@@ -1,0 +1,86 @@
+/*
+ * Card — Figma Card frame (185:6512): example 185:8050, card_header (218:7173), card_content, card_footer (218:7174).
+ *   container: padding p-5 0, gap m-4, border-radius/rounded-lg, colors/card/background, 1px INSIDE colors/card/border,
+ *              clipped; shadow: Figma uses a remote style (shadow-sm 0 1 3 / 10%) — the local effect elevation-1
+ *              (0 1 3 / 12%) is used (figma-issues F60)
+ *   header:    padding 0 p-5 p-3 p-5, gap m-1_5, 1px bottom divider (…/divider), title sm/leading-normal/semibold
+ *              (…/item/label/title), description sm/leading-normal/normal (…/item/label/description), m-0_5 apart
+ *   content:   padding 0 p-5
+ *   footer:    padding 0 p-5, buttons fill the width, m-2 apart
+ */
+
+.ds-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-4);
+  padding: var(--spacing-padding-p-5) 0;
+  overflow: hidden;
+  border-radius: var(--border-radius-rounded-lg);
+  background-color: var(--colors-card-background-default);
+  box-shadow:
+    inset 0 0 0 var(--border-width-border) var(--colors-card-border-default),
+    var(--effect-elevation-1);
+}
+
+.ds-card__header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-1_5);
+  padding: 0 var(--spacing-padding-p-5) var(--spacing-padding-p-3);
+  box-shadow: inset 0 calc(-1 * var(--border-width-border)) 0 0 var(--colors-card-divider-default);
+}
+
+.ds-card__heading {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-0_5);
+  min-width: 0;
+}
+
+.ds-card__title,
+.ds-card__description {
+  margin: 0;
+}
+
+.ds-card__title {
+  color: var(--colors-card-item-label-title-default);
+  font-family: var(--typography-sm-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-semibold-font-size);
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+  line-height: var(--typography-sm-leading-normal-semibold-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-semibold-letter-spacing);
+}
+
+.ds-card__description {
+  color: var(--colors-card-item-label-description-default);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+.ds-card__action {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.ds-card__content {
+  box-sizing: border-box;
+  padding: 0 var(--spacing-padding-p-5);
+}
+
+.ds-card__footer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-2);
+  padding: 0 var(--spacing-padding-p-5);
+}
+
+.ds-card__footer > * {
+  width: 100%;
+}

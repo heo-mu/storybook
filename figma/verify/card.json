@@ -1,0 +1,42 @@
+{
+  "component": "Card",
+  "sets": [
+    {
+      "set": "card_header",
+      "story": "components-card-showcase--figma",
+      "figmaPrefix": "header:",
+      "background": "#ffffff",
+      "geometryOnly": "the Figma Card frame (185:6512) is hidden, so no reference image can be rendered (figma-issues F61)",
+      "parts": {
+        "Frame 2147239191": ".ds-card__heading",
+        "Frame 2147239191/Text": ".ds-card__title",
+        "Frame 2147239191/Text#2": ".ds-card__description",
+        "button_basic": ".ds-button"
+      }
+    },
+    {
+      "set": "card_footer",
+      "story": "components-card-showcase--figma",
+      "figmaPrefix": "footer:",
+      "background": "#ffffff",
+      "geometryOnly": "hidden Figma frame (F61)",
+      "parts": {
+        "button_basic": ".ds-button",
+        "button_basic#2": ".ds-button"
+      }
+    },
+    {
+      "set": "card",
+      "story": "components-card-showcase--figma",
+      "figmaPrefix": "card:",
+      "background": "#ffffff",
+      "geometryOnly": "hidden Figma frame (F61)",
+      "parts": {
+        "Frame 2147239186": ".ds-card__header",
+        "Wrapper": ".ds-card__content",
+        "Wrapper/Rectangle 421": ".ds-card__content > *",
+        "Wrapper#2": ".ds-card__footer"
+      }
+    }
+  ]
+}

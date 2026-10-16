@@ -131,7 +131,9 @@ for (const set of config.sets) {
     if (!setNode) throw new Error(`set ${geometry.id} not in metadata`);
     positions = new Map(setNode.children.map((c) => [c.name, c]));
   }
-  const reference = PNG.sync.read(readFileSync(path.join(ROOT, 'figma', 'reference', `${set.set}.png`)));
+  // `geometryOnly`: "reason" — no reference image can be rendered (e.g. the Figma frame is hidden): sizes and
+  // positions are compared, pixels and glyphs are left for manual review.
+  const reference = set.geometryOnly ? null : PNG.sync.read(readFileSync(path.join(ROOT, 'figma', 'reference', `${set.set}.png`)));
 
   // Normalise selectors: string | string[] | { selector(s), compare }
   const partSpecs = Object.entries(set.parts).map(([key, spec]) => {
@@ -217,7 +219,7 @@ for (const set of config.sets) {
     const variantRef = useVariantRef ? path.join(ROOT, 'figma', 'reference', set.set, `${m.name.replace(/[^a-zA-Z0-9]+/g, '_')}.png`) : null;
     const fp = variantRef ? { x: 0, y: 0 } : positions.get(m.name);
     let pixel = null;
-    if (fp) {
+    if (fp && !set.geometryOnly) {
       const shot = PNG.sync.read(await screenshotCell(page, m.attr));
       const w = Math.min(shot.width, Math.round(g.w)), h = Math.min(shot.height, Math.round(g.h));
       const fig = cropOver(variantRef ? PNG.sync.read(readFileSync(variantRef)) : reference, Math.round(fp.x), Math.round(fp.y), w, h, set.background);
@@ -275,7 +277,7 @@ for (const set of config.sets) {
         writeFileSync(path.join(OUT, file), PNG.sync.write(sideBySide(fig, dom, pixDiff)));
         pixel.diffImage = path.join('.verify', component, file);
       }
-    } else {
+    } else if (!set.geometryOnly) {
       issues.push({ cat: 'structure', detail: 'variant not found in set metadata' });
     }
     results.push({ name: m.name, issues, notes, pixel });
@@ -296,6 +298,7 @@ for (const set of config.sets) {
   for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known difference — ${v}: ${why}`); }
   if (set.maskRects || set.maskRectsFor) lines.push(`  ◇ manual review (pixels not compared): ${set['//maskRects'] ?? set['//maskRectsFor'] ?? 'masked areas'}`);
   if (ignored.length) lines.push(`  ◇ manual review (not compared): ${set.ignore.join(", ")}`);
+  if (set.geometryOnly) lines.push(`  ◇ manual review (pixels and glyphs not compared): ${set.geometryOnly}`);
   for (const [v, why] of Object.entries(set.skipVariants ?? {})) lines.push(`  ◇ manual review (variant not compared) — ${v}: ${why}`);
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);
   lines.push(`  non-text pixels: mean ${((ratios.reduce((a, b) => a + b, 0) / Math.max(1, ratios.length)) * 100).toFixed(2)}% differing, max ${(Math.max(0, ...ratios) * 100).toFixed(2)}%`);

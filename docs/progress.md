@@ -30,7 +30,7 @@
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 완료 |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 완료 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 완료 (Popover · Drawer 구현 불가) |
-| 7 | Table · Card · Chart · Loading | 진행 (Table · Loading 완료) |
+| 7 | Table · Card · Chart · Loading | 진행 (Table · Card · Loading 완료, Chart 남음) |
 | 8 | Dashboard components | 미착수 |
 | 9 | 통합 QA | 미착수 |
 
@@ -67,6 +67,7 @@
 | Accordion | 10 | 10/10 | 10/10 | 10/10 | 통과 |
 | Dialog | 1 | 1/1 | 1/1 | 1/1 (제목 글자 위치 기록) | 통과 |
 | Table (header · body · key · value · editable) | 3 + 8 + 2 + 2 + 52 | 64/64 (3 수동) | 64/64 (3 수동) | 64/64 (3 수동) | 통과 |
+| Card (header · footer · 예시) | 1 + 1 + 1 | 3/3 (위치 · 크기만) | 3/3 (〃) | 3/3 (〃) | 통과 — Figma 프레임 숨김, 픽셀 수동 검토 |
 
 Phase 5 · 6 그룹 검증(2026-10-16): verify:all 25개 컴포넌트 × 3 엔진 통과(Phase 5까지), Accordion · Dialog 3 엔진 개별 통과,
 verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 67 파일 · 311개 통과, typecheck · lint · build · build-storybook 통과,
@@ -89,6 +90,8 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 Phase 7 — Table(351:3452, 355:3739, 355:4193, 355:4460, 503:23264) → Card(218:7173, 218:7174) → Chart(698:4399, 697:4514, 693:9776).
 
+**결정 필요 — Card(F60 · F61)**: Figma Card 프레임이 숨김이고 그림자가 원격 스타일입니다.
+
 **결정 필요 — Dialog 덮개(F51)**: Figma에 scrim이 없어 투명으로 두었습니다. **Accordion Hover(F50)**: 변형마다 다른 표현을 Figma 그대로 구현했습니다.
 
 **결정 필요 — Toast 표시 위치 · 간격 · 시간(F44)**: Figma에 없어 코드 정책으로 정했습니다.
@@ -102,7 +105,7 @@ Phase 7 — Table(351:3452, 355:3739, 355:4193, 355:4460, 503:23264) → Card(21
 
 검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
 `figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),
-`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), `maskRectsFor`(변형별 픽셀 제외 영역), `variantReferences`(소수점 위치 변형을 개별 스크린샷과 비교), `skipVariants`(비교 제외 · 수동 검토 표시), `glyphDyTolerance`, `hugNodes`, part의 `compare` · `optional`.
+`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), `maskRectsFor`(변형별 픽셀 제외 영역), `variantReferences`(소수점 위치 변형을 개별 스크린샷과 비교), `skipVariants`(비교 제외 · 수동 검토 표시), `glyphDyTolerance`, `hugNodes`, `geometryOnly`(기준 이미지 없음), part의 `compare` · `optional`.
 
 ## 미해결 이슈
 

@@ -142,6 +142,8 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F57 | table_value_editable 안내 글자가 `colors/table/key-value/value/label/hover`(스냅샷 이후 추가)에 바인딩 | 같은 값 `colors/text/tertiary` | 스냅샷 동기화 시 반영 |
 | F58 | table_value_editable 샘플 불일치 — Textarea 유형은 편집 시 한 줄 Input인데 채움 값은 두 줄, Date Picker 채움 값이 자리표시("YYYY.MM.DD"), Filter Disabled Empty만 chip-input, 상태마다 예시 문구가 다름 | 한 줄 Input · 실제 날짜, 두 줄 변형 3개는 수동 검토 | 의도 확인 |
 | F59 | table_value_editable File Upload 버튼 인스턴스 최소 너비 80px, 이미지 자리표시(#d9d9d9 + 대각선)가 변수 없는 값 · 원격 변수 | 최소 너비는 사용 예에 명시, 자리표시는 스토리 전용 이미지 | — |
+| F60 | 카드 그림자가 원격 라이브러리 스타일 `Box Shadow/shadow-sm`(0 1 3 / 10%) — 로컬 효과 스타일에 같은 값 없음(elevation-1은 12%) | `elevation-1` 사용 | 로컬 스타일 추가 또는 elevation-1 사용 (결정 필요) |
+| F61 | Card 프레임(185:6512)이 숨김 — 스크린샷 · 내보내기가 1×1로 렌더링되어 픽셀 기준 이미지를 만들 수 없음 | 레이어 값으로 구현, 위치 · 크기만 검증(`geometryOnly`) | 숨김 이유 · 사용 여부 확인 (결정 필요) |
 
 ## D. 작업 중 관찰된 원본 변경
 

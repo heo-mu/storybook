@@ -176,6 +176,9 @@
 - 열 정보 아이콘은 포커스할 수 있고 툴팁으로 설명을 보여 줍니다. 순서 바꾸기 손잡이 이름 "순서 이동".
 - KeyValueTable은 `<dl>`(dt = 항목, dd = 값), 필수 점은 "필수"로 읽힙니다.
 
+### Card
+- 일반 `<div>` 묶음. 머리글 제목은 `<h3>`(`headingLevel`로 변경) — 페이지의 제목 단계에 맞추세요.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.
