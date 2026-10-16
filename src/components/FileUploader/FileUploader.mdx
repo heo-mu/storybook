@@ -1,0 +1,83 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/FileUploader.showcase.stories';
+import { FileUploader } from './FileUploader';
+import { FileUploaderItem } from './FileUploaderItem';
+import { Loading } from '../Loading';
+
+<Meta title="Components/FileUploader/Usage" />
+
+# FileUploader · FileUploaderItem · Loading — 사용 가이드
+
+Figma **File Uploader** 프레임(675:4910)의 `file-uploader`(5개) · `file-uploader-item`(3개)와, 업로드 중 표시에 쓰이는
+**Loading**(149:3000)의 `loading`(md · sm)을 구현했습니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { FileUploader, FileUploaderItem } from 'platform-design-system';
+
+const [files, setFiles] = useState<Upload[]>([]);
+
+<FileUploader
+  helperText="PDF, HWP, DOCX, JPG, PNG · 파일당 10 MB · 최대 5개"
+  accept=".pdf,.hwp,.docx,.jpg,.png"
+  multiple
+  onFilesSelected={(picked) => startUpload(picked)}
+/>
+
+{files.map((f) => (
+  <FileUploaderItem
+    key={f.id}
+    fileName={f.name}
+    fileInfo={f.done ? \`\${f.size} · 업로드 완료\` : \`\${f.size} · 업로드 중\`}
+    status={f.done ? 'completed' : 'uploading'}
+    onRemove={() => remove(f.id)}
+  />
+))}`}
+/>
+
+크기 · 개수 제한 검사와 업로드 자체는 사용처에서 처리합니다(컴포넌트는 `accept`에 맞는 파일만 전달).
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| file-uploader Title / Helper Text | `title` · `helperText` | 기본 제목 "파일을 끌어다 놓거나 선택하세요" |
+| Show Icon | `showIcon` | 기본 `true` |
+| State Hover · Pressed | 브라우저 `:hover` · `:active` | |
+| State Drag-over | 파일을 영역 위로 끌 때 자동 | |
+| State Disabled | `disabled` | |
+| file-uploader-item State Completed · uploading · download | `status` | `onRemove` · `onDownload` |
+| File Name · File Info | `fileName` · `fileInfo` | 긴 이름은 말줄임 |
+| loading size · text | `Loading` `size` · `label` | |
+
+Figma의 "Show Button" 속성은 어떤 레이어에도 연결되어 있지 않아 구현하지 않았습니다(figma-issues F26).
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **드롭 영역 = 버튼**: 클릭 · Enter · Space로 파일 선택 창을 엽니다. 도움말 텍스트가 버튼 설명(`aria-describedby`)입니다.
+- **드롭 필터**: 드롭한 파일도 `accept`(확장자 · MIME · `image/*`)로 거르고, `multiple`이 아니면 첫 파일만 전달합니다.
+- **항목 버튼 설명**: "삭제" · "다운로드" 버튼은 파일 이름을 설명으로 가집니다(목록에서 구분).
+- **스피너 회전**: Figma에 모션 정의가 없어 1초에 한 바퀴, `prefers-reduced-motion`에서는 3초에 한 바퀴.
+- **점선 테두리**: SVG로 6 / 4 대시를 그립니다. Figma는 대시를 변마다 맞춰 그려 모서리 근처 대시 위치가 최대 3px 다릅니다(수동 검토).
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+### FileUploader
+
+<ArgTypes of={FileUploader} />
+
+### FileUploaderItem
+
+<ArgTypes of={FileUploaderItem} />
+
+### Loading
+
+<ArgTypes of={Loading} />

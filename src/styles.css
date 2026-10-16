@@ -15,3 +15,6 @@
 @import './components/Chip/Chip.css';
 @import './components/Calendar/Calendar.css';
 @import './components/DatePicker/DatePicker.css';
+@import './components/Loading/Loading.css';
+@import './components/FileUploader/FileUploader.css';
+@import './components/Link/Link.css';

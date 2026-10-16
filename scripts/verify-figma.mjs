@@ -107,7 +107,10 @@ for (const set of config.sets) {
   // A single component (geometry.single) is its own reference image; `origin` is where it starts in that image
   // (a screenshot includes effects such as drop shadows around the node).
   let positions;
-  if (geometry.single) {
+  if (geometry.positions) {
+    // Sets missing from the section metadata carry their variant positions (from use_figma) in the geometry file.
+    positions = new Map(Object.entries(geometry.positions).map(([name, [x, y]]) => [name, { x, y }]));
+  } else if (geometry.single) {
     const [ox, oy] = geometry.origin ?? [0, 0];
     positions = new Map(Object.keys(geometry.variants).map((name) => [name, { x: ox, y: oy }]));
   } else {
@@ -196,6 +199,8 @@ for (const set of config.sets) {
         ...textBoxes,
         ...g.n.filter((n) => isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh })),
         ...g.n.flatMap(([p, x, y, bw, bh]) => pixelMasks.filter((mk) => mk.re.test(p)).map((mk) => ({ p, x: x - mk.pad + 1, y: y - mk.pad + 1, w: bw + 2 * (mk.pad - 1), h: bh + 2 * (mk.pad - 1) }))),
+        // maskRects: [[x, y, w, h], …] relative to the variant (negative w / h count from the right / bottom edge).
+        ...(set.maskRects ?? []).map(([x, y, w, h]) => ({ p: 'rect', x: x < 0 ? g.w + x : x, y: y < 0 ? g.h + y : y, w: w <= 0 ? g.w + w : w, h: h <= 0 ? g.h + h : h })),
       ];
       // Strict comparison outside text boxes (padded by 1px).
       const mask = (img) => { const c = new PNG({ width: w, height: h }); img.data.copy(c.data); for (const t of maskBoxes) for (let yy = Math.max(0, Math.floor(t.y) - 1); yy < Math.min(h, Math.ceil(t.y + t.h) + 1); yy++) for (let xx = Math.max(0, Math.floor(t.x) - 1); xx < Math.min(w, Math.ceil(t.x + t.w) + 1); xx++) { const i = (yy * w + xx) * 4; c.data[i] = c.data[i + 1] = c.data[i + 2] = 0; } return c; };
@@ -218,7 +223,7 @@ for (const set of config.sets) {
         const subpixel = fp.x % 1 !== 0;
         // Chromium is the reference engine; other engines rasterise text differently, so horizontal
         // offsets under 1px there are recorded as rendering differences, not defects.
-        const dxTol = BROWSER === 'chromium' ? (set.glyphDxTolerance ?? 0.5) : 1;
+        const dxTol = BROWSER === 'chromium' ? (set.glyphDxTolerance ?? 0.5) : Math.max(1, set.glyphDxTolerance ?? 0);
         // knownDifferences: { "<variant>": "reason" } for every engine, or { "<variant>": { "<engine>": "reason" } }.
         const knownEntry = set.knownDifferences?.[m.name];
         const known = typeof knownEntry === 'string' ? knownEntry : knownEntry?.[BROWSER];
@@ -253,6 +258,7 @@ for (const set of config.sets) {
   lines.push('', `${set.set}: rendered ${measured.length}/${expected.length}${missing.length ? ` (missing: ${missing.join(' | ')})` : ''}`);
   lines.push(`  all checks passed: ${clean}/${results.length}`);
   for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known difference — ${v}: ${why}`); }
+  if (set.maskRects) lines.push(`  ◇ manual review (pixels not compared): ${set['//maskRects'] ?? 'masked areas'}`);
   if (ignored.length) lines.push(`  ◇ manual review (not compared): ${set.ignore.join(", ")}`);
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);
   lines.push(`  non-text pixels: mean ${((ratios.reduce((a, b) => a + b, 0) / Math.max(1, ratios.length)) * 100).toFixed(2)}% differing, max ${(Math.max(0, ...ratios) * 100).toFixed(2)}%`);

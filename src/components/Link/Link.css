@@ -1,0 +1,133 @@
+/*
+ * Link — Figma component set `link` (111:1509).
+ *   padding p-0 / p-0_5 / p-0_5 / p-1 (top right bottom left), gap m-0_5 (lg m-1), border-radius/rounded
+ *   label: xs · sm · base /leading-normal/underline (Medium, underlined) · icon arrow-square-out 16 / 18 / 20
+ * State: Default → Visited → Hover → Pressed → Disabled (later rules win).
+ */
+.ds-link {
+  --ds-link-icon: 16px;
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-0_5);
+  max-width: 100%;
+  padding: var(--spacing-padding-p-0) var(--spacing-padding-p-0_5) var(--spacing-padding-p-0_5) var(--spacing-padding-p-1);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-link-background-default);
+  color: var(--colors-link-label-default);
+  font-family: var(--typography-xs-leading-normal-underline-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-underline-font-size);
+  font-weight: var(--typography-xs-leading-normal-underline-font-weight);
+  line-height: var(--typography-xs-leading-normal-underline-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-underline-letter-spacing);
+  text-decoration: none;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* sm/leading-normal/underline binds deleted variables in Figma (docs/figma-issues.md C3): 140% line-height,
+ * weight 500 — the generated text-style tokens carry those values. */
+.ds-link[data-size='md'] {
+  --ds-link-icon: 18px;
+
+  font-family: var(--typography-sm-leading-normal-underline-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-underline-font-size);
+  font-weight: var(--typography-sm-leading-normal-underline-font-weight);
+  line-height: var(--typography-sm-leading-normal-underline-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-underline-letter-spacing);
+}
+
+.ds-link[data-size='lg'] {
+  --ds-link-icon: 20px;
+
+  gap: var(--spacing-margin-m-1);
+  font-family: var(--typography-base-leading-normal-underline-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-underline-font-size);
+  font-weight: var(--typography-base-leading-normal-underline-font-weight);
+  line-height: var(--typography-base-leading-normal-underline-line-height);
+  letter-spacing: var(--typography-base-leading-normal-underline-letter-spacing);
+}
+
+.ds-link__label {
+  min-width: 0;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+
+/* sm/leading-normal/underline is 140% (19.6px); Figma lays the line out on a whole 20px box, so the
+ * browser line box is rounded up the same way (otherwise the glyphs sit ~1px higher than in Figma). */
+.ds-link[data-size='md'] .ds-link__label {
+  line-height: round(up, calc(var(--typography-sm-leading-normal-underline-font-size) * 1.4), 1px);
+}
+
+/* base 16 / 24: 1px padding + 23px line-height keeps Chromium on Figma's baseline (as Button lg). */
+.ds-link[data-size='lg'] .ds-link__label {
+  padding-top: 1px;
+  line-height: calc(var(--typography-base-leading-normal-underline-line-height) - 1px);
+}
+
+.ds-link__icon {
+  display: block;
+  flex-shrink: 0;
+  width: var(--ds-link-icon);
+  height: var(--ds-link-icon);
+  color: var(--colors-link-icon-default);
+}
+
+.ds-link:visited {
+  color: var(--colors-link-label-visited);
+}
+
+.ds-link:visited .ds-link__icon {
+  color: var(--colors-link-icon-visited);
+}
+
+.ds-link:hover {
+  background-color: var(--colors-link-background-hover);
+  color: var(--colors-link-label-hover);
+}
+
+.ds-link:hover .ds-link__icon {
+  color: var(--colors-link-icon-hover);
+}
+
+.ds-link:active {
+  background-color: var(--colors-link-background-pressed);
+  color: var(--colors-link-label-pressed);
+}
+
+.ds-link:active .ds-link__icon {
+  color: var(--colors-link-icon-pressed);
+}
+
+.ds-link[data-disabled] {
+  background-color: var(--colors-link-background-disabled);
+  color: var(--colors-link-label-disabled);
+  cursor: default;
+}
+
+.ds-link[data-disabled] .ds-link__icon {
+  color: var(--colors-link-icon-disabled);
+}
+
+.ds-link:focus-visible {
+  outline-style: auto;
+}
+
+.ds-link__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-link__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

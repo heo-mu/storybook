@@ -106,6 +106,14 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F21 | chip-filter Selected 배경이 투명, Disabled 배경도 투명(chip-multi는 회색 채움) | 각 세트 그대로 | 의도 확인 |
 | F22 | Chip · Segmented Control · Slider에 Focus 상태 없음 (F1과 같음) | 브라우저 기본 포커스 링 | 키보드 포커스 표현 정의 |
 | F23 | 성공 메시지 녹색(#00a63e)이 대비 3.16:1 — WCAG AA 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 4.5:1 이상으로 조정 |
+| F24 | Date Picker 빈 상태가 Semantic `colors/text/placeholder` · `colors/icon/placeholder`에 직접 바인딩(`…/placeholder/default` 미사용) | 바인딩 그대로 | Component 변수 경유 |
+| F25 | 달력 요일이 영어 자리표시(Su Mo …)인데 월 제목은 한국어(2026년 7월), 요일은 `colors/text/tertiary`에 직접 바인딩(`date-picker/weekday/label/default` 미사용) | 요일 · 월 이름 모두 로캘(ko-KR: 일 월 …), 색은 바인딩 그대로 | 언어 통일, Component 변수 사용 |
+| F26 | file-uploader의 "Show Button" 속성이 어떤 레이어에도 연결되지 않음 | 미구현 | 속성 삭제 또는 버튼 추가 |
+| F27 | file-uploader-item이 Semantic `surface/page` · `border/gray-subtler`에 직접 바인딩, 다운로드 아이콘이 미바인딩 #404b5d | 바인딩 그대로, 아이콘은 같은 값의 `colors/icon/secondary` | Component 변수 정의 |
+| F28 | Loading 간격이 다른 라이브러리(원격) 변수, 그라데이션이 `border/transparency` → `border/brand`(Semantic)에 바인딩 — `loading/spinner/indicator/*` 미사용 | 같은 이름의 로컬 `spacing/margin/m-2_5`, 그라데이션은 바인딩 그대로 | 로컬 · Component 변수 사용 |
+| F29 | file-uploader Drag-over 아이콘이 `…/icon/default`(`…/icon/drag-over` 변수 미사용), Pressed가 `…/focus` 변수 사용 | 바인딩 그대로 | 이름 · 바인딩 정리 |
+| F30 | **점선 테두리가 변마다 대시 간격을 맞춤**(9.85 ~ 10.25px) — CSS · SVG는 외곽선을 따라 이어 그림 | SVG 6 / 4 대시, 위상만 맞춤 — 테두리 픽셀은 수동 검토 | — |
+| F31 | **작업 중 원본 변경**: Button Secondary Solid 신설 · TextButton Secondary 색 분리 · 변수 삭제, `fill/primary/subtle/hover` 값 변경 | 스냅샷 동결(Primitive 추가분만 반영) — [token-diff.md](./token-diff.md) | 동기화 여부 결정 필요 |
 
 ## D. 작업 중 관찰된 원본 변경
 

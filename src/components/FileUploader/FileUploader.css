@@ -1,0 +1,194 @@
+/*
+ * FileUploader — Figma component set `file-uploader` (651:3945).
+ *   353×100 (height 100), vertical, centred, gap p-2, padding p-3 inside the 1px stroke (Figma includes the
+ *   stroke in the layout), border-radius/rounded, 1px INSIDE dashed stroke (dash 6, gap 4)
+ *   icon UploadSimple 16px · title sm/leading-normal/medium · helper xs/leading-normal/normal (gap m-0_5)
+ * State: Default → Hover → Pressed (Figma binds …/focus) → Drag-over → Disabled (later rules win).
+ */
+.ds-file-uploader {
+  --_bg: var(--colors-file-uploader-background-default);
+  --_bd: var(--colors-file-uploader-border-default);
+  --_label: var(--colors-file-uploader-label-default);
+
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-padding-p-2);
+  width: 100%;
+  min-height: 100px;
+  margin: 0;
+  padding: calc(var(--spacing-padding-p-3) + var(--border-width-border));
+  border: 0;
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_bg);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-file-uploader:hover {
+  --_bg: var(--colors-file-uploader-background-hover);
+  --_bd: var(--colors-file-uploader-border-hover);
+}
+
+.ds-file-uploader:active {
+  --_bg: var(--colors-file-uploader-background-focus);
+  --_bd: var(--colors-file-uploader-border-focus);
+}
+
+.ds-file-uploader[data-drag-over] {
+  --_bg: var(--colors-file-uploader-background-drag-over);
+  --_bd: var(--colors-file-uploader-border-drag-over);
+}
+
+.ds-file-uploader:disabled {
+  --_bg: var(--colors-file-uploader-background-disabled);
+  --_bd: var(--colors-file-uploader-border-disabled);
+  --_label: var(--colors-file-uploader-label-disabled);
+
+  cursor: default;
+}
+
+.ds-file-uploader:focus-visible {
+  outline-style: auto;
+}
+
+.ds-file-uploader__border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ds-file-uploader__border rect {
+  x: 0.5px;
+  y: 0.5px;
+  width: calc(100% - var(--border-width-border));
+  height: calc(100% - var(--border-width-border));
+  rx: calc(var(--border-radius-rounded) - 0.5px);
+  fill: none;
+  stroke: var(--_bd);
+  stroke-width: var(--border-width-border);
+  stroke-dasharray: 6 4;
+  /* Figma starts the dash pattern 3.2px earlier along the outline than SVG does (measured on the Figma render). */
+  stroke-dashoffset: 3.2;
+}
+
+/* The Figma icon stays colors/file-uploader/icon/default in every state (…/icon/drag-over is unused). */
+.ds-file-uploader__icon {
+  display: block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--colors-file-uploader-icon-default);
+}
+
+.ds-file-uploader__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-0_5);
+  width: 100%;
+}
+
+.ds-file-uploader__title {
+  color: var(--_label);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-file-uploader__helper {
+  color: var(--colors-file-uploader-helper-default);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+/*
+ * FileUploaderItem — Figma component set `file-uploader-item` (651:3999).
+ *   320 wide, padding p-2 × p-3 inside a 1px colors/border/gray-subtler stroke (included in the layout),
+ *   colors/surface/page, border-radius/rounded — the item binds semantic variables directly (F27)
+ *   row: FileText 20px · name (sm/leading-normal/medium) + info (xs/leading-normal/normal, gap p-0_5) · action,
+ *   gap p-3
+ */
+.ds-file-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-padding-p-3);
+  width: 100%;
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-3);
+  border: var(--border-width-border) solid var(--colors-border-gray-subtler);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-surface-page);
+}
+
+.ds-file-item__icon {
+  display: block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--colors-file-uploader-icon-default);
+}
+
+.ds-file-item__info {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-padding-p-0_5);
+  min-width: 0;
+}
+
+.ds-file-item__name,
+.ds-file-item__meta {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ds-file-item__name {
+  color: var(--colors-file-uploader-label-default);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-file-item__meta {
+  color: var(--colors-file-uploader-helper-default);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+.ds-file-item__action,
+.ds-file-item__spinner {
+  flex-shrink: 0;
+}
+
+/* Figma overrides the download icon with an unbound #404b5d — the semantic token with that value (F27). */
+.ds-file-item__download .ds-button__icon {
+  color: var(--colors-icon-secondary);
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-file-item__name,
+  .ds-file-item__meta {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

@@ -1,0 +1,98 @@
+/*
+ * Loading — Figma component set `loading` (675:5644), size md / sm.
+ *   root: vertical, items centred, padding spacing/padding/p-px, gap 10px (a remote-library variable in
+ *         Figma; the local spacing/margin/m-2_5 has the same name and value — docs/figma-issues.md F28)
+ *   spinner: 22 / 14px circle, 2px round-capped arc (the Figma vector exported as a mask), angular gradient
+ *            colors/border/transparency → colors/border/brand (the stops bind the semantic variables, not
+ *            colors/loading/spinner/indicator/*), rotated 10.5° / 8.7° as in Figma
+ *   label: base/leading-normal/medium (md) · sm/leading-normal/medium (sm), colors/loading/spinner/label/default
+ */
+
+.ds-loading {
+  --ds-loading-spinner: 24px;
+  --ds-loading-angle: 100.5deg;
+  --ds-loading-arc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 12C22 12.5523 22.4477 13 23 13C23.5523 13 24 12.5523 24 12H23H22ZM23.5193 15.3727C23.6742 14.8426 23.3701 14.2873 22.84 14.1323C22.3099 13.9773 21.7546 14.2814 21.5996 14.8115L22.5594 15.0921L23.5193 15.3727ZM12 23V22C6.47715 22 2 17.5228 2 12H1H0C0 18.6274 5.37258 24 12 24V23ZM1 12H2C2 6.47715 6.47715 2 12 2V1V0C5.37258 0 0 5.37258 0 12H1ZM12 1V2C17.5228 2 22 6.47715 22 12H23H24C24 5.37258 18.6274 0 12 0V1ZM22.5594 15.0921L21.5996 14.8115C20.3849 18.9665 16.5454 22 12 22V23V24C17.4577 24 22.062 20.3573 23.5193 15.3727L22.5594 15.0921Z'/%3E%3C/svg%3E");
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-margin-m-2_5);
+  padding: var(--spacing-padding-p-px);
+  color: var(--colors-loading-spinner-label-default);
+  font-family: var(--typography-base-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-medium-font-size);
+  font-weight: var(--typography-base-leading-normal-medium-font-weight);
+  line-height: var(--typography-base-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-base-leading-normal-medium-letter-spacing);
+  vertical-align: top;
+}
+
+.ds-loading[data-size='sm'] {
+  --ds-loading-spinner: 16px;
+  --ds-loading-angle: 98.7deg;
+  --ds-loading-arc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M14 8C14 8.55228 14.4477 9 15 9C15.5523 9 16 8.55228 16 8H15H14ZM15.6795 10.2483C15.8344 9.71822 15.5303 9.16286 15.0002 9.00789C14.4701 8.85292 13.9148 9.15702 13.7598 9.68711L14.7196 9.96772L15.6795 10.2483ZM8 15V14C4.68629 14 2 11.3137 2 8H1H0C0 12.4183 3.58172 16 8 16V15ZM1 8H2C2 4.68629 4.68629 2 8 2V1V0C3.58172 0 0 3.58172 0 8H1ZM8 1V2C11.3137 2 14 4.68629 14 8H15H16C16 3.58172 12.4183 0 8 0V1ZM14.7196 9.96772L13.7598 9.68711C13.0309 12.1804 10.7267 14 8 14V15V16C11.639 16 14.708 13.5712 15.6795 10.2483L14.7196 9.96772Z'/%3E%3C/svg%3E");
+
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+/* The 2px stroke is centred on the 22 / 14px circle, so the visible spinner is 1px larger on each side:
+ * it overlaps the root padding (Figma vector at padding + 0, stroke outside its bounds). */
+.ds-loading__spinner {
+  display: block;
+  flex-shrink: 0;
+  width: var(--ds-loading-spinner);
+  height: var(--ds-loading-spinner);
+  margin: calc(-1 * var(--spacing-padding-p-px));
+  /* Figma interpolates the angular gradient without premultiplied alpha (white RGB of the transparent stop
+   * mixes in), so on a light surface the brand colour builds up with the square of the angle; CSS gradients
+   * are premultiplied (linear), hence the intermediate stops at (i/8)² brand. */
+  background: conic-gradient(
+    from var(--ds-loading-angle),
+    var(--colors-border-transparency) 0deg,
+    color-mix(in srgb, var(--colors-border-brand) 1.56%, transparent) 45deg,
+    color-mix(in srgb, var(--colors-border-brand) 6.25%, transparent) 90deg,
+    color-mix(in srgb, var(--colors-border-brand) 14.06%, transparent) 135deg,
+    color-mix(in srgb, var(--colors-border-brand) 25%, transparent) 180deg,
+    color-mix(in srgb, var(--colors-border-brand) 39.06%, transparent) 225deg,
+    color-mix(in srgb, var(--colors-border-brand) 56.25%, transparent) 270deg,
+    color-mix(in srgb, var(--colors-border-brand) 76.56%, transparent) 315deg,
+    var(--colors-border-brand) 360deg
+  );
+  -webkit-mask: var(--ds-loading-arc) center / 100% 100% no-repeat;
+  mask: var(--ds-loading-arc) center / 100% 100% no-repeat;
+  animation: ds-loading-spin 1s linear infinite;
+}
+
+/* base 16 / 24: 1px padding + 23px line-height keeps Chromium on Figma's baseline (as Button lg). */
+.ds-loading[data-size='md'] .ds-loading__label {
+  padding-top: 1px;
+  line-height: calc(var(--typography-base-leading-normal-medium-line-height) - 1px);
+}
+
+.ds-loading__label {
+  white-space: nowrap;
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-loading__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
+
+/* Motion is not defined in Figma: one turn per second (code policy); slower with reduced motion. */
+@keyframes ds-loading-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-loading__spinner {
+    animation-duration: 3s;
+  }
+}

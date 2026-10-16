@@ -81,3 +81,15 @@
 - Chip: `<button aria-pressed>`(켜짐 / 꺼짐). 여러 개를 묶을 때는 사용처에서 `role="group"` + 이름.
 - InputChip: 칩 전체가 삭제 버튼(이름 = 라벨 + "삭제"), Delete · Backspace로도 삭제 — 12px X 아이콘만 누르는 것보다 큰 대상(WCAG 2.5.8).
 - FilterChip: react-aria `Button` — `aria-expanded`(직접 지정 또는 MenuTrigger 등 트리거가 설정), 화살표 방향이 이를 따라감.
+
+### DatePicker · Calendar
+- 필드는 `<input>`(라벨 · `aria-invalid` · 메시지 설명), 해석할 수 없거나 선택할 수 없는 날짜를 입력하면 Error 상태 + `aria-invalid`.
+- 달력 버튼(이름 "달력 열기", `aria-expanded`)이 Dialog를 열고, Dialog 이름은 필드 라벨입니다. Alt + ↓로도 열립니다.
+- Calendar(react-aria): `role="grid"` + 날짜 버튼(이름 예: "2026년 7월 30일 목요일"), 비활성 날짜 `aria-disabled`,
+  이전 / 다음 달 버튼 이름은 로캘 문구. 방향키 · Page Up/Down · Home/End.
+- `name`을 주면 숨은 input으로 ISO 날짜를 전송합니다.
+
+### FileUploader · FileUploaderItem · Loading
+- 드롭 영역은 `<button>`(이름 = 제목, 설명 = 도움말), Enter · Space로 파일 선택 창. 숨은 `<input type="file">`이 폼 값.
+- 항목의 "삭제" · "다운로드"는 TextButton, 설명(`aria-describedby`)이 파일 이름. 업로드 중 항목은 `aria-busy` + 스피너.
+- Loading은 `role="status"`(라벨 또는 `aria-label`, 기본 "로딩 중"). 회전은 `prefers-reduced-motion`에서 느려집니다.

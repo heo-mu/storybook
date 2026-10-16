@@ -57,3 +57,44 @@ CSS로 만들면 `--default`, `--hover` 같은 전역 이름이 되어 다른 CS
 ## 기타 메타데이터 변화
 
 - WEB code syntax가 지정된 변수 수: 115 → 45 (코드 이름은 code syntax가 아니라 변수 경로에서 생성하므로 영향 없음)
+
+## Figma 원본 변경 감지 (Phase 3 진행 중, 2026-10-16)
+
+File Uploader 구현 중 Loading이 바인딩한 `spacing/padding/p-px`가 스냅샷에 없어, 스냅샷과 원본의 체크섬을 다시 비교했습니다
+(`npm run figma:checksum` ↔ `figma/checksum.figma.js`, 줄 단위 해시 비교로 변경 줄 특정).
+
+| 그룹 | 스냅샷 | 현재 원본 | 내용 |
+| --- | --- | --- | --- |
+| Primitive 색 · Theme · Text Style · Effect Style | — | 동일 | 변화 없음 |
+| Primitive 스칼라 | 159 | 166 | **추가 7개만**: `border-radius/rounded-[2px]`, `border-width/border-0` · `border-2_5` · `border-3`, `spacing/gap/overlap-0_5`(−2), `spacing/padding/p-13`(52), `spacing/padding/p-px`(1) |
+| Semantic | 68 | 68 | `colors/fill/primary/subtle/hover`: `gray/50`(#f9fafb) → `gray/75`(#f5f6f7) |
+| Component — Button 계열 | 73 | 81 | 아래 표 |
+| Component — 그 외 | 682 | 682 | `colors/accordion/border/focus` → `colors/accordion/border/hover`(이름 변경, 값 동일) |
+
+### Button 계열 변경
+
+| 변경 | 내용 |
+| --- | --- |
+| **Secondary Solid 신설** | `button_basic` 160 → 192 Variant, `button_icon` 120 → 144 (Variant=Secondary, Appearance=Solid 추가). `colors/button/secondary/solid/background/*`가 `surface/container-*`(회색)에서 `fill/secondary/strong/*`(녹색 #007c56 · #009b68 · #02bb7b)로, label · icon이 `text/secondary`에서 `text/inverse` · `icon/inverse`(#fdfdfd)로 |
+| 삭제 | `colors/button/primary/outline/border/default` · `/disabled`, `colors/button/primary/solid/border/default` · `/disabled` |
+| alias 변경(값 동일) | `colors/button/primary/solid/icon/default`: `text/inverse` → `icon/inverse` |
+| **TextButton 분리** | `colors/button_text/*`(16) → `colors/button_text/primary/*` + `colors/button_text/secondary/*`(32). Secondary는 label `text/tertiary`, icon `icon/placeholder` 등 Primary와 다른 색 — figma-issues A1("Secondary가 Primary와 동일")이 원본에서 해소됨 |
+| 세트 배치 | `button_basic` 1087×1080 → 1087×1292, `button_icon` 440×704 → 880×432, `button_text` 424×263 → 424×212 |
+
+### 처리 — 스냅샷 동결 (추가분만 반영)
+
+- **반영함**: Primitive 스칼라 추가 7개(기존 값 변경 없음). `primScalars` 체크섬이 원본과 일치(`833ae02f`), 생성 CSS는 변수 7개 추가뿐.
+- **반영하지 않음**: Semantic · Component 변경. 이유
+  1. Button 계열은 원본에서 개정되어(새 Variant 56개, 색 변경, 변수 삭제) 반영하면 Button 구현과 296개 검증 결과가 바뀝니다 —
+     "기존 Button 3종의 구현과 검증 결과를 유지" 지시에 따라 임의로 바꾸지 않습니다.
+  2. 삭제된 `colors/button/primary/outline/border/default`는 `Button.css`가 참조합니다(figma-issues A5 · A6: 다른 Variant 토큰 참조).
+     재생성하면 해당 CSS 변수가 사라져 테두리가 깨집니다.
+  3. `fill/primary/subtle/hover` 변경은 Hover 배경 17개 Component 변수(Button outline · TextButton · Checkbox · Radio · Select option ·
+     Chip · Chip filter · Date Picker day · navigation, 이후 Accordion · Link · Navigation · Pagination · Tab · Table)에 영향을 줍니다.
+     차이는 채널당 4 단계(#f9fafb → #f5f6f7)입니다.
+- **영향 — 검증 기준**: 오늘 원본 변경 이후 받은 기준 이미지(Select option · Chip · Date Picker · File Uploader · Loading 등)의 Hover 배경은
+  #f5f6f7, 코드(동결 스냅샷)는 #f9fafb입니다. 기존 픽셀 비교(pixelmatch 임계 0.1)는 이 정도 차이를 실패로 잡지 않으므로,
+  해당 Hover 상태는 "원본 변경 이전 토큰 기준"으로 통과한 것입니다.
+- **결정 필요**: 원본 최신 버전으로 동기화할지(→ Button에 Secondary Solid 추가 · TextButton Secondary 색 · 삭제 변수 대응,
+  Hover 배경 #f5f6f7로 전 컴포넌트 재검증) 여부. 동기화 절차: 그룹별 재추출 → `npm run tokens` → `npm run verify:all` ·
+  `npm run verify:button`(기준 이미지 재캡처 포함).

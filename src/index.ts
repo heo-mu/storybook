@@ -12,5 +12,8 @@ export * from './components/SegmentedControl';
 export * from './components/Chip';
 export * from './components/Calendar';
 export * from './components/DatePicker';
+export * from './components/Loading';
+export * from './components/FileUploader';
+export * from './components/Link';
 export { CHOICE_SIZES, CHOICE_GROUP_ORIENTATIONS, type ChoiceSize, type ChoiceGroupOrientation } from './components/Choice';
 export * from './icons';

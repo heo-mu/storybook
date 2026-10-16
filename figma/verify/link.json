@@ -1,0 +1,19 @@
+{
+  "component": "Link",
+  "sets": [
+    {
+      "set": "link",
+      "story": "components-link-showcase--variant-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 100px; min-width: 100px; max-width: 100px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Label": ".ds-link__label",
+        "arrow-square-out": ".ds-link__icon"
+      },
+      "knownDifferences": {
+        "Size=lg, State=Default": "underline offset / thickness are AUTO in Figma; the browser draws the 16px underline ~1.5px higher, pulling the label centroid up (glyphs match) — as option md Disabled",
+        "Size=lg, State=Disabled": "same as lg Default (low-contrast label)"
+      }
+    }
+  ]
+}

@@ -26,8 +26,8 @@
 | 0 | 토큰 최신화 · 인벤토리 | 완료 (0c7fcfa) |
 | 1 | Input · Textarea · Search Field | 완료 |
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
-| 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 미착수 |
-| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 미착수 |
+| 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
+| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link 완료) |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
@@ -49,17 +49,25 @@
 | Slider (slider · handle) | 2 + 5 | 7/7 | 7/7 | 7/7 | 통과 |
 | Segmented Control (control · item) | 3 + 18 | 21/21 | 21/21 | 21/21 | 통과 |
 | Chip (chip-multi · chip-input · chip-filter) | 24 + 12 + 48 | 84/84 | 84/84 | 84/84 | 통과 |
+| Date Picker (trigger · message · calendar · day · navigation) | 21 + 3 + 1 + 7 + 8 | 40/40 | 40/40 | 40/40 | 통과 |
+| File Uploader (dropzone · item) · Loading | 5 + 3 · 2 | 10/10 | 10/10 | 10/10 | 통과 |
+| Link | 15 | 15/15 | 15/15 | 15/15 | 통과 |
 
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
+수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).
 검증 스토리에서만 Figma 예시에 맞춘 항목: Slider 단위 상자 24px(F14) · 숫자 필드 23px(F15), 핸들 x 제외(F16).
 알려진 렌더링 차이(실패 아님): option md Disabled 밑줄 위치(Figma auto 밑줄이 약 1.5px 아래, F6) ·
 WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이미지 동일).
 
 ## 다음 작업
 
-Phase 3 — Date Picker(`date-picker_trigger` 144:723, `_message` 144:888, `_day` 144:1033, `_navigation` 144:1328,
-`date-picker_header` 144:1377, `date-picker_calendar` 144:1644) → File Uploader(651:3945, item 651:3999).
-Date Picker는 react-aria-components `DatePicker` · `Calendar` + `@internationalized/date`(설치됨)를 검토한다. Combobox는 Figma에서 삭제됨(구현 불가).
+Phase 4 나머지 — Navigation(item_parent 180:5246, item_link 180:6174, item_child 180:6249) → Tab(tab_filled 91:5000, tab_line 91:5241) →
+Pagination(132:871, 132:520, 132:604) → Breadcrumb(712:5106, 710:4794) → Stepper(179:2043, 203:3949, 179:1621, 203:3708, 179:1614, 203:4253) →
+Dropdown Menu(dropdownmenu_item 179:4819, line 179:5082).
+
+**결정 필요 — Figma 원본 변경**: Phase 3 중 원본이 바뀌었습니다(Button Secondary Solid 신설 등, [token-diff.md](./token-diff.md)
+"Figma 원본 변경 감지"). 스냅샷은 동결(Primitive 추가 7개만 반영)했고, 이후 받은 기준 이미지의 Hover 배경(#f5f6f7)과 코드(#f9fafb)는
+채널당 4 단계 다를 수 있습니다(현재 픽셀 임계값으로는 실패하지 않음).
 
 검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
 `figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),

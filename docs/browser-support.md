@@ -89,6 +89,15 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 - Slider 핸들의 Pressed 원은 `color-mix(in srgb, …)`(Chrome 111+, Firefox 113+, Safari 16.2+)로 핸들 색 20%를 만듭니다.
 - Segmented Control은 `inline-grid` + `grid-auto-columns: 1fr`로 항목 너비를 같게 맞춥니다.
 
+## Date Picker · File Uploader · Loading
+
+세 엔진 모두 전 Variant 통과(Date Picker 트리거 21 · 메시지 3 · 달력 1 · 날짜 7 · 이동 8, File Uploader 5 · 항목 3, Loading 2).
+
+- 달력 제목(18 / 28px)은 lg 필드 값과 같은 27px 줄 높이 + 아래 1px 보정(Firefox · WebKit이 1px 아래에 그리던 것).
+- 달력 그리드는 `<table>` 그대로 `border-spacing`으로 간격을 만들어 표 시맨틱(react-aria grid)을 유지합니다.
+- Loading 스피너: `conic-gradient` + SVG 마스크(`mask` / `-webkit-mask`), 중간 정지점은 `color-mix()`(Chrome 111+, Firefox 113+, Safari 16.2+).
+- File Uploader 점선: SVG `<rect>`의 `x` · `y` · `width` · `height` · `rx`를 CSS로 지정(SVG 2 기하 속성 — 세 엔진에서 동작 확인).
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.

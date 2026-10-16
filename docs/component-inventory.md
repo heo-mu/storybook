@@ -30,15 +30,15 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Slider 379:1562 | `slider` (2) Default/Disabled · Show Input · `handle` (5) | `Slider` | 2 | 완료 |
 | Segmented Control 476:21053 | `segmented-control` (3) Size md/sm/xs · `segmented-item` (18) Selected/Unselected · Size · State | `SegmentedControl`, `SegmentedControlItem` | 2 | 완료 |
 | Chip 180:11829 | `chip-multi` (24) · `chip-input` (12) · `chip-filter` (48, Expanded) | `Chip`, `InputChip`, `FilterChip` | 2 | 완료 |
-| Date Picker 149:831 | `date-picker_trigger` (21) · `_message` (3) · `_day` (7) · `_navigation` (8) · `date-picker_header` · `date-picker_calendar` | `DatePicker` (+ `Calendar`) | 3 | 미착수 |
-| File Uploader 675:4910 | `file-uploader` (5) State Default/Hover/Pressed/Drag-over/Disabled · `file-uploader-item` (3) Completed/uploading/download | `FileUploader`, `FileUploaderItem` | 3 | 미착수 |
+| Date Picker 149:831 | `date-picker_trigger` (21) · `_message` (3) · `_day` (7) · `_navigation` (8) · `date-picker_header` · `date-picker_calendar` | `DatePicker`, `Calendar` | 3 | 완료 |
+| File Uploader 675:4910 | `file-uploader` (5) State Default/Hover/Pressed/Drag-over/Disabled · `file-uploader-item` (3) Completed/uploading/download | `FileUploader`, `FileUploaderItem` | 3 | 완료 |
 | ~~Combobox~~ | Figma에서 삭제됨 | — | 3 | 구현 불가 |
 
 ## Navigation
 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
-| Link 111:960 | `link` (15) Size lg/sm/md · State Default/Hover/Pressed/Visited/Disabled · Icon | `Link` | 4 | 미착수 |
+| Link 111:960 | `link` (15) Size lg/sm/md · State Default/Hover/Pressed/Visited/Disabled · Icon | `Link` | 4 | 완료 |
 | Navigation 180:2023 | `item_parent` (4) Expanded · `item_link` (4) Selected · `item_child` (4) · State Default/Hover | `Navigation` (+ items) | 4 | 미착수 |
 | Tab 86:3121 | `tab_filled` (60) Variant · Size · Shape · State 5 · `tab_line` (30) | `Tabs` | 4 | 미착수 |
 | Pagination 149:1030 | `pagination` (3) · `pagination_item` (24) · `pagination_control` (48) | `Pagination` | 4 | 미착수 |
@@ -68,7 +68,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Table 351:3340 | `table_header` (3) · `table_body` (8) · `table_key` (2) · `table_value` (2) · `table_value_editable` (52) | `Table`, `KeyValueTable` | 7 | 미착수 |
 | Card 185:6512 (숨김) | `Frame 2147239186` · `Wrapper` | `Card` | 7 | 미착수 |
 | Chart 773:6723 | `chart` (12) Type Bar Horizontal/Bar Vertical/Line · Style Default/Simple · Group · `chart-legend-item` (3) · `chart-tooltip` | `Chart` | 7 | 미착수 |
-| Loading 149:3000 | `loading` (2) size md/sm · text | `Loading` | 7 | 미착수 |
+| Loading 149:3000 | `loading` (2) size md/sm · text | `Loading` | 7 | 완료 (Phase 3에서 File Uploader와 함께) |
 
 ## Dashboard components (별도 섹션 728:25472)
 

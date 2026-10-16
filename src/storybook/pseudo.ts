@@ -8,6 +8,7 @@ export const PSEUDO = {
   pressed: 'pseudo-active',
   focus: 'pseudo-focus-within',
   focusVisible: 'pseudo-focus-visible',
+  visited: 'pseudo-visited',
   /** On an ancestor: every descendant matches :hover / :active (for parts a component does not expose). */
   hoverAll: 'pseudo-hover-all',
   pressedAll: 'pseudo-active-all',
@@ -15,7 +16,7 @@ export const PSEUDO = {
 
 /** Story parameters that enable the stylesheet rewriting for every pseudo class used above. */
 export const PSEUDO_STORY_PARAMETERS = {
-  pseudo: { hover: [], active: [], focusWithin: [], focusVisible: [] },
+  pseudo: { hover: [], active: [], focusWithin: [], focusVisible: [], visited: [] },
 };
 
 export const figmaCase = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);

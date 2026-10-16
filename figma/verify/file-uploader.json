@@ -1,0 +1,81 @@
+{
+  "component": "FileUploader",
+  "sets": [
+    {
+      "set": "file-uploader",
+      "story": "components-fileuploader-showcase--dropzone-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 377px; min-width: 377px; max-width: 377px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "icon_size": ".ds-file-uploader__icon",
+        "icon_size/UploadSimple": ".ds-file-uploader__icon",
+        "Frame *": ".ds-file-uploader__text",
+        "Frame */Title": ".ds-file-uploader__title",
+        "Frame */Helper": ".ds-file-uploader__helper"
+      },
+      "maskRects": [
+        [
+          0,
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          -2,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          -2,
+          0,
+          2,
+          0
+        ]
+      ],
+      "//maskRects": "dashed border: Figma fits the 6/4 dash pattern to each side, SVG continues it around the outline (dash positions differ up to 3px)",
+      "glyphDxTolerance": 1.2,
+      "//glyphDxTolerance": "the centred mixed Latin/Hangul helper line has the same ink extents and word positions as Figma (within 1px); its centroid differs 1.12px from glyph weight"
+    },
+    {
+      "set": "file-uploader-item",
+      "story": "components-fileuploader-showcase--item-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 344px; min-width: 344px; max-width: 344px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; } .ds-loading__spinner { animation: none !important; }",
+      "parts": {
+        "File content/icon_size": ".ds-file-item__icon",
+        "File content/icon_size/icon/FileText": ".ds-file-item__icon",
+        "File content/icon_size/icon/FileText/FileText": ".ds-file-item__icon",
+        "File content/File info": ".ds-file-item__info",
+        "File content/File info/File name": ".ds-file-item__name",
+        "File content/File info/File metadata": ".ds-file-item__meta",
+        "File content/button_text": ".ds-file-item__action",
+        "File content/button_text/Label": ".ds-file-item__action .ds-button__label",
+        "File content/button_text/icon_size": ".ds-file-item__action .ds-button__icon",
+        "File content/button_text/icon_size/icon/*": ".ds-file-item__action .ds-button__icon",
+        "File content/loading": ".ds-file-item__spinner"
+      },
+      "glyphDxTolerance": 0.6,
+      "//glyphDxTolerance": "file name with Latin extension (.pdf) measures dx 0.57px; same tolerance as Input"
+    },
+    {
+      "set": "loading",
+      "story": "components-fileuploader-showcase--loading-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; } .ds-loading__spinner { animation: none !important; }",
+      "parts": {
+        "Ellipse 2403": {
+          "selector": ".ds-loading__spinner",
+          "compare": ""
+        },
+        "Loading text": ".ds-loading__label"
+      }
+    }
+  ]
+}
