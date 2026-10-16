@@ -29,5 +29,6 @@ export * from './components/Tooltip';
 export * from './components/EmptyState';
 export * from './components/Accordion';
 export * from './components/Dialog';
+export * from './components/Table';
 export { CHOICE_SIZES, CHOICE_GROUP_ORIENTATIONS, type ChoiceSize, type ChoiceGroupOrientation } from './components/Choice';
 export * from './icons';

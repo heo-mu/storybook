@@ -1,0 +1,78 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Table.showcase.stories';
+import { Table, TableColumn, TableCell, KeyValueItem } from './Table';
+
+<Meta title="Components/Table/Usage" />
+
+# Table — 사용 가이드
+
+Figma **Table** 프레임(351:3340)의 `table_header`(3개) · `table_body`(8개) · `table_key`(2개) · `table_value`(2개)를 구현했습니다.
+데이터 표는 react-aria-components Table(키보드 칸 이동 · 선택 · 정렬 · 행 동작)을 씁니다.
+`table_value_editable`(관리 모드 52개)은 아직 구현하지 않았습니다(진행 상황: docs/progress.md).
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Table, TableHeader, TableColumn, TableSelectionColumn, TableBody, TableRow, TableCell, TableSelectionCell } from 'platform-design-system';
+
+<Table aria-label="설비 목록" selectionMode="multiple" onRowAction={(id) => open(id)}
+  sortDescriptor={sort} onSortChange={setSort}>
+  <TableHeader>
+    <TableSelectionColumn />
+    <TableColumn id="name" isRowHeader allowsSorting>설비명</TableColumn>
+    <TableColumn id="site" info="설비가 설치된 건물">위치</TableColumn>
+  </TableHeader>
+  <TableBody items={rows}>
+    {(row) => (
+      <TableRow id={row.id}>
+        <TableSelectionCell />
+        <TableCell variant="strong">{row.name}</TableCell>
+        <TableCell>{row.site}</TableCell>
+      </TableRow>
+    )}
+  </TableBody>
+</Table>
+
+<KeyValueTable>
+  <KeyValueItem label="설비명" required>1호기 공조</KeyValueItem>
+  <KeyValueItem label="상태"><Badge size="md" dot={false}>운영</Badge></KeyValueItem>
+</KeyValueTable>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | 코드 | 비고 |
+| --- | --- | --- |
+| table_header Type Text · Title | `TableColumn` children | |
+| table_header Info | `TableColumn info` | 정보 아이콘 + 툴팁 |
+| table_header Filter | `TableColumn allowsSorting` | CaretUpDown, 정렬 중 \`…/icon/active\`, 순서는 \`aria-sort\` |
+| table_header Type Checkbox · Empty | `TableSelectionColumn` · `TableEmptyColumn` | |
+| table_body Type Text · Strong Text | `TableCell variant` | |
+| table_body Type Badge · Button · Switch · Icon | 셀 안의 `Badge` · `Button` · `Switch` · 아이콘 | |
+| table_body Type Checkbox · Reorder | `TableSelectionCell` · `TableDragHandle` | 끌어서 순서 바꾸기는 `dragAndDropHooks` |
+| 예시 행 Hover · Pressed | `onRowAction`이 있는 행 | `table/data/background/hover · pressed` |
+| table_key Type Required | `KeyValueItem required` | 빨간 점, "필수"로 읽힘 |
+| table_value Type Text · Badge | `KeyValueItem` children | |
+
+## 코드 정책 (Figma에서 정해지지 않은 부분)
+
+- **행 Hover · Pressed 색**: Figma 예시는 의미 변수(`fill/secondary/subtle/hover`)에 직접 바인딩했지만 같은 용도의 컴포넌트 변수
+  `table/data/background/hover · pressed`가 있어 그것을 씁니다(figma-issues F54).
+- **선택된 행**: Figma에 별도 모습이 없어 체크박스로만 표시합니다.
+- **정렬 방향 아이콘**: Figma는 CaretUpDown 하나라 방향은 \`aria-sort\`로 전달하고 아이콘은 활성 색만 바뀝니다.
+- **편집 아이콘(Type Icon)**: Figma에는 아이콘만 있습니다. 누를 수 있게 하려면 버튼으로 감싸고 이름을 주세요.
+
+## Props
+
+<ArgTypes of={Table} />
+
+### TableColumn · TableCell · KeyValueItem
+
+<ArgTypes of={TableColumn} />
+
+<ArgTypes of={TableCell} />
+
+<ArgTypes of={KeyValueItem} />

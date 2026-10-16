@@ -1,0 +1,212 @@
+/*
+ * Table (data) — Figma `table_header` (351:3452), `table_body` (355:3739) and the table_data example (855:9117).
+ *   header cell: padding p-2_5 p-4, gap m-1_5, colors/table/data/header/background, 1px top + bottom border
+ *                (…/header/border, drawn inside the 40px — not part of the layout in Figma), title sm/leading-normal/semibold (…/header/label), 20px icons
+ *                (…/header/icon/default, sorted: …/icon/active)
+ *   body cell:   padding p-2_5 p-4, min-height 46, colors/table/data/background, 1px bottom border (…/data/border —
+ *                part of the layout in Figma: content is centred in the 45px above it, so it is a real border),
+ *                Text sm/leading-normal/normal (…/data/value), Strong Text semibold brand-status/information/strong,
+ *                20px icons (…/data/icon/*)
+ *   rows with an action: Hover …/data/background/hover, Pressed …/background/pressed (Figma example rows).
+ */
+
+.ds-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  outline: none;
+}
+
+.ds-table__column {
+  box-sizing: border-box;
+  height: 40px;
+  padding: var(--spacing-padding-p-2_5) var(--spacing-padding-p-4);
+  background-color: var(--colors-table-data-header-background-default);
+  box-shadow:
+    inset 0 var(--border-width-border) 0 0 var(--colors-table-data-header-border-default),
+    inset 0 calc(-1 * var(--border-width-border)) 0 0 var(--colors-table-data-header-border-default);
+  color: var(--colors-table-data-header-label-default);
+  font-family: var(--typography-sm-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-semibold-font-size);
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+  line-height: var(--typography-sm-leading-normal-semibold-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-semibold-letter-spacing);
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Figma table_header Type Empty keeps a 48px width without content. */
+.ds-table__column[data-type='empty'] {
+  min-width: 48px;
+}
+
+.ds-table__column[data-allows-sorting] {
+  cursor: pointer;
+}
+
+.ds-table__column-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-1_5);
+}
+
+.ds-table__column[data-type='checkbox'] > *,
+.ds-table__cell[data-type='checkbox'] > * {
+  display: flex;
+}
+
+.ds-table__info,
+.ds-table__sort {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--colors-table-data-header-icon-default);
+}
+
+.ds-table__info > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ds-table__sort[data-active] {
+  color: var(--colors-table-data-header-icon-active);
+}
+
+.ds-table__row {
+  --_bg: var(--colors-table-data-background-default);
+
+  outline-offset: -2px;
+}
+
+/* react-aria marks only interactive rows (action, link or selection) as hovered / pressed. */
+.ds-table__row[data-hovered] {
+  --_bg: var(--colors-table-data-background-hover);
+}
+
+.ds-table__row[data-pressed] {
+  --_bg: var(--colors-table-data-background-pressed);
+}
+
+.ds-table__cell {
+  --_icon: var(--colors-table-data-icon-default);
+
+  box-sizing: border-box;
+  height: 46px;
+  padding: var(--spacing-padding-p-2_5) var(--spacing-padding-p-4);
+  border-bottom: var(--border-width-border) solid var(--colors-table-data-border-default);
+  background-color: var(--_bg);
+  color: var(--colors-table-data-value-default);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+  vertical-align: middle;
+  outline-offset: -2px;
+}
+
+.ds-table__cell[data-variant='strong'] {
+  color: var(--colors-brand-status-information-strong);
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+}
+
+.ds-table__cell-content {
+  display: flex;
+  align-items: center;
+}
+
+.ds-table__cell-content > svg,
+.ds-table__drag > svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: var(--_icon);
+}
+
+.ds-table__drag {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: grab;
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-table__column-title,
+  .ds-table__cell-content {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
+
+/*
+ * Key-value — Figma `table_key` (355:4193), `table_value` (355:4460), example 855:9118.
+ *   key:   min 160 × 52, padding p-2_5 p-4, gap m-2, colors/table/key-value/key/background, label sm/leading-normal/
+ *          semibold (…/key/label), Required: 4px dot (…/key/required) at the end
+ *   value: min-height 52, padding p-1_5 p-4, gap m-2, …/value/background, text sm/leading-normal/normal
+ *          (…/value/label/completed)
+ *   1px bottom border (…/key/border, part of the layout in Figma); the first row also has a top border.
+ */
+.ds-kv {
+  display: grid;
+  grid-template-columns: minmax(160px, max-content) 1fr;
+  margin: 0;
+}
+
+.ds-kv__row {
+  display: contents;
+}
+
+.ds-kv__key,
+.ds-kv__value {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+  min-height: 52px;
+  margin: 0;
+  border-bottom: var(--border-width-border) solid var(--colors-table-key-value-key-border-default);
+}
+
+.ds-kv__row:first-child > .ds-kv__key,
+.ds-kv__row:first-child > .ds-kv__value {
+  border-top: var(--border-width-border) solid var(--colors-table-key-value-key-border-default);
+}
+
+.ds-kv__key {
+  padding: var(--spacing-padding-p-2_5) var(--spacing-padding-p-4);
+  background-color: var(--colors-table-key-value-key-background-default);
+  color: var(--colors-table-key-value-key-label-default);
+  font-family: var(--typography-sm-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-semibold-font-size);
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+  line-height: var(--typography-sm-leading-normal-semibold-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-semibold-letter-spacing);
+}
+
+.ds-kv__label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ds-kv__required {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-table-key-value-key-required-default);
+}
+
+.ds-kv__value {
+  padding: var(--spacing-padding-p-1_5) var(--spacing-padding-p-4);
+  background-color: var(--colors-table-key-value-value-background-default);
+  color: var(--colors-table-key-value-value-label-completed);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}

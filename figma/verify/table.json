@@ -1,0 +1,75 @@
+{
+  "component": "Table",
+  "sets": [
+    {
+      "set": "table_header",
+      "story": "components-table-showcase--header-matrix",
+      "background": "#ffffff",
+      "parts": {
+        "Title": ".ds-table__column-title",
+        "checkbox": ".ds-checkbox__input"
+      }
+    },
+    {
+      "set": "table_body",
+      "story": "components-table-showcase--body-matrix",
+      "background": "#ffffff",
+      "variantReferences": true,
+      "maskPixels": [
+        "badge_status",
+        "button_basic",
+        "checkbox",
+        "List",
+        "NotePencil",
+        "switch"
+      ],
+      "parts": {
+        "Title": {
+          "selector": ".ds-table__cell-content",
+          "optional": true
+        },
+        "badge_status": ".ds-badge",
+        "button_basic": ".ds-button",
+        "checkbox": ".ds-checkbox__input",
+        "List": ".ds-table__drag > svg",
+        "NotePencil": ".ds-table__cell-content > svg",
+        "switch": ".ds-switch__track"
+      },
+      "knownDifferences": {
+        "Type=Text": {
+          "firefox": "text centred at y 12.5 (45px above the bottom border) — the engine places it on a whole pixel, Figma on the half pixel",
+          "webkit": "text centred at y 12.5 (45px above the bottom border) — the engine places it on a whole pixel, Figma on the half pixel"
+        },
+        "Type=Strong Text": {
+          "firefox": "text centred at y 12.5 (45px above the bottom border) — the engine places it on a whole pixel, Figma on the half pixel",
+          "webkit": "text centred at y 12.5 (45px above the bottom border) — the engine places it on a whole pixel, Figma on the half pixel"
+        }
+      }
+    },
+    {
+      "set": "table_key",
+      "story": "components-table-showcase--key-value-matrix",
+      "figmaPrefix": "key:",
+      "background": "#ffffff",
+      "parts": {
+        "Title": ".ds-kv__label",
+        "Divider": ".ds-kv__required"
+      }
+    },
+    {
+      "set": "table_value",
+      "story": "components-table-showcase--key-value-matrix",
+      "figmaPrefix": "value:",
+      "background": "#ffffff",
+      "parts": {
+        "badge_status": ".ds-badge"
+      },
+      "knownDifferences": {
+        "Type=Text": "text centred at y 15.5 (51px above the bottom border) — browsers place the text on a whole pixel, Figma on the half pixel"
+      },
+      "maskPixels": [
+        "badge_status"
+      ]
+    }
+  ]
+}

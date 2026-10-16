@@ -206,12 +206,15 @@ for (const set of config.sets) {
     }
 
     // Pixels
-    const fp = positions.get(m.name);
+    // `variantReferences`: variants placed at fractional positions in the set (Figma renders them on a half pixel)
+    // are compared with a screenshot of the variant itself — figma/reference/<set>/<variant>.png, origin 0, 0.
+    const variantRef = set.variantReferences ? path.join(ROOT, 'figma', 'reference', set.set, `${m.name.replace(/[^a-zA-Z0-9]+/g, '_')}.png`) : null;
+    const fp = variantRef ? { x: 0, y: 0 } : positions.get(m.name);
     let pixel = null;
     if (fp) {
       const shot = PNG.sync.read(await screenshotCell(page, m.attr));
       const w = Math.min(shot.width, Math.round(g.w)), h = Math.min(shot.height, Math.round(g.h));
-      const fig = cropOver(reference, Math.round(fp.x), Math.round(fp.y), w, h, set.background);
+      const fig = cropOver(variantRef ? PNG.sync.read(readFileSync(variantRef)) : reference, Math.round(fp.x), Math.round(fp.y), w, h, set.background);
       const dom = cropOver(shot, 0, 0, w, h, set.background);
       const textBoxes = g.n.filter((n) => n[5] === 'T' && !isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh }));
       // maskPixels: ["<layer glob>" | { node, pad }] — areas excluded from the pixel diff only (geometry still checked).

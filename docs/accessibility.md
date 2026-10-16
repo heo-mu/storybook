@@ -170,6 +170,12 @@
 - react-aria-components Modal + Dialog: 열리면 포커스가 안으로 이동해 갇히고(Tab 순환), Esc로 닫히면 트리거로 돌아갑니다.
 - `role="dialog"`(확인 질문은 `alertdialog`), 제목 = 이름(`aria-labelledby`), 설명 = `aria-describedby`. 배경 페이지는 react-aria가 숨깁니다.
 
+### Table
+- react-aria-components Table: `role="grid"`, 방향키로 칸 이동, 선택 체크박스(Space), 정렬 열 `aria-sort`, 행 동작은 Enter · 클릭.
+- 선택 체크박스는 디자인 시스템 Checkbox(이름은 react-aria가 "선택" · "모두 선택" 등으로 지정).
+- 열 정보 아이콘은 포커스할 수 있고 툴팁으로 설명을 보여 줍니다. 순서 바꾸기 손잡이 이름 "순서 이동".
+- KeyValueTable은 `<dl>`(dt = 항목, dd = 값), 필수 점은 "필수"로 읽힙니다.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

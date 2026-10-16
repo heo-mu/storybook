@@ -136,6 +136,9 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F51 | Dialog 뒤 덮개(scrim) 색이 없음 — `dialog/body/default`(검정 90%)는 쓰임이 정의되지 않고 어디에도 바인딩되지 않음 | 덮개 투명 | 덮개 정의 (결정 필요) |
 | F52 | accordion 트리거 · 본문 padding과 구분선 두께가 원격 라이브러리 변수에 바인딩 | 같은 값의 로컬 `p-2` · `p-2_5` · `p-3` · `border-width/border` | 로컬 변수 사용 |
 | F53 | 작업 중 accordion-item이 14 → 10개로 바뀜(Focus 상태 삭제, `border/focus` → `border/hover` 이름 변경 — F31) | 현재 10개 구현, 토큰은 스냅샷 이름(`border/focus`, 값 동일) | — |
+| F54 | table_data 예시 행의 Hover · Pressed가 의미 변수(`fill/secondary/subtle/hover` · `fill/primary/subtle/pressed`)에 직접 바인딩 — 컴포넌트 변수 `table/data/background/hover · pressed`는 미사용 | 컴포넌트 변수 사용 | 바인딩 정리 |
+| F55 | table_header Type Empty가 자식 없이 48px 너비로 남아 있음(auto layout 잔여 크기) | 최소 너비 48px | — |
+| F56 | table_body · table_value 내용이 반 픽셀 위치(테두리 포함 높이 45 · 51의 가운데)에 놓임 — 브라우저는 글자 · 상자를 정수 픽셀에 그림 | 같은 레이아웃, 글자 위치 0.5px 차이는 알려진 차이로 기록 | — |
 
 ## D. 작업 중 관찰된 원본 변경
 
