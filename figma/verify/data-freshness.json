@@ -1,0 +1,33 @@
+{
+  "component": "DataFreshness",
+  "sets": [
+    {
+      "set": "data-freshness",
+      "story": "components-datafreshness-showcase--figma",
+      "background": "#ffffff",
+      "accumulatedFallback": true,
+      "hugNodes": [
+        "badge_status"
+      ],
+      "parts": {
+        "badge_status": ".ds-badge",
+        "badge_status/Circle": ".ds-badge__dot",
+        "badge_status/Label": ".ds-badge__label",
+        "Frame *": ".ds-data-freshness__meta",
+        "Frame */Timestamp": ".ds-data-freshness__time",
+        "Frame */Interval*": ".ds-data-freshness__interval"
+      },
+      "glyphTolerances": {
+        "badge_status/Label": {
+          "dx": 0.8,
+          "why": "Hangul glyphs start and end on the same pixel columns as Figma; the browser rasterises them heavier (light grey text), which moves the ink centroid (Stale \"수신 지연\" 0.73px)"
+        },
+        "Frame */Interval": {
+          "dx": 0.7,
+          "dy": 0.6,
+          "why": "the 3px middle dot \"·\": Firefox draws it 0.5px higher and 0.6px right"
+        }
+      }
+    }
+  ]
+}

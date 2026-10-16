@@ -1,0 +1,15 @@
+{
+  "component": "MetricTrend",
+  "sets": [
+    {
+      "set": "metric-trend",
+      "story": "components-metrictrend-showcase--figma",
+      "background": "#ffffff",
+      "parts": {
+        "icon_size": ".ds-metric-trend__icon",
+        "icon_size/*": ".ds-metric-trend__icon",
+        "Change": ".ds-metric-trend__label"
+      }
+    }
+  ]
+}

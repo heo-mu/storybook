@@ -151,6 +151,11 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F66 | chart-tooltip 제목 · 값 글자색이 원격 라이브러리 변수 `color/text/tertiary`(#6d7882) · `color/text/primary`(#131416), padding 10 · radius 6도 원격 변수. 차트 안 인스턴스에만 배경 흐림 12가 추가됨(메인 컴포넌트는 그림자만) | 같은 이름의 로컬 `colors/text/tertiary`(#778191) · `colors/text/primary`(#131c2b), 같은 값의 `p-2_5` · `rounded-sm`. 흐림은 `Chart` 안 툴팁에만(`blur(6px)` = 반경 12 / 2) | 로컬 변수 바인딩 |
 | F67 | chart 선 모양 — 기본 선 차트 첫 계열만 꼭짓점 모서리 반경 8, 두 번째 계열은 없음. 간단 선 차트 꼭짓점 이음이 섞여 있음(2개 MITER · 나머지 ROUND). 선 · 영역 꼭짓점이 0.3–2.6px 어긋나고 점(마커) 위치도 선과 0.4–0.8px 다름 | 첫 계열 반경 8 · 두 번째 직선(Figma 그대로), 간단 선 이음 둥글게, 점은 선 꼭짓점에 | 통일 |
 | F68 | chart-legend-item — 선 차트 Group=yes 두 번째 범례가 Dash Line 인스턴스인데 점선을 지워 실선(series/02), Dash Line 메인 컴포넌트 색은 `chart/series/compare`. 숨김 레이어 "Current values"(간단 스타일 현재 값 칩), "Axis unit"(가로 막대 단위) | 선 차트 범례는 실선 `line`, `ChartLegendItem type="dash-line"`은 메인 컴포넌트대로(Figma가 20px 선에 맞춘 대시 간격 재현). 숨김 레이어는 구현하지 않음 | 의도 확인 |
+| F69 | 대시보드 컴포넌트가 원격 라이브러리 변수 사용 — metric-card · dashboard-filter-bar의 padding `padding/6`(16) · 모서리 `radius/xlarge1`(12) · 배경 `color/background/white`(#ffffff), data-state 배경 `color/background/white`. 그림자(0 1 8 / 12%)는 효과 스타일 없이 값만 지정 | 같은 값 `p-4`, 모서리 12px(로컬 모서리 토큰에 12 없음: rounded-lg 10 · rounded-xl 14), `colors/surface/page`(#fdfdfd), 그림자 `elevation-3`(같은 값) | 로컬 변수 · 모서리 토큰 정의 (결정 필요) |
+| F70 | skeleton Shape 값 이름 "Shape4"(100 × 10, 이름 없는 변형), Circle 모서리 `rounded-xl`(14)이 24px 원보다 큼 | `shape="shape4"` 그대로, 원은 모서리가 잘려 원형 | 이름 정리 |
+| F71 | dashboard-filter-bar 예시 — segmented-control 220px가 라벨보다 좁음(항목 70.67 − 좌우 padding 16 < "최근 30일" 58, Figma는 padding 위로 넘쳐 그림), 초기화 버튼이 스냅샷 이후 추가된 button_icon Secondary · Solid(F31), 컨트롤에 보이는 라벨 없음(Label=false) | SegmentedControl은 말줄임(수동 검토), 예시는 Secondary · Outline으로 대체하고 그 영역 픽셀 제외, 각 컨트롤에 `aria-label` 필요 | 예시 크기 · 버튼 정리 |
+| F72 | metric-trend Direction에 상태 값 "Disabled"가 섞여 있고, Disabled 3개(Tone별)는 모양이 같음 | `direction="disabled"`(Tone 무시) | Disabled를 별도 속성으로 |
+| F73 | data-state Partial 설명 기본값에 실제 수치("130대 중 128대 수신 · 누락된 2대…")가 들어 있음. data-freshness 배지 인스턴스에 변수 없는 흰 배경(#ffffff)이 채워져 있음(Badge Outline은 투명) | Partial 설명 기본값 없음, 배지는 Badge 그대로(흰 배경 위에서 같음) | 샘플 정리 |
 
 ## D. 작업 중 관찰된 원본 변경
 

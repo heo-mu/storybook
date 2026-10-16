@@ -1,0 +1,76 @@
+{
+  "component": "DataState",
+  "sets": [
+    {
+      "set": "data-state",
+      "story": "components-datastate-showcase--figma",
+      "background": "#ffffff",
+      "parts": {
+        "Frame 2147240246": {
+          "selector": ".ds-data-state__skeleton",
+          "compare": "yh",
+          "optional": true
+        },
+        "Frame 2147240246/skeleton*": {
+          "selector": ".ds-skeleton",
+          "optional": true
+        },
+        "Loading label": {
+          "selector": ".ds-data-state__loading",
+          "compare": "yh",
+          "optional": true
+        },
+        "empty-state": {
+          "selector": ".ds-empty-state",
+          "optional": true
+        },
+        "empty-state/Frame *": {
+          "selector": ".ds-empty-state__text",
+          "optional": true
+        },
+        "empty-state/Frame */icon_size": {
+          "selector": ".ds-empty-state__icon",
+          "optional": true
+        },
+        "empty-state/Frame */icon_size/*": {
+          "selector": ".ds-empty-state__icon > svg",
+          "optional": true
+        },
+        "empty-state/Frame */Title": {
+          "selector": ".ds-empty-state__title",
+          "optional": true
+        },
+        "empty-state/Frame */Description": {
+          "selector": ".ds-empty-state__description",
+          "optional": true
+        },
+        "empty-state/button_text": {
+          "selector": ".ds-text-button",
+          "optional": true
+        },
+        "empty-state/button_text/Label": {
+          "selector": ".ds-text-button .ds-button__label",
+          "optional": true
+        },
+        "empty-state/button_text/icon_size": {
+          "selector": ".ds-text-button .ds-button__icon",
+          "optional": true
+        }
+      },
+      "glyphTolerances": {
+        "Loading label": {
+          "dx": 1.4,
+          "why": "Hangul glyphs start and end on the same pixel columns as Figma (±1px); the browser rasterises light grey text heavier, which moves the ink centroid (Chromium up to 0.95px, Firefox 1.35px, WebKit 1.17px)"
+        },
+        "empty-state/Frame */*": {
+          "dx": 1.4,
+          "why": "Hangul glyphs start and end on the same pixel columns as Figma (±1px); the browser rasterises light grey text heavier, which moves the ink centroid (Chromium up to 0.95px, Firefox 1.35px, WebKit 1.17px)"
+        },
+        "empty-state/button_text/Label": {
+          "dx": 1.4,
+          "why": "Hangul glyphs start and end on the same pixel columns as Figma (±1px); the browser rasterises light grey text heavier, which moves the ink centroid (Chromium up to 0.95px, Firefox 1.35px, WebKit 1.17px)"
+        }
+      }
+    }
+  ]
+}

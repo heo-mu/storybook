@@ -1,0 +1,61 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/DashboardFilterBar.showcase.stories';
+import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from './DashboardFilterBar';
+
+<Meta title="Components/DashboardFilterBar/Usage" />
+
+# Dashboard Filter Bar — 사용 가이드
+
+Figma **dashboard-filter-bar**(698:4163)를 구현했습니다. 대시보드의 조회 조건 묶음과 오른쪽 버튼을 흰 카드에 배치하는 레이아웃 컴포넌트입니다.
+안의 컨트롤은 디자인 시스템의 Select · FilterChip · SegmentedControl · DatePicker(sm)를 그대로 씁니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Button, DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange, DatePicker, Select, SelectOption } from 'platform-design-system';
+
+<DashboardFilterBar actions={<Button size="md">조회</Button>}>
+  <DashboardFilterGroup label="조회 대상">
+    <Select size="sm" aria-label="조회 대상" defaultValue="all"><SelectOption id="all">전체 단지</SelectOption></Select>
+  </DashboardFilterGroup>
+  <DashboardFilterGroup label="조회 기간">
+    <DashboardFilterRange
+      from={<DatePicker size="sm" aria-label="시작일" />}
+      to={<DatePicker size="sm" aria-label="종료일" />} />
+  </DashboardFilterGroup>
+</DashboardFilterBar>`}
+/>
+
+## Figma → 컴포넌트
+
+| Figma | 코드 | 값 |
+| --- | --- | --- |
+| 바 (흰 카드) | `DashboardFilterBar` | padding 16 · 모서리 12 · 그림자 0 1 8 / 12%, 필터와 버튼 사이 `m-4` |
+| Controls · Applied filters · … (그룹) | `DashboardFilterGroup label` | 라벨 sm medium `text/tertiary`, 컨트롤 `p-2` 간격 |
+| "\|" | 그룹 사이에 자동 | sm normal `text/placeholder`, 그룹과 `m-6` 간격 |
+| 날짜 ~ 날짜 | `DashboardFilterRange from to` | "~" `text/tertiary`, `m-2` 간격 |
+| 오른쪽 버튼 | `actions` | `p-3` 간격 |
+
+## 코드 정책 (Figma에서 정해지지 않은 부분)
+
+- **좁은 화면**: 그룹이 다음 줄로 넘어갑니다(줄 간격도 `m-6`). Figma는 1616px 한 줄만 있습니다.
+- **원격 변수**: padding · 모서리 · 배경이 원격 라이브러리 변수입니다(F69) — 같은 값 `p-4`, 모서리 12px, `colors/surface/page`.
+- **초기화 버튼**: Figma 예시는 button_icon Secondary · Solid인데, 이 변형은 토큰 스냅샷 이후 Figma에 추가되었습니다(F31 — 동기화 결정 필요).
+  예시와 검증 스토리는 Secondary · Outline을 대신 쓰고 그 영역은 픽셀 비교에서 뺐습니다.
+- **접근성**: 바는 `role="search"` 랜드마크(`aria-label`, 기본 "조회 조건"), 그룹은 라벨로 이름 붙은 `role="group"`. 각 컨트롤에도
+  `aria-label`을 주세요(Figma 컨트롤에는 보이는 라벨이 없음). "|" · "~"는 장식입니다.
+
+## Props
+
+<ArgTypes of={DashboardFilterBar} />
+
+### DashboardFilterGroup
+
+<ArgTypes of={DashboardFilterGroup} />
+
+### DashboardFilterRange
+
+<ArgTypes of={DashboardFilterRange} />

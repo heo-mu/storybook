@@ -139,6 +139,17 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   가로 막대 행(37.6 · 45.6px)의 카테고리 이름은 소수점 y라 세로 0.51px 차이. 숨긴 데이터 표는 div로 감쌌습니다 — Firefox는 잘라 낸
   `<table>`의 `<caption>`을 그대로 그립니다. 차트 안 툴팁의 `backdrop-filter`는 세 엔진 모두 지원.
 
+## Dashboard components (Skeleton · MetricTrend · DataFreshness · MetricCard · DataState · DashboardFilterBar)
+
+세 엔진 모두 전 Variant 통과. 엔진 · 렌더링 차이로 기록한 항목:
+
+- **글자 뒤 자간**: Figma의 자동 너비 글자 상자는 마지막 글자 뒤 자간을 넣지 않고, CSS는 넣습니다. xs(자간 0.01em)는 정수 올림 결과가 1px 달라질 수
+  있어 `round(up, size - 자간, 1px)`로 올림하고, 3xl 값(자간 -2.5px)은 `padding-inline-end: -자간`으로 Figma 상자 너비(67px)를 맞춥니다.
+- 연한 회색 한글(설명 · 제목)은 글자 시작 · 끝 위치가 같고 농도만 달라 글자 중심 허용치를 레이어별로 둠(DataState 1.4px, MetricCard 제목 1.1px,
+  DataFreshness 배지 0.8px · "·" Firefox 0.5px 위).
+- DashboardFilterBar(Firefox · WebKit): calc-size가 없어 라벨이 1px 미만씩 좁아 오른쪽 그룹이 최대 3.25px 당겨지고 컨트롤 테두리 픽셀이 0.6% 달라
+  엔진별 픽셀 허용치 0.7%(Chromium 0.5% 기본).
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.

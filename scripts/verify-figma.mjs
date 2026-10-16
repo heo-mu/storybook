@@ -247,8 +247,10 @@ for (const set of config.sets) {
       // A root that hugs its text is < 1px narrower without calc-size(), so everything right of the text is
       // shifted: recorded (up to 5%) instead of failed — colours and shapes are checked strictly in Chromium.
       const widthFallback = !calcSize && dw > tol && dw <= fallbackPx(g.w);
-      if (pixel.ratio > (set.pixelTolerance ?? 0.005) && widthFallback && pixel.ratio <= 0.05) notes.push(`pixels ${(pixel.ratio * 100).toFixed(2)}% (shifted by the no-calc-size width)`);
-      else if (pixel.ratio > (set.pixelTolerance ?? 0.005)) issues.push({ cat: 'pixels', detail: `${(pixel.ratio * 100).toFixed(2)}% of non-text pixels differ` });
+      // `pixelTolerance`: a ratio, or { "<engine>": ratio } for engine-specific allowances (reason in "//pixelTolerance").
+      const pixTol = typeof set.pixelTolerance === 'object' ? (set.pixelTolerance[BROWSER] ?? 0.005) : (set.pixelTolerance ?? 0.005);
+      if (pixel.ratio > pixTol && widthFallback && pixel.ratio <= 0.05) notes.push(`pixels ${(pixel.ratio * 100).toFixed(2)}% (shifted by the no-calc-size width)`);
+      else if (pixel.ratio > pixTol) issues.push({ cat: 'pixels', detail: `${(pixel.ratio * 100).toFixed(2)}% of non-text pixels differ` });
       // Glyph placement
       const offsets = [];
       const glyphTolerances = Object.entries(set.glyphTolerances ?? {}).map(([pattern, t]) => ({ re: glob(pattern), ...t }));
@@ -303,6 +305,7 @@ for (const set of config.sets) {
   for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known difference — ${v}: ${why}`); }
   if (set.maskRects || set.maskRectsFor) lines.push(`  ◇ manual review (pixels not compared): ${set['//maskRects'] ?? set['//maskRectsFor'] ?? 'masked areas'}`);
   if (ignored.length) lines.push(`  ◇ manual review (not compared): ${set.ignore.join(", ")}`);
+  if (typeof set.pixelTolerance === 'object' && set.pixelTolerance[BROWSER] != null) lines.push(`  ◇ pixel tolerance ${(set.pixelTolerance[BROWSER] * 100).toFixed(1)}% in ${BROWSER} — ${set['//pixelTolerance'] ?? ''}`);
   for (const [pattern, t] of Object.entries(set.glyphTolerances ?? {})) lines.push(`  ◇ glyph tolerance — ${pattern}: ${[t.dx != null && 'dx ±' + t.dx, t.dy != null && 'dy ±' + t.dy].filter(Boolean).join(', ')}px — ${t.why}`);
   if (set.geometryOnly) lines.push(`  ◇ manual review (pixels and glyphs not compared): ${set.geometryOnly}`);
   for (const [v, why] of Object.entries(set.skipVariants ?? {})) lines.push(`  ◇ manual review (variant not compared) — ${v}: ${why}`);

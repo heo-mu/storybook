@@ -74,12 +74,12 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 
 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- |
-| `metric-trend` (12) Direction Up/Down/Flat/Disabled · Tone Positive/Negative/Neutral | `MetricTrend` | 8 | 미착수 |
-| `data-state` (6) Loading/Empty/No-results/Error/No-access/Partial | `DataState` | 8 | 미착수 |
-| `skeleton` (4) Shape Line/Block/Circle/Shape4 | `Skeleton` | 8 | 미착수 |
-| `data-freshness` (3) Fresh/Stale/Offline | `DataFreshness` | 8 | 미착수 |
-| `metric-card` (단일) | `MetricCard` | 8 | 미착수 |
-| `dashboard-filter-bar` (단일) | `DashboardFilterBar` | 8 | 미착수 |
+| `metric-trend` (12) Direction Up/Down/Flat/Disabled · Tone Positive/Negative/Neutral | `MetricTrend` | 8 | 완료 |
+| `data-state` (6) Loading/Empty/No-results/Error/No-access/Partial | `DataState` | 8 | 완료 |
+| `skeleton` (4) Shape Line/Block/Circle/Shape4 | `Skeleton` | 8 | 완료 |
+| `data-freshness` (3) Fresh/Stale/Offline | `DataFreshness` | 8 | 완료 |
+| `metric-card` (단일) | `MetricCard` | 8 | 완료 |
+| `dashboard-filter-bar` (단일) | `DashboardFilterBar`, `DashboardFilterGroup`, `DashboardFilterRange` | 8 | 완료 (초기화 버튼 Secondary · Solid는 F31, "최근 30일" 말줄임 F71 — 수동 검토) |
 
 ## 컴포넌트가 아닌 프레임
 

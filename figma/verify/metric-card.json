@@ -1,0 +1,29 @@
+{
+  "component": "MetricCard",
+  "sets": [
+    {
+      "set": "metric-card",
+      "story": "components-metriccard-showcase--figma",
+      "background": "#ffffff",
+      "parts": {
+        "Header": ".ds-metric-card__header",
+        "Header/icon_size": ".ds-metric-card__icon",
+        "Header/Title": ".ds-metric-card__title",
+        "Value row": ".ds-metric-card__value-row",
+        "Value row/Value": ".ds-metric-card__value",
+        "Value row/Unit": ".ds-metric-card__unit",
+        "Comparison row": ".ds-metric-card__comparison",
+        "Comparison row/metric-trend": ".ds-metric-trend",
+        "Comparison row/metric-trend/icon_size": ".ds-metric-trend__icon",
+        "Comparison row/metric-trend/Change": ".ds-metric-trend__label",
+        "Comparison row/Comparison": ".ds-metric-card__comparison-text"
+      },
+      "glyphTolerances": {
+        "Header/Title": {
+          "dx": 1.1,
+          "why": "Hangul glyphs start and end on the same pixel columns as Figma (±1px); the browser rasterises light grey text heavier, which moves the ink centroid (Chromium 0.68px, Firefox 1.05px)"
+        }
+      }
+    }
+  ]
+}

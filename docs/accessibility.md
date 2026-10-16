@@ -187,6 +187,20 @@
 - 포인터 호버의 툴팁은 같은 값을 보여 주는 시각 보조입니다(낭독기는 표 · 알림으로 접근). 간단 스타일은 툴팁이 없어 초점을 받지 않습니다.
 - 색만으로 계열을 구분하지 않도록 범례 · 툴팁에 계열 이름이 함께 나옵니다. 툴팁 제목 `text/tertiary`(#778191)는 알려진 토큰 대비 항목.
 
+### Skeleton · Data State
+- Skeleton은 장식(`aria-hidden`). DataState는 `role="status"`(상태가 바뀌면 정중하게 읽음), Loading은 `aria-busy="true"`와 문구
+  "데이터를 불러오는 중입니다". 나머지 상태는 EmptyState(아이콘 장식, 제목 · 설명 글자)와 `onAction`이 있을 때만 TextButton.
+
+### Metric Trend · Metric Card · Data Freshness
+- MetricTrend: 방향 아이콘은 장식이고 "증가" · "감소" · "변동 없음"(`directionLabel`)을 화면 낭독기용으로 앞에 읽습니다. Tone(좋음 · 나쁨)은 색으로만
+  구분되므로 비교 문구 등 주변 글자로 의미를 전하세요.
+- MetricCard: 제목 `<h3>`(`headingLevel`)으로 이름 붙은 `role="group"`, 아이콘 장식.
+- DataFreshness: 상태 배지 글자 + 시각(`dateTime`이면 `<time>`) + 갱신 주기, "·"는 숨김. 시각 갱신을 매번 읽지 않도록 알림 영역이 아닙니다.
+
+### Dashboard Filter Bar
+- `role="search"` 랜드마크(이름 "조회 조건"), 그룹은 라벨로 이름 붙은 `role="group"`, "|" · "~"는 숨김. Figma 컨트롤에는 보이는 라벨이 없으므로
+  각 Select · SegmentedControl · DatePicker에 `aria-label`을 주세요(예시: "조회 대상", "시작일").
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

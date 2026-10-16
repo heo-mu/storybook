@@ -1,0 +1,56 @@
+<section id="728:25472" name="Dashboard components" x="15542" y="-2344" width="1916" height="1864">
+  <frame id="697:4143" name="Dashboard/v1" x="100" y="100" width="1716" height="1664">
+    <frame id="724:14917" name="Header" x="50" y="50" width="1616" height="64">
+      <text id="724:14918" name="Title" x="0" y="0" width="349" height="32" />
+    </frame>
+    <frame id="724:14935" name="Frame 2147240248" x="50" y="146" width="268" height="120">
+      <text id="699:4758" name="Section title" x="0" y="0" width="184" height="24" />
+      <text id="699:4822" name="Section title" x="0" y="32" width="251" height="24" />
+      <text id="699:4960" name="Section title" x="0" y="64" width="268" height="24" />
+      <text id="699:5031" name="Section title" x="0" y="96" width="259" height="24" />
+    </frame>
+    <text id="724:14920" name="Title" x="50" y="298" width="129" height="24" />
+    <symbol id="697:4487" name="metric-card" x="50" y="354" width="386" height="136" />
+    <text id="724:14921" name="Title" x="50" y="522" width="104" height="18" />
+    <frame id="697:4482" name="metric-trend" x="50" y="572" width="382" height="164">
+      <symbol id="697:4432" name="Direction=Up, Tone=Positive" x="20" y="20" width="60" height="24" />
+      <symbol id="697:4441" name="Direction=Down, Tone=Positive" x="114" y="20" width="60" height="24" />
+      <symbol id="697:4448" name="Direction=Flat, Tone=Positive" x="208" y="20" width="60" height="24" />
+      <symbol id="705:12060" name="Direction=Disabled, Tone=Positive" x="302" y="20" width="60" height="24" />
+      <symbol id="697:4450" name="Direction=Up, Tone=Negative" x="20" y="70" width="60" height="24" />
+      <symbol id="697:4457" name="Direction=Down, Tone=Negative" x="114" y="70" width="60" height="24" />
+      <symbol id="697:4464" name="Direction=Flat, Tone=Negative" x="208" y="70" width="60" height="24" />
+      <symbol id="705:12063" name="Direction=Disabled, Tone=Negative" x="302" y="70" width="60" height="24" />
+      <symbol id="697:4466" name="Direction=Up, Tone=Neutral" x="20" y="120" width="60" height="24" />
+      <symbol id="697:4473" name="Direction=Down, Tone=Neutral" x="114" y="120" width="60" height="24" />
+      <symbol id="697:4480" name="Direction=Flat, Tone=Neutral" x="208" y="120" width="60" height="24" />
+      <symbol id="705:12066" name="Direction=Disabled, Tone=Neutral" x="302" y="120" width="60" height="24" />
+    </frame>
+    <text id="724:14933" name="Title" x="50" y="768" width="1616" height="24" />
+    <text id="724:14927" name="Title" x="50" y="824" width="73" height="18" />
+    <symbol id="698:4163" name="dashboard-filter-bar" x="50" y="874" width="1616" height="68" />
+    <text id="724:14934" name="Title" x="50" y="974" width="1616" height="24" />
+    <text id="724:14928" name="Title" x="50" y="1030" width="86" height="18" />
+    <frame id="698:4359" name="data-state" x="50" y="1080" width="1460" height="252">
+      <symbol id="698:4262" name="State=Loading" x="20" y="20" width="460" height="66" />
+      <symbol id="698:4267" name="State=Empty" x="500" y="20" width="460" height="96" />
+      <symbol id="698:4287" name="State=No-results" x="980" y="20" width="460" height="96" />
+      <symbol id="698:4305" name="State=Error" x="20" y="136" width="460" height="96" />
+      <symbol id="698:4323" name="State=No-access" x="500" y="136" width="460" height="96" />
+      <symbol id="698:4341" name="State=Partial" x="980" y="136" width="460" height="96" />
+    </frame>
+    <text id="724:14930" name="Title" x="50" y="1364" width="70" height="18" />
+    <frame id="697:4486" name="skeleton" x="50" y="1414" width="430" height="58">
+      <symbol id="697:4483" name="Shape=Line" x="17" y="25" width="60" height="8" />
+      <symbol id="705:11804" name="Shape=Shape4" x="101" y="24" width="100" height="10" />
+      <symbol id="697:4484" name="Shape=Block" x="225" y="23" width="140" height="12" />
+      <symbol id="697:4485" name="Shape=Circle" x="389" y="17" width="24" height="24" />
+    </frame>
+    <text id="773:9907" name="Title" x="50" y="1504" width="1616" height="24" />
+    <frame id="697:4543" name="data-freshness" x="50" y="1560" width="799" height="54">
+      <symbol id="697:4525" name="State=Fresh" x="17" y="17" width="239" height="20" />
+      <symbol id="697:4531" name="State=Stale" x="280" y="17" width="239" height="20" />
+      <symbol id="697:4537" name="State=Offline" x="543" y="17" width="239" height="20" />
+    </frame>
+  </frame>
+</section>

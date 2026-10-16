@@ -1,0 +1,67 @@
+/*
+ * Metric Trend — Figma `metric-trend` (697:4482): padding p-1, gap p-1, border-radius/rounded-sm,
+ * colors/dashboard/background/default; 12px icon; change text xs/leading-normal/medium.
+ *   Tone Positive: text/brand (icon too) · Negative: status/danger/strong · Neutral: text/secondary + icon/secondary
+ *   Direction Disabled: dashboard/background/disabled, icon/disabled, text/placeholder (Minus icon)
+ */
+
+.ds-metric-trend {
+  --_fg: var(--colors-text-brand);
+  --_icon: var(--colors-text-brand);
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--spacing-padding-p-1);
+  padding: var(--spacing-padding-p-1);
+  border-radius: var(--border-radius-rounded-sm);
+  background-color: var(--colors-dashboard-background-default);
+  color: var(--_fg);
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+  white-space: nowrap;
+}
+
+.ds-metric-trend[data-tone='negative'] {
+  --_fg: var(--colors-status-danger-strong);
+  --_icon: var(--colors-status-danger-strong);
+}
+
+.ds-metric-trend[data-tone='neutral'] {
+  --_fg: var(--colors-text-secondary);
+  --_icon: var(--colors-icon-secondary);
+}
+
+.ds-metric-trend[data-direction='disabled'] {
+  --_fg: var(--colors-text-placeholder);
+  --_icon: var(--colors-icon-disabled);
+
+  background-color: var(--colors-dashboard-background-disabled);
+}
+
+.ds-metric-trend__icon {
+  display: block;
+  flex: none;
+  color: var(--_icon);
+}
+
+.ds-metric-trend__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-metric-trend__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

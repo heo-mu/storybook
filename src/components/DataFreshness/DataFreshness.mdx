@@ -1,0 +1,39 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/DataFreshness.showcase.stories';
+import { DataFreshness } from './DataFreshness';
+
+<Meta title="Components/DataFreshness/Usage" />
+
+# Data Freshness — 사용 가이드
+
+Figma **data-freshness**(697:4543, 3개 변형)를 구현했습니다. 데이터가 얼마나 최신인지(상태 배지, 마지막 수신 시각, 갱신 주기)를 보여 줍니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { DataFreshness } from 'platform-design-system';
+
+<DataFreshness state="fresh" timestamp="2026.10.14 09:30" dateTime="2026-10-14T09:30" interval="자동 갱신 1분" />`}
+/>
+
+## Figma → Props
+
+| Figma | 코드 | 비고 |
+| --- | --- | --- |
+| State Fresh · Stale · Offline | `state` | Badge Outline · sm · Rounded(점 포함) — Success · Warning · Gray |
+| 배지 글자 | `label` | 기본 "최근 수신" · "수신 지연" · "연결 끊김" |
+| Timestamp Text | `timestamp` (+ `dateTime`) | `text/secondary` |
+| Interval Text | `interval` | "·" 다음, `text/tertiary` |
+
+## 코드 정책 · 접근성
+
+- `dateTime`을 주면 시각을 `<time datetime>`으로 표시합니다. "·"는 장식으로 숨깁니다.
+- 시각이 바뀔 때마다 읽어 주지 않도록 알림 영역(`aria-live`)으로 만들지 않았습니다. 상태 변화를 알려야 하면 사용처에서 알리세요.
+- Figma 배지 인스턴스는 흰 배경(#ffffff, 변수 없음)이 채워져 있으나 Badge Outline은 배경이 투명합니다(흰 배경 위에서 같음).
+
+## Props
+
+<ArgTypes of={DataFreshness} />

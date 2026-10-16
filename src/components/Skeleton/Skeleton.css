@@ -1,0 +1,29 @@
+/*
+ * Skeleton — Figma `skeleton` (697:4486): colors/skeleton/background, border-radius/rounded.
+ *   Line 60 × 8 · Shape4 100 × 10 · Block 140 × 12 · Circle 24 × 24 (border-radius/rounded-xl)
+ */
+
+.ds-skeleton {
+  box-sizing: border-box;
+  flex: none;
+  width: 60px;
+  height: 8px;
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-skeleton-background-default);
+}
+
+.ds-skeleton[data-shape='shape4'] {
+  width: 100px;
+  height: 10px;
+}
+
+.ds-skeleton[data-shape='block'] {
+  width: 140px;
+  height: 12px;
+}
+
+.ds-skeleton[data-shape='circle'] {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-rounded-xl);
+}

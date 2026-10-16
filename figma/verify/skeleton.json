@@ -1,0 +1,11 @@
+{
+  "component": "Skeleton",
+  "sets": [
+    {
+      "set": "skeleton",
+      "story": "components-skeleton-showcase--figma",
+      "background": "#ffffff",
+      "parts": {}
+    }
+  ]
+}

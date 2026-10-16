@@ -1,0 +1,48 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/DataState.showcase.stories';
+import { DataState } from './DataState';
+
+<Meta title="Components/DataState/Usage" />
+
+# Data State — 사용 가이드
+
+Figma **data-state**(698:4359, 6개 변형)를 구현했습니다. 데이터 영역이 내용 대신 보여 주는 상태 — 불러오는 중, 비어 있음, 결과 없음, 오류,
+권한 없음, 일부 누락입니다. Loading은 스켈레톤 막대 3개와 문구, 나머지는 EmptyState(아이콘 · 제목 · 설명 · TextButton)입니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { DataState } from 'platform-design-system';
+
+{isLoading ? <DataState state="loading" />
+  : error ? <DataState state="error" onAction={refetch} />
+  : rows.length === 0 ? <DataState state="no-results" onAction={resetFilters} />
+  : <Table … />}`}
+/>
+
+## Figma → Props
+
+| Figma State | 아이콘 | 기본 제목 · 설명 · 버튼(오른쪽 아이콘) |
+| --- | --- | --- |
+| Loading | 스켈레톤 Line · Shape4 · Block | "데이터를 불러오는 중입니다"(`loadingLabel`) |
+| Empty | Database | 아직 수집된 데이터가 없습니다 · 수집 설정과 데이터 연결을 확인하세요. · 수집 설정 확인 › |
+| No-results | Info | 조회 결과가 없습니다 · 기간이나 조회 대상을 변경해 보세요. · 조건 초기화 ↺ |
+| Error | WarningCircle | 데이터를 불러오지 못했습니다 · 연결 상태를 확인한 뒤 다시 시도하세요. · 다시 시도 ↺ |
+| No-access | Info | 조회 권한이 없습니다 · 관리자에게 데이터 접근 권한을 요청하세요. · 권한 안내 › |
+| Partial | Warning | 일부 데이터가 누락되었습니다 · (설명 기본값 없음) · 누락 내역 확인 › |
+
+`title` · `description` · `actionLabel`로 바꿀 수 있고, `description={null}`은 설명을 숨깁니다.
+
+## 코드 정책 (Figma에서 정해지지 않은 부분)
+
+- **버튼**: `onAction`(또는 `action`)이 있을 때만 그립니다 — 동작 없는 버튼을 두지 않습니다.
+- **Partial 설명**: Figma 기본 문구에 실제 수치("130대 중 128대")가 들어 있어 기본값으로 쓰지 않습니다.
+- **접근성**: 상태가 바뀌면 읽어 주도록 `role="status"`(Loading은 `aria-busy`)입니다. 스켈레톤 · 아이콘은 장식입니다.
+- **배경 · 너비**: 원격 `color/background/white` 대신 `colors/surface/page`(F69), 부모 너비를 채웁니다(Figma 460px).
+
+## Props
+
+<ArgTypes of={DataState} />

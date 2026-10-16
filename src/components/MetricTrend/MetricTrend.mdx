@@ -1,0 +1,40 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/MetricTrend.showcase.stories';
+import { MetricTrend } from './MetricTrend';
+
+<Meta title="Components/MetricTrend/Usage" />
+
+# Metric Trend — 사용 가이드
+
+Figma **metric-trend**(697:4482, 12개 변형)를 구현했습니다. 지표의 변화량을 방향 아이콘과 함께 보여 줍니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { MetricTrend } from 'platform-design-system';
+
+// 사용량이 줄어든 것이 좋은 지표
+<MetricTrend direction="down" tone="positive">4.8%p</MetricTrend>`}
+/>
+
+## Figma → Props
+
+| Figma | 코드 | 비고 |
+| --- | --- | --- |
+| Direction (Up · Down · Flat · Disabled) | `direction` | 아이콘 TrendUp · TrendDown · Minus(Flat · Disabled) |
+| Tone (Positive · Negative · Neutral) | `tone` | 색: `text/brand` · `status/danger/strong` · `text/secondary` |
+| Change Text | children | xs/leading-normal/medium |
+
+Disabled는 Tone과 관계없이 `dashboard/background/disabled` 배경, `icon/disabled` · `text/placeholder`입니다.
+
+## 코드 정책 · 접근성
+
+- 방향은 아이콘으로만 보이므로 화면 낭독기용 글자("증가" · "감소" · "변동 없음", `directionLabel`)를 앞에 넣습니다. Disabled는 넣지 않습니다.
+- Tone(좋음 · 나쁨)은 색으로만 구분됩니다. 의미가 중요하면 주변 문장(예: MetricCard의 비교 문구)에서 설명하세요.
+
+## Props
+
+<ArgTypes of={MetricTrend} />

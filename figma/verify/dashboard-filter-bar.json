@@ -1,0 +1,54 @@
+{
+  "component": "DashboardFilterBar",
+  "sets": [
+    {
+      "set": "dashboard-filter-bar",
+      "story": "components-dashboardfilterbar-showcase--figma",
+      "background": "#ffffff",
+      "accumulatedFallback": true,
+      "hugNodes": [
+        "**/chip-filter*",
+        "**/segmented-control"
+      ],
+      "maskRects": [
+        [
+          1503,
+          16,
+          36,
+          36
+        ]
+      ],
+      "//maskRects": "reset button: Figma button_icon Secondary · Solid was added to Figma after the token snapshot (figma-issues F31) — the story uses Secondary · Outline there",
+      "parts": {
+        "Frame 2147240239": ".ds-filter-bar__filters",
+        "Frame 2147240239/Controls*": ".ds-filter-bar__group",
+        "Frame 2147240239/Applied filters": ".ds-filter-bar__group",
+        "Frame 2147240239/Frame 2147240240": ".ds-filter-bar__group",
+        "Frame 2147240239/*/Scope label": ".ds-filter-bar__label",
+        "Frame 2147240239/*/Label": ".ds-filter-bar__group > .ds-filter-bar__label",
+        "Frame 2147240239/*/Interval label": ".ds-filter-bar__label",
+        "Frame 2147240239/|*": ".ds-filter-bar__divider",
+        "Frame 2147240239/*/select/Container": ".ds-select__trigger",
+        "Frame 2147240239/*/select/Container/Input": ".ds-select__value",
+        "Frame 2147240239/Applied filters/chip-filter*": ".ds-chip",
+        "Frame 2147240239/Applied filters/chip-filter*/Label": ".ds-chip__label",
+        "Frame 2147240239/Controls#2/segmented-control": ".ds-segmented",
+        "Frame 2147240239/Controls#2/segmented-control/segmented-item*": ".ds-segmented__segment",
+        "Frame 2147240239/Controls#2/Frame 2147240238": ".ds-filter-bar__range",
+        "Frame 2147240239/Controls#2/Frame 2147240238/date-picker_trigger*/Container": ".ds-date-picker .ds-field__control",
+        "Frame 2147240239/Controls#2/Frame 2147240238/To": ".ds-filter-bar__range-separator",
+        "Frame 2147240236": ".ds-filter-bar__actions",
+        "Frame 2147240236/button_basic": ".ds-filter-bar__actions .ds-button:not(.ds-icon-button)"
+      },
+      "ignore": [
+        "Frame 2147240239/Controls#2/segmented-control/segmented-item#3/Label"
+      ],
+      "//ignore": "the Figma segmented control (220px) is narrower than \"최근 30일\" (item 70.67 − padding 16 < label 58): Figma draws the label over the padding, SegmentedControl truncates it with an ellipsis (figma-issues F71)",
+      "pixelTolerance": {
+        "firefox": 0.007,
+        "webkit": 0.007
+      },
+      "//pixelTolerance": "without calc-size() each hugging label stays < 1px narrower, so the groups to the right move left (up to 3.25px at \"집계\") and their control borders differ: 0.60–0.61% (Chromium, with calc-size, ≤ 0.5%)"
+    }
+  ]
+}

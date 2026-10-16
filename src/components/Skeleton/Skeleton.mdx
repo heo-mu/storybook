@@ -1,0 +1,45 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Skeleton.showcase.stories';
+import { Skeleton } from './Skeleton';
+
+<Meta title="Components/Skeleton/Usage" />
+
+# Skeleton — 사용 가이드
+
+Figma **skeleton**(697:4486, 4개 변형)을 구현했습니다. 내용을 불러오는 동안 자리를 표시하는 정적인 도형입니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Skeleton } from 'platform-design-system';
+
+<div role="status" aria-label="불러오는 중">
+  <Skeleton shape="circle" />
+  <Skeleton shape="block" />
+  <Skeleton shape="line" style={{ width: 200 }} />
+</div>`}
+/>
+
+## Figma → Props
+
+| Figma Shape | `shape` | 크기 |
+| --- | --- | --- |
+| Line | `line` | 60 × 8 |
+| Shape4 | `shape4` | 100 × 10 (Figma 값 이름 그대로 — figma-issues F70) |
+| Block | `block` | 140 × 12 |
+| Circle | `circle` | 24 × 24 |
+
+색 `colors/skeleton/background`, 모서리 `border-radius/rounded`(Circle `rounded-xl`).
+
+## 코드 정책
+
+- **애니메이션 없음**: Figma에 움직임이 정의되지 않아 정적으로 둡니다.
+- **크기 조절**: `style`의 width / height로 바꿀 수 있습니다(색 · 모서리는 그대로).
+- **접근성**: 장식(`aria-hidden`)입니다. 불러오는 중이라는 사실은 감싸는 영역에서 알리세요(`DataState state="loading"`은 `role="status"`).
+
+## Props
+
+<ArgTypes of={Skeleton} />

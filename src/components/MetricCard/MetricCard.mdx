@@ -1,0 +1,47 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/MetricCard.showcase.stories';
+import { MetricCard } from './MetricCard';
+
+<Meta title="Components/MetricCard/Usage" />
+
+# Metric Card — 사용 가이드
+
+Figma **metric-card**(697:4487)를 구현했습니다. 대시보드의 핵심 지표 하나를 제목, 값 · 단위, 비교(MetricTrend + 문구)로 보여 줍니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { LightningIcon, MetricCard, MetricTrend } from 'platform-design-system';
+
+<MetricCard
+  title="누적 전력 사용량"
+  icon={<LightningIcon />}
+  value="1,248"
+  unit="kWh"
+  trend={<MetricTrend direction="down" tone="positive">4.8%p</MetricTrend>}
+  comparison="이전 7일 대비"
+/>`}
+/>
+
+## Figma → Props
+
+| Figma | 코드 | 비고 |
+| --- | --- | --- |
+| Header icon (Lightning) · Title | `icon` · `title` | 20px `icon/tertiary`, 제목은 `<h3>`(`headingLevel`) |
+| Value · Unit | `value` · `unit` | 3xl semibold · sm, 기준선 정렬 |
+| metric-trend · Comparison | `trend` · `comparison` | |
+
+## 코드 정책 (Figma에서 정해지지 않은 부분)
+
+- **원격 변수**: 카드 padding(`padding/6` 16) · 모서리(`radius/xlarge1` 12) · 배경(`color/background/white`)이 원격 라이브러리 변수입니다
+  (figma-issues F69). 같은 값의 `p-4`, 모서리 12px(같은 값의 로컬 토큰 없음), `colors/surface/page`를 씁니다. 그림자는 효과 스타일이 없지만 값이
+  `elevation-3`과 같습니다.
+- **너비**: 부모 너비를 채웁니다(Figma 386px).
+- **접근성**: 카드 전체가 제목으로 이름 붙은 그룹(`role="group"`)입니다. 아이콘은 장식입니다.
+
+## Props
+
+<ArgTypes of={MetricCard} />

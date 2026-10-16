@@ -1,0 +1,87 @@
+/*
+ * Dashboard Filter Bar — Figma `dashboard-filter-bar` (698:4163): row, padding 16, m-4 between the filters (fill)
+ * and the actions; white card with radius 12 and shadow 0 1 8 / 12% — the padding, radius and colour are remote
+ * library variables (figma-issues F69): same-value p-4, radius 12px (no local token) and colors/surface/page;
+ * the shadow values equal effect elevation-3.
+ *   filters:  groups m-6 apart with "|" dividers (sm/leading-normal/normal, text/placeholder) — wrap onto further rows
+ *             with the same gap when the bar is narrower than its content (code policy)
+ *   group:    label sm/leading-normal/medium (text/tertiary), controls p-2 apart
+ *   range:    from · "~" (sm/leading-normal/normal, text/tertiary) · to, m-2 apart
+ *   actions:  p-3 apart
+ */
+
+.ds-filter-bar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-margin-m-4);
+  padding: var(--spacing-padding-p-4);
+  border-radius: 12px;
+  background-color: var(--colors-surface-page);
+  box-shadow: var(--effect-elevation-3);
+}
+
+.ds-filter-bar__filters {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-margin-m-6);
+  min-width: 0;
+}
+
+.ds-filter-bar__divider,
+.ds-filter-bar__range-separator {
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+.ds-filter-bar__divider {
+  color: var(--colors-text-placeholder);
+}
+
+.ds-filter-bar__group,
+.ds-filter-bar__range {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--spacing-padding-p-2);
+}
+
+.ds-filter-bar__range {
+  gap: var(--spacing-margin-m-2);
+}
+
+.ds-filter-bar__label {
+  flex: none;
+  color: var(--colors-text-tertiary);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+  white-space: nowrap;
+}
+
+.ds-filter-bar__range-separator {
+  color: var(--colors-text-tertiary);
+}
+
+.ds-filter-bar__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--spacing-padding-p-3);
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-filter-bar__label,
+  .ds-filter-bar__divider,
+  .ds-filter-bar__range-separator {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
