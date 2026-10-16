@@ -1,0 +1,39 @@
+{
+  "component": "Navigation",
+  "sets": [
+    {
+      "set": "item_parent",
+      "story": "components-navigation-showcase--parent-matrix",
+      "background": "#ffffff",
+      "parts": {
+        "icon_size": ".ds-nav-item__icon",
+        "icon_size/icon/*": ".ds-nav-item__icon > svg",
+        "icon_size/icon/*/*": ".ds-nav-item__icon > svg",
+        "Menu name": ".ds-nav-item__label",
+        "icon_size#2": ".ds-nav-item__caret",
+        "icon_size#2/icon/*": ".ds-nav-item__caret",
+        "icon_size#2/icon/*/*": ".ds-nav-item__caret"
+      }
+    },
+    {
+      "set": "item_link",
+      "story": "components-navigation-showcase--link-matrix",
+      "background": "#ffffff",
+      "parts": {
+        "icon_size": ".ds-nav-item__icon",
+        "icon_size/icon/*": ".ds-nav-item__icon > svg",
+        "icon_size/icon/*/*": ".ds-nav-item__icon > svg",
+        "Menu name": ".ds-nav-item__label"
+      }
+    },
+    {
+      "set": "item_child",
+      "story": "components-navigation-showcase--child-matrix",
+      "background": "#ffffff",
+      "parts": {
+        "Container": ".ds-nav-child",
+        "Container/Menu name": ".ds-nav-child__label"
+      }
+    }
+  ]
+}

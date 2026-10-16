@@ -27,7 +27,7 @@
 | 1 | Input · Textarea · Search Field | 완료 |
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
-| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link · Tab · Pagination · Dropdown Menu · Breadcrumb 완료) |
+| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Stepper 남음) |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
@@ -56,6 +56,7 @@
 | Pagination (pagination · item · control) | 3 + 24 + 48 | 75/75 | 75/75 | 75/75 | 통과 |
 | Dropdown Menu (item · line) | 5 + 1 | 6/6 | 6/6 | 6/6 | 통과 |
 | Breadcrumb (breadcrumb · item) | 6 + 12 | 18/18 | 18/18 (너비 누적 fallback) | 18/18 (〃) | 통과 |
+| Navigation (item_parent · item_link · item_child) | 4 + 4 + 4 | 12/12 | 12/12 | 12/12 | 통과 |
 
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
 수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).
@@ -66,8 +67,7 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 4 나머지 — Navigation(item_parent 180:5246, item_link 180:6174,
-item_child 180:6249) → Stepper(179:2043, 203:3949, 179:1621, 203:3708, 179:1614, 203:4253).
+Phase 4 나머지 — Stepper(179:2043, 203:3949, 179:1621, 203:3708, 179:1614, 203:4253).
 
 **결정 필요 — Breadcrumb 펼친 상태(F33)**: Figma는 메뉴가 열린 동안 현재 페이지 항목을 Role=Open으로 그렸습니다. 코드는 … 버튼이
 메뉴를 열고 현재 페이지는 Current로 둡니다.

@@ -39,7 +39,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
 | Link 111:960 | `link` (15) Size lg/sm/md · State Default/Hover/Pressed/Visited/Disabled · Icon | `Link` | 4 | 완료 |
-| Navigation 180:2023 | `item_parent` (4) Expanded · `item_link` (4) Selected · `item_child` (4) · State Default/Hover | `Navigation` (+ items) | 4 | 미착수 |
+| Navigation 180:2023 | `item_parent` (4) Expanded · `item_link` (4) Selected · `item_child` (4) · State Default/Hover | `Navigation`, `NavLink`, `NavGroup`, `NavChild`, `NavParentItem` | 4 | 완료 |
 | Tab 86:3121 | `tab_filled` (60) Variant · Size · Shape · State 5 · `tab_line` (30) | `Tabs`, `TabList`, `Tab`, `TabPanel` | 4 | 완료 |
 | Pagination 149:1030 | `pagination` (3) · `pagination_item` (24) · `pagination_control` (48) | `Pagination`, `PaginationItem`, `PaginationControl` | 4 | 완료 |
 | Breadcrumb 721:13374 | `breadcrumb` (6) Size · Layout Full/Collapsed · Expanded · `breadcrumb-item` (12) Role Link/Current/Open | `Breadcrumb`, `BreadcrumbItem`, `BreadcrumbSeparator` | 4 | 완료 |

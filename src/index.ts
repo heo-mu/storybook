@@ -19,5 +19,6 @@ export * from './components/Tabs';
 export * from './components/Pagination';
 export * from './components/DropdownMenu';
 export * from './components/Breadcrumb';
+export * from './components/Navigation';
 export { CHOICE_SIZES, CHOICE_GROUP_ORIENTATIONS, type ChoiceSize, type ChoiceGroupOrientation } from './components/Choice';
 export * from './icons';

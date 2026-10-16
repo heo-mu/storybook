@@ -118,6 +118,8 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F33 | **breadcrumb Expanded=True**: 메뉴를 여는 … 버튼은 Link Default인데 현재 페이지 항목이 Role=Open(브랜드 색 · semibold), 메뉴는 경로 오른쪽 끝에 정렬(md x 89 · sm x 60) | 메뉴는 … 버튼 아래 2px(시작 정렬), 현재 페이지는 Current 유지, Role=Open은 `BreadcrumbItem open`으로 제공 | 의도 확인 (결정 필요) |
 | F34 | breadcrumb-item Hover · Pressed · Open · Current Variant의 아이콘 슬롯이 비어 있음(Link Default만 House) — `breadcrumb/home-icon/hover · pressed · current`, `background/focus` · `border/focus` · `border/menu` 변수는 어디에도 바인딩되지 않음 | 아이콘 색은 같은 이름의 변수 사용, focus · menu 변수는 미사용 | 아이콘 슬롯 채우기, 변수 정리 |
 | F35 | breadcrumb "Show Parent"가 Full에서도 상위 페이지를 숨김(경로가 끊김) | Collapsed에만 적용 | 의도 확인 |
+| F36 | item_link Unselected Hover 아이콘이 `…/link/unselected/icon/default`에 바인딩 — `…/icon/hover`(icon/secondary) 미사용(item_parent Hover는 `…/icon/hover` 사용) | 바인딩 그대로(Hover에도 기본 색) | 의도 확인 |
+| F37 | LNB 예시의 하위 목록 선(Vector, 1px CENTER)이 x 16에 있어 반 픽셀(15.5–16.5)로 렌더링 | 같은 위치의 선명한 1px 선 | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

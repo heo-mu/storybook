@@ -113,6 +113,11 @@
 - 접힌 경로의 … 버튼: 이름 "중간 경로 보기", `aria-haspopup` · `aria-expanded`, 메뉴 이름은 버튼 이름, 그룹 이름 "상위 경로".
   키보드는 Dropdown Menu와 같습니다.
 
+### Navigation
+- `<nav>`(이름은 `aria-label`로 지정) > `<ul>` > `<li>`. 링크는 `<a href>`, 현재 페이지는 `aria-current="page"`.
+- 그룹(item_parent)은 `<button aria-expanded aria-controls>`, 접힌 하위 목록은 `hidden`이라 Tab 순서와 접근성 트리에서 빠집니다.
+- 아이콘은 `aria-hidden`(장식).
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

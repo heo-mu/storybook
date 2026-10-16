@@ -1,0 +1,190 @@
+/*
+ * Navigation (LNB) — Figma `item_parent` (180:5246), `item_link` (180:6174), `item_child` (180:6249) and the LNB
+ * example of the Navigation frame (180:2023).
+ *   container: padding p-5, colors/navigation/lnb/background/default; header m-4 above the list; items m-1_5 apart
+ *   parent / link: padding p-2_5 p-1_5, gap m-2, border-radius/rounded, icon 20px, label base/leading-normal
+ *          medium (parent Expanded: semibold, link Selected: bold), caret 16px (parent)
+ *   child: padding p-1_5 p-2_5, border-radius/rounded, label sm/leading-normal medium (Selected: bold)
+ *   child list: padding-left p-4, 1px line (…/child/selected/indicator/selected), m-2_5 to the items, m-1_5 apart
+ * State: Default → Hover (:hover) → Selected / Expanded.
+ */
+
+.ds-nav {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-4);
+  padding: var(--spacing-padding-p-5);
+  background-color: var(--colors-navigation-lnb-background-default);
+}
+
+.ds-nav__list,
+.ds-nav__children {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-1_5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-nav__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-1_5);
+}
+
+.ds-nav__children {
+  padding-left: calc(var(--spacing-padding-p-4) + var(--spacing-margin-m-2_5));
+  background: linear-gradient(
+      var(--colors-navigation-lnb-item-child-selected-indicator-selected),
+      var(--colors-navigation-lnb-item-child-selected-indicator-selected)
+    )
+    var(--spacing-padding-p-4) 0 / var(--border-width-border) 100% no-repeat;
+}
+
+.ds-nav__children[hidden] {
+  display: none;
+}
+
+/* item_parent · item_link */
+.ds-nav-item {
+  --_bg: var(--colors-navigation-lnb-item-link-unselected-background-default);
+  --_fg: var(--colors-navigation-lnb-item-link-unselected-label-default);
+  --_icon: var(--colors-navigation-lnb-item-link-unselected-icon-default);
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-padding-p-2_5) var(--spacing-padding-p-1_5);
+  border: 0;
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--typography-base-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-medium-font-size);
+  font-weight: var(--typography-base-leading-normal-medium-font-weight);
+  line-height: var(--typography-base-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-base-leading-normal-medium-letter-spacing);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-nav-item[data-kind='parent'] {
+  --_bg: var(--colors-navigation-lnb-item-parent-background-default);
+  --_fg: var(--colors-navigation-lnb-item-parent-label-default);
+  --_icon: var(--colors-navigation-lnb-item-parent-icon-default);
+  --_caret: var(--colors-navigation-lnb-item-parent-chevron-collapsed);
+}
+
+/* Figma binds the Unselected Hover icon to …/icon/default (…/icon/hover is unused — figma-issues F36). */
+.ds-nav-item[data-kind='link']:hover {
+  --_bg: var(--colors-navigation-lnb-item-link-unselected-background-hover);
+  --_fg: var(--colors-navigation-lnb-item-link-unselected-label-hover);
+}
+
+.ds-nav-item[data-kind='parent']:hover {
+  --_bg: var(--colors-navigation-lnb-item-parent-background-hover);
+  --_fg: var(--colors-navigation-lnb-item-parent-label-hover);
+  --_icon: var(--colors-navigation-lnb-item-parent-icon-hover);
+}
+
+.ds-nav-item[data-kind='link'][data-selected] {
+  --_bg: var(--colors-navigation-lnb-item-link-selected-background-default);
+  --_fg: var(--colors-navigation-lnb-item-link-selected-label-default);
+  --_icon: var(--colors-navigation-lnb-item-link-selected-icon-default);
+
+  font-weight: var(--typography-base-leading-normal-bold-font-weight);
+}
+
+.ds-nav-item[data-kind='link'][data-selected]:hover {
+  --_bg: var(--colors-navigation-lnb-item-link-selected-background-hover);
+  --_fg: var(--colors-navigation-lnb-item-link-selected-label-hover);
+  --_icon: var(--colors-navigation-lnb-item-link-selected-icon-hover);
+}
+
+.ds-nav-item[data-kind='parent'][data-expanded] {
+  --_caret: var(--colors-navigation-lnb-item-parent-chevron-expanded);
+
+  font-weight: var(--typography-base-leading-normal-semibold-font-weight);
+}
+
+.ds-nav-item__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--_icon);
+}
+
+.ds-nav-item__icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 16 / 24 label: 1px + 23px keeps the baseline on a whole pixel (docs/browser-support.md). */
+.ds-nav-item__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 1px;
+  line-height: 23px;
+}
+
+.ds-nav-item__caret {
+  display: block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--_caret);
+}
+
+/* item_child */
+.ds-nav-child {
+  --_bg: var(--colors-navigation-lnb-item-child-unselected-background-default);
+  --_fg: var(--colors-navigation-lnb-item-child-unselected-label-default);
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-padding-p-1_5) var(--spacing-padding-p-2_5);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-nav-child:hover {
+  --_bg: var(--colors-navigation-lnb-item-child-unselected-background-hover);
+  --_fg: var(--colors-navigation-lnb-item-child-unselected-label-hover);
+}
+
+.ds-nav-child[data-selected] {
+  --_bg: var(--colors-navigation-lnb-item-child-selected-background-default);
+  --_fg: var(--colors-navigation-lnb-item-child-selected-label-default);
+
+  font-weight: var(--typography-sm-leading-normal-bold-font-weight);
+}
+
+.ds-nav-child[data-selected]:hover {
+  --_bg: var(--colors-navigation-lnb-item-child-selected-background-hover);
+  --_fg: var(--colors-navigation-lnb-item-child-selected-label-hover);
+}
+
+.ds-nav-child__label {
+  flex: 1 1 auto;
+  min-width: 0;
+}

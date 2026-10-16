@@ -1,0 +1,66 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Navigation.showcase.stories';
+import { Navigation, NavLink, NavGroup, NavChild } from './Navigation';
+
+<Meta title="Components/Navigation/Usage" />
+
+# Navigation — 사용 가이드
+
+Figma **Navigation** 프레임(180:2023)의 `item_parent` · `item_link` · `item_child`(각 4개)와 LNB 예시 구성을 구현했습니다.
+parent는 펼침(Expanded), link와 child는 현재 위치(Selected)를 표시합니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Navigation, NavGroup, NavChild, NavLink } from 'platform-design-system';
+
+<Navigation aria-label="주 메뉴" header={<Logo />} style={{ width: 240 }}>
+  <NavGroup label="에너지 관리" icon={<ChartIcon />} defaultExpanded>
+    <NavChild href="/energy/usage">사용량</NavChild>
+    <NavChild href="/energy/saving" selected>에너지 절약</NavChild>
+  </NavGroup>
+  <NavLink href="/dashboard" icon={<HomeIcon />}>대시보드</NavLink>
+</Navigation>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| item_link Variant Selected | `NavLink selected` | `aria-current="page"`, 굵게 · 브랜드 색 |
+| item_parent Expanded | `NavGroup expanded` / `defaultExpanded` / `onExpandedChange` | 버튼 `aria-expanded`, 화살표 위 · 아래 |
+| item_child Variant Selected | `NavChild selected` | `aria-current="page"` |
+| State Hover | 브라우저 `:hover` | |
+| Icon (Boolean) · 아이콘 | `icon` | 20px, Figma 자리표시 아이콘은 List |
+| Menu Text | `children` / `label` | 긴 이름은 줄바꿈 |
+| LNB 예시 로고 영역 | `Navigation header` | 메뉴 위 m-4 |
+
+## 코드 정책 (Figma에 정의되지 않은 부분)
+
+- **너비**: 항목은 컨테이너 너비를 채웁니다. Figma 예시의 LNB는 240px(항목 200px + 좌우 p-5)이며 레이아웃에서 지정합니다.
+- **하위 목록 선**: Figma는 1px 선을 반 픽셀 위치(x 15.5–16.5)에 그려 두 열에 흐리게 나뉩니다. 코드는 같은 위치의 1px 선으로 그립니다.
+- **Pressed · Focus 상태**: Figma에 없어 Pressed는 Hover와 같고, 포커스는 브라우저 기본 포커스 링입니다.
+- **link Hover 아이콘 색**: Figma 바인딩대로 Unselected Hover에서도 `…/icon/default`를 씁니다 (`…/icon/hover` 미사용 — F36).
+
+## 키보드
+
+| 키 | 동작 |
+| --- | --- |
+| Tab · Shift+Tab | 메뉴 항목 사이 이동 (접힌 그룹의 하위 항목은 건너뜀) |
+| Enter · Space (그룹) | 펼치기 · 접기 |
+| Enter (링크) | 페이지 이동 |
+
+## Props
+
+<ArgTypes of={Navigation} />
+
+### NavLink · NavGroup · NavChild
+
+<ArgTypes of={NavLink} />
+
+<ArgTypes of={NavGroup} />
+
+<ArgTypes of={NavChild} />
