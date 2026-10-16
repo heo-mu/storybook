@@ -109,34 +109,46 @@ for (const set of config.sets) {
   const positions = new Map(setNode.children.map((c) => [c.name, c]));
   const reference = PNG.sync.read(readFileSync(path.join(ROOT, 'figma', 'reference', `${set.set}.png`)));
 
-  await page.goto(`${SB}/iframe.html?id=${set.story}&viewMode=story`);
+  // Normalise selectors: string | string[] | { selector(s), compare }
+  const partSpecs = Object.entries(set.parts).map(([key, spec]) => {
+    const s = typeof spec === 'string' || Array.isArray(spec) ? { selector: spec } : spec;
+    return { key, re: glob(key), selectors: [].concat(s.selector), compare: s.compare ?? 'xywh', optional: Boolean(s.optional) };
+  });
+  const contentDependent = (set.contentDependent ?? []).map(glob);
+  // Figma layers that cannot be reproduced statically (e.g. a scroll indicator): not compared, masked in
+  // the pixel check and listed for manual review.
+  const ignored = (set.ignore ?? []).map(glob);
+  const isIgnored = (p) => ignored.some((re) => re.test(p));
+  const tol = set.tolerance ?? 0.5;
+
+  const results = [];
+  const measured = [];
+  // `story` may list several stories (e.g. states that need an open overlay); "id&args=…" sets story args.
+  for (const story of [].concat(set.story)) {
+  await page.goto(`${SB}/iframe.html?id=${story}&viewMode=story`);
   await page.waitForSelector('[data-figma]');
   if (set.waitFor) await page.waitForSelector(set.waitFor);
   await page.addStyleTag({ content: `html, body { background: ${set.background} !important; } ${set.harnessCss ?? ''}` });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(150);
 
-  // Normalise selectors: string | string[] | { selector(s), compare }
-  const partSpecs = Object.entries(set.parts).map(([key, spec]) => {
-    const s = typeof spec === 'string' || Array.isArray(spec) ? { selector: spec } : spec;
-    return { key, re: glob(key), selectors: [].concat(s.selector), compare: s.compare ?? 'xywh', optional: Boolean(s.optional) };
-  });
-  const measured = await page.evaluate(measure, Object.fromEntries(partSpecs.map((p) => [p.key, p.selectors])));
+  const storyMeasured = await page.evaluate(measure, Object.fromEntries(partSpecs.map((p) => [p.key, p.selectors])));
+  measured.push(...storyMeasured);
   const calcSize = await page.evaluate(() => CSS.supports('width', 'calc-size(fit-content, round(up, size, 1px))'));
-  const contentDependent = (set.contentDependent ?? []).map(glob);
-  const tol = set.tolerance ?? 0.5;
 
-  const results = [];
-  for (const m of measured) {
+  for (const m of storyMeasured) {
     const g = geometry.variants[m.name];
     const issues = [];
     const notes = [];
     if (!g) { issues.push({ cat: 'structure', detail: 'not a Figma variant name' }); results.push({ name: m.name, issues, notes }); continue; }
-    if (Math.abs(m.w - g.w) > tol || Math.abs(m.h - g.h) > tol) issues.push({ cat: 'size', detail: `root ${m.w.toFixed(2)}×${m.h.toFixed(2)} ≠ ${g.w}×${g.h}` });
+    const dw = Math.abs(m.w - g.w);
+    // A root that hugs its text is < 1px narrower without calc-size() (Firefox, Safari) — docs/browser-support.md.
+    if (dw > tol && !calcSize && dw < 1 && Math.abs(m.h - g.h) <= tol) notes.push(`root width ${m.w.toFixed(2)} vs ${g.w} (no calc-size)`);
+    else if (dw > tol || Math.abs(m.h - g.h) > tol) issues.push({ cat: 'size', detail: `root ${m.w.toFixed(2)}×${m.h.toFixed(2)} ≠ ${g.w}×${g.h}` });
 
     // Parts
     for (const spec of partSpecs) {
-      const figmaNodes = g.n.filter(([p]) => spec.re.test(p));
+      const figmaNodes = g.n.filter(([p]) => spec.re.test(p) && !isIgnored(p));
       const dom = [...m.parts[spec.key]];
       for (const [p, x, y, w, h, flag] of figmaNodes) {
         if (!dom.length) { issues.push({ cat: 'structure', detail: `${p}: missing in DOM` }); continue; }
@@ -169,9 +181,10 @@ for (const set of config.sets) {
       const w = Math.min(shot.width, Math.round(g.w)), h = Math.min(shot.height, Math.round(g.h));
       const fig = cropOver(reference, Math.round(fp.x), Math.round(fp.y), w, h, set.background);
       const dom = cropOver(shot, 0, 0, w, h, set.background);
-      const textBoxes = g.n.filter((n) => n[5] === 'T').map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh }));
+      const textBoxes = g.n.filter((n) => n[5] === 'T' && !isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh }));
+      const maskBoxes = [...textBoxes, ...g.n.filter((n) => isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh }))];
       // Strict comparison outside text boxes (padded by 1px).
-      const mask = (img) => { const c = new PNG({ width: w, height: h }); img.data.copy(c.data); for (const t of textBoxes) for (let yy = Math.max(0, Math.floor(t.y) - 1); yy < Math.min(h, Math.ceil(t.y + t.h) + 1); yy++) for (let xx = Math.max(0, Math.floor(t.x) - 1); xx < Math.min(w, Math.ceil(t.x + t.w) + 1); xx++) { const i = (yy * w + xx) * 4; c.data[i] = c.data[i + 1] = c.data[i + 2] = 0; } return c; };
+      const mask = (img) => { const c = new PNG({ width: w, height: h }); img.data.copy(c.data); for (const t of maskBoxes) for (let yy = Math.max(0, Math.floor(t.y) - 1); yy < Math.min(h, Math.ceil(t.y + t.h) + 1); yy++) for (let xx = Math.max(0, Math.floor(t.x) - 1); xx < Math.min(w, Math.ceil(t.x + t.w) + 1); xx++) { const i = (yy * w + xx) * 4; c.data[i] = c.data[i + 1] = c.data[i + 2] = 0; } return c; };
       const diff = new PNG({ width: w, height: h });
       const differing = pixelmatch(mask(fig).data, mask(dom).data, diff.data, w, h, { threshold: 0.1 });
       pixel = { nonTextDiffering: differing, ratio: differing / (w * h) };
@@ -188,7 +201,12 @@ for (const set of config.sets) {
         // Chromium is the reference engine; other engines rasterise text differently, so horizontal
         // offsets under 1px there are recorded as rendering differences, not defects.
         const dxTol = BROWSER === 'chromium' ? (set.glyphDxTolerance ?? 0.5) : 1;
-        if (Math.abs(dy) > 0.5 || (!subpixel && Math.abs(dx) > dxTol)) issues.push({ cat: 'text-position', detail: `${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)}` });
+        // knownDifferences: { "<variant>": "reason" } for every engine, or { "<variant>": { "<engine>": "reason" } }.
+        const knownEntry = set.knownDifferences?.[m.name];
+        const known = typeof knownEntry === 'string' ? knownEntry : knownEntry?.[BROWSER];
+        // Documented engine rendering differences (config knownDifferences) are recorded, not failed.
+        if ((Math.abs(dy) > 0.5 || (!subpixel && Math.abs(dx) > dxTol)) && known) notes.push(`${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)} — known: ${known}`);
+        else if (Math.abs(dy) > 0.5 || (!subpixel && Math.abs(dx) > dxTol)) issues.push({ cat: 'text-position', detail: `${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)}` });
         else if (!subpixel && Math.abs(dx) > 0.5) notes.push(`${t.p} glyph dx ${dx.toFixed(2)} (${BROWSER} text rendering)`);
       }
       pixel.glyphs = offsets;
@@ -204,6 +222,7 @@ for (const set of config.sets) {
     }
     results.push({ name: m.name, issues, notes, pixel });
   }
+  }
   const expected = Object.keys(geometry.variants);
   const missing = expected.filter((n) => !measured.some((m) => m.name === n));
   report.sets[set.set] = { expected: expected.length, rendered: measured.length, missing, results };
@@ -215,6 +234,8 @@ for (const set of config.sets) {
   const glyphs = results.flatMap((r) => r.pixel?.glyphs ?? []);
   lines.push('', `${set.set}: rendered ${measured.length}/${expected.length}${missing.length ? ` (missing: ${missing.join(' | ')})` : ''}`);
   lines.push(`  all checks passed: ${clean}/${results.length}`);
+  for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known rendering difference — ${v}: ${why}`); }
+  if (ignored.length) lines.push(`  ◇ manual review (not compared): ${set.ignore.join(", ")}`);
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);
   lines.push(`  non-text pixels: mean ${((ratios.reduce((a, b) => a + b, 0) / Math.max(1, ratios.length)) * 100).toFixed(2)}% differing, max ${(Math.max(0, ...ratios) * 100).toFixed(2)}%`);
   if (glyphs.length) lines.push(`  glyph offset vs Figma: max |dx| ${Math.max(...glyphs.map((o) => Math.abs(o.dx))).toFixed(2)}px, max |dy| ${Math.max(...glyphs.map((o) => Math.abs(o.dy))).toFixed(2)}px`);

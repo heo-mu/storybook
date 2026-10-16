@@ -1,0 +1,1 @@
+{"set":"select_message","id":"95:2960","variants":{"Type=Error":{"w":71,"h":16,"n":[["x-circle-fill",0,0,16,16,""],["Error Text",20,0,51,16,"T"]]},"Type=Success":{"w":71,"h":16,"n":[["check-circle-fill",0,0,16,16,""],["Success Text",20,0,51,16,"T"]]},"Type=Info":{"w":71,"h":16,"n":[["info-fill",0,0,16,16,""],["Info text",20,0,51,16,"T"]]}}}

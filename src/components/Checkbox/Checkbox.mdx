@@ -1,0 +1,77 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Checkbox.showcase.stories';
+import { Checkbox } from './Checkbox';
+import { CheckboxGroup } from './CheckboxGroup';
+
+<Meta title="Components/Checkbox/Usage" />
+
+# Checkbox — 사용 가이드
+
+Figma **Checkbox** 프레임(98:2375)의 `checkbox` 세트(36개)를 구현한 체크박스입니다. 네이티브 `<input type="checkbox">`를 그대로 사용하므로
+폼 전송, 레이블 클릭, Space 키, 스크린리더의 체크 상태(일부 선택 = `mixed`)가 브라우저 기본 동작으로 처리됩니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Checkbox, CheckboxGroup } from 'platform-design-system';
+
+<Checkbox label="이용약관 동의" name="terms" required />
+
+// 제어 컴포넌트
+<Checkbox label="자동 로그인" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+
+// 전체 선택 (일부만 선택되면 Indeterminate)
+<Checkbox label="전체" checked={all} indeterminate={some && !all} onChange={toggleAll} />
+
+// 그룹 — 선택된 value 배열을 관리
+<CheckboxGroup aria-label="수신 채널" value={channels} onChange={setChannels} name="channel" style={{ gap: 8 }}>
+  <Checkbox value="email" label="이메일" />
+  <Checkbox value="sms" label="SMS" />
+</CheckboxGroup>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Selection Unchecked · Checked | `checked` / `defaultChecked` | 그룹 안에서는 `CheckboxGroup`의 `value` |
+| Selection Indeterminate | `indeterminate` | DOM `indeterminate` 속성 → 스크린리더에 "일부 선택" |
+| Size sm · md · lg | `size` | 상자 14 · 16 · 18px. 기본 `'sm'` (그룹 안에서는 그룹 `size`) |
+| Label / Label Text | `label` | 생략하면 상자만 렌더링 → `aria-label` 지정 |
+| State Hover · Pressed | 브라우저 `:hover` · `:active` | 레이블 영역 포함 |
+| State Disabled | `disabled` | |
+
+`name`, `value`, `required`, `onChange` 등 나머지 `<input>` 속성과 `ref`는 실제 `<input>`에 전달됩니다.
+`className` · `style`은 루트 `<label>`에 적용됩니다.
+
+## CheckboxGroup
+
+Figma에는 그룹 컴포넌트가 없습니다. `CheckboxGroup`은 `role="group"`과 선택값 배열 관리만 하는 시맨틱 래퍼이며,
+`aria-label` 또는 `aria-labelledby`로 이름을 붙입니다. `value`를 가진 하위 `Checkbox`가 그룹 값에 연결됩니다.
+
+| Prop | 설명 |
+| --- | --- |
+| `value` / `defaultValue` / `onChange` | 선택된 value 배열 (제어 / 비제어) |
+| `name` · `size` · `disabled` | 모든 하위 체크박스에 적용 |
+| `orientation` | `'vertical'`(기본) · `'horizontal'` |
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **포커스 표시**: Figma에 Focus 상태가 없어 브라우저 기본 포커스 링(`:focus-visible`)을 유지합니다.
+- **항목 간격**: Figma에 그룹 간격이 정의되어 있지 않아 그룹은 간격을 두지 않습니다. `style={{ gap }}` 또는 `className`으로 지정하세요.
+- **Indeterminate 클릭**: 클릭하면 브라우저가 Indeterminate를 해제하고 체크 상태를 바꿉니다. 제어 컴포넌트라면 `onChange`에서 다시 계산하세요.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+<ArgTypes of={Checkbox} />
+
+### CheckboxGroup
+
+<ArgTypes of={CheckboxGroup} />

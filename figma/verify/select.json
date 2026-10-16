@@ -1,0 +1,83 @@
+{
+  "component": "Select",
+  "sets": [
+    {
+      "set": "select",
+      "story": [
+        "components-select-showcase--variant-matrix",
+        "components-select-showcase--open&args=size:sm",
+        "components-select-showcase--open&args=size:md",
+        "components-select-showcase--open&args=size:lg"
+      ],
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 344px; min-width: 344px; max-width: 344px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Label": ".ds-field__label",
+        "Container": ".ds-select__trigger",
+        "Container/Input": ".ds-select__value",
+        "Container/icon_size": ".ds-select__icon",
+        "Container/icon_size/icon/*": ".ds-select__icon > svg",
+        "Container/icon_size/icon/*/*": ".ds-select__icon > svg"
+      },
+      "glyphDxTolerance": 0.75,
+      "//glyphDxTolerance": "sm Disabled placeholder (#c9ced6 on #eff0f3) measures 0.71px horizontally; the images are identical, low-contrast centroid noise (same as Input)",
+      "knownDifferences": {
+        "Size=md, State=Disabled": {
+          "webkit": "low-contrast disabled placeholder (#c9ced6 on #eff0f3) measures dx −1.09; the images are identical (centroid noise)"
+        }
+      }
+    },
+    {
+      "set": "listbox",
+      "story": "components-select-showcase--listbox-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 356px; min-width: 356px; max-width: 356px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "ignore": [
+        "scroll"
+      ],
+      "parts": {
+        "option*": {
+          "selector": ".ds-option",
+          "compare": "xywh"
+        },
+        "option*/Option Name": ".ds-option__text",
+        "option*/icon_size": ".ds-option__check",
+        "option*/icon_size/icon/Check": ".ds-option__check > svg",
+        "option*/icon_size/icon/Check/Check": ".ds-option__check > svg"
+      }
+    },
+    {
+      "set": "option",
+      "story": "components-select-showcase--option-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 344px; min-width: 344px; max-width: 344px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Option Name": ".ds-option__text",
+        "icon_size": ".ds-option__check",
+        "icon_size/icon/Check": ".ds-option__check > svg",
+        "icon_size/icon/Check/Check": ".ds-option__check > svg"
+      },
+      "knownDifferences": {
+        "Size=md, State=Disabled": "underline offset/thickness are AUTO in Figma; Figma draws it ~1.5px lower and thicker than the browser font metrics (glyphs themselves match)"
+      }
+    },
+    {
+      "set": "select_message",
+      "story": "components-select-showcase--message-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "*-fill": ".ds-field-message__icon",
+        "Info text": {
+          "selector": ".ds-field-message__text",
+          "optional": true
+        },
+        "* Text": {
+          "selector": ".ds-field-message__text",
+          "optional": true
+        }
+      },
+      "//parts": "Figma names the Info text layer \"Info text\" and the others \"Success Text\" / \"Error Text\"; each variant matches one of the two keys"
+    }
+  ]
+}

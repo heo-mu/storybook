@@ -1,0 +1,290 @@
+/*
+ * Select — Figma component set `select` (95:4740), Type Outline. Field layout from Field.css.
+ * State: Default → (has value) Completed → :hover Hover → Open → Error → Read-only → Disabled
+ * (later rules win). Colours are the Figma bindings (colors/select/outline/outline/*).
+ */
+.ds-select {
+  --ds-field-bg: var(--colors-select-outline-outline-background-default);
+  --ds-field-border-color: var(--colors-select-outline-outline-border-default);
+  --ds-field-border-width: var(--border-width-border);
+  /* Figma binds the value to …/label/* and the empty Display Text to the semantic colors/text/placeholder. */
+  --ds-field-text: var(--colors-select-outline-outline-label-completed);
+  --ds-field-placeholder: var(--colors-text-placeholder);
+  --ds-field-icon: var(--colors-select-outline-outline-icon-default);
+}
+
+.ds-select[data-filled] {
+  --ds-field-bg: var(--colors-select-outline-outline-background-completed);
+  --ds-field-border-color: var(--colors-select-outline-outline-border-completed);
+}
+
+.ds-select:hover {
+  --ds-field-border-color: var(--colors-select-outline-outline-border-hover);
+}
+
+/* Open: the caret colour is an unbound #404b5d in Figma — the semantic token with that value (docs/figma-issues.md F5). */
+.ds-select[data-open] {
+  --ds-field-border-color: var(--colors-select-outline-outline-border-focus);
+  --ds-field-icon: var(--colors-icon-secondary);
+}
+
+.ds-select[data-invalid] {
+  --ds-field-border-color: var(--colors-select-outline-outline-border-error);
+  --ds-field-border-width: var(--border-width-border-2);
+  --ds-field-text: var(--colors-select-outline-outline-label-error);
+  --ds-field-icon: var(--colors-select-outline-outline-icon-error);
+}
+
+.ds-select[data-readonly] {
+  --ds-field-bg: var(--colors-select-outline-outline-background-read-only);
+  --ds-field-border-color: var(--colors-select-outline-outline-border-read-only);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-select-outline-outline-label-default);
+}
+
+.ds-select[data-disabled] {
+  --ds-field-bg: var(--colors-select-outline-outline-background-disabled);
+  --ds-field-border-color: var(--colors-select-outline-outline-border-disabled);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-select-outline-outline-label-disabled);
+  --ds-field-placeholder: var(--colors-select-outline-outline-placeholder-disabled);
+  --ds-field-icon: var(--colors-select-outline-outline-icon-disabled);
+}
+
+/* Trigger — the Figma Container as a <button>. */
+.ds-select__trigger {
+  margin: 0;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-select[data-disabled] .ds-select__trigger,
+.ds-select[data-readonly] .ds-select__trigger {
+  cursor: default;
+}
+
+/* Display Text — single line, truncated (Figma text truncation). Same typography and baseline
+ * compensation as the field value text (Field.css). */
+.ds-select__value {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ds-field-text);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+.ds-select__value[data-placeholder] {
+  color: var(--ds-field-placeholder);
+}
+
+.ds-select[data-size='md'] .ds-select__value {
+  box-sizing: border-box;
+  height: var(--typography-base-leading-normal-normal-line-height);
+  padding-top: 1px;
+  font-family: var(--typography-base-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-normal-font-size);
+  font-weight: var(--typography-base-leading-normal-normal-font-weight);
+  line-height: calc(var(--typography-base-leading-normal-normal-line-height) - 1px);
+  letter-spacing: var(--typography-base-leading-normal-normal-letter-spacing);
+}
+
+.ds-select[data-size='lg'] .ds-select__value {
+  box-sizing: border-box;
+  height: var(--typography-lg-leading-normal-normal-line-height);
+  padding-bottom: 1px;
+  font-family: var(--typography-lg-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-lg-leading-normal-normal-font-size);
+  font-weight: var(--typography-lg-leading-normal-normal-font-weight);
+  line-height: calc(var(--typography-lg-leading-normal-normal-line-height) - 1px);
+  letter-spacing: var(--typography-lg-leading-normal-normal-letter-spacing);
+}
+
+/* select_message — colors/select/outline/outline/helper/* */
+.ds-select .ds-field-message[data-type='info'] {
+  --ds-field-message-color: var(--colors-select-outline-outline-helper-info);
+}
+
+.ds-select .ds-field-message[data-type='success'] {
+  --ds-field-message-color: var(--colors-select-outline-outline-helper-completed);
+}
+
+.ds-select .ds-field-message[data-type='error'] {
+  --ds-field-message-color: var(--colors-select-outline-outline-helper-error);
+}
+
+/* Popover — positioned by react-aria below the field (offset spacing/margin/m-1) and as wide as it.
+ * The listbox inside scrolls when the popover is limited to the space available in the viewport. */
+.ds-select__popover {
+  display: flex;
+  flex-direction: column;
+  width: var(--trigger-width);
+  outline: none;
+}
+
+/* listbox (97:2665): padding p-1_5, border-radius/rounded, 1px INSIDE border, effect elevation-3.
+ * The border is an inset outline so options scrolled under the edge never cover it. */
+.ds-listbox {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--spacing-padding-p-1_5);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-select-outline-outline-listbox-background-default);
+  box-shadow: var(--effect-elevation-3);
+  outline: var(--border-width-border) solid var(--colors-select-outline-outline-listbox-border-default);
+  outline-offset: calc(-1 * var(--border-width-border));
+}
+
+/* Figma "scroll": a 4px rounded thumb at the right edge, colors/select/outline/outline/listbox/scroll/default. */
+.ds-listbox::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ds-listbox::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ds-listbox::-webkit-scrollbar-thumb {
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-select-outline-outline-listbox-scroll-default);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .ds-listbox {
+    scrollbar-width: thin;
+    scrollbar-color: var(--colors-select-outline-outline-listbox-scroll-default) transparent;
+  }
+}
+
+/* option (97:2286): padding p-2 × p-2_5 / p-3 / p-4, gap m-2, check icon 16px.
+ * State: Default → Selected → Hover (incl. keyboard focus) → Pressed → Disabled. */
+.ds-option {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-2_5);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-select-outline-outline-option-background-default);
+  color: var(--colors-select-outline-outline-option-label-default);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-option[data-size='md'] {
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-3);
+  font-family: var(--typography-base-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-normal-font-size);
+  font-weight: var(--typography-base-leading-normal-normal-font-weight);
+  line-height: var(--typography-base-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-base-leading-normal-normal-letter-spacing);
+}
+
+.ds-option[data-size='lg'] {
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-4);
+  font-family: var(--typography-lg-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-lg-leading-normal-normal-font-size);
+  font-weight: var(--typography-lg-leading-normal-normal-font-weight);
+  line-height: var(--typography-lg-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-lg-leading-normal-normal-letter-spacing);
+}
+
+.ds-option__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Same baseline compensation as the field value text (Field.css). */
+.ds-option[data-size='md'] .ds-option__text {
+  padding-top: 1px;
+  line-height: calc(var(--typography-base-leading-normal-normal-line-height) - 1px);
+}
+
+.ds-option[data-size='lg'] .ds-option__text {
+  padding-bottom: 1px;
+  line-height: calc(var(--typography-lg-leading-normal-normal-line-height) - 1px);
+}
+
+.ds-option__check {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--colors-select-outline-outline-option-check-icon-selected);
+}
+
+.ds-option__check > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Selected has no fill in Figma. */
+.ds-option[data-selected] {
+  background-color: transparent;
+}
+
+.ds-option:hover,
+.ds-option[data-focus-visible] {
+  background-color: var(--colors-select-outline-outline-option-background-hover);
+  color: var(--colors-select-outline-outline-option-label-hover);
+}
+
+.ds-option:active,
+.ds-option[data-pressed] {
+  background-color: var(--colors-select-outline-outline-option-background-pressed);
+  color: var(--colors-select-outline-outline-option-label-pressed);
+}
+
+/* Selected: brand label in the *-leading-normal-semibold text style. */
+.ds-option[data-selected] {
+  color: var(--colors-select-outline-outline-option-label-selected);
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+}
+
+.ds-option[data-size='md'][data-selected] {
+  font-weight: var(--typography-base-leading-normal-semibold-font-weight);
+}
+
+.ds-option[data-size='lg'][data-selected] {
+  font-weight: var(--typography-lg-leading-normal-semibold-font-weight);
+}
+
+.ds-option[data-disabled] {
+  background-color: var(--colors-select-outline-outline-option-background-disabled);
+  color: var(--colors-select-outline-outline-option-label-disabled);
+  cursor: default;
+}
+
+.ds-option[data-disabled] .ds-option__check {
+  color: var(--colors-select-outline-outline-option-check-icon-disabled);
+}
+
+/* Figma md Disabled uses base/leading-normal/underline (Medium, underlined) unlike sm / lg —
+ * reproduced as designed, reported in docs/figma-issues.md F6. */
+.ds-option[data-size='md'][data-disabled] {
+  font-weight: var(--typography-base-leading-normal-underline-font-weight);
+  text-decoration: var(--typography-base-leading-normal-underline-text-decoration);
+  /* Figma: skip ink off; offset and thickness AUTO (font metrics). */
+  text-decoration-skip-ink: none;
+}

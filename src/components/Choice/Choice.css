@@ -1,0 +1,82 @@
+/*
+ * Shared layout for Checkbox (99:2389), Radio (102:2677) and Switch (107:409):
+ *   root (horizontal auto-layout, gap spacing/margin/m-1_5, items centred) → control → Label.
+ * The control is the native <input> itself (appearance: none) so it keeps native semantics, form
+ * participation and the browser focus ring; decorations (check icon, radio dot, switch thumb) are
+ * absolutely positioned siblings that follow it.
+ */
+
+.ds-choice {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-1_5);
+  max-width: 100%;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-choice[data-disabled] {
+  cursor: default;
+}
+
+.ds-choice__input {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: inherit;
+}
+
+.ds-choice__decoration {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Label — xs/leading-normal/normal (sm) · sm/leading-normal/normal (md, lg). */
+.ds-choice__label {
+  min-width: 0;
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ds-choice[data-size='md'] .ds-choice__label,
+.ds-choice[data-size='lg'] .ds-choice__label {
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+/* Figma auto-width text boxes are whole pixels (see docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-choice__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
+
+/* Checkbox / Radio group — semantic wrapper only. Figma defines no group spacing, so items are laid
+ * out without a gap; set one with `className` / `style` (docs/figma-issues.md F3). */
+.ds-choice-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.ds-choice-group[data-orientation='horizontal'] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}

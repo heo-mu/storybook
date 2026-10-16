@@ -22,7 +22,8 @@ export default defineConfig({
       cssFileName: 'styles',
     },
     rolldownOptions: {
-      external: [/^react($|\/)/, /^react-dom($|\/)/],
+      // Peer and runtime dependencies are resolved from the consumer's node_modules, not bundled.
+      external: [/^react($|\/)/, /^react-dom($|\/)/, /^react-aria-components($|\/)/, /^@internationalized\//],
     },
   },
 });

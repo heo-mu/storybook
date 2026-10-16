@@ -1,0 +1,17 @@
+{
+  "component": "Checkbox",
+  "sets": [
+    {
+      "set": "checkbox",
+      "story": "components-checkbox-showcase--variant-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; } tr > :first-child { width: 160px; min-width: 160px; max-width: 160px; }",
+      "parts": {
+        "checkbox": ".ds-checkbox__input",
+        "checkbox/check-bold": ".ds-checkbox__check",
+        "checkbox/minus-bold": ".ds-checkbox__minus",
+        "라벨명": ".ds-choice__label"
+      }
+    }
+  ]
+}

@@ -79,6 +79,23 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | E11 | Search Field에 `helper/*` 변수가 있지만 메시지 Variant 없음, Read-only 상태 없음 | 메시지 · Read-only 스타일 미구현 | 필요 시 Variant 추가 |
 | E12 | 메시지 info 색(#0086d3)과 tertiary 텍스트(#778191)가 WCAG AA 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 대비 4.5:1 이상으로 조정 |
 
+## F. 선택 컨트롤 (Checkbox · Radio · Switch · Select)
+
+| # | 내용 | 코드 처리 | 제안 |
+| --- | --- | --- | --- |
+| F1 | Checkbox · Radio · Switch · Select(닫힌 상태)에 Focus 상태가 없음 | 브라우저 기본 포커스 링(`:focus-visible`) 유지 | 키보드 포커스 표현 정의 |
+| F2 | Switch Disabled 라벨은 `text/tertiary`(#778191), Checkbox · Radio Disabled 라벨은 `text/disabled`(#c9ced6) | 각 바인딩 그대로 | 비활성 라벨 색 통일 |
+| F3 | Checkbox · Radio 그룹(여러 항목 배치) 컴포넌트와 항목 간격이 없음 | `CheckboxGroup` · `RadioGroup`은 간격 없는 시맨틱 래퍼, 간격은 사용처에서 지정 | 그룹 간격 · 방향 정의 |
+| F4 | Radio md 점이 9px이고 위치가 3.5px(반 픽셀) — 가장자리가 흐리게 렌더링됨 | 값 그대로 | 8 / 10px처럼 짝수 크기 |
+| F5 | Select Open의 화살표 색 #404b5d가 변수에 바인딩되지 않음 | 같은 값의 Semantic `colors/icon/secondary` 사용 | Component 변수(`select/…/icon/focus` 등) 바인딩 |
+| F6 | **option md Disabled만 `base/leading-normal/underline`(Medium, 밑줄)** — sm · lg Disabled는 Regular, 밑줄 없음 | Figma 그대로 재현(Medium + 밑줄). 밑줄 위치는 엔진 폰트 지표에 따라 Figma보다 약 1.5px 위 | sm · lg와 같은 텍스트 스타일로 통일 |
+| F7 | Select 빈 Display Text가 Semantic `colors/text/placeholder`에 직접 바인딩, 값은 `…/label/*` — `…/placeholder/default` · `…/value/*` 변수 미사용 (E1 · E3과 같은 패턴) | 바인딩 그대로 | 값 → `value/*`, 빈 상태 → `placeholder/*` |
+| F8 | option Selected에 배경이 없음(`…/option/background/selected` 변수 미사용) | 투명 배경 | 의도 확인 |
+| F9 | listbox `scroll`(4×100px 막대)이 옵션 5개로 넘치지 않는 상태에서도 고정 레이어로 표시 | 브라우저 스크롤바 스타일(4px, 둥근 모서리, 토큰 색)로 구현 — 내용이 넘칠 때만 표시, 자동 비교에서 제외(수동 검토) | 스크롤 상태 예시임을 명시 |
+| F10 | listbox 최대 높이, 위로 열릴 때의 배치가 정의되지 않음 | 화면 남은 공간에 맞춰 높이 제한 · 위로 뒤집기(react-aria 기본) | 최대 높이 정의 |
+| F11 | 옵션의 Hover와 Selected가 겹칠 때, 키보드 이동 중 표현이 정의되지 않음 | 키보드 이동 = Hover 모양, Selected + Hover = Hover 배경 + Selected 글자 | 조합 상태 정의 |
+| F12 | Checkbox · Radio 테두리와 Switch 꺼짐 트랙(#a1a8b5)이 배경 대비 2.35:1 — WCAG 1.4.11(비텍스트 3:1) 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 3:1 이상으로 조정 |
+
 ## D. 작업 중 관찰된 원본 변경
 
 같은 날 작업 시작 시점과 비교해 원본이 바뀌었습니다.

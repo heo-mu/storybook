@@ -1,0 +1,131 @@
+/*
+ * Figma component set `checkbox` (99:2389) — Selection Unchecked / Checked / Indeterminate ×
+ * Size sm / md / lg × State Default / Hover / Pressed / Disabled.
+ *   box 14 / 16 / 18px, border-radius/rounded, 1px INSIDE stroke (inset box-shadow)
+ *   check-bold / minus-bold 12 / 14 / 16px at (1, 1) inside the box
+ * Each selection defines a palette (--_bg-*, --_bd-*, --_ic-*) on the elements that paint; the state
+ * rules below pick the slot.
+ */
+
+.ds-checkbox {
+  --ds-checkbox-box: 14px;
+  --ds-checkbox-icon: 12px;
+
+  color: var(--colors-checkbox-label-default);
+}
+
+.ds-checkbox[data-size='md'] {
+  --ds-checkbox-box: 16px;
+  --ds-checkbox-icon: 14px;
+}
+
+.ds-checkbox[data-size='lg'] {
+  --ds-checkbox-box: 18px;
+  --ds-checkbox-icon: 16px;
+}
+
+.ds-checkbox[data-disabled] {
+  color: var(--colors-checkbox-label-disabled);
+}
+
+.ds-checkbox__input {
+  width: var(--ds-checkbox-box);
+  height: var(--ds-checkbox-box);
+  border-radius: var(--border-radius-rounded);
+}
+
+.ds-checkbox__icon {
+  display: none;
+  left: 1px;
+  top: calc(50% - var(--ds-checkbox-icon) / 2);
+  width: var(--ds-checkbox-icon);
+  height: var(--ds-checkbox-icon);
+}
+
+/* Selection palettes */
+.ds-checkbox__input,
+.ds-checkbox__icon {
+  --_bg-default: var(--colors-checkbox-background-unchecked-default);
+  --_bg-hover: var(--colors-checkbox-background-unchecked-hover);
+  --_bg-pressed: var(--colors-checkbox-background-unchecked-pressed);
+  --_bg-disabled: var(--colors-checkbox-background-unchecked-disabled);
+  --_bd-default: var(--colors-checkbox-border-unchecked-default);
+  --_bd-hover: var(--colors-checkbox-border-unchecked-hover);
+  --_bd-pressed: var(--colors-checkbox-border-unchecked-pressed);
+  --_bd-disabled: var(--colors-checkbox-border-unchecked-disabled);
+}
+
+.ds-checkbox__input:checked,
+.ds-checkbox__input:checked ~ .ds-checkbox__icon {
+  --_bg-default: var(--colors-checkbox-background-checked-default);
+  --_bg-hover: var(--colors-checkbox-background-checked-hover);
+  --_bg-pressed: var(--colors-checkbox-background-checked-pressed);
+  --_bg-disabled: var(--colors-checkbox-background-checked-disabled);
+  --_bd-default: var(--colors-checkbox-border-checked-default);
+  --_bd-hover: var(--colors-checkbox-border-checked-hover);
+  --_bd-pressed: var(--colors-checkbox-border-checked-pressed);
+  --_bd-disabled: var(--colors-checkbox-border-checked-disabled);
+  --_ic-default: var(--colors-checkbox-icon-checked-default);
+  --_ic-hover: var(--colors-checkbox-icon-checked-hover);
+  --_ic-pressed: var(--colors-checkbox-icon-checked-pressed);
+  --_ic-disabled: var(--colors-checkbox-icon-checked-disabled);
+}
+
+/* Indeterminate wins over checked (a mixed checkbox can also be :checked). */
+.ds-checkbox__input:indeterminate,
+.ds-checkbox__input:indeterminate ~ .ds-checkbox__icon {
+  --_bg-default: var(--colors-checkbox-background-indeterminate-default);
+  --_bg-hover: var(--colors-checkbox-background-indeterminate-hover);
+  --_bg-pressed: var(--colors-checkbox-background-indeterminate-pressed);
+  --_bg-disabled: var(--colors-checkbox-background-indeterminate-disabled);
+  --_bd-default: var(--colors-checkbox-border-indeterminate-default);
+  --_bd-hover: var(--colors-checkbox-border-indeterminate-hover);
+  --_bd-pressed: var(--colors-checkbox-border-indeterminate-pressed);
+  --_bd-disabled: var(--colors-checkbox-border-indeterminate-disabled);
+  --_ic-default: var(--colors-checkbox-icon-indeterminate-default);
+  --_ic-hover: var(--colors-checkbox-icon-indeterminate-hover);
+  --_ic-pressed: var(--colors-checkbox-icon-indeterminate-pressed);
+  --_ic-disabled: var(--colors-checkbox-icon-indeterminate-disabled);
+}
+
+.ds-checkbox__input:checked:not(:indeterminate) ~ .ds-checkbox__check,
+.ds-checkbox__input:indeterminate ~ .ds-checkbox__minus {
+  display: block;
+}
+
+/* States: Default → Hover → Pressed → Disabled (later rules win). */
+.ds-checkbox__input {
+  background-color: var(--_bg-default);
+  box-shadow: inset 0 0 0 1px var(--_bd-default);
+}
+
+.ds-checkbox__icon {
+  color: var(--_ic-default);
+}
+
+.ds-checkbox:hover > .ds-checkbox__input {
+  background-color: var(--_bg-hover);
+  box-shadow: inset 0 0 0 1px var(--_bd-hover);
+}
+
+.ds-checkbox:hover > .ds-checkbox__icon {
+  color: var(--_ic-hover);
+}
+
+.ds-checkbox:active > .ds-checkbox__input {
+  background-color: var(--_bg-pressed);
+  box-shadow: inset 0 0 0 1px var(--_bd-pressed);
+}
+
+.ds-checkbox:active > .ds-checkbox__icon {
+  color: var(--_ic-pressed);
+}
+
+.ds-checkbox[data-disabled] > .ds-checkbox__input {
+  background-color: var(--_bg-disabled);
+  box-shadow: inset 0 0 0 1px var(--_bd-disabled);
+}
+
+.ds-checkbox[data-disabled] > .ds-checkbox__icon {
+  color: var(--_ic-disabled);
+}

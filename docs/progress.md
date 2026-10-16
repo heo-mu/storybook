@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | 0 | 토큰 최신화 · 인벤토리 | 완료 (0c7fcfa) |
 | 1 | Input · Textarea · Search Field | 완료 |
-| 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 미착수 |
+| 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 진행 (Checkbox · Radio · Switch · Select 완료) |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 미착수 |
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 미착수 |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
@@ -42,11 +42,22 @@
 | Input | 21 | 21/21 | 21/21 | 21/21 | 통과 |
 | Textarea | 14 | 14/14 | 14/14 | 14/14 | 통과 |
 | Search Field | 36 | 36/36 | 36/36 | 36/36 | 통과 |
+| Checkbox | 36 | 36/36 | 36/36 | 36/36 | 통과 |
+| Radio | 24 | 24/24 | 24/24 | 24/24 | 통과 |
+| Switch | 16 | 16/16 | 16/16 | 16/16 | 통과 |
+| Select (select · listbox · option · select_message) | 21 + 3 + 15 + 3 | 42/42 | 42/42 | 42/42 | 통과 |
+
+수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
+알려진 렌더링 차이(실패 아님): option md Disabled 밑줄 위치(Figma auto 밑줄이 약 1.5px 아래, F6) ·
+WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이미지 동일).
 
 ## 다음 작업
 
-Phase 2 — Select부터. `react-aria-components`(헤드리스, 스타일 없음)를 설치해 Select · Checkbox · Radio · Switch ·
-Slider · Segmented Control의 키보드·포커스·ARIA 동작에 사용하고, 시각 스타일은 Figma 변수만 사용한다.
+Phase 2 나머지 — Slider(`slider` 391:1988, `handle` 391:2013) → Segmented Control(531:24471, 524:24397) → Chip(201:12711, 558:26017, 558:25704).
+Slider는 react-aria-components `Slider`, Segmented Control은 `RadioGroup` 시맨틱(또는 RAC `ToggleButtonGroup`)을 검토한다.
+
+검증 도구 메모: `figma/verify/*.json`의 `story`는 배열 가능(열린 오버레이 상태용, `id&args=key:value`), `ignore`(수동 검토 레이어),
+`knownDifferences`(엔진 렌더링 차이 — 문자열 또는 엔진별 객체), `glyphDxTolerance`.
 
 ## 미해결 이슈
 

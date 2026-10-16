@@ -1,0 +1,47 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Switch.showcase.stories';
+import { Switch } from './Switch';
+
+<Meta title="Components/Switch/Usage" />
+
+# Switch — 사용 가이드
+
+Figma **Switch** 프레임(107:188)의 `switch` 세트(16개)를 구현한 토글 스위치입니다.
+`<input type="checkbox" role="switch">`이므로 Space 키로 전환되고, 스크린리더에는 "켜짐 / 꺼짐"으로 전달됩니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Switch } from 'platform-design-system';
+
+<Switch label="알림 받기" name="notify" defaultChecked />
+
+// 제어 컴포넌트
+<Switch label="자동 저장" checked={autoSave} onChange={(e) => setAutoSave(e.target.checked)} size="md" />`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Checked False · True | `checked` / `defaultChecked` | |
+| Size sm · md | `size` | 트랙 32×16 · 36×18px. 기본 `'sm'` |
+| Label / Label Text | `label` | 생략하면 `aria-label` 지정 |
+| State Hover · Pressed | 브라우저 `:hover` · `:active` | |
+| State Disabled | `disabled` | |
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **포커스 표시**: Figma에 Focus 상태가 없어 브라우저 기본 포커스 링을 유지합니다.
+- **전환 애니메이션**: Figma에 모션 정의가 없어 썸이 즉시 이동합니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+<ArgTypes of={Switch} />

@@ -1,0 +1,16 @@
+{
+  "component": "Radio",
+  "sets": [
+    {
+      "set": "radio",
+      "story": "components-radio-showcase--variant-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; } tr > :first-child { width: 160px; min-width: 160px; max-width: 160px; }",
+      "parts": {
+        "radio": ".ds-radio__input",
+        "radio/dot": ".ds-radio__dot",
+        "Label": ".ds-choice__label"
+      }
+    }
+  ]
+}

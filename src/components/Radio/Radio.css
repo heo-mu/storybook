@@ -1,0 +1,106 @@
+/*
+ * Figma component set `radio` (102:2677) — Selection Unselected / Selected × Size sm / md / lg ×
+ * State Default / Hover / Pressed / Disabled.
+ *   circle 14 / 16 / 18px, border-radius/rounded-full, 1px INSIDE stroke (inset box-shadow)
+ *   dot 8 / 9 / 10px centred in the circle (Selected only)
+ */
+
+.ds-radio {
+  --ds-radio-box: 14px;
+  --ds-radio-dot: 8px;
+
+  color: var(--colors-radio-label-default);
+}
+
+.ds-radio[data-size='md'] {
+  --ds-radio-box: 16px;
+  --ds-radio-dot: 9px;
+}
+
+.ds-radio[data-size='lg'] {
+  --ds-radio-box: 18px;
+  --ds-radio-dot: 10px;
+}
+
+.ds-radio[data-disabled] {
+  color: var(--colors-radio-label-disabled);
+}
+
+.ds-radio__input {
+  width: var(--ds-radio-box);
+  height: var(--ds-radio-box);
+  border-radius: var(--border-radius-rounded-full);
+}
+
+.ds-radio__dot {
+  display: none;
+  left: calc((var(--ds-radio-box) - var(--ds-radio-dot)) / 2);
+  top: calc(50% - var(--ds-radio-dot) / 2);
+  width: var(--ds-radio-dot);
+  height: var(--ds-radio-dot);
+  border-radius: var(--border-radius-rounded-full);
+}
+
+.ds-radio__input:checked ~ .ds-radio__dot {
+  display: block;
+}
+
+/* Selection palettes */
+.ds-radio__input {
+  --_bg-default: var(--colors-radio-background-unselected-default);
+  --_bg-hover: var(--colors-radio-background-unselected-hover);
+  --_bg-pressed: var(--colors-radio-background-unselected-pressed);
+  --_bg-disabled: var(--colors-radio-background-unselected-disabled);
+  --_bd-default: var(--colors-radio-border-unselected-default);
+  --_bd-hover: var(--colors-radio-border-unselected-hover);
+  --_bd-pressed: var(--colors-radio-border-unselected-pressed);
+  --_bd-disabled: var(--colors-radio-border-unselected-disabled);
+}
+
+.ds-radio__input:checked {
+  --_bg-default: var(--colors-radio-background-selected-default);
+  --_bg-hover: var(--colors-radio-background-selected-hover);
+  --_bg-pressed: var(--colors-radio-background-selected-pressed);
+  --_bg-disabled: var(--colors-radio-background-selected-disabled);
+  --_bd-default: var(--colors-radio-border-selected-default);
+  --_bd-hover: var(--colors-radio-border-selected-hover);
+  --_bd-pressed: var(--colors-radio-border-selected-pressed);
+  --_bd-disabled: var(--colors-radio-border-selected-disabled);
+}
+
+/* States: Default → Hover → Pressed → Disabled (later rules win). */
+.ds-radio__input {
+  background-color: var(--_bg-default);
+  box-shadow: inset 0 0 0 1px var(--_bd-default);
+}
+
+.ds-radio__dot {
+  background-color: var(--colors-radio-dot-selected-default);
+}
+
+.ds-radio:hover > .ds-radio__input {
+  background-color: var(--_bg-hover);
+  box-shadow: inset 0 0 0 1px var(--_bd-hover);
+}
+
+.ds-radio:hover > .ds-radio__dot {
+  background-color: var(--colors-radio-dot-selected-hover);
+}
+
+.ds-radio:active > .ds-radio__input {
+  background-color: var(--_bg-pressed);
+  box-shadow: inset 0 0 0 1px var(--_bd-pressed);
+}
+
+.ds-radio:active > .ds-radio__dot {
+  background-color: var(--colors-radio-dot-selected-pressed);
+}
+
+.ds-radio[data-disabled] > .ds-radio__input {
+  background-color: var(--_bg-disabled);
+  box-shadow: inset 0 0 0 1px var(--_bd-disabled);
+}
+
+.ds-radio[data-disabled] > .ds-radio__dot {
+  background-color: var(--colors-radio-dot-selected-disabled);
+}

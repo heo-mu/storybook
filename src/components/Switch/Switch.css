@@ -1,0 +1,79 @@
+/*
+ * Figma component set `switch` (107:409) — Size sm / md × State Default / Hover / Pressed / Disabled ×
+ * Checked False / True.
+ *   track 32×16 / 36×18, border-radius/rounded-full, padding spacing/padding/p-0_5 (2px)
+ *   thumb 12 / 14px, left-aligned (off) or right-aligned (on) inside the padding
+ */
+
+.ds-switch {
+  --ds-switch-track-w: 32px;
+  --ds-switch-track-h: 16px;
+  --ds-switch-thumb: 12px;
+
+  color: var(--colors-switch-label-default);
+}
+
+.ds-switch[data-size='md'] {
+  --ds-switch-track-w: 36px;
+  --ds-switch-track-h: 18px;
+  --ds-switch-thumb: 14px;
+}
+
+.ds-switch[data-disabled] {
+  color: var(--colors-switch-label-disabled);
+}
+
+.ds-switch__track {
+  width: var(--ds-switch-track-w);
+  height: var(--ds-switch-track-h);
+  border-radius: var(--border-radius-rounded-full);
+}
+
+.ds-switch__thumb {
+  left: var(--spacing-padding-p-0_5);
+  top: calc(50% - var(--ds-switch-thumb) / 2);
+  width: var(--ds-switch-thumb);
+  height: var(--ds-switch-thumb);
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-switch-thumb-default);
+}
+
+.ds-switch__track:checked ~ .ds-switch__thumb {
+  left: calc(var(--ds-switch-track-w) - var(--spacing-padding-p-0_5) - var(--ds-switch-thumb));
+}
+
+/* Track palettes */
+.ds-switch__track {
+  --_bg-default: var(--colors-switch-track-off-default);
+  --_bg-hover: var(--colors-switch-track-off-hover);
+  --_bg-pressed: var(--colors-switch-track-off-pressed);
+  --_bg-disabled: var(--colors-switch-track-off-disabled);
+}
+
+.ds-switch__track:checked {
+  --_bg-default: var(--colors-switch-track-on-default);
+  --_bg-hover: var(--colors-switch-track-on-hover);
+  --_bg-pressed: var(--colors-switch-track-on-pressed);
+  --_bg-disabled: var(--colors-switch-track-on-disabled);
+}
+
+/* States: Default → Hover → Pressed → Disabled (later rules win). */
+.ds-switch__track {
+  background-color: var(--_bg-default);
+}
+
+.ds-switch:hover > .ds-switch__track {
+  background-color: var(--_bg-hover);
+}
+
+.ds-switch:active > .ds-switch__track {
+  background-color: var(--_bg-pressed);
+}
+
+.ds-switch[data-disabled] > .ds-switch__track {
+  background-color: var(--_bg-disabled);
+}
+
+.ds-switch[data-disabled] > .ds-switch__thumb {
+  background-color: var(--colors-switch-thumb-disabled);
+}

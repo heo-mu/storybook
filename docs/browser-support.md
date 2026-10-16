@@ -66,6 +66,18 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 - 라벨 · 메시지 텍스트 너비는 Button 라벨과 같은 `calc-size()` 점진적 향상입니다.
 - 비기준 엔진(Firefox · WebKit)의 1px 미만 글리프 가로 차이는 글자 래스터화 차이로 기록만 하고 실패로 보지 않습니다(Chromium 기준 0.5px).
 
+## 선택 컨트롤 (Checkbox · Radio · Switch · Select)
+
+세 엔진 모두 전 Variant 통과(Checkbox 36, Radio 24, Switch 16, Select 21 · listbox 3 · option 15 · select_message 3).
+
+- 컨트롤은 네이티브 `<input>`에 `appearance: none`을 지정해 그립니다 — 세 엔진 모두 지원, 포커스 링도 브라우저 기본.
+- 라벨 너비가 내용에 맞춰지는 루트(Checkbox · Radio · Switch)는 `calc-size()`가 없는 Firefox · WebKit에서 1px 미만 좁습니다(Button과 같은 fallback).
+- **listbox 스크롤 표시**: Chromium · Safari는 `::-webkit-scrollbar`(4px, 둥근 막대, 토큰 색), Firefox는
+  `@supports not selector(::-webkit-scrollbar)`로 `scrollbar-width: thin` + `scrollbar-color`(두께는 브라우저가 결정).
+  macOS의 "스크롤 막대 자동 숨김" 설정에서는 스크롤할 때만 보입니다.
+- 목록 테두리는 `outline` + 음수 `outline-offset`(스크롤된 옵션이 테두리를 덮지 않도록) — 둥근 모서리를 따르는 outline은 Chrome 94+, Firefox 88+, Safari 16.4+.
+- option md Disabled의 밑줄: Figma가 offset · 두께를 auto로 두어 엔진 폰트 지표를 따르며, Figma보다 약 1.5px 위에 그려집니다(렌더링 차이로 기록).
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.

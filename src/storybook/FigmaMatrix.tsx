@@ -12,7 +12,7 @@ const caption: CSSProperties = {
 /**
  * Story-only grid for Variant Matrix stories. Each cell is wrapped in an element carrying
  * `data-figma="<exact Figma variant name>"` (used by scripts/verify-figma.mjs) and sized like the
- * Figma variant when `cellWidth` is given.
+ * Figma variant when `cellWidth` is given; without it the cell hugs its content (like a Figma hug layout).
  */
 export function FigmaMatrix({
   columns,
@@ -44,7 +44,7 @@ export function FigmaMatrix({
             {row.cells.map((cell, i) => (
               <td key={i} style={{ padding: '0 24px 0 0', verticalAlign: 'top' }}>
                 {cell && (
-                  <div data-figma={cell.figma} style={{ width: cellWidth }}>
+                  <div data-figma={cell.figma} style={cellWidth === undefined ? { display: 'flex', width: 'fit-content' } : { width: cellWidth }}>
                     {cell.node}
                   </div>
                 )}
