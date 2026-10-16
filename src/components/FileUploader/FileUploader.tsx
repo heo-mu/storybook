@@ -1,4 +1,4 @@
-import { forwardRef, useId, useRef, useState, type CSSProperties, type DragEvent, type ReactNode } from 'react';
+import { forwardRef, useRef, useState, type CSSProperties, type DragEvent, type ReactNode } from 'react';
 import { UploadSimpleIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import { useMergedRef } from '../Field';
@@ -49,7 +49,6 @@ export const FileUploader = forwardRef<HTMLInputElement, FileUploaderProps>(func
   { title = '파일을 끌어다 놓거나 선택하세요', helperText, showIcon = true, accept, multiple = false, disabled = false, onFilesSelected, name, id, className, style },
   ref,
 ) {
-  const autoId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const mergedRef = useMergedRef(ref, inputRef);
   const [dragDepth, setDragDepth] = useState(0);
@@ -75,8 +74,6 @@ export const FileUploader = forwardRef<HTMLInputElement, FileUploaderProps>(func
         style={style}
         disabled={disabled}
         data-drag-over={dragDepth > 0 || undefined}
-        aria-labelledby={`${autoId}-title`}
-        aria-describedby={helperText != null && helperText !== false ? `${autoId}-helper` : undefined}
         onClick={() => inputRef.current?.click()}
         onDragEnter={(e) => onDrag(e, 1)}
         onDragOver={(e) => onDrag(e, 0)}
@@ -94,11 +91,11 @@ export const FileUploader = forwardRef<HTMLInputElement, FileUploaderProps>(func
         </svg>
         {showIcon && <UploadSimpleIcon className="ds-file-uploader__icon" />}
         <span className="ds-file-uploader__text">
-          <span className="ds-file-uploader__title" id={`${autoId}-title`}>
+          <span className="ds-file-uploader__title">
             {title}
           </span>
           {helperText != null && helperText !== false && (
-            <span className="ds-file-uploader__helper" id={`${autoId}-helper`}>
+            <span className="ds-file-uploader__helper">
               {helperText}
             </span>
           )}

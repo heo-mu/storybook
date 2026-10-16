@@ -13,7 +13,8 @@
 | 성공(success) 메시지 | `colors/brand-status/success/strong` | #00a63e / #fdfdfd | 3.16:1 | Input · Textarea · Select 메시지 |
 | 보조 텍스트 | `colors/text/tertiary` (gray/500) | #778191 / #fdfdfd | 3.87:1 | Textarea 카운터 최대값 |
 | 선택 안 된 세그먼트 | `colors/segmented-control/unselected/label/default` (text/tertiary) | #778191 / #eff0f3 | 3.46:1 | Segmented Control |
-| 플레이스홀더 | `colors/text/placeholder` (gray/400) | #a1a8b5 / #fdfdfd | 2.35:1 | Input · Textarea · Search Field · Select 플레이스홀더 |
+| 플레이스홀더 | `colors/text/placeholder` (gray/400) | #a1a8b5 / #fdfdfd | 2.35:1 | Input · Textarea · Search Field · Select 플레이스홀더, Stepper Locked 제목 |
+| 잠긴 단계 설명 | `colors/stepper/label/description/locked` (text/disabled) | #c9ced6 / #fdfdfd | 1.55:1 | Stepper Locked(조작 대상이 아니라 비활성 예외에 해당하지 않음) |
 
 비활성(Disabled) 요소는 WCAG 대비 기준에서 제외됩니다.
 
@@ -29,11 +30,19 @@
 ## 자동 검사 (axe-core)
 
 `node scripts/a11y-audit.mjs`(Storybook 실행 중)가 모든 스토리를 WCAG 2.0 / 2.1 / 2.2 A · AA 규칙으로 검사합니다.
-위 표의 토큰 색 대비는 "알려진 항목"으로 따로 집계하고, 그 밖의 위반은 실패로 처리합니다.
+위 표의 토큰 색 대비와 아래 react-aria 마크업 항목은 "알려진 항목"으로 따로 집계하고, 그 밖의 위반은 실패로 처리합니다.
 
-| 시점 | 스토리 | 알려진 토큰 대비 | 그 밖의 위반 |
-| --- | --- | --- | --- |
-| Phase 2 완료 | 148 | 102 (모두 color-contrast) | 0 |
+| 시점 | 스토리 | 알려진 토큰 대비 | 알려진 react-aria 마크업 | 그 밖의 위반 |
+| --- | --- | --- | --- | --- |
+| Phase 2 완료 | 148 | 102 (모두 color-contrast) | — | 0 |
+| Phase 4 완료 | 262 | 210 (모두 color-contrast) | 693 | 0 |
+
+- **react-aria 마크업 — label-content-name-mismatch (axe 실험 규칙, WCAG 2.5.3)**: 달력 날짜 칸의 이름은 react-aria가 만드는
+  전체 날짜("2026년 7월 28일 화요일")이고 보이는 글자는 "28"입니다. 한국어 이름에서는 "28일"로 붙어 axe가 단어 일치로
+  인정하지 않습니다(숫자는 이름에 포함). 라이브러리가 이름을 바꿀 방법을 제공하지 않아 알려진 항목으로 둡니다.
+- Phase 3 · 4 검사에서 고친 코드 문제: FileUploader 드롭 영역 이름을 보이는 글자(제목 + 도움말)로 변경(2.5.3),
+  Tabs 검증 스토리에 TabPanel 추가(aria-controls 대상).
+- `[data-a11y-exclude]`: 단독으로는 유효한 위젯이 아닌 시각 검증 칸(예: 제목만 있는 메뉴)은 검사에서 제외하고 스토리에 이유를 적습니다.
 
 ## 컴포넌트별
 
@@ -90,7 +99,7 @@
 - `name`을 주면 숨은 input으로 ISO 날짜를 전송합니다.
 
 ### FileUploader · FileUploaderItem · Loading
-- 드롭 영역은 `<button>`(이름 = 제목, 설명 = 도움말), Enter · Space로 파일 선택 창. 숨은 `<input type="file">`이 폼 값.
+- 드롭 영역은 `<button>`(이름 = 보이는 글자: 제목 + 도움말, WCAG 2.5.3), Enter · Space로 파일 선택 창. 숨은 `<input type="file">`이 폼 값.
 - 항목의 "삭제" · "다운로드"는 TextButton, 설명(`aria-describedby`)이 파일 이름. 업로드 중 항목은 `aria-busy` + 스피너.
 - Loading은 `role="status"`(라벨 또는 `aria-label`, 기본 "로딩 중"). 회전은 `prefers-reduced-motion`에서 느려집니다.
 
@@ -117,6 +126,11 @@
 - `<nav>`(이름은 `aria-label`로 지정) > `<ul>` > `<li>`. 링크는 `<a href>`, 현재 페이지는 `aria-current="page"`.
 - 그룹(item_parent)은 `<button aria-expanded aria-controls>`, 접힌 하위 목록은 `hidden`이라 Tab 순서와 접근성 트리에서 빠집니다.
 - 아이콘은 `aria-hidden`(장식).
+
+### Stepper
+- `<ol>`(이름은 `aria-label`) > `<li>`, 현재 단계 `aria-current="step"`.
+- 원 안의 숫자 · 아이콘은 `aria-hidden`, 대신 숨은 문구 "N단계"와 상태(완료 · 오류 · 잠김)를 읽습니다.
+- 연결선은 장식(`aria-hidden`). 상호작용 없음.
 
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,

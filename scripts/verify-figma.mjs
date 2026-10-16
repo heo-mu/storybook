@@ -97,6 +97,19 @@ const consoleErrors = [];
 page.on('pageerror', (e) => consoleErrors.push(e.message));
 page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text()); });
 
+// A story can re-render once after load (args from the URL, a dependency re-optimised by Vite), detaching the
+// cell between measuring and capturing it: retry that case once instead of failing the run.
+async function screenshotCell(page, name) {
+  const locate = () => page.locator(`[data-figma="${name.replace(/"/g, '\\"')}"]`).first();
+  try {
+    return await locate().screenshot();
+  } catch (e) {
+    if (!/not attached/.test(String(e))) throw e;
+    await page.waitForTimeout(500);
+    return locate().screenshot();
+  }
+}
+
 const report = { component, browser: `${BROWSER} ${browser.version()}`, sets: {} };
 let failures = 0;
 const lines = ['', `Figma ↔ Storybook parity — ${component} (${report.browser})`];
@@ -143,7 +156,11 @@ for (const set of config.sets) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(150);
 
-  const storyMeasured = await page.evaluate(measure, Object.fromEntries(partSpecs.map((p) => [p.key, p.selectors])));
+  // `figmaPrefix`: one story holds several sets — cells named "<prefix><variant>" belong to this set.
+  const prefix = set.figmaPrefix ?? '';
+  const storyMeasured = (await page.evaluate(measure, Object.fromEntries(partSpecs.map((p) => [p.key, p.selectors]))))
+    .filter((m) => m.name.startsWith(prefix))
+    .map((m) => ({ ...m, attr: m.name, name: m.name.slice(prefix.length) }));
   measured.push(...storyMeasured);
   const calcSize = await page.evaluate(() => CSS.supports('width', 'calc-size(fit-content, round(up, size, 1px))'));
 
@@ -192,7 +209,7 @@ for (const set of config.sets) {
     const fp = positions.get(m.name);
     let pixel = null;
     if (fp) {
-      const shot = PNG.sync.read(await page.locator(`[data-figma="${m.name.replace(/"/g, '\\"')}"]`).first().screenshot());
+      const shot = PNG.sync.read(await screenshotCell(page, m.attr));
       const w = Math.min(shot.width, Math.round(g.w)), h = Math.min(shot.height, Math.round(g.h));
       const fig = cropOver(reference, Math.round(fp.x), Math.round(fp.y), w, h, set.background);
       const dom = cropOver(shot, 0, 0, w, h, set.background);

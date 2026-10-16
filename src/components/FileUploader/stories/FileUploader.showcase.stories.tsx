@@ -180,8 +180,9 @@ export const Accessibility: Story = {
     </div>
   ),
   play: async ({ canvas }) => {
-    const zone = canvas.getByRole('button', { name: FIGMA_TITLE });
-    await expect(zone).toHaveAccessibleDescription(FIGMA_HELPER);
+    // The name is the visible text (title + helper), as WCAG 2.5.3 (label in name) asks.
+    const zone = canvas.getByRole('button', { name: (name) => name.startsWith(FIGMA_TITLE) && name.endsWith(FIGMA_HELPER) });
+    await expect(zone).toBeInTheDocument();
     await expect(canvas.getByRole('status', { name: '업로드 중' })).toBeInTheDocument();
   },
 };

@@ -1,0 +1,87 @@
+{
+  "component": "Stepper",
+  "sets": [
+    {
+      "set": "stepper_indicator_horizontal",
+      "story": "components-stepper-showcase--indicator-matrix",
+      "figmaPrefix": "horizontal:",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "parts": {
+        "button_icon": ".ds-stepper-indicator__circle",
+        "button_icon/Label#2": ".ds-stepper-indicator__number",
+        "button_icon/icon_size": ".ds-stepper-indicator__icon",
+        "button_icon/icon_size/icon/*": ".ds-stepper-indicator__icon",
+        "Content": ".ds-stepper-indicator__content",
+        "Content/Label": ".ds-stepper-indicator__label",
+        "Content/Sub label": ".ds-stepper-indicator__description"
+      }
+    },
+    {
+      "set": "stepper_indicator_vertical",
+      "story": "components-stepper-showcase--indicator-matrix",
+      "figmaPrefix": "vertical:",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "parts": {
+        "button_icon": ".ds-stepper-indicator__circle",
+        "button_icon/Label#2": ".ds-stepper-indicator__number",
+        "button_icon/icon_size": ".ds-stepper-indicator__icon",
+        "button_icon/icon_size/icon/*": ".ds-stepper-indicator__icon",
+        "Content": ".ds-stepper-indicator__content",
+        "Content/Label": ".ds-stepper-indicator__label",
+        "Content/Sub Label": ".ds-stepper-indicator__description"
+      }
+    },
+    {
+      "set": "stepper_connector_horizontal",
+      "story": "components-stepper-showcase--connector-matrix",
+      "figmaPrefix": "horizontal:",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 200px; min-width: 200px; max-width: 200px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "parts": {}
+    },
+    {
+      "set": "stepper_connector_vertical",
+      "story": "components-stepper-showcase--connector-matrix",
+      "figmaPrefix": "vertical:",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 200px; min-width: 200px; max-width: 200px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "parts": {}
+    },
+    {
+      "set": "stepper_horizontal",
+      "story": "components-stepper-showcase--stepper-matrix",
+      "figmaPrefix": "horizontal:",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 860px; min-width: 860px; max-width: 860px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "parts": {
+        "stepper_indicator_horizontal*": ".ds-stepper-indicator",
+        "*/button_icon": ".ds-stepper-indicator__circle",
+        "*/button_icon/Label": ".ds-stepper-indicator__number",
+        "*/button_icon/icon_size": ".ds-stepper-indicator__icon",
+        "*/Content": ".ds-stepper-indicator__content",
+        "*/Content/Label": ".ds-stepper-indicator__label",
+        "*/Content/Sub label": ".ds-stepper-indicator__description",
+        "stepper_connector_horizontal*": ".ds-stepper-connector"
+      }
+    },
+    {
+      "set": "stepper_vertical",
+      "story": "components-stepper-showcase--stepper-matrix",
+      "figmaPrefix": "vertical:",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 860px; min-width: 860px; max-width: 860px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "parts": {
+        "stepper_indicator_vertical*": ".ds-stepper-indicator",
+        "*/button_icon": ".ds-stepper-indicator__circle",
+        "*/button_icon/Label": ".ds-stepper-indicator__number",
+        "*/button_icon/icon_size": ".ds-stepper-indicator__icon",
+        "*/Content": ".ds-stepper-indicator__content",
+        "*/Content/Label": ".ds-stepper-indicator__label",
+        "*/Content/Sub Label": ".ds-stepper-indicator__description",
+        "stepper_connector_vertical*": ".ds-stepper-connector"
+      }
+    }
+  ]
+}

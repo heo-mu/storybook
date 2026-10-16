@@ -1,0 +1,66 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Stepper.showcase.stories';
+import { Stepper, StepperIndicator, StepperConnector } from './Stepper';
+
+<Meta title="Components/Stepper/Usage" />
+
+# Stepper — 사용 가이드
+
+Figma **Stepper** 프레임(151:697)의 `stepper_horizontal` · `stepper_vertical`(각 3개), `stepper_indicator_*`(각 5개),
+`stepper_connector_*`(각 2개)를 구현했습니다. 진행 상황 표시용이며 클릭할 수 없습니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Stepper } from 'platform-design-system';
+
+<Stepper
+  aria-label="가입 절차"
+  currentStep={step}          // 0부터 — 앞 단계는 완료, 뒤 단계는 예정
+  steps={[
+    { label: '약관 동의', description: '필수 항목' },
+    { label: '정보 입력', description: '이름 · 연락처', status: hasError ? 'error' : undefined },
+    { label: '완료' },
+  ]}
+/>
+
+<Stepper orientation="vertical" steps={steps} currentStep={2} />`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Type Horizontal · Vertical | `orientation` | |
+| Steps 3 · 4 · 5 | `steps` 개수 | 개수 제한 없음 |
+| indicator Variant Upcoming · Current · Completed | `currentStep`에서 계산 | 현재 단계 `aria-current="step"` |
+| indicator Variant Locked · Error | 단계의 `status` | |
+| Label · Label Text | 단계의 `label` | |
+| Sub-Label · Sub-Label Text | 단계의 `description` | |
+| connector State Completed | 완료된 단계 뒤에서 자동 | |
+
+## 코드 정책 (Figma에 정의되지 않은 부분)
+
+- **연결선 길이**: Figma는 가로 180px 고정입니다. 기본은 180px이고, Stepper에 너비를 주면 연결선이 늘어나 채웁니다.
+  세로 연결선은 48px 고정입니다.
+- **스크린 리더 문구**: 완료 · 오류 · 잠김은 색과 아이콘으로만 보이므로 "N단계, 완료"처럼 숨은 문구를 함께 읽습니다.
+- **애니메이션**: Figma에 참고 링크(heroui stepper)만 있고 값이 없어 구현하지 않았습니다.
+- **텍스트 넘침**: Figma처럼 표시기 루트는 원 크기(20px)이고 라벨이 양옆(가로) 또는 위아래(세로)로 넘칩니다.
+  가로 Stepper 양 끝 라벨이 잘리지 않도록 바깥에 여백을 두세요(라벨 폭의 절반).
+
+## 상태
+
+<Canvas of={Showcase.IndicatorMatrix} />
+
+## Props
+
+<ArgTypes of={Stepper} />
+
+### StepperIndicator · StepperConnector
+
+<ArgTypes of={StepperIndicator} />
+
+<ArgTypes of={StepperConnector} />

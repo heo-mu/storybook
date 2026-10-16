@@ -105,13 +105,18 @@ export function NavGroup({ label, icon, children, expanded, defaultExpanded = fa
         {label}
       </NavParentItem>
       {items.length > 0 && (
-        <ul id={listId} className="ds-nav__children" hidden={!isExpanded}>
-          {items.map((child, index) => (
-            <li key={index} className="ds-nav__entry">
-              {child}
-            </li>
-          ))}
-        </ul>
+        <div className="ds-nav__children" hidden={!isExpanded}>
+          <svg className="ds-nav__line" aria-hidden="true" focusable="false">
+            <rect />
+          </svg>
+          <ul id={listId} className="ds-nav__children-list">
+            {items.map((child, index) => (
+              <li key={index} className="ds-nav__entry">
+                {child}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );

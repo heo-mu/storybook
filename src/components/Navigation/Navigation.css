@@ -19,7 +19,7 @@
 }
 
 .ds-nav__list,
-.ds-nav__children {
+.ds-nav__children-list {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-margin-m-1_5);
@@ -34,17 +34,34 @@
   gap: var(--spacing-margin-m-1_5);
 }
 
+/*
+ * Child list: padding-left p-4 + m-2_5, with the Figma 1px line (CENTER stroke at x = p-4, i.e. 15.5–16.5) drawn as
+ * an SVG rect so it keeps that half-pixel geometry like Figma (CSS backgrounds snap to whole pixels).
+ */
 .ds-nav__children {
+  position: relative;
   padding-left: calc(var(--spacing-padding-p-4) + var(--spacing-margin-m-2_5));
-  background: linear-gradient(
-      var(--colors-navigation-lnb-item-child-selected-indicator-selected),
-      var(--colors-navigation-lnb-item-child-selected-indicator-selected)
-    )
-    var(--spacing-padding-p-4) 0 / var(--border-width-border) 100% no-repeat;
 }
 
 .ds-nav__children[hidden] {
   display: none;
+}
+
+.ds-nav__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--spacing-padding-p-4) * 2);
+  height: 100%;
+  overflow: visible;
+}
+
+.ds-nav__line > rect {
+  x: calc(var(--spacing-padding-p-4) - var(--border-width-border) / 2);
+  y: 0;
+  width: var(--border-width-border);
+  height: 100%;
+  fill: var(--colors-navigation-lnb-item-child-selected-indicator-selected);
 }
 
 /* item_parent · item_link */

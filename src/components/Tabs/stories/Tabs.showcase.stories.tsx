@@ -31,6 +31,13 @@ function FigmaTab({ appearance, variant, size, shape, state }: { appearance: Tab
           -
         </Tab>
       </TabList>
+      {/* Panels exist so aria-controls resolves; hidden — the cell shows the tab only. */}
+      <TabPanel id="tab" style={{ display: 'none' }}>
+        -
+      </TabPanel>
+      <TabPanel id="other" style={{ display: 'none' }}>
+        -
+      </TabPanel>
     </Tabs>
   );
 }
@@ -60,6 +67,9 @@ export const Overview: Story = {
           <Tab id="w">주간</Tab>
           <Tab id="m">월간</Tab>
         </TabList>
+        <TabPanel id="d">일간 데이터</TabPanel>
+        <TabPanel id="w">주간 데이터</TabPanel>
+        <TabPanel id="m">월간 데이터</TabPanel>
       </Tabs>
     </div>
   ),

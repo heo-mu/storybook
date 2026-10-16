@@ -1,0 +1,1 @@
+{"set":"stepper_connector_horizontal","id":"179:1614","variants":{"State=Default, Type=Horizontal":{"w":180,"h":20,"n":[]},"State=Completed, Type=Horizontal":{"w":180,"h":20,"n":[]}},"positions":{"State=Default, Type=Horizontal":[20,20],"State=Completed, Type=Horizontal":[220,20]}}

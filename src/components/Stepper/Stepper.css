@@ -1,0 +1,220 @@
+/*
+ * Stepper — Figma `stepper_horizontal` (179:2043), `stepper_vertical` (203:3949), `stepper_indicator_horizontal`
+ * (179:1621), `stepper_indicator_vertical` (203:3708), `stepper_connector_horizontal` (179:1614),
+ * `stepper_connector_vertical` (203:4253).
+ *   indicator: 20px circle (padding p-0_5, border-radius/rounded-full) with the number (xs/leading-normal/medium,
+ *       16px wide, centred) or a 16px icon; text m-2 from the circle — label sm/leading-normal/medium, sub label
+ *       xs/leading-normal/normal, m-0_5 apart. Horizontal: text under the circle, centred, the root as wide as the
+ *       circle (text overflows both sides). Vertical: text beside it, the root as tall as the circle.
+ *   connector: 1px line (border-width/border) centred in a 20px band, padding p-1 at both ends; horizontal 180px,
+ *       vertical 48px. Inside a stepper the padding is 0 (Figma instance override).
+ * Indicator status: Upcoming · Current · Completed · Locked · Error.
+ */
+
+.ds-stepper {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-stepper[data-orientation='vertical'] {
+  flex-direction: column;
+}
+
+.ds-stepper__step {
+  display: flex;
+}
+
+.ds-stepper[data-orientation='horizontal'] .ds-stepper__step:not(:last-child) {
+  flex: 1 1 auto;
+}
+
+.ds-stepper[data-orientation='vertical'] .ds-stepper__step {
+  flex-direction: column;
+}
+
+.ds-stepper__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Indicator */
+.ds-stepper-indicator {
+  --_bg: var(--colors-stepper-indicator-upcoming-background-default);
+  --_mark: var(--colors-stepper-indicator-upcoming-label-default);
+  --_title: var(--colors-stepper-label-title-dafault);
+  --_desc: var(--colors-stepper-label-description-default);
+
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+}
+
+.ds-stepper-indicator[data-orientation='horizontal'] {
+  flex-direction: column;
+  width: 20px;
+}
+
+.ds-stepper-indicator[data-orientation='vertical'] {
+  height: 20px;
+}
+
+.ds-stepper-indicator[data-status='current'] {
+  --_bg: var(--colors-stepper-indicator-current-background-default);
+  --_mark: var(--colors-stepper-indicator-current-label-default);
+}
+
+.ds-stepper-indicator[data-status='completed'] {
+  --_bg: var(--colors-stepper-indicator-completed-background-default);
+  --_mark: var(--colors-stepper-indicator-completed-icon-default);
+}
+
+.ds-stepper-indicator[data-status='locked'] {
+  --_bg: var(--colors-stepper-indicator-locked-background-default);
+  --_mark: var(--colors-stepper-indicator-locked-label-default);
+  --_title: var(--colors-stepper-label-title-locked);
+  --_desc: var(--colors-stepper-label-description-locked);
+}
+
+.ds-stepper-indicator[data-status='error'] {
+  --_bg: var(--colors-stepper-indicator-error-background-default);
+  --_mark: var(--colors-stepper-indicator-error-icon-default);
+  --_title: var(--colors-stepper-label-title-error);
+  --_desc: var(--colors-stepper-label-description-error);
+}
+
+.ds-stepper-indicator__circle {
+  box-sizing: border-box;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: var(--spacing-padding-p-0_5);
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--_bg);
+  color: var(--_mark);
+}
+
+.ds-stepper-indicator__number {
+  width: 16px;
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+  text-align: center;
+}
+
+.ds-stepper-indicator__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.ds-stepper-indicator__content {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-margin-m-0_5);
+  white-space: nowrap;
+}
+
+.ds-stepper-indicator[data-orientation='horizontal'] .ds-stepper-indicator__content {
+  align-items: center;
+  text-align: center;
+}
+
+.ds-stepper-indicator__label {
+  color: var(--_title);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-stepper-indicator__description {
+  color: var(--_desc);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-stepper-indicator__label,
+  .ds-stepper-indicator__description {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
+
+/*
+ * Connector: the Figma line is a 1px stroke centred on the band (y 9.5–10.5 of 20), so it falls on a half pixel.
+ * An SVG rect with the same geometry renders like Figma (two half-covered rows at 1x, one crisp row at 2x);
+ * CSS backgrounds would snap it to a whole pixel. Rect geometry is set with SVG 2 CSS properties.
+ */
+.ds-stepper-connector {
+  --_line: var(--colors-stepper-connector-incomplete-default);
+
+  box-sizing: border-box;
+  display: block;
+  flex-shrink: 0;
+}
+
+.ds-stepper-connector[data-completed] {
+  --_line: var(--colors-stepper-connector-complete-default);
+}
+
+.ds-stepper-connector[data-orientation='horizontal'] {
+  flex: 1 1 180px;
+  width: 180px;
+  height: 20px;
+  padding: 0 var(--spacing-padding-p-1);
+}
+
+.ds-stepper-connector[data-orientation='vertical'] {
+  width: 20px;
+  height: 48px;
+  padding: var(--spacing-padding-p-1) 0;
+}
+
+.ds-stepper-connector__line {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ds-stepper-connector__line > rect {
+  fill: var(--_line);
+}
+
+.ds-stepper-connector[data-orientation='horizontal'] .ds-stepper-connector__line > rect {
+  x: 0;
+  y: calc(50% - var(--border-width-border) / 2);
+  width: 100%;
+  height: var(--border-width-border);
+}
+
+.ds-stepper-connector[data-orientation='vertical'] .ds-stepper-connector__line > rect {
+  x: calc(50% - var(--border-width-border) / 2);
+  y: 0;
+  width: var(--border-width-border);
+  height: 100%;
+}
+
+.ds-stepper .ds-stepper-connector {
+  padding: 0;
+}

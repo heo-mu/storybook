@@ -119,7 +119,11 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F34 | breadcrumb-item Hover · Pressed · Open · Current Variant의 아이콘 슬롯이 비어 있음(Link Default만 House) — `breadcrumb/home-icon/hover · pressed · current`, `background/focus` · `border/focus` · `border/menu` 변수는 어디에도 바인딩되지 않음 | 아이콘 색은 같은 이름의 변수 사용, focus · menu 변수는 미사용 | 아이콘 슬롯 채우기, 변수 정리 |
 | F35 | breadcrumb "Show Parent"가 Full에서도 상위 페이지를 숨김(경로가 끊김) | Collapsed에만 적용 | 의도 확인 |
 | F36 | item_link Unselected Hover 아이콘이 `…/link/unselected/icon/default`에 바인딩 — `…/icon/hover`(icon/secondary) 미사용(item_parent Hover는 `…/icon/hover` 사용) | 바인딩 그대로(Hover에도 기본 색) | 의도 확인 |
-| F37 | LNB 예시의 하위 목록 선(Vector, 1px CENTER)이 x 16에 있어 반 픽셀(15.5–16.5)로 렌더링 | 같은 위치의 선명한 1px 선 | — |
+| F37 | LNB 예시의 하위 목록 선 · Stepper 연결선이 1px CENTER 선(정수 좌표)이라 반 픽셀(예: 15.5–16.5)에 걸쳐 흐리게 렌더링 | 같은 기하의 SVG rect로 그려 Figma와 같은 픽셀(CSS 배경은 정수 픽셀로 맞춰짐) | 선명한 선을 원하면 0.5px 이동 |
+| F38 | Stepper 변수 이름 오타 `colors/stepper/label/title/dafault`(default) | 이름 그대로(토큰은 Figma 이름) | 이름 수정 |
+| F39 | Stepper 안의 connector 인스턴스가 padding p-1을 0으로 덮어씀(컴포넌트 자체는 양 끝 p-1) | 컴포넌트는 p-1, Stepper 안에서는 0 | — |
+| F40 | Stepper Current 원(`fill/primary/strong/pressed` #007c56)이 Completed(`…/strong/default` #004a38)보다 밝음 | 바인딩 그대로 | 의도 확인 |
+| F41 | Stepper 프레임에 애니메이션 참고 링크(heroui.pro stepper)만 있고 시간 · 곡선 값 없음 | 미구현 | 값 정의 |
 
 ## D. 작업 중 관찰된 원본 변경
 

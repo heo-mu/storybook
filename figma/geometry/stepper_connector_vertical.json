@@ -1,0 +1,1 @@
+{"set":"stepper_connector_vertical","id":"203:4253","variants":{"State=Default, Type=Vertical":{"w":20,"h":48,"n":[]},"State=Completed, Type=Vertical":{"w":20,"h":48,"n":[]}},"positions":{"State=Default, Type=Vertical":[20,20],"State=Completed, Type=Vertical":[60,20]}}

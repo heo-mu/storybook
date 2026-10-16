@@ -86,10 +86,14 @@ export const ItemMatrix: Story = {
           cells: [
             {
               figma: 'Type=Title, State=None',
+              // A menu holding only a title is not a valid menu for assistive technology: visual cell only,
+              // excluded from the axe audit (scripts/a11y-audit.mjs).
               node: (
-                <Menu aria-label="title">
-                  <DropdownMenuSection title="제목">{[]}</DropdownMenuSection>
-                </Menu>
+                <div data-a11y-exclude="title-only menu">
+                  <Menu aria-label="title">
+                    <DropdownMenuSection title="제목">{[]}</DropdownMenuSection>
+                  </Menu>
+                </div>
               ),
             },
           ],
