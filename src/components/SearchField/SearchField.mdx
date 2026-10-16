@@ -1,0 +1,46 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/SearchField.showcase.stories';
+import { SearchField } from './SearchField';
+
+<Meta title="Components/SearchField/Usage" />
+
+# Search Field — 사용 가이드
+
+Figma **Search Field** 프레임(216:6742)의 `search-field` 세트(36개)를 구현한 검색 입력입니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { SearchField } from 'platform-design-system';
+
+<SearchField label="입주민 검색" placeholder="이름 또는 동·호수" onSearch={(q) => runSearch(q)} />
+
+// 라벨 없는 검색창
+<SearchField aria-label="전체 검색" appearance="solid" size="md" />`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Size sm · md · lg | `size` | 기본 `'sm'` |
+| Type Outline · Solid | `appearance` | 기본 `'outline'` |
+| Label / Label Text | `label` | 생략 시 `aria-label` 필수 |
+| State Hover · Focus · Completed · Error · Disabled | 브라우저 상태 · 값 유무 · `invalid` · `disabled` | Figma에 Read-only 상태 없음 |
+
+## 동작
+
+- `<input type="search">`이며, Enter 키에서 `onSearch(value)`가 호출됩니다. 브라우저 기본 지우기 아이콘은 숨깁니다.
+- 지우기 버튼(X)은 Figma처럼 Focus · Error 상태에서 보입니다(마우스용, `tabIndex=-1`). 누르면 값을 비우고 `onClear`를 호출하며 포커스를 유지합니다.
+- Solid 타입의 Error는 Figma에 테두리가 없습니다(글자색만 변경) — [figma-issues](../../../docs/figma-issues.md) 참고.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+<ArgTypes of={SearchField} />

@@ -1,0 +1,114 @@
+/*
+ * Textarea — Figma component set `textarea` (86:2597). Same state order as Input.
+ */
+.ds-textarea {
+  --ds-field-bg: var(--colors-textarea-outline-background-default);
+  --ds-field-border-color: var(--colors-textarea-outline-border-default);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-textarea-outline-label-completed);
+  /* Figma binds the empty text directly to colors/text/placeholder. */
+  --ds-field-placeholder: var(--colors-text-placeholder);
+  --ds-textarea-count: var(--colors-text-brand);
+}
+
+.ds-textarea[data-filled] {
+  --ds-field-bg: var(--colors-textarea-outline-background-completed);
+  --ds-field-border-color: var(--colors-textarea-outline-border-completed);
+}
+
+.ds-textarea:hover {
+  --ds-field-border-color: var(--colors-textarea-outline-border-hover);
+}
+
+.ds-textarea:focus-within {
+  --ds-field-border-color: var(--colors-textarea-outline-border-focus);
+}
+
+.ds-textarea[data-invalid] {
+  --ds-field-border-color: var(--colors-textarea-outline-border-error);
+  --ds-field-border-width: var(--border-width-border-2);
+  --ds-field-text: var(--colors-textarea-outline-label-error);
+  /* Figma binds the over-limit count to colors/input/outline/helper/error. */
+  --ds-textarea-count: var(--colors-input-outline-helper-error);
+}
+
+.ds-textarea[data-readonly] {
+  --ds-field-bg: var(--colors-textarea-outline-background-read-only);
+  --ds-field-border-color: var(--colors-textarea-outline-border-read-only);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-textarea-outline-label-default);
+}
+
+.ds-textarea[data-disabled] {
+  --ds-field-bg: var(--colors-textarea-outline-background-disabled);
+  --ds-field-border-color: var(--colors-textarea-outline-border-disabled);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-textarea-outline-placeholder-disabled);
+  --ds-field-placeholder: var(--colors-textarea-outline-placeholder-disabled);
+}
+
+/* Container: fixed 100px, top-aligned text. */
+.ds-textarea__control {
+  align-items: stretch;
+  gap: var(--spacing-padding-p-0);
+  height: 100px;
+}
+
+.ds-textarea__input {
+  height: 100%;
+  resize: none;
+  overflow: auto;
+}
+
+.ds-field[data-size] .ds-textarea__input {
+  height: 100%;
+  padding-top: 0;
+}
+
+/* md (16px / 24px): multi-line, so instead of changing the line-height (Input md) the first baseline
+ * is moved by half a pixel — Chromium then lands on Figma's baseline and other engines are unchanged. */
+.ds-textarea[data-size='md'] .ds-textarea__input {
+  padding-top: 0.5px;
+  line-height: var(--typography-base-leading-normal-normal-line-height);
+}
+
+/* "Character count" row: message on the left (fill), count on the right. */
+.ds-textarea__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-padding-p-1_5);
+  width: 100%;
+}
+
+.ds-textarea__message {
+  flex: 1 1 auto;
+}
+
+.ds-textarea__count {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: var(--spacing-padding-p-0_5);
+  color: var(--colors-textarea-outline-counter-default);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+.ds-textarea__count-current {
+  color: var(--ds-textarea-count);
+}
+
+.ds-textarea .ds-field-message[data-type='info'] {
+  --ds-field-message-color: var(--colors-textarea-outline-helper-info);
+}
+
+.ds-textarea .ds-field-message[data-type='success'] {
+  --ds-field-message-color: var(--colors-textarea-outline-helper-completed);
+}
+
+.ds-textarea .ds-field-message[data-type='error'] {
+  --ds-field-message-color: var(--colors-textarea-outline-helper-error);
+}

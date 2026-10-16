@@ -1,0 +1,23 @@
+{
+  "component": "Input",
+  "sets": [
+    {
+      "set": "input",
+      "story": "components-input-showcase--variant-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 344px; min-width: 344px; max-width: 344px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Label": ".ds-field__label",
+        "Container": ".ds-field__control",
+        "Container/Input": ".ds-field__input",
+        "Container/eye": ".ds-input__reveal",
+        "Container/icon_size": ".ds-input__clear",
+        "input_message": ".ds-field-message",
+        "input_message/*-fill": ".ds-field-message__icon",
+        "input_message/*ext": ".ds-field-message__text"
+      },
+      "glyphDxTolerance": 0.6,
+      "//glyphDxTolerance": "lg Disabled placeholder (#c9ced6 on #eff0f3) measures 0.54px horizontally; the images are identical, low-contrast centroid noise"
+    }
+  ]
+}

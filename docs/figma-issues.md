@@ -62,6 +62,23 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | C5 | `file-uploader/label`, `file-uploader/helper`는 **Noto Sans KR**이며 변수 바인딩 없음 (나머지는 Pretendard Variable) | 값 그대로 생성 | 의도 확인 후 Pretendard·변수로 통일 |
 | C6 | Effect Style `elevation-1/2/3/6`이 `shadows/*` 변수에 바인딩되지 않음. 색 #0000001f(12%)는 `shadows/color`(5 · 10 · 25%)에 없음. 4·5 단계 없음 | 값 그대로 `--effect-elevation-*` 생성. `shadows/scale/*`은 조합 규칙이 없어 합성하지 않음 | 그림자 변수로 바인딩하고 스케일 정리 |
 
+## E. 입력 필드 (Input · Textarea · Search Field)
+
+| # | 내용 | 코드 처리 | 제안 |
+| --- | --- | --- | --- |
+| E1 | 값 텍스트가 `colors/input/outline/label/*`에 바인딩(이름은 label). `…/value/*`, `…/placeholder/*` 변수는 쓰이지 않음 | 바인딩 그대로(label 토큰 = 값/플레이스홀더 색) | 값 텍스트를 `value/*`, 빈 상태를 `placeholder/*`에 바인딩 |
+| E2 | 필드 라벨이 Component 변수가 아닌 Semantic `colors/text/secondary`에 직접 바인딩(세 필드 공통) | 바인딩 그대로 | Rules 03에 따라 Component 변수 경유 |
+| E3 | Textarea 빈 텍스트가 Semantic `colors/text/placeholder`에 직접 바인딩(Input은 Component 변수) | 바인딩 그대로 | Component 변수로 통일 |
+| E4 | Textarea Error 카운터가 Input 변수 `colors/input/outline/helper/error`에 바인딩, 현재 글자 수는 Semantic `colors/text/brand`(같은 값의 `textarea/outline/counter/completed` 미사용) | 바인딩 그대로 | `textarea/outline/counter/*`로 통일 |
+| E5 | Textarea 카운터 숫자(1 · 50 · 200)는 예시 값 — Error 예시는 최대값(100)을 넘음 | 실제 길이 표시, `maxLength`는 브라우저가 강제 | — |
+| E6 | Input 눈 아이콘(`Icon-eye`)이 Default를 뺀 모든 상태에 표시, 아이콘은 하나뿐(숨김/표시 구분 없음) | 비밀번호 표시 토글로 해석(`type="password"`), 상태는 `aria-pressed` | 용도와 숨김 상태 아이콘 정의 |
+| E7 | 지우기(X)가 Input은 Hover · Focus, Search Field는 Focus · Error에 표시 — 컴포넌트마다 규칙이 다름 | 각 Figma 규칙 그대로 | 규칙 통일 |
+| E8 | **Search Field Solid / Error에 테두리가 없음** — 값 색도 Completed와 같아 오류가 시각적으로 구분되지 않음 | Figma 그대로 | 오류 표현 추가 |
+| E9 | Search Field Default · Hover는 `icon_size/icon/MagnifyingGlass`, 나머지 상태는 `MagnifyingGlass` 인스턴스 직접 사용(같은 위치·크기) | 구조 차이 무시, 같은 아이콘 | 인스턴스 구조 통일 |
+| E10 | Search Field Solid의 지우기 아이콘이 Outline 변수(`search-field/outline/icon/default`)에 바인딩 | 바인딩 그대로 | Solid 변수 사용 |
+| E11 | Search Field에 `helper/*` 변수가 있지만 메시지 Variant 없음, Read-only 상태 없음 | 메시지 · Read-only 스타일 미구현 | 필요 시 Variant 추가 |
+| E12 | 메시지 info 색(#0086d3)과 tertiary 텍스트(#778191)가 WCAG AA 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 대비 4.5:1 이상으로 조정 |
+
 ## D. 작업 중 관찰된 원본 변경
 
 같은 날 작업 시작 시점과 비교해 원본이 바뀌었습니다.

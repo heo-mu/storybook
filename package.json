@@ -34,7 +34,8 @@
     "test": "vitest run --project=storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "verify:button": "node scripts/verify-button.mjs"
+    "verify:button": "node scripts/verify-button.mjs",
+    "verify:figma": "node scripts/verify-figma.mjs"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",

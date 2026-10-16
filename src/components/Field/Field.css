@@ -1,0 +1,204 @@
+/*
+ * Shared field layout for Input (76:2945), Textarea (86:2597) and Search Field (216:6570):
+ *   root (vertical auto-layout) → Label → Container → message / counter row.
+ * Components fill the --ds-field-* slots with their own Figma variables per state.
+ */
+
+.ds-field {
+  --ds-field-bg: transparent;
+  --ds-field-border-color: transparent;
+  --ds-field-border-width: 0px;
+  --ds-field-text: inherit;
+  --ds-field-placeholder: inherit;
+  --ds-field-icon: currentColor;
+  --ds-field-action: var(--ds-field-icon);
+  --ds-field-icon-size: 16px;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-padding-p-1);
+  width: 100%;
+  min-width: 0;
+}
+
+.ds-field[data-size='md'],
+.ds-field[data-size='lg'] {
+  gap: var(--spacing-padding-p-1_5);
+}
+
+/* Label — xs/leading-normal/normal (sm) · sm/leading-normal/normal (md, lg), colors/text/secondary. */
+.ds-field__label {
+  display: block;
+  color: var(--colors-text-secondary);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+.ds-field[data-size='md'] .ds-field__label,
+.ds-field[data-size='lg'] .ds-field__label {
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+/* Container — horizontal auto-layout, 1px (Error 2px) INSIDE stroke. */
+.ds-field__control {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-padding-p-2);
+  width: 100%;
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-2_5);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--ds-field-bg);
+  box-shadow: inset 0 0 0 var(--ds-field-border-width) var(--ds-field-border-color);
+}
+
+.ds-field[data-size='md'] .ds-field__control {
+  --ds-field-icon-size: 20px;
+  padding: var(--spacing-padding-p-2_5) var(--spacing-padding-p-3);
+}
+
+.ds-field[data-size='lg'] .ds-field__control {
+  --ds-field-icon-size: 24px;
+  padding: var(--spacing-padding-p-3) var(--spacing-padding-p-4);
+}
+
+/* Value text — sm/leading-normal/normal · base/… · lg/… */
+.ds-field__input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  /* WebKit draws type="search" with its own search-field box and text inset. */
+  -webkit-appearance: none;
+  appearance: none;
+  color: var(--ds-field-text);
+  -webkit-text-fill-color: var(--ds-field-text);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+  height: var(--typography-sm-leading-normal-normal-line-height);
+}
+
+.ds-field__input::placeholder {
+  color: var(--ds-field-placeholder);
+  -webkit-text-fill-color: var(--ds-field-placeholder);
+  opacity: 1;
+}
+
+/* base/leading-normal/normal (16px / 24px): the 24px box is split into 1px padding + 23px line-height
+ * so Chromium's floored 2.5px half-leading lands on Figma's baseline (same fix as Button lg; neutral in
+ * Firefox / WebKit). */
+.ds-field[data-size='md'] .ds-field__input {
+  font-family: var(--typography-base-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-normal-font-size);
+  font-weight: var(--typography-base-leading-normal-normal-font-weight);
+  line-height: calc(var(--typography-base-leading-normal-normal-line-height) - 1px);
+  letter-spacing: var(--typography-base-leading-normal-normal-letter-spacing);
+  height: var(--typography-base-leading-normal-normal-line-height);
+  padding-top: 1px;
+}
+
+/* lg/leading-normal/normal (18px / 28px): Firefox and WebKit centre the single-line value 1px below
+ * Figma; 27px line-height + 1px bottom padding raises it half a pixel there while Chromium (integer
+ * half-leading) renders exactly as before. */
+.ds-field[data-size='lg'] .ds-field__input {
+  font-family: var(--typography-lg-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-lg-leading-normal-normal-font-size);
+  font-weight: var(--typography-lg-leading-normal-normal-font-weight);
+  line-height: calc(var(--typography-lg-leading-normal-normal-line-height) - 1px);
+  letter-spacing: var(--typography-lg-leading-normal-normal-letter-spacing);
+  height: var(--typography-lg-leading-normal-normal-line-height);
+  padding-bottom: 1px;
+}
+
+/* Remove native search decorations — the design has its own clear button. */
+.ds-field__input::-webkit-search-decoration,
+.ds-field__input::-webkit-search-cancel-button,
+.ds-field__input::-webkit-search-results-button,
+.ds-field__input::-webkit-search-results-decoration {
+  display: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Figma "icon_size" frames: 16 / 20 / 24px. */
+.ds-field__icon,
+.ds-field__action {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--ds-field-icon-size);
+  height: var(--ds-field-icon-size);
+  color: var(--ds-field-icon);
+}
+
+.ds-field__action {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ds-field-action);
+  cursor: pointer;
+}
+
+.ds-field__action:disabled {
+  cursor: default;
+}
+
+.ds-field__icon > svg,
+.ds-field__action > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Message — Figma *_message: 16px status icon + xs/leading-normal/normal, gap 4. */
+.ds-field-message {
+  --ds-field-message-color: inherit;
+
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-padding-p-1);
+  min-width: 0;
+  margin: 0;
+  color: var(--ds-field-message-color);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+.ds-field-message__icon {
+  display: block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* Figma auto-width text boxes are whole pixels; round the label and message text up the same way
+ * (progressive enhancement, see docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-field__label,
+  .ds-field-message__text {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

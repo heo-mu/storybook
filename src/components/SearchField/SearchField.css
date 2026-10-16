@@ -1,0 +1,104 @@
+/*
+ * Search Field — Figma component set `search-field` (216:6570), Type Outline / Solid.
+ * State order: Default → Completed → Hover → Focus → Error → Disabled.
+ */
+.ds-search-field {
+  --ds-field-border-width: var(--border-width-border);
+}
+
+/* ---- Outline */
+.ds-search-field[data-appearance='outline'] {
+  --ds-field-bg: var(--colors-search-field-outline-background-default);
+  --ds-field-border-color: var(--colors-search-field-outline-border-default);
+  --ds-field-text: var(--colors-search-field-outline-label-completed);
+  --ds-field-placeholder: var(--colors-search-field-outline-label-default);
+  --ds-field-icon: var(--colors-search-field-outline-icon-default);
+  --ds-field-action: var(--colors-search-field-outline-icon-default);
+}
+
+.ds-search-field[data-appearance='outline'][data-filled] {
+  --ds-field-bg: var(--colors-search-field-outline-background-completed);
+  --ds-field-border-color: var(--colors-search-field-outline-border-completed);
+}
+
+.ds-search-field[data-appearance='outline']:hover {
+  --ds-field-bg: var(--colors-search-field-outline-background-hover);
+  --ds-field-border-color: var(--colors-search-field-outline-border-hover);
+  --ds-field-placeholder: var(--colors-search-field-outline-label-hover);
+}
+
+.ds-search-field[data-appearance='outline']:focus-within {
+  --ds-field-bg: var(--colors-search-field-outline-background-focus);
+  --ds-field-border-color: var(--colors-search-field-outline-border-focus);
+}
+
+.ds-search-field[data-appearance='outline'][data-invalid] {
+  --ds-field-bg: var(--colors-search-field-outline-background-error);
+  --ds-field-border-color: var(--colors-search-field-outline-border-error);
+  --ds-field-border-width: var(--border-width-border-2);
+  --ds-field-text: var(--colors-search-field-outline-label-error);
+}
+
+.ds-search-field[data-appearance='outline'][data-disabled] {
+  --ds-field-bg: var(--colors-search-field-outline-background-disabled);
+  --ds-field-border-color: var(--colors-search-field-outline-border-disabled);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-search-field-outline-label-disabled);
+  --ds-field-placeholder: var(--colors-search-field-outline-label-disabled);
+  --ds-field-icon: var(--colors-search-field-outline-icon-disabled);
+}
+
+/* ---- Solid: no stroke except Hover and Focus (Figma). */
+.ds-search-field[data-appearance='solid'] {
+  --ds-field-bg: var(--colors-search-field-solid-background-default);
+  --ds-field-border-color: transparent;
+  --ds-field-border-width: 0px;
+  --ds-field-text: var(--colors-search-field-solid-label-completed);
+  --ds-field-placeholder: var(--colors-search-field-solid-label-default);
+  --ds-field-icon: var(--colors-search-field-solid-icon-default);
+  /* Figma binds the Solid clear icon to the Outline icon variable. */
+  --ds-field-action: var(--colors-search-field-outline-icon-default);
+}
+
+.ds-search-field[data-appearance='solid'][data-filled] {
+  --ds-field-bg: var(--colors-search-field-solid-background-completed);
+}
+
+.ds-search-field[data-appearance='solid']:hover {
+  --ds-field-bg: var(--colors-search-field-solid-background-hover);
+  --ds-field-border-color: var(--colors-search-field-solid-border-hover);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-placeholder: var(--colors-search-field-solid-label-hover);
+}
+
+.ds-search-field[data-appearance='solid']:focus-within {
+  --ds-field-bg: var(--colors-search-field-solid-background-focus);
+  --ds-field-border-color: var(--colors-search-field-solid-border-focus);
+  --ds-field-border-width: var(--border-width-border);
+}
+
+.ds-search-field[data-appearance='solid'][data-invalid] {
+  --ds-field-bg: var(--colors-search-field-solid-background-error);
+  --ds-field-border-color: transparent;
+  --ds-field-border-width: 0px;
+  --ds-field-text: var(--colors-search-field-solid-label-error);
+}
+
+.ds-search-field[data-appearance='solid'][data-disabled] {
+  --ds-field-bg: var(--colors-search-field-solid-background-disabled);
+  --ds-field-border-color: transparent;
+  --ds-field-border-width: 0px;
+  --ds-field-text: var(--colors-search-field-solid-label-disabled);
+  --ds-field-placeholder: var(--colors-search-field-solid-label-disabled);
+  --ds-field-icon: var(--colors-search-field-solid-icon-disabled);
+}
+
+/* Clear (X): Focus and Error states only. */
+.ds-search-field__clear {
+  display: none;
+}
+
+.ds-search-field:focus-within .ds-search-field__clear,
+.ds-search-field[data-invalid] .ds-search-field__clear {
+  display: inline-flex;
+}

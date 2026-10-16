@@ -1,0 +1,63 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Input.showcase.stories';
+import { Input } from './Input';
+
+<Meta title="Components/Input/Usage" />
+
+# Input — 사용 가이드
+
+Figma **Input** 프레임(72:4021)의 `input` 세트(21개)와 `input_message`(3개)를 구현한 한 줄 입력 필드입니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Input } from 'platform-design-system';
+
+<Input label="이메일" type="email" name="email" placeholder="example@domain.com" />
+
+// 제어 컴포넌트
+const [value, setValue] = useState('');
+<Input label="이름" value={value} onChange={(e) => setValue(e.target.value)} />
+
+// 검증 메시지
+<Input label="전화번호" value={phone} invalid={!valid} message={valid ? undefined : '전화번호 형식이 아닙니다.'} />
+
+// 비밀번호 (눈 아이콘으로 표시/숨김)
+<Input label="비밀번호" type="password" autoComplete="current-password" />`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Size sm · md · lg | `size` | 기본 `'sm'`. 컨테이너 높이 36 · 44 · 52px |
+| Label / Label Text | `label` | 생략하면 라벨 없음 → `aria-label` 지정 |
+| Alert / Alert Text | `message` | `input_message` |
+| input_message Type Info · Success · Error | `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'info'` |
+| Icon-eye | `type="password"` + `revealable` | 비밀번호 표시/숨김 토글 |
+| State Hover · Focus | 브라우저 `:hover` · `:focus-within` | |
+| State Completed | 값이 있을 때 자동 | |
+| State Error | `invalid` | 2px 빨간 테두리, `aria-invalid` |
+| State Disabled · Read-only | `disabled` · `readOnly` | |
+
+`value`, `onChange`, `name`, `type`, `autoComplete` 등 나머지 `<input>` 속성과 `ref`는 실제 `<input>`에 전달됩니다.
+`className` · `style`은 루트 요소에 적용됩니다.
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **지우기 버튼(X)**: Figma처럼 Hover · Focus 상태에서 보입니다. 마우스용이므로 Tab 순서에서 제외됩니다(`tabIndex=-1`).
+  필요 없으면 `clearable={false}`.
+- **눈 아이콘**: Figma `Icon-eye`는 비밀번호 표시/숨김 토글로 해석해 `type="password"`일 때만 렌더링합니다.
+  Figma에는 아이콘이 하나뿐이라 숨김/표시 모두 같은 아이콘이며, 상태는 `aria-pressed`와 레이블로 전달합니다.
+- **Error + Focus**: Figma에 조합이 없어 Error 테두리를 유지합니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+<ArgTypes of={Input} />

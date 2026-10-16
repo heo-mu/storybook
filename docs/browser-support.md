@@ -56,6 +56,16 @@ Figma의 auto-width 텍스트 상자는 정수 px입니다("라벨명" 12px → 
 
 Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대로 적용합니다. 라벨 상자 크기(24px)는 변하지 않습니다.
 
+## 입력 필드 (Input · Textarea · Search Field)
+
+`node scripts/verify-figma.mjs <input|textarea|search-field> --browser=…` 결과: 세 엔진 모두 전 Variant 통과(Input 21, Textarea 14, Search Field 36).
+
+- **WebKit 검색 입력**: `type="search"`에 WebKit 자체 지우기 버튼(⌫)과 검색 상자 스타일이 그려져, `::-webkit-search-*` 의사 요소를 `display: none`으로 숨기고 입력에 `appearance: none`을 지정했습니다.
+- **기준선 보정**: 한 줄 값 텍스트 md(16/24px)는 Button lg와 같은 1px 패딩 + 23px 줄 높이, lg(18/28px)는 27px 줄 높이 + 아래 1px 패딩
+  (Firefox · WebKit이 1px 아래에 그리던 것을 보정, Chromium은 변화 없음). Textarea md는 여러 줄이므로 위 0.5px 패딩만 사용합니다.
+- 라벨 · 메시지 텍스트 너비는 Button 라벨과 같은 `calc-size()` 점진적 향상입니다.
+- 비기준 엔진(Firefox · WebKit)의 1px 미만 글리프 가로 차이는 글자 래스터화 차이로 기록만 하고 실패로 보지 않습니다(Chromium 기준 0.5px).
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.

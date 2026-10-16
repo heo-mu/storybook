@@ -20,9 +20,9 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
 | Button 58:4971 | `button_basic` (160) · `button_icon` (120) · `button_text` (16) | `Button`, `IconButton`, `TextButton` | — | 완료 |
-| Input 72:4021 | `input` (21) Type=Outline · Size sm/md/lg · State Default/Hover/Focus/Completed/Error/Disabled/Read-only · Label, Alert, Icon-eye · `input_message` (3) Info/Success/Error | `Input` | 1 | 미착수 |
-| Textarea 86:2594 | `textarea` (14) Size md/sm · State 7종 · Label, Alert, Counter · `textarea_message` (3) | `Textarea` | 1 | 미착수 |
-| Search Field 216:6742 | `search-field` (36) Size sm/md/lg · State Default/Hover/Focus/Error/Disabled/Completed · Type Solid/Outline · Label | `SearchField` | 1 | 미착수 |
+| Input 72:4021 | `input` (21) Type=Outline · Size sm/md/lg · State Default/Hover/Focus/Completed/Error/Disabled/Read-only · Label, Alert, Icon-eye · `input_message` (3) Info/Success/Error | `Input` | 1 | 완료 |
+| Textarea 86:2594 | `textarea` (14) Size md/sm · State 7종 · Label, Alert, Counter · `textarea_message` (3) | `Textarea` | 1 | 완료 |
+| Search Field 216:6742 | `search-field` (36) Size sm/md/lg · State Default/Hover/Focus/Error/Disabled/Completed · Type Solid/Outline · Label | `SearchField` | 1 | 완료 |
 | Select 95:2819 | `select` (21) Size · State Default/Hover/Open/Completed/Error/Disabled/Read-only · `select_message` (3) · `listbox` (3) · `option` (15) Default/Hover/Pressed/Selected/Disabled | `Select` (+ `SelectOption`) | 2 | 미착수 |
 | Checkbox 98:2375 | `checkbox` (36) Selection Unchecked/Checked/Indeterminate · Size sm/md/lg · State 4 · Label | `Checkbox` (+ `CheckboxGroup`) | 2 | 미착수 |
 | Radio 100:3180 | `radio` (24) Selection · Size · State · Label | `Radio`, `RadioGroup` | 2 | 미착수 |

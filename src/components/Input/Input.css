@@ -1,0 +1,87 @@
+/*
+ * Input — Figma component set `input` (76:2945), Type=Outline.
+ * State: Default → (has value) Completed → :hover Hover → :focus-within Focus → Error → Read-only → Disabled
+ * (later rules win). Colours are the Figma bindings (colors/input/outline/*).
+ */
+.ds-input {
+  --ds-field-bg: var(--colors-input-outline-background-default);
+  --ds-field-border-color: var(--colors-input-outline-border-default);
+  --ds-field-border-width: var(--border-width-border);
+  /* Figma binds the value text to …/label/* and the empty text to …/label/default. */
+  --ds-field-text: var(--colors-input-outline-label-completed);
+  --ds-field-placeholder: var(--colors-input-outline-label-default);
+  --ds-field-icon: var(--colors-input-outline-icon-default);
+}
+
+.ds-input[data-filled] {
+  --ds-field-bg: var(--colors-input-outline-background-completed);
+  --ds-field-border-color: var(--colors-input-outline-border-completed);
+  --ds-field-icon: var(--colors-input-outline-icon-completed);
+}
+
+.ds-input:hover {
+  --ds-field-border-color: var(--colors-input-outline-border-hover);
+  --ds-field-icon: var(--colors-input-outline-icon-hover);
+}
+
+.ds-input:focus-within {
+  --ds-field-border-color: var(--colors-input-outline-border-focus);
+  --ds-field-icon: var(--colors-input-outline-icon-focus);
+}
+
+.ds-input[data-invalid] {
+  --ds-field-border-color: var(--colors-input-outline-border-error);
+  --ds-field-border-width: var(--border-width-border-2);
+  --ds-field-text: var(--colors-input-outline-label-error);
+  --ds-field-icon: var(--colors-input-outline-icon-error);
+}
+
+.ds-input[data-readonly] {
+  --ds-field-bg: var(--colors-input-outline-background-read-only);
+  --ds-field-border-color: var(--colors-input-outline-border-read-only);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-icon: var(--colors-input-outline-icon-read-only);
+}
+
+.ds-input[data-disabled] {
+  --ds-field-bg: var(--colors-input-outline-background-disabled);
+  --ds-field-border-color: var(--colors-input-outline-border-disabled);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-input-outline-label-disabled);
+  --ds-field-placeholder: var(--colors-input-outline-label-disabled);
+  --ds-field-icon: var(--colors-input-outline-icon-disabled);
+}
+
+/* Icon visibility as in Figma: the eye is hidden only in the Default state, the clear (X) icon
+ * appears on Hover and Focus. */
+.ds-input__reveal,
+.ds-input__clear {
+  display: none;
+}
+
+.ds-input[data-filled] .ds-input__reveal,
+.ds-input[data-invalid] .ds-input__reveal,
+.ds-input[data-readonly] .ds-input__reveal,
+.ds-input[data-disabled] .ds-input__reveal,
+.ds-input:hover .ds-input__reveal,
+.ds-input:focus-within .ds-input__reveal {
+  display: inline-flex;
+}
+
+.ds-input:hover .ds-input__clear,
+.ds-input:focus-within .ds-input__clear {
+  display: inline-flex;
+}
+
+/* Messages — colors/input/outline/helper/* */
+.ds-input .ds-field-message[data-type='info'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-info);
+}
+
+.ds-input .ds-field-message[data-type='success'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-completed);
+}
+
+.ds-input .ds-field-message[data-type='error'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-error);
+}
