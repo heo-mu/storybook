@@ -150,6 +150,21 @@ import { BUTTON_SIZES, BUTTON_TONES, type ButtonProps, type ButtonSize } from 'p
 BUTTON_TONES.map((tone) => <Button key={`${tone.variant}-${tone.appearance}`} {...tone}>{tone.variant}</Button>);
 ```
 
+## 6-1. 그 밖의 컴포넌트
+
+버튼과 같은 방식으로 `platform-design-system`에서 import 합니다(스타일은 1의 `styles.css` 하나로 모두 포함).
+
+| 분류 | 컴포넌트 |
+| --- | --- |
+| 입력 | `Input` · `Textarea` · `SearchField` · `Select` · `Checkbox` · `Radio` · `Switch` · `Slider` · `SegmentedControl` · `Chip` · `InputChip` · `FilterChip` · `DatePicker` · `Calendar` · `FileUploader` |
+| 탐색 | `Link` · `Navigation` · `Tabs` · `Pagination` · `Breadcrumb` · `Stepper` · `DropdownMenu` |
+| 피드백 · 오버레이 | `Badge` · `Progress` · `Loading` · `Alert` · `Toast` · `Tooltip` · `EmptyState` · `Dialog` · `Accordion` |
+| 데이터 | `Table` · `KeyValueTable` · `Card` · `Chart` |
+| 대시보드 | `MetricCard` · `MetricTrend` · `DataFreshness` · `DataState` · `Skeleton` · `DashboardFilterBar` |
+
+Props · Figma 대응 · 접근성 메모는 Storybook의 각 **Usage** 문서에 있습니다. 보이는 라벨이 없는 컨트롤(Select · SegmentedControl ·
+DatePicker를 필터 바에 넣을 때 등)에는 `aria-label`을 주세요.
+
 ## 7. 토큰 사용하기
 
 앱 스타일에서도 같은 토큰을 CSS Variables로 쓸 수 있습니다. 이름은 Figma 변수 경로의 `/`를 `-`로 바꾼 것입니다.

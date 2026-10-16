@@ -31,8 +31,8 @@
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 완료 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 완료 (Popover · Drawer 구현 불가) |
 | 7 | Table · Card · Chart · Loading | 완료 |
-| 8 | Dashboard components | 진행 (6개 구현 · 개별 검증 완료, 그룹 검증 남음) |
-| 9 | 통합 QA | 미착수 |
+| 8 | Dashboard components | 완료 |
+| 9 | 통합 QA · 최종 보고 | 완료 ([final-report.md](./final-report.md)) |
 
 ## 검증 현황
 
@@ -76,6 +76,11 @@
 | Data State | 6 | 6/6 | 6/6 | 6/6 | 통과 |
 | Dashboard Filter Bar | 1 | 1/1 | 1/1 (calc-size 없음 0.6%) | 1/1 (〃) | 통과 — 초기화 버튼(F31) · "최근 30일" 말줄임(F71) 수동 검토 |
 
+Phase 8 그룹 검증 · Phase 9 통합 QA(2026-10-16, 최종 코드): verify:all 36개 컴포넌트(71세트 · 842변형) × 3 엔진 108/108 통과,
+verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 86 파일 · 370개 통과, typecheck · lint · build(토큰 변경 없음) · build-storybook 통과,
+axe 370 스토리 — 그 밖의 위반 0(알려진 토큰 대비 400, react-aria 달력 이름 693), 외부 프로젝트(npm pack → Vite 8 + React 19 + TS 6)
+타입 검사 · 빌드 · 브라우저 실행(콘솔 오류 0) 통과, Storybook MCP 컴포넌트 매니페스트 44 · 문서 37쪽.
+
 Phase 7 그룹 검증(2026-10-16): verify:all 30개 컴포넌트 × 3 엔진 — 89/90 통과, Chromium date-picker_navigation 1개가 병렬 빌드 · 테스트
 실행 중에 1회 실패 → 부하 없이 단독 재실행 2회 모두 40/40 통과. verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 74 파일 · 337개 통과,
 typecheck · lint · build(토큰 재생성 변경 없음) · build-storybook 통과, axe 337 스토리 — 그 밖의 위반 0(알려진 토큰 대비 343, react-aria 달력 이름 693).
@@ -102,7 +107,7 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 8 그룹 검증 → Phase 9 통합 QA(verify:all · verify:button · 테스트 · lint · typecheck · build · build-storybook · axe · 외부 import · MCP 문서) · 최종 보고.
+모든 Phase 완료. 남은 일은 결정 대기 항목([final-report.md](./final-report.md#5-결정이-필요한-항목))에 대한 디자인 측 결정과, 그에 따른 반영입니다.
 
 **결정 필요 — 대시보드 원격 변수(F69)**: 카드 모서리 12px는 로컬 토큰이 없어 Figma 값을 그대로 썼습니다(rounded-lg 10 · rounded-xl 14 중 선택 또는 토큰 추가).
 
