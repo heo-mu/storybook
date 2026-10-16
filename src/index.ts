@@ -17,5 +17,6 @@ export * from './components/FileUploader';
 export * from './components/Link';
 export * from './components/Tabs';
 export * from './components/Pagination';
+export * from './components/DropdownMenu';
 export { CHOICE_SIZES, CHOICE_GROUP_ORIENTATIONS, type ChoiceSize, type ChoiceGroupOrientation } from './components/Choice';
 export * from './icons';

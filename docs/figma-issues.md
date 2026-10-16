@@ -114,6 +114,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F29 | file-uploader Drag-over 아이콘이 `…/icon/default`(`…/icon/drag-over` 변수 미사용), Pressed가 `…/focus` 변수 사용 | 바인딩 그대로 | 이름 · 바인딩 정리 |
 | F30 | **점선 테두리가 변마다 대시 간격을 맞춤**(9.85 ~ 10.25px) — CSS · SVG는 외곽선을 따라 이어 그림 | SVG 6 / 4 대시, 위상만 맞춤 — 테두리 픽셀은 수동 검토 | — |
 | F31 | **작업 중 원본 변경**: Button Secondary Solid 신설 · TextButton Secondary 색 분리 · 변수 삭제, `fill/primary/subtle/hover` 값 변경 | 스냅샷 동결(Primitive 추가분만 반영) — [token-diff.md](./token-diff.md) | 동기화 여부 결정 필요 |
+| F32 | `dropdownmenu_line` 세로 padding(`py-1`)과 구분선 두께(`border-width`)가 원격 라이브러리 변수에 바인딩 | 같은 값의 로컬 `spacing/padding/p-1` · `border-width/border` | 로컬 변수 사용 |
 
 ## D. 작업 중 관찰된 원본 변경
 

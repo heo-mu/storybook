@@ -27,7 +27,7 @@
 | 1 | Input · Textarea · Search Field | 완료 |
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
-| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link · Tab · Pagination 완료) |
+| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link · Tab · Pagination · Dropdown Menu 완료) |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
@@ -54,6 +54,7 @@
 | Link | 15 | 15/15 | 15/15 | 15/15 | 통과 |
 | Tabs (tab_filled · tab_line) | 60 + 30 | 90/90 | 90/90 | 90/90 | 통과 |
 | Pagination (pagination · item · control) | 3 + 24 + 48 | 75/75 | 75/75 | 75/75 | 통과 |
+| Dropdown Menu (item · line) | 5 + 1 | 6/6 | 6/6 | 6/6 | 통과 |
 
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
 수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).
@@ -63,9 +64,8 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 4 나머지 — Navigation(item_parent 180:5246, item_link 180:6174, item_child 180:6249) → Tab(tab_filled 91:5000, tab_line 91:5241) →
-Pagination(132:871, 132:520, 132:604) → Breadcrumb(712:5106, 710:4794) → Stepper(179:2043, 203:3949, 179:1621, 203:3708, 179:1614, 203:4253) →
-Dropdown Menu(dropdownmenu_item 179:4819, line 179:5082).
+Phase 4 나머지 — Breadcrumb(breadcrumb 712:5106, breadcrumb-item 710:4794) → Navigation(item_parent 180:5246, item_link 180:6174,
+item_child 180:6249) → Stepper(179:2043, 203:3949, 179:1621, 203:3708, 179:1614, 203:4253).
 
 **결정 필요 — Figma 원본 변경**: Phase 3 중 원본이 바뀌었습니다(Button Secondary Solid 신설 등, [token-diff.md](./token-diff.md)
 "Figma 원본 변경 감지"). 스냅샷은 동결(Primitive 추가 7개만 반영)했고, 이후 받은 기준 이미지의 Hover 배경(#f5f6f7)과 코드(#f9fafb)는

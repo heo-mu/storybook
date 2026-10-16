@@ -98,6 +98,14 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 - Loading 스피너: `conic-gradient` + SVG 마스크(`mask` / `-webkit-mask`), 중간 정지점은 `color-mix()`(Chrome 111+, Firefox 113+, Safari 16.2+).
 - File Uploader 점선: SVG `<rect>`의 `x` · `y` · `width` · `height` · `rx`를 CSS로 지정(SVG 2 기하 속성 — 세 엔진에서 동작 확인).
 
+## Link · Tabs · Pagination · Dropdown Menu
+
+세 엔진 모두 전 Variant 통과(Link 15, Tabs 90, Pagination 75, Dropdown Menu 항목 5 · 구분선 1).
+
+- Link md(14px, 행간 140%)의 줄 높이는 `round(up, …, 1px)`로 Figma와 같은 20px(Chrome 125+, Firefox 118+, Safari 15.4+).
+- Link lg 밑줄: Figma AUTO 밑줄이 브라우저보다 약 1.5px 아래 — 알려진 렌더링 차이(글자 위치는 일치).
+- Dropdown Menu 구분선은 1px 배경 그라데이션(테두리 대신)이라 엔진마다 같은 픽셀 행에 그려집니다.
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.

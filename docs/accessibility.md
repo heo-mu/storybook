@@ -93,3 +93,22 @@
 - 드롭 영역은 `<button>`(이름 = 제목, 설명 = 도움말), Enter · Space로 파일 선택 창. 숨은 `<input type="file">`이 폼 값.
 - 항목의 "삭제" · "다운로드"는 TextButton, 설명(`aria-describedby`)이 파일 이름. 업로드 중 항목은 `aria-busy` + 스피너.
 - Loading은 `role="status"`(라벨 또는 `aria-label`, 기본 "로딩 중"). 회전은 `prefers-reduced-motion`에서 느려집니다.
+
+### Link
+- 네이티브 `<a href>`. Visited는 브라우저 `:visited`. `external`이면 `target="_blank"` + `rel="noopener noreferrer"`와
+  숨은 안내 문구("(새 창)", `newTabLabel`), 아이콘은 `aria-hidden`.
+- Disabled는 `href` 없이 `role="link"` + `aria-disabled="true"` — 포커스되지 않습니다.
+
+### Tabs
+- react-aria-components tablist: `role="tablist"` / `tab` / `tabpanel`, `aria-selected`, 패널은 탭 이름으로 연결.
+- ← → (세로 배치는 ↑ ↓) · Home · End로 이동, 비활성 탭은 건너뜀. `TabList`에 `aria-label` 필요.
+
+### Pagination
+- `<nav aria-label="페이지 이동">` 안의 `<button>`들. 번호 이름 "N 페이지", 현재 페이지 `aria-current="page"`.
+- 이전 · 다음 버튼 이름 "이전 페이지" · "다음 페이지", 끝에서는 `disabled`.
+
+### Dropdown Menu
+- react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
+  `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.
+- Enter · Space · ↓ / ↑로 열면 첫 / 마지막 항목에 포커스, 방향키 · Home · End · 글자 입력으로 이동, Esc로 닫고 트리거로 복귀.
+- 키보드 포커스는 Figma Hover 모양으로 표시합니다(Figma에 Focus 상태 없음).

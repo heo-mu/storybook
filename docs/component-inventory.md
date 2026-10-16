@@ -44,7 +44,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Pagination 149:1030 | `pagination` (3) · `pagination_item` (24) · `pagination_control` (48) | `Pagination`, `PaginationItem`, `PaginationControl` | 4 | 완료 |
 | Breadcrumb 721:13374 | `breadcrumb` (6) Size · Layout Full/Collapsed · Expanded · `breadcrumb-item` (12) Role Link/Current/Open | `Breadcrumb` | 4 | 미착수 |
 | Stepper 151:697 | `stepper_horizontal` (3) · `stepper_vertical` (3) Steps 3/4/5 · indicators (5+5) Upcoming/Current/Completed/Locked/Error · connectors (2+2) | `Stepper` | 4 | 미착수 |
-| Dropdown Menu 179:2465 | `dropdownmenu_item` (5) Type Content/Title · State Default/Hover/Disabled/Alert/None · `dropdownmenu_line` | `DropdownMenu` | 4 | 미착수 |
+| Dropdown Menu 179:2465 | `dropdownmenu_item` (5) Type Content/Title · State Default/Hover/Disabled/Alert/None · `dropdownmenu_line` | `DropdownMenu`, `DropdownMenuItem`, `DropdownMenuSection`, `DropdownMenuSeparator` | 4 | 완료 |
 
 ## Feedback / Overlay
 
