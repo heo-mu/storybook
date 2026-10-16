@@ -47,13 +47,13 @@ export type ButtonToneProps =
   | {
       /** Figma "Variant". @default 'primary' */
       variant?: 'primary' | 'tertiary';
-      /** Figma "Appearance". @default 'solid' */
+      /** Figma "Appearance". Secondary exists only as Outline. @default 'solid' */
       appearance?: ButtonAppearance;
     }
   | {
       /** Figma "Variant". @default 'primary' */
       variant: 'secondary';
-      /** Figma "Appearance" — Secondary exists only as Outline. */
+      /** Figma "Appearance". Secondary exists only as Outline. */
       appearance?: 'outline';
     };
 

@@ -4,7 +4,7 @@ import { hasSlot } from '../../utils/hasSlot';
 import { ButtonIconSlot } from './ButtonIconSlot';
 import type { ButtonDisabledProp, TextButtonSize, TextButtonVariant } from './Button.options';
 
-export type TextButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children'> &
+export type TextButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'disabled'> &
   ButtonDisabledProp & {
   /** Figma "Type" ("Primary" / "SecondarySecondary"). Both are bound to the same variables in Ver 0.4. @default 'primary' */
   variant?: TextButtonVariant;

@@ -3,7 +3,7 @@ import { cx } from '../../utils/cx';
 import { ButtonIconSlot } from './ButtonIconSlot';
 import { resolveAppearance, type ButtonDisabledProp, type ButtonShape, type ButtonToneProps, type IconButtonSize } from './Button.options';
 
-export type IconButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'aria-label'> &
+export type IconButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'aria-label' | 'disabled'> &
   ButtonToneProps &
   ButtonDisabledProp & {
     /** Figma "Size". @default 'xs' */

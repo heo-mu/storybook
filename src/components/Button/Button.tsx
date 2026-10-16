@@ -4,7 +4,7 @@ import { hasSlot } from '../../utils/hasSlot';
 import { ButtonIconSlot } from './ButtonIconSlot';
 import { resolveAppearance, type ButtonDisabledProp, type ButtonShape, type ButtonSize, type ButtonToneProps } from './Button.options';
 
-export type ButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children'> &
+export type ButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'disabled'> &
   ButtonToneProps &
   ButtonDisabledProp & {
     /** Figma "Size". @default 'xs' */
