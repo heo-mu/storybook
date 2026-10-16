@@ -67,7 +67,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Accordion 796:5813 | `accordion-item` (10, 작업 중 14→10: Focus 상태 삭제) Size md/sm · State Default/Hover/Disabled · Expanded | `Accordion`, `AccordionItem` | 6 | 완료 |
 | Table 351:3340 | `table_header` (3) · `table_body` (8) · `table_key` (2) · `table_value` (2) · `table_value_editable` (52) | `Table` (+ Header · Column · Body · Row · Cell), `KeyValueTable`, `KeyValueItem`, `KeyValueGroup`, `ImageUploadPreview` | 7 | 완료 (editable 3개 수동 검토 — F58) |
 | Card 185:6512 (숨김) | `Frame 2147239186` · `Wrapper` | `Card`, `CardHeader`, `CardContent`, `CardFooter` | 7 | 완료 (Figma 프레임 숨김 — 위치 · 크기만 검증, F61) |
-| Chart 773:6723 | `chart` (12) Type Bar Horizontal/Bar Vertical/Line · Style Default/Simple · Group · `chart-legend-item` (3) · `chart-tooltip` | `Chart` | 7 | 미착수 |
+| Chart 773:6723 | `chart` (12) Type Line/Bar Vertical/Bar Horizontal · Style Default/Simple · Group no/yes · `chart-legend-item` (3) Line/Dash Line/Bar · `chart-tooltip` (단일) | `Chart`, `ChartLegendItem`, `ChartTooltip` | 7 | 완료 (간단 선 차트 그림 영역 · 차트 안 툴팁 위치는 수동 검토 — F63 · F64) |
 | Loading 149:3000 | `loading` (2) size md/sm · text | `Loading` | 7 | 완료 (Phase 3에서 File Uploader와 함께) |
 
 ## Dashboard components (별도 섹션 728:25472)

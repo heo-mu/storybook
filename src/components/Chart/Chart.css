@@ -1,0 +1,466 @@
+/*
+ * Chart — Figma `chart` (698:4399), `chart-legend-item` (697:4514), `chart-tooltip` (693:9776).
+ *   default style: "Chart annotation / axes" (Y / X axis labels, p-4 apart, p-1 below, xs/leading-normal/normal,
+ *                  text/secondary) · plot (228px; Bar Horizontal Group=yes 268px) · "Chart annotation / legend"
+ *                  (centred, p-5 apart, wraps p-2, p-3 above)
+ *   line:          value labels right-aligned in a 32px column, plot from x 44; grid y 12–196 (chart/grid/default,
+ *                  1px); category labels at y 208; series border-2 (first: vector corner radius 8); markers on inner
+ *                  points r 4 + border-2 border/inverse; active point surface/page + border-3; hover guide border/gray
+ *                  1px dash 4 / 4; one series also has an area (series colour 20% → 0%); "최고" badge 8px above the
+ *                  highest point
+ *   bar vertical:  plot area y 28–200, categories p-4 apart, bars 16px (pair p-2 apart, rounded top), labels 80px
+ *                  at y 208 (sm medium); hover highlight 64px alpha/black/50
+ *   bar horizontal: p-2 above, rows over 188px (Group=yes 228px), labels 40px (sm medium) p-3 before the track,
+ *                  bars 16px (Group=yes 12px, p-1_5 apart, rounded right), zero / axis baselines border/gray-subtler,
+ *                  inner grid lines, tick labels p-2 below
+ *   simple:        160px, clipped; plot 132px (p-1 above the largest value), period labels at y 140 in columns
+ *                  p-3 apart; baseline chart/simple/history (round caps); bars 24px (Group=yes 14px, p-1 apart);
+ *                  horizontal rows 28px (Group=yes 34px) m-2 apart, labels 32px, bars 12px (Group=yes 8px, 8px
+ *                  apart) up to 90% of the track; line border-2_5 (comparison border-2, dash 3 / 3), markers r 4
+ *                  with a 2px inside surface/page ring, the last point surface/page + border-3
+ *   bars:          linear gradient from the series colour at the value end to 40% of it at the axis
+ * Geometry custom properties (--_<name> on .ds-chart__plot) are read by Chart.tsx to draw the SVG.
+ */
+
+.ds-chart {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+}
+
+.ds-chart[data-variant='simple'] {
+  overflow: hidden;
+}
+
+/* Colours — chart marks, legend markers and tooltip indicators. */
+:where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='brand'] {
+  --_c: var(--colors-chart-series-brand);
+}
+
+:where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='compare'] {
+  --_c: var(--colors-chart-series-compare);
+}
+
+:where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='02'] {
+  --_c: var(--colors-chart-series-02);
+}
+
+:where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='history'] {
+  --_c: var(--colors-chart-simple-history);
+}
+
+:where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='history-compare'] {
+  --_c: var(--colors-chart-simple-history-compare);
+}
+
+/* Axis labels */
+.ds-chart__axes {
+  display: flex;
+  gap: var(--spacing-padding-p-4);
+  padding-bottom: var(--spacing-padding-p-1);
+}
+
+.ds-chart__axis-label {
+  flex: 1 1 0;
+  min-width: 0;
+  color: var(--colors-text-secondary);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+.ds-chart__axis-label[data-axis='x'] {
+  text-align: right;
+}
+
+/* Plot geometry */
+.ds-chart__plot {
+  position: relative;
+  flex: none;
+  height: var(--_plot-height);
+}
+
+.ds-chart__plot:focus-visible {
+  outline-style: auto;
+}
+
+.ds-chart[data-variant='default'] .ds-chart__plot {
+  --_plot-height: 228px;
+  --_value-label-width: 32px;
+  --_plot-left: 44px;
+  --_label-top: 208px;
+  --_tooltip-gap: var(--spacing-padding-p-3);
+  --_bar-radius: var(--border-radius-rounded);
+}
+
+.ds-chart[data-type='line'][data-variant='default'] .ds-chart__plot {
+  --_grid-top: 12px;
+  --_grid-bottom: 196px;
+  --_line-corner: 8px;
+  --_point-radius: 4px;
+  --_ring-radius: 4px;
+  --_badge-offset: 8px;
+}
+
+.ds-chart[data-type='bar-vertical'][data-variant='default'] .ds-chart__plot {
+  --_grid-top: 28px;
+  --_grid-bottom: 200px;
+  --_label-width: 80px;
+  --_category-gap: var(--spacing-padding-p-4);
+  --_bar-size: 16px;
+  --_pair-gap: var(--spacing-padding-p-2);
+  --_highlight-size: 64px;
+}
+
+.ds-chart[data-type='bar-horizontal'][data-variant='default'] .ds-chart__plot {
+  --_pad-top: var(--spacing-padding-p-2);
+  --_body-height: 188px;
+  --_axis-gap: var(--spacing-padding-p-2);
+  --_row-label-width: 40px;
+  --_row-label-gap: var(--spacing-padding-p-3);
+  --_bar-size: 16px;
+  --_pair-gap: var(--spacing-padding-p-1_5);
+}
+
+.ds-chart[data-type='bar-horizontal'][data-variant='default'][data-group='yes'] .ds-chart__plot {
+  --_plot-height: 268px;
+  --_body-height: 228px;
+  --_bar-size: 12px;
+}
+
+.ds-chart[data-variant='simple'] .ds-chart__plot {
+  --_plot-height: 160px;
+  --_draw-top: var(--spacing-padding-p-1);
+  --_draw-height: 132px;
+  --_label-top: 140px;
+  --_category-gap: var(--spacing-padding-p-3);
+  --_bar-radius: var(--border-radius-rounded);
+  --_point-radius: 3px;
+  --_ring-radius: 4px;
+}
+
+.ds-chart[data-type='bar-vertical'][data-variant='simple'] .ds-chart__plot {
+  --_bar-size: 24px;
+  --_pair-gap: var(--spacing-padding-p-1);
+}
+
+.ds-chart[data-type='bar-vertical'][data-variant='simple'][data-group='yes'] .ds-chart__plot {
+  --_bar-size: 14px;
+}
+
+.ds-chart[data-type='bar-horizontal'][data-variant='simple'] .ds-chart__plot {
+  --_row-height: 28px;
+  --_row-gap: var(--spacing-margin-m-2);
+  --_row-label-width: 32px;
+  --_row-label-gap: var(--spacing-padding-p-2);
+  --_bar-size: 12px;
+  --_pair-gap: 8px;
+  --_bar-max: 0.9;
+}
+
+.ds-chart[data-type='bar-horizontal'][data-variant='simple'][data-group='yes'] .ds-chart__plot {
+  --_row-height: 34px;
+  --_bar-size: 8px;
+}
+
+.ds-chart__svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  overflow: hidden;
+}
+
+/* SVG marks */
+.ds-chart__stop {
+  stop-color: var(--_c);
+}
+
+.ds-chart__stop[data-end] {
+  stop-opacity: 0.4;
+}
+
+[data-kind='area'] > .ds-chart__stop {
+  stop-opacity: 0.2;
+}
+
+[data-kind='area'] > .ds-chart__stop[data-end] {
+  stop-opacity: 0;
+}
+
+.ds-chart__grid {
+  stroke: var(--colors-chart-grid-default);
+  stroke-width: var(--border-width-border);
+}
+
+.ds-chart__axis {
+  stroke: var(--colors-border-gray-subtler);
+  stroke-width: var(--border-width-border);
+}
+
+.ds-chart__baseline {
+  stroke: var(--colors-chart-simple-history);
+  stroke-width: var(--border-width-border);
+  stroke-linecap: round;
+}
+
+.ds-chart__guide {
+  stroke: var(--colors-border-gray);
+  stroke-width: var(--border-width-border);
+  stroke-dasharray: 4 4;
+}
+
+.ds-chart__highlight {
+  fill: var(--colors-alpha-black-50);
+}
+
+.ds-chart__line {
+  fill: none;
+  stroke: var(--_c);
+  stroke-width: var(--border-width-border-2);
+  stroke-linejoin: miter;
+}
+
+.ds-chart[data-variant='simple'] .ds-chart__line {
+  stroke-width: var(--border-width-border-2_5);
+  stroke-linejoin: round;
+}
+
+.ds-chart[data-variant='simple'] .ds-chart__line[data-series='1'] {
+  stroke-width: var(--border-width-border-2);
+  stroke-dasharray: 3 3;
+}
+
+.ds-chart__point {
+  fill: var(--_c);
+  stroke: var(--colors-border-inverse);
+  stroke-width: var(--border-width-border-2);
+}
+
+.ds-chart[data-variant='simple'] .ds-chart__point {
+  stroke: var(--colors-surface-page);
+}
+
+.ds-chart .ds-chart__point[data-current] {
+  fill: var(--colors-surface-page);
+  stroke: var(--_c);
+  stroke-width: var(--border-width-border-3);
+}
+
+/* Plot labels (positioned by Chart.tsx) */
+.ds-chart__labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ds-chart__tick,
+.ds-chart__category {
+  position: absolute;
+  box-sizing: border-box;
+  color: var(--colors-text-secondary);
+  white-space: nowrap;
+}
+
+.ds-chart__tick {
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+.ds-chart__category {
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-chart__labels [data-anchor='center'] {
+  transform: translateX(-50%);
+}
+
+.ds-chart__labels [data-anchor='end'] {
+  transform: translateX(-100%);
+}
+
+.ds-chart__labels [data-anchor='middle'] {
+  transform: translateY(-50%);
+}
+
+.ds-chart__labels [data-anchor='band'] {
+  text-align: center;
+}
+
+.ds-chart__labels [data-anchor='end-middle'] {
+  transform: translate(-100%, -50%);
+}
+
+.ds-chart__labels [data-axis='value'][data-anchor='middle'] {
+  text-align: right;
+}
+
+/* Tick labels that hug their text are whole pixels wide, like Figma's auto-width text boxes (aligned inside them). */
+.ds-chart__labels [data-anchor='center'] {
+  text-align: center;
+}
+
+.ds-chart__labels [data-anchor='end'] {
+  text-align: right;
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-chart__labels [data-anchor='center'],
+  .ds-chart__labels [data-anchor='end'],
+  .ds-chart__labels [data-anchor='end-middle'],
+  .ds-chart-tooltip__title,
+  .ds-chart-tooltip__text,
+  .ds-chart-tooltip__value {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
+
+.ds-chart__max {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+/* Tooltip inside the chart — Figma instances add a background blur 12 (CSS blur radius = Figma radius / 2). */
+.ds-chart__tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* Legend */
+.ds-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-padding-p-2) var(--spacing-padding-p-5);
+  padding-top: var(--spacing-padding-p-3);
+}
+
+.ds-chart-legend-item {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-padding-p-1_5);
+  color: var(--colors-text-secondary);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+  white-space: nowrap;
+}
+
+/* Figma LINE "Series marker" 20px, border-2, centred on y 8 — Figma draws it on the rows above (6–7). */
+.ds-chart-legend-item__marker {
+  flex: none;
+  width: 20px;
+  height: var(--border-width-border-2);
+  margin-top: calc(-1 * var(--border-width-border-2));
+  background-color: var(--_c);
+}
+
+/*
+ * Dash 5 / gap 3 — Figma fits the pattern to the open 20px line: three whole periods (20 / 3px) starting and ending
+ * with half a dash, the dash : gap ratio kept at 5 : 3.
+ */
+.ds-chart-legend-item[data-type='dash-line'] .ds-chart-legend-item__marker {
+  --_period: calc(20px / 3);
+  background: repeating-linear-gradient(to right, var(--_c) 0 calc(var(--_period) * 5 / 8), transparent 0 var(--_period)) calc(var(--_period) * -5 / 16) 0;
+}
+
+.ds-chart-legend-item[data-type='bar'] .ds-chart-legend-item__marker {
+  width: 12px;
+  height: 12px;
+  margin-top: 0;
+  border-radius: var(--border-radius-rounded-\[2px\]);
+}
+
+/* Tooltip */
+.ds-chart-tooltip {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-1_5);
+  padding: var(--spacing-padding-p-2_5);
+  border-radius: var(--border-radius-rounded-sm);
+  background-color: var(--colors-alpha-white-800);
+  box-shadow: var(--effect-elevation-3);
+  white-space: nowrap;
+}
+
+.ds-chart-tooltip__title {
+  color: var(--colors-text-tertiary);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+.ds-chart-tooltip__items {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: var(--spacing-margin-m-1) var(--spacing-margin-m-1_5);
+  margin: 0;
+}
+
+.ds-chart-tooltip__row {
+  display: contents;
+}
+
+.ds-chart-tooltip__label,
+.ds-chart-tooltip__value {
+  margin: 0;
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-chart-tooltip__label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-1_5);
+  color: var(--colors-text-secondary);
+}
+
+.ds-chart-tooltip__indicator {
+  flex: none;
+  width: 4px;
+  height: 16px;
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_c);
+}
+
+.ds-chart-tooltip__value {
+  color: var(--colors-text-primary);
+}
+
+/* Screen-reader text (data table, announcements) */
+.ds-chart__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -179,6 +179,14 @@
 ### Card
 - 일반 `<div>` 묶음. 머리글 제목은 `<h3>`(`headingLevel`로 변경) — 페이지의 제목 단계에 맞추세요.
 
+### Chart
+- `<figure>`(이름 = `aria-label`). 그림(SVG) · 눈금 글자 · 범례 · 툴팁은 보조 기술에서 숨기고, 모든 값을 숨긴 표(`<table>` — 캡션 =
+  `aria-label`, 열 머리 = 카테고리, 행 머리 = 계열 이름)로 제공합니다. 축 이름은 일반 글자로 읽힙니다.
+- 기본 스타일의 그림 영역은 Tab으로 초점(`role="group"`, 이름 "차트 항목: 화살표 키로 값 확인", 브라우저 기본 포커스 링 — Figma에 Focus 없음).
+  ←/→/↑/↓로 항목 이동, Home · End, Esc로 닫기. 이동한 항목의 값("104동: 조회 기간 305, 이전 기간 314")을 `aria-live="polite"`로 알립니다.
+- 포인터 호버의 툴팁은 같은 값을 보여 주는 시각 보조입니다(낭독기는 표 · 알림으로 접근). 간단 스타일은 툴팁이 없어 초점을 받지 않습니다.
+- 색만으로 계열을 구분하지 않도록 범례 · 툴팁에 계열 이름이 함께 나옵니다. 툴팁 제목 `text/tertiary`(#778191)는 알려진 토큰 대비 항목.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

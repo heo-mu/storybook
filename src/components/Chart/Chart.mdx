@@ -1,0 +1,96 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Chart.showcase.stories';
+import { Chart } from './Chart';
+import { ChartLegendItem } from './ChartLegendItem';
+import { ChartTooltip } from './ChartTooltip';
+
+<Meta title="Components/Chart/Usage" />
+
+# Chart — 사용 가이드
+
+Figma **chart**(698:4399, 12개 변형)와 **chart-legend-item**(697:4514), **chart-tooltip**(693:9776)을 구현했습니다.
+선 · 세로 막대 · 가로 막대 차트를 기본 스타일(축 이름, 값 눈금, 범례, 툴팁)과 간단 스타일(160px, 마지막 항목이 현재 기간)로 그립니다.
+그림은 컨테이너 너비에 맞춘 SVG이고, 같은 값을 화면 낭독기용 표로도 제공합니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Chart } from 'platform-design-system';
+
+<Chart
+  aria-label="동별 전력 사용량"
+  type="bar-vertical"
+  yAxisLabel="Y축: 전력 사용량 (kWh)"
+  xAxisLabel="X축: 동별 구분"
+  categories={['101동', '102동', '103동', '104동', '105동']}
+  series={[
+    { label: '조회 기간', data: [320, 265, 301, 305, 384] },
+    { label: '이전 기간', data: [330, 273, 311, 314, 396] },
+  ]}
+/>
+
+<Chart variant="simple" type="line" aria-label="월별 사용량"
+  categories={['6월', '7월', '8월', '9월', '10월']}
+  series={[{ label: '사용량', data: [148, 198, 136, 224, 184] }]} />`}
+/>
+
+## Figma → Props
+
+| Figma | 코드 | 비고 |
+| --- | --- | --- |
+| Type (Line · Bar Vertical · Bar Horizontal) | `type` (`line` · `bar-vertical` · `bar-horizontal`) | |
+| Style (Default · Simple) | `variant` (`default` · `simple`) | |
+| Group (no · yes) | `series` 1개 · 2개 | 두 번째가 비교 계열, 3개째부터는 무시 |
+| Y Axis Label · X Axis Label | `yAxisLabel` · `xAxisLabel` | 기본 스타일 |
+| 값 눈금(0–400, 0–240) | `ticks` | 없으면 0부터 4칸(1 · 1.5 · 2 · 2.5 · 3 · 4 · 5 · 6 · 8 × 10ⁿ 간격) |
+| 카테고리 · 기간 이름 | `categories` | |
+| 툴팁이 보이는 항목(Figma 호버 표시) | `activeIndex` · `defaultActiveIndex` · `onActiveIndexChange` | 기본 스타일 |
+| "최고" 배지 | `maxLabel` | 선 차트 기본 스타일, `false`로 숨김 |
+| chart-legend-item | `ChartLegendItem` (`type` line · dash-line · bar, `color`) | `Chart`가 범례를 직접 그림 — 별도 범례용 |
+| chart-tooltip | `ChartTooltip` (`title`, `items`) | `Chart`가 직접 표시 — 별도 사용용 |
+
+## 색 (Figma 변형별 그대로)
+
+| | 첫 계열 | 두 번째 계열 |
+| --- | --- | --- |
+| 선 | `chart/series/brand` | `chart/series/02` (간단 스타일: 점선 3 / 3) |
+| 세로 막대 기본 | `chart/series/brand` | `chart/series/compare` |
+| 가로 막대 기본 | `chart/series/brand` | 막대 `chart/simple/history`, 범례 · 툴팁 `chart/series/compare` (figma-issues F65) |
+| 간단 막대 — 현재 기간(마지막) | `chart/series/brand` | `chart/series/02` |
+| 간단 막대 — 지난 기간 | 1계열: 세로 `chart/series/compare` · 가로 `chart/simple/history` / 2계열: `chart/simple/history` | `chart/simple/history-compare` |
+
+막대는 값 쪽 끝의 계열 색에서 축 쪽 40%로 흐려지는 그라디언트, 한 계열 선 차트는 아래 면(계열 색 20% → 0%)이 있습니다.
+
+## 상호작용 · 접근성
+
+- 기본 스타일의 그림 영역은 키보드로 초점을 받습니다(`role="group"`, 이름 `plotLabel`). ←/→(↑/↓)로 항목 이동,
+  Home / End, Esc로 툴팁을 닫습니다. 이동한 항목의 값은 `aria-live` 영역으로 읽어 줍니다.
+- 포인터를 올리면 가장 가까운 항목의 툴팁 · 강조(막대: `alpha/black/50` 영역, 선: 점선 안내선 · 빈 원)가 보입니다.
+- 그림(SVG · 눈금 글자 · 범례 · 툴팁)은 보조 기술에서 숨기고, 모든 값을 표(`<table>`, 캡션 = `aria-label`)로 제공합니다.
+- 간단 스타일은 툴팁이 없어(Figma) 초점을 받지 않고 표만 제공합니다.
+
+## 코드 정책 (Figma에서 정해지지 않은 부분)
+
+- **툴팁 위치**: Figma는 변형마다 손으로 배치했습니다(F63). 선 · 가로 막대는 기준점(점 · 가장 긴 막대 끝)의 오른쪽 `p-3`,
+  세로 막대는 항목 가운데에서 그림 영역 위쪽에 맞추고, 넘치면 왼쪽으로 뒤집습니다.
+- **호버 표시**: Figma는 막대 Group=yes 변형에만 호버 상태를 그렸습니다. 같은 강조 · 툴팁을 Group=no에도 씁니다.
+- **간단 선 차트의 점**: Figma 샘플 점은 기간 이름 가운데에 있지 않습니다(F64). 코드는 각 기간 가운데에 두고, 선은 첫 · 마지막
+  구간의 기울기로 양 끝까지 이어 그립니다.
+- **값 범위**: 0 이상 값만 정의되어 있습니다. 눈금 범위를 벗어나는 값은 범위 끝에 그립니다. 간단 스타일은 가장 큰 값을 위(세로)
+  · 트랙의 90%(가로, Figma 224 → 280px 중 252px)에 둡니다.
+- **숨김 레이어**: 간단 스타일의 "Current values"(현재 값 칩)와 가로 막대의 "Axis unit"은 Figma에서 숨김이라 구현하지 않았습니다.
+
+## Props
+
+<ArgTypes of={Chart} />
+
+### ChartLegendItem
+
+<ArgTypes of={ChartLegendItem} />
+
+### ChartTooltip
+
+<ArgTypes of={ChartTooltip} />

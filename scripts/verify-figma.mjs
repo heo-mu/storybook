@@ -31,7 +31,9 @@ const config = readJson(`figma/verify/${component}.json`);
 const sectionMeta = loadPage('section-58-5174.xml');
 const dashboardMeta = (() => { try { return loadPage('section-728-25472.xml'); } catch { return null; } })();
 
-const glob = (pattern) => new RegExp('^' + pattern.split('*').map((s) => s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('[^/]*') + '$');
+// Layer-path globs: `*` matches within one path segment, `**` across segments.
+const glob = (pattern) =>
+  new RegExp('^' + pattern.split('**').map((part) => part.split('*').map((s) => s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('[^/]*')).join('.*') + '$');
 const hexRgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 
 function cropOver(png, x, y, w, h, bg) {
@@ -249,6 +251,7 @@ for (const set of config.sets) {
       else if (pixel.ratio > (set.pixelTolerance ?? 0.005)) issues.push({ cat: 'pixels', detail: `${(pixel.ratio * 100).toFixed(2)}% of non-text pixels differ` });
       // Glyph placement
       const offsets = [];
+      const glyphTolerances = Object.entries(set.glyphTolerances ?? {}).map(([pattern, t]) => ({ re: glob(pattern), ...t }));
       for (const t of textBoxes) {
         if (contentDependent.some((re) => re.test(t.p))) continue;
         const a = inkCentroid(fig, t), b = inkCentroid(dom, t);
@@ -258,13 +261,15 @@ for (const set of config.sets) {
         const subpixel = fp.x % 1 !== 0;
         // Chromium is the reference engine; other engines rasterise text differently, so horizontal
         // offsets under 1px there are recorded as rendering differences, not defects.
-        const dxTol = BROWSER === 'chromium' ? (set.glyphDxTolerance ?? 0.5) : Math.max(fallbackPx(t.x), set.glyphDxTolerance ?? 0);
+        // `glyphTolerances`: { "<layer glob>": { dx?, dy?, why } } — wider limits for the matching text layers only.
+        const layerTol = glyphTolerances.find((g) => g.re.test(t.p));
+        const dxTol = BROWSER === 'chromium' ? (layerTol?.dx ?? set.glyphDxTolerance ?? 0.5) : Math.max(fallbackPx(t.x), layerTol?.dx ?? set.glyphDxTolerance ?? 0);
         // knownDifferences: { "<variant>": "reason" } for every engine, or { "<variant>": { "<engine>": "reason" } }.
         const knownEntry = set.knownDifferences?.[m.name];
         const known = typeof knownEntry === 'string' ? knownEntry : knownEntry?.[BROWSER];
         // Documented engine rendering differences (config knownDifferences) are recorded, not failed.
         // `glyphDyTolerance`: sets whose Figma texts sit on half pixels (centred in an odd height) — default 0.5.
-        const dyTol = set.glyphDyTolerance ?? 0.5;
+        const dyTol = layerTol?.dy ?? set.glyphDyTolerance ?? 0.5;
         if ((Math.abs(dy) > dyTol || (!subpixel && Math.abs(dx) > dxTol)) && known) notes.push(`${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)} — known: ${known}`);
         else if (Math.abs(dy) > dyTol || (!subpixel && Math.abs(dx) > dxTol)) issues.push({ cat: 'text-position', detail: `${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)}` });
         else if (!subpixel && Math.abs(dx) > 0.5) notes.push(`${t.p} glyph dx ${dx.toFixed(2)} (${BROWSER} text rendering)`);
@@ -298,6 +303,7 @@ for (const set of config.sets) {
   for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known difference — ${v}: ${why}`); }
   if (set.maskRects || set.maskRectsFor) lines.push(`  ◇ manual review (pixels not compared): ${set['//maskRects'] ?? set['//maskRectsFor'] ?? 'masked areas'}`);
   if (ignored.length) lines.push(`  ◇ manual review (not compared): ${set.ignore.join(", ")}`);
+  for (const [pattern, t] of Object.entries(set.glyphTolerances ?? {})) lines.push(`  ◇ glyph tolerance — ${pattern}: ${[t.dx != null && 'dx ±' + t.dx, t.dy != null && 'dy ±' + t.dy].filter(Boolean).join(', ')}px — ${t.why}`);
   if (set.geometryOnly) lines.push(`  ◇ manual review (pixels and glyphs not compared): ${set.geometryOnly}`);
   for (const [v, why] of Object.entries(set.skipVariants ?? {})) lines.push(`  ◇ manual review (variant not compared) — ${v}: ${why}`);
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);

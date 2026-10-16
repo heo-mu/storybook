@@ -132,6 +132,12 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   관리 모드 입력 상자의 위 · 아래 테두리는 Figma가 두 줄에 흐리게 그려 픽셀 비교에서 뺐습니다. 칩 · 라벨 폭은 calc-size 없는 엔진에서
   누적(`accumulatedFallback` + `hugNodes`).
 - Accordion 구분선: Figma 선(LINE)은 y 아래 줄이 아니라 위 줄(트리거 마지막 줄)에 그려지므로 트리거의 `::after`로 그립니다.
+- Chart: 그림은 컨테이너 너비(`ResizeObserver`)에 맞춘 SVG라 막대 · 선 가장자리가 Figma처럼 소수점 위치에서 안티에일리어싱됩니다.
+  Figma LINE(세로 막대 눈금선 · 범례 선)은 y 위 줄에, VECTOR 선(선 차트 눈금선 · 가로 막대 기준선)은 y 걸쳐 두 줄에 그려져 같은 규칙으로
+  그립니다. 축 이름의 한글 xs 글자는 글자 위치가 픽셀 단위로 같고 농도만 달라 글자 중심 허용치를 1.6px로 둠(`glyphTolerances`),
+  선 차트 값 눈금은 calc-size 없는 엔진(Firefox · WebKit)에서 글자 상자가 소수점 너비로 남아 "240"이 최대 1.08px 오른쪽(허용 1.1px).
+  가로 막대 행(37.6 · 45.6px)의 카테고리 이름은 소수점 y라 세로 0.51px 차이. 숨긴 데이터 표는 div로 감쌌습니다 — Firefox는 잘라 낸
+  `<table>`의 `<caption>`을 그대로 그립니다. 차트 안 툴팁의 `backdrop-filter`는 세 엔진 모두 지원.
 
 ## 검증하지 못한 환경
 

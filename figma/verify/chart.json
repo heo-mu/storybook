@@ -1,0 +1,156 @@
+{
+  "component": "Chart",
+  "sets": [
+    {
+      "set": "chart",
+      "story": "components-chart-showcase--figma",
+      "background": "#ffffff",
+      "harnessCss": ".ds-chart__tooltip { visibility: hidden !important; }",
+      "ignore": [
+        "**/chart-tooltip"
+      ],
+      "parts": {
+        "Chart annotation / axes/*": {
+          "selector": ".ds-chart__axis-label",
+          "optional": true
+        },
+        "Chart content / plot": {
+          "selector": ".ds-chart__plot",
+          "optional": true
+        },
+        "Chart annotation / legend/*": {
+          "selector": ".ds-chart-legend-item",
+          "optional": true
+        },
+        "Chart content / plot/Y *": {
+          "selector": ".ds-chart__tick[data-axis='value']",
+          "compare": "yh",
+          "optional": true
+        },
+        "Chart content / plot/Plot area / 0–400/Grid anchor / */Axis value / *": {
+          "selector": ".ds-chart__tick[data-axis='value']",
+          "optional": true
+        },
+        "Chart content / plot/Plot coordinate space / full width/X tick anchor / */X *": {
+          "selector": ".ds-chart__tick[data-axis='category']",
+          "compare": "xy",
+          "optional": true
+        },
+        "Chart content / plot/X-axis / value labels/Linear value scale/Tick anchor / */Tick / *": {
+          "selector": ".ds-chart__tick[data-axis='value']",
+          "compare": "xy",
+          "optional": true
+        },
+        "**/Category label": {
+          "selector": ".ds-chart__category",
+          "optional": true
+        },
+        "**/Building": {
+          "selector": ".ds-chart__category",
+          "optional": true
+        },
+        "**/Bar / **": {
+          "selector": ".ds-chart__bar",
+          "optional": true
+        },
+        "Simple plot/*/Main / **": {
+          "selector": ".ds-chart__bar",
+          "optional": true
+        },
+        "Simple plot/*/Comparison / **": {
+          "selector": ".ds-chart__bar",
+          "optional": true
+        },
+        "*/Magnitude plot/Main / **": {
+          "selector": ".ds-chart__bar",
+          "optional": true
+        },
+        "*/Magnitude plot/Comparison / **": {
+          "selector": ".ds-chart__bar",
+          "optional": true
+        },
+        "**/Highlight": {
+          "selector": ".ds-chart__highlight",
+          "optional": true
+        },
+        "Chart content / plot/Plot coordinate space / full width/badge_status": {
+          "selector": ".ds-chart__max",
+          "compare": "ywh",
+          "optional": true
+        },
+        "Period labels/*": {
+          "selector": ".ds-chart__tick",
+          "optional": true
+        },
+        "History row */Period/Period Label": {
+          "selector": ".ds-chart__tick",
+          "optional": true
+        },
+        "Current period row/Period/Period Label": {
+          "selector": ".ds-chart__tick",
+          "optional": true
+        }
+      },
+      "maskRectsFor": {
+        "Type=Line, Style=Simple, *": [
+          [
+            0,
+            0,
+            320,
+            132
+          ]
+        ]
+      },
+      "//maskRectsFor": "simple line plots — the Figma sample points are placed by hand (not at the period label centres, uneven spacing), the code puts each point at its period's centre (figma-issues F64); the tooltip inside the chart is hidden here and its Figma area masked: its placement is a code policy (F63), the tooltip itself is checked in the chart-tooltip set",
+      "glyphTolerances": {
+        "Chart annotation / axes/*": {
+          "dx": 1.6,
+          "why": "xs Hangul axis titles: same glyph extents and positions as Figma (ink runs identical to the pixel), the centroid moves up to 1.55px because the browser rasterises some glyphs lighter / heavier"
+        },
+        "**/Category label": {
+          "dx": 0.6,
+          "dy": 0.6,
+          "why": "category labels: bar-horizontal rows are 37.6 / 45.6px tall, so their centred labels sit at fractional y (Chromium puts glyphs on whole pixels, dy up to 0.51); bar-vertical labels are 80px boxes centred on the category, Figma placed them 0.2px left of centre (x 9 in a 98.4px category)"
+        },
+        "**/Building": {
+          "dx": 0.6,
+          "dy": 0.6,
+          "why": "category labels: bar-horizontal rows are 37.6 / 45.6px tall, so their centred labels sit at fractional y (Chromium puts glyphs on whole pixels, dy up to 0.51); bar-vertical labels are 80px boxes centred on the category, Figma placed them 0.2px left of centre (x 9 in a 98.4px category)"
+        },
+        "Chart content / plot/Y *": {
+          "dx": 1.1,
+          "why": "line value labels hug their text and end at the 32px column: Figma rounds the box up to whole pixels, so does calc-size() in Chromium; without it (Firefox, WebKit) \"240\" keeps its narrower sub-pixel width and starts up to 1.08px further right"
+        }
+      }
+    },
+    {
+      "set": "chart-legend-item",
+      "story": "components-chart-showcase--figma-parts",
+      "figmaPrefix": "legend:",
+      "background": "#ffffff",
+      "parts": {
+        "Rectangle 34624613": {
+          "selector": ".ds-chart-legend-item[data-type='bar'] .ds-chart-legend-item__marker",
+          "optional": true
+        },
+        "Label": ".ds-chart-legend-item__label"
+      }
+    },
+    {
+      "set": "chart-tooltip",
+      "story": "components-chart-showcase--figma-parts",
+      "figmaPrefix": "tooltip:",
+      "background": "#ffffff",
+      "parts": {
+        "Time": ".ds-chart-tooltip__title",
+        "Frame 2147240250/Frame 2147240235/Info container*": {
+          "selector": ".ds-chart-tooltip__label",
+          "compare": "xyh"
+        },
+        "Frame 2147240250/Frame 2147240235/Info container*/Indicator": ".ds-chart-tooltip__indicator",
+        "Frame 2147240250/Frame 2147240249/Pressure label*": ".ds-chart-tooltip__value"
+      },
+      "//parts": "label rows: their width is the label text width (Figma measures \"RS-201\" 47px, the browser 47.0x) — the column they share is checked through the value x positions and the root width"
+    }
+  ]
+}

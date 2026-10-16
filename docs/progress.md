@@ -30,7 +30,7 @@
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 완료 |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 완료 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 완료 (Popover · Drawer 구현 불가) |
-| 7 | Table · Card · Chart · Loading | 진행 (Table · Card · Loading 완료, Chart 남음) |
+| 7 | Table · Card · Chart · Loading | 진행 (4개 구현 · 개별 검증 완료, 그룹 검증 남음) |
 | 8 | Dashboard components | 미착수 |
 | 9 | 통합 QA | 미착수 |
 
@@ -68,6 +68,7 @@
 | Dialog | 1 | 1/1 | 1/1 | 1/1 (제목 글자 위치 기록) | 통과 |
 | Table (header · body · key · value · editable) | 3 + 8 + 2 + 2 + 52 | 64/64 (3 수동) | 64/64 (3 수동) | 64/64 (3 수동) | 통과 |
 | Card (header · footer · 예시) | 1 + 1 + 1 | 3/3 (위치 · 크기만) | 3/3 (〃) | 3/3 (〃) | 통과 — Figma 프레임 숨김, 픽셀 수동 검토 |
+| Chart (chart · legend-item · tooltip) | 12 + 3 + 1 | 16/16 | 16/16 | 16/16 | 통과 — 간단 선 차트 그림 영역 · 차트 안 툴팁 위치 수동 검토 |
 
 Phase 5 · 6 그룹 검증(2026-10-16): verify:all 25개 컴포넌트 × 3 엔진 통과(Phase 5까지), Accordion · Dialog 3 엔진 개별 통과,
 verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 67 파일 · 311개 통과, typecheck · lint · build · build-storybook 통과,
@@ -81,6 +82,8 @@ build · build-storybook 통과, axe 262 스토리 — 그 밖의 위반 0(알�
 수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).
 수동 검토 필요: Badge Outline 모서리(1px 안쪽 테두리의 모서리 안티에일리어싱이 Figma · 엔진마다 달라 모서리 4px · 둥근 끝만 픽셀 비교 제외).
 수동 검토 필요: Table 관리 모드 — Textarea 두 줄 변형 3개(F58), 필드 위 · 아래 테두리 반 픽셀 행과 필드 안 글자(픽셀 비교 제외 영역).
+수동 검토 필요: Chart — 간단 선 차트 2개의 그림 영역(Figma 샘플 점이 기간 가운데에 있지 않음, F64 — 픽셀 비교 제외, 화면 확인함),
+차트 안 툴팁 위치(코드 정책, F63 — 검증 스토리에서 숨기고 Figma 툴팁 영역 제외, 툴팁 자체는 chart-tooltip 세트로 비교).
 수동 검토 필요: Breadcrumb 펼친 메뉴 위치(Figma는 경로 오른쪽 끝 정렬, 코드는 … 버튼 아래 — F33). 메뉴 크기 200 × 110은 스토리 테스트로 확인.
 검증 스토리에서만 Figma 예시에 맞춘 항목: Slider 단위 상자 24px(F14) · 숫자 필드 23px(F15), 핸들 x 제외(F16).
 알려진 렌더링 차이(실패 아님): option md Disabled 밑줄 위치(Figma auto 밑줄이 약 1.5px 아래, F6) ·
@@ -88,7 +91,11 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 7 — Table(351:3452, 355:3739, 355:4193, 355:4460, 503:23264) → Card(218:7173, 218:7174) → Chart(698:4399, 697:4514, 693:9776).
+Phase 7 그룹 검증(verify:all · verify:button · 테스트 · typecheck · lint · build · build-storybook · axe) → Phase 8 Dashboard components
+(metric-trend 697:4482 · data-state 698:4359 · skeleton 697:4486 · data-freshness 697:4543 · metric-card 697:4487 · dashboard-filter-bar 698:4163).
+
+**결정 필요 — Chart(F63 · F65)**: 툴팁 위치는 Figma가 변형마다 손으로 배치해 코드 정책으로 정했습니다. 가로 막대 기본 스타일의 비교 막대 색
+(`chart/simple/history`)이 범례 · 툴팁(`chart/series/compare`)과 다르고 세로 막대와도 다르지만 Figma 그대로 구현했습니다.
 
 **결정 필요 — Card(F60 · F61)**: Figma Card 프레임이 숨김이고 그림자가 원격 스타일입니다.
 
@@ -105,7 +112,8 @@ Phase 7 — Table(351:3452, 355:3739, 355:4193, 355:4460, 503:23264) → Card(21
 
 검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
 `figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),
-`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), `maskRectsFor`(변형별 픽셀 제외 영역), `variantReferences`(소수점 위치 변형을 개별 스크린샷과 비교), `skipVariants`(비교 제외 · 수동 검토 표시), `glyphDyTolerance`, `hugNodes`, `geometryOnly`(기준 이미지 없음), part의 `compare` · `optional`.
+`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), `maskRectsFor`(변형별 픽셀 제외 영역), `variantReferences`(소수점 위치 변형을 개별 스크린샷과 비교), `skipVariants`(비교 제외 · 수동 검토 표시), `glyphDyTolerance`, `glyphTolerances`(레이어 glob별 dx · dy 허용치와 이유), `hugNodes`, `geometryOnly`(기준 이미지 없음), part의 `compare` · `optional`.
+레이어 경로 glob: `*`는 경로 한 단계 안, `**`는 여러 단계.
 
 ## 미해결 이슈
 
