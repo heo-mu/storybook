@@ -2,7 +2,8 @@ import type { CSSProperties, ReactNode } from 'react';
 
 const caption: CSSProperties = {
   font: '500 11px/16px var(--font-family-basic), sans-serif',
-  color: 'var(--colors-text-tertiary)',
+  // text/secondary: 4.5:1+ contrast on the page surface (text/tertiary is 3.87:1).
+  color: 'var(--colors-text-secondary)',
   whiteSpace: 'nowrap',
   textAlign: 'left',
   padding: '4px 12px 4px 0',
@@ -14,9 +15,9 @@ export function MatrixTable({ columns, rows }: { columns: string[]; rows: Array<
     <table style={{ borderCollapse: 'separate', borderSpacing: '0 8px' }}>
       <thead>
         <tr>
-          <th style={caption} />
+          <td style={caption} />
           {columns.map((c) => (
-            <th key={c} style={caption}>
+            <th key={c} style={caption} scope="col">
               {c}
             </th>
           ))}
