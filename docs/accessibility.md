@@ -151,6 +151,10 @@
 - 정적 `Toast`는 `role="status"`. 상태 아이콘은 장식 — 상태는 메시지 문구로 전달하세요.
 - 자동 닫힘은 최소 5초(`showToast`가 보정), 중요한 오류는 `timeout: null`로 유지하세요.
 
+### Tooltip
+- react-aria-components TooltipTrigger: 말풍선 `role="tooltip"`, 트리거 `aria-describedby`. 키보드 포커스 시 바로 표시, Esc로 닫기.
+- 툴팁은 보조 설명입니다. 아이콘 버튼의 이름은 `aria-label`로 따로 주세요(툴팁은 설명으로만 연결).
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

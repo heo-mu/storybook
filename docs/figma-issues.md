@@ -129,6 +129,8 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F44 | Toast 표시 위치 · 여러 개일 때 간격 · 자동 닫힘 시간이 정의되지 않음 | 화면 아래 가운데(아래 `p-5`), 간격 `m-2`, 5초 — 코드 정책 | 정의 필요 |
 | F45 | toast 변수 이름 오타 `colors/toast/border/succeess` · `…/status-icon/succeess` | 이름 그대로 | 이름 수정 |
 | F46 | toast 높이 36 고정인데 세로 padding p-3(12 + 12 + 내용 20 = 44) — 내용이 가운데로 넘침 | 높이 36 · padding 그대로(같은 위치), 한 줄 말줄임 | padding 정리 |
+| F47 | tooltip 그림자(elevation-3)가 채움 없는 루트에 있어 말풍선 + 화살표 전체에 적용 — CSS box-shadow 토큰은 화살표 모양을 따를 수 없음 | 말풍선에만 적용(화살표 그림자 생략) | — |
+| F48 | tooltip 트리거와의 거리 · 표시 지연이 정의되지 않음 | 거리 = 화살표 길이 8px, 지연 react-aria 기본 | 정의 필요 |
 
 ## D. 작업 중 관찰된 원본 변경
 

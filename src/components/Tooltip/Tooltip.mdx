@@ -1,0 +1,53 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Tooltip.showcase.stories';
+import { Tooltip } from './Tooltip';
+
+<Meta title="Components/Tooltip/Usage" />
+
+# Tooltip — 사용 가이드
+
+Figma **Tooltip** 프레임(149:780)의 `tooltip`(4개)을 구현했습니다. 마우스를 올리거나 키보드로 포커스하면 짧은 설명을 보여 줍니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Button, IconButton, Tooltip } from 'platform-design-system';
+
+<Tooltip content="변경 사항을 저장합니다">
+  <Button>저장</Button>
+</Tooltip>
+
+<Tooltip content="설정" placement="bottom">
+  <IconButton aria-label="설정" icon={<GearIcon />} />
+</Tooltip>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Placement Top · Right · Bottom · Left | `placement` | 공간이 없으면 반대쪽으로 |
+| Arrow | `showArrow` | 10 × 8 삼각형 |
+| Message Text | `content` | |
+
+## 코드 정책 (Figma에 정의되지 않은 부분)
+
+- **트리거와의 거리**: 화살표 길이(8px)만큼 띄워 화살표 끝이 트리거에 닿습니다.
+- **나타나는 지연**: react-aria 기본값(마우스 1.5초, 키보드 포커스는 즉시), `delay` · `closeDelay`로 조정.
+- **그림자**: Figma는 말풍선과 화살표에 함께 그림자(elevation-3)를 줍니다. CSS 토큰(box-shadow)은 화살표 모양을 따를 수 없어
+  말풍선에만 적용합니다(화살표 그림자 생략 — figma-issues F47).
+- **트리거 요소**: ref와 props를 전달하는 요소여야 합니다(`Button`, `IconButton`, `TextButton`, `Link` 등).
+
+## 키보드
+
+| 키 | 동작 |
+| --- | --- |
+| Tab (트리거로 포커스) | 툴팁 표시 |
+| Esc | 툴팁 닫기 |
+
+## Props
+
+<ArgTypes of={Tooltip} />

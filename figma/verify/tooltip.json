@@ -1,0 +1,16 @@
+{
+  "component": "Tooltip",
+  "sets": [
+    {
+      "set": "tooltip",
+      "story": "components-tooltip-showcase--matrix",
+      "background": "#ffffff",
+      "waitFor": "[role=tooltip]",
+      "harnessCss": ".ds-button { width: 80px; }",
+      "parts": {
+        "content/text": ".ds-tooltip__text",
+        "arrow": ".ds-tooltip__arrow > svg"
+      }
+    }
+  ]
+}
