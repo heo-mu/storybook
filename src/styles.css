@@ -30,3 +30,5 @@
 @import './components/Toast/Toast.css';
 @import './components/Tooltip/Tooltip.css';
 @import './components/EmptyState/EmptyState.css';
+@import './components/Accordion/Accordion.css';
+@import './components/Dialog/Dialog.css';

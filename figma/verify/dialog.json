@@ -1,0 +1,24 @@
+{
+  "component": "Dialog",
+  "sets": [
+    {
+      "set": "dialog",
+      "story": "components-dialog-showcase--figma",
+      "background": "#ffffff",
+      "waitFor": "[role=dialog]",
+      "knownDifferences": {
+        "dialog": {
+          "webkit": "centred title box is narrower than the Figma whole-pixel width without calc-size(), plus WebKit 18px semibold advance — glyphs within ~1.1px"
+        }
+      },
+      "parts": {
+        "dialog_header": ".ds-dialog__header",
+        "dialog_header/title": ".ds-dialog__title",
+        "dialog_header/description": ".ds-dialog__description",
+        "dialog_footer": ".ds-dialog__footer",
+        "dialog_footer/button_basic*": ".ds-dialog__footer > .ds-button",
+        "dialog_footer/button_basic*/Label": ".ds-dialog__footer .ds-button__label"
+      }
+    }
+  ]
+}

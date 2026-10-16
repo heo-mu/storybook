@@ -1,0 +1,93 @@
+/*
+ * Dialog — Figma `dialog` (149:2838): 420px wide, padding p-16 p-4 p-8 (top · sides · bottom), m-8 between header
+ * and footer, content centred; border-radius/rounded-md, colors/dialog/background, 1px INSIDE border …/border,
+ * effect elevation-6. Header m-2: title lg/leading-normal/semibold (…/title), description sm/leading-normal/normal
+ * (…/description). Footer 240px, buttons m-2 apart filling it.
+ * The overlay is transparent: Figma defines no scrim (figma-issues F51).
+ */
+
+.ds-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-dialog-modal {
+  max-width: 100%;
+  max-height: 100%;
+  outline: none;
+}
+
+.ds-dialog {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-margin-m-8);
+  width: 420px;
+  max-width: 100%;
+  padding: var(--spacing-padding-p-16) var(--spacing-padding-p-4) var(--spacing-padding-p-8);
+  border-radius: var(--border-radius-rounded-md);
+  background-color: var(--colors-dialog-background-default);
+  box-shadow:
+    inset 0 0 0 var(--border-width-border) var(--colors-dialog-border-default),
+    var(--effect-elevation-6);
+  outline: none;
+}
+
+/* The header is centred; its texts are left-aligned inside their own boxes, as in Figma. */
+.ds-dialog__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+  text-align: left;
+}
+
+/* 18 / 28 title: 27px + 1px below keeps the baseline where Figma draws it (docs/browser-support.md). */
+.ds-dialog__title {
+  margin: 0;
+  padding-bottom: 1px;
+  color: var(--colors-dialog-title-default);
+  font-family: var(--typography-lg-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-lg-leading-normal-semibold-font-size);
+  font-weight: var(--typography-lg-leading-normal-semibold-font-weight);
+  line-height: 27px;
+  letter-spacing: var(--typography-lg-leading-normal-semibold-letter-spacing);
+}
+
+.ds-dialog__description {
+  margin: 0;
+  color: var(--colors-dialog-description-default);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+.ds-dialog__body {
+  align-self: stretch;
+}
+
+.ds-dialog__footer {
+  display: flex;
+  gap: var(--spacing-margin-m-2);
+  width: 240px;
+  max-width: 100%;
+}
+
+.ds-dialog__footer > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-dialog__title,
+  .ds-dialog__description {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

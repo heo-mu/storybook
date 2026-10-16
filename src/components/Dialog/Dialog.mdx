@@ -1,0 +1,61 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Dialog.showcase.stories';
+import { Dialog } from './Dialog';
+
+<Meta title="Components/Dialog/Usage" />
+
+# Dialog — 사용 가이드
+
+Figma **Dialog** 프레임(149:1287)의 `dialog`(149:2838)를 구현했습니다. 화면 위에 떠서 응답을 받는 모달입니다.
+
+<Canvas of={Showcase.Figma} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Button, Dialog } from 'platform-design-system';
+
+<Dialog
+  trigger={<Button>삭제</Button>}
+  role="alertdialog"
+  title="파일을 삭제할까요?"
+  description="삭제한 파일은 되돌릴 수 없습니다."
+  actions={(close) => (
+    <>
+      <Button variant="tertiary" appearance="solid" size="lg" onClick={close}>취소</Button>
+      <Button size="lg" onClick={() => { remove(); close(); }}>삭제</Button>
+    </>
+  )}
+/>
+
+// 직접 열고 닫기
+<Dialog open={open} onOpenChange={setOpen} title="…" actions={…} />`}
+/>
+
+## Figma → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| title | `title` | 대화상자 이름(\`aria-labelledby\`) |
+| description | `description` | 대화상자 설명(\`aria-describedby\`) |
+| dialog_footer (버튼 2개, 240px) | `actions` | 같은 너비로 채움. 함수면 `close`를 받음 |
+
+## 코드 정책 (Figma에 정의되지 않은 부분)
+
+- **배경 덮개(scrim)**: Figma에 없어 투명입니다. 대화상자의 테두리 · 그림자(elevation-6)로 구분됩니다(figma-issues F51 — 결정 필요).
+  `dialog/body/default`(검정 90%) 변수가 있지만 쓰임이 정의되지 않아 사용하지 않았습니다.
+- **내용 영역**: Figma에는 제목 · 설명 · 버튼만 있습니다. `children`은 헤더와 버튼 사이에 같은 간격(`m-8`)으로 놓입니다.
+- **닫기**: Esc로 닫힘(`keyboardDismissDisabled`로 끔), 바깥 클릭은 `dismissable`일 때만. 닫기(X) 버튼은 Figma에 없습니다.
+- **열림 · 닫힘 애니메이션**: 정의가 없어 즉시 나타납니다.
+
+## 키보드
+
+| 키 | 동작 |
+| --- | --- |
+| Tab · Shift+Tab | 대화상자 안에서만 이동 |
+| Esc | 닫고 트리거로 포커스 복귀 |
+
+## Props
+
+<ArgTypes of={Dialog} />

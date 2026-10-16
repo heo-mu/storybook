@@ -1,0 +1,24 @@
+{
+  "component": "Accordion",
+  "sets": [
+    {
+      "set": "accordion-item",
+      "story": "components-accordion-showcase--matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 340px; min-width: 340px; max-width: 340px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "glyphDxTolerance": 1,
+      "parts": {
+        "Trigger": ".ds-accordion__trigger",
+        "Trigger/Heading": ".ds-accordion__heading-text",
+        "Trigger/Heading/Title": ".ds-accordion__title",
+        "Trigger/icon_size": ".ds-accordion__icon",
+        "Trigger/icon_size/icon/*": ".ds-accordion__icon",
+        "Trigger/icon_size/icon/*/*": ".ds-accordion__icon",
+        "Body": {
+          "selector": ".ds-accordion__body",
+          "optional": true
+        }
+      }
+    }
+  ]
+}

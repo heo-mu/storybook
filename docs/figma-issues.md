@@ -132,6 +132,10 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F47 | tooltip 그림자(elevation-3)가 채움 없는 루트에 있어 말풍선 + 화살표 전체에 적용 — CSS box-shadow 토큰은 화살표 모양을 따를 수 없음 | 말풍선에만 적용(화살표 그림자 생략) | — |
 | F48 | tooltip 트리거와의 거리 · 표시 지연이 정의되지 않음 | 거리 = 화살표 길이 8px, 지연 react-aria 기본 | 정의 필요 |
 | F49 | empty-state의 버튼을 끄는 속성이 없음(아이콘 · 설명은 Boolean 있음) | `action` 선택 | 속성 추가 |
+| F50 | accordion-item Hover 표현이 변형마다 다름 — 구분선은 모든 Hover에서 `border/hover`, 배경 `background/hover`는 sm · Expanded Hover에만 | Figma 그대로(sm Expanded만 배경) | 통일 여부 결정 |
+| F51 | Dialog 뒤 덮개(scrim) 색이 없음 — `dialog/body/default`(검정 90%)는 쓰임이 정의되지 않고 어디에도 바인딩되지 않음 | 덮개 투명 | 덮개 정의 (결정 필요) |
+| F52 | accordion 트리거 · 본문 padding과 구분선 두께가 원격 라이브러리 변수에 바인딩 | 같은 값의 로컬 `p-2` · `p-2_5` · `p-3` · `border-width/border` | 로컬 변수 사용 |
+| F53 | 작업 중 accordion-item이 14 → 10개로 바뀜(Focus 상태 삭제, `border/focus` → `border/hover` 이름 변경 — F31) | 현재 10개 구현, 토큰은 스냅샷 이름(`border/focus`, 값 동일) | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

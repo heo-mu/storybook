@@ -56,7 +56,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Toast 91:5557 | `toast` (3) Information/Success/Error · Close Icon | `Toast`, `ToastRegion`, `showToast` | 5 | 완료 |
 | Tooltip 149:780 | `tooltip` (4) Placement Top/Right/Bottom/Left · Arrow | `Tooltip` | 5 | 완료 |
 | Empty State 174:1480 | `empty-state` (단일) Description, Icon | `EmptyState` | 5 | 완료 |
-| Dialog 149:1287 | `dialog` (단일, 420×228) | `Dialog` | 6 | 미착수 |
+| Dialog 149:1287 | `dialog` (단일, 420×228) | `Dialog` | 6 | 완료 |
 | ~~Popover~~ | Figma에서 삭제됨 | — | 6 | 구현 불가 |
 | ~~Drawer~~ | Figma에서 삭제됨 | — | 6 | 구현 불가 |
 
@@ -64,7 +64,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
-| Accordion 796:5813 | `accordion-item` (14) Size md/sm · State Default/Hover/Focus/Disabled · Expanded | `Accordion` | 6 | 미착수 |
+| Accordion 796:5813 | `accordion-item` (10, 작업 중 14→10: Focus 상태 삭제) Size md/sm · State Default/Hover/Disabled · Expanded | `Accordion`, `AccordionItem` | 6 | 완료 |
 | Table 351:3340 | `table_header` (3) · `table_body` (8) · `table_key` (2) · `table_value` (2) · `table_value_editable` (52) | `Table`, `KeyValueTable` | 7 | 미착수 |
 | Card 185:6512 (숨김) | `Frame 2147239186` · `Wrapper` | `Card` | 7 | 미착수 |
 | Chart 773:6723 | `chart` (12) Type Bar Horizontal/Bar Vertical/Line · Style Default/Simple · Group · `chart-legend-item` (3) · `chart-tooltip` | `Chart` | 7 | 미착수 |

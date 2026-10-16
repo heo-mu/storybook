@@ -1,0 +1,150 @@
+/*
+ * Accordion — Figma `accordion-item` (796:6071).
+ *   trigger: md padding p-2_5 p-3 / sm p-2 p-2_5 (remote variables in Figma — local equivalents), gap p-2,
+ *            border-radius/rounded; title md base/leading-normal/medium · sm sm/leading-normal/medium (Expanded:
+ *            semibold, colors/accordion/title/*), description xs/leading-normal/normal (…/body) p-1 below;
+ *            caret 16px (CaretDown …/icon/default, CaretUp …/icon/expanded, …/icon/disabled)
+ *   divider: Figma line directly under the trigger, drawn on the trigger's last pixel row (::after) —
+ *            colors/accordion/border/default, Hover …/border/hover (= snapshot …/border/focus, figma-issues F31)
+ *   body:    md padding p-3 · sm p-3 p-2_5, text sm/leading-normal/normal (…/body/default)
+ * State: Default → Hover (divider; trigger background only for sm Expanded, as in Figma — F50) → Disabled.
+ */
+
+.ds-accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-accordion__item {
+  --_bg: var(--colors-accordion-background-default);
+  --_title: var(--colors-accordion-title-default);
+  --_icon: var(--colors-accordion-icon-default);
+  --_divider: var(--colors-accordion-border-default);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-accordion__heading {
+  margin: 0;
+}
+
+.ds-accordion__trigger {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-padding-p-2);
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-padding-p-2_5) var(--spacing-padding-p-3);
+  border: 0;
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_bg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-accordion__item[data-size='sm'] .ds-accordion__trigger {
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-2_5);
+}
+
+.ds-accordion__heading-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--spacing-padding-p-1);
+  min-width: 0;
+}
+
+/* md title 16 / 24: 1px + 23px keeps the baseline on a whole pixel (docs/browser-support.md). */
+.ds-accordion__title {
+  padding-top: 1px;
+  color: var(--_title);
+  font-family: var(--typography-base-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-medium-font-size);
+  font-weight: var(--typography-base-leading-normal-medium-font-weight);
+  line-height: 23px;
+  letter-spacing: var(--typography-base-leading-normal-medium-letter-spacing);
+}
+
+.ds-accordion__item[data-expanded] .ds-accordion__title {
+  font-weight: var(--typography-base-leading-normal-semibold-font-weight);
+}
+
+.ds-accordion__item[data-size='sm'] .ds-accordion__title {
+  padding-top: 0;
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-accordion__item[data-size='sm'][data-expanded] .ds-accordion__title {
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+}
+
+.ds-accordion__description {
+  color: var(--colors-accordion-body-default);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+.ds-accordion__icon {
+  display: block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--_icon);
+}
+
+.ds-accordion__item[data-expanded] {
+  --_icon: var(--colors-accordion-icon-expanded);
+}
+
+/* Hover: the divider (all sizes) and, for sm Expanded only, the trigger background — as drawn in Figma. */
+.ds-accordion__trigger:hover:not([data-disabled]) {
+  --_divider: var(--colors-accordion-border-focus);
+}
+
+.ds-accordion__item[data-size='sm'][data-expanded] .ds-accordion__trigger:hover {
+  --_bg: var(--colors-accordion-background-hover);
+}
+
+.ds-accordion__item[data-disabled] {
+  --_bg: var(--colors-accordion-background-disabled);
+  --_title: var(--colors-accordion-title-disabled);
+  --_icon: var(--colors-accordion-icon-disabled);
+}
+
+.ds-accordion__item[data-disabled] .ds-accordion__trigger {
+  cursor: default;
+}
+
+.ds-accordion__trigger[data-divider]::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--border-width-border);
+  background-color: var(--_divider);
+  content: '';
+}
+
+.ds-accordion__body {
+  padding: var(--spacing-padding-p-3);
+  color: var(--colors-accordion-body-default);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+.ds-accordion__item[data-size='sm'] .ds-accordion__body {
+  padding: var(--spacing-padding-p-3) var(--spacing-padding-p-2_5);
+}

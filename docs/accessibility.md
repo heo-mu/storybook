@@ -158,6 +158,14 @@
 ### Empty State
 - 제목 · 설명은 일반 텍스트(`<p>`), 아이콘은 장식(`aria-hidden`). `action` 버튼은 일반 Tab 순서.
 
+### Accordion
+- react-aria-components Disclosure: 제목은 `<h3>`(`headingLevel`) 안의 `<button aria-expanded aria-controls>`, 내용은 버튼 이름의 영역.
+- Enter · Space로 펼침 · 접힘, 비활성 항목은 포커스 대상에서 빠짐. 구분선 · 화살표는 장식.
+
+### Dialog
+- react-aria-components Modal + Dialog: 열리면 포커스가 안으로 이동해 갇히고(Tab 순환), Esc로 닫히면 트리거로 돌아갑니다.
+- `role="dialog"`(확인 질문은 `alertdialog`), 제목 = 이름(`aria-labelledby`), 설명 = `aria-describedby`. 배경 페이지는 react-aria가 숨깁니다.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

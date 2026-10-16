@@ -121,6 +121,15 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   Rounded의 둥근 끝만 픽셀 비교에서 빼고(`maskRectsFor`) 곧은 테두리는 그대로 비교합니다.
 - sm 점(3px)은 세로 8.5px 위치(가운데 정렬)이지만 세 엔진 모두 Figma와 같은 픽셀로 그려집니다.
 
+## Badge 이후 (Progress · Alert · Toast · Tooltip · Empty State · Accordion · Dialog)
+
+세 엔진 모두 전 Variant 통과. 엔진 차이로 기록한 항목:
+
+- Tooltip: 트리거 너비가 소수점이면 말풍선 위치도 소수점이 되어 검증 하네스에서 트리거 너비를 정수로 고정(`harnessCss`).
+- Accordion: 14px 한글의 글자 위치는 같고 안티에일리어싱 농도만 달라 글자 중심 허용치를 1px로 둠(`glyphDxTolerance`).
+- Dialog(WebKit): calc-size가 없어 가운데 정렬된 제목 상자가 Figma보다 좁아 제목 글자 중심이 약 1.1px 차이(`knownDifferences`).
+- Accordion 구분선: Figma 선(LINE)은 y 아래 줄이 아니라 위 줄(트리거 마지막 줄)에 그려지므로 트리거의 `::after`로 그립니다.
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.

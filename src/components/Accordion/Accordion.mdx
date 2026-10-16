@@ -1,0 +1,60 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Accordion.showcase.stories';
+import { Accordion, AccordionItem } from './Accordion';
+
+<Meta title="Components/Accordion/Usage" />
+
+# Accordion — 사용 가이드
+
+Figma **Accordion** 프레임(796:5813)의 `accordion-item`(10개)을 구현했습니다. 제목 버튼으로 내용을 펼치고 접습니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Accordion, AccordionItem } from 'platform-design-system';
+
+<Accordion defaultExpandedKeys={['advanced']}>
+  <AccordionItem id="basic" title="기본 설정">…</AccordionItem>
+  <AccordionItem id="advanced" title="고급 설정" description="알림과 수집 조건을 설정합니다.">…</AccordionItem>
+  <AccordionItem id="lab" title="실험 기능" disabled>…</AccordionItem>
+</Accordion>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Size md · sm | `Accordion size` | 제목 16 · 14px, 높이 44 · 36px |
+| Expanded | `expandedKeys` · `defaultExpandedKeys` / 단독 항목 `expanded` · `defaultExpanded` | 화살표 위 · 아래, 제목 semibold |
+| State Hover | 브라우저 `:hover` | |
+| State Disabled | `disabled` | |
+| Title Text | `title` | |
+| Show Description · Description Text | `description` | |
+| Show Divider | `divider` | 기본 켜짐 |
+| Body (accordion-content) | `children` | |
+
+## 코드 정책 (Figma에서 정해지지 않은 부분)
+
+- **Hover 모습**: Figma는 모든 Hover에서 구분선을 진하게(`border/hover`) 하고, 배경은 sm · Expanded Hover에만 칠합니다.
+  Figma 그대로 구현했습니다(figma-issues F50 — 통일 여부 확인 필요).
+- **여러 개 열기**: Figma에 규칙이 없어 기본은 하나만, `allowsMultipleExpanded`로 여러 개.
+- **애니메이션**: 정의가 없어 즉시 펼칩니다.
+- **너비**: 부모 너비를 채웁니다(Figma 320px).
+
+## 키보드
+
+| 키 | 동작 |
+| --- | --- |
+| Tab | 제목 버튼 사이 이동(비활성 제외) |
+| Enter · Space | 펼치기 · 접기 |
+
+## Props
+
+<ArgTypes of={Accordion} />
+
+### AccordionItem
+
+<ArgTypes of={AccordionItem} />
