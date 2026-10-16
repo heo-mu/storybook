@@ -67,6 +67,10 @@
 | Accordion | 10 | 10/10 | 10/10 | 10/10 | 통과 |
 | Dialog | 1 | 1/1 | 1/1 | 1/1 (제목 글자 위치 기록) | 통과 |
 
+Phase 5 · 6 그룹 검증(2026-10-16): verify:all 25개 컴포넌트 × 3 엔진 통과(Phase 5까지), Accordion · Dialog 3 엔진 개별 통과,
+verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 67 파일 · 311개 통과, typecheck · lint · build · build-storybook 통과,
+axe 311 스토리 — 그 밖의 위반 0(알려진 토큰 대비 302: Badge Point · Warning · Danger 추가, react-aria 달력 이름 693).
+
 Phase 4 그룹 검증(2026-10-16): verify:all 19개 컴포넌트 × 3 엔진 통과(Chromium Breadcrumb 1회 첫 로드 재렌더 실패 → 재실행 통과,
 검증 도구에 detached 재시도 추가), verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 51 파일 · 257개 통과, typecheck · lint ·
 build · build-storybook 통과, axe 262 스토리 — 그 밖의 위반 0(알려진 토큰 대비 210, react-aria 달력 이름 693 — accessibility.md).

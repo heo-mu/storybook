@@ -15,6 +15,9 @@
 | 선택 안 된 세그먼트 | `colors/segmented-control/unselected/label/default` (text/tertiary) | #778191 / #eff0f3 | 3.46:1 | Segmented Control |
 | 플레이스홀더 | `colors/text/placeholder` (gray/400) | #a1a8b5 / #fdfdfd | 2.35:1 | Input · Textarea · Search Field · Select 플레이스홀더, Stepper Locked 제목 |
 | 잠긴 단계 설명 | `colors/stepper/label/description/locked` (text/disabled) | #c9ced6 / #fdfdfd | 1.55:1 | Stepper Locked(조작 대상이 아니라 비활성 예외에 해당하지 않음) |
+| Badge Point | `colors/badge/status/*/label/point` · `count/background/point` | #ec003f / #ffe4e6 · #fdfdfd, #fdfdfd / #ec003f | 3.77 · 4.45 · 4.45:1 | Badge · BadgeCount Point |
+| Badge Warning | `colors/badge/status/*/label/warning` · `count/background/warning` | #f54900 / #ffedd4 · #fdfdfd, #fdfdfd / #f54900 | 3.13 · 3.53 · 3.53:1 | Badge · BadgeCount Warning |
+| Badge Danger (Filled) | `colors/badge/status/filled/label/danger` | #e7000b / #ffe2e2 | 3.91:1 | Badge Danger Filled |
 
 비활성(Disabled) 요소는 WCAG 대비 기준에서 제외됩니다.
 
@@ -36,6 +39,7 @@
 | --- | --- | --- | --- | --- |
 | Phase 2 완료 | 148 | 102 (모두 color-contrast) | — | 0 |
 | Phase 4 완료 | 262 | 210 (모두 color-contrast) | 693 | 0 |
+| Phase 6 완료 | 311 | 302 (모두 color-contrast) | 693 | 0 |
 
 - **react-aria 마크업 — label-content-name-mismatch (axe 실험 규칙, WCAG 2.5.3)**: 달력 날짜 칸의 이름은 react-aria가 만드는
   전체 날짜("2026년 7월 28일 화요일")이고 보이는 글자는 "28"입니다. 한국어 이름에서는 "28일"로 붙어 axe가 단어 일치로
