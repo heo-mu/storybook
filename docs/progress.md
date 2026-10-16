@@ -28,7 +28,7 @@
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 완료 |
-| 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 진행 (Badge · Progress · Alert 완료) |
+| 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 진행 (Badge · Progress · Alert · Toast 완료) |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
 | 8 | Dashboard components | 미착수 |
@@ -61,6 +61,7 @@
 | Badge (status · dot · count) | 84 + 21 + 14 | 119/119 | 119/119 | 119/119 | 통과 |
 | Progress | 1 | 1/1 | 1/1 | 1/1 | 통과 |
 | Alert | 3 | 3/3 | 3/3 | 3/3 | 통과 |
+| Toast | 3 | 3/3 | 3/3 | 3/3 | 통과 |
 
 Phase 4 그룹 검증(2026-10-16): verify:all 19개 컴포넌트 × 3 엔진 통과(Chromium Breadcrumb 1회 첫 로드 재렌더 실패 → 재실행 통과,
 검증 도구에 detached 재시도 추가), verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 51 파일 · 257개 통과, typecheck · lint ·
@@ -76,7 +77,9 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 5 나머지 — Toast(91:5927) → Tooltip(149:1111) → Empty State(724:14963).
+Phase 5 나머지 — Tooltip(149:1111) → Empty State(724:14963).
+
+**결정 필요 — Toast 표시 위치 · 간격 · 시간(F44)**: Figma에 없어 코드 정책으로 정했습니다.
 
 **결정 필요 — Breadcrumb 펼친 상태(F33)**: Figma는 메뉴가 열린 동안 현재 페이지 항목을 Role=Open으로 그렸습니다. 코드는 … 버튼이
 메뉴를 열고 현재 페이지는 Current로 둡니다.

@@ -126,6 +126,9 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F41 | Stepper 프레임에 애니메이션 참고 링크(heroui.pro stepper)만 있고 시간 · 곡선 값 없음 | 미구현 | 값 정의 |
 | F42 | badge_status Outline sm(Basic 제외 12개)에 바인딩되지 않은 흰색(#ffffff) 채움, 나머지 Outline은 채움 없음 | 모두 배경 없음(흰 배경에서 동일) | 채움 제거 또는 변수 바인딩 |
 | F43 | badge_count 최소 너비 16 · 높이 16이 변수에 바인딩되지 않음, 텍스트 `xxs`(10px) 스타일 사용 | 값 그대로(16px) | — |
+| F44 | Toast 표시 위치 · 여러 개일 때 간격 · 자동 닫힘 시간이 정의되지 않음 | 화면 아래 가운데(아래 `p-5`), 간격 `m-2`, 5초 — 코드 정책 | 정의 필요 |
+| F45 | toast 변수 이름 오타 `colors/toast/border/succeess` · `…/status-icon/succeess` | 이름 그대로 | 이름 수정 |
+| F46 | toast 높이 36 고정인데 세로 padding p-3(12 + 12 + 내용 20 = 44) — 내용이 가운데로 넘침 | 높이 36 · padding 그대로(같은 위치), 한 줄 말줄임 | padding 정리 |
 
 ## D. 작업 중 관찰된 원본 변경
 

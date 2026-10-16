@@ -1,0 +1,97 @@
+/*
+ * Toast — Figma `toast` (91:5927): 320 × 36, padding p-3 p-2_5, gap p-2, border-radius/rounded,
+ * colors/toast/background, 1px INSIDE border colors/toast/border/<status>, effect elevation-3; 20px status icon,
+ * message sm/leading-normal/medium (…/label/default), 20px close icon (…/close-icon/default).
+ * The height is fixed in Figma, so the message stays on one line (ellipsis).
+ * Region layout (position, gap between toasts) is not in Figma: code policy, see Toast.mdx.
+ */
+
+.ds-toast {
+  --_bd: var(--colors-toast-border-information);
+  --_icon: var(--colors-toast-status-icon-information);
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-padding-p-2);
+  width: 320px;
+  max-width: 100%;
+  height: 36px;
+  padding: var(--spacing-padding-p-3) var(--spacing-padding-p-2_5);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-toast-background-default);
+  box-shadow:
+    inset 0 0 0 var(--border-width-border) var(--_bd),
+    var(--effect-elevation-3);
+}
+
+.ds-toast[data-status='success'] {
+  --_bd: var(--colors-toast-border-succeess);
+  --_icon: var(--colors-toast-status-icon-succeess);
+}
+
+.ds-toast[data-status='error'] {
+  --_bd: var(--colors-toast-border-error);
+  --_icon: var(--colors-toast-status-icon-error);
+}
+
+.ds-toast__body {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--spacing-padding-p-2);
+  min-width: 0;
+}
+
+.ds-toast__icon {
+  display: block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--_icon);
+}
+
+.ds-toast__message {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--colors-toast-label-default);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-toast__close {
+  display: flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--colors-toast-close-icon-default);
+  cursor: pointer;
+}
+
+.ds-toast__close > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Region: bottom centre, newest at the bottom (code policy — not defined in Figma). */
+.ds-toast-region {
+  position: fixed;
+  bottom: var(--spacing-padding-p-5);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-2);
+  translate: -50% 0;
+  outline: none;
+}

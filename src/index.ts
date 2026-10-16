@@ -24,5 +24,6 @@ export * from './components/Stepper';
 export * from './components/Badge';
 export * from './components/Progress';
 export * from './components/Alert';
+export * from './components/Toast';
 export { CHOICE_SIZES, CHOICE_GROUP_ORIENTATIONS, type ChoiceSize, type ChoiceGroupOrientation } from './components/Choice';
 export * from './icons';

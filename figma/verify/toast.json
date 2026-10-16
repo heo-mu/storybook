@@ -1,0 +1,19 @@
+{
+  "component": "Toast",
+  "sets": [
+    {
+      "set": "toast",
+      "story": "components-toast-showcase--matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 340px; min-width: 340px; max-width: 340px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Icon and Text": ".ds-toast__body",
+        "Icon and Text/*-fill": ".ds-toast__icon",
+        "Icon and Text/Text": ".ds-toast__message",
+        "icon_size": ".ds-toast__close",
+        "icon_size/icon/X": ".ds-toast__close > svg",
+        "icon_size/icon/X/X": ".ds-toast__close > svg"
+      }
+    }
+  ]
+}

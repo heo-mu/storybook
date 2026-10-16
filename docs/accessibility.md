@@ -145,6 +145,12 @@
   상태는 제목 문구로 전달하세요.
 - `action` 버튼은 일반 Tab 순서.
 
+### Toast
+- `ToastRegion`(react-aria-components Toast): 이름 있는 영역("알림"), 새 알림을 읽어 주고, 마우스를 올리거나 포커스가 있으면
+  자동 닫힘 시간이 멈춥니다. Tab으로 알림과 닫기 버튼("알림 닫기")에 갈 수 있습니다.
+- 정적 `Toast`는 `role="status"`. 상태 아이콘은 장식 — 상태는 메시지 문구로 전달하세요.
+- 자동 닫힘은 최소 5초(`showToast`가 보정), 중요한 오류는 `timeout: null`로 유지하세요.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.
