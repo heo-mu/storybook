@@ -30,7 +30,7 @@
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 완료 |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 완료 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 완료 (Popover · Drawer 구현 불가) |
-| 7 | Table · Card · Chart · Loading | 진행 (4개 구현 · 개별 검증 완료, 그룹 검증 남음) |
+| 7 | Table · Card · Chart · Loading | 완료 |
 | 8 | Dashboard components | 미착수 |
 | 9 | 통합 QA | 미착수 |
 
@@ -70,6 +70,10 @@
 | Card (header · footer · 예시) | 1 + 1 + 1 | 3/3 (위치 · 크기만) | 3/3 (〃) | 3/3 (〃) | 통과 — Figma 프레임 숨김, 픽셀 수동 검토 |
 | Chart (chart · legend-item · tooltip) | 12 + 3 + 1 | 16/16 | 16/16 | 16/16 | 통과 — 간단 선 차트 그림 영역 · 차트 안 툴팁 위치 수동 검토 |
 
+Phase 7 그룹 검증(2026-10-16): verify:all 30개 컴포넌트 × 3 엔진 — 89/90 통과, Chromium date-picker_navigation 1개가 병렬 빌드 · 테스트
+실행 중에 1회 실패 → 부하 없이 단독 재실행 2회 모두 40/40 통과. verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 74 파일 · 337개 통과,
+typecheck · lint · build(토큰 재생성 변경 없음) · build-storybook 통과, axe 337 스토리 — 그 밖의 위반 0(알려진 토큰 대비 343, react-aria 달력 이름 693).
+
 Phase 5 · 6 그룹 검증(2026-10-16): verify:all 25개 컴포넌트 × 3 엔진 통과(Phase 5까지), Accordion · Dialog 3 엔진 개별 통과,
 verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 67 파일 · 311개 통과, typecheck · lint · build · build-storybook 통과,
 axe 311 스토리 — 그 밖의 위반 0(알려진 토큰 대비 302: Badge Point · Warning · Danger 추가, react-aria 달력 이름 693).
@@ -91,7 +95,7 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 7 그룹 검증(verify:all · verify:button · 테스트 · typecheck · lint · build · build-storybook · axe) → Phase 8 Dashboard components
+Phase 8 Dashboard components
 (metric-trend 697:4482 · data-state 698:4359 · skeleton 697:4486 · data-freshness 697:4543 · metric-card 697:4487 · dashboard-filter-bar 698:4163).
 
 **결정 필요 — Chart(F63 · F65)**: 툴팁 위치는 Figma가 변형마다 손으로 배치해 코드 정책으로 정했습니다. 가로 막대 기본 스타일의 비교 막대 색
