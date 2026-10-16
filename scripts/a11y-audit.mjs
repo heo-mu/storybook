@@ -1,0 +1,82 @@
+// Accessibility audit of every Storybook story with axe-core (WCAG 2.0 / 2.1 / 2.2 A + AA rules).
+//
+//   npm run storybook                       (in another terminal)
+//   node scripts/a11y-audit.mjs [--filter=components-select]
+//
+// Violations are grouped by rule. Known design-token issues (docs/accessibility.md) are listed separately
+// from code issues so that new problems stand out. Report: .verify/a11y/report.json
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { chromium } from 'playwright';
+import { ROOT } from './lib/figma-snapshot.mjs';
+
+const SB = process.env.STORYBOOK_URL ?? 'http://localhost:6006';
+const FILTER = process.argv.find((a) => a.startsWith('--filter='))?.split('=')[1];
+const OUT = path.join(ROOT, '.verify', 'a11y');
+mkdirSync(OUT, { recursive: true });
+
+// Contrast of Figma token colours below WCAG AA — reported to design, not fixed in code (docs/accessibility.md).
+const KNOWN_CONTRAST = ['#0086d3', '#00a63e', '#778191', '#a1a8b5'];
+
+const index = await (await fetch(`${SB}/index.json`)).json();
+const stories = Object.values(index.entries).filter((e) => e.type === 'story' && (!FILTER || e.id.startsWith(FILTER)));
+const axeSource = readFileSync(path.join(ROOT, 'node_modules', 'axe-core', 'axe.min.js'), 'utf8');
+
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1400, height: 1000 } });
+const results = [];
+for (const story of stories) {
+  await page.goto(`${SB}/iframe.html?id=${story.id}&viewMode=story`);
+  await page.waitForFunction(() => document.querySelector('#storybook-root')?.childElementCount > 0, null, { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(200);
+  // The Storybook a11y addon may already have loaded axe and be running it for its panel: reuse it and retry.
+  if (!(await page.evaluate(() => Boolean(window.axe)))) await page.addScriptTag({ content: axeSource });
+  const violations = await page.evaluate(async () => {
+    const run = async (tries) => {
+      try {
+        return await window.axe.run(document.querySelector('#storybook-root'), {
+          runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
+        });
+      } catch (e) {
+        if (tries > 0 && String(e).includes('already running')) {
+          await new Promise((res) => setTimeout(res, 250));
+          return run(tries - 1);
+        }
+        throw e;
+      }
+    };
+    const r = await run(40);
+    return r.violations.map((v) => ({
+      id: v.id,
+      impact: v.impact,
+      help: v.help,
+      nodes: v.nodes.map((n) => ({ target: n.target.join(' '), summary: n.failureSummary?.split('\n').slice(0, 2).join(' ') })),
+    }));
+  });
+  results.push({ id: story.id, title: `${story.title} / ${story.name}`, violations });
+}
+await browser.close();
+
+const known = [];
+const issues = [];
+for (const r of results) {
+  for (const v of r.violations) {
+    for (const n of v.nodes) {
+      const entry = { story: r.id, rule: v.id, impact: v.impact, target: n.target, summary: n.summary };
+      const isKnown = v.id === 'color-contrast' && KNOWN_CONTRAST.some((c) => n.summary?.toLowerCase().includes(c));
+      (isKnown ? known : issues).push(entry);
+    }
+  }
+}
+writeFileSync(path.join(OUT, 'report.json'), JSON.stringify({ stories: results.length, issues, known }, null, 2));
+
+const byRule = (list) => Object.entries(list.reduce((m, e) => ((m[e.rule] = (m[e.rule] ?? 0) + 1), m), {}));
+console.log(`axe audit: ${results.length} stories`);
+console.log(`  known Figma token contrast findings: ${known.length}${known.length ? ' — ' + byRule(known).map(([k, n]) => `${k} ${n}`).join(', ') : ''}`);
+console.log(`  other violations: ${issues.length}`);
+for (const [rule, n] of byRule(issues)) {
+  const first = issues.find((e) => e.rule === rule);
+  console.log(`  ✗ ${rule}: ${n} — e.g. ${first.story} ${first.target} (${first.summary ?? ''})`);
+}
+console.log('report: .verify/a11y/report.json');
+process.exitCode = issues.length ? 1 : 0;

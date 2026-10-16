@@ -9,9 +9,11 @@
 
 | 용도 | 토큰 | 색 / 배경 | 대비 | 사용처 |
 | --- | --- | --- | --- | --- |
-| 안내(info) 메시지 | `colors/brand-status/information/strong` (sky/600) | #0086d3 / #fdfdfd | 3.85:1 | Input · Textarea 메시지 |
+| 안내(info) 메시지 | `colors/brand-status/information/strong` (sky/600) | #0086d3 / #fdfdfd | 3.85:1 | Input · Textarea · Select 메시지 |
+| 성공(success) 메시지 | `colors/brand-status/success/strong` | #00a63e / #fdfdfd | 3.16:1 | Input · Textarea · Select 메시지 |
 | 보조 텍스트 | `colors/text/tertiary` (gray/500) | #778191 / #fdfdfd | 3.87:1 | Textarea 카운터 최대값 |
-| 플레이스홀더 | `colors/text/placeholder` (gray/400) | #a1a8b5 / #fdfdfd | 2.4:1 | 입력 필드 플레이스홀더 |
+| 선택 안 된 세그먼트 | `colors/segmented-control/unselected/label/default` (text/tertiary) | #778191 / #eff0f3 | 3.46:1 | Segmented Control |
+| 플레이스홀더 | `colors/text/placeholder` (gray/400) | #a1a8b5 / #fdfdfd | 2.35:1 | Input · Textarea · Search Field · Select 플레이스홀더 |
 
 비활성(Disabled) 요소는 WCAG 대비 기준에서 제외됩니다.
 
@@ -23,6 +25,15 @@
 | 스위치 꺼짐 트랙 | `colors/switch/track/off/default` (brand-gray-400) | #a1a8b5 / #fdfdfd | 2.35:1 | Switch 꺼짐 |
 
 라벨 텍스트가 함께 있어 컨트롤의 의미는 전달되지만, 컨트롤 경계 자체는 기준 미만입니다(디자인 조정 필요, figma-issues F12).
+
+## 자동 검사 (axe-core)
+
+`node scripts/a11y-audit.mjs`(Storybook 실행 중)가 모든 스토리를 WCAG 2.0 / 2.1 / 2.2 A · AA 규칙으로 검사합니다.
+위 표의 토큰 색 대비는 "알려진 항목"으로 따로 집계하고, 그 밖의 위반은 실패로 처리합니다.
+
+| 시점 | 스토리 | 알려진 토큰 대비 | 그 밖의 위반 |
+| --- | --- | --- | --- |
+| Phase 2 완료 | 148 | 102 (모두 color-contrast) | 0 |
 
 ## 컴포넌트별
 
@@ -54,3 +65,19 @@
 - 라벨(`<label>`)과 선택값이 트리거의 이름, 메시지가 설명(`aria-describedby`). Read-only는 숨은 "읽기 전용" 설명 추가.
 - 키보드: Enter · Space · ↓ · ↑로 열기, 방향키 · Home · End · 타입어헤드 이동, Enter 선택, Esc 닫기, 닫히면 포커스가 트리거로 복귀.
 - `name`이 있으면 숨은 네이티브 `<select>`로 폼 값 · `required` 검증.
+
+### Slider
+- react-aria-components: 핸들 안의 네이티브 `<input type="range">`(role slider, min · max · value)로 스크린리더와 키보드
+  (화살표 · Page Up/Down · Home · End)를 지원합니다. Figma에 보이는 라벨이 없어 `aria-label` / `aria-labelledby`가 필요합니다.
+- 숫자 필드는 `Input`(이름 `inputLabel`, 기본 "값 입력"), Enter · 포커스 이동 시 확정, ↑ · ↓로 한 단계 이동.
+- 값 라벨 · 범위 라벨은 시각 정보이므로 `aria-hidden`(값은 range input이 전달).
+- Focus: 핸들에 브라우저 기본 포커스 링 + 값 라벨 표시.
+
+### Segmented Control
+- `role="radiogroup"` + 시각적으로 숨긴 네이티브 라디오 — 방향키 이동(비활성 항목 건너뜀), 폼 전송.
+- Focus: 선택된 세그먼트에 브라우저 기본 포커스 링.
+
+### Chip · InputChip · FilterChip
+- Chip: `<button aria-pressed>`(켜짐 / 꺼짐). 여러 개를 묶을 때는 사용처에서 `role="group"` + 이름.
+- InputChip: 칩 전체가 삭제 버튼(이름 = 라벨 + "삭제"), Delete · Backspace로도 삭제 — 12px X 아이콘만 누르는 것보다 큰 대상(WCAG 2.5.8).
+- FilterChip: react-aria `Button` — `aria-expanded`(직접 지정 또는 MenuTrigger 등 트리거가 설정), 화살표 방향이 이를 따라감.

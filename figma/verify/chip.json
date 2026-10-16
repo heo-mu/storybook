@@ -1,0 +1,41 @@
+{
+  "component": "Chip",
+  "sets": [
+    {
+      "set": "chip-multi",
+      "story": "components-chip-showcase--multi-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 100px; min-width: 100px; max-width: 100px; } tr > :first-child { width: 200px; min-width: 200px; max-width: 200px; }",
+      "parts": {
+        "Label": ".ds-chip__label",
+        "icon_size": ".ds-chip__icon",
+        "icon_size/icon/*": ".ds-chip__icon",
+        "icon_size/icon/*/*": ".ds-chip__icon"
+      }
+    },
+    {
+      "set": "chip-input",
+      "story": "components-chip-showcase--input-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 100px; min-width: 100px; max-width: 100px; } tr > :first-child { width: 200px; min-width: 200px; max-width: 200px; }",
+      "parts": {
+        "Label": ".ds-chip__label",
+        "icon_size": ".ds-chip__icon",
+        "icon_size/icon/*": ".ds-chip__icon",
+        "icon_size/icon/*/*": ".ds-chip__icon"
+      }
+    },
+    {
+      "set": "chip-filter",
+      "story": "components-chip-showcase--filter-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 100px; min-width: 100px; max-width: 100px; } tr > :first-child { width: 240px; min-width: 240px; max-width: 240px; }",
+      "parts": {
+        "Label": ".ds-chip__label",
+        "icon_size": ".ds-chip__icon",
+        "icon_size/icon/*": ".ds-chip__icon",
+        "icon_size/icon/*/*": ".ds-chip__icon"
+      }
+    }
+  ]
+}

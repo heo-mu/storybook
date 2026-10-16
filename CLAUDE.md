@@ -1,7 +1,8 @@
 # platform-design-system
 
 React component library for the Figma file **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, page `🔵 Ver 0.4`).
-Implemented so far: design tokens and the Button family (`Button`, `IconButton`, `TextButton`).
+Implemented so far: design tokens, Button family, Input / Textarea / SearchField, Checkbox, Radio, Switch,
+Select, Slider, SegmentedControl, Chip / InputChip / FilterChip — status in docs/component-inventory.md, next steps in docs/progress.md.
 
 ## Storybook MCP
 
@@ -29,6 +30,9 @@ to access component and documentation knowledge before answering or acting on UI
 - `npm run figma:checksum` — checksums to compare with `figma/checksum.figma.js` run in Figma
 - `npm run verify:button` — DOM/pixel parity check of all 296 Button variants against Figma (Storybook must be running);
   add `-- --browser=firefox` or `webkit` to check other engines (see docs/browser-support.md)
+- `node scripts/verify-figma.mjs <component> [--browser=…]` — parity check driven by figma/verify/<component>.json;
+  `npm run verify:all` runs every component in Chromium, Firefox and WebKit
+- `npm run verify:a11y` — axe-core audit of every story (known Figma token contrast issues listed separately)
 
 ## Docs
 

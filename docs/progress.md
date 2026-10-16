@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | 0 | 토큰 최신화 · 인벤토리 | 완료 (0c7fcfa) |
 | 1 | Input · Textarea · Search Field | 완료 |
-| 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 진행 (Checkbox · Radio · Switch · Select 완료) |
+| 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 미착수 |
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 미착수 |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
@@ -46,18 +46,24 @@
 | Radio | 24 | 24/24 | 24/24 | 24/24 | 통과 |
 | Switch | 16 | 16/16 | 16/16 | 16/16 | 통과 |
 | Select (select · listbox · option · select_message) | 21 + 3 + 15 + 3 | 42/42 | 42/42 | 42/42 | 통과 |
+| Slider (slider · handle) | 2 + 5 | 7/7 | 7/7 | 7/7 | 통과 |
+| Segmented Control (control · item) | 3 + 18 | 21/21 | 21/21 | 21/21 | 통과 |
+| Chip (chip-multi · chip-input · chip-filter) | 24 + 12 + 48 | 84/84 | 84/84 | 84/84 | 통과 |
 
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
+검증 스토리에서만 Figma 예시에 맞춘 항목: Slider 단위 상자 24px(F14) · 숫자 필드 23px(F15), 핸들 x 제외(F16).
 알려진 렌더링 차이(실패 아님): option md Disabled 밑줄 위치(Figma auto 밑줄이 약 1.5px 아래, F6) ·
 WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이미지 동일).
 
 ## 다음 작업
 
-Phase 2 나머지 — Slider(`slider` 391:1988, `handle` 391:2013) → Segmented Control(531:24471, 524:24397) → Chip(201:12711, 558:26017, 558:25704).
-Slider는 react-aria-components `Slider`, Segmented Control은 `RadioGroup` 시맨틱(또는 RAC `ToggleButtonGroup`)을 검토한다.
+Phase 3 — Date Picker(`date-picker_trigger` 144:723, `_message` 144:888, `_day` 144:1033, `_navigation` 144:1328,
+`date-picker_header` 144:1377, `date-picker_calendar` 144:1644) → File Uploader(651:3945, item 651:3999).
+Date Picker는 react-aria-components `DatePicker` · `Calendar` + `@internationalized/date`(설치됨)를 검토한다. Combobox는 Figma에서 삭제됨(구현 불가).
 
-검증 도구 메모: `figma/verify/*.json`의 `story`는 배열 가능(열린 오버레이 상태용, `id&args=key:value`), `ignore`(수동 검토 레이어),
-`knownDifferences`(엔진 렌더링 차이 — 문자열 또는 엔진별 객체), `glyphDxTolerance`.
+검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
+`figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),
+`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, part의 `compare` · `optional`.
 
 ## 미해결 이슈
 

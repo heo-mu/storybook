@@ -35,7 +35,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "verify:button": "node scripts/verify-button.mjs",
-    "verify:figma": "node scripts/verify-figma.mjs"
+    "verify:figma": "node scripts/verify-figma.mjs",
+    "verify:a11y": "node scripts/a11y-audit.mjs",
+    "verify:all": "node scripts/verify-all.mjs"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",

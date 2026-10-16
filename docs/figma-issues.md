@@ -95,6 +95,17 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F10 | listbox 최대 높이, 위로 열릴 때의 배치가 정의되지 않음 | 화면 남은 공간에 맞춰 높이 제한 · 위로 뒤집기(react-aria 기본) | 최대 높이 정의 |
 | F11 | 옵션의 Hover와 Selected가 겹칠 때, 키보드 이동 중 표현이 정의되지 않음 | 키보드 이동 = Hover 모양, Selected + Hover = Hover 배경 + Selected 글자 | 조합 상태 정의 |
 | F12 | Checkbox · Radio 테두리와 Switch 꺼짐 트랙(#a1a8b5)이 배경 대비 2.35:1 — WCAG 1.4.11(비텍스트 3:1) 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 3:1 이상으로 조정 |
+| F13 | **Slider가 다른 라이브러리(원격) 변수에 바인딩** — 간격 `spacing/margin/m-2_5` · `m-2`, radius `radius/max`(100), 그림자 효과 스타일 `md-3,10`(`color/shadow/shadow-3` #051b3c33, 0 4 6 −1), 단위 · 값 라벨 글꼴 변수 | 같은 이름 · 역할의 로컬 토큰 사용(`radius/max` → `rounded-full`), 그림자는 Figma 값을 그대로 재현 | 이 파일의 변수 · 효과 스타일로 교체 |
+| F14 | Slider 단위 텍스트 "명" 상자가 글자 1개인데 24px(auto-width가 갱신되지 않은 값) | 실제 글자 너비. 검증 스토리에서만 24px로 맞춰 나머지 배치를 비교 | 텍스트 상자 크기 갱신 |
+| F15 | Slider 숫자 필드가 예시 값 "100"에 맞춘 너비(43px) | 가장 긴 값(최솟값 · 최댓값 자릿수)에 맞춘 고정 너비 — 값이 바뀌어도 트랙 길이 유지. 검증 스토리에서만 Figma 너비로 맞춤 | 필드 너비 규칙 정의 |
+| F16 | Slider 핸들이 채움 끝보다 2px 오른쪽(x 93, 채움 끝 100.5)에 수동 배치 | 핸들 중심을 값 위치에 맞춤 — 핸들 x는 비교에서 제외, 영역 픽셀 마스크 | — |
+| F17 | Slider 채움 막대가 8px 높이로 4px 트랙에 잘려 보임, Pressed 원(#007c5633)이 변수 미바인딩 | 구조 그대로 재현(8px 채움 + 트랙 clip), 원은 핸들 색 20%(`color-mix`) | 채움 높이 정리, 변수 바인딩 |
+| F18 | Segmented Control 선택 항목 그림자(#00000017, 0 1 2)가 변수 · 효과 스타일 미연결, md 가로 여백이 `spacing/margin/m-1_5`(padding이 아닌 margin 변수) | 값 그대로 재현 | 효과 스타일 · padding 변수 사용 |
+| F19 | Segmented Control 선택 항목의 Hover · Pressed Variant는 없지만 변수(`…/selected/background/hover` 등)는 있음 | 변수 사용(값이 Default와 같아 시각 변화 없음) | Variant 추가 또는 변수 정리 |
+| F20 | Chip 아이콘 크기가 세트마다 다름 — sm: chip-multi 16px, chip-input · chip-filter 12px | 각 세트 그대로 | 통일 |
+| F21 | chip-filter Selected 배경이 투명, Disabled 배경도 투명(chip-multi는 회색 채움) | 각 세트 그대로 | 의도 확인 |
+| F22 | Chip · Segmented Control · Slider에 Focus 상태 없음 (F1과 같음) | 브라우저 기본 포커스 링 | 키보드 포커스 표현 정의 |
+| F23 | 성공 메시지 녹색(#00a63e)이 대비 3.16:1 — WCAG AA 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 4.5:1 이상으로 조정 |
 
 ## D. 작업 중 관찰된 원본 변경
 

@@ -1,0 +1,79 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Chip.showcase.stories';
+import { Chip } from './Chip';
+import { InputChip } from './InputChip';
+import { FilterChip } from './FilterChip';
+
+<Meta title="Components/Chip/Usage" />
+
+# Chip — 사용 가이드
+
+Figma **Chip** 프레임(180:11829)의 세 세트를 용도별 컴포넌트로 구현했습니다.
+
+| Figma 세트 | 컴포넌트 | 용도 | 요소 |
+| --- | --- | --- | --- |
+| `chip-multi` (24) | `Chip` | 여러 개를 켜고 끄는 필터 | `<button aria-pressed>` |
+| `chip-input` (12) | `InputChip` | 입력된 값(태그) — 삭제 가능 | `<button>` (이름: 라벨 + "삭제") |
+| `chip-filter` (48) | `FilterChip` | 필터 메뉴 · 패널 열기 | react-aria `Button` (`aria-expanded`) |
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Chip, InputChip, FilterChip } from 'platform-design-system';
+
+// 다중 선택 필터
+<div role="group" aria-label="상태">
+  {statuses.map((s) => (
+    <Chip key={s} size="sm" selected={selected.includes(s)} onSelectedChange={(on) => toggle(s, on)}>{s}</Chip>
+  ))}
+</div>
+
+// 입력된 태그
+{tags.map((t) => <InputChip key={t} size="sm" onRemove={() => remove(t)}>{t}</InputChip>)}
+
+// 필터 메뉴 트리거 (react-aria MenuTrigger가 aria-expanded와 화살표 방향을 관리)
+<MenuTrigger>
+  <FilterChip size="sm" selected={!!owner}>{owner ? \`담당자: \${owner}\` : '담당자'}</FilterChip>
+  <Popover>…</Popover>
+</MenuTrigger>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Size xs · sm · md | `size` | 높이 24 · 28 · 36px. 기본 `'xs'`(Figma 기본값) |
+| Label Text | children | |
+| chip-multi Variant Selected | `selected` / `defaultSelected` / `onSelectedChange` | 체크 아이콘 표시 |
+| chip-filter Variant Selected | `selected` | 필터 값이 적용됨 (브랜드 테두리 · 글자) |
+| chip-filter Expanded | `expanded` | 위쪽 화살표, `aria-expanded`. react-aria 트리거 안에서는 자동 |
+| State Hover · Pressed | 브라우저 `:hover` · `:active` | |
+| State Disabled | `disabled` | |
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **InputChip 삭제 대상**: Figma의 X 아이콘(12px)만 누르는 대신 칩 전체가 삭제 버튼입니다(터치 대상 크기 확보).
+  키보드는 Enter · Space · Delete · Backspace로 삭제합니다.
+- **포커스 표시**: Figma에 Focus 상태가 없어 브라우저 기본 포커스 링을 유지합니다.
+- **Chip 그룹**: Figma에 그룹 컴포넌트 · 간격이 없어 사용처에서 `role="group"`과 간격을 지정합니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+### Chip
+
+<ArgTypes of={Chip} />
+
+### InputChip
+
+<ArgTypes of={InputChip} />
+
+### FilterChip
+
+<ArgTypes of={FilterChip} />

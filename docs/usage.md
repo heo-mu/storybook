@@ -22,7 +22,8 @@ npm pack                      # → platform-design-system-0.1.0.tgz
 npm install ../platform-design-system/platform-design-system-0.1.0.tgz
 ```
 
-`pretendard`(폰트)는 패키지 의존성으로 함께 설치됩니다.
+`pretendard`(폰트), `react-aria-components`(Select · Slider · FilterChip 등의 키보드 · 포커스 · ARIA 동작, 스타일 없음),
+`@internationalized/date`(날짜)는 패키지 의존성으로 함께 설치됩니다. 컴포넌트별 사용법은 Storybook의 각 "Usage" 문서를 참고하세요.
 저장소 폴더를 `file:` 링크로 직접 연결하는 방식은 검증하지 않았습니다(React가 두 벌 로드될 수 있음).
 
 ## 1. 스타일 불러오기 (앱 진입점에서 한 번)

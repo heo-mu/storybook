@@ -1,0 +1,237 @@
+/*
+ * Chips — Figma component sets `chip-multi` (201:12711, Chip), `chip-input` (558:26017, InputChip) and
+ * `chip-filter` (558:25704, FilterChip).
+ *   pill: border-radius/rounded-full, 1px INSIDE border (inset box-shadow)
+ *   xs: padding p-1 × p-2, gap m-0_5 · sm: p-1_5 × p-2_5, gap m-1 · md: p-2 × p-3, gap m-1
+ *   label: xs/leading-normal/medium (xs, sm) · sm/leading-normal/medium (md)
+ *   icon: 12px (xs; sm input / filter) · 16px (md; sm multi)
+ * Palettes per kind and selection (--_bg-*, --_bd-*, --_fg-*, --_ic-*); the state rules pick the slot.
+ */
+
+.ds-chip {
+  --ds-chip-icon: 12px;
+
+  /* chip-multi / chip-input — colors/chip/chip/*, unselected */
+  --_bg-default: var(--colors-chip-chip-background-unselected-default);
+  --_bg-hover: var(--colors-chip-chip-background-unselected-hover);
+  --_bg-pressed: var(--colors-chip-chip-background-unselected-pressed);
+  --_bg-disabled: var(--colors-chip-chip-background-unselected-disabled);
+  --_bd-default: var(--colors-chip-chip-border-unselected-default);
+  --_bd-hover: var(--colors-chip-chip-border-unselected-hover);
+  --_bd-pressed: var(--colors-chip-chip-border-unselected-pressed);
+  --_bd-disabled: var(--colors-chip-chip-border-unselected-disabled);
+  --_fg-default: var(--colors-chip-chip-label-unselected-default);
+  --_fg-hover: var(--colors-chip-chip-label-unselected-hover);
+  --_fg-pressed: var(--colors-chip-chip-label-unselected-pressed);
+  --_fg-disabled: var(--colors-chip-chip-label-unselected-disabled);
+  --_ic-default: var(--colors-chip-chip-icon-unselected-default);
+  --_ic-hover: var(--colors-chip-chip-icon-unselected-hover);
+  --_ic-pressed: var(--colors-chip-chip-icon-unselected-pressed);
+  --_ic-disabled: var(--colors-chip-chip-icon-unselected-disabled);
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-margin-m-0_5);
+  max-width: 100%;
+  margin: 0;
+  padding: var(--spacing-padding-p-1) var(--spacing-padding-p-2);
+  border: 0;
+  border-radius: var(--border-radius-rounded-full);
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+  vertical-align: top;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-chip[data-size='sm'] {
+  gap: var(--spacing-margin-m-1);
+  padding: var(--spacing-padding-p-1_5) var(--spacing-padding-p-2_5);
+}
+
+.ds-chip[data-size='md'] {
+  --ds-chip-icon: 16px;
+
+  gap: var(--spacing-margin-m-1);
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-3);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+/* chip-multi sm uses the 16px check (chip-input / chip-filter sm keep 12px). */
+.ds-chip[data-kind='toggle'][data-size='sm'] {
+  --ds-chip-icon: 16px;
+}
+
+/* chip-multi Selected — colors/chip/chip/*, selected */
+.ds-chip[aria-pressed='true'] {
+  --_bg-default: var(--colors-chip-chip-background-selected-default);
+  --_bg-hover: var(--colors-chip-chip-background-selected-hover);
+  --_bg-pressed: var(--colors-chip-chip-background-selected-pressed);
+  --_bg-disabled: var(--colors-chip-chip-background-selected-disabled);
+  --_bd-default: var(--colors-chip-chip-border-selected-default);
+  --_bd-hover: var(--colors-chip-chip-border-selected-hover);
+  --_bd-pressed: var(--colors-chip-chip-border-selected-pressed);
+  --_bd-disabled: var(--colors-chip-chip-border-selected-disabled);
+  --_fg-default: var(--colors-chip-chip-label-selected-default);
+  --_fg-hover: var(--colors-chip-chip-label-selected-hover);
+  --_fg-pressed: var(--colors-chip-chip-label-selected-pressed);
+  --_fg-disabled: var(--colors-chip-chip-label-selected-disabled);
+  --_ic-default: var(--colors-chip-chip-icon-selected-default);
+  --_ic-hover: var(--colors-chip-chip-icon-selected-hover);
+  --_ic-pressed: var(--colors-chip-chip-icon-selected-pressed);
+  --_ic-disabled: var(--colors-chip-chip-icon-selected-disabled);
+}
+
+/* chip-filter — colors/chip-filter/*, unselected / selected */
+.ds-chip[data-kind='filter'] {
+  --_bg-default: var(--colors-chip-filter-background-unselected-default);
+  --_bg-hover: var(--colors-chip-filter-background-unselected-hover);
+  --_bg-pressed: var(--colors-chip-filter-background-unselected-pressed);
+  --_bg-disabled: var(--colors-chip-filter-background-unselected-disabled);
+  --_bd-default: var(--colors-chip-filter-border-unselected-default);
+  --_bd-hover: var(--colors-chip-filter-border-unselected-hover);
+  --_bd-pressed: var(--colors-chip-filter-border-unselected-pressed);
+  --_bd-disabled: var(--colors-chip-filter-border-unselected-disabled);
+  --_fg-default: var(--colors-chip-filter-label-unselected-default);
+  --_fg-hover: var(--colors-chip-filter-label-unselected-hover);
+  --_fg-pressed: var(--colors-chip-filter-label-unselected-pressed);
+  --_fg-disabled: var(--colors-chip-filter-label-unselected-disabled);
+  --_ic-default: var(--colors-chip-filter-icon-unselected-default);
+  --_ic-hover: var(--colors-chip-filter-icon-unselected-hover);
+  --_ic-pressed: var(--colors-chip-filter-icon-unselected-pressed);
+  --_ic-disabled: var(--colors-chip-filter-icon-unselected-disabled);
+}
+
+.ds-chip[data-kind='filter'][data-selected] {
+  --_bg-default: var(--colors-chip-filter-background-selected-default);
+  --_bg-hover: var(--colors-chip-filter-background-selected-hover);
+  --_bg-pressed: var(--colors-chip-filter-background-selected-pressed);
+  --_bg-disabled: var(--colors-chip-filter-background-selected-disabled);
+  --_bd-default: var(--colors-chip-filter-border-selected-default);
+  --_bd-hover: var(--colors-chip-filter-border-selected-hover);
+  --_bd-pressed: var(--colors-chip-filter-border-selected-pressed);
+  --_bd-disabled: var(--colors-chip-filter-border-selected-disabled);
+  --_fg-default: var(--colors-chip-filter-label-selected-default);
+  --_fg-hover: var(--colors-chip-filter-label-selected-hover);
+  --_fg-pressed: var(--colors-chip-filter-label-selected-pressed);
+  --_fg-disabled: var(--colors-chip-filter-label-selected-disabled);
+  --_ic-default: var(--colors-chip-filter-icon-selected-default);
+  --_ic-hover: var(--colors-chip-filter-icon-selected-hover);
+  --_ic-pressed: var(--colors-chip-filter-icon-selected-pressed);
+  --_ic-disabled: var(--colors-chip-filter-icon-selected-disabled);
+}
+
+/* States: Default → Hover → Pressed → Disabled (later rules win). */
+.ds-chip {
+  --_bg: var(--_bg-default);
+  --_bd: var(--_bd-default);
+  --_fg: var(--_fg-default);
+  --_ic: var(--_ic-default);
+
+  background-color: var(--_bg);
+  box-shadow: inset 0 0 0 var(--border-width-border) var(--_bd);
+  color: var(--_fg);
+}
+
+/*
+ * Chip and InputChip fills are always opaque: the border colour is painted as a border-box background layer
+ * under the fill (padding-box layer, 1px transparent border) so the rounded outer edge is anti-aliased once.
+ * An inset shadow over the fill (used for FilterChip, whose fill can be transparent) composites the edge
+ * twice, which darkens Selected chips whose border and fill share a colour.
+ */
+.ds-chip:not([data-kind='filter']) {
+  border: var(--border-width-border) solid transparent;
+  padding: calc(var(--spacing-padding-p-1) - var(--border-width-border)) calc(var(--spacing-padding-p-2) - var(--border-width-border));
+  background: linear-gradient(var(--_bg), var(--_bg)) padding-box, linear-gradient(var(--_bd), var(--_bd)) border-box;
+  box-shadow: none;
+}
+
+.ds-chip:not([data-kind='filter'])[data-size='sm'] {
+  padding: calc(var(--spacing-padding-p-1_5) - var(--border-width-border)) calc(var(--spacing-padding-p-2_5) - var(--border-width-border));
+}
+
+.ds-chip:not([data-kind='filter'])[data-size='md'] {
+  padding: calc(var(--spacing-padding-p-2) - var(--border-width-border)) calc(var(--spacing-padding-p-3) - var(--border-width-border));
+}
+
+.ds-chip:hover {
+  --_bg: var(--_bg-hover);
+  --_bd: var(--_bd-hover);
+  --_fg: var(--_fg-hover);
+  --_ic: var(--_ic-hover);
+}
+
+.ds-chip:active,
+.ds-chip[data-pressed] {
+  --_bg: var(--_bg-pressed);
+  --_bd: var(--_bd-pressed);
+  --_fg: var(--_fg-pressed);
+  --_ic: var(--_ic-pressed);
+}
+
+.ds-chip:disabled {
+  --_bg: var(--_bg-disabled);
+  --_bd: var(--_bd-disabled);
+  --_fg: var(--_fg-disabled);
+  --_ic: var(--_ic-disabled);
+
+  cursor: default;
+}
+
+.ds-chip__label {
+  min-width: 0;
+  /* Figma text is LEFT-aligned in its whole-pixel box (buttons centre text by default). */
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ds-chip__icon {
+  display: block;
+  flex-shrink: 0;
+  width: var(--ds-chip-icon);
+  height: var(--ds-chip-icon);
+  color: var(--_ic);
+}
+
+/* FilterChip caret follows aria-expanded (set by `expanded` or by a react-aria trigger). */
+.ds-chip__caret-up,
+.ds-chip[aria-expanded='true'] .ds-chip__caret-down {
+  display: none;
+}
+
+.ds-chip[aria-expanded='true'] .ds-chip__caret-up {
+  display: block;
+}
+
+/* Text only for screen readers (InputChip "삭제"). */
+.ds-chip__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-chip__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

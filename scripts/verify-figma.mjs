@@ -194,7 +194,11 @@ for (const set of config.sets) {
       const diff = new PNG({ width: w, height: h });
       const differing = pixelmatch(mask(fig).data, mask(dom).data, diff.data, w, h, { threshold: 0.1 });
       pixel = { nonTextDiffering: differing, ratio: differing / (w * h) };
-      if (pixel.ratio > (set.pixelTolerance ?? 0.005)) issues.push({ cat: 'pixels', detail: `${(pixel.ratio * 100).toFixed(2)}% of non-text pixels differ` });
+      // A root that hugs its text is < 1px narrower without calc-size(), so everything right of the text is
+      // shifted: recorded (up to 5%) instead of failed — colours and shapes are checked strictly in Chromium.
+      const widthFallback = !calcSize && dw > tol && dw <= 1;
+      if (pixel.ratio > (set.pixelTolerance ?? 0.005) && widthFallback && pixel.ratio <= 0.05) notes.push(`pixels ${(pixel.ratio * 100).toFixed(2)}% (shifted by the no-calc-size width)`);
+      else if (pixel.ratio > (set.pixelTolerance ?? 0.005)) issues.push({ cat: 'pixels', detail: `${(pixel.ratio * 100).toFixed(2)}% of non-text pixels differ` });
       // Glyph placement
       const offsets = [];
       for (const t of textBoxes) {

@@ -78,6 +78,17 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 - 목록 테두리는 `outline` + 음수 `outline-offset`(스크롤된 옵션이 테두리를 덮지 않도록) — 둥근 모서리를 따르는 outline은 Chrome 94+, Firefox 88+, Safari 16.4+.
 - option md Disabled의 밑줄: Figma가 offset · 두께를 auto로 두어 엔진 폰트 지표를 따르며, Figma보다 약 1.5px 위에 그려집니다(렌더링 차이로 기록).
 
+## Slider · Segmented Control · Chip
+
+세 엔진 모두 전 Variant 통과(Slider 2 · handle 5, Segmented Control 3 · item 18, Chip 24 · 12 · 48).
+
+- 너비가 라벨에 맞춰지는 칩은 `calc-size()`가 없는 Firefox · WebKit에서 1px 미만 좁아 라벨 오른쪽(아이콘 · 끝 곡선)이 그만큼 당겨집니다.
+  검증기는 이 경우의 픽셀 차이(5% 이하)를 fallback 기록으로 남기고, 색 · 모양은 Chromium에서 엄격히 비교합니다.
+- Chip · InputChip의 1px 테두리는 테두리 색 배경 레이어(border-box) 위에 채움 레이어(padding-box)를 겹쳐 그립니다.
+  inset 그림자로 그리면 둥근 가장자리가 두 번 합성되어 채움과 테두리 색이 같은 Selected 칩의 가장자리가 Figma보다 진해집니다(세 엔진 공통).
+- Slider 핸들의 Pressed 원은 `color-mix(in srgb, …)`(Chrome 111+, Firefox 113+, Safari 16.2+)로 핸들 색 20%를 만듭니다.
+- Segmented Control은 `inline-grid` + `grid-auto-columns: 1fr`로 항목 너비를 같게 맞춥니다.
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.
