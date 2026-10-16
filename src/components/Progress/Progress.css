@@ -1,0 +1,17 @@
+/*
+ * Progress — Figma `progress` (185:6518): track 6px high, border-radius/rounded-full,
+ * colors/progress/border/surface/default, clips the bar (colors/progress/border/indicator/default, square ends).
+ * Width comes from the layout (430px in Figma).
+ */
+
+.ds-progress {
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-progress-border-surface-default);
+}
+
+.ds-progress__bar {
+  height: 100%;
+  background-color: var(--colors-progress-border-indicator-default);
+}

@@ -1,0 +1,13 @@
+{
+  "component": "Progress",
+  "sets": [
+    {
+      "set": "progress",
+      "story": "components-progress-showcase--figma",
+      "background": "#ffffff",
+      "parts": {
+        "Progressbar": ".ds-progress__bar"
+      }
+    }
+  ]
+}

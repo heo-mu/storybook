@@ -1,0 +1,38 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Progress.showcase.stories';
+import { Progress } from './Progress';
+
+<Meta title="Components/Progress/Usage" />
+
+# Progress — 사용 가이드
+
+Figma **Progress** 프레임(185:6435)의 `progress`(185:6518)를 구현했습니다. 6px 트랙과 그 안에서 잘리는 막대입니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Progress } from 'platform-design-system';
+
+<Progress aria-label="업로드" value={percent} />
+<Progress aria-labelledby="job-title" value={done} maxValue={total} valueLabel={\`\${total}개 중 \${done}개\`} />`}
+/>
+
+## Figma → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Progressbar 너비 | `value` · `minValue` · `maxValue` | 백분율로 계산 |
+| 트랙 너비 430px | 레이아웃 | 부모 너비를 채움 |
+
+## 코드 정책 (Figma에 정의되지 않은 부분)
+
+- **값을 모르는 진행(indeterminate)**: Figma에 없어 제공하지 않습니다.
+- **라벨 · 수치 표시**: Figma에 없어 시각 요소는 없고, `aria-label` · `valueLabel`로 스크린 리더에 전달합니다.
+- **애니메이션**: Figma에 정의가 없어 막대 너비는 즉시 바뀝니다.
+
+## Props
+
+<ArgTypes of={Progress} />

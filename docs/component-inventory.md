@@ -51,7 +51,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
 | Badge 91:5943 | `badge_dot` (21) · `badge_status` (84) Status 7 · Appearance · Size · Shape · `badge_count` (14) | `Badge`, `BadgeDot`, `BadgeCount` | 5 | 완료 |
-| Progress 185:6435 | `progress` (단일) | `ProgressBar` | 5 | 미착수 |
+| Progress 185:6435 | `progress` (단일) | `Progress`Bar` | 5 | 완료 |
 | Alert 179:5471 | `alert` (3) Information/Success/Error · Sub, Button, Icon | `Alert` | 5 | 미착수 |
 | Toast 91:5557 | `toast` (3) Information/Success/Error · Close Icon | `Toast` (+ 표시 관리) | 5 | 미착수 |
 | Tooltip 149:780 | `tooltip` (4) Placement Top/Right/Bottom/Left · Arrow | `Tooltip` | 5 | 미착수 |
