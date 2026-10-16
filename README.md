@@ -5,6 +5,12 @@ Tokens and components are built only from values that exist in Figma.
 
 Status: design tokens · `Button` · `IconButton` · `TextButton` (Figma frame "Button", 296 variants).
 
+## Docs
+
+- [docs/usage.md](docs/usage.md) — using Button, IconButton and TextButton in another React project (Korean)
+- [docs/browser-support.md](docs/browser-support.md) — CSS features, fallbacks and measured results in Chromium / Firefox / WebKit
+- [docs/figma-issues.md](docs/figma-issues.md) — token and variant naming issues found in the Figma source
+
 ## Use it in another React project
 
 ```bash
@@ -56,7 +62,7 @@ exist in Figma are typed (there is no Secondary/Solid).
 | --- | --- |
 | `npm run storybook` | Storybook on http://localhost:6006 (also the Storybook MCP endpoint `/mcp`) |
 | `npm test` | Story tests (Vitest + Playwright Chromium): computed styles, prop → state transitions, variant counts |
-| `npm run verify:button` | Figma parity of all 296 Button variants (Storybook must be running) |
+| `npm run verify:button` | Figma parity of all 296 Button variants (Storybook must be running); `-- --browser=firefox` / `webkit` for other engines |
 | `npm run typecheck` · `npm run lint` · `npm run build` | |
 | `npm run tokens` | Regenerate `src/tokens` from `figma/` |
 | `npm run figma:checksum` | Snapshot checksums; compare with `figma/checksum.figma.js` run through the Figma MCP |

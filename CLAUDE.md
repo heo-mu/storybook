@@ -27,4 +27,11 @@ to access component and documentation knowledge before answering or acting on UI
 - `npm run typecheck`, `npm run lint`, `npm run build`
 - `npm run tokens` — regenerate CSS tokens from `figma/`
 - `npm run figma:checksum` — checksums to compare with `figma/checksum.figma.js` run in Figma
-- `npm run verify:button` — DOM/pixel parity check of all 296 Button variants against Figma (Storybook must be running)
+- `npm run verify:button` — DOM/pixel parity check of all 296 Button variants against Figma (Storybook must be running);
+  add `-- --browser=firefox` or `webkit` to check other engines (see docs/browser-support.md)
+
+## Docs
+
+- docs/usage.md — consuming the package from another React project
+- docs/browser-support.md — CSS features, fallbacks, measured per-engine results
+- docs/figma-issues.md — token / variant naming issues in the Figma source (report, don't "fix" them in code)
