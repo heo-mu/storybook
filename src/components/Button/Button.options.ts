@@ -44,8 +44,24 @@ export type ButtonState = (typeof BUTTON_STATES)[number];
  * Secondary only exists as Outline, so its appearance defaults to (and can only be) "outline".
  */
 export type ButtonToneProps =
-  | { variant?: 'primary' | 'tertiary'; appearance?: ButtonAppearance }
-  | { variant: 'secondary'; appearance?: 'outline' };
+  | {
+      /** Figma "Variant". @default 'primary' */
+      variant?: 'primary' | 'tertiary';
+      /** Figma "Appearance". @default 'solid' */
+      appearance?: ButtonAppearance;
+    }
+  | {
+      /** Figma "Variant". @default 'primary' */
+      variant: 'secondary';
+      /** Figma "Appearance" — Secondary exists only as Outline. */
+      appearance?: 'outline';
+    };
+
+/** Figma "State": Hover/Pressed are the native :hover/:active states, Disabled is this prop. */
+export type ButtonDisabledProp = {
+  /** Figma State "Disabled". */
+  disabled?: boolean;
+};
 
 export function resolveAppearance(variant: ButtonVariant, appearance: ButtonAppearance | undefined): ButtonAppearance {
   if (variant === 'secondary') return 'outline';

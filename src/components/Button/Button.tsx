@@ -2,10 +2,11 @@ import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react
 import { cx } from '../../utils/cx';
 import { hasSlot } from '../../utils/hasSlot';
 import { ButtonIconSlot } from './ButtonIconSlot';
-import { resolveAppearance, type ButtonShape, type ButtonSize, type ButtonToneProps } from './Button.options';
+import { resolveAppearance, type ButtonDisabledProp, type ButtonShape, type ButtonSize, type ButtonToneProps } from './Button.options';
 
 export type ButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children'> &
-  ButtonToneProps & {
+  ButtonToneProps &
+  ButtonDisabledProp & {
     /** Figma "Size". @default 'xs' */
     size?: ButtonSize;
     /** Figma "Shape". @default 'square' */

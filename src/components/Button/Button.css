@@ -73,8 +73,21 @@
   cursor: not-allowed;
 }
 
+/* Figma "Label": auto-width text, textAlignHorizontal CENTER. Figma's auto-width text boxes are whole
+ * pixels (e.g. 32 / 37 / 42px for "라벨명"); calc-size() rounds the label up the same way so button
+ * widths match Figma exactly. Browsers without calc-size() keep the natural (sub-pixel) width. */
 .ds-button__label {
   display: block;
+  width: calc-size(fit-content, round(up, size, 1px));
+  text-align: center;
+}
+
+/* base/leading-normal/medium (16px / 24px) leaves a 2.5px half-leading; Chromium rounds the font
+ * metrics and floors it, drawing the glyphs ~1px above Figma. Splitting the same 24px line box into
+ * 1px padding + 23px line-height puts the baseline on Figma's position; the label box stays 24px. */
+.ds-button[data-size='lg'] .ds-button__label {
+  padding-top: 1px;
+  line-height: calc(var(--typography-base-leading-normal-medium-line-height) - 1px);
 }
 
 /* Figma "icon_size" frame: fixed square, vertical auto-layout (CENTER / MIN). */
