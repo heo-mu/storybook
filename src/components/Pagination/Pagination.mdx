@@ -1,0 +1,54 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Pagination.showcase.stories';
+import { Pagination, PaginationItem, PaginationControl } from './Pagination';
+
+<Meta title="Components/Pagination/Usage" />
+
+# Pagination — 사용 가이드
+
+Figma **Pagination** 프레임(149:1030)의 `pagination`(3개) · `pagination_item`(24개) · `pagination_control`(48개)를 구현했습니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Pagination } from 'platform-design-system';
+
+<Pagination totalPages={pageCount} page={page} onPageChange={setPage} />
+
+// 크기 · 모양
+<Pagination totalPages={20} size="md" shape="rounded" visiblePages={7} />`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Size sm · md · lg | `size` | 버튼 20 · 24 · 28px, 간격 6 · 8 · 10px |
+| Shape Square · Rounded | `shape` | |
+| item State Current | `page` / `defaultPage` | `aria-current="page"` |
+| item State Hover · Pressed · control Hover · Pressed | 브라우저 `:hover` · `:active` | |
+| control State Disabled | 첫 · 마지막 페이지에서 자동 | |
+| 페이지 번호 개수 (Figma 5개) | `visiblePages` | 현재 페이지를 가운데 두는 창 |
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **생략 표시(…)·처음/끝 이동**: Figma에 없어 구현하지 않았습니다. 페이지가 많으면 현재 페이지 주변 `visiblePages`개만 보입니다.
+- **첫 페이지의 이전 버튼**: Figma 예시는 1페이지에서도 이전 버튼이 Default이지만, 이동할 곳이 없으므로 Disabled로 표시합니다.
+- **포커스 표시**: Figma에 Focus 상태가 없어 브라우저 기본 포커스 링을 사용합니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+<ArgTypes of={Pagination} />
+
+### PaginationItem · PaginationControl
+
+<ArgTypes of={PaginationItem} />
+
+<ArgTypes of={PaginationControl} />

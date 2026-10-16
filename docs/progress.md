@@ -27,7 +27,7 @@
 | 1 | Input · Textarea · Search Field | 완료 |
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
-| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link 완료) |
+| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link · Tab · Pagination 완료) |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
@@ -52,6 +52,8 @@
 | Date Picker (trigger · message · calendar · day · navigation) | 21 + 3 + 1 + 7 + 8 | 40/40 | 40/40 | 40/40 | 통과 |
 | File Uploader (dropzone · item) · Loading | 5 + 3 · 2 | 10/10 | 10/10 | 10/10 | 통과 |
 | Link | 15 | 15/15 | 15/15 | 15/15 | 통과 |
+| Tabs (tab_filled · tab_line) | 60 + 30 | 90/90 | 90/90 | 90/90 | 통과 |
+| Pagination (pagination · item · control) | 3 + 24 + 48 | 75/75 | 75/75 | 75/75 | 통과 |
 
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
 수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).

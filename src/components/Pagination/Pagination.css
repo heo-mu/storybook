@@ -1,0 +1,154 @@
+/*
+ * Pagination — Figma component sets `pagination` (132:871), `pagination_item` (132:520) and
+ * `pagination_control` (132:604).
+ *   row gap: m-1_5 (sm) · m-2 (md) · m-2_5 (lg)
+ *   item / control: 20 · 24 · 28px square, border-radius/rounded (Square) or rounded-full (Rounded)
+ *   number: xs · sm · base /leading-normal/medium, centred; caret icon 16 · 20 · 24px
+ * Item state: Default → Hover → Pressed → Current; control: Default → Hover → Pressed → Disabled.
+ */
+
+.ds-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-1_5);
+}
+
+.ds-pagination[data-size='md'] {
+  gap: var(--spacing-margin-m-2);
+}
+
+.ds-pagination[data-size='lg'] {
+  gap: var(--spacing-margin-m-2_5);
+}
+
+.ds-pagination__item,
+.ds-pagination__control {
+  --ds-pagination-box: 20px;
+  --ds-pagination-icon: 16px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--ds-pagination-box);
+  height: var(--ds-pagination-box);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius-rounded);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-pagination__item[data-size='md'],
+.ds-pagination__control[data-size='md'] {
+  --ds-pagination-box: 24px;
+  --ds-pagination-icon: 20px;
+}
+
+.ds-pagination__item[data-size='lg'],
+.ds-pagination__control[data-size='lg'] {
+  --ds-pagination-box: 28px;
+  --ds-pagination-icon: 24px;
+}
+
+.ds-pagination__item[data-shape='rounded'],
+.ds-pagination__control[data-shape='rounded'] {
+  border-radius: var(--border-radius-rounded-full);
+}
+
+/* Item */
+.ds-pagination__item {
+  background-color: var(--colors-pagination-item-background-default);
+  color: var(--colors-pagination-item-label-default);
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+}
+
+.ds-pagination__item[data-size='md'] {
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-pagination__item[data-size='lg'] {
+  font-family: var(--typography-base-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-medium-font-size);
+  font-weight: var(--typography-base-leading-normal-medium-font-weight);
+  line-height: var(--typography-base-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-base-leading-normal-medium-letter-spacing);
+}
+
+.ds-pagination__number {
+  display: block;
+  /* Figma text is LEFT-aligned in its whole-pixel box (buttons centre text by default). */
+  text-align: left;
+}
+
+/* base 16 / 24: 1px padding + 23px line-height keeps Chromium on Figma's baseline (as Button lg). */
+.ds-pagination__item[data-size='lg'] .ds-pagination__number {
+  padding-top: 1px;
+  line-height: calc(var(--typography-base-leading-normal-medium-line-height) - 1px);
+}
+
+.ds-pagination__item:hover {
+  background-color: var(--colors-pagination-item-background-hover);
+  color: var(--colors-pagination-item-label-hover);
+}
+
+.ds-pagination__item:active {
+  background-color: var(--colors-pagination-item-background-pressed);
+  color: var(--colors-pagination-item-label-pressed);
+}
+
+.ds-pagination__item[data-current] {
+  background-color: var(--colors-pagination-item-background-current);
+  color: var(--colors-pagination-item-label-current);
+}
+
+/* Control */
+.ds-pagination__control {
+  background-color: var(--colors-pagination-control-background-default);
+  color: var(--colors-pagination-control-icon-default);
+}
+
+.ds-pagination__icon {
+  display: block;
+  width: var(--ds-pagination-icon);
+  height: var(--ds-pagination-icon);
+}
+
+.ds-pagination__control:hover {
+  background-color: var(--colors-pagination-control-background-hover);
+  color: var(--colors-pagination-control-icon-hover);
+}
+
+.ds-pagination__control:active {
+  background-color: var(--colors-pagination-control-background-pressed);
+  color: var(--colors-pagination-control-icon-pressed);
+}
+
+.ds-pagination__control:disabled {
+  background-color: var(--colors-pagination-control-background-disabled);
+  color: var(--colors-pagination-control-icon-disabled);
+  cursor: default;
+}
+
+/* Keyboard focus — no Figma Focus state: the browser focus ring. */
+.ds-pagination__item:focus-visible,
+.ds-pagination__control:focus-visible {
+  outline-style: auto;
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-pagination__number {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

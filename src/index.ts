@@ -15,5 +15,7 @@ export * from './components/DatePicker';
 export * from './components/Loading';
 export * from './components/FileUploader';
 export * from './components/Link';
+export * from './components/Tabs';
+export * from './components/Pagination';
 export { CHOICE_SIZES, CHOICE_GROUP_ORIENTATIONS, type ChoiceSize, type ChoiceGroupOrientation } from './components/Choice';
 export * from './icons';

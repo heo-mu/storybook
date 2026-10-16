@@ -1,0 +1,182 @@
+/*
+ * Tabs — Figma component sets `tab_filled` (91:5000) and `tab_line` (91:5241).
+ *   padding sm p-1_5 × p-2_5 · md p-2 × p-4 (line: p-1_5 × p-4) · lg p-2 × p-5, gap p-1
+ *   label: xs/leading-normal/medium (sm) · sm/leading-normal/semibold (md) · base/leading-normal/semibold (lg), centred
+ *   filled: background per state, border-radius/rounded (Square) or rounded-full (Rounded)
+ *   line: 1px bottom stroke (INSIDE) per state, no radius
+ * State: Default → Hover → Pressed → Selected → Disabled (later rules win).
+ */
+
+.ds-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.ds-tab {
+  --_bg-default: var(--colors-tab-primary-filled-background-default);
+  --_bg-hover: var(--colors-tab-primary-filled-background-hover);
+  --_bg-pressed: var(--colors-tab-primary-filled-background-pressed);
+  --_bg-selected: var(--colors-tab-primary-filled-background-selected);
+  --_bg-disabled: var(--colors-tab-primary-filled-background-disabled);
+  --_fg-default: var(--colors-tab-primary-filled-label-default);
+  --_fg-hover: var(--colors-tab-primary-filled-label-hover);
+  --_fg-pressed: var(--colors-tab-primary-filled-label-pressed);
+  --_fg-selected: var(--colors-tab-primary-filled-label-selected);
+  --_fg-disabled: var(--colors-tab-primary-filled-label-disabled);
+  --_line: transparent;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-padding-p-1);
+  padding: var(--spacing-padding-p-1_5) var(--spacing-padding-p-2_5);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_bg-default);
+  color: var(--_fg-default);
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+  text-align: center;
+  white-space: nowrap;
+  outline: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-tab[data-variant='secondary'] {
+  --_bg-default: var(--colors-tab-secondary-filled-background-default);
+  --_bg-hover: var(--colors-tab-secondary-filled-background-hover);
+  --_bg-pressed: var(--colors-tab-secondary-filled-background-pressed);
+  --_bg-selected: var(--colors-tab-secondary-filled-background-selected);
+  --_bg-disabled: var(--colors-tab-secondary-filled-background-disabled);
+  --_fg-default: var(--colors-tab-secondary-filled-label-default);
+  --_fg-hover: var(--colors-tab-secondary-filled-label-hover);
+  --_fg-pressed: var(--colors-tab-secondary-filled-label-pressed);
+  --_fg-selected: var(--colors-tab-secondary-filled-label-selected);
+  --_fg-disabled: var(--colors-tab-secondary-filled-label-disabled);
+}
+
+.ds-tab[data-shape='rounded'] {
+  border-radius: var(--border-radius-rounded-full);
+}
+
+/* Line: no fill; the 1px bottom stroke carries the state. */
+.ds-tab[data-appearance='line'] {
+  --_bg-default: transparent;
+  --_bg-hover: transparent;
+  --_bg-pressed: transparent;
+  --_bg-selected: transparent;
+  --_bg-disabled: transparent;
+  --_fg-default: var(--colors-tab-primary-line-label-default);
+  --_fg-hover: var(--colors-tab-primary-line-label-hover);
+  --_fg-pressed: var(--colors-tab-primary-line-label-pressed);
+  --_fg-selected: var(--colors-tab-primary-line-label-selected);
+  --_fg-disabled: var(--colors-tab-primary-line-label-disabled);
+  --_line-default: var(--colors-tab-primary-line-underline-default);
+  --_line-hover: var(--colors-tab-primary-line-underline-hover);
+  --_line-pressed: var(--colors-tab-primary-line-underline-pressed);
+  --_line-selected: var(--colors-tab-primary-line-underline-selected);
+  --_line-disabled: var(--colors-tab-primary-line-underline-disabled);
+  --_line: var(--_line-default);
+
+  border-radius: 0;
+  box-shadow: inset 0 calc(-1 * var(--border-width-border)) 0 var(--_line);
+}
+
+.ds-tab[data-appearance='line'][data-variant='secondary'] {
+  --_fg-default: var(--colors-tab-secondary-line-label-default);
+  --_fg-hover: var(--colors-tab-secondary-line-label-hover);
+  --_fg-pressed: var(--colors-tab-secondary-line-label-pressed);
+  --_fg-selected: var(--colors-tab-secondary-line-label-selected);
+  --_fg-disabled: var(--colors-tab-secondary-line-label-disabled);
+  --_line-default: var(--colors-tab-secondary-line-underline-default);
+  --_line-hover: var(--colors-tab-secondary-line-underline-hover);
+  --_line-pressed: var(--colors-tab-secondary-line-underline-pressed);
+  --_line-selected: var(--colors-tab-secondary-line-underline-selected);
+  --_line-disabled: var(--colors-tab-secondary-line-underline-disabled);
+}
+
+.ds-tab[data-size='md'] {
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-4);
+  font-family: var(--typography-sm-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-semibold-font-size);
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+  line-height: var(--typography-sm-leading-normal-semibold-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-semibold-letter-spacing);
+}
+
+.ds-tab[data-appearance='line'][data-size='md'] {
+  padding: var(--spacing-padding-p-1_5) var(--spacing-padding-p-4);
+}
+
+.ds-tab[data-size='lg'] {
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-5);
+  font-family: var(--typography-base-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-base-leading-normal-semibold-font-size);
+  font-weight: var(--typography-base-leading-normal-semibold-font-weight);
+  line-height: var(--typography-base-leading-normal-semibold-line-height);
+  letter-spacing: var(--typography-base-leading-normal-semibold-letter-spacing);
+}
+
+/* base 16 / 24: 1px padding + 23px line-height keeps Chromium on Figma's baseline (as Button lg). */
+.ds-tab[data-size='lg'] .ds-tab__label {
+  padding-top: 1px;
+  line-height: calc(var(--typography-base-leading-normal-semibold-line-height) - 1px);
+}
+
+.ds-tab__label {
+  display: block;
+}
+
+.ds-tab:hover {
+  background-color: var(--_bg-hover);
+  color: var(--_fg-hover);
+  --_line: var(--_line-hover);
+}
+
+.ds-tab:active,
+.ds-tab[data-pressed] {
+  background-color: var(--_bg-pressed);
+  color: var(--_fg-pressed);
+  --_line: var(--_line-pressed);
+}
+
+.ds-tab[data-selected] {
+  background-color: var(--_bg-selected);
+  color: var(--_fg-selected);
+  --_line: var(--_line-selected);
+}
+
+.ds-tab[data-disabled] {
+  background-color: var(--_bg-disabled);
+  color: var(--_fg-disabled);
+  --_line: var(--_line-disabled);
+
+  cursor: default;
+}
+
+/* Keyboard focus — no Figma Focus state: the browser focus ring. */
+.ds-tab[data-focus-visible] {
+  outline-style: auto;
+}
+
+.ds-tabs__panel {
+  outline: none;
+}
+
+.ds-tabs__panel[data-focus-visible] {
+  outline-style: auto;
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-tab__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

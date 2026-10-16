@@ -1,0 +1,19 @@
+{
+  "component": "Tabs",
+  "sets": [
+    {
+      "set": "tab_filled",
+      "story": "components-tabs-showcase--filled-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 110px; min-width: 110px; max-width: 110px; } tr > :first-child { width: 200px; min-width: 200px; max-width: 200px; }",
+      "parts": { "Label": ".ds-tab__label" }
+    },
+    {
+      "set": "tab_line",
+      "story": "components-tabs-showcase--line-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 110px; min-width: 110px; max-width: 110px; } tr > :first-child { width: 200px; min-width: 200px; max-width: 200px; }",
+      "parts": { "Label": ".ds-tab__label" }
+    }
+  ]
+}

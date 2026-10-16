@@ -1,0 +1,64 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Tabs.showcase.stories';
+import { Tabs, TabList, Tab, TabPanel } from './Tabs';
+
+<Meta title="Components/Tabs/Usage" />
+
+# Tabs — 사용 가이드
+
+Figma **Tab** 프레임(86:3121)의 `tab_filled`(60개) · `tab_line`(30개)를 구현한 탭입니다.
+키보드 · ARIA(tablist / tab / tabpanel)는 react-aria-components가 담당합니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Tabs, TabList, Tab, TabPanel } from 'platform-design-system';
+
+<Tabs appearance="line" selectedKey={tab} onSelectionChange={setTab}>
+  <TabList aria-label="주문 상태">
+    <Tab id="all">전체</Tab>
+    <Tab id="paid">결제 완료</Tab>
+    <Tab id="canceled" disabled>취소</Tab>
+  </TabList>
+  <TabPanel id="all">…</TabPanel>
+  <TabPanel id="paid">…</TabPanel>
+  <TabPanel id="canceled">…</TabPanel>
+</Tabs>
+
+// 채워진 둥근 탭 (Secondary · md)
+<Tabs appearance="filled" shape="rounded" variant="secondary" size="md">…</Tabs>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| 세트 tab_line · tab_filled | `appearance` | `'line'`(기본) · `'filled'` |
+| Variant Primary · Secondary | `variant` | 선택 색 #004a38 · #007c56 |
+| Size sm · md · lg | `size` | 높이 line 28 · 32 · 40, filled 28 · 36 · 40px |
+| Shape Square · Rounded | `shape` | filled만 |
+| State Hover · Pressed | 브라우저 `:hover` · 누름 | |
+| State Selected | `selectedKey` / `defaultSelectedKey` | |
+| State Disabled | `Tab disabled` | 키보드 이동에서 건너뜀 |
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **탭 간격 · 정렬**: Figma에 탭 목록 레이아웃이 없어 간격 없이 나란히 둡니다. line 탭은 이웃 탭의 밑줄이 이어져 하나의 선이 됩니다.
+- **활성화 방식**: 방향키로 이동하면 바로 선택(automatic). `keyboardActivation="manual"`이면 Enter · Space로 선택.
+- **포커스 표시**: Figma에 Focus 상태가 없어 브라우저 기본 포커스 링을 사용합니다.
+- **패널**: Figma에 정의가 없어 스타일 없이 내용만 렌더링합니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+<ArgTypes of={Tabs} />
+
+### Tab
+
+<ArgTypes of={Tab} />
