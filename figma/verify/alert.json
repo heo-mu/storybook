@@ -1,0 +1,20 @@
+{
+  "component": "Alert",
+  "sets": [
+    {
+      "set": "alert",
+      "story": "components-alert-showcase--matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 340px; min-width: 340px; max-width: 340px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Icon and Text": ".ds-alert__body",
+        "Icon and Text/*-fill": ".ds-alert__icon",
+        "Icon and Text/Frame *": ".ds-alert__text",
+        "Icon and Text/Frame */Text": ".ds-alert__title",
+        "Icon and Text/Frame */Text#2": ".ds-alert__description",
+        "button_basic": ".ds-alert__action > .ds-button",
+        "button_basic/Label": ".ds-alert__action .ds-button__label"
+      }
+    }
+  ]
+}

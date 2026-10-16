@@ -140,6 +140,11 @@
 - react-aria-components `ProgressBar`: `role="progressbar"`, `aria-valuenow` · `aria-valuemin` · `aria-valuemax` · `aria-valuetext`(기본 백분율, `valueLabel`로 변경).
 - 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby` 필수.
 
+### Alert
+- 오류는 `role="alert"`(즉시 읽음), 안내 · 성공은 `role="status"`(`role`로 변경 가능). 상태 아이콘은 장식(`aria-hidden`) —
+  상태는 제목 문구로 전달하세요.
+- `action` 버튼은 일반 Tab 순서.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

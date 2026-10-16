@@ -1,0 +1,48 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Alert.showcase.stories';
+import { Alert } from './Alert';
+
+<Meta title="Components/Alert/Usage" />
+
+# Alert — 사용 가이드
+
+Figma **Alert** 프레임(179:5471)의 `alert`(3개)를 구현했습니다. 화면 안에 머무는 안내 메시지입니다(잠시 떴다 사라지는 알림은 Toast).
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Alert, Button } from 'platform-design-system';
+
+<Alert status="information" title="점검 예정" description="7월 30일 02:00 – 04:00에 서비스를 점검합니다." />
+
+<Alert
+  status="error"
+  title="업로드 실패"
+  description="파일 크기를 확인하세요."
+  action={<Button variant="tertiary" appearance="outline" size="xs" onClick={retry}>재시도</Button>}
+/>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Status Information · Success · Error | `status` | 상태 아이콘(20px)과 색 |
+| Alert Text | `title` | |
+| Sub · Sub Text | `description` | |
+| Icon | `showIcon` | |
+| Button | `action` | Figma: Button Tertiary · Outline · xs |
+
+## 코드 정책 (Figma에 정의되지 않은 부분)
+
+- **너비**: 부모 너비를 채웁니다(Figma 320px 고정).
+- **설명 길이**: Figma 예시 문구는 "최대 2줄"이지만 자르기 설정이 없어 자르지 않습니다.
+- **역할(role)**: 오류는 `role="alert"`(바로 읽음), 안내 · 성공은 `role="status"`. `role` prop으로 바꿀 수 있습니다.
+- **닫기 버튼**: Figma에 없어 제공하지 않습니다. 필요하면 `action`에 버튼을 넣으세요.
+
+## Props
+
+<ArgTypes of={Alert} />
