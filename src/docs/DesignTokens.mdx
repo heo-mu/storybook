@@ -1,0 +1,80 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { EffectStyleTable, PrimitivePalette, TextStyleTable, VariableTable } from './TokenTables';
+
+<Meta title="Foundations/Design Tokens" />
+
+# Design Tokens
+
+Figma **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`)의 Variables·Styles만으로 생성한 CSS Variables입니다.
+원본에 없는 토큰은 만들지 않았습니다.
+
+- 원본 스냅샷: `figma/variables/*.txt`, `figma/styles/*.txt` (Figma MCP로 읽기 전용 추출, 체크섬으로 원본과 일치 확인)
+- 생성: `npm run tokens` → `src/tokens/*.css`, `src/tokens/tokens.json`
+- 이름 규칙: Figma 변수 경로의 `/` → `-` (예: `colors/text/primary` → `--colors-text-primary`). 원본 WEB code syntax와 같은 규칙입니다.
+- 별칭(alias)은 `var()` 참조로 유지되어 **Primitive → Theme → Semantic → Component** 체인이 그대로 보존됩니다.
+
+| 레이어 | Figma 컬렉션 | 변수 수 | 파일 |
+| --- | --- | --- | --- |
+| Primitive | Primitive | 615 | `primitive.css` |
+| Theme | Theme | 44 | `theme.css` |
+| Semantic | Semantic | 68 | `semantic.css` |
+| Component | Component (Button 그룹만: `colors/button/*`, `colors/button_text/*`) | 73 / 825 | `components/button.css` |
+| Typography | Text Styles | 46 | `typography.css` |
+| Shadows | Effect Styles | 4 | `effects.css` |
+
+Component 컬렉션은 이번 범위인 Button 그룹만 포함했습니다. 다른 컴포넌트 토큰은 해당 컴포넌트 구현 시 추가합니다.
+
+## Colors
+
+### Primitive
+
+<PrimitivePalette />
+
+### Theme
+
+<VariableTable collection="Theme" />
+
+### Semantic
+
+<VariableTable collection="Semantic" />
+
+### Component — Button
+
+<VariableTable collection="Component" />
+
+## Typography
+
+Text Style마다 `--typography-<style>-font-family | font-size | font-weight | line-height | letter-spacing | text-decoration`
+변수와 `.ds-typography-<style>` 클래스가 생성됩니다.
+
+<TextStyleTable />
+
+<VariableTable collection="Primitive" prefix="font/" />
+
+## Spacing
+
+<VariableTable collection="Primitive" prefix="spacing/" />
+
+## Radius · Border width · Opacity
+
+<VariableTable collection="Primitive" prefix="border-radius/" />
+
+<VariableTable collection="Primitive" prefix="border-width/" />
+
+<VariableTable collection="Primitive" prefix="opacity/" />
+
+## Shadows
+
+Effect Styles (`--effect-*`):
+
+<EffectStyleTable />
+
+Primitive 그림자 스케일 변수(`shadows/scale/*`, `shadows/color/*`). Figma에서 어떤 색과 조합되는지 정의되어 있지 않아 합성 값은 만들지 않았습니다.
+
+<VariableTable collection="Primitive" prefix="shadows/" />
+
+## 기타
+
+<VariableTable collection="Primitive" prefix="pro/" />
+
+<VariableTable collection="Primitive" prefix="meta/" />
