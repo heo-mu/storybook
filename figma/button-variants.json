@@ -1,0 +1,2095 @@
+{
+ "button_basic": {
+  "setId": "54:2904",
+  "w": 1087,
+  "h": 1080,
+  "variants": [
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 20,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 64,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 112,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Square, State=Default",
+    "x": 20,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=lg, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 168,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 232,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 276,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 324,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Square, State=Default",
+    "x": 20,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=lg, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 380,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 444,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 488,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 536,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Square, State=Default",
+    "x": 20,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=lg, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 592,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 656,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 868,
+    "w": 80,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 700,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 912,
+    "w": 88,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 748,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 960,
+    "w": 101,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Square, State=Default",
+    "x": 20,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Square, State=Default",
+    "x": 20,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Square, State=Hover",
+    "x": 154,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Square, State=Pressed",
+    "x": 288,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Square, State=Disabled",
+    "x": 422,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Rounded, State=Default",
+    "x": 556,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Rounded, State=Hover",
+    "x": 690,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Rounded, State=Pressed",
+    "x": 824,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=lg, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 804,
+    "w": 114,
+    "h": 44
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=lg, Shape=Rounded, State=Disabled",
+    "x": 958,
+    "y": 1016,
+    "w": 114,
+    "h": 44
+   }
+  ]
+ },
+ "button_icon": {
+  "setId": "67:2368",
+  "w": 440,
+  "h": 704,
+  "variants": [
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 60,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Solid, Size=md, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 104,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 156,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 196,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Solid, Size=md, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 240,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 292,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 332,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Primary, Appearance=Outline, Size=md, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 376,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Default",
+    "x": 20,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 428,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=xs, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 564,
+    "w": 24,
+    "h": 24
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Default",
+    "x": 20,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 468,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=sm, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 604,
+    "w": 28,
+    "h": 28
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Default",
+    "x": 20,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Hover",
+    "x": 72,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Pressed",
+    "x": 124,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Square, State=Disabled",
+    "x": 176,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Default",
+    "x": 228,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Hover",
+    "x": 280,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Pressed",
+    "x": 332,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Secondary, Appearance=Outline, Size=md, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 512,
+    "w": 36,
+    "h": 36
+   },
+   {
+    "name": "Variant=Tertiary, Appearance=Outline, Size=md, Shape=Rounded, State=Disabled",
+    "x": 384,
+    "y": 648,
+    "w": 36,
+    "h": 36
+   }
+  ]
+ },
+ "button_text": {
+  "setId": "432:8395",
+  "w": 424,
+  "h": 263,
+  "variants": [
+   {
+    "name": "Type=Primary, Size=sm, State=Default",
+    "x": 24.5,
+    "y": 20,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=Primary, Size=sm, State=Hover",
+    "x": 125.5,
+    "y": 20,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=Primary, Size=sm, State=Pressed",
+    "x": 226.5,
+    "y": 20,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=Primary, Size=sm, State=Disabled",
+    "x": 327.5,
+    "y": 20,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=Primary, Size=md, State=Default",
+    "x": 20,
+    "y": 64,
+    "w": 81,
+    "h": 32
+   },
+   {
+    "name": "Type=Primary, Size=md, State=Hover",
+    "x": 121,
+    "y": 64,
+    "w": 81,
+    "h": 32
+   },
+   {
+    "name": "Type=Primary, Size=md, State=Pressed",
+    "x": 222,
+    "y": 64,
+    "w": 81,
+    "h": 32
+   },
+   {
+    "name": "Type=Primary, Size=md, State=Disabled",
+    "x": 323,
+    "y": 64,
+    "w": 81,
+    "h": 32
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=sm, State=Default",
+    "x": 24.5,
+    "y": 116,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=sm, State=Hover",
+    "x": 125.5,
+    "y": 116,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=sm, State=Pressed",
+    "x": 226.5,
+    "y": 116,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=sm, State=Disabled",
+    "x": 327.5,
+    "y": 116,
+    "w": 72,
+    "h": 24
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=md, State=Default",
+    "x": 20,
+    "y": 160,
+    "w": 81,
+    "h": 32
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=md, State=Hover",
+    "x": 121,
+    "y": 160,
+    "w": 81,
+    "h": 32
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=md, State=Pressed",
+    "x": 222,
+    "y": 160,
+    "w": 81,
+    "h": 32
+   },
+   {
+    "name": "Type=SecondarySecondary, Size=md, State=Disabled",
+    "x": 323,
+    "y": 160,
+    "w": 81,
+    "h": 32
+   }
+  ]
+ }
+}

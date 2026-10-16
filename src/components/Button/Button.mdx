@@ -1,0 +1,111 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as ButtonStories from './Button.stories';
+import { Button } from './Button';
+import { IconButton } from './IconButton';
+import { TextButton } from './TextButton';
+
+<Meta title="Components/Button/Usage" />
+
+# Button — 사용 가이드
+
+Figma **[Platform] Web Design System → 🔵 Ver 0.4 → Component → Button** 프레임(58:4971)의 컴포넌트 296개를
+3개의 React 컴포넌트로 구현했습니다. 296개를 각각 만들지 않고, Figma Variant Property를 그대로 Props로 옮겼습니다.
+
+| React 컴포넌트 | Figma Component Set | Variant 수 | 구성 |
+| --- | --- | --- | --- |
+| `Button` | `button_basic` (54:2904) | 160 | Variant×Appearance 5 × Size 4 × Shape 2 × State 4 |
+| `IconButton` | `button_icon` (67:2368) | 120 | Variant×Appearance 5 × Size 3 × Shape 2 × State 4 |
+| `TextButton` | `button_text` (432:8395) | 16 | Type 2 × Size 2 × State 4 |
+
+<Canvas of={ButtonStories.Overview} />
+
+## 설치 및 Import
+
+<Source
+  language="tsx"
+  code={`// 앱 진입점에서 한 번만
+import 'platform-design-system/fonts.css';  // Pretendard Variable (font/family/basic)
+import 'platform-design-system/styles.css'; // 디자인 토큰 + 컴포넌트 스타일
+
+import { Button, IconButton, TextButton } from 'platform-design-system';
+
+<Button variant="primary" size="md" leftIcon={<MyIcon />}>저장</Button>
+<IconButton variant="tertiary" appearance="outline" icon={<PlusIcon />} aria-label="추가" />
+<TextButton size="md" rightIcon={<CaretRightIcon />}>더보기</TextButton>`}
+/>
+
+토큰만 필요하면 `platform-design-system/tokens.css`(CSS Variables)를 import 하세요.
+
+## Figma 속성 → Props
+
+### Button / IconButton
+
+| Figma 속성 | 값 | Prop | 기본값 |
+| --- | --- | --- | --- |
+| Variant | Primary · Secondary · Tertiary | `variant` | `'primary'` |
+| Appearance | Solid · Outline | `appearance` | `'solid'` (Secondary는 `'outline'`) |
+| Size | xs · sm · md · lg (IconButton: xs · sm · md) | `size` | `'xs'` |
+| Shape | Square · Rounded | `shape` | `'square'` |
+| State | Default · Hover · Pressed · Disabled | 브라우저 상태 `:hover` · `:active`, `disabled` | — |
+| Left Icon / Right Icon (boolean) | true · false | `leftIcon` / `rightIcon` (넘기면 표시) | 없음 |
+| Label Text | 텍스트 | `children` (IconButton: `aria-label`) | — |
+
+### TextButton
+
+| Figma 속성 | 값 | Prop | 기본값 |
+| --- | --- | --- | --- |
+| Type | Primary · SecondarySecondary | `variant` (`'primary'` · `'secondary'`) | `'primary'` |
+| Size | sm · md | `size` | `'sm'` |
+| State | Default · Hover · Pressed · Disabled | `:hover` · `:active`, `disabled` | — |
+| Left Icon / Right Icon, Label Text | | `leftIcon` / `rightIcon`, `children` | |
+
+## 유효한 조합만 허용
+
+Figma에는 **Secondary / Solid 조합이 없습니다.** 타입이 이를 막습니다.
+
+<Source
+  language="tsx"
+  code={`<Button variant="secondary">OK</Button>                     // appearance는 자동으로 'outline'
+<Button variant="secondary" appearance="outline">OK</Button> // OK
+<Button variant="secondary" appearance="solid">✗</Button>   // 타입 오류`}
+/>
+
+Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수(160 / 120 / 16)를 테스트로 검증합니다.
+
+## 상태 (State)
+
+<Canvas of={ButtonStories.States} />
+
+- **Hover / Pressed**는 별도 Prop이 아니라 실제 포인터 상태(`:hover`, `:active`)로 표현됩니다.
+- **Disabled**는 네이티브 `disabled` 속성입니다. Outline의 Disabled는 Figma와 동일하게 테두리가 없습니다.
+- **Focus**: Figma Button에는 Focus 상태가 정의되어 있지 않습니다. 임의 스타일을 만들지 않고 브라우저 기본 포커스 표시를 유지합니다.
+
+## 아이콘
+
+- 아이콘은 슬롯입니다. 어떤 SVG든 넘기면 Figma `icon_size` 프레임과 같은 크기로 맞춰집니다
+  (Button xs–md 16px · lg 20px, IconButton xs·sm 16px · md 20px, TextButton 16px).
+- 아이콘 색은 `color`로 지정되므로 SVG는 `fill="currentColor"`를 사용하세요.
+- 아이콘은 `aria-hidden` 처리됩니다. `IconButton`은 `aria-label`이 필수입니다(Figma의 숨겨진 Label 레이어에 해당).
+
+## Props
+
+### Button
+<ArgTypes of={Button} />
+
+### IconButton
+<ArgTypes of={IconButton} />
+
+### TextButton
+<ArgTypes of={TextButton} />
+
+## Figma 원본 데이터 메모 (Ver 0.4)
+
+구현은 Figma 바인딩을 그대로 따릅니다. 아래 항목은 디자인 쪽 정리가 필요할 수 있는 부분입니다.
+
+1. `button_text`의 Type 값이 **`SecondarySecondary`** 로 되어 있고, Primary와 같은 변수에 바인딩되어 화면상 차이가 없습니다.
+2. `button_icon`의 **Tertiary / Solid** 배경은 `colors/button/secondary/solid/background/*` 에 바인딩되어 있습니다(값은 tertiary와 동일).
+3. `button_basic`의 **Secondary / Outline Hover·Pressed** 테두리는 Square 변형에서 `secondary/solid/border/default`,
+   Rounded 변형에서 `secondary/outline/border/default` 에 바인딩되어 있습니다(값은 동일 #007c56). 구현은 `secondary/outline/border/default` 를 사용합니다.
+4. `*/solid/border/*`, `*/outline/border/disabled` 토큰은 존재하지만 컴포넌트에는 테두리가 적용되어 있지 않습니다(Solid 전체, Outline Disabled).
+5. `colors/button/progress/border` 토큰에 대응하는 Variant는 없습니다.
+6. Focus 상태가 정의되어 있지 않습니다.

@@ -1,0 +1,3 @@
+/* Library stylesheet: design tokens + component styles. Consumers import this once. */
+@import './tokens/index.css';
+@import './components/Button/Button.css';

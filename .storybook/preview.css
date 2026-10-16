@@ -1,0 +1,6 @@
+/* Storybook canvas only — not part of the library. */
+body {
+  background: var(--colors-surface-page);
+  color: var(--colors-text-primary);
+  font-family: var(--font-family-basic), sans-serif;
+}
