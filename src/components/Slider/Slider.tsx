@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
+import { useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import { Slider as AriaSlider, SliderThumb, SliderTrack } from 'react-aria-components';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
@@ -71,17 +71,15 @@ export function Slider({
 }: SliderProps) {
   const [current, setCurrent] = useControllableState(value, defaultValue ?? minValue, onChange);
   const format = (n: number) => new Intl.NumberFormat(undefined, { useGrouping: false, ...formatOptions }).format(n);
-  const [draft, setDraft] = useState(() => String(current));
-  useEffect(() => setDraft(String(current)), [current]);
+  // Text being typed in the number field; null when it simply shows the current value.
+  const [draft, setDraft] = useState<string | null>(null);
 
   const commit = () => {
+    if (draft === null) return;
+    setDraft(null);
     const parsed = Number(draft.trim());
-    if (draft.trim() === '' || Number.isNaN(parsed)) {
-      setDraft(String(current));
-      return;
-    }
+    if (draft.trim() === '' || Number.isNaN(parsed)) return;
     const snapped = clamp(Math.round((parsed - minValue) / step) * step + minValue, minValue, maxValue);
-    setDraft(String(snapped));
     if (snapped !== current) setCurrent(snapped);
     onChangeEnd?.(snapped);
   };
@@ -90,6 +88,7 @@ export function Slider({
     if (event.key === 'Enter') commit();
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
+      setDraft(null);
       const next = clamp(current + (event.key === 'ArrowUp' ? step : -step), minValue, maxValue);
       setCurrent(next);
       onChangeEnd?.(next);
@@ -149,7 +148,7 @@ export function Slider({
             clearable={false}
             inputMode="decimal"
             aria-label={inputLabel}
-            value={draft}
+            value={draft ?? String(current)}
             disabled={disabled}
             onChange={(e) => setDraft(e.target.value)}
             onBlur={commit}
