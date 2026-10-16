@@ -169,6 +169,17 @@ export type KeyValueItemProps = {
   requiredLabel?: string;
   /** Figma `table_value` content: text (Type Text) or a component such as `Badge` (Type Badge). */
   children: ReactNode;
+  /**
+   * Figma `table_value_editable` (management mode) with a field — Input, Select, DatePicker (or two for a range):
+   * the field shows no frame until it is hovered or focused, so the value reads like text. @default false
+   */
+  editable?: boolean;
+  /** Figma `table_value_editable` State Disabled: the cell background (the controls inside take `disabled`). */
+  disabled?: boolean;
+  /** Text after the value (Figma "단위", "Show unit"). */
+  unit?: ReactNode;
+  /** Stack the value content vertically, m-2 apart (Figma File Upload cell). @default false */
+  stack?: boolean;
   /** Data attributes for the key cell (e.g. test ids). */
   keyProps?: ComponentPropsWithoutRef<'dt'> & { [dataAttribute: `data-${string}`]: string | undefined };
   /** Data attributes for the value cell. */
@@ -176,7 +187,7 @@ export type KeyValueItemProps = {
 };
 
 /** One row: Figma `table_key` (355:4193) + `table_value` (355:4460). */
-export function KeyValueItem({ label, required = false, requiredLabel = '필수', children, keyProps, valueProps }: KeyValueItemProps) {
+export function KeyValueItem({ label, required = false, requiredLabel = '필수', children, editable = false, disabled = false, unit, stack = false, keyProps, valueProps }: KeyValueItemProps) {
   return (
     <div className="ds-kv__row">
       <dt {...keyProps} className={cx('ds-kv__key', keyProps?.className)} data-required={required || undefined}>
@@ -185,9 +196,15 @@ export function KeyValueItem({ label, required = false, requiredLabel = '필수'
           <span className="ds-kv__required" role="img" aria-label={requiredLabel} />
         )}
       </dt>
-      <dd {...valueProps} className={cx('ds-kv__value', valueProps?.className)}>
+      <dd {...valueProps} className={cx('ds-kv__value', valueProps?.className)} data-editable={editable || undefined} data-disabled={disabled || undefined} data-stack={stack || undefined}>
         {children}
+        {unit != null && unit !== false && <span className="ds-kv__unit">{unit}</span>}
       </dd>
     </div>
   );
+}
+
+/** A row of value content m-2 apart (e.g. a button and its hint, or chips and a reset button). */
+export function KeyValueGroup({ className, ...rest }: ComponentPropsWithoutRef<'span'>) {
+  return <span {...rest} className={cx('ds-kv__group', className)} />;
 }

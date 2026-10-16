@@ -192,3 +192,41 @@
     width: calc-size(fit-content, round(up, size, 1px));
   }
 }
+
+/* ImageUploadPreview — the File Upload cell of Figma table_value_editable (100px image, remove button on its corner). */
+.ds-image-preview {
+  position: relative;
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+}
+
+.ds-image-preview__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ds-image-preview__remove {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  box-sizing: border-box;
+  display: flex;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: var(--spacing-padding-p-0_5);
+  border: var(--border-width-border) solid var(--colors-border-gray-subtler);
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-fill-secondary-subtle-default);
+  color: var(--colors-icon-secondary);
+  cursor: pointer;
+}
+
+.ds-image-preview__remove > svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+}

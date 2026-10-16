@@ -137,7 +137,8 @@
 /* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
 @supports (width: calc-size(fit-content, round(up, size, 1px))) {
   .ds-table__column-title,
-  .ds-table__cell-content {
+  .ds-table__cell-content,
+  .ds-kv__unit {
     width: calc-size(fit-content, round(up, size, 1px));
   }
 }
@@ -152,7 +153,7 @@
  */
 .ds-kv {
   display: grid;
-  grid-template-columns: minmax(160px, max-content) 1fr;
+  grid-template-columns: minmax(160px, max-content) minmax(0, 1fr);
   margin: 0;
 }
 
@@ -209,4 +210,144 @@
   font-weight: var(--typography-sm-leading-normal-normal-font-weight);
   line-height: var(--typography-sm-leading-normal-normal-line-height);
   letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+/*
+ * Key-value in management mode — Figma `table_value_editable` (503:23264), field types (Input, Select, Date Picker,
+ * two Date Pickers for a range, Phone Number, Textarea). The state belongs to the cell:
+ *   Default — padding p-4 like any value, the fields show no frame, padding or icons (the value reads as text);
+ *   Hover · Editing (cell hovered, focused or a list / calendar open) — padding-left p-1_5, the fields in their
+ *   Default / Completed look (Figma draws the field's Default state on Hover, not the field's own hover), Editing
+ *   is the focused / open field. Text stays at 16px for one field; a range reflows as in Figma.
+ * Disabled: …/value/background/disabled. Unit text …/value/label/default.
+ */
+.ds-kv__value > .ds-field {
+  flex: 1 1 0;
+  width: auto;
+}
+
+.ds-kv__value .ds-field__control {
+  min-width: 0;
+}
+
+.ds-kv__value[data-disabled] {
+  background-color: var(--colors-table-key-value-value-background-disabled);
+}
+
+.ds-kv__value[data-stack] {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ds-kv__group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+}
+
+/* Default look of a field cell: the texts take the cell's colours (Figma …/value/label/*). */
+.ds-kv__value[data-editable] .ds-field {
+  --ds-field-text: var(--colors-table-key-value-value-label-completed);
+  --ds-field-placeholder: var(--colors-table-key-value-value-label-default);
+}
+
+.ds-kv__value[data-editable][data-disabled] .ds-field {
+  --ds-field-text: var(--colors-table-key-value-value-label-disabled);
+  --ds-field-placeholder: var(--colors-table-key-value-value-label-disabled);
+}
+
+.ds-kv__unit {
+  flex-shrink: 0;
+  color: var(--colors-table-key-value-value-label-default);
+}
+
+/* Default look: no frame, padding or icons on the field controls. */
+.ds-kv__value[data-editable] .ds-field__control {
+  padding-inline: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.ds-kv__value[data-editable] .ds-field__icon,
+.ds-kv__value[data-editable] .ds-field__action {
+  display: none;
+}
+
+/* Hover · Editing (plain selectors, so forced pseudo states in stories apply too). Disabled cells stay Default. */
+.ds-kv__value[data-editable]:hover,
+.ds-kv__value[data-editable]:focus-within,
+.ds-kv__value[data-editable]:has([data-open]) {
+  padding-left: var(--spacing-padding-p-1_5);
+}
+
+.ds-kv__value[data-editable]:hover .ds-field__control,
+.ds-kv__value[data-editable]:focus-within .ds-field__control,
+.ds-kv__value[data-editable]:has([data-open]) .ds-field__control {
+  padding-inline: var(--spacing-padding-p-2_5);
+  background-color: var(--ds-field-bg);
+  box-shadow: inset 0 0 0 var(--ds-field-border-width) var(--ds-field-border-color);
+}
+
+.ds-kv__value[data-editable]:hover .ds-field__icon,
+.ds-kv__value[data-editable]:hover .ds-field__action,
+.ds-kv__value[data-editable]:focus-within .ds-field__icon,
+.ds-kv__value[data-editable]:focus-within .ds-field__action,
+.ds-kv__value[data-editable]:has([data-open]) .ds-field__icon,
+.ds-kv__value[data-editable]:has([data-open]) .ds-field__action {
+  display: inline-flex;
+}
+
+.ds-kv__value[data-editable][data-disabled] {
+  padding-left: var(--spacing-padding-p-4);
+}
+
+.ds-kv__value[data-editable][data-disabled] .ds-field__control {
+  padding-inline: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.ds-kv__value[data-editable][data-disabled] .ds-field__icon,
+.ds-kv__value[data-editable][data-disabled] .ds-field__action {
+  display: none;
+}
+
+.ds-kv__value[data-editable] .ds-input:hover:not(:focus-within) {
+  --ds-field-border-color: var(--colors-input-outline-border-default);
+}
+
+.ds-kv__value[data-editable] .ds-input[data-filled]:hover:not(:focus-within) {
+  --ds-field-border-color: var(--colors-input-outline-border-completed);
+}
+
+.ds-kv__value[data-editable] .ds-select:hover:not([data-open]) {
+  --ds-field-border-color: var(--colors-select-outline-outline-border-default);
+}
+
+.ds-kv__value[data-editable] .ds-select[data-filled]:hover:not([data-open]) {
+  --ds-field-border-color: var(--colors-select-outline-outline-border-completed);
+}
+
+.ds-kv__value[data-editable] .ds-date-picker:hover:not(:focus-within, [data-open]) {
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-default);
+}
+
+.ds-kv__value[data-editable] .ds-date-picker[data-filled]:hover:not(:focus-within, [data-open]) {
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-completed);
+}
+
+/* The clear (X) icon appears only while editing (Figma Hover shows the Completed field without it). */
+.ds-kv__value[data-editable] .ds-input:not(:focus-within) .ds-input__clear {
+  display: none;
+}
+
+/* Hint after a control (Switch, file upload): Figma …/value/label/hover — added after the token snapshot;
+ * the same colour as colors/text/tertiary, which is used here (figma-issues F57). */
+.ds-kv__hint {
+  color: var(--colors-text-tertiary);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
 }

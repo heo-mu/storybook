@@ -30,7 +30,7 @@
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 완료 |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 완료 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 완료 (Popover · Drawer 구현 불가) |
-| 7 | Table · Card · Chart · Loading | 진행 (Table 일부) |
+| 7 | Table · Card · Chart · Loading | 진행 (Table · Loading 완료) |
 | 8 | Dashboard components | 미착수 |
 | 9 | 통합 QA | 미착수 |
 
@@ -66,7 +66,7 @@
 | Empty State | 1 | 1/1 | 1/1 | 1/1 | 통과 |
 | Accordion | 10 | 10/10 | 10/10 | 10/10 | 통과 |
 | Dialog | 1 | 1/1 | 1/1 | 1/1 (제목 글자 위치 기록) | 통과 |
-| Table (header · body · key · value) | 3 + 8 + 2 + 2 | 15/15 | 15/15 | 15/15 | 통과 — table_value_editable(52) 미착수 |
+| Table (header · body · key · value · editable) | 3 + 8 + 2 + 2 + 52 | 64/64 (3 수동) | 64/64 (3 수동) | 64/64 (3 수동) | 통과 |
 
 Phase 5 · 6 그룹 검증(2026-10-16): verify:all 25개 컴포넌트 × 3 엔진 통과(Phase 5까지), Accordion · Dialog 3 엔진 개별 통과,
 verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 67 파일 · 311개 통과, typecheck · lint · build · build-storybook 통과,
@@ -79,6 +79,7 @@ build · build-storybook 통과, axe 262 스토리 — 그 밖의 위반 0(알�
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
 수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).
 수동 검토 필요: Badge Outline 모서리(1px 안쪽 테두리의 모서리 안티에일리어싱이 Figma · 엔진마다 달라 모서리 4px · 둥근 끝만 픽셀 비교 제외).
+수동 검토 필요: Table 관리 모드 — Textarea 두 줄 변형 3개(F58), 필드 위 · 아래 테두리 반 픽셀 행과 필드 안 글자(픽셀 비교 제외 영역).
 수동 검토 필요: Breadcrumb 펼친 메뉴 위치(Figma는 경로 오른쪽 끝 정렬, 코드는 … 버튼 아래 — F33). 메뉴 크기 200 × 110은 스토리 테스트로 확인.
 검증 스토리에서만 Figma 예시에 맞춘 항목: Slider 단위 상자 24px(F14) · 숫자 필드 23px(F15), 핸들 x 제외(F16).
 알려진 렌더링 차이(실패 아님): option md Disabled 밑줄 위치(Figma auto 밑줄이 약 1.5px 아래, F6) ·
@@ -101,7 +102,7 @@ Phase 7 — Table(351:3452, 355:3739, 355:4193, 355:4460, 503:23264) → Card(21
 
 검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
 `figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),
-`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), `maskRectsFor`(변형별 픽셀 제외 영역), `variantReferences`(소수점 위치 변형을 개별 스크린샷과 비교), part의 `compare` · `optional`.
+`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), `maskRectsFor`(변형별 픽셀 제외 영역), `variantReferences`(소수점 위치 변형을 개별 스크린샷과 비교), `skipVariants`(비교 제외 · 수동 검토 표시), `glyphDyTolerance`, `hugNodes`, part의 `compare` · `optional`.
 
 ## 미해결 이슈
 

@@ -70,6 +70,442 @@
       "maskPixels": [
         "badge_status"
       ]
+    },
+    {
+      "set": "table_value_editable",
+      "story": [
+        "components-table-editable-showcase--editable-matrix",
+        "components-table-editable-showcase--editable-open&args=type:Select",
+        "components-table-editable-showcase--editable-open&args=type:Date Picker"
+      ],
+      "background": "#ffffff",
+      "variantReferences": [
+        "Type=Textarea*",
+        "Type=Date Picker*"
+      ],
+      "glyphDyTolerance": 0.7,
+      "accumulatedFallback": true,
+      "hugNodes": [
+        "chip-filter",
+        "chip-input",
+        "Frame 2147240231/chip-input",
+        "Frame 2147240231/chip-input#2"
+      ],
+      "maskPixels": [
+        "chip-filter",
+        "chip-input",
+        "Frame 2147240231/chip-input",
+        "Frame 2147240231/chip-input#2",
+        "button_text"
+      ],
+      "maskRectsFor": {
+        "Type=Input, State=Hover*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Input, State=Editing*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Phone Number, State=Hover*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Phone Number, State=Editing*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Textarea, State=Hover*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Textarea, State=Editing*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Select, State=Hover*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Select, State=Editing*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Date Picker, State=Hover*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Date Picker, State=Editing*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            250,
+            28
+          ]
+        ],
+        "Type=Date Range Picker, State=Hover*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            124,
+            28
+          ],
+          [
+            174,
+            12,
+            124,
+            28
+          ],
+          [
+            141,
+            7,
+            3,
+            38
+          ],
+          [
+            166,
+            7,
+            3,
+            38
+          ]
+        ],
+        "Type=Date Range Picker, State=Editing*": [
+          [
+            0,
+            7,
+            320,
+            2
+          ],
+          [
+            0,
+            42,
+            320,
+            2
+          ],
+          [
+            12,
+            12,
+            124,
+            28
+          ],
+          [
+            174,
+            12,
+            124,
+            28
+          ],
+          [
+            141,
+            7,
+            3,
+            38
+          ],
+          [
+            166,
+            7,
+            3,
+            38
+          ]
+        ]
+      },
+      "ignore": [
+        "Frame 2147240210/listbox",
+        "Frame 2147240212/date-picker_calendar"
+      ],
+      "skipVariants": {
+        "Type=Textarea, State=Default, Content=Filled": "Figma wraps the value on two lines inside the single-line field it uses for this type (F58)",
+        "Type=Textarea, State=Disabled, Content=Filled": "two-line value in a single-line field (F58)",
+        "Type=Textarea, State=Hover, Content=Filled": "two-line value in a single-line field (F58)"
+      },
+      "knownDifferences": {
+        "Type=Date Picker, State=Default, Content=Filled": "Figma sample shows the placeholder \"YYYY.MM.DD\" as the value; a filled date picker shows a date (F58)",
+        "Type=Date Picker, State=Disabled, Content=Filled": "placeholder shown as the value in Figma (F58)",
+        "Type=Date Range Picker, State=Default, Content=Filled": "placeholder shown as the value in Figma (F58)",
+        "Type=Date Range Picker, State=Disabled, Content=Filled": "placeholder shown as the value in Figma (F58)",
+        "Type=Date Picker, State=Default, Content=Empty": "placeholder \"YYYY.MM.DD\": Y–Y kerning differs from Figma (as the date-picker trigger, docs/browser-support.md)",
+        "Type=Date Picker, State=Disabled, Content=Empty": "placeholder \"YYYY.MM.DD\": Y–Y kerning differs from Figma (as the date-picker trigger, docs/browser-support.md)",
+        "Type=Date Range Picker, State=Default, Content=Empty": "placeholder \"YYYY.MM.DD\": Y–Y kerning differs from Figma (as the date-picker trigger, docs/browser-support.md)",
+        "Type=Date Range Picker, State=Disabled, Content=Empty": "placeholder \"YYYY.MM.DD\": Y–Y kerning differs from Figma (as the date-picker trigger, docs/browser-support.md)",
+        "Type=File Upload, State=Default, Content=Empty": "the 175px hint (Korean + Latin) is about 1px narrower than in Figma; its start and the layout match"
+      },
+      "parts": {
+        "Title": {
+          "selector": [
+            ".ds-field__input",
+            ".ds-select__value",
+            ".ds-kv__unit"
+          ],
+          "compare": "xyh",
+          "optional": true
+        },
+        "Title#2": {
+          "selector": [
+            ".ds-kv__unit"
+          ],
+          "compare": "xyh",
+          "optional": true
+        },
+        "Title#3": {
+          "selector": [
+            ".ds-field__input"
+          ],
+          "compare": "xyh",
+          "optional": true
+        },
+        "input": {
+          "selector": ".ds-input",
+          "optional": true
+        },
+        "select": {
+          "selector": ".ds-select",
+          "optional": true
+        },
+        "Frame 2147240210": {
+          "selector": ".ds-select",
+          "optional": true
+        },
+        "Frame 2147240210/select": {
+          "selector": ".ds-select",
+          "optional": true
+        },
+        "date-picker_trigger": {
+          "selector": ".ds-date-picker",
+          "optional": true
+        },
+        "date-picker_trigger#2": {
+          "selector": ".ds-date-picker",
+          "optional": true
+        },
+        "Frame 2147240212": {
+          "selector": ".ds-date-picker",
+          "optional": true
+        },
+        "Frame 2147240212/date-picker_trigger": {
+          "selector": ".ds-date-picker",
+          "optional": true
+        },
+        "chip-filter": {
+          "selector": ".ds-chip",
+          "optional": true
+        },
+        "chip-input": {
+          "selector": ".ds-chip",
+          "optional": true
+        },
+        "Frame 2147240231": {
+          "selector": ".ds-kv__group > .ds-kv__group",
+          "optional": true
+        },
+        "Frame 2147240231/chip-input": {
+          "selector": ".ds-chip",
+          "optional": true
+        },
+        "Frame 2147240231/chip-input#2": {
+          "selector": ".ds-chip",
+          "optional": true
+        },
+        "button_text": {
+          "selector": ".ds-text-button",
+          "optional": true
+        },
+        "switch": {
+          "selector": ".ds-switch__track",
+          "optional": true
+        },
+        "Switch Description": {
+          "selector": ".ds-kv__hint",
+          "optional": true
+        },
+        "Upload Container": {
+          "selector": ".ds-kv__value > .ds-kv__group",
+          "optional": true
+        },
+        "Upload Container/button_basic": {
+          "selector": ".ds-button",
+          "optional": true
+        },
+        "Upload Container/Upload Description": {
+          "selector": ".ds-kv__hint",
+          "optional": true
+        },
+        "Image Upload Vector": {
+          "selector": ".ds-image-preview",
+          "optional": true
+        },
+        "Image Upload Vector/Frame 2147239476": {
+          "selector": ".ds-image-preview__remove",
+          "optional": true
+        }
+      },
+      "//maskRectsFor": "field frames centred at y 7.5: their top / bottom edge rows (anti-aliased in Figma) and the text inside the field (part of the field instance, not a Figma text node) — side borders, icons and backgrounds are compared"
     }
   ]
 }

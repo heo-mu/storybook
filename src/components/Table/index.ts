@@ -11,6 +11,7 @@ export {
   TableDragHandle,
   KeyValueTable,
   KeyValueItem,
+  KeyValueGroup,
   type TableProps,
   type TableHeaderProps,
   type TableColumnProps,

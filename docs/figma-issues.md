@@ -139,6 +139,9 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F54 | table_data 예시 행의 Hover · Pressed가 의미 변수(`fill/secondary/subtle/hover` · `fill/primary/subtle/pressed`)에 직접 바인딩 — 컴포넌트 변수 `table/data/background/hover · pressed`는 미사용 | 컴포넌트 변수 사용 | 바인딩 정리 |
 | F55 | table_header Type Empty가 자식 없이 48px 너비로 남아 있음(auto layout 잔여 크기) | 최소 너비 48px | — |
 | F56 | table_body · table_value 내용이 반 픽셀 위치(테두리 포함 높이 45 · 51의 가운데)에 놓임 — 브라우저는 글자 · 상자를 정수 픽셀에 그림 | 같은 레이아웃, 글자 위치 0.5px 차이는 알려진 차이로 기록 | — |
+| F57 | table_value_editable 안내 글자가 `colors/table/key-value/value/label/hover`(스냅샷 이후 추가)에 바인딩 | 같은 값 `colors/text/tertiary` | 스냅샷 동기화 시 반영 |
+| F58 | table_value_editable 샘플 불일치 — Textarea 유형은 편집 시 한 줄 Input인데 채움 값은 두 줄, Date Picker 채움 값이 자리표시("YYYY.MM.DD"), Filter Disabled Empty만 chip-input, 상태마다 예시 문구가 다름 | 한 줄 Input · 실제 날짜, 두 줄 변형 3개는 수동 검토 | 의도 확인 |
+| F59 | table_value_editable File Upload 버튼 인스턴스 최소 너비 80px, 이미지 자리표시(#d9d9d9 + 대각선)가 변수 없는 값 · 원격 변수 | 최소 너비는 사용 예에 명시, 자리표시는 스토리 전용 이미지 | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

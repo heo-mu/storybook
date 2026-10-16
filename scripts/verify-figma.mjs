@@ -169,10 +169,14 @@ for (const set of config.sets) {
     const issues = [];
     const notes = [];
     if (!g) { issues.push({ cat: 'structure', detail: 'not a Figma variant name' }); results.push({ name: m.name, issues, notes }); continue; }
+    // `skipVariants`: { "<variant>": "reason" } — rendered but not compared (listed for manual review).
+    if (set.skipVariants?.[m.name]) { notes.push(`not compared: ${set.skipVariants[m.name]}`); results.push({ name: m.name, issues, notes, skipped: true }); continue; }
     const dw = Math.abs(m.w - g.w);
     // Without calc-size() each box that hugs text may be < 1px narrower. With `accumulatedFallback` (a row of
     // several hugging labels, e.g. Breadcrumb) the allowance is 1px per text box at or before that position.
-    const texts = g.n.filter((n) => n[5] === 'T' && !isIgnored(n[0]));
+    // `hugNodes`: further layers that hug their text inside an instance (e.g. chips), counted like text boxes.
+    const hugRes = (set.hugNodes ?? []).map(glob);
+    const texts = g.n.filter((n) => (n[5] === 'T' || hugRes.some((re) => re.test(n[0]))) && !isIgnored(n[0]));
     const fallbackPx = (x) => (set.accumulatedFallback ? Math.max(1, texts.filter((n) => n[1] <= x + tol).length) : 1);
     // A root that hugs its text is < 1px narrower without calc-size() (Firefox, Safari) — docs/browser-support.md.
     if (dw > tol && !calcSize && dw <= fallbackPx(g.w) && Math.abs(m.h - g.h) <= tol) notes.push(`root width ${m.w.toFixed(2)} vs ${g.w} (no calc-size)`);
@@ -208,7 +212,9 @@ for (const set of config.sets) {
     // Pixels
     // `variantReferences`: variants placed at fractional positions in the set (Figma renders them on a half pixel)
     // are compared with a screenshot of the variant itself — figma/reference/<set>/<variant>.png, origin 0, 0.
-    const variantRef = set.variantReferences ? path.join(ROOT, 'figma', 'reference', set.set, `${m.name.replace(/[^a-zA-Z0-9]+/g, '_')}.png`) : null;
+    // `variantReferences`: true for every variant, or a list of variant globs.
+    const useVariantRef = set.variantReferences === true || (Array.isArray(set.variantReferences) && set.variantReferences.some((pat) => glob(pat).test(m.name)));
+    const variantRef = useVariantRef ? path.join(ROOT, 'figma', 'reference', set.set, `${m.name.replace(/[^a-zA-Z0-9]+/g, '_')}.png`) : null;
     const fp = variantRef ? { x: 0, y: 0 } : positions.get(m.name);
     let pixel = null;
     if (fp) {
@@ -255,8 +261,10 @@ for (const set of config.sets) {
         const knownEntry = set.knownDifferences?.[m.name];
         const known = typeof knownEntry === 'string' ? knownEntry : knownEntry?.[BROWSER];
         // Documented engine rendering differences (config knownDifferences) are recorded, not failed.
-        if ((Math.abs(dy) > 0.5 || (!subpixel && Math.abs(dx) > dxTol)) && known) notes.push(`${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)} — known: ${known}`);
-        else if (Math.abs(dy) > 0.5 || (!subpixel && Math.abs(dx) > dxTol)) issues.push({ cat: 'text-position', detail: `${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)}` });
+        // `glyphDyTolerance`: sets whose Figma texts sit on half pixels (centred in an odd height) — default 0.5.
+        const dyTol = set.glyphDyTolerance ?? 0.5;
+        if ((Math.abs(dy) > dyTol || (!subpixel && Math.abs(dx) > dxTol)) && known) notes.push(`${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)} — known: ${known}`);
+        else if (Math.abs(dy) > dyTol || (!subpixel && Math.abs(dx) > dxTol)) issues.push({ cat: 'text-position', detail: `${t.p} glyphs dx ${dx.toFixed(2)} dy ${dy.toFixed(2)}` });
         else if (!subpixel && Math.abs(dx) > 0.5) notes.push(`${t.p} glyph dx ${dx.toFixed(2)} (${BROWSER} text rendering)`);
       }
       pixel.glyphs = offsets;
@@ -277,16 +285,18 @@ for (const set of config.sets) {
   const missing = expected.filter((n) => !measured.some((m) => m.name === n));
   report.sets[set.set] = { expected: expected.length, rendered: measured.length, missing, results };
 
-  const clean = results.filter((r) => !r.issues.length).length;
+  const skipped = results.filter((r) => r.skipped).length;
+  const clean = results.filter((r) => !r.issues.length && !r.skipped).length;
   const byCat = {};
   for (const r of results) for (const i of r.issues) (byCat[i.cat] ??= []).push(`${r.name}: ${i.detail}`);
   const ratios = results.map((r) => r.pixel?.ratio ?? 0);
   const glyphs = results.flatMap((r) => r.pixel?.glyphs ?? []);
   lines.push('', `${set.set}: rendered ${measured.length}/${expected.length}${missing.length ? ` (missing: ${missing.join(' | ')})` : ''}`);
-  lines.push(`  all checks passed: ${clean}/${results.length}`);
+  lines.push(`  all checks passed: ${clean}/${results.length - skipped}${skipped ? ` (${skipped} not compared)` : ''}`);
   for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known difference — ${v}: ${why}`); }
-  if (set.maskRects) lines.push(`  ◇ manual review (pixels not compared): ${set['//maskRects'] ?? 'masked areas'}`);
+  if (set.maskRects || set.maskRectsFor) lines.push(`  ◇ manual review (pixels not compared): ${set['//maskRects'] ?? set['//maskRectsFor'] ?? 'masked areas'}`);
   if (ignored.length) lines.push(`  ◇ manual review (not compared): ${set.ignore.join(", ")}`);
+  for (const [v, why] of Object.entries(set.skipVariants ?? {})) lines.push(`  ◇ manual review (variant not compared) — ${v}: ${why}`);
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);
   lines.push(`  non-text pixels: mean ${((ratios.reduce((a, b) => a + b, 0) / Math.max(1, ratios.length)) * 100).toFixed(2)}% differing, max ${(Math.max(0, ...ratios) * 100).toFixed(2)}%`);
   if (glyphs.length) lines.push(`  glyph offset vs Figma: max |dx| ${Math.max(...glyphs.map((o) => Math.abs(o.dx))).toFixed(2)}px, max |dy| ${Math.max(...glyphs.map((o) => Math.abs(o.dy))).toFixed(2)}px`);

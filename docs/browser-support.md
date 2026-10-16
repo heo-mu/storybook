@@ -128,6 +128,9 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 - Tooltip: 트리거 너비가 소수점이면 말풍선 위치도 소수점이 되어 검증 하네스에서 트리거 너비를 정수로 고정(`harnessCss`).
 - Accordion: 14px 한글의 글자 위치는 같고 안티에일리어싱 농도만 달라 글자 중심 허용치를 1px로 둠(`glyphDxTolerance`).
 - Dialog(WebKit): calc-size가 없어 가운데 정렬된 제목 상자가 Figma보다 좁아 제목 글자 중심이 약 1.1px 차이(`knownDifferences`).
+- Table: 본문 · 값 칸 내용이 반 픽셀 위치(높이 45 · 51의 가운데)라 글자 세로 위치 0.5px 차이(`knownDifferences` · `glyphDyTolerance`),
+  관리 모드 입력 상자의 위 · 아래 테두리는 Figma가 두 줄에 흐리게 그려 픽셀 비교에서 뺐습니다. 칩 · 라벨 폭은 calc-size 없는 엔진에서
+  누적(`accumulatedFallback` + `hugNodes`).
 - Accordion 구분선: Figma 선(LINE)은 y 아래 줄이 아니라 위 줄(트리거 마지막 줄)에 그려지므로 트리거의 `::after`로 그립니다.
 
 ## 검증하지 못한 환경

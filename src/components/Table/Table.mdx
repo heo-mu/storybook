@@ -6,9 +6,8 @@ import { Table, TableColumn, TableCell, KeyValueItem } from './Table';
 
 # Table — 사용 가이드
 
-Figma **Table** 프레임(351:3340)의 `table_header`(3개) · `table_body`(8개) · `table_key`(2개) · `table_value`(2개)를 구현했습니다.
-데이터 표는 react-aria-components Table(키보드 칸 이동 · 선택 · 정렬 · 행 동작)을 씁니다.
-`table_value_editable`(관리 모드 52개)은 아직 구현하지 않았습니다(진행 상황: docs/progress.md).
+Figma **Table** 프레임(351:3340)의 `table_header`(3개) · `table_body`(8개) · `table_key`(2개) · `table_value`(2개) ·
+`table_value_editable`(관리 모드 52개)을 구현했습니다. 데이터 표는 react-aria-components Table(키보드 칸 이동 · 선택 · 정렬 · 행 동작)을 씁니다.
 
 <Canvas of={Showcase.Overview} />
 
@@ -57,7 +56,47 @@ Figma **Table** 프레임(351:3340)의 `table_header`(3개) · `table_body`(8개
 | table_key Type Required | `KeyValueItem required` | 빨간 점, "필수"로 읽힘 |
 | table_value Type Text · Badge | `KeyValueItem` children | |
 
+## 관리 모드 (table_value_editable)
+
+값 칸에 실제 입력 컴포넌트를 넣고 `editable`을 주면, 평소에는 테두리 없이 글자처럼 보이고(Default) 마우스를 올리거나
+편집 중일 때 입력 상자가 나타납니다(Hover · Editing). `disabled`는 칸 배경, `unit`은 뒤 단위 글자입니다.
+
+<Source
+  language="tsx"
+  code={`<KeyValueTable>
+  <KeyValueItem label="정격 용량" editable unit="kW"><Input size="sm" aria-label="정격 용량" /></KeyValueItem>
+  <KeyValueItem label="종류" editable><Select size="sm" aria-label="종류">…</Select></KeyValueItem>
+  <KeyValueItem label="점검 기간" editable>
+    <DatePicker size="sm" aria-label="시작일" /><span className="ds-kv__unit">~</span><DatePicker size="sm" aria-label="종료일" />
+  </KeyValueItem>
+  <KeyValueItem label="태그">
+    <KeyValueGroup><InputChip size="md" onRemove={…}>라벨</InputChip><TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton></KeyValueGroup>
+  </KeyValueItem>
+  <KeyValueItem label="사용"><Switch size="md" aria-label="사용" /><span className="ds-kv__hint">설명</span></KeyValueItem>
+  <KeyValueItem label="대표 이미지" stack>
+    <KeyValueGroup><Button variant="tertiary" appearance="outline" size="xs" style={{ minWidth: 80 }}>파일 선택</Button>
+      <span className="ds-kv__hint">권장 비율 1:1, JPG/PNG, 최대 5MB</span></KeyValueGroup>
+    <ImageUploadPreview src={url} alt="대표 이미지" onRemove={…} />
+  </KeyValueItem>
+</KeyValueTable>`}
+/>
+
+| Figma Type | 넣는 컴포넌트 |
+| --- | --- |
+| Input · Phone Number · Textarea | `Input size="sm"` (+ `editable`, Input은 `unit`) |
+| Select | `Select size="sm"` |
+| Date Picker · Date Range Picker | `DatePicker size="sm"` 1개 · 2개(사이 `~`) |
+| Filter | `FilterChip` / `InputChip` + `TextButton`(초기화, ArrowCounterClockwise) in `KeyValueGroup` |
+| Switch | `Switch size="md"` + `.ds-kv__hint` |
+| File Upload | `stack` + 버튼(최소 너비 80px) · 안내 + `ImageUploadPreview` |
+
 ## 코드 정책 (Figma에서 정해지지 않은 부분)
+
+- **관리 모드 상태**: Figma는 칸 단위 상태(Default · Hover · Editing)이므로 칸에 마우스가 있거나 포커스 · 열린 목록이 있으면
+  입력 상자를 보여 줍니다. Hover에서는 Figma처럼 입력 상자의 기본(Default · Completed) 테두리를 씁니다.
+- **Textarea 유형**: Figma는 편집 시 한 줄 Input을 쓰면서 채워진 값은 두 줄로 그려 둘을 함께 구현할 수 없습니다. 한 줄 Input으로 구현했고
+  두 줄 변형 3개는 수동 검토 대상입니다(figma-issues F58).
+- **안내 글자 색**: Figma `table/key-value/value/label/hover`는 토큰 스냅샷 이후 추가된 변수라 같은 값의 `text/tertiary`를 씁니다(F57).
 
 - **행 Hover · Pressed 색**: Figma 예시는 의미 변수(`fill/secondary/subtle/hover`)에 직접 바인딩했지만 같은 용도의 컴포넌트 변수
   `table/data/background/hover · pressed`가 있어 그것을 씁니다(figma-issues F54).

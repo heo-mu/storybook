@@ -23,7 +23,9 @@
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-hover);
 }
 
-.ds-date-picker:focus-within {
+/* While the calendar is open focus is inside it; the trigger keeps its Focus look (Figma Editing state). */
+.ds-date-picker:focus-within,
+.ds-date-picker[data-open] {
   --ds-field-bg: var(--colors-date-picker-trigger-outline-background-completed);
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-focus);
   --ds-field-text: var(--colors-date-picker-trigger-outline-label-default);

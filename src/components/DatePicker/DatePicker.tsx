@@ -138,6 +138,7 @@ export function DatePicker({
       style={style}
       data-size={size}
       data-filled={(draft ?? date) ? true : undefined}
+      data-open={isOpen || undefined}
       data-invalid={isInvalid || undefined}
       data-disabled={disabled || undefined}
       data-readonly={readOnly || undefined}
