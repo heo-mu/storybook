@@ -1,1 +1,2 @@
-export { Alert, ALERT_STATUSES, type AlertProps, type AlertStatus } from './Alert';
+export { Alert, type AlertProps } from './Alert';
+export * from './Alert.options';

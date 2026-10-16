@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, type Mock } from 'storybook/test';
-import { Alert, ALERT_STATUSES, type AlertStatus } from '../Alert';
+import { Alert } from '../Alert';
+import { ALERT_STATUSES, type AlertStatus } from '../Alert.options';
 import { Button } from '../../Button';
 import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
 

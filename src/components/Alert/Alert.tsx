@@ -1,13 +1,7 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
-import { CheckCircleFillIcon, InfoFillIcon, XCircleFillIcon } from '../../icons';
 import { cx } from '../../utils/cx';
-
-/** Figma alert / toast "Status". */
-export const ALERT_STATUSES = ['information', 'success', 'error'] as const;
-export type AlertStatus = (typeof ALERT_STATUSES)[number];
-
-/** Status icon of Alert and Toast (Figma info-fill · check-circle-fill · x-circle-fill). */
-export const STATUS_ICON = { information: InfoFillIcon, success: CheckCircleFillIcon, error: XCircleFillIcon } as const;
+import type { AlertStatus } from './Alert.options';
+import { STATUS_ICON } from './statusIcon';
 
 export type AlertProps = Omit<ComponentPropsWithoutRef<'div'>, 'title' | 'children'> & {
   /** Figma "Status". @default 'information' */

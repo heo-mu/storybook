@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Alert, ALERT_STATUSES } from './Alert';
+import { Alert } from './Alert';
+import { ALERT_STATUSES } from './Alert.options';
 import { Button } from '../Button';
 
 // Usage stories (Storybook MCP manifest). Verification stories: ./stories/Alert.showcase.stories.tsx
