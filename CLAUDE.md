@@ -2,7 +2,8 @@
 
 React component library for the Figma file **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, page `🔵 Ver 0.4`).
 Implemented so far: design tokens, Button family, Input / Textarea / SearchField, Checkbox, Radio, Switch,
-Select, Slider, SegmentedControl, Chip / InputChip / FilterChip — status in docs/component-inventory.md, next steps in docs/progress.md.
+Select, Slider, SegmentedControl, Chip / InputChip / FilterChip, DatePicker / Calendar, FileUploader, Loading, Link, Tabs,
+Pagination, DropdownMenu, Breadcrumb — status in docs/component-inventory.md, next steps in docs/progress.md.
 
 ## Storybook MCP
 

@@ -153,8 +153,12 @@ for (const set of config.sets) {
     const notes = [];
     if (!g) { issues.push({ cat: 'structure', detail: 'not a Figma variant name' }); results.push({ name: m.name, issues, notes }); continue; }
     const dw = Math.abs(m.w - g.w);
+    // Without calc-size() each box that hugs text may be < 1px narrower. With `accumulatedFallback` (a row of
+    // several hugging labels, e.g. Breadcrumb) the allowance is 1px per text box at or before that position.
+    const texts = g.n.filter((n) => n[5] === 'T' && !isIgnored(n[0]));
+    const fallbackPx = (x) => (set.accumulatedFallback ? Math.max(1, texts.filter((n) => n[1] <= x + tol).length) : 1);
     // A root that hugs its text is < 1px narrower without calc-size() (Firefox, Safari) — docs/browser-support.md.
-    if (dw > tol && !calcSize && dw <= 1 && Math.abs(m.h - g.h) <= tol) notes.push(`root width ${m.w.toFixed(2)} vs ${g.w} (no calc-size)`);
+    if (dw > tol && !calcSize && dw <= fallbackPx(g.w) && Math.abs(m.h - g.h) <= tol) notes.push(`root width ${m.w.toFixed(2)} vs ${g.w} (no calc-size)`);
     else if (dw > tol || Math.abs(m.h - g.h) > tol) issues.push({ cat: 'size', detail: `root ${m.w.toFixed(2)}×${m.h.toFixed(2)} ≠ ${g.w}×${g.h}` });
 
     // Parts
@@ -177,7 +181,7 @@ for (const set of config.sets) {
           // Auto-width text boxes are whole pixels in Figma; browsers keep the sub-pixel text width.
           if (isText && axis === 'w' && diff < 1) { notes.push(`${p} text width ${a.toFixed(2)} vs ${b}`); continue; }
           // Without calc-size() (Firefox, Safari) boxes that hug text stay < 1px narrower — docs/browser-support.md.
-          if (!calcSize && (axis === 'w' || axis === 'x') && diff <= 1) { notes.push(`${p}.${axis} ${a.toFixed(2)} vs ${b} (no calc-size)`); continue; }
+          if (!calcSize && (axis === 'w' || axis === 'x') && diff <= fallbackPx(axis === 'x' ? x - tol : x + w)) { notes.push(`${p}.${axis} ${a.toFixed(2)} vs ${b} (no calc-size)`); continue; }
           issues.push({ cat: 'geometry', detail: `${p}.${axis} ${a.toFixed(2)} ≠ ${b}` });
         }
       }
@@ -209,7 +213,7 @@ for (const set of config.sets) {
       pixel = { nonTextDiffering: differing, ratio: differing / (w * h) };
       // A root that hugs its text is < 1px narrower without calc-size(), so everything right of the text is
       // shifted: recorded (up to 5%) instead of failed — colours and shapes are checked strictly in Chromium.
-      const widthFallback = !calcSize && dw > tol && dw <= 1;
+      const widthFallback = !calcSize && dw > tol && dw <= fallbackPx(g.w);
       if (pixel.ratio > (set.pixelTolerance ?? 0.005) && widthFallback && pixel.ratio <= 0.05) notes.push(`pixels ${(pixel.ratio * 100).toFixed(2)}% (shifted by the no-calc-size width)`);
       else if (pixel.ratio > (set.pixelTolerance ?? 0.005)) issues.push({ cat: 'pixels', detail: `${(pixel.ratio * 100).toFixed(2)}% of non-text pixels differ` });
       // Glyph placement
@@ -223,7 +227,7 @@ for (const set of config.sets) {
         const subpixel = fp.x % 1 !== 0;
         // Chromium is the reference engine; other engines rasterise text differently, so horizontal
         // offsets under 1px there are recorded as rendering differences, not defects.
-        const dxTol = BROWSER === 'chromium' ? (set.glyphDxTolerance ?? 0.5) : Math.max(1, set.glyphDxTolerance ?? 0);
+        const dxTol = BROWSER === 'chromium' ? (set.glyphDxTolerance ?? 0.5) : Math.max(fallbackPx(t.x), set.glyphDxTolerance ?? 0);
         // knownDifferences: { "<variant>": "reason" } for every engine, or { "<variant>": { "<engine>": "reason" } }.
         const knownEntry = set.knownDifferences?.[m.name];
         const known = typeof knownEntry === 'string' ? knownEntry : knownEntry?.[BROWSER];

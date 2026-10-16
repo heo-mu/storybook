@@ -115,6 +115,9 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F30 | **점선 테두리가 변마다 대시 간격을 맞춤**(9.85 ~ 10.25px) — CSS · SVG는 외곽선을 따라 이어 그림 | SVG 6 / 4 대시, 위상만 맞춤 — 테두리 픽셀은 수동 검토 | — |
 | F31 | **작업 중 원본 변경**: Button Secondary Solid 신설 · TextButton Secondary 색 분리 · 변수 삭제, `fill/primary/subtle/hover` 값 변경 | 스냅샷 동결(Primitive 추가분만 반영) — [token-diff.md](./token-diff.md) | 동기화 여부 결정 필요 |
 | F32 | `dropdownmenu_line` 세로 padding(`py-1`)과 구분선 두께(`border-width`)가 원격 라이브러리 변수에 바인딩 | 같은 값의 로컬 `spacing/padding/p-1` · `border-width/border` | 로컬 변수 사용 |
+| F33 | **breadcrumb Expanded=True**: 메뉴를 여는 … 버튼은 Link Default인데 현재 페이지 항목이 Role=Open(브랜드 색 · semibold), 메뉴는 경로 오른쪽 끝에 정렬(md x 89 · sm x 60) | 메뉴는 … 버튼 아래 2px(시작 정렬), 현재 페이지는 Current 유지, Role=Open은 `BreadcrumbItem open`으로 제공 | 의도 확인 (결정 필요) |
+| F34 | breadcrumb-item Hover · Pressed · Open · Current Variant의 아이콘 슬롯이 비어 있음(Link Default만 House) — `breadcrumb/home-icon/hover · pressed · current`, `background/focus` · `border/focus` · `border/menu` 변수는 어디에도 바인딩되지 않음 | 아이콘 색은 같은 이름의 변수 사용, focus · menu 변수는 미사용 | 아이콘 슬롯 채우기, 변수 정리 |
+| F35 | breadcrumb "Show Parent"가 Full에서도 상위 페이지를 숨김(경로가 끊김) | Collapsed에만 적용 | 의도 확인 |
 
 ## D. 작업 중 관찰된 원본 변경
 

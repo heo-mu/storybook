@@ -42,7 +42,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Navigation 180:2023 | `item_parent` (4) Expanded · `item_link` (4) Selected · `item_child` (4) · State Default/Hover | `Navigation` (+ items) | 4 | 미착수 |
 | Tab 86:3121 | `tab_filled` (60) Variant · Size · Shape · State 5 · `tab_line` (30) | `Tabs`, `TabList`, `Tab`, `TabPanel` | 4 | 완료 |
 | Pagination 149:1030 | `pagination` (3) · `pagination_item` (24) · `pagination_control` (48) | `Pagination`, `PaginationItem`, `PaginationControl` | 4 | 완료 |
-| Breadcrumb 721:13374 | `breadcrumb` (6) Size · Layout Full/Collapsed · Expanded · `breadcrumb-item` (12) Role Link/Current/Open | `Breadcrumb` | 4 | 미착수 |
+| Breadcrumb 721:13374 | `breadcrumb` (6) Size · Layout Full/Collapsed · Expanded · `breadcrumb-item` (12) Role Link/Current/Open | `Breadcrumb`, `BreadcrumbItem`, `BreadcrumbSeparator` | 4 | 완료 |
 | Stepper 151:697 | `stepper_horizontal` (3) · `stepper_vertical` (3) Steps 3/4/5 · indicators (5+5) Upcoming/Current/Completed/Locked/Error · connectors (2+2) | `Stepper` | 4 | 미착수 |
 | Dropdown Menu 179:2465 | `dropdownmenu_item` (5) Type Content/Title · State Default/Hover/Disabled/Alert/None · `dropdownmenu_line` | `DropdownMenu`, `DropdownMenuItem`, `DropdownMenuSection`, `DropdownMenuSeparator` | 4 | 완료 |
 

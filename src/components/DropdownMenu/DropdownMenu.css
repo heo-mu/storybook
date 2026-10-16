@@ -49,6 +49,8 @@
   padding: var(--spacing-padding-p-2) var(--spacing-padding-p-1) var(--spacing-padding-p-2) var(--spacing-padding-p-2_5);
   border-radius: var(--border-radius-rounded);
   background-color: var(--_bg);
+  color: var(--_fg);
+  text-decoration: none; /* items with `href` render as links */
   outline: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;

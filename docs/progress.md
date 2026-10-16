@@ -27,7 +27,7 @@
 | 1 | Input · Textarea · Search Field | 완료 |
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
-| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link · Tab · Pagination · Dropdown Menu 완료) |
+| 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 진행 (Link · Tab · Pagination · Dropdown Menu · Breadcrumb 완료) |
 | 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
@@ -55,17 +55,22 @@
 | Tabs (tab_filled · tab_line) | 60 + 30 | 90/90 | 90/90 | 90/90 | 통과 |
 | Pagination (pagination · item · control) | 3 + 24 + 48 | 75/75 | 75/75 | 75/75 | 통과 |
 | Dropdown Menu (item · line) | 5 + 1 | 6/6 | 6/6 | 6/6 | 통과 |
+| Breadcrumb (breadcrumb · item) | 6 + 12 | 18/18 | 18/18 (너비 누적 fallback) | 18/18 (〃) | 통과 |
 
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
 수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).
+수동 검토 필요: Breadcrumb 펼친 메뉴 위치(Figma는 경로 오른쪽 끝 정렬, 코드는 … 버튼 아래 — F33). 메뉴 크기 200 × 110은 스토리 테스트로 확인.
 검증 스토리에서만 Figma 예시에 맞춘 항목: Slider 단위 상자 24px(F14) · 숫자 필드 23px(F15), 핸들 x 제외(F16).
 알려진 렌더링 차이(실패 아님): option md Disabled 밑줄 위치(Figma auto 밑줄이 약 1.5px 아래, F6) ·
 WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이미지 동일).
 
 ## 다음 작업
 
-Phase 4 나머지 — Breadcrumb(breadcrumb 712:5106, breadcrumb-item 710:4794) → Navigation(item_parent 180:5246, item_link 180:6174,
+Phase 4 나머지 — Navigation(item_parent 180:5246, item_link 180:6174,
 item_child 180:6249) → Stepper(179:2043, 203:3949, 179:1621, 203:3708, 179:1614, 203:4253).
+
+**결정 필요 — Breadcrumb 펼친 상태(F33)**: Figma는 메뉴가 열린 동안 현재 페이지 항목을 Role=Open으로 그렸습니다. 코드는 … 버튼이
+메뉴를 열고 현재 페이지는 Current로 둡니다.
 
 **결정 필요 — Figma 원본 변경**: Phase 3 중 원본이 바뀌었습니다(Button Secondary Solid 신설 등, [token-diff.md](./token-diff.md)
 "Figma 원본 변경 감지"). 스냅샷은 동결(Primitive 추가 7개만 반영)했고, 이후 받은 기준 이미지의 Hover 배경(#f5f6f7)과 코드(#f9fafb)는
@@ -73,7 +78,7 @@ item_child 180:6249) → Stepper(179:2043, 203:3949, 179:1621, 203:3708, 179:161
 
 검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
 `figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),
-`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, part의 `compare` · `optional`.
+`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), part의 `compare` · `optional`.
 
 ## 미해결 이슈
 

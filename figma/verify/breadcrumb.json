@@ -1,0 +1,74 @@
+{
+  "component": "Breadcrumb",
+  "sets": [
+    {
+      "set": "breadcrumb-item",
+      "story": "components-breadcrumb-showcase--item-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "parts": {
+        "Label": ".ds-breadcrumb-item__label"
+      }
+    },
+    {
+      "set": "breadcrumb",
+      "story": [
+        "components-breadcrumb-showcase--breadcrumb-matrix",
+        "components-breadcrumb-showcase--breadcrumb-expanded&args=size:md",
+        "components-breadcrumb-showcase--breadcrumb-expanded&args=size:sm"
+      ],
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 480px; min-width: 480px; max-width: 480px; } tr > :first-child { width: 80px; min-width: 80px; max-width: 80px; }",
+      "accumulatedFallback": true,
+      "ignore": [
+        "dropdownmenu",
+        "dropdownmenu/*",
+        "dropdownmenu/*/*",
+        "dropdownmenu/*/*/*"
+      ],
+      "parts": {
+        "* group": {
+          "selector": ".ds-breadcrumb__group",
+          "optional": true
+        },
+        "* row": {
+          "selector": ".ds-breadcrumb__group",
+          "optional": true
+        },
+        "Overflow trigger": {
+          "selector": ".ds-breadcrumb__group",
+          "optional": true
+        },
+        "*/Home": ".ds-breadcrumb-item",
+        "*/More": {
+          "selector": ".ds-breadcrumb-item",
+          "optional": true
+        },
+        "*/Ancestor *": {
+          "selector": ".ds-breadcrumb-item",
+          "optional": true
+        },
+        "*/Parent": {
+          "selector": ".ds-breadcrumb-item",
+          "optional": true
+        },
+        "breadcrumb-item": ".ds-breadcrumb-item",
+        "*/Label": ".ds-breadcrumb-item__label",
+        "*/*/Label": ".ds-breadcrumb-item__label",
+        "*/Home/icon_size": ".ds-breadcrumb-item__icon",
+        "*/More/icon_size": {
+          "selector": ".ds-breadcrumb-item__icon",
+          "optional": true
+        },
+        "*/Home/icon_size/House": ".ds-breadcrumb-item__icon > svg",
+        "*/More/icon_size/DotsThree": {
+          "selector": ".ds-breadcrumb-item__icon > svg",
+          "optional": true
+        },
+        "*/Separator": ".ds-breadcrumb__separator",
+        "*/Separator/icon_size": ".ds-breadcrumb__separator > svg",
+        "*/Separator/icon_size/icon/CaretRight": ".ds-breadcrumb__separator > svg"
+      }
+    }
+  ]
+}

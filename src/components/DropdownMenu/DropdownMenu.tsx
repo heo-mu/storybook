@@ -34,6 +34,8 @@ export type DropdownMenuProps = {
   onOpenChange?: (open: boolean) => void;
   /** Position relative to the trigger. @default 'bottom start' */
   placement?: Placement;
+  /** Gap between the trigger and the panel in px (4 as Select / Date Picker; the Figma breadcrumb menu uses 2). @default 4 */
+  offset?: number;
   /** Item ids that cannot be activated (Figma State "Disabled"). */
   disabledKeys?: Iterable<Key>;
   className?: string;
@@ -45,11 +47,20 @@ export type DropdownMenuProps = {
  * border-radius/rounded, effect elevation-3. Keyboard, focus and ARIA (menu / menuitem) come from
  * react-aria-components; Escape closes and focus returns to the trigger.
  */
-export function DropdownMenu({ trigger, children, open, onOpenChange, placement = 'bottom start', className, ...menuProps }: DropdownMenuProps) {
+export function DropdownMenu({
+  trigger,
+  children,
+  open,
+  onOpenChange,
+  placement = 'bottom start',
+  offset = 4,
+  className,
+  ...menuProps
+}: DropdownMenuProps) {
   return (
     <MenuTrigger isOpen={open} onOpenChange={onOpenChange}>
       <Pressable>{trigger as ReactElement<DOMAttributes<HTMLElement>, string>}</Pressable>
-      <Popover className="ds-dropdown__popover" placement={placement} offset={4}>
+      <Popover className="ds-dropdown__popover" placement={placement} offset={offset}>
         <Menu {...menuProps} className={cx('ds-dropdown', className)}>
           {children}
         </Menu>

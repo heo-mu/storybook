@@ -107,6 +107,12 @@
 - `<nav aria-label="페이지 이동">` 안의 `<button>`들. 번호 이름 "N 페이지", 현재 페이지 `aria-current="page"`.
 - 이전 · 다음 버튼 이름 "이전 페이지" · "다음 페이지", 끝에서는 `disabled`.
 
+### Breadcrumb
+- `<nav aria-label="이동 경로">` > `<ol>` > `<li>`. 현재 페이지는 링크가 아닌 텍스트 + `aria-current="page"`.
+- 홈 항목은 아이콘만 보이므로 이름 "홈"(`homeLabel`), 구분선(›)은 `aria-hidden`.
+- 접힌 경로의 … 버튼: 이름 "중간 경로 보기", `aria-haspopup` · `aria-expanded`, 메뉴 이름은 버튼 이름, 그룹 이름 "상위 경로".
+  키보드는 Dropdown Menu와 같습니다.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

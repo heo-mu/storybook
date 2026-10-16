@@ -1,0 +1,148 @@
+/*
+ * Breadcrumb — Figma `breadcrumb` (712:5106), `breadcrumb-item` (710:4794), `breadcrumb-modern-separator` (710:4795).
+ *   breadcrumb: row of groups (item + separator), gap p-0_5 between groups and inside a group
+ *   item: height 32 (md) / 28 (sm), padding 0 p-2 (home item: p-1), gap p-1, border-radius/rounded-sm,
+ *         label sm (md) / xs (sm) leading-normal medium — semibold for Current and Open; icon 16 (md) / 12 (sm)
+ *   separator: 12px wide, CaretRight 12px, colors/breadcrumb/separator/default
+ *   overflow menu: the dropdown menu panel 2px below the row, 200px wide (Figma frame width)
+ * Item state: Default → Hover → Pressed → Open → Current.
+ */
+
+.ds-breadcrumb {
+  display: flex;
+}
+
+.ds-breadcrumb__list {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-padding-p-0_5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-breadcrumb__group {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-padding-p-0_5);
+}
+
+.ds-breadcrumb__separator {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  color: var(--colors-breadcrumb-separator-default);
+}
+
+.ds-breadcrumb__separator > svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+}
+
+.ds-breadcrumb-item {
+  --_bg: var(--colors-breadcrumb-background-default);
+  --_fg: var(--colors-breadcrumb-label-default);
+  --_icon: var(--colors-breadcrumb-home-icon-default);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-padding-p-1);
+  height: 32px;
+  margin: 0;
+  padding: 0 var(--spacing-padding-p-2);
+  border: 0;
+  border-radius: var(--border-radius-rounded-sm);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-breadcrumb-item[data-size='sm'] {
+  height: 28px;
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+}
+
+/* Home item: the Figma instance overrides the horizontal padding to p-1. */
+.ds-breadcrumb-item[data-home] {
+  padding: 0 var(--spacing-padding-p-1);
+}
+
+.ds-breadcrumb-item:is(a, button):hover {
+  --_bg: var(--colors-breadcrumb-background-hover);
+  --_fg: var(--colors-breadcrumb-label-hover);
+  --_icon: var(--colors-breadcrumb-home-icon-hover);
+}
+
+.ds-breadcrumb-item:is(a, button):active {
+  --_bg: var(--colors-breadcrumb-background-pressed);
+  --_fg: var(--colors-breadcrumb-label-pressed);
+  --_icon: var(--colors-breadcrumb-home-icon-pressed);
+}
+
+.ds-breadcrumb-item[data-open] {
+  --_fg: var(--colors-breadcrumb-label-focus);
+}
+
+.ds-breadcrumb-item[data-current] {
+  --_bg: var(--colors-breadcrumb-background-current);
+  --_fg: var(--colors-breadcrumb-label-current);
+  --_icon: var(--colors-breadcrumb-home-icon-current);
+
+  cursor: default;
+}
+
+.ds-breadcrumb-item:is([data-open], [data-current]) {
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+}
+
+.ds-breadcrumb-item[data-size='sm']:is([data-open], [data-current]) {
+  font-weight: var(--typography-xs-leading-normal-semibold-font-weight);
+}
+
+.ds-breadcrumb-item__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--_icon);
+}
+
+.ds-breadcrumb-item[data-size='sm'] .ds-breadcrumb-item__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.ds-breadcrumb-item__icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ds-dropdown.ds-breadcrumb__menu {
+  width: 200px;
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-breadcrumb-item__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
