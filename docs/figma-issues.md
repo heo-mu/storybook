@@ -124,6 +124,8 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F39 | Stepper 안의 connector 인스턴스가 padding p-1을 0으로 덮어씀(컴포넌트 자체는 양 끝 p-1) | 컴포넌트는 p-1, Stepper 안에서는 0 | — |
 | F40 | Stepper Current 원(`fill/primary/strong/pressed` #007c56)이 Completed(`…/strong/default` #004a38)보다 밝음 | 바인딩 그대로 | 의도 확인 |
 | F41 | Stepper 프레임에 애니메이션 참고 링크(heroui.pro stepper)만 있고 시간 · 곡선 값 없음 | 미구현 | 값 정의 |
+| F42 | badge_status Outline sm(Basic 제외 12개)에 바인딩되지 않은 흰색(#ffffff) 채움, 나머지 Outline은 채움 없음 | 모두 배경 없음(흰 배경에서 동일) | 채움 제거 또는 변수 바인딩 |
+| F43 | badge_count 최소 너비 16 · 높이 16이 변수에 바인딩되지 않음, 텍스트 `xxs`(10px) 스타일 사용 | 값 그대로(16px) | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

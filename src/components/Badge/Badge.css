@@ -1,0 +1,259 @@
+/*
+ * Badge — Figma `badge_status` (91:6152), `badge_dot` (95:2681), `badge_count` (95:2762).
+ *   badge_status: sm padding p-0_5 p-1_5 · gap p-1 · dot 3px · label xs/leading-normal/medium;
+ *                 md padding p-1 p-2 · gap p-1 · dot 4px · xs; lg padding p-1 p-2_5 · gap p-1_5 · dot 4px · sm;
+ *                 Square border-radius/rounded, Rounded …/rounded-full; Outline: 1px INSIDE border, no fill.
+ *   badge_dot:    4 · 6 · 8px circle (sm · md · lg).
+ *   badge_count:  height 16, min-width 16, padding 0 p-1, border-radius/rounded-full, label xxs/leading-normal/medium.
+ */
+
+.ds-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-padding-p-1);
+  padding: var(--spacing-padding-p-0_5) var(--spacing-padding-p-1_5);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_bg);
+  box-shadow: inset 0 0 0 var(--_bw, 0) var(--_bd, transparent);
+  color: var(--_fg);
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+  white-space: nowrap;
+}
+
+.ds-badge[data-size='md'] {
+  padding: var(--spacing-padding-p-1) var(--spacing-padding-p-2);
+}
+
+.ds-badge[data-size='lg'] {
+  gap: var(--spacing-padding-p-1_5);
+  padding: var(--spacing-padding-p-1) var(--spacing-padding-p-2_5);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+}
+
+.ds-badge[data-shape='rounded'] {
+  border-radius: var(--border-radius-rounded-full);
+}
+
+.ds-badge[data-appearance='outline'] {
+  --_bw: var(--border-width-border);
+}
+
+.ds-badge__dot {
+  flex-shrink: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--_dot);
+}
+
+.ds-badge:not([data-size='sm']) .ds-badge__dot {
+  width: 4px;
+  height: 4px;
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-badge__label,
+  .ds-badge-count__label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
+
+/* Status palettes */
+.ds-badge[data-status='basic'] {
+  --_bg: var(--colors-badge-status-filled-background-basic);
+  --_dot: var(--colors-badge-status-filled-dot-basic);
+  --_fg: var(--colors-badge-status-filled-label-basic);
+}
+
+.ds-badge[data-status='basic'][data-appearance='outline'] {
+  --_bg: transparent;
+  --_bd: var(--colors-badge-status-outline-border-basic);
+  --_dot: var(--colors-badge-status-outline-dot-basic);
+  --_fg: var(--colors-badge-status-outline-label-basic);
+}
+
+.ds-badge[data-status='gray'] {
+  --_bg: var(--colors-badge-status-filled-background-gray);
+  --_dot: var(--colors-badge-status-filled-dot-gray);
+  --_fg: var(--colors-badge-status-filled-label-gray);
+}
+
+.ds-badge[data-status='gray'][data-appearance='outline'] {
+  --_bg: transparent;
+  --_bd: var(--colors-badge-status-outline-border-gray);
+  --_dot: var(--colors-badge-status-outline-dot-gray);
+  --_fg: var(--colors-badge-status-outline-label-gray);
+}
+
+.ds-badge[data-status='point'] {
+  --_bg: var(--colors-badge-status-filled-background-point);
+  --_dot: var(--colors-badge-status-filled-dot-point);
+  --_fg: var(--colors-badge-status-filled-label-point);
+}
+
+.ds-badge[data-status='point'][data-appearance='outline'] {
+  --_bg: transparent;
+  --_bd: var(--colors-badge-status-outline-border-point);
+  --_dot: var(--colors-badge-status-outline-dot-point);
+  --_fg: var(--colors-badge-status-outline-label-point);
+}
+
+.ds-badge[data-status='success'] {
+  --_bg: var(--colors-badge-status-filled-background-success);
+  --_dot: var(--colors-badge-status-filled-dot-success);
+  --_fg: var(--colors-badge-status-filled-label-success);
+}
+
+.ds-badge[data-status='success'][data-appearance='outline'] {
+  --_bg: transparent;
+  --_bd: var(--colors-badge-status-outline-border-success);
+  --_dot: var(--colors-badge-status-outline-dot-success);
+  --_fg: var(--colors-badge-status-outline-label-success);
+}
+
+.ds-badge[data-status='warning'] {
+  --_bg: var(--colors-badge-status-filled-background-warning);
+  --_dot: var(--colors-badge-status-filled-dot-warning);
+  --_fg: var(--colors-badge-status-filled-label-warning);
+}
+
+.ds-badge[data-status='warning'][data-appearance='outline'] {
+  --_bg: transparent;
+  --_bd: var(--colors-badge-status-outline-border-warning);
+  --_dot: var(--colors-badge-status-outline-dot-warning);
+  --_fg: var(--colors-badge-status-outline-label-warning);
+}
+
+.ds-badge[data-status='danger'] {
+  --_bg: var(--colors-badge-status-filled-background-danger);
+  --_dot: var(--colors-badge-status-filled-dot-danger);
+  --_fg: var(--colors-badge-status-filled-label-danger);
+}
+
+.ds-badge[data-status='danger'][data-appearance='outline'] {
+  --_bg: transparent;
+  --_bd: var(--colors-badge-status-outline-border-danger);
+  --_dot: var(--colors-badge-status-outline-dot-danger);
+  --_fg: var(--colors-badge-status-outline-label-danger);
+}
+
+.ds-badge[data-status='information'] {
+  --_bg: var(--colors-badge-status-filled-background-information);
+  --_dot: var(--colors-badge-status-filled-dot-information);
+  --_fg: var(--colors-badge-status-filled-label-information);
+}
+
+.ds-badge[data-status='information'][data-appearance='outline'] {
+  --_bg: transparent;
+  --_bd: var(--colors-badge-status-outline-border-information);
+  --_dot: var(--colors-badge-status-outline-dot-information);
+  --_fg: var(--colors-badge-status-outline-label-information);
+}
+
+/* badge_dot */
+.ds-badge-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--_dot);
+}
+
+.ds-badge-dot[data-size='md'] {
+  width: 6px;
+  height: 6px;
+}
+
+.ds-badge-dot[data-size='lg'] {
+  width: 8px;
+  height: 8px;
+}
+
+.ds-badge-dot[data-status='basic'] {
+  --_dot: var(--colors-badge-dot-background-basic);
+}
+
+.ds-badge-dot[data-status='gray'] {
+  --_dot: var(--colors-badge-dot-background-gray);
+}
+
+.ds-badge-dot[data-status='point'] {
+  --_dot: var(--colors-badge-dot-background-point);
+}
+
+.ds-badge-dot[data-status='success'] {
+  --_dot: var(--colors-badge-dot-background-success);
+}
+
+.ds-badge-dot[data-status='warning'] {
+  --_dot: var(--colors-badge-dot-background-warning);
+}
+
+.ds-badge-dot[data-status='danger'] {
+  --_dot: var(--colors-badge-dot-background-danger);
+}
+
+.ds-badge-dot[data-status='information'] {
+  --_dot: var(--colors-badge-dot-background-information);
+}
+
+/* badge_count */
+.ds-badge-count {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 var(--spacing-padding-p-1);
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--_bg);
+  color: var(--colors-badge-count-label-default);
+  font-family: var(--typography-xxs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xxs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xxs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xxs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xxs-leading-normal-medium-letter-spacing);
+  white-space: nowrap;
+}
+
+.ds-badge-count[data-status='basic'] {
+  --_bg: var(--colors-badge-count-background-basic);
+}
+
+.ds-badge-count[data-status='gray'] {
+  --_bg: var(--colors-badge-count-background-gray);
+}
+
+.ds-badge-count[data-status='point'] {
+  --_bg: var(--colors-badge-count-background-point);
+}
+
+.ds-badge-count[data-status='success'] {
+  --_bg: var(--colors-badge-count-background-success);
+}
+
+.ds-badge-count[data-status='warning'] {
+  --_bg: var(--colors-badge-count-background-warning);
+}
+
+.ds-badge-count[data-status='danger'] {
+  --_bg: var(--colors-badge-count-background-danger);
+}
+
+.ds-badge-count[data-status='information'] {
+  --_bg: var(--colors-badge-count-background-information);
+}

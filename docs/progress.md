@@ -28,7 +28,7 @@
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 완료 |
-| 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 미착수 |
+| 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 진행 (Badge 완료) |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
 | 8 | Dashboard components | 미착수 |
@@ -58,6 +58,7 @@
 | Breadcrumb (breadcrumb · item) | 6 + 12 | 18/18 | 18/18 (너비 누적 fallback) | 18/18 (〃) | 통과 |
 | Navigation (item_parent · item_link · item_child) | 4 + 4 + 4 | 12/12 | 12/12 | 12/12 | 통과 |
 | Stepper (stepper · indicator · connector × 가로/세로) | 6 + 10 + 4 | 20/20 | 20/20 | 20/20 | 통과 |
+| Badge (status · dot · count) | 84 + 21 + 14 | 119/119 | 119/119 | 119/119 | 통과 |
 
 Phase 4 그룹 검증(2026-10-16): verify:all 19개 컴포넌트 × 3 엔진 통과(Chromium Breadcrumb 1회 첫 로드 재렌더 실패 → 재실행 통과,
 검증 도구에 detached 재시도 추가), verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 51 파일 · 257개 통과, typecheck · lint ·
@@ -65,6 +66,7 @@ build · build-storybook 통과, axe 262 스토리 — 그 밖의 위반 0(알�
 
 수동 검토 필요: listbox `scroll` 표시(스크롤바로 구현, 자동 비교 제외 — figma-issues F9).
 수동 검토 필요: File Uploader 점선 테두리(Figma는 변마다 대시 간격을 맞춤 — F30).
+수동 검토 필요: Badge Outline 모서리(1px 안쪽 테두리의 모서리 안티에일리어싱이 Figma · 엔진마다 달라 모서리 4px · 둥근 끝만 픽셀 비교 제외).
 수동 검토 필요: Breadcrumb 펼친 메뉴 위치(Figma는 경로 오른쪽 끝 정렬, 코드는 … 버튼 아래 — F33). 메뉴 크기 200 × 110은 스토리 테스트로 확인.
 검증 스토리에서만 Figma 예시에 맞춘 항목: Slider 단위 상자 24px(F14) · 숫자 필드 23px(F15), 핸들 x 제외(F16).
 알려진 렌더링 차이(실패 아님): option md Disabled 밑줄 위치(Figma auto 밑줄이 약 1.5px 아래, F6) ·
@@ -72,7 +74,7 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 5 — Badge(95:2681, 91:6152, 95:2762) → Progress(185:6518) → Alert(179:6087) → Toast(91:5927) → Tooltip(149:1111) → Empty State(724:14963).
+Phase 5 나머지 — Progress(185:6518) → Alert(179:6087) → Toast(91:5927) → Tooltip(149:1111) → Empty State(724:14963).
 
 **결정 필요 — Breadcrumb 펼친 상태(F33)**: Figma는 메뉴가 열린 동안 현재 페이지 항목을 Role=Open으로 그렸습니다. 코드는 … 버튼이
 메뉴를 열고 현재 페이지는 Current로 둡니다.
@@ -83,7 +85,7 @@ Phase 5 — Badge(95:2681, 91:6152, 95:2762) → Progress(185:6518) → Alert(17
 
 검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
 `figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),
-`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), part의 `compare` · `optional`.
+`knownDifferences`(문자열 또는 엔진별 객체), `glyphDxTolerance`, `accumulatedFallback`(calc-size 없는 엔진에서 라벨 수만큼 너비 허용), `figmaPrefix`(한 스토리에 여러 세트), `maskRectsFor`(변형별 픽셀 제외 영역), part의 `compare` · `optional`.
 
 ## 미해결 이슈
 

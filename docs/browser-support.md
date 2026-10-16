@@ -112,6 +112,15 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   Figma와 같은 50% 두 줄.
 - Dropdown Menu 구분선은 1px 배경 그라데이션(테두리 대신)이라 엔진마다 같은 픽셀 행에 그려집니다.
 
+## Badge
+
+세 엔진 모두 전 Variant 통과(badge_status 84 · badge_dot 21 · badge_count 14).
+
+- Outline 1px 안쪽 테두리(inset box-shadow)의 모서리 안티에일리어싱은 Figma와 엔진마다 다릅니다(border · outline · 배경 겹침도 측정했지만
+  어느 것도 세 엔진 모두 Figma와 같지 않음). 작은 배지에서는 이 몇 픽셀이 0.5% 기준을 넘어, Outline 변형의 모서리(4px)와
+  Rounded의 둥근 끝만 픽셀 비교에서 빼고(`maskRectsFor`) 곧은 테두리는 그대로 비교합니다.
+- sm 점(3px)은 세로 8.5px 위치(가운데 정렬)이지만 세 엔진 모두 Figma와 같은 픽셀로 그려집니다.
+
 ## 검증하지 못한 환경
 
 - 실제 macOS / iOS Safari, macOS Firefox, Android 브라우저 — Playwright WebKit은 같은 엔진이지만 운영체제의 글꼴 렌더러가 다릅니다.

@@ -220,8 +220,11 @@ for (const set of config.sets) {
         ...textBoxes,
         ...g.n.filter((n) => isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh })),
         ...g.n.flatMap(([p, x, y, bw, bh]) => pixelMasks.filter((mk) => mk.re.test(p)).map((mk) => ({ p, x: x - mk.pad + 1, y: y - mk.pad + 1, w: bw + 2 * (mk.pad - 1), h: bh + 2 * (mk.pad - 1) }))),
-        // maskRects: [[x, y, w, h], …] relative to the variant (negative w / h count from the right / bottom edge).
-        ...(set.maskRects ?? []).map(([x, y, w, h]) => ({ p: 'rect', x: x < 0 ? g.w + x : x, y: y < 0 ? g.h + y : y, w: w <= 0 ? g.w + w : w, h: h <= 0 ? g.h + h : h })),
+        // maskRects: [[x, y, w, h], …] relative to the variant (negative w / h count from the right / bottom edge);
+        // maskRectsFor: { "<variant glob>": [[x, y, w, h], …] } for the matching variants only.
+        ...[...(set.maskRects ?? []), ...Object.entries(set.maskRectsFor ?? {}).flatMap(([pat, rects]) => (glob(pat).test(m.name) ? rects : []))].map(
+          ([x, y, w, h]) => ({ p: 'rect', x: x < 0 ? g.w + x : x, y: y < 0 ? g.h + y : y, w: w <= 0 ? g.w + w : w, h: h <= 0 ? g.h + h : h }),
+        ),
       ];
       // Strict comparison outside text boxes (padded by 1px).
       const mask = (img) => { const c = new PNG({ width: w, height: h }); img.data.copy(c.data); for (const t of maskBoxes) for (let yy = Math.max(0, Math.floor(t.y) - 1); yy < Math.min(h, Math.ceil(t.y + t.h) + 1); yy++) for (let xx = Math.max(0, Math.floor(t.x) - 1); xx < Math.min(w, Math.ceil(t.x + t.w) + 1); xx++) { const i = (yy * w + xx) * 4; c.data[i] = c.data[i + 1] = c.data[i + 2] = 0; } return c; };

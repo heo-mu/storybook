@@ -132,6 +132,10 @@
 - 원 안의 숫자 · 아이콘은 `aria-hidden`, 대신 숨은 문구 "N단계"와 상태(완료 · 오류 · 잠김)를 읽습니다.
 - 연결선은 장식(`aria-hidden`). 상호작용 없음.
 
+### Badge
+- `Badge`는 글자가 그대로 읽히는 `<span>`(상태 점은 `aria-hidden`). 색만으로 뜻을 전하지 않도록 글자에 상태를 담으세요.
+- `BadgeDot`은 장식(`aria-hidden`), `aria-label`을 주면 `role="img"`로 읽힙니다. `BadgeCount`는 숫자가 읽히며 필요하면 `aria-label`.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

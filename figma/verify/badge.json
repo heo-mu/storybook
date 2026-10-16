@@ -1,0 +1,110 @@
+{
+  "component": "Badge",
+  "sets": [
+    {
+      "set": "badge_status",
+      "story": "components-badge-showcase--status-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 100px; min-width: 100px; max-width: 100px; } tr > :first-child { width: 160px; min-width: 160px; max-width: 160px; }",
+      "maskRectsFor": {
+        "*Appearance=Outline, Size=*, Shape=Square": [
+          [
+            0,
+            0,
+            4,
+            4
+          ],
+          [
+            -4,
+            0,
+            4,
+            4
+          ],
+          [
+            0,
+            -4,
+            4,
+            4
+          ],
+          [
+            -4,
+            -4,
+            4,
+            4
+          ]
+        ],
+        "*Appearance=Outline, Size=sm, Shape=Rounded": [
+          [
+            0,
+            0,
+            10,
+            20
+          ],
+          [
+            -10,
+            0,
+            10,
+            20
+          ]
+        ],
+        "*Appearance=Outline, Size=md, Shape=Rounded": [
+          [
+            0,
+            0,
+            12,
+            24
+          ],
+          [
+            -12,
+            0,
+            12,
+            24
+          ]
+        ],
+        "*Appearance=Outline, Size=lg, Shape=Rounded": [
+          [
+            0,
+            0,
+            14,
+            28
+          ],
+          [
+            -14,
+            0,
+            14,
+            28
+          ]
+        ]
+      },
+      "parts": {
+        "Circle": ".ds-badge__dot",
+        "Label": ".ds-badge__label"
+      }
+    },
+    {
+      "set": "badge_dot",
+      "story": "components-badge-showcase--dot-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 100px; min-width: 100px; max-width: 100px; } tr > :first-child { width: 160px; min-width: 160px; max-width: 160px; }",
+      "parts": {
+        "Rounded Badge": ".ds-badge-dot"
+      }
+    },
+    {
+      "set": "badge_count",
+      "story": "components-badge-showcase--count-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 100px; min-width: 100px; max-width: 100px; } tr > :first-child { width: 160px; min-width: 160px; max-width: 160px; }",
+      "parts": {
+        "Count": {
+          "selector": ".ds-badge-count__label",
+          "optional": true
+        },
+        "Count (max)": {
+          "selector": ".ds-badge-count__label",
+          "optional": true
+        }
+      }
+    }
+  ]
+}
