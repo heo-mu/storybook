@@ -1,0 +1,206 @@
+/*
+ * Calendar — Figma `date-picker_calendar` (144:1644): padding p-4, gap m-2, colors/date-picker/calendar/*,
+ * 1px INSIDE border, border-radius/rounded, effect elevation-3.
+ *   header (144:1377): month label lg/leading-normal/semibold + previous / next buttons (24px, gap m-1_5)
+ *   grid: 7 columns of 24px with gap m-4 (16px); rows 24px with gap m-2 (8px); weekday row 24px + p-1 bottom
+ *         padding and a 1px colors/border/disabled line
+ *   day (144:1033): 24×24, border-radius/rounded, xs/leading-normal/medium centred
+ * The grid stays a real <table> (react-aria grid semantics); border-spacing gives the gaps and negative
+ * margins remove the outer spacing.
+ */
+
+.ds-calendar {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-margin-m-2);
+  padding: var(--spacing-padding-p-4);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-date-picker-calendar-background-default);
+  box-shadow:
+    inset 0 0 0 var(--border-width-border) var(--colors-date-picker-calendar-border-default),
+    var(--effect-elevation-3);
+}
+
+/* Header */
+.ds-calendar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-1_5);
+}
+
+.ds-calendar__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  color: var(--colors-date-picker-header-label-default);
+  font-family: var(--typography-lg-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-lg-leading-normal-semibold-font-size);
+  font-weight: var(--typography-lg-leading-normal-semibold-font-weight);
+  /* 18 / 28: 27px line-height + 1px bottom padding keeps Firefox and WebKit on Figma's baseline (as the lg
+   * field value in Field.css); Chromium renders it the same either way. */
+  line-height: calc(var(--typography-lg-leading-normal-semibold-line-height) - 1px);
+  padding-bottom: 1px;
+  letter-spacing: var(--typography-lg-leading-normal-semibold-letter-spacing);
+}
+
+.ds-calendar__nav {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-margin-m-1_5);
+}
+
+/* Navigation (144:1328): Default · Hover · Pressed · Disabled. */
+.ds-calendar__nav-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-date-picker-header-navigation-background-default);
+  color: var(--colors-date-picker-header-navigation-icon-default);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-calendar__nav-button > svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.ds-calendar__nav-button:hover {
+  background-color: var(--colors-date-picker-header-navigation-background-hover);
+  color: var(--colors-date-picker-header-navigation-icon-hover);
+}
+
+.ds-calendar__nav-button:active,
+.ds-calendar__nav-button[data-pressed] {
+  background-color: var(--colors-date-picker-header-navigation-background-pressed);
+  color: var(--colors-date-picker-header-navigation-icon-pressed);
+}
+
+.ds-calendar__nav-button:disabled,
+.ds-calendar__nav-button[data-disabled] {
+  background-color: var(--colors-date-picker-header-navigation-background-disabled);
+  color: var(--colors-date-picker-header-navigation-icon-disabled);
+  cursor: default;
+}
+
+/* Grid */
+.ds-calendar__grid-wrap {
+  position: relative;
+}
+
+/* Weekday row separator: 1px at the bottom of the 28px weekday row, spanning the 7 columns. */
+.ds-calendar__grid-wrap::before {
+  content: '';
+  position: absolute;
+  top: calc(24px + var(--spacing-padding-p-1) - var(--border-width-border));
+  left: 0;
+  right: 0;
+  height: var(--border-width-border);
+  background-color: var(--colors-border-disabled);
+  pointer-events: none;
+}
+
+.ds-calendar__grid {
+  border-collapse: separate;
+  border-spacing: var(--spacing-margin-m-4) var(--spacing-margin-m-2);
+  margin: calc(-1 * var(--spacing-margin-m-2)) calc(-1 * var(--spacing-margin-m-4));
+}
+
+.ds-calendar__grid th,
+.ds-calendar__grid td {
+  padding: 0;
+}
+
+/* Weekday labels — Figma binds them to the semantic colors/text/tertiary. */
+.ds-calendar__weekday {
+  box-sizing: border-box;
+  width: 24px;
+  height: calc(24px + var(--spacing-padding-p-1));
+  padding: 0 0 var(--spacing-padding-p-1);
+  color: var(--colors-text-tertiary);
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: 24px;
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+  text-align: center;
+  vertical-align: top;
+}
+
+/* Day (144:1033): Default → Today → Hover → Pressed → Selected → Disabled → Outside (later rules win).
+ * react-aria marks days outside the shown month as disabled too, so Outside comes last. */
+.ds-calendar__day {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--colors-date-picker-day-background-default);
+  color: var(--colors-date-picker-day-label-interaction-default);
+  font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-medium-font-size);
+  font-weight: var(--typography-xs-leading-normal-medium-font-weight);
+  line-height: var(--typography-xs-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
+  outline: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ds-calendar__day[data-today] {
+  background-color: var(--colors-date-picker-day-background-today);
+  color: var(--colors-date-picker-day-label-status-today);
+}
+
+.ds-calendar__day:hover {
+  background-color: var(--colors-date-picker-day-background-hover);
+  color: var(--colors-date-picker-day-label-interaction-hover);
+}
+
+.ds-calendar__day:active,
+.ds-calendar__day[data-pressed] {
+  background-color: var(--colors-date-picker-day-background-pressed);
+  color: var(--colors-date-picker-day-label-interaction-pressed);
+}
+
+.ds-calendar__day[data-selected] {
+  background-color: var(--colors-date-picker-day-background-selected);
+  color: var(--colors-date-picker-day-label-status-selected);
+}
+
+.ds-calendar__day[data-disabled],
+.ds-calendar__day[data-unavailable] {
+  background-color: var(--colors-date-picker-day-background-disabled);
+  color: var(--colors-date-picker-day-label-interaction-disabled);
+  cursor: default;
+}
+
+.ds-calendar__day[data-outside-month] {
+  background-color: var(--colors-date-picker-day-background-outside);
+  color: var(--colors-date-picker-day-label-status-outside);
+}
+
+/* Keyboard focus — no Figma Focus state: the browser focus ring. */
+.ds-calendar__day[data-focus-visible] {
+  outline-style: auto;
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-calendar__day-label {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

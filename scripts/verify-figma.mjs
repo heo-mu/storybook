@@ -104,9 +104,17 @@ const lines = ['', `Figma ↔ Storybook parity — ${component} (${report.browse
 for (const set of config.sets) {
   if (ONLY_SET && set.set !== ONLY_SET) continue;
   const geometry = readJson(`figma/geometry/${set.set}.json`);
-  const setNode = findById(sectionMeta, geometry.id) ?? (dashboardMeta && findById(dashboardMeta, geometry.id));
-  if (!setNode) throw new Error(`set ${geometry.id} not in metadata`);
-  const positions = new Map(setNode.children.map((c) => [c.name, c]));
+  // A single component (geometry.single) is its own reference image; `origin` is where it starts in that image
+  // (a screenshot includes effects such as drop shadows around the node).
+  let positions;
+  if (geometry.single) {
+    const [ox, oy] = geometry.origin ?? [0, 0];
+    positions = new Map(Object.keys(geometry.variants).map((name) => [name, { x: ox, y: oy }]));
+  } else {
+    const setNode = findById(sectionMeta, geometry.id) ?? (dashboardMeta && findById(dashboardMeta, geometry.id));
+    if (!setNode) throw new Error(`set ${geometry.id} not in metadata`);
+    positions = new Map(setNode.children.map((c) => [c.name, c]));
+  }
   const reference = PNG.sync.read(readFileSync(path.join(ROOT, 'figma', 'reference', `${set.set}.png`)));
 
   // Normalise selectors: string | string[] | { selector(s), compare }

@@ -1,0 +1,77 @@
+/*
+ * DatePicker — Figma component set `date-picker_trigger` (144:723), Type Outline. Field layout from Field.css.
+ * State: Default → (has a date) Completed → :hover Hover → :focus-within Focus → Error → Read-only → Disabled
+ * (later rules win). Colours are the Figma bindings (colors/date-picker/trigger/outline/*); the empty state
+ * binds the semantic colors/text/placeholder and colors/icon/placeholder directly (docs/figma-issues.md F24).
+ */
+.ds-date-picker {
+  --ds-field-bg: var(--colors-date-picker-trigger-outline-background-default);
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-default);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-label-completed);
+  --ds-field-placeholder: var(--colors-text-placeholder);
+  --ds-field-icon: var(--colors-icon-placeholder);
+}
+
+.ds-date-picker[data-filled] {
+  --ds-field-bg: var(--colors-date-picker-trigger-outline-background-completed);
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-completed);
+  --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-default);
+}
+
+.ds-date-picker:hover {
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-hover);
+}
+
+.ds-date-picker:focus-within {
+  --ds-field-bg: var(--colors-date-picker-trigger-outline-background-completed);
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-focus);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-label-default);
+  --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-default);
+}
+
+.ds-date-picker[data-invalid] {
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-error);
+  --ds-field-border-width: var(--border-width-border-2);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-label-error);
+  --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-error);
+}
+
+.ds-date-picker[data-readonly] {
+  --ds-field-bg: var(--colors-date-picker-trigger-outline-background-read-only);
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-read-only);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-label-default);
+}
+
+.ds-date-picker[data-disabled] {
+  --ds-field-bg: var(--colors-date-picker-trigger-outline-background-disabled);
+  --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-disabled);
+  --ds-field-border-width: var(--border-width-border);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-label-disabled);
+  --ds-field-placeholder: var(--colors-date-picker-trigger-outline-placeholder-disabled);
+  --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-disabled);
+}
+
+/* date-picker_message — colors/date-picker/trigger/outline/helper/* */
+.ds-date-picker .ds-field-message[data-type='info'] {
+  --ds-field-message-color: var(--colors-date-picker-trigger-outline-helper-info);
+}
+
+.ds-date-picker .ds-field-message[data-type='success'] {
+  --ds-field-message-color: var(--colors-date-picker-trigger-outline-helper-completed);
+}
+
+.ds-date-picker .ds-field-message[data-type='error'] {
+  --ds-field-message-color: var(--colors-date-picker-trigger-outline-helper-error);
+}
+
+.ds-date-picker__button:focus-visible,
+.ds-date-picker__button[data-focus-visible] {
+  outline-style: auto;
+}
+
+.ds-date-picker__popover,
+.ds-date-picker__dialog {
+  outline: none;
+}

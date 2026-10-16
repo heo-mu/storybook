@@ -1,10 +1,19 @@
 import type { Preview } from '@storybook/react-vite';
+import { I18nProvider } from 'react-aria-components';
 // Full (non-subset) Pretendard Variable so rendering matches Figma deterministically.
 import 'pretendard/dist/web/variable/pretendardvariable.css';
 import '../src/styles.css';
 import './preview.css';
 
 const preview: Preview = {
+  // The design is Korean (Figma "2026년 7월", YYYY.MM.DD): react-aria formats dates and numbers for ko-KR in stories.
+  decorators: [
+    (Story) => (
+      <I18nProvider locale="ko-KR">
+        <Story />
+      </I18nProvider>
+    ),
+  ],
   parameters: {
     controls: {
       matchers: {

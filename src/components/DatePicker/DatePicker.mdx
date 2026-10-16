@@ -1,0 +1,88 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/DatePicker.showcase.stories';
+import * as CalendarShowcase from '../Calendar/stories/Calendar.showcase.stories';
+import { DatePicker } from './DatePicker';
+import { Calendar } from '../Calendar';
+
+<Meta title="Components/DatePicker/Usage" />
+
+# DatePicker · Calendar — 사용 가이드
+
+Figma **Date Picker** 프레임(149:831)의 `date-picker_trigger`(21개) · `date-picker_message`(3개)를 `DatePicker`로,
+`date-picker_calendar` · `_header` · `_navigation`(8개) · `_day`(7개)를 `Calendar`로 구현했습니다.
+달력의 키보드 · 포커스 · ARIA는 [react-aria-components](https://react-spectrum.adobe.com/react-aria/Calendar.html)가 담당합니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { DatePicker, Calendar } from 'platform-design-system';
+
+// 값은 ISO 날짜 문자열('YYYY-MM-DD'), 화면에는 YYYY.MM.DD
+<DatePicker label="시작일" name="start" value={start} onChange={setStart} />
+
+// 선택 가능 범위와 주말 제외
+<DatePicker label="상담일" minValue="2026-07-06" maxValue="2026-08-31"
+  isDateUnavailable={(iso) => [0, 6].includes(new Date(iso + 'T00:00').getDay())} />
+
+// 달력만
+<Calendar aria-label="일정" value={day} onChange={setDay} />
+
+// 로캘 — 월 · 요일 이름은 react-aria I18nProvider를 따름 (없으면 브라우저 언어)
+<I18nProvider locale="ko-KR"><App /></I18nProvider>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Size sm · md · lg | `size` | 필드 높이 36 · 44 · 52px |
+| Label / Alert | `label` · `message` · `messageType` | |
+| Display Text "YYYY.MM.DD" | `placeholder` | 값은 YYYY.MM.DD 형식으로 표시 |
+| State Hover · Focus | 브라우저 `:hover` · `:focus-within` | |
+| State Completed | 날짜가 있을 때 자동 | |
+| State Error | `invalid`, 또는 해석할 수 없거나 선택할 수 없는 날짜를 입력했을 때 | `aria-invalid` |
+| State Disabled · Read-only | `disabled` · `readOnly` | Read-only는 달력 버튼 없음 |
+| day Today · Selected · Outside · Disabled | 오늘 · `value` · 다른 달 · `minValue`/`maxValue`/`isDateUnavailable` | |
+| navigation Disabled | 범위 끝 달에서 이전 / 다음 비활성 | |
+
+`name`을 주면 숨겨진 input으로 `YYYY-MM-DD` 값이 폼에 전송됩니다.
+
+## 키보드
+
+| 위치 | 키 | 동작 |
+| --- | --- | --- |
+| 필드 | 숫자 입력 + Enter / Tab | 날짜 확정 (YYYY.MM.DD, YYYY-MM-DD, YYYY/MM/DD, YYYYMMDD) |
+| 필드 | Alt + ↓ | 달력 열기 |
+| 달력 | ← → ↑ ↓ | 하루 / 한 주 이동 |
+| 달력 | Page Up · Page Down | 이전 · 다음 달 |
+| 달력 | Enter · Space | 선택 후 닫기 |
+| 달력 | Esc | 닫기 |
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **직접 입력**: Figma Focus 상태가 있는 텍스트 필드이므로 직접 입력을 지원합니다. 해석할 수 없는 날짜(2026.02.30 등)나
+  범위 밖 날짜는 값을 바꾸지 않고 Error 상태로 표시합니다.
+- **달력 위치**: Figma 예시(Calendar Container)대로 필드 아래 4px, 필드 왼쪽에 맞춤. 공간이 없으면 위로 열립니다.
+- **요일 이름**: Figma는 영어 자리표시(Su Mo …)이지만 월 이름은 한국어(2026년 7월)여서, 둘 다 로캘을 따르도록 했습니다(ko-KR: 일 월 …).
+- **포커스 표시**: Figma에 없어 날짜 · 달력 버튼에 브라우저 기본 포커스 링을 사용합니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## 달력
+
+<Canvas of={CalendarShowcase.Overview} />
+
+## Props
+
+### DatePicker
+
+<ArgTypes of={DatePicker} />
+
+### Calendar
+
+<ArgTypes of={Calendar} />
