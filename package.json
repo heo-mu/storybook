@@ -33,7 +33,8 @@
     "lint": "oxlint",
     "test": "vitest run --project=storybook",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "verify:button": "node scripts/verify-button.mjs"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",
@@ -55,13 +56,16 @@
     "@vitest/browser-playwright": "^5.0.5",
     "@vitest/coverage-v8": "^5.0.5",
     "oxlint": "^1.81.0",
+    "pixelmatch": "^7.2.0",
     "playwright": "^1.64.1",
+    "pngjs": "^7.0.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "remark-gfm": "^4.0.1",
     "storybook": "^10.6.2",
     "storybook-addon-pseudo-states": "^10.6.2",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",
-    "vitest": "^5.0.5",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "vitest": "^5.0.5"
   }
 }
