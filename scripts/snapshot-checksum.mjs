@@ -9,6 +9,7 @@ const groups = {
   theme: canon(readVariables('theme.txt', 'Theme'), true),
   semantic: canon(readVariables('semantic.txt', 'Semantic'), true),
   compButton: canon(readVariables('component-button.txt', 'Component'), true),
+  compOthers: canon(readVariables('component-others.txt', 'Component'), true),
   text: readStyleLines('text-styles.txt'),
   effect: readStyleLines('effect-styles.txt'),
 };

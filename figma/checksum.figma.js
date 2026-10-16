@@ -18,6 +18,7 @@ const groups = {
   theme: withScopes(list('Theme', () => true)),
   semantic: withScopes(list('Semantic', () => true)),
   compButton: withScopes(list('Component', (v) => /^colors\/button/.test(v.name))),
+  compOthers: withScopes(list('Component', (v) => !/^colors\/button/.test(v.name))),
 };
 groups.text = (await figma.getLocalTextStylesAsync()).map((s) => [s.name, s.fontName.family + '/' + s.fontName.style, s.fontSize, s.lineHeight.unit === 'AUTO' ? 'AUTO' : s.lineHeight.value + (s.lineHeight.unit === 'PIXELS' ? 'px' : '%'), s.letterSpacing.value + (s.letterSpacing.unit === 'PIXELS' ? 'px' : '%'), s.textDecoration, s.textCase, Object.entries(s.boundVariables || {}).map(([k, a]) => k + ':' + al(a)).join(' ')].join(' | '));
 groups.effect = (await figma.getLocalEffectStylesAsync()).map((s) => s.name + ' :: ' + s.effects.map((e) => [e.type, e.color ? hex(e.color) : '', e.offset ? e.offset.x + ',' + e.offset.y : '', 'r' + e.radius, 'sp' + (e.spread ?? ''), e.visible ? '' : 'HIDDEN', e.blendMode, Object.entries(e.boundVariables || {}).map(([k, a]) => k + ':' + al(a)).join(' ')].join(' ')).join(' ;; '));

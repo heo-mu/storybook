@@ -31,6 +31,7 @@ export function readAllVariables() {
     ...readVariables('theme.txt', 'Theme'),
     ...readVariables('semantic.txt', 'Semantic'),
     ...readVariables('component-button.txt', 'Component'),
+    ...readVariables('component-others.txt', 'Component'),
   ];
 }
 

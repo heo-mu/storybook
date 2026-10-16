@@ -68,17 +68,29 @@ function block(selector, entries, comment) {
 const files = {};
 const json = { source: { fileKey: 'Ry3WecA6sP6lKPop1vXrTp', file: '[Platform] Web Design System', exported: '2026-10-16' }, variables: [], textStyles: [], effectStyles: [] };
 
-for (const [collection, file, note] of [
-  ['Primitive', 'primitive.css', 'Figma collection "Primitive" (Mode 1)'],
-  ['Theme', 'theme.css', 'Figma collection "Theme" (Mode 1)'],
-  ['Semantic', 'semantic.css', 'Figma collection "Semantic" (Mode 1)'],
-  ['Component', 'components/button.css', 'Figma collection "Component" (Mode 1) — colors/button/*, colors/button_text/*'],
-]) {
-  const list = variables.filter((v) => v.collection === collection);
+// Component variables are split per component group: colors/<group>/… → components/<group>.css
+// (colors/button_text/* stays with button). Variables without a group path (Figma's root-level
+// "default", "hover", … — docs/figma-issues.md B1) are not emitted: their names would be global.
+const componentGroup = (name) => {
+  const g = name.split('/')[1];
+  return g === 'button_text' ? 'button' : g;
+};
+json.skipped = variables.filter((v) => v.collection === 'Component' && !v.name.includes('/')).map((v) => ({ collection: v.collection, name: v.name, reason: 'no group path (global name)' }));
+const outputs = [
+  ['Primitive', 'primitive.css', 'Figma collection "Primitive" (Mode 1)', () => true],
+  ['Theme', 'theme.css', 'Figma collection "Theme" (Mode 1)', () => true],
+  ['Semantic', 'semantic.css', 'Figma collection "Semantic" (Mode 1)', () => true],
+];
+const groups = [...new Set(variables.filter((v) => v.collection === 'Component' && v.name.includes('/')).map((v) => componentGroup(v.name)))].sort();
+for (const g of groups) {
+  outputs.push(['Component', `components/${g}.css`, `Figma collection "Component" (Mode 1) — ${g === 'button' ? 'colors/button/*, colors/button_text/*' : `colors/${g}/*`}`, (v) => v.name.includes('/') && componentGroup(v.name) === g]);
+}
+for (const [collection, file, note, pick] of outputs) {
+  const list = variables.filter((v) => v.collection === collection && pick(v));
   files[file] = HEADER + block(':root', list.map((v) => [cssVarName(v.name), cssValue(v)]), `${note} — ${list.length} variables`);
   for (const v of list) {
     const target = aliasTarget(v.raw);
-    json.variables.push({ collection, name: v.name, cssVar: cssVarName(v.name), type: typeOf(v), scopes: v.scopes, value: cssValue(v), aliasOf: target ? `${target.collection}:${target.name}` : undefined, resolved: resolve(v) });
+    json.variables.push({ collection, name: v.name, cssVar: cssVarName(v.name), type: typeOf(v), scopes: v.scopes, value: cssValue(v), aliasOf: target ? `${target.collection}:${target.name}` : undefined, resolved: resolve(v), file });
   }
 }
 
@@ -124,7 +136,8 @@ for (const s of readEffectStyles()) {
 }
 files['effects.css'] = HEADER + block(':root', effectVars, `Figma local effect styles — ${effectVars.length} styles`);
 
-files['index.css'] = HEADER + ['primitive.css', 'theme.css', 'semantic.css', 'typography.css', 'effects.css', 'components/button.css'].map((f) => `@import './${f}';`).join('\n') + '\n';
+const tokenFiles = ['primitive.css', 'theme.css', 'semantic.css', 'typography.css', 'effects.css', ...groups.map((g) => `components/${g}.css`)];
+files['index.css'] = HEADER + tokenFiles.map((f) => `@import './${f}';`).join('\n') + '\n';
 
 mkdirSync(path.join(OUT, 'components'), { recursive: true });
 for (const [file, content] of Object.entries(files)) writeFileSync(path.join(OUT, file), content);
