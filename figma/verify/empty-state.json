@@ -1,0 +1,21 @@
+{
+  "component": "EmptyState",
+  "sets": [
+    {
+      "set": "empty-state",
+      "story": "components-emptystate-showcase--figma",
+      "background": "#ffffff",
+      "parts": {
+        "Frame *": ".ds-empty-state__text",
+        "Frame */icon_size": ".ds-empty-state__icon",
+        "Frame */icon_size/Database": ".ds-empty-state__icon > svg",
+        "Frame */Title": ".ds-empty-state__title",
+        "Frame */Description": ".ds-empty-state__description",
+        "button_text": ".ds-text-button",
+        "button_text/Label": ".ds-text-button .ds-button__label",
+        "button_text/icon_size": ".ds-text-button .ds-button__icon",
+        "button_text/icon_size/icon/CaretRight": ".ds-text-button .ds-button__icon > svg"
+      }
+    }
+  ]
+}

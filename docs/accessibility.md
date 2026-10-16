@@ -155,6 +155,9 @@
 - react-aria-components TooltipTrigger: 말풍선 `role="tooltip"`, 트리거 `aria-describedby`. 키보드 포커스 시 바로 표시, Esc로 닫기.
 - 툴팁은 보조 설명입니다. 아이콘 버튼의 이름은 `aria-label`로 따로 주세요(툴팁은 설명으로만 연결).
 
+### Empty State
+- 제목 · 설명은 일반 텍스트(`<p>`), 아이콘은 장식(`aria-hidden`). `action` 버튼은 일반 Tab 순서.
+
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.

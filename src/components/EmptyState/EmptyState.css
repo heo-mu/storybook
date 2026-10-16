@@ -1,0 +1,73 @@
+/*
+ * Empty State — Figma `empty-state` (724:14963): column centred, 320px wide, action m-3 below the text block;
+ * text block m-1 apart: 16px icon (colors/icon/placeholder), title sm/leading-normal/semibold (colors/text/tertiary),
+ * description xs/leading-normal/normal (colors/text/placeholder, centred, wraps).
+ */
+
+.ds-empty-state {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-margin-m-3);
+  width: 320px;
+  max-width: 100%;
+}
+
+.ds-empty-state__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-margin-m-1);
+  width: 100%;
+}
+
+.ds-empty-state__icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  color: var(--colors-icon-placeholder);
+}
+
+.ds-empty-state__icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ds-empty-state__title,
+.ds-empty-state__description {
+  margin: 0;
+}
+
+.ds-empty-state__title {
+  color: var(--colors-text-tertiary);
+  font-family: var(--typography-sm-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-semibold-font-size);
+  font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
+  line-height: var(--typography-sm-leading-normal-semibold-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-semibold-letter-spacing);
+  text-align: center;
+}
+
+.ds-empty-state__description {
+  align-self: stretch;
+  color: var(--colors-text-placeholder);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+  text-align: center;
+}
+
+.ds-empty-state__action {
+  display: flex;
+}
+
+/* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-empty-state__title {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

@@ -1,0 +1,43 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/EmptyState.showcase.stories';
+import { EmptyState } from './EmptyState';
+
+<Meta title="Components/EmptyState/Usage" />
+
+# Empty State — 사용 가이드
+
+Figma **Empty State** 프레임(174:1480)의 `empty-state`(724:14963)를 구현했습니다. 목록 · 차트 등이 비어 있을 때 가운데에 보여 줍니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { EmptyState, TextButton, CaretRightIcon, DatabaseIcon } from 'platform-design-system';
+
+<EmptyState
+  icon={<DatabaseIcon />}
+  title="아직 수집된 데이터가 없습니다"
+  description="수집 설정과 데이터 연결을 확인하세요."
+  action={<TextButton rightIcon={<CaretRightIcon />} onClick={openSettings}>수집 설정 확인</TextButton>}
+/>`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| Title Text | `title` | |
+| Description · Description Text | `description` | 가운데 정렬, 줄바꿈 |
+| Icon | `icon` | 16px, 장식 |
+| 버튼(button_text) | `action` | Figma: TextButton Primary sm + CaretRight |
+
+## 코드 정책 (Figma에 정의되지 않은 부분)
+
+- **버튼 유무**: Figma에는 버튼을 끄는 속성이 없지만 버튼이 필요 없는 빈 상태가 있어 `action`을 선택으로 두었습니다.
+- **너비**: Figma처럼 320px, 부모가 더 좁으면 그 너비로 줄어듭니다.
+
+## Props
+
+<ArgTypes of={EmptyState} />

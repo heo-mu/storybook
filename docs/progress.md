@@ -28,7 +28,7 @@
 | 2 | Select · Checkbox · Radio · Switch · Slider · Segmented Control · Chip | 완료 |
 | 3 | Date Picker · File Uploader (Combobox: Figma 삭제) | 완료 (Loading 포함) |
 | 4 | Link · Navigation · Tab · Pagination · Breadcrumb · Stepper · Dropdown Menu | 완료 |
-| 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 진행 (Empty State 남음) |
+| 5 | Badge · Progress · Alert · Toast · Tooltip · Empty State | 완료 |
 | 6 | Dialog · Accordion (Popover · Drawer: Figma 삭제) | 미착수 |
 | 7 | Table · Card · Chart · Loading | 미착수 |
 | 8 | Dashboard components | 미착수 |
@@ -63,6 +63,7 @@
 | Alert | 3 | 3/3 | 3/3 | 3/3 | 통과 |
 | Toast | 3 | 3/3 | 3/3 | 3/3 | 통과 |
 | Tooltip (화살표 위치 포함) | 4 | 4/4 | 4/4 | 4/4 | 통과 |
+| Empty State | 1 | 1/1 | 1/1 | 1/1 | 통과 |
 
 Phase 4 그룹 검증(2026-10-16): verify:all 19개 컴포넌트 × 3 엔진 통과(Chromium Breadcrumb 1회 첫 로드 재렌더 실패 → 재실행 통과,
 검증 도구에 detached 재시도 추가), verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 51 파일 · 257개 통과, typecheck · lint ·
@@ -78,7 +79,7 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-Phase 5 나머지 — Empty State(724:14963).
+Phase 6 — Dialog(149:2838) → Accordion(796:6071) (Popover · Drawer: Figma에서 삭제 — 구현 불가로 기록).
 
 **결정 필요 — Toast 표시 위치 · 간격 · 시간(F44)**: Figma에 없어 코드 정책으로 정했습니다.
 
