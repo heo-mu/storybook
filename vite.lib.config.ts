@@ -16,7 +16,7 @@ export default defineConfig({
     sourcemap: true,
     cssCodeSplit: false,
     lib: {
-      entry: path.resolve(dirname, 'src/index.ts'),
+      entry: path.resolve(dirname, 'src/build-entry.ts'),
       formats: ['es', 'cjs'],
       fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
       cssFileName: 'styles',

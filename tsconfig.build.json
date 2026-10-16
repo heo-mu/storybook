@@ -16,6 +16,7 @@
     "src/**/stories/**",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
-    "src/docs/**"
+    "src/docs/**",
+    "src/build-entry.ts"
   ]
 }

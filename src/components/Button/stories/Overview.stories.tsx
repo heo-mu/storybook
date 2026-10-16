@@ -1,0 +1,62 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button } from '../Button';
+import { IconButton } from '../IconButton';
+import { TextButton } from '../TextButton';
+import { BUTTON_SHAPES, BUTTON_SIZES, BUTTON_TONES, ICON_BUTTON_SIZES, TEXT_BUTTON_SIZES } from '../Button.options';
+import { CaretLeftIcon, CaretRightIcon, PlusIcon } from './figma-icons';
+import { Section } from './StoryLayout';
+import { figmaCase } from './story-helpers';
+
+// Visual showcase — excluded from the MCP components manifest (uses story-only helpers).
+const meta = {
+  title: 'Components/Button/Overview',
+  tags: ['!manifest'],
+  parameters: { controls: { disable: true } },
+} satisfies Meta;
+
+export default meta;
+type Story = StoryObj;
+
+/** The whole Button family (Figma frame "Button", 58:4971) at a glance. */
+export const Overview: Story = {
+  render: () => (
+    <div>
+      <Section title="Button — Variant × Appearance (md)">
+        {BUTTON_TONES.map((tone) => (
+          <Button key={`${tone.variant}-${tone.appearance}`} {...tone} size="md" leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
+            {figmaCase(tone.variant)} {figmaCase(tone.appearance)}
+          </Button>
+        ))}
+      </Section>
+      <Section title="Button — Size (xs · sm · md · lg)">
+        {BUTTON_SIZES.map((size) => (
+          <Button key={size} size={size} leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
+            라벨명
+          </Button>
+        ))}
+      </Section>
+      <Section title="Button — Shape (Square · Rounded)">
+        {BUTTON_SHAPES.map((shape) => (
+          <Button key={shape} size="md" shape={shape} variant="tertiary" appearance="outline">
+            {figmaCase(shape)}
+          </Button>
+        ))}
+      </Section>
+      <Section title="IconButton — Variant × Appearance (md) · Size (xs · sm · md)">
+        {BUTTON_TONES.map((tone) => (
+          <IconButton key={`${tone.variant}-${tone.appearance}`} {...tone} size="md" icon={<PlusIcon />} aria-label={`${tone.variant} ${tone.appearance}`} />
+        ))}
+        {ICON_BUTTON_SIZES.map((size) => (
+          <IconButton key={size} size={size} variant="tertiary" appearance="outline" icon={<PlusIcon />} aria-label={size} />
+        ))}
+      </Section>
+      <Section title="TextButton — Size (sm · md)">
+        {TEXT_BUTTON_SIZES.map((size) => (
+          <TextButton key={size} size={size} leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
+            라벨명
+          </TextButton>
+        ))}
+      </Section>
+    </div>
+  ),
+};

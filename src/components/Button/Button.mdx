@@ -1,5 +1,6 @@
 import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
-import * as ButtonStories from './Button.stories';
+import * as OverviewStories from './stories/Overview.stories';
+import * as StatesStories from './stories/States.stories';
 import { Button } from './Button';
 import { IconButton } from './IconButton';
 import { TextButton } from './TextButton';
@@ -17,7 +18,7 @@ Figma **[Platform] Web Design System → 🔵 Ver 0.4 → Component → Button**
 | `IconButton` | `button_icon` (67:2368) | 120 | Variant×Appearance 5 × Size 3 × Shape 2 × State 4 |
 | `TextButton` | `button_text` (432:8395) | 16 | Type 2 × Size 2 × State 4 |
 
-<Canvas of={ButtonStories.Overview} />
+<Canvas of={OverviewStories.Overview} />
 
 ## 설치 및 Import
 
@@ -74,7 +75,7 @@ Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수
 
 ## 상태 (State)
 
-<Canvas of={ButtonStories.States} />
+<Canvas of={StatesStories.ButtonStates} />
 
 - **Hover / Pressed**는 별도 Prop이 아니라 실제 포인터 상태(`:hover`, `:active`)로 표현됩니다.
 - **Disabled**는 네이티브 `disabled` 속성입니다. Outline의 Disabled는 Figma와 동일하게 테두리가 없습니다.
