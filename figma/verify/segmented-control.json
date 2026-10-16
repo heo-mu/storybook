@@ -1,0 +1,28 @@
+{
+  "component": "SegmentedControl",
+  "sets": [
+    {
+      "set": "segmented-control",
+      "story": "components-segmentedcontrol-showcase--variant-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 340px; min-width: 340px; max-width: 340px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "segmented-item*/Label": ".ds-segmented__label",
+        "segmented-item*": ".ds-segmented__segment"
+      },
+      "glyphDxTolerance": 0.6,
+      "//glyphDxTolerance": "md labels (16px Medium, centred in a whole-pixel text box) measure dx 0.47-0.55: Chromium lays the word out ~1px narrower than Figma, so centring puts it half a pixel further right; same tolerance as Input"
+    },
+    {
+      "set": "segmented-item",
+      "story": "components-segmentedcontrol-showcase--item-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Label": ".ds-segmented__label"
+      },
+      "glyphDxTolerance": 0.6,
+      "//glyphDxTolerance": "md labels (16px Medium, centred in a whole-pixel text box) measure dx 0.47-0.55: Chromium lays the word out ~1px narrower than Figma, so centring puts it half a pixel further right; same tolerance as Input"
+    }
+  ]
+}

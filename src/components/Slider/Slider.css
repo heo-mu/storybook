@@ -1,0 +1,205 @@
+/*
+ * Slider — Figma component set `slider` (391:1988) with `handle` (391:2013).
+ *   root: horizontal, gap spacing/margin/m-2_5, items centred
+ *   main column: track row 20px (rail 4px at y 8) + range row 20px, overlapping by 2px
+ *   rail: colors/slider/background/surface; the 8px fill is clipped by the 4px rail (as in Figma)
+ *   handle: 20px box, 18px knob with a 3px INSIDE border and the md shadow
+ *   entry: Input sm + unit text, gap spacing/margin/m-2
+ * Several layers are bound to variables of a remote library (spacing, radius/max, shadow) — the local
+ * tokens with the same name / role are used; see docs/figma-issues.md F13.
+ */
+
+.ds-slider {
+  /* Remote effect style "md-3,10" (DROP_SHADOW 0 4 6 −1, color/shadow/shadow-3 #051b3c33) — not in this
+   * file's variables, reproduced from the Figma values (F13). */
+  --ds-slider-handle-shadow: 0 4px 6px -1px #051b3c33;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-2_5);
+  width: 100%;
+  min-width: 0;
+}
+
+.ds-slider__main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ds-slider__track {
+  position: relative;
+  height: 20px;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.ds-slider[data-disabled] .ds-slider__track {
+  cursor: default;
+}
+
+.ds-slider__rail {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-slider-background-surface-default);
+}
+
+.ds-slider__fill {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  height: 8px;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-slider-background-indicator-default);
+}
+
+.ds-slider[data-disabled] .ds-slider__fill {
+  background-color: var(--colors-slider-background-indicator-disabled);
+}
+
+/* Handle — react-aria positions it (left: value %, translate −50% −50%). */
+.ds-slider__thumb {
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  outline: none;
+}
+
+/* Keyboard focus (the range input inside the handle): the browser focus ring, as for the other controls. */
+.ds-slider__thumb[data-focus-visible] {
+  outline-style: auto;
+}
+
+.ds-slider__knob {
+  position: absolute;
+  inset: 1px;
+  box-sizing: border-box;
+  /* 3px INSIDE stroke as a real border; the fill is clipped to the padding box so it cannot bleed
+   * through the anti-aliased edge. */
+  border: 3px solid var(--colors-slider-border-handle-default);
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-slider-background-handle-default);
+  background-clip: padding-box;
+  box-shadow: var(--ds-slider-handle-shadow);
+}
+
+.ds-slider[data-disabled] .ds-slider__knob {
+  background-color: var(--colors-slider-background-handle-disabled);
+}
+
+/* Pressed halo: 26px circle of the handle colour at 20 % (#007c5633 in Figma), layer blur 1. */
+.ds-slider__halo {
+  display: none;
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: color-mix(in srgb, var(--colors-slider-background-handle-default) 20%, transparent);
+  filter: blur(1px);
+}
+
+.ds-slider__thumb:active .ds-slider__halo,
+.ds-slider__thumb[data-dragging] .ds-slider__halo {
+  display: block;
+}
+
+/* Value label (handle "Value Label=yes"): pill 18px high, centred 3px above the handle, padding 0 p-1_5. */
+.ds-slider__value-label {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  height: 18px;
+  align-items: center;
+  padding: 0 var(--spacing-padding-p-1_5);
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--colors-slider-background-value-label-default);
+  color: var(--colors-slider-label-value-label-default);
+  font-family: var(--typography-xxs-leading-normal-semibold-font-family), sans-serif;
+  font-size: var(--typography-xxs-leading-normal-semibold-font-size);
+  font-weight: var(--typography-xxs-leading-normal-semibold-font-weight);
+  line-height: var(--typography-xxs-leading-normal-semibold-line-height);
+  letter-spacing: var(--typography-xxs-leading-normal-semibold-letter-spacing);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Shown on hover and drag (Figma) and on keyboard focus (code policy). */
+.ds-slider__thumb:hover .ds-slider__value-label,
+.ds-slider__thumb:active .ds-slider__value-label,
+.ds-slider__thumb[data-dragging] .ds-slider__value-label,
+.ds-slider__thumb[data-focus-visible] .ds-slider__value-label {
+  display: flex;
+}
+
+.ds-slider[data-disabled] .ds-slider__value-label,
+.ds-slider[data-disabled] .ds-slider__halo {
+  display: none;
+}
+
+/* Range row — sm/leading-normal/medium, colors/slider/label/range/*. */
+.ds-slider__range {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-margin-m-2_5);
+  margin-top: -2px;
+  color: var(--colors-slider-label-range-default);
+  font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-medium-font-size);
+  font-weight: var(--typography-sm-leading-normal-medium-font-weight);
+  line-height: var(--typography-sm-leading-normal-medium-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ds-slider[data-disabled] .ds-slider__range {
+  color: var(--colors-slider-label-range-disabled);
+}
+
+.ds-slider__entry {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+}
+
+/* Number field hugging the longest value (Figma: input hugs "100"). */
+.ds-slider__input {
+  width: auto;
+}
+
+.ds-slider__input .ds-field__input {
+  flex: none;
+  width: calc(var(--ds-slider-digits) * 1ch);
+}
+
+.ds-slider__unit {
+  color: var(--colors-slider-label-unit-default);
+  font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-sm-leading-normal-normal-font-size);
+  font-weight: var(--typography-sm-leading-normal-normal-font-weight);
+  line-height: var(--typography-sm-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+  white-space: nowrap;
+}
+
+.ds-slider[data-disabled] .ds-slider__unit {
+  color: var(--colors-slider-label-unit-disabled);
+}
+
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-slider__value-text,
+  .ds-slider__range-label,
+  .ds-slider__unit {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}

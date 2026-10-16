@@ -8,6 +8,9 @@ export const PSEUDO = {
   pressed: 'pseudo-active',
   focus: 'pseudo-focus-within',
   focusVisible: 'pseudo-focus-visible',
+  /** On an ancestor: every descendant matches :hover / :active (for parts a component does not expose). */
+  hoverAll: 'pseudo-hover-all',
+  pressedAll: 'pseudo-active-all',
 } as const;
 
 /** Story parameters that enable the stylesheet rewriting for every pseudo class used above. */

@@ -1,0 +1,66 @@
+{
+  "component": "Slider",
+  "sets": [
+    {
+      "set": "slider",
+      "story": "components-slider-showcase--variant-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 312px; min-width: 312px; max-width: 312px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Frame 2147238937": ".ds-slider__main",
+        "Frame 2147238937/Frame 2147238934": ".ds-slider__track",
+        "Frame 2147238937/Frame 2147238934/Frame 2147238819": ".ds-slider__rail",
+        "Frame 2147238937/Frame 2147238934/Frame 2147238819/Rectangle 34624605": {
+          "selector": ".ds-slider__fill",
+          "compare": "xyh"
+        },
+        "Frame 2147238937/Frame 2147238934/handle": {
+          "selector": ".ds-slider__thumb",
+          "compare": "ywh"
+        },
+        "Frame 2147238937/Frame 2147238934/handle/Rectangle 34624610": {
+          "selector": ".ds-slider__knob",
+          "compare": "ywh"
+        },
+        "Frame 2147238937/Frame 2147238936": ".ds-slider__range",
+        "Frame 2147238937/Frame 2147238936/*": ".ds-slider__range-label",
+        "Frame 2147238916": {
+          "selector": ".ds-slider__entry",
+          "optional": true
+        },
+        "Frame 2147238938": {
+          "selector": ".ds-slider__entry",
+          "optional": true
+        },
+        "Frame */input": ".ds-slider__input",
+        "Frame */input/Container": ".ds-slider__input .ds-field__control",
+        "Frame */input/Container/Input": ".ds-slider__input .ds-field__input",
+        "Frame */명": ".ds-slider__unit"
+      },
+      "maskPixels": [
+        {
+          "node": "Frame 2147238937/Frame 2147238934/handle",
+          "pad": 4
+        }
+      ],
+      "knownDifferences": {
+        "State=Default": "the Figma handle is placed by hand 2px right of the fill end (x 93); the code centres it on the value (x 91) — x not compared, handle area masked",
+        "State=Disabled": "same handle placement as Default"
+      }
+    },
+    {
+      "set": "handle",
+      "story": "components-slider-showcase--handle-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td { width: 44px; min-width: 44px; max-width: 44px; } th { width: 200px; min-width: 200px; max-width: 200px; }",
+      "parts": {
+        "Rectangle *": [
+          ".ds-slider__knob",
+          ".ds-slider__halo"
+        ],
+        "Tag/state": ".ds-slider__value-label",
+        "Tag/state/Description Top": ".ds-slider__value-text"
+      }
+    }
+  ]
+}

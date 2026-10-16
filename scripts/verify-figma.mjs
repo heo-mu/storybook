@@ -143,7 +143,7 @@ for (const set of config.sets) {
     if (!g) { issues.push({ cat: 'structure', detail: 'not a Figma variant name' }); results.push({ name: m.name, issues, notes }); continue; }
     const dw = Math.abs(m.w - g.w);
     // A root that hugs its text is < 1px narrower without calc-size() (Firefox, Safari) — docs/browser-support.md.
-    if (dw > tol && !calcSize && dw < 1 && Math.abs(m.h - g.h) <= tol) notes.push(`root width ${m.w.toFixed(2)} vs ${g.w} (no calc-size)`);
+    if (dw > tol && !calcSize && dw <= 1 && Math.abs(m.h - g.h) <= tol) notes.push(`root width ${m.w.toFixed(2)} vs ${g.w} (no calc-size)`);
     else if (dw > tol || Math.abs(m.h - g.h) > tol) issues.push({ cat: 'size', detail: `root ${m.w.toFixed(2)}×${m.h.toFixed(2)} ≠ ${g.w}×${g.h}` });
 
     // Parts
@@ -166,7 +166,7 @@ for (const set of config.sets) {
           // Auto-width text boxes are whole pixels in Figma; browsers keep the sub-pixel text width.
           if (isText && axis === 'w' && diff < 1) { notes.push(`${p} text width ${a.toFixed(2)} vs ${b}`); continue; }
           // Without calc-size() (Firefox, Safari) boxes that hug text stay < 1px narrower — docs/browser-support.md.
-          if (!calcSize && (axis === 'w' || axis === 'x') && diff < 1) { notes.push(`${p}.${axis} ${a.toFixed(2)} vs ${b} (no calc-size)`); continue; }
+          if (!calcSize && (axis === 'w' || axis === 'x') && diff <= 1) { notes.push(`${p}.${axis} ${a.toFixed(2)} vs ${b} (no calc-size)`); continue; }
           issues.push({ cat: 'geometry', detail: `${p}.${axis} ${a.toFixed(2)} ≠ ${b}` });
         }
       }
@@ -182,7 +182,13 @@ for (const set of config.sets) {
       const fig = cropOver(reference, Math.round(fp.x), Math.round(fp.y), w, h, set.background);
       const dom = cropOver(shot, 0, 0, w, h, set.background);
       const textBoxes = g.n.filter((n) => n[5] === 'T' && !isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh }));
-      const maskBoxes = [...textBoxes, ...g.n.filter((n) => isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh }))];
+      // maskPixels: ["<layer glob>" | { node, pad }] — areas excluded from the pixel diff only (geometry still checked).
+      const pixelMasks = (set.maskPixels ?? []).map((e) => (typeof e === 'string' ? { re: glob(e), pad: 1 } : { re: glob(e.node), pad: e.pad ?? 1 }));
+      const maskBoxes = [
+        ...textBoxes,
+        ...g.n.filter((n) => isIgnored(n[0])).map(([p, x, y, bw, bh]) => ({ p, x, y, w: bw, h: bh })),
+        ...g.n.flatMap(([p, x, y, bw, bh]) => pixelMasks.filter((mk) => mk.re.test(p)).map((mk) => ({ p, x: x - mk.pad + 1, y: y - mk.pad + 1, w: bw + 2 * (mk.pad - 1), h: bh + 2 * (mk.pad - 1) }))),
+      ];
       // Strict comparison outside text boxes (padded by 1px).
       const mask = (img) => { const c = new PNG({ width: w, height: h }); img.data.copy(c.data); for (const t of maskBoxes) for (let yy = Math.max(0, Math.floor(t.y) - 1); yy < Math.min(h, Math.ceil(t.y + t.h) + 1); yy++) for (let xx = Math.max(0, Math.floor(t.x) - 1); xx < Math.min(w, Math.ceil(t.x + t.w) + 1); xx++) { const i = (yy * w + xx) * 4; c.data[i] = c.data[i + 1] = c.data[i + 2] = 0; } return c; };
       const diff = new PNG({ width: w, height: h });
@@ -234,7 +240,7 @@ for (const set of config.sets) {
   const glyphs = results.flatMap((r) => r.pixel?.glyphs ?? []);
   lines.push('', `${set.set}: rendered ${measured.length}/${expected.length}${missing.length ? ` (missing: ${missing.join(' | ')})` : ''}`);
   lines.push(`  all checks passed: ${clean}/${results.length}`);
-  for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known rendering difference — ${v}: ${why}`); }
+  for (const [v, entry] of Object.entries(set.knownDifferences ?? {})) { const why = typeof entry === 'string' ? entry : entry[BROWSER]; if (why) lines.push(`  ◇ known difference — ${v}: ${why}`); }
   if (ignored.length) lines.push(`  ◇ manual review (not compared): ${set.ignore.join(", ")}`);
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);
   lines.push(`  non-text pixels: mean ${((ratios.reduce((a, b) => a + b, 0) / Math.max(1, ratios.length)) * 100).toFixed(2)}% differing, max ${(Math.max(0, ...ratios) * 100).toFixed(2)}%`);

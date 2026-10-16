@@ -1,0 +1,67 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Showcase from './stories/Slider.showcase.stories';
+import { Slider } from './Slider';
+
+<Meta title="Components/Slider/Usage" />
+
+# Slider — 사용 가이드
+
+Figma **Slider** 프레임(379:1562)의 `slider`(Default · Disabled)와 `handle`(5개)을 구현한 범위 입력입니다.
+드래그 · 터치 · 키보드는 [react-aria-components](https://react-spectrum.adobe.com/react-aria/Slider.html)가 처리하고,
+오른쪽 숫자 필드(Figma "Show Input")는 `Input` 컴포넌트를 그대로 사용합니다.
+
+<Canvas of={Showcase.Overview} />
+
+## 사용 예
+
+<Source
+  language="tsx"
+  code={`import { Slider } from 'platform-design-system';
+
+<Slider aria-label="인원" minValue={1} maxValue={200} defaultValue={100} unit="명" />
+
+// 제어 컴포넌트 + 변경 완료 시점에만 저장
+<Slider aria-label="투명도" value={opacity} onChange={setOpacity} onChangeEnd={save} step={10} unit="%" />
+
+// 숫자 필드 없이
+<Slider aria-label="볼륨" defaultValue={70} showInput={false} />`}
+/>
+
+## Figma 속성 → Props
+
+| Figma | Prop | 비고 |
+| --- | --- | --- |
+| 범위 라벨 "1" · "200" | `minValue` · `maxValue` | 기본 0 · 100, `formatOptions`로 숫자 형식 |
+| 채움 · 핸들 위치 | `value` / `defaultValue` / `onChange` | `onChangeEnd`는 드래그 종료 · 키 입력 · 필드 확정 시 |
+| Show Input | `showInput` | 기본 `true`. Enter 또는 포커스 이동 시 확정, 범위 밖 값은 잘라내고 `step`에 맞춤 |
+| 단위 텍스트 "명" | `unit` | 필드 오른쪽과 값 라벨에 표시 |
+| handle Value Label | `valueLabel` | 기본 `true`. Hover · 드래그 중 핸들 위 값 표시 |
+| handle Pressed | 드래그 중 | 핸들 주위 반투명 원 |
+| State Disabled | `disabled` | |
+
+Figma에는 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby`가 필요합니다. 숫자 필드 이름은 `inputLabel`(기본 "값 입력").
+
+## 키보드
+
+| 키 | 동작 |
+| --- | --- |
+| ← · → · ↑ · ↓ | 한 `step` 이동 |
+| Page Up · Page Down | 큰 단위 이동 |
+| Home · End | 최솟값 · 최댓값 |
+| 숫자 필드에서 ↑ · ↓ | 한 `step` 이동 |
+
+## 코드 정책 (Figma에 정의되지 않은 동작)
+
+- **값 라벨**: Figma처럼 Hover · 드래그 중에 표시하고, 키보드 포커스에도 표시합니다.
+- **핸들 위치**: 값 위치에 핸들 중심을 맞춥니다(Figma 예시는 손으로 배치되어 채움 끝보다 2px 오른쪽).
+- **숫자 필드 너비**: 가장 긴 값(최솟값 · 최댓값의 자릿수)이 들어가는 고정 너비 — 값이 바뀌어도 트랙 길이가 변하지 않습니다
+  (Figma 예시는 "100"에 맞춘 너비).
+- **포커스 표시**: Figma에 Focus 상태가 없어 핸들에 브라우저 기본 포커스 링을 표시하고, 값 라벨도 함께 보입니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+## Props
+
+<ArgTypes of={Slider} />
