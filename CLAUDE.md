@@ -42,7 +42,11 @@ to access component and documentation knowledge before answering or acting on UI
 ## Docs
 
 - docs/developer-guide.md — handover guide for the frontend team (stack, install, tokens, versioning, MCP)
+- docs/public-api.md — generated list of public (49) / auxiliary (32) components and the internal API not to use;
+  every new component export must be classified at the top of scripts/generate-api-docs.mjs (the script fails otherwise)
 - docs/api.md — generated public API; docs/figma-issue-triage.md — open Figma issues by category
+- docs/release-checklist.md — pre-release checklist; docs/breaking-changes.md — compatibility analysis and version policy
+- docs/figma-fix-requests.md — fixes requested in the Figma source (node / variable IDs); add new ones there, never edit Figma
 - docs/usage.md — consuming the package from another React project
 - docs/browser-support.md — CSS features, fallbacks, measured per-engine results
 - docs/figma-issues.md — token / variant naming issues in the Figma source (report, don't "fix" them in code)

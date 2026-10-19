@@ -34,6 +34,7 @@
 | 8 | Dashboard components | 완료 |
 | 9 | 통합 QA · 최종 보고 | 완료 ([final-report.md](./final-report.md)) |
 | 10 | 전달 전 안정화 (F31 · F65 · F69 분석, 차트 툴팁 · 필터 바 라벨, 이슈 분류, 개발자 문서) | 완료 |
+| 11 | 최종 배포 준비 (F31 동기화 · Secondary/Solid, F65 색 통일, F69 토큰, 공개 API 분류, 배포 전 체크리스트) | 완료 — [final-report.md 8절](./final-report.md#8-최종-배포-준비-2026-10-19) |
 
 ## 검증 현황
 
@@ -111,25 +112,25 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
-모든 Phase 완료. 남은 일은 결정 대기 항목([final-report.md](./final-report.md#5-결정이-필요한-항목))에 대한 디자인 측 결정과, 그에 따른 반영입니다.
+모든 Phase 완료. 남은 일은 [final-report.md 8절](./final-report.md#8-최종-배포-준비-2026-10-19)의 결정(D1 – D6)과 [Figma 수정 요청](./figma-fix-requests.md)(R1 – R8) 반영,
+그리고 배포 승인 후 [release-checklist.md](./release-checklist.md)의 배포 단계입니다. 아래는 이전 결정 항목의 현재 상태입니다.
 
-**결정 필요 — 대시보드 원격 변수(F69)**: 카드 모서리 12px는 로컬 토큰이 없어 Figma 값을 그대로 썼습니다(rounded-lg 10 · rounded-xl 14 중 선택 또는 토큰 추가).
+**F69 — 해결(2026-10-19)**: 공통 토큰 `rounded-[12px]`(Figma 등록 대기)을 추가해 MetricCard · DashboardFilterBar가 사용합니다.
 
-**결정 필요 — Chart(F63 · F65)**: 툴팁 위치는 Figma가 변형마다 손으로 배치해 코드 정책으로 정했습니다. 가로 막대 기본 스타일의 비교 막대 색
-(`chart/simple/history`)이 범례 · 툴팁(`chart/series/compare`)과 다르고 세로 막대와도 다르지만 Figma 그대로 구현했습니다.
+**결정 필요 — Chart(F63 · F65-b)**: 툴팁 위치는 코드 정책입니다. 가로 막대 기본 스타일의 비교 막대는 2026-10-19부터 범례 · 툴팁과 같은
+`chart/series/compare`(Figma 수정 요청 R3). 간단 스타일 지난 기간 색(세로 · 가로 다름)은 Figma 그대로입니다.
 
 **결정 필요 — Card(F60 · F61)**: Figma Card 프레임이 숨김이고 그림자가 원격 스타일입니다.
 
-**결정 필요 — Dialog 덮개(F51)**: Figma에 scrim이 없어 투명으로 두었습니다. **Accordion Hover(F50)**: 변형마다 다른 표현을 Figma 그대로 구현했습니다.
+**결정 필요 — Dialog 덮개(F51)**: Figma에 scrim이 없어 투명으로 두었습니다. **Accordion Hover(F50)**: 2026-10-19 Figma에서 통일되어 해소 · 반영.
 
 **결정 필요 — Toast 표시 위치 · 간격 · 시간(F44)**: Figma에 없어 코드 정책으로 정했습니다.
 
 **결정 필요 — Breadcrumb 펼친 상태(F33)**: Figma는 메뉴가 열린 동안 현재 페이지 항목을 Role=Open으로 그렸습니다. 코드는 … 버튼이
 메뉴를 열고 현재 페이지는 Current로 둡니다.
 
-**결정 필요 — Figma 원본 변경**: Phase 3 중 원본이 바뀌었습니다(Button Secondary Solid 신설 등, [token-diff.md](./token-diff.md)
-"Figma 원본 변경 감지"). 스냅샷은 동결(Primitive 추가 7개만 반영)했고, 이후 받은 기준 이미지의 Hover 배경(#f5f6f7)과 코드(#f9fafb)는
-채널당 4 단계 다를 수 있습니다(현재 픽셀 임계값으로는 실패하지 않음).
+**Figma 원본 변경(F31) — 동기화 완료(2026-10-19)**: 스냅샷 체크섬 8그룹이 원본과 일치하고 Button 352개 · 기준 이미지가 최신입니다.
+Primary · Outline 테두리 변수(원본에서 삭제)만 결정 D1 대기입니다.
 
 검증 도구: `npm run verify:all`(전 컴포넌트 × 3 엔진 요약), `npm run verify:a11y`(axe, 전 스토리), `npm run verify:button`.
 `figma/verify/*.json` 옵션 — `story` 배열(`id&args=key:value`), `ignore`(수동 검토 레이어), `maskPixels`(픽셀만 제외),

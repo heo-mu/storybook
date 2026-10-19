@@ -18,6 +18,7 @@
 | Badge Point | `colors/badge/status/*/label/point` · `count/background/point` | #ec003f / #ffe4e6 · #fdfdfd, #fdfdfd / #ec003f | 3.77 · 4.45 · 4.45:1 | Badge · BadgeCount Point |
 | Badge Warning | `colors/badge/status/*/label/warning` · `count/background/warning` | #f54900 / #ffedd4 · #fdfdfd, #fdfdfd / #f54900 | 3.13 · 3.53 · 3.53:1 | Badge · BadgeCount Warning |
 | Badge Danger (Filled) | `colors/badge/status/filled/label/danger` | #e7000b / #ffe2e2 | 3.91:1 | Badge Danger Filled |
+| Button Secondary · Solid Hover · Pressed | `colors/button/secondary/solid/label/default`(text/inverse) on `…/background/hover` · `pressed` (fill/secondary/strong/hover · pressed) | #fdfdfd / #009b68 · #02bb7b | 3.51 · 2.46:1 | Button · IconButton Secondary · Solid(2026-10-19 Figma 추가). Default #007c56은 5.14:1로 통과 |
 
 비활성(Disabled) 요소는 WCAG 대비 기준에서 제외됩니다.
 
@@ -40,6 +41,7 @@
 | Phase 2 완료 | 148 | 102 (모두 color-contrast) | — | 0 |
 | Phase 4 완료 | 262 | 210 (모두 color-contrast) | 693 | 0 |
 | Phase 6 완료 | 311 | 302 (모두 color-contrast) | 693 | 0 |
+| 최종 배포 준비 (2026-10-19) | 376 | 423 (모두 color-contrast — Secondary · Solid Hover · Pressed 18 포함) | 693 | 0 |
 
 - **react-aria 마크업 — label-content-name-mismatch (axe 실험 규칙, WCAG 2.5.3)**: 달력 날짜 칸의 이름은 react-aria가 만드는
   전체 날짜("2026년 7월 28일 화요일")이고 보이는 글자는 "28"입니다. 한국어 이름에서는 "28일"로 붙어 axe가 단어 일치로

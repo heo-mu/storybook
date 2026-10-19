@@ -1,5 +1,8 @@
 # Design Token Diff — 2026-10-16 재추출
 
+> **2026-10-19**: 아래 "원본 변경 감지" 내용은 F31 동기화로 반영되어 스냅샷이 원본과 다시 같습니다(체크섬 8그룹 일치).
+> 반영 결과와 토큰 변경 목록은 [analysis/F31-button-sync.md](./analysis/F31-button-sync.md) · [breaking-changes.md](./breaking-changes.md).
+
 Figma **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`)의 Variables / Styles를 다시 추출해,
 Button 구현 시점의 스냅샷(`figma/`)과 비교한 결과입니다. 비교는 정렬된 `name=value [scopes]` 줄의 체크섬
 (`npm run figma:checksum` ↔ `figma/checksum.figma.js`)과 그룹별 변수 개수로 했습니다.

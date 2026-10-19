@@ -81,19 +81,19 @@ Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것
 
 | # | 내용 | 현재 코드 |
 | --- | --- | --- |
-| F31 | 작업 중 Figma 원본 변경(Button Secondary · Solid 신설 등) 동기화 여부 | 스냅샷 동결. Dashboard Filter Bar 초기화 버튼은 Secondary · Outline으로 대체 |
+| F31 | 작업 중 Figma 원본 변경(Button Secondary · Solid 신설 등) 동기화 여부 | **2026-10-19 동기화 완료** — Primary · Outline 테두리 변수만 D1(8절) |
 | F33 | Breadcrumb 펼친 상태 표현(Role=Open, 메뉴 위치) | … 버튼이 메뉴를 열고 현재 항목은 Current |
 | F44 | Toast 위치 · 간격 · 표시 시간 | 화면 아래 가운데, 간격 m-2, 5초 |
 | F48 | Tooltip 거리 · 지연 | 화살표 길이 8px, react-aria 기본 지연 |
-| F50 | Accordion Hover 표현이 변형마다 다름 | Figma 그대로 |
+| F50 | Accordion Hover 표현이 변형마다 다름 | **해소** — 2026-10-19 Figma에서 통일, 코드 반영 |
 | F51 | Dialog 뒤 덮개(scrim) 색 | 투명 |
 | F58 | Table 관리 모드 샘플 불일치 | 한 줄 Input · 실제 날짜, 두 줄 변형 수동 검토 |
 | F60 | Card 그림자(원격 스타일 10%) | 로컬 elevation-1(12%) |
 | F61 | Card 프레임 숨김 | 레이어 값으로 구현 |
 | F63 | Chart 툴팁 위치 규칙 | 기준점 오른쪽 p-3(넘치면 왼쪽), 세로 막대는 항목 가운데 · 그림 영역 위 |
-| F65 | Chart 비교 계열 색(가로 막대 막대 · 범례 색이 다름) | Figma 변형별 그대로 |
-| F69 | 대시보드 원격 변수(padding 16 · 모서리 12 · 흰 배경) | p-4 · 12px(로컬 토큰 없음) · surface/page |
-| F71 | Dashboard Filter Bar 예시 크기(세그먼트 220px) | 말줄임 |
+| F65 | Chart 비교 계열 색(가로 막대 막대 · 범례 색이 다름) | **기본 스타일은 `series/compare`로 통일**(Figma 수정 요청 R3), 간단 스타일은 결정 대기 |
+| F69 | 대시보드 원격 변수(padding 16 · 모서리 12 · 흰 배경) | p-4 · **공통 토큰 `rounded-[12px]`(Figma 등록 대기 R4)** · surface/page |
+| F71 | Dashboard Filter Bar 예시 크기(세그먼트 220px) | **해결** — 라벨이 항목 padding까지 사용 |
 
 ## 6. 체크포인트 커밋 (로컬)
 
@@ -154,3 +154,40 @@ Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것
 | 이슈 분류 | 113개 ID: 디자인 결정 37 · 개발 개선 7(완료 2) · 허용 차이 74 — [분류표](./figma-issue-triage.md) |
 | 개발자 문서 | [developer-guide.md](./developer-guide.md), [api.md](./api.md)(자동 생성), [CHANGELOG.md](../CHANGELOG.md) |
 | 회귀 · 외부 Import | verify:all 36개 컴포넌트 × 3 엔진 108/108, verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 86 파일 · 374개, typecheck · lint · build(토큰 변경 없음) · build-storybook, axe 374 스토리 그 밖의 위반 0, 외부 프로젝트(npm pack → Vite 8 + React 19 + TS 6) 타입 검사 · 빌드 · 실행 — 화면 가장자리 차트 툴팁이 `<body>`에서 보이는 그림 영역 안, "최근 30일" 잘림 없음, 콘솔 오류 0 |
+
+## 8. 최종 배포 준비 (2026-10-19)
+
+원격 Push · npm 배포 · Storybook 배포는 하지 않았고, 변경은 로컬 커밋만 했습니다. Figma 원본은 읽기 전용으로만 조회했습니다.
+
+| 작업 | 결과 |
+| --- | --- |
+| F31 최신 Figma 동기화 | 스냅샷 재추출 → 체크섬 **8그룹 모두 원본과 일치**. 토큰 삭제 · 이름 변경 17 · 추가 26 · 값 변경 25. Button 352개(Secondary · Solid 56 추가) — [분석 6 · 7절](./analysis/F31-button-sync.md#6-적용-결과-2026-10-19) |
+| Primary · Outline 테두리 | 원본 42개 노드가 **삭제된 변수**를 가리킴 → 원본에 남은 #004a38을 그대로 쓰고 **변수 연결은 정하지 않음**(D1) |
+| Secondary · Solid Props · 호환성 | `appearance="solid"` 허용, 생략 시 Secondary는 이전처럼 Outline — 기존 코드 화면 변화 없음. `BUTTON_TONES` 위치 변경은 내부 API로 분류 |
+| 노드 단위 원본 변경 | 68개 세트를 다시 캡처해 비교 → Accordion(모든 Hover 배경 · 펼침 구분선 · Disabled, F50 해소)과 Table 편집 칸 Filter(칩 1개 구성) 반영, 기준 갱신 |
+| 호환성 · 버전 정책 | [breaking-changes.md](./breaking-changes.md) — 외부 배포 전이므로 별칭 없이 **0.1.0으로 첫 배포** 권장, 0.x · 1.0 이후 규칙 |
+| F65 | 가로 막대 기본 비교 막대 = 범례 · 툴팁 `chart/series/compare`. Figma 노드 5개 · 변수 ID 보고(R3) |
+| F69 | 공통 토큰 `--border-radius-rounded-\[12px\]`(기존 `rounded-[2px]` 규칙, Tailwind 없음) — `figma-pending/`에서 생성, 체크섬 밖, Figma 등록 시 자동 감지 |
+| 공개 API 분류 | 컴포넌트 88 = **공개 49 · 보조 32 · 내부 부품 7**, export 308(= 307 + `closeToast`) = 컴포넌트 88 + 타입 125 + 상수 45 + 함수 2 + 아이콘 35 + 내부 API 13 — [public-api.md](./public-api.md)(자동 생성, 분류 누락 시 생성 실패) |
+| 문서 | developer-guide · api.md · public-api.md · CHANGELOG 갱신, [release-checklist.md](./release-checklist.md) · [figma-fix-requests.md](./figma-fix-requests.md) 추가 |
+| 회귀 · 외부 Import | typecheck · lint 0, 스토리 테스트 86 파일 · **376개** 통과, build(토큰 = 스냅샷, 변경 없음) · build-storybook, **verify:all 36 × 3 엔진 108/108**, **verify:button 352/352 · 실제 포인터 36/36 × 3 엔진**, axe 376 스토리 그 밖의 위반 0(새 알려진 대비 18: Secondary · Solid Hover · Pressed 흰 글자 3.51 · 2.46:1 — Figma 값, 디자인 확인 필요), 외부 프로젝트(npm pack → Vite 8 + React 19 + TS 6 strict) 타입 검사 · 빌드 · 실행 — Secondary · Solid #007c56, Secondary 기본 Outline 유지, 12px 토큰, `closeToast`, 콘솔 오류 0 |
+
+### 결정이 필요한 항목
+
+| # | 결정 | 권장 | 영향 |
+| --- | --- | --- | --- |
+| D1 | Button Primary · Outline 테두리에 바인딩할 변수(원본에서 삭제됨) | 컴포넌트 변수 `colors/button/primary/outline/border/default`를 다시 만들어 `fill/primary/strong/default`에 연결 | Figma 42개 노드 재바인딩, 코드는 리터럴 → 토큰 한 줄 |
+| D2 | 첫 배포 버전 | **0.1.0**(남은 결정이 API를 바꿀 수 있음) | CHANGELOG `[Unreleased]` → `[0.1.0]`, 태그 |
+| D3 | Table 편집 칸 Filter의 다중 선택 목록(칩 + 체크 목록) | 필요하면 새 컴포넌트로 설계(지금은 그리지 않음) | 새 컴포넌트 또는 기존 DropdownMenu 선택 모드 |
+| D4 | 간단 스타일 차트 지난 기간 색(세로 `series/compare` · 가로 `simple/history`, F65-b) | 디자인 의도 확인 | `markColor` 한 줄 |
+| D5 | 내부 부품 7 · 내부 API 13을 1.0 전에 export에서 뺄지 | 빼기(0.x 마이너에서) | 호환성 변경 — 0.x 규칙상 마이너 |
+| D6 | 배포 실행(npm 레지스트리 · Storybook 호스팅) 승인 | — | `"private": true` 해제, 레지스트리 설정 |
+
+그 밖의 디자인 결정 37건은 [figma-issue-triage.md](./figma-issue-triage.md) 1절(우선순위 표시)에 있습니다.
+
+### Figma 원본 수정 요청 (수정하지 않음)
+
+[figma-fix-requests.md](./figma-fix-requests.md) — R1 Primary · Outline 테두리(삭제된 변수, 42노드) · R2 Secondary · Outline 테두리 바인딩(8노드) ·
+R3 차트 비교 막대(5노드, F65) · R4 12px 변수 등록 · 재바인딩(5 + 29노드, F69) · R5 Accordion 변형 위치(1노드) · R6 Table Filter 칩 상태(3노드) ·
+R7 다중 선택 목록(D3) · R8 Table 안내 글자(삭제된 변수, 3노드, F57).
+

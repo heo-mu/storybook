@@ -5,6 +5,32 @@
 
 ## [Unreleased]
 
+첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
+
+### 호환성 변경 (Figma 동기화 2026-10-19 — F31)
+- **토큰 CSS 변수 삭제 · 이름 변경 17개**: `--colors-button_text-*` 12개 → `--colors-button_text-primary-*`(Secondary는 `-secondary-*` 새로 추가),
+  `--colors-accordion-border-focus` → `--colors-accordion-border-hover`, `--colors-button-primary-{solid,outline}-border-{default,disabled}` 4개 삭제
+  (Figma에서 변수 삭제). 별칭은 두지 않습니다.
+- `BUTTON_TONES`에 Secondary · Solid 추가(3번째) — 이제 내부 API.
+
+### 화면 변경
+- Hover 배경(`fill/primary/subtle/hover`) #f9fafb → #f5f6f7 — Button Outline · TextButton · Checkbox · Radio · Chip · DatePicker · Link · Pagination · Select · Tabs · Table · Accordion.
+- **TextButton** `variant="secondary"`: 글자 · 아이콘이 Primary보다 한 단계 연함(Figma `button_text/secondary`).
+- **Accordion**: 모든 크기 Hover 배경, 펼친 항목 구분선 `border/hover`, Disabled 배경 `fill/disabled` · 제목 `text/placeholder`(F50 해소).
+- **Chart**: 가로 막대 기본 스타일 비교 막대를 범례 · 툴팁과 같은 `chart/series/compare`로(F65 — Figma 수정 요청).
+
+### Added
+- **Button · IconButton**: Secondary · Solid(Figma 56개 변형, 352개 전체). `appearance`를 생략하면 Secondary는 이전처럼 Outline.
+- `closeToast(key)` — `showToast()`가 돌려준 토스트를 코드에서 닫기.
+- 공통 토큰 `--border-radius-rounded-\[12px\]`(F69, Figma 등록 대기 — `figma-pending/primitive.txt`). MetricCard · DashboardFilterBar가 사용.
+- 문서: `docs/public-api.md`(공개 49 · 보조 32 · 사용 금지 내부 API, 자동 생성), `docs/breaking-changes.md`, `docs/figma-fix-requests.md`,
+  `docs/release-checklist.md`. `api.md`에 분류 표시.
+
+### Deprecated
+- 내부 API로 분류(`@internal`, export는 유지 — 1.0 전 제거 여부 결정): `toastQueue` · `resolveAppearance` · `BUTTON_STATES` · `BUTTON_TONES` ·
+  `ButtonToneProps` · `ButtonDisabledProp`, 내부 부품 `PaginationItem` · `PaginationControl` · `BreadcrumbItem` · `BreadcrumbSeparator` ·
+  `StepperIndicator` · `StepperConnector` · `NavParentItem`과 그 Props 타입.
+
 ### Changed
 - **Chart**: 툴팁을 `<body>`로 포털(`position: fixed`)하고, 보이는 그림 영역과 화면 안으로 자동 배치(넘치면 뒤집기 · 가장자리에서 이동, 스크롤 · 창 크기 변경 추적).
   `overflow: hidden` 부모 안에서도 잘리지 않습니다. 테스트에서 툴팁을 찾을 때는 `document`에서 조회하세요.

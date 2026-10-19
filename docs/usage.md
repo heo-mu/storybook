@@ -61,7 +61,7 @@ export function SaveBar({ onSave, saving }: { onSave: () => void; saving: boolea
 | Prop | 값 | 기본값 | Figma |
 | --- | --- | --- | --- |
 | `variant` | `'primary'` · `'secondary'` · `'tertiary'` | `'primary'` | Variant |
-| `appearance` | `'solid'` · `'outline'` (secondary는 `'outline'`만) | `'solid'` | Appearance |
+| `appearance` | `'solid'` · `'outline'` | `'solid'` (secondary는 생략 시 `'outline'`) | Appearance |
 | `size` | `'xs'` · `'sm'` · `'md'` · `'lg'` | `'xs'` | Size |
 | `shape` | `'square'` · `'rounded'` | `'square'` | Shape |
 | `leftIcon` / `rightIcon` | 아이콘 엘리먼트 | 없음 | Left / Right Icon |
@@ -107,7 +107,7 @@ import { TextButton } from 'platform-design-system';
 
 | Prop | 값 | 기본값 | Figma |
 | --- | --- | --- | --- |
-| `variant` | `'primary'` · `'secondary'` | `'primary'` | Type (Ver 0.4에서는 두 값이 같은 모양) |
+| `variant` | `'primary'` · `'secondary'` | `'primary'` | Type (Secondary는 글자 · 아이콘이 한 단계 연함 — 2026-10-19 Figma) |
 | `size` | `'sm'` · `'md'` | `'sm'` | Size |
 | `leftIcon` / `rightIcon`, `children`, `disabled` | Button과 동일 | | |
 
@@ -135,8 +135,8 @@ export function PlusIcon() {
 Figma에 없는 조합은 컴파일 단계에서 막힙니다.
 
 ```tsx
-<Button variant="secondary">OK</Button>                      // appearance는 'outline'으로 결정
-<Button variant="secondary" appearance="solid">X</Button>    // ✗ 타입 오류 — Secondary/Solid 없음
+<Button variant="secondary">OK</Button>                      // appearance 생략 → 'outline'
+<Button variant="secondary" appearance="solid">OK</Button>   // Secondary / Solid (2026-10-19 Figma 추가)
 <IconButton size="lg" icon={<PlusIcon />} aria-label="X" />  // ✗ 타입 오류 — IconButton에 lg 없음
 <IconButton icon={<PlusIcon />} />                           // ✗ 타입 오류 — aria-label 필수
 ```
@@ -144,10 +144,10 @@ Figma에 없는 조합은 컴파일 단계에서 막힙니다.
 타입과 옵션 배열도 함께 export 됩니다.
 
 ```tsx
-import { BUTTON_SIZES, BUTTON_TONES, type ButtonProps, type ButtonSize } from 'platform-design-system';
+import { BUTTON_SIZES, BUTTON_VARIANTS, type ButtonProps, type ButtonSize } from 'platform-design-system';
 
-// BUTTON_TONES: Figma에 존재하는 Variant × Appearance 5개 조합
-BUTTON_TONES.map((tone) => <Button key={`${tone.variant}-${tone.appearance}`} {...tone}>{tone.variant}</Button>);
+// 옵션 배열: Figma 속성 값 목록(선택지 UI · 값 검증용). BUTTON_TONES · BUTTON_STATES는 내부 API입니다(docs/public-api.md).
+BUTTON_VARIANTS.map((variant) => <Button key={variant} variant={variant}>{variant}</Button>);
 ```
 
 ## 6-1. 그 밖의 컴포넌트

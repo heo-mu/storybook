@@ -19,7 +19,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
-| Button 58:4971 | `button_basic` (160) · `button_icon` (120) · `button_text` (16) | `Button`, `IconButton`, `TextButton` | — | 완료 |
+| Button 58:4971 | `button_basic` (192) · `button_icon` (144) · `button_text` (16) — Secondary · Solid는 2026-10-19 동기화로 추가 | `Button`, `IconButton`, `TextButton` | — | 완료 |
 | Input 72:4021 | `input` (21) Type=Outline · Size sm/md/lg · State Default/Hover/Focus/Completed/Error/Disabled/Read-only · Label, Alert, Icon-eye · `input_message` (3) Info/Success/Error | `Input` | 1 | 완료 |
 | Textarea 86:2594 | `textarea` (14) Size md/sm · State 7종 · Label, Alert, Counter · `textarea_message` (3) | `Textarea` | 1 | 완료 |
 | Search Field 216:6742 | `search-field` (36) Size sm/md/lg · State Default/Hover/Focus/Error/Disabled/Completed · Type Solid/Outline · Label | `SearchField` | 1 | 완료 |
@@ -79,7 +79,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | `skeleton` (4) Shape Line/Block/Circle/Shape4 | `Skeleton` | 8 | 완료 |
 | `data-freshness` (3) Fresh/Stale/Offline | `DataFreshness` | 8 | 완료 |
 | `metric-card` (단일) | `MetricCard` | 8 | 완료 |
-| `dashboard-filter-bar` (단일) | `DashboardFilterBar`, `DashboardFilterGroup`, `DashboardFilterRange` | 8 | 완료 (초기화 버튼 Secondary · Solid는 F31, "최근 30일" 말줄임 F71 — 수동 검토) |
+| `dashboard-filter-bar` (단일) | `DashboardFilterBar`, `DashboardFilterGroup`, `DashboardFilterRange` | 8 | 완료 (초기화 버튼 Secondary · Solid — 2026-10-19 F31 동기화로 반영, "최근 30일" F71 해결) |
 
 ## 컴포넌트가 아닌 프레임
 

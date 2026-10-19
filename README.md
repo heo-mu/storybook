@@ -1,17 +1,22 @@
 # platform-design-system
 
 React component library for the Figma file **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, page `🔵 Ver 0.4`).
-Tokens and components are built only from values that exist in Figma.
+Tokens and components are built only from values that exist in Figma (plus one decided token awaiting Figma registration,
+`figma-pending/primitive.txt`).
 
 Status: design tokens and every component of the Figma Component section (58:5174) and Dashboard components section
-(728:25472) — Button family (296 variants) plus 842 further variants in 71 sets, checked against Figma in Chromium,
+(728:25472) — Button family (352 variants) plus 842 further variants in 71 sets, checked against Figma in Chromium,
 Firefox and WebKit. Inventory: [docs/component-inventory.md](docs/component-inventory.md) · results:
 [docs/final-report.md](docs/final-report.md).
 
 ## Docs
 
 - [docs/developer-guide.md](docs/developer-guide.md) — stack, structure, install, Storybook, tokens, browsers, versioning, Storybook MCP (Korean)
+- [docs/public-api.md](docs/public-api.md) — what to use and what not to use: 49 public components, 32 auxiliary components, internal API (generated, Korean)
 - [docs/api.md](docs/api.md) — public API, generated from the source (`npm run docs:api`)
+- [docs/release-checklist.md](docs/release-checklist.md) — pre-release checklist (Korean)
+- [docs/breaking-changes.md](docs/breaking-changes.md) — compatibility analysis of the 2026-10-19 changes and the version policy proposal (Korean)
+- [docs/figma-fix-requests.md](docs/figma-fix-requests.md) — fixes requested in the Figma source, with node and variable IDs (Korean)
 - [docs/usage.md](docs/usage.md) — using the package in another React project (Korean)
 - [docs/final-report.md](docs/final-report.md) — inventory, verification results and open design decisions (Korean)
 - [docs/accessibility.md](docs/accessibility.md) — keyboard and screen-reader behaviour per component
@@ -69,7 +74,7 @@ exists in Figma since the 2026-10-19 sync (Secondary / Solid added); without `ap
 | --- | --- |
 | `npm run storybook` | Storybook on http://localhost:6006 (also the Storybook MCP endpoint `/mcp`) |
 | `npm test` | Story tests (Vitest + Playwright Chromium): computed styles, prop → state transitions, variant counts |
-| `npm run verify:button` | Figma parity of all 296 Button variants (Storybook must be running); `-- --browser=firefox` / `webkit` for other engines |
+| `npm run verify:button` | Figma parity of all 352 Button variants (Storybook must be running); `-- --browser=firefox` / `webkit` for other engines |
 | `node scripts/verify-figma.mjs <component>` | Figma parity of one component (`figma/verify/<component>.json`); `--browser=`, `--set=` |
 | `npm run verify:all` | Every component in Chromium, Firefox and WebKit |
 | `npm run verify:a11y` | axe-core audit of every story |
