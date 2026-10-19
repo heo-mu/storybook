@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 import { KeyValueGroup, KeyValueItem, KeyValueTable } from '../Table';
 import { Button, TextButton } from '../../Button';
-import { FilterChip, InputChip } from '../../Chip';
+import { FilterChip } from '../../Chip';
 import { DatePicker } from '../../DatePicker';
 import { ImageUploadPreview } from '../../FileUploader';
 import { Input } from '../../Input';
@@ -77,19 +77,23 @@ function EditCell({ type, state, content }: { type: Type; state: State; content:
         </>,
         { editable: true },
       );
+    // Figma (since 2026-10-19): one chip-filter — Unselected "텍스트 선택" when empty, Selected with the summary when
+    // filled; Hover · Empty shows the chip's Hover state, Hover · Filled adds 초기화, Editing is the Expanded chip
+    // (Unselected in Figma) whose multi-select listbox is not drawn here (no such list in the library — decision item).
     case 'Filter':
-      if (!filled) return row(disabled ? <InputChip size="md" disabled onRemove={() => {}}>라벨명</InputChip> : <FilterChip size="md">라벨명</FilterChip>);
+      if (!filled) {
+        return row(
+          <FilterChip size="md" disabled={disabled} className={state === 'Hover' ? PSEUDO.hover : undefined}>
+            텍스트 선택
+          </FilterChip>,
+        );
+      }
       return row(
         <KeyValueGroup>
-          <KeyValueGroup style={{ gap: 'var(--spacing-margin-m-1)' }}>
-            <InputChip size="md" disabled={disabled} onRemove={() => {}}>
-              라벨명
-            </InputChip>
-            <InputChip size="md" disabled={disabled} onRemove={() => {}}>
-              라벨명
-            </InputChip>
-          </KeyValueGroup>
-          {active && <TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton>}
+          <FilterChip size="md" selected={state !== 'Editing'} expanded={state === 'Editing' || undefined} disabled={disabled}>
+            선택유형: 옵션명, 옵션명
+          </FilterChip>
+          {state === 'Hover' && <TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton>}
         </KeyValueGroup>,
       );
     case 'Switch':

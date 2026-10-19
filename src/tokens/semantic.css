@@ -52,7 +52,7 @@
   --colors-text-link-pressed: var(--colors-blue-800);
   --colors-text-link-visited: var(--colors-violet-700);
   --colors-fill-primary-subtle-default: var(--colors-white);
-  --colors-fill-primary-subtle-hover: var(--colors-gray-50);
+  --colors-fill-primary-subtle-hover: var(--colors-gray-75);
   --colors-fill-primary-subtle-pressed: var(--colors-gray-100);
   --colors-fill-secondary-subtle-default: var(--colors-white);
   --colors-fill-secondary-subtle-hover: var(--colors-gray-50);

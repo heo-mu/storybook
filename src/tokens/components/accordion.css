@@ -3,11 +3,11 @@
 :root {
   --colors-accordion-background-default: var(--colors-fill-transparent-default);
   --colors-accordion-background-hover: var(--colors-fill-primary-subtle-hover);
-  --colors-accordion-background-disabled: var(--colors-fill-transparent-default);
+  --colors-accordion-background-disabled: var(--colors-fill-disabled-default);
   --colors-accordion-border-default: var(--colors-border-gray-subtler);
-  --colors-accordion-border-focus: var(--colors-border-gray-darker);
+  --colors-accordion-border-hover: var(--colors-border-gray-darker);
   --colors-accordion-title-default: var(--colors-text-primary);
-  --colors-accordion-title-disabled: var(--colors-text-disabled);
+  --colors-accordion-title-disabled: var(--colors-text-placeholder);
   --colors-accordion-body-default: var(--colors-text-secondary);
   --colors-accordion-icon-default: var(--colors-icon-tertiary);
   --colors-accordion-icon-disabled: var(--colors-icon-disabled);

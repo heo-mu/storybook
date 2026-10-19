@@ -243,13 +243,14 @@ for (const set of SETS) {
 
 // Real pointer interaction on the Playground stories (no pseudo-state forcing).
 const INTERACTIONS = [
-  ...[['primary', 'solid'], ['primary', 'outline'], ['secondary', 'outline'], ['tertiary', 'solid'], ['tertiary', 'outline']].map(([v, a]) => ({
+  ...[['primary', 'solid'], ['primary', 'outline'], ['secondary', 'solid'], ['secondary', 'outline'], ['tertiary', 'solid'], ['tertiary', 'outline']].map(([v, a]) => ({
     set: 'button_basic', story: 'components-button-button--playground', args: `variant:${v};appearance:${a}`, key: `${v[0].toUpperCase() + v.slice(1)}/${a[0].toUpperCase() + a.slice(1)}`,
   })),
-  ...[['primary', 'solid'], ['tertiary', 'solid'], ['tertiary', 'outline']].map(([v, a]) => ({
+  ...[['primary', 'solid'], ['secondary', 'solid'], ['tertiary', 'solid'], ['tertiary', 'outline']].map(([v, a]) => ({
     set: 'button_icon', story: 'components-button-iconbutton--playground', args: `variant:${v};appearance:${a}`, key: `${v[0].toUpperCase() + v.slice(1)}/${a[0].toUpperCase() + a.slice(1)}`,
   })),
   { set: 'button_text', story: 'components-button-textbutton--playground', args: 'variant:primary;leftIcon:CaretLeft', key: 'Primary' },
+  { set: 'button_text', story: 'components-button-textbutton--playground', args: 'variant:secondary;leftIcon:CaretLeft', key: 'SecondarySecondary' },
 ];
 for (const it of INTERACTIONS) {
   await page.goto(`${SB}/iframe.html?id=${it.story}&viewMode=story&args=${it.args}`);

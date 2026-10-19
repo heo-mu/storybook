@@ -10,15 +10,6 @@
         "**/chip-filter*",
         "**/segmented-control"
       ],
-      "maskRects": [
-        [
-          1503,
-          16,
-          36,
-          36
-        ]
-      ],
-      "//maskRects": "reset button: Figma button_icon Secondary · Solid was added to Figma after the token snapshot (figma-issues F31) — the story uses Secondary · Outline there",
       "parts": {
         "Frame 2147240239": ".ds-filter-bar__filters",
         "Frame 2147240239/Controls*": ".ds-filter-bar__group",

@@ -9,15 +9,14 @@ import { ArrowCounterClockwiseIcon } from '../../../icons';
 
 /**
  * Story-only: the Figma dashboard-filter-bar sample (not part of the package API).
- * The Figma reset button is button_icon Secondary · Solid, added to Figma after the token snapshot (figma-issues F31) —
- * Secondary · Outline stands in for it here.
+ * The reset button is button_icon Secondary · Solid as in Figma (available since the F31 sync of 2026-10-19).
  */
 export function FilterBarSample(props: Omit<ComponentPropsWithoutRef<typeof DashboardFilterBar>, 'children'>) {
   return (
     <DashboardFilterBar
       actions={
         <>
-          <IconButton variant="secondary" appearance="outline" size="md" icon={<ArrowCounterClockwiseIcon />} aria-label="조건 초기화" />
+          <IconButton variant="secondary" appearance="solid" size="md" icon={<ArrowCounterClockwiseIcon />} aria-label="조건 초기화" />
           <Button variant="primary" appearance="solid" size="md">
             조회
           </Button>

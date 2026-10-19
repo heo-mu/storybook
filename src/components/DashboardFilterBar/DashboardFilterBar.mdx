@@ -43,8 +43,7 @@ Figma **dashboard-filter-bar**(698:4163)를 구현했습니다. 대시보드의 
 
 - **좁은 화면**: 그룹이 다음 줄로 넘어갑니다(줄 간격도 `m-6`). Figma는 1616px 한 줄만 있습니다.
 - **원격 변수**: padding · 모서리 · 배경이 원격 라이브러리 변수입니다(F69) — 같은 값 `p-4`, 모서리 12px, `colors/surface/page`.
-- **초기화 버튼**: Figma 예시는 button_icon Secondary · Solid인데, 이 변형은 토큰 스냅샷 이후 Figma에 추가되었습니다(F31 — 동기화 결정 필요).
-  예시와 검증 스토리는 Secondary · Outline을 대신 쓰고 그 영역은 픽셀 비교에서 뺐습니다.
+- **초기화 버튼**: Figma 예시대로 `IconButton variant="secondary" appearance="solid"`(2026-10-19 F31 동기화로 추가된 변형)입니다.
 - **접근성**: 바는 `role="search"` 랜드마크(`aria-label`, 기본 "조회 조건"), 그룹은 라벨로 이름 붙은 `role="group"`. 각 컨트롤에도
   `aria-label`을 주세요(Figma 컨트롤에는 보이는 라벨이 없음). "|" · "~"는 장식입니다.
 

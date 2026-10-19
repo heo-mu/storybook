@@ -52,12 +52,12 @@ Package entry points:
 | Variables: Primitive (615), Theme (44), Semantic (68), Component `colors/button*` (73) | `src/tokens/*.css` — `colors/text/primary` → `--colors-text-primary`; aliases stay `var()` references |
 | Text Styles (46) | `--typography-<style>-*` variables + `.ds-typography-<style>` classes |
 | Effect Styles (4) | `--effect-elevation-*` |
-| `button_basic` (160) | `Button` — `variant`, `appearance`, `size`, `shape`, `leftIcon`, `rightIcon`, `children`, `disabled` |
-| `button_icon` (120) | `IconButton` — same, no `lg`; `icon`, required `aria-label` |
+| `button_basic` (192) | `Button` — `variant`, `appearance`, `size`, `shape`, `leftIcon`, `rightIcon`, `children`, `disabled` |
+| `button_icon` (144) | `IconButton` — same, no `lg`; `icon`, required `aria-label` |
 | `button_text` (16) | `TextButton` — `variant` (Figma "Type"), `size`, `leftIcon`, `rightIcon`, `children`, `disabled` |
 
-State Hover / Pressed are the native `:hover` / `:active` states; Disabled is `disabled`. Only combinations that
-exist in Figma are typed (there is no Secondary/Solid).
+State Hover / Pressed are the native `:hover` / `:active` states; Disabled is `disabled`. Every Variant × Appearance pair
+exists in Figma since the 2026-10-19 sync (Secondary / Solid added); without `appearance`, Secondary stays Outline.
 
 `figma/` holds the read-only Figma export the code is generated and verified from:
 `variables/`, `styles/` (token snapshot), `button-spec.json` (per Size/Shape geometry and per State colours),

@@ -1,5 +1,5 @@
-# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (682 of 755)
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only)
+# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (682 of 763)
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: accordion background/disabled, border/focus → border/hover, title/disabled)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 # Lines without [scopes] are scoped ALL_SCOPES.
 #scopes ALL_SCOPES
@@ -676,11 +676,11 @@ colors/dashboard/border/default=@S:colors/border/gray-subtler [STROKE_COLOR]
 colors/skeleton/background/default=@S:colors/surface/overlay [FRAME_FILL,SHAPE_FILL]
 colors/accordion/background/default=@S:colors/fill/transparent/default [FRAME_FILL,SHAPE_FILL]
 colors/accordion/background/hover=@S:colors/fill/primary/subtle/hover [FRAME_FILL,SHAPE_FILL]
-colors/accordion/background/disabled=@S:colors/fill/transparent/default [FRAME_FILL,SHAPE_FILL]
+colors/accordion/background/disabled=@S:colors/fill/disabled/default [FRAME_FILL,SHAPE_FILL]
 colors/accordion/border/default=@S:colors/border/gray-subtler [STROKE_COLOR]
-colors/accordion/border/focus=@S:colors/border/gray-darker [STROKE_COLOR]
+colors/accordion/border/hover=@S:colors/border/gray-darker [STROKE_COLOR]
 colors/accordion/title/default=@S:colors/text/primary [TEXT_FILL]
-colors/accordion/title/disabled=@S:colors/text/disabled [TEXT_FILL]
+colors/accordion/title/disabled=@S:colors/text/placeholder [TEXT_FILL]
 colors/accordion/body/default=@S:colors/text/secondary [TEXT_FILL]
 colors/accordion/icon/default=@S:colors/icon/tertiary [SHAPE_FILL,STROKE_COLOR]
 colors/accordion/icon/disabled=@S:colors/icon/disabled [SHAPE_FILL,STROKE_COLOR]

@@ -69,8 +69,8 @@ Figma **Table** 프레임(351:3340)의 `table_header`(3개) · `table_body`(8개
   <KeyValueItem label="점검 기간" editable>
     <DatePicker size="sm" aria-label="시작일" /><span className="ds-kv__unit">~</span><DatePicker size="sm" aria-label="종료일" />
   </KeyValueItem>
-  <KeyValueItem label="태그">
-    <KeyValueGroup><InputChip size="md" onRemove={…}>라벨</InputChip><TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton></KeyValueGroup>
+  <KeyValueItem label="유형">
+    <KeyValueGroup><FilterChip size="md" selected>선택유형: 옵션명, 옵션명</FilterChip><TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton></KeyValueGroup>
   </KeyValueItem>
   <KeyValueItem label="사용"><Switch size="md" aria-label="사용" /><span className="ds-kv__hint">설명</span></KeyValueItem>
   <KeyValueItem label="대표 이미지" stack>
@@ -86,7 +86,7 @@ Figma **Table** 프레임(351:3340)의 `table_header`(3개) · `table_body`(8개
 | Input · Phone Number · Textarea | `Input size="sm"` (+ `editable`, Input은 `unit`) |
 | Select | `Select size="sm"` |
 | Date Picker · Date Range Picker | `DatePicker size="sm"` 1개 · 2개(사이 `~`) |
-| Filter | `FilterChip` / `InputChip` + `TextButton`(초기화, ArrowCounterClockwise) in `KeyValueGroup` |
+| Filter | `FilterChip size="md"` 1개 — 비어 있으면 "텍스트 선택", 선택하면 `selected` + 요약 라벨, 편집 중 `expanded`; 값이 있을 때 `TextButton`(초기화, ArrowCounterClockwise) in `KeyValueGroup` (Figma 2026-10-19). 열린 다중 선택 목록은 라이브러리에 없음 — 결정 대기 |
 | Switch | `Switch size="md"` + `.ds-kv__hint` |
 | File Upload | `stack` + 버튼(최소 너비 80px) · 안내 + `ImageUploadPreview` |
 

@@ -5,9 +5,11 @@
  *            semibold, colors/accordion/title/*), description xs/leading-normal/normal (…/body) p-1 below;
  *            caret 16px (CaretDown …/icon/default, CaretUp …/icon/expanded, …/icon/disabled)
  *   divider: Figma line directly under the trigger, drawn on the trigger's last pixel row (::after) —
- *            colors/accordion/border/default, Hover …/border/hover (= snapshot …/border/focus, figma-issues F31)
+ *            colors/accordion/border/default; Hover and Expanded …/border/hover (renamed from …/border/focus; Expanded
+ *            uses it since the Figma update of 2026-10-19)
+ *   disabled: …/background/disabled (fill/disabled) and …/title/disabled (text/placeholder) since the 2026-10-19 sync
  *   body:    md padding p-3 · sm p-3 p-2_5, text sm/leading-normal/normal (…/body/default)
- * State: Default → Hover (divider; trigger background only for sm Expanded, as in Figma — F50) → Disabled.
+ * State: Default → Hover (divider and trigger background …/background/hover in every size — Figma since 2026-10-19, F50) → Disabled.
  */
 
 .ds-accordion {
@@ -106,15 +108,13 @@
 
 .ds-accordion__item[data-expanded] {
   --_icon: var(--colors-accordion-icon-expanded);
+  --_divider: var(--colors-accordion-border-hover);
 }
 
-/* Hover: the divider (all sizes) and, for sm Expanded only, the trigger background — as drawn in Figma. */
+/* Hover: divider and trigger background in every size and expanded state (Figma since 2026-10-19). */
 .ds-accordion__trigger:hover:not([data-disabled]) {
-  --_divider: var(--colors-accordion-border-focus);
-}
-
-.ds-accordion__item[data-size='sm'][data-expanded] .ds-accordion__trigger:hover {
   --_bg: var(--colors-accordion-background-hover);
+  --_divider: var(--colors-accordion-border-hover);
 }
 
 .ds-accordion__item[data-disabled] {

@@ -21,10 +21,14 @@ export const TEXT_BUTTON_SIZES = ['sm', 'md'] as const;
 /** Figma "State" — Hover/Pressed are interaction states (:hover/:active), Disabled is the `disabled` prop. */
 export const BUTTON_STATES = ['default', 'hover', 'pressed', 'disabled'] as const;
 
-/** Variant × Appearance pairs present in button_basic and button_icon (there is no Secondary/Solid). */
+/**
+ * Variant × Appearance pairs present in button_basic and button_icon — all six since the Figma sync of 2026-10-19
+ * (Secondary / Solid added in Figma; docs/analysis/F31-button-sync.md).
+ */
 export const BUTTON_TONES = [
   { variant: 'primary', appearance: 'solid' },
   { variant: 'primary', appearance: 'outline' },
+  { variant: 'secondary', appearance: 'solid' },
   { variant: 'secondary', appearance: 'outline' },
   { variant: 'tertiary', appearance: 'solid' },
   { variant: 'tertiary', appearance: 'outline' },
@@ -40,22 +44,15 @@ export type TextButtonSize = (typeof TEXT_BUTTON_SIZES)[number];
 export type ButtonState = (typeof BUTTON_STATES)[number];
 
 /**
- * Variant/Appearance props constrained to the pairs that exist in Figma.
- * Secondary only exists as Outline, so its appearance defaults to (and can only be) "outline".
+ * Variant/Appearance props — every pair exists in Figma (Secondary / Solid since 2026-10-19).
+ * Without `appearance`, Secondary stays Outline (its only appearance before) and the others are Solid.
  */
-export type ButtonToneProps =
-  | {
-      /** Figma "Variant". @default 'primary' */
-      variant?: 'primary' | 'tertiary';
-      /** Figma "Appearance". Secondary exists only as Outline. @default 'solid' */
-      appearance?: ButtonAppearance;
-    }
-  | {
-      /** Figma "Variant". @default 'primary' */
-      variant: 'secondary';
-      /** Figma "Appearance". Secondary exists only as Outline. */
-      appearance?: 'outline';
-    };
+export type ButtonToneProps = {
+  /** Figma "Variant". @default 'primary' */
+  variant?: ButtonVariant;
+  /** Figma "Appearance". @default 'solid' ('outline' for variant "secondary") */
+  appearance?: ButtonAppearance;
+};
 
 /** Figma "State": Hover/Pressed are the native :hover/:active states, Disabled is this prop. */
 export type ButtonDisabledProp = {
@@ -63,7 +60,7 @@ export type ButtonDisabledProp = {
   disabled?: boolean;
 };
 
+/** The appearance a button renders with: the given one, else Outline for Secondary (backward compatible) and Solid otherwise. */
 export function resolveAppearance(variant: ButtonVariant, appearance: ButtonAppearance | undefined): ButtonAppearance {
-  if (variant === 'secondary') return 'outline';
-  return appearance ?? 'solid';
+  return appearance ?? (variant === 'secondary' ? 'outline' : 'solid');
 }

@@ -9,13 +9,13 @@ import { TextButton } from './TextButton';
 
 # Button — 사용 가이드
 
-Figma **[Platform] Web Design System → 🔵 Ver 0.4 → Component → Button** 프레임(58:4971)의 컴포넌트 296개를
-3개의 React 컴포넌트로 구현했습니다. 296개를 각각 만들지 않고, Figma Variant Property를 그대로 Props로 옮겼습니다.
+Figma **[Platform] Web Design System → 🔵 Ver 0.4 → Component → Button** 프레임(58:4971)의 컴포넌트 352개를
+3개의 React 컴포넌트로 구현했습니다. 352개를 각각 만들지 않고, Figma Variant Property를 그대로 Props로 옮겼습니다.
 
 | React 컴포넌트 | Figma Component Set | Variant 수 | 구성 |
 | --- | --- | --- | --- |
-| `Button` | `button_basic` (54:2904) | 160 | Variant×Appearance 5 × Size 4 × Shape 2 × State 4 |
-| `IconButton` | `button_icon` (67:2368) | 120 | Variant×Appearance 5 × Size 3 × Shape 2 × State 4 |
+| `Button` | `button_basic` (54:2904) | 192 | Variant×Appearance 6 × Size 4 × Shape 2 × State 4 |
+| `IconButton` | `button_icon` (67:2368) | 144 | Variant×Appearance 6 × Size 3 × Shape 2 × State 4 |
 | `TextButton` | `button_text` (432:8395) | 16 | Type 2 × Size 2 × State 4 |
 
 <Canvas of={OverviewStories.Overview} />
@@ -60,18 +60,19 @@ import { Button, IconButton, TextButton } from 'platform-design-system';
 | State | Default · Hover · Pressed · Disabled | `:hover` · `:active`, `disabled` | — |
 | Left Icon / Right Icon, Label Text | | `leftIcon` / `rightIcon`, `children` | |
 
-## 유효한 조합만 허용
+## Variant × Appearance
 
-Figma에는 **Secondary / Solid 조합이 없습니다.** 타입이 이를 막습니다.
+2026-10-19 Figma 동기화로 **Secondary / Solid가 추가**되어 6개 조합이 모두 있습니다(이전 296개 → 352개).
+`appearance`를 생략하면 Secondary는 이전과 같이 **Outline**, 나머지는 Solid입니다(기존 코드 호환).
 
 <Source
   language="tsx"
-  code={`<Button variant="secondary">OK</Button>                     // appearance는 자동으로 'outline'
-<Button variant="secondary" appearance="outline">OK</Button> // OK
-<Button variant="secondary" appearance="solid">✗</Button>   // 타입 오류`}
+  code={`<Button variant="secondary">OK</Button>                     // appearance 생략 → 'outline' (이전과 같음)
+<Button variant="secondary" appearance="outline">OK</Button> // Outline
+<Button variant="secondary" appearance="solid">OK</Button>   // Solid (녹색 채움, 2026-10-19 추가)`}
 />
 
-Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수(160 / 120 / 16)를 테스트로 검증합니다.
+Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수(192 / 144 / 16)를 테스트로 검증합니다.
 
 ## 상태 (State)
 
@@ -103,8 +104,8 @@ Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수
 
 구현은 Figma 바인딩을 그대로 따릅니다. 아래 항목은 디자인 쪽 정리가 필요할 수 있는 부분입니다.
 
-1. `button_text`의 Type 값이 **`SecondarySecondary`** 로 되어 있고, Primary와 같은 변수에 바인딩되어 화면상 차이가 없습니다.
-2. `button_icon`의 **Tertiary / Solid** 배경은 `colors/button/secondary/solid/background/*` 에 바인딩되어 있습니다(값은 tertiary와 동일).
+1. `button_text`의 Type 값 이름이 **`SecondarySecondary`** 입니다. 2026-10-19 동기화로 Secondary는 `colors/button_text/secondary/*`(Primary보다 연한 글자 · 아이콘)를 씁니다.
+2. **Primary / Outline 테두리**는 변수(`colors/button/primary/outline/border/default`)가 삭제되어 Figma에서 바인딩 없는 #004a38입니다. 코드는 이 값을 그대로 쓰며, 연결할 변수는 결정 대기입니다(`docs/analysis/F31-button-sync.md`).
 3. `button_basic`의 **Secondary / Outline Hover·Pressed** 테두리는 Square 변형에서 `secondary/solid/border/default`,
    Rounded 변형에서 `secondary/outline/border/default` 에 바인딩되어 있습니다(값은 동일 #007c56). 구현은 `secondary/outline/border/default` 를 사용합니다.
 4. `*/solid/border/*`, `*/outline/border/disabled` 토큰은 존재하지만 컴포넌트에는 테두리가 적용되어 있지 않습니다(Solid 전체, Outline Disabled).
@@ -115,6 +116,6 @@ Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수
 
 ## 브라우저 지원
 
-Chromium(Chrome · Edge 129+)에서는 296개 Variant가 Figma와 픽셀 단위로 같습니다.
+Chromium(Chrome · Edge 129+)에서는 352개 Variant가 Figma와 픽셀 단위로 같습니다.
 Firefox · Safari는 `calc-size()`를 지원하지 않아 텍스트가 있는 버튼의 너비가 1px 미만 좁게 그려지고, 그 외(높이 · 간격 · 색 · 테두리 · 상태)는 같습니다.
 측정 결과와 Fallback은 `docs/browser-support.md`, 외부 프로젝트 사용 예제는 `docs/usage.md`를 참고하세요.

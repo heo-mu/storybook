@@ -26,9 +26,9 @@ const expectVariantCount = (count: number) => async ({ canvasElement }: { canvas
   await expect(new Set(names).size).toBe(count);
 };
 
-/** `button_basic` — 5 Variant×Appearance × 4 States (rows) × 4 Sizes × 2 Shapes (columns) = 160. */
+/** `button_basic` — 6 Variant×Appearance × 4 States (rows) × 4 Sizes × 2 Shapes (columns) = 192. */
 export const ButtonMatrix: Story = {
-  name: 'Button (160)',
+  name: 'Button (192)',
   render: () => (
     <MatrixTable
       columns={BUTTON_SIZES.flatMap((size) => BUTTON_SHAPES.map((shape) => `${size} · ${figmaCase(shape)}`))}
@@ -55,12 +55,12 @@ export const ButtonMatrix: Story = {
       )}
     />
   ),
-  play: expectVariantCount(160),
+  play: expectVariantCount(192),
 };
 
-/** `button_icon` — 5 Variant×Appearance × 4 States × 3 Sizes × 2 Shapes = 120. */
+/** `button_icon` — 6 Variant×Appearance × 4 States × 3 Sizes × 2 Shapes = 144. */
 export const IconButtonMatrix: Story = {
-  name: 'IconButton (120)',
+  name: 'IconButton (144)',
   render: () => (
     <MatrixTable
       columns={ICON_BUTTON_SIZES.flatMap((size) => BUTTON_SHAPES.map((shape) => `${size} · ${figmaCase(shape)}`))}
@@ -85,7 +85,7 @@ export const IconButtonMatrix: Story = {
       )}
     />
   ),
-  play: expectVariantCount(120),
+  play: expectVariantCount(144),
 };
 
 /** `button_text` — 2 Types × 4 States (rows) × 2 Sizes (columns) = 16. */

@@ -19,7 +19,7 @@ to access component and documentation knowledge before answering or acting on UI
 
 - Source of truth is Figma. Use only values that exist there: tokens come from `figma/` snapshots via
   `npm run tokens`; never hand-edit `src/tokens/*` and never add tokens that are not in Figma.
-- Only implement Figma variant combinations that exist (e.g. there is no Secondary/Solid button).
+- Only implement Figma variant combinations that exist (Button Secondary / Solid exists since the 2026-10-19 sync).
 - The Figma file is read-only for this project — do not modify it.
 - Story-only helpers in `src/components/*/stories/` (icons, matrix layout) are not part of the package API.
 
@@ -30,7 +30,7 @@ to access component and documentation knowledge before answering or acting on UI
 - `npm run typecheck`, `npm run lint`, `npm run build`
 - `npm run tokens` — regenerate CSS tokens from `figma/`
 - `npm run figma:checksum` — checksums to compare with `figma/checksum.figma.js` run in Figma
-- `npm run verify:button` — DOM/pixel parity check of all 296 Button variants against Figma (Storybook must be running);
+- `npm run verify:button` — DOM/pixel parity check of all 352 Button variants against Figma (Storybook must be running);
   add `-- --browser=firefox` or `webkit` to check other engines (see docs/browser-support.md)
 - `node scripts/verify-figma.mjs <component> [--browser=…]` — parity check driven by figma/verify/<component>.json;
   `npm run verify:all` runs every component in Chromium, Firefox and WebKit

@@ -86,16 +86,10 @@
       "glyphDyTolerance": 0.7,
       "accumulatedFallback": true,
       "hugNodes": [
-        "chip-filter",
-        "chip-input",
-        "Frame 2147240231/chip-input",
-        "Frame 2147240231/chip-input#2"
+        "chip-filter"
       ],
       "maskPixels": [
         "chip-filter",
-        "chip-input",
-        "Frame 2147240231/chip-input",
-        "Frame 2147240231/chip-input#2",
         "button_text"
       ],
       "maskRectsFor": {
@@ -374,11 +368,20 @@
             3,
             38
           ]
+        ],
+        "Type=Filter, State=Editing*": [
+          [
+            0,
+            47,
+            320,
+            5
+          ]
         ]
       },
       "ignore": [
         "Frame 2147240210/listbox",
-        "Frame 2147240212/date-picker_calendar"
+        "Frame 2147240212/date-picker_calendar",
+        "listbox"
       ],
       "skipVariants": {
         "Type=Textarea, State=Default, Content=Filled": "Figma wraps the value on two lines inside the single-line field it uses for this type (F58)",
@@ -456,22 +459,6 @@
           "selector": ".ds-chip",
           "optional": true
         },
-        "chip-input": {
-          "selector": ".ds-chip",
-          "optional": true
-        },
-        "Frame 2147240231": {
-          "selector": ".ds-kv__group > .ds-kv__group",
-          "optional": true
-        },
-        "Frame 2147240231/chip-input": {
-          "selector": ".ds-chip",
-          "optional": true
-        },
-        "Frame 2147240231/chip-input#2": {
-          "selector": ".ds-chip",
-          "optional": true
-        },
         "button_text": {
           "selector": ".ds-text-button",
           "optional": true
@@ -505,7 +492,7 @@
           "optional": true
         }
       },
-      "//maskRectsFor": "field frames centred at y 7.5: their top / bottom edge rows (anti-aliased in Figma) and the text inside the field (part of the field instance, not a Figma text node) — side borders, icons and backgrounds are compared"
+      "//maskRectsFor": "field frames centred at y 7.5: their top / bottom edge rows (anti-aliased in Figma) and the text inside the field (part of the field instance, not a Figma text node) — side borders, icons and backgrounds are compared; Filter · Editing: the top of the open multi-select listbox under the chip (y 47.5) — the library has no multi-select list for a filter chip (decision item, docs/analysis/F31-button-sync.md)"
     }
   ]
 }

@@ -1,5 +1,5 @@
 # Figma snapshot — collection "Semantic" (mode: Mode 1), 68 variables
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only)
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: fill/primary/subtle/hover)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 colors/border/inverse=@P:colors/white [ALL_SCOPES]
 colors/border/gray-subtler=@T:colors/brand-gray/250 [ALL_SCOPES]
@@ -52,7 +52,7 @@ colors/text/link/hover=@P:colors/blue/700 [ALL_SCOPES]
 colors/text/link/pressed=@P:colors/blue/800 [ALL_SCOPES]
 colors/text/link/visited=@P:colors/violet/700 [ALL_SCOPES]
 colors/fill/primary/subtle/default=@P:colors/white [ALL_SCOPES]
-colors/fill/primary/subtle/hover=@P:colors/gray/50 [ALL_SCOPES]
+colors/fill/primary/subtle/hover=@P:colors/gray/75 [ALL_SCOPES]
 colors/fill/primary/subtle/pressed=@P:colors/gray/100 [ALL_SCOPES]
 colors/fill/secondary/subtle/default=@P:colors/white [ALL_SCOPES]
 colors/fill/secondary/subtle/hover=@P:colors/gray/50 [ALL_SCOPES]

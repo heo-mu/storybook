@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Figma component set **button_icon** (67:2368, 120 variants). Same Variant / Appearance / Shape / State as Button; ' +
+          'Figma component set **button_icon** (67:2368, 144 variants). Same Variant / Appearance / Shape / State as Button; ' +
           'Size has no `lg`. `icon` takes an icon element (ReactNode). The Figma "Label" layer is hidden, so the accessible ' +
           'name is the required `aria-label`.',
       },
@@ -33,8 +33,7 @@ const meta = {
     appearance: {
       control: 'inline-radio',
       options: BUTTON_APPEARANCES,
-      if: { arg: 'variant', neq: 'secondary' },
-      description: 'Figma "Appearance". Secondary exists only as Outline.',
+      description: 'Figma "Appearance". Without it Secondary is Outline (backward compatible), the others Solid.',
       table: { defaultValue: { summary: "'solid' ('outline' for secondary)" } },
     },
     size: { control: 'inline-radio', options: ICON_BUTTON_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'xs' } } },

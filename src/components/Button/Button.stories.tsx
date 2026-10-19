@@ -14,10 +14,10 @@ const meta = {
     docs: {
       description: {
         component:
-          'Figma component set **button_basic** (54:2904, 160 variants). Props map 1:1 to the Figma variant properties: ' +
+          'Figma component set **button_basic** (54:2904, 192 variants). Props map 1:1 to the Figma variant properties: ' +
           'Variant → `variant`, Appearance → `appearance`, Size → `size`, Shape → `shape`, Left/Right Icon → `leftIcon`/`rightIcon` ' +
           '(pass an icon element), Label Text → `children`. State Hover/Pressed are the native `:hover`/`:active` states, ' +
-          'State Disabled is `disabled`. Secondary exists only as Outline.',
+          'State Disabled is `disabled`. Without `appearance`, Secondary is Outline (backward compatible); Secondary / Solid exists since the 2026-10-19 Figma sync.',
       },
     },
   },
@@ -35,9 +35,7 @@ const meta = {
     appearance: {
       control: 'inline-radio',
       options: BUTTON_APPEARANCES,
-      // Figma has no Secondary/Solid — Secondary is always Outline.
-      if: { arg: 'variant', neq: 'secondary' },
-      description: 'Figma "Appearance". Secondary exists only as Outline.',
+      description: 'Figma "Appearance". Without it Secondary is Outline (backward compatible), the others Solid.',
       table: { defaultValue: { summary: "'solid' ('outline' for secondary)" } },
     },
     size: { control: 'inline-radio', options: BUTTON_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'xs' } } },
@@ -55,9 +53,14 @@ type Story = StoryObj<typeof meta>;
 /** Every prop is wired to a control (icons can be switched on in the Left/Right Icon controls). */
 export const Playground: Story = {};
 
-/** Secondary exists only as Outline; `appearance` resolves to "outline" automatically. */
+/** Secondary / Outline — also what `variant="secondary"` renders without `appearance`. */
 export const Secondary: Story = {
   args: { variant: 'secondary', appearance: 'outline', size: 'md' },
+};
+
+/** Secondary / Solid (Figma button_basic since 2026-10-19). */
+export const SecondarySolid: Story = {
+  args: { variant: 'secondary', appearance: 'solid', size: 'md' },
 };
 
 export const TertiaryOutline: Story = {

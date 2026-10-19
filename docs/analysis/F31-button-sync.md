@@ -1,6 +1,8 @@
 # F31 — 최신 Figma Button 변경 재분석과 영향 (2026-10-19)
 
-Figma 원본은 읽기 전용으로만 조회했고, 코드 · 토큰 스냅샷은 **바꾸지 않았습니다**. 이 문서는 동기화 여부를 결정하기 위한 자료입니다.
+> **상태: 동기화 적용(2026-10-19, 최종 배포 준비).** 결과는 맨 아래 [6. 적용 결과](#6-적용-결과-2026-10-19)와
+> [7. 노드 단위 변경](#7-노드-단위-변경-변수-체크섬에-드러나지-않은-원본-변경)에 있습니다. 1–5절은 적용 전 분석 기록입니다.
+> Figma 원본은 읽기 전용으로만 조회했습니다. Primary · Outline 테두리의 변수 연결은 정하지 않았습니다.
 
 ## 요약
 
@@ -73,7 +75,35 @@ Date Picker(navigation · day) · Chip · Chip Filter · Table 행 · Accordion,
 4. 기준 재캡처: `figma/button-variants.json` · `figma/reference/button_*.png` · `figma/button-spec.json` → `npm run verify:button`(352)
 5. 전 컴포넌트 회귀: `npm run verify:all`, 테스트, 접근성, 외부 import → [버전 관리 절차](../developer-guide.md#7-버전-관리와-업데이트-절차)
 
-## 결론
+## 결론 (적용 전 판단)
 
-현재 패키지는 동결 스냅샷 기준으로 일관되게 동작합니다(296/296). 최신 원본과의 차이는 **색 36개 + 새 Variant 56개**로 크기 · 배치에는 영향이 없습니다.
+당시 패키지는 동결 스냅샷 기준으로 일관되게 동작합니다(296/296). 최신 원본과의 차이는 **색 36개 + 새 Variant 56개**로 크기 · 배치에는 영향이 없습니다.
 Primary · Outline 테두리 변수가 원본에서 사라진 상태라 지금 동기화하면 코드가 임의의 값을 정해야 하므로, ① 결정 후 동기화를 권장합니다.
+
+## 6. 적용 결과 (2026-10-19)
+
+| 항목 | 내용 |
+| --- | --- |
+| 스냅샷 | `figma/variables/component-button.txt`(81개) 재추출, `semantic.txt` 1줄 · `component-others.txt` 3줄 갱신. 체크섬 semantic `ecad5e9b` · compButton `26a0d4f2` · compOthers `e50a2578` — 원본과 일치 |
+| 토큰 | CSS 변수 삭제 17 · 추가 25 · 값 변경 9 — 목록과 이전 이름 대응은 [breaking-changes.md](../breaking-changes.md) |
+| Button · IconButton | `BUTTON_TONES` 6개(Secondary · Solid 추가), `appearance` 타입은 그대로 `'solid' | 'outline'`(Variant별 제한 해제). **`appearance` 생략 시 Secondary는 Outline 유지**(`resolveAppearance`) — 기존 코드 화면 변화 없음 |
+| IconButton Tertiary · Solid | 원본이 `tertiary/solid/*`로 다시 바인딩(A5 해소) → 코드도 tertiary 토큰 사용 |
+| TextButton | `--colors-button_text-primary-*` · `-secondary-*` 사용. **Secondary는 글자 · 아이콘이 한 단계 연해짐(시각 변경)** |
+| Primary · Outline 테두리 | 원본 42개 노드가 **삭제된 변수**(`VariableID:59:2221` `colors/button/primary/outline/border/default`)를 가리킨 채 색 #004a38만 남음. 코드는 이 값을 리터럴로 쓰고(`Button.css`) **연결할 변수는 정하지 않음** — 결정 D1 |
+| Secondary · Outline 테두리 | Square Hover · Pressed 8개만 `secondary/solid/border/default`, 나머지는 `secondary/outline/border/default`(값 같음). 코드는 `secondary/outline/border/default` 하나 — 원본 정리 요청 |
+| 기준 데이터 | `button-spec.json` · `button-variants.json` · `reference/button_*.png` 원본 최신값으로 교체 |
+| 검증 | `verify:button` 192 / 144 / 16 = **352/352**, 실제 포인터 36/36(Secondary · Solid · TextButton Secondary 포함) — Chromium · Firefox · WebKit |
+
+## 7. 노드 단위 변경 (변수 체크섬에 드러나지 않은 원본 변경)
+
+방법: 기준 이미지가 있는 68개 세트를 원본에서 다시 캡처해 저장소 기준과 비교(흰 배경 합성, 채널 차 2 초과 픽셀).
+68개 중 66개는 안티앨리어싱 수준(대부분 1–24px) 또는 Hover 토큰 변경(Checkbox · Radio, 채널 차 4 이하)만 달랐고, 2개 세트가 실제로 바뀌었습니다.
+
+| 세트 | 원본 변경 | 반영 |
+| --- | --- | --- |
+| `accordion-item` (796:6071) | ① 모든 Hover에 배경 `accordion/background/hover`(접힘: 변형 루트, 펼침: Trigger) — 이전에는 sm · Expanded Hover만(F50) ② Default · Expanded 구분선 `border/default` → `border/hover` ③ Disabled 루트 · Trigger 배경 `background/disabled` ④ md · Hover · Expanded(796:5903) 위치 y 20 → 40 | `Accordion.css` 갱신, 위치는 `figma/geometry/accordion-item.json`만 수정. **F50 해소** |
+| `table_value_editable` (503:23264) Type=Filter 7개 | 입력 칩 2개 + 초기화 → **chip-filter 1개**(비어 있음: Unselected "텍스트 선택", 채움: Selected "선택유형: 옵션명, 옵션명"), Hover · Filled에 초기화(button_text), Editing은 Expanded 칩 + 다중 선택 listbox(sm, 2개 선택) | 쇼케이스 구성 변경(공개 API 변화 없음), geometry · 기준 이미지 교체. 열린 다중 선택 목록은 라이브러리에 없어 그리지 않음 — 결정 D3 |
+| `checkbox` · `radio` | Hover 배경 #f9fafb → #f5f6f7(토큰) | 기준 이미지 교체 |
+| `dashboard-filter-bar` | 원본 변경 없음. 초기화 버튼(button_icon Secondary · Solid)을 이제 그대로 구현 | 샘플 · 문서 수정, 픽셀 비교 마스크 제거 |
+
+원본 정리가 필요한 항목(노드 ID 포함)은 [figma-fix-requests.md](../figma-fix-requests.md)에 모았습니다.

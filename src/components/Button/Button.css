@@ -171,23 +171,27 @@
   --ds-button-icon-disabled: var(--colors-button-primary-solid-icon-disabled);
 }
 
-.ds-button[data-variant='tertiary'][data-appearance='solid'] {
+/* Secondary / Solid — added in Figma (F31 sync, 2026-10-19). */
+.ds-button[data-variant='secondary'][data-appearance='solid'],
+.ds-icon-button[data-variant='secondary'][data-appearance='solid'] {
+  --ds-button-bg-default: var(--colors-button-secondary-solid-background-default);
+  --ds-button-bg-hover: var(--colors-button-secondary-solid-background-hover);
+  --ds-button-bg-pressed: var(--colors-button-secondary-solid-background-pressed);
+  --ds-button-bg-disabled: var(--colors-button-secondary-solid-background-disabled);
+  --ds-button-label-default: var(--colors-button-secondary-solid-label-default);
+  --ds-button-label-disabled: var(--colors-button-secondary-solid-label-disabled);
+  --ds-button-icon-default: var(--colors-button-secondary-solid-icon-default);
+  --ds-button-icon-disabled: var(--colors-button-secondary-solid-icon-disabled);
+}
+
+.ds-button[data-variant='tertiary'][data-appearance='solid'],
+.ds-icon-button[data-variant='tertiary'][data-appearance='solid'] {
   --ds-button-bg-default: var(--colors-button-tertiary-solid-background-default);
   --ds-button-bg-hover: var(--colors-button-tertiary-solid-background-hover);
   --ds-button-bg-pressed: var(--colors-button-tertiary-solid-background-pressed);
   --ds-button-bg-disabled: var(--colors-button-tertiary-solid-background-disabled);
   --ds-button-label-default: var(--colors-button-tertiary-solid-label-default);
   --ds-button-label-disabled: var(--colors-button-tertiary-solid-label-disabled);
-  --ds-button-icon-default: var(--colors-button-tertiary-solid-icon-default);
-  --ds-button-icon-disabled: var(--colors-button-tertiary-solid-icon-disabled);
-}
-
-/* button_icon Tertiary/Solid backgrounds are bound to colors/button/secondary/solid/background/* in Figma. */
-.ds-icon-button[data-variant='tertiary'][data-appearance='solid'] {
-  --ds-button-bg-default: var(--colors-button-secondary-solid-background-default);
-  --ds-button-bg-hover: var(--colors-button-secondary-solid-background-hover);
-  --ds-button-bg-pressed: var(--colors-button-secondary-solid-background-pressed);
-  --ds-button-bg-disabled: var(--colors-button-secondary-solid-background-disabled);
   --ds-button-icon-default: var(--colors-button-tertiary-solid-icon-default);
   --ds-button-icon-disabled: var(--colors-button-tertiary-solid-icon-disabled);
 }
@@ -207,7 +211,12 @@
   --ds-button-label-disabled: var(--colors-button-primary-outline-label-disabled);
   --ds-button-icon-default: var(--colors-button-primary-outline-icon-default);
   --ds-button-icon-disabled: var(--colors-button-primary-outline-icon-disabled);
-  --ds-button-stroke-color: var(--colors-button-primary-outline-border-default);
+  /*
+   * Figma (2026-10-19): the Primary / Outline stroke is an unbound #004a38 — its variable
+   * colors/button/primary/outline/border/default was deleted. The Figma value is used as is until a variable is chosen
+   * (decision pending — docs/analysis/F31-button-sync.md); it is the only literal colour in this file.
+   */
+  --ds-button-stroke-color: #004a38;
 }
 
 .ds-button[data-variant='secondary'][data-appearance='outline'],
@@ -293,22 +302,37 @@
 }
 
 /* ------------------------------------------------------------- TextButton */
-/* Figma Type "Primary" and "SecondarySecondary" are bound to the same variables. */
+/* Figma Type "Primary" → colors/button_text/primary/*, "SecondarySecondary" → colors/button_text/secondary/* (split in the 2026-10-19 sync). */
 .ds-text-button {
   --ds-button-icon-size: 16px;
-  --ds-button-bg-default: var(--colors-button_text-background-default);
-  --ds-button-bg-hover: var(--colors-button_text-background-hover);
-  --ds-button-bg-pressed: var(--colors-button_text-background-pressed);
-  --ds-button-bg-disabled: var(--colors-button_text-background-disabled);
-  --ds-button-label-default: var(--colors-button_text-label-default);
-  --ds-button-label-hover: var(--colors-button_text-label-hover);
-  --ds-button-label-pressed: var(--colors-button_text-label-pressed);
-  --ds-button-label-disabled: var(--colors-button_text-label-disabled);
-  --ds-button-icon-default: var(--colors-button_text-icon-default);
-  --ds-button-icon-hover: var(--colors-button_text-icon-hover);
-  --ds-button-icon-pressed: var(--colors-button_text-icon-pressed);
-  --ds-button-icon-disabled: var(--colors-button_text-icon-disabled);
+  --ds-button-bg-default: var(--colors-button_text-primary-background-default);
+  --ds-button-bg-hover: var(--colors-button_text-primary-background-hover);
+  --ds-button-bg-pressed: var(--colors-button_text-primary-background-pressed);
+  --ds-button-bg-disabled: var(--colors-button_text-primary-background-disabled);
+  --ds-button-label-default: var(--colors-button_text-primary-label-default);
+  --ds-button-label-hover: var(--colors-button_text-primary-label-hover);
+  --ds-button-label-pressed: var(--colors-button_text-primary-label-pressed);
+  --ds-button-label-disabled: var(--colors-button_text-primary-label-disabled);
+  --ds-button-icon-default: var(--colors-button_text-primary-icon-default);
+  --ds-button-icon-hover: var(--colors-button_text-primary-icon-hover);
+  --ds-button-icon-pressed: var(--colors-button_text-primary-icon-pressed);
+  --ds-button-icon-disabled: var(--colors-button_text-primary-icon-disabled);
   border-radius: var(--border-radius-rounded);
+}
+
+.ds-text-button[data-variant='secondary'] {
+  --ds-button-bg-default: var(--colors-button_text-secondary-background-default);
+  --ds-button-bg-hover: var(--colors-button_text-secondary-background-hover);
+  --ds-button-bg-pressed: var(--colors-button_text-secondary-background-pressed);
+  --ds-button-bg-disabled: var(--colors-button_text-secondary-background-disabled);
+  --ds-button-label-default: var(--colors-button_text-secondary-label-default);
+  --ds-button-label-hover: var(--colors-button_text-secondary-label-hover);
+  --ds-button-label-pressed: var(--colors-button_text-secondary-label-pressed);
+  --ds-button-label-disabled: var(--colors-button_text-secondary-label-disabled);
+  --ds-button-icon-default: var(--colors-button_text-secondary-icon-default);
+  --ds-button-icon-hover: var(--colors-button_text-secondary-icon-hover);
+  --ds-button-icon-pressed: var(--colors-button_text-secondary-icon-pressed);
+  --ds-button-icon-disabled: var(--colors-button_text-secondary-icon-disabled);
 }
 
 .ds-text-button[data-size='sm'] {
