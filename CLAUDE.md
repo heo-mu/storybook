@@ -35,9 +35,12 @@ to access component and documentation knowledge before answering or acting on UI
 - `node scripts/verify-figma.mjs <component> [--browser=…]` — parity check driven by figma/verify/<component>.json;
   `npm run verify:all` runs every component in Chromium, Firefox and WebKit
 - `npm run verify:a11y` — axe-core audit of every story (known Figma token contrast issues listed separately)
+- `npm run docs:api` — regenerate docs/api.md (public API) after changing exports or prop JSDoc
 
 ## Docs
 
+- docs/developer-guide.md — handover guide for the frontend team (stack, install, tokens, versioning, MCP)
+- docs/api.md — generated public API; docs/figma-issue-triage.md — open Figma issues by category
 - docs/usage.md — consuming the package from another React project
 - docs/browser-support.md — CSS features, fallbacks, measured per-engine results
 - docs/figma-issues.md — token / variant naming issues in the Figma source (report, don't "fix" them in code)

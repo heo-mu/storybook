@@ -10,6 +10,8 @@ Firefox and WebKit. Inventory: [docs/component-inventory.md](docs/component-inve
 
 ## Docs
 
+- [docs/developer-guide.md](docs/developer-guide.md) — stack, structure, install, Storybook, tokens, browsers, versioning, Storybook MCP (Korean)
+- [docs/api.md](docs/api.md) — public API, generated from the source (`npm run docs:api`)
 - [docs/usage.md](docs/usage.md) — using the package in another React project (Korean)
 - [docs/final-report.md](docs/final-report.md) — inventory, verification results and open design decisions (Korean)
 - [docs/accessibility.md](docs/accessibility.md) — keyboard and screen-reader behaviour per component
@@ -71,6 +73,7 @@ exist in Figma are typed (there is no Secondary/Solid).
 | `node scripts/verify-figma.mjs <component>` | Figma parity of one component (`figma/verify/<component>.json`); `--browser=`, `--set=` |
 | `npm run verify:all` | Every component in Chromium, Firefox and WebKit |
 | `npm run verify:a11y` | axe-core audit of every story |
+| `npm run docs:api` | Regenerate docs/api.md from the exports and JSDoc |
 | `npm run typecheck` · `npm run lint` · `npm run build` | |
 | `npm run tokens` | Regenerate `src/tokens` from `figma/` |
 | `npm run figma:checksum` | Snapshot checksums; compare with `figma/checksum.figma.js` run through the Figma MCP |

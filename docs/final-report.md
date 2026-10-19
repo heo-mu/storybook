@@ -75,6 +75,8 @@ import { Chart, MetricCard, MetricTrend } from 'platform-design-system';
 
 ## 5. 결정이 필요한 항목
 
+> 2026-10-19 갱신: 전체 이슈의 분류(디자인 결정 · 개발 개선 · 허용 차이)는 [figma-issue-triage.md](./figma-issue-triage.md)를 보세요.
+
 Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것입니다. 자세한 내용은 [figma-issues.md](./figma-issues.md).
 
 | # | 내용 | 현재 코드 |
@@ -137,3 +139,18 @@ Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것
 - `4575e59` Chart: line / bar charts (default and simple style), ChartLegendItem, ChartTooltip from the Figma chart set
 - `c0f29ff` docs: Phase 7 group verification (Table, Card, Chart, Loading)
 - `25fe925` Dashboard components: Skeleton, MetricTrend, DataFreshness, MetricCard, DataState, DashboardFilterBar
+
+## 7. 안정화 (2026-10-19)
+
+신규 컴포넌트 없이 전달 전 안정화를 진행했습니다. 상세는 각 문서에 있습니다.
+
+| 작업 | 결과 |
+| --- | --- |
+| F31 최신 Button 변경 재분석 | 기존 296 변형: 크기 · 배치 296 동일, 색 260 동일 · 36 다름(Hover 배경 30, TextButton Secondary 6), 새 Secondary · Solid 56 — [분석](./analysis/F31-button-sync.md). 동기화는 결정 대기 |
+| Chart 툴팁 자동 위치 | 보이는 그림 영역 · 화면 경계 안으로 자동 배치, `<body>` 포털로 잘림 방지 — 스토리 테스트 3개 추가 |
+| F65 원인 | 가로 막대 기본의 비교 막대만 `chart/simple/history`(간단 스타일 막대를 복사한 흔적) → **Figma 수정 필요**로 판단 — [분석](./analysis/F65-chart-compare-color.md) |
+| F69 12px 모서리 | 본 페이지 5개 · legacy 29개, 모두 원격 `radius/xlarge1` — 로컬 `rounded-[12px]` 추가 제안 — [분석](./analysis/F69-radius-12.md) |
+| "최근 30일" 잘림 | SegmentedControl 라벨이 Figma처럼 항목 padding까지 사용 → 잘림 해소, 해당 라벨 검증 재개 |
+| 이슈 분류 | 113개 ID: 디자인 결정 37 · 개발 개선 7(완료 2) · 허용 차이 74 — [분류표](./figma-issue-triage.md) |
+| 개발자 문서 | [developer-guide.md](./developer-guide.md), [api.md](./api.md)(자동 생성), [CHANGELOG.md](../CHANGELOG.md) |
+| 회귀 · 외부 Import | {{STABILIZATION_QA}} |

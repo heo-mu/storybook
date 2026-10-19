@@ -33,6 +33,7 @@
 | 7 | Table · Card · Chart · Loading | 완료 |
 | 8 | Dashboard components | 완료 |
 | 9 | 통합 QA · 최종 보고 | 완료 ([final-report.md](./final-report.md)) |
+| 10 | 전달 전 안정화 (F31 · F65 · F69 분석, 차트 툴팁 · 필터 바 라벨, 이슈 분류, 개발자 문서) | 진행 — 회귀 검증 |
 
 ## 검증 현황
 
