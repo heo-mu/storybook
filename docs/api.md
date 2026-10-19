@@ -7,7 +7,7 @@
   react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 Usage 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
 
-export 308개: 공개 컴포넌트 49 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 125 · 상수 45 · 함수 2 · 아이콘 35 · 내부 API 13
+export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 129 · 상수 45 · 함수 3 · 아이콘 35 · 내부 API 13
 
 ## 목차
 
@@ -406,8 +406,31 @@ Figma component set `chip-filter` (558:25704) — a chip that opens a filter men
 | `selected` | `boolean` | `false` | Figma Variant "Selected": the filter has a value applied. |
 | `size` | `"xs" \| "sm" \| "md"` | `xs` | Figma "Size". |
 
+### `FilterChipSelect`
+
+**공개 컴포넌트**
+
+A filter chip with its option panel — Figma `chip-filter` (558:25704) + `listbox` / `option` Size=sm, as in the Figma "chip-filter 선택 예시" (Design System Rules 04 · 07). - Multiple (default): options toggle with a check while the panel stays open; the chip text follows the choice and   the choice is applied (`onChange`, Selected look) when the panel closes — Esc, a press outside or the chip.   Turning every option off and closing removes the filter. - Single: choosing an option applies it and closes the panel; the first option (`clearLabel`, "전체") removes it. The chip is Selected while a value is applied. Keyboard and screen readers follow the react-aria Select (button + listbox: Enter · Space · ↓ open, arrows · type-ahead move, Space · Enter choose, Esc close).
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `label` *(필수)* | `string` |  | Filter name: the chip text while nothing is applied, then "name: value, value". |
+| `options` *(필수)* | `FilterChipSelectOption[]` |  | The choices, in order. |
+| `className` | `string` |  |  |
+| `clearLabel` | `string` | `'전체'` | First option that clears the filter (`null` value). |
+| `defaultValue` | `Key \| Key[] \| null` | `[] null` | Initially applied values (uncontrolled). Initially applied value (uncontrolled). |
+| `disabled` | `boolean` |  | Figma chip State "Disabled". |
+| `maxDisplayed` | `number` | `3` | How many applied values the chip names before "외 N". |
+| `name` | `string` |  | Form field name (a hidden native select carries the value). |
+| `onChange` | `((value: Key[]) => void) \| ((value: Key \| null) => void)` |  | Called with the applied values when the panel closes with a changed choice. Called with the applied value (`null` when cleared). |
+| `onOpenChange` | `((isOpen: boolean) => void)` |  | Called when the panel opens or closes. |
+| `selectionMode` | `"multiple" \| "single"` |  | Several values (default): the panel stays open while choosing and the choice is applied when it closes. One value: choosing an option applies it and closes the panel. |
+| `size` | `"xs" \| "sm" \| "md"` | `'md'` | Figma chip "Size". |
+| `value` | `Key \| Key[] \| null` |  | Applied values (controlled). Applied value (controlled); `null` = no filter. |
+
 - 상수: `CHIP_SIZES`
-- 타입: `ChipProps`, `InputChipProps`, `FilterChipProps`, `ChipSize`
+- 함수: `filterChipText`
+- 타입: `ChipProps`, `InputChipProps`, `FilterChipProps`, `ChipSize`, `FilterChipSelectProps`, `FilterChipSelectMultipleProps`, `FilterChipSelectSingleProps`, `FilterChipSelectOption`
 
 ## Choice
 
@@ -1124,7 +1147,7 @@ Figma component sets `stepper_indicator_horizontal` (179:1621) and `stepper_indi
 | `description` | `ReactNode` |  | Figma "Sub-Label Text" ("Sub-Label" on). |
 | `label` | `ReactNode` |  | Figma "Label Text" ("Label" on). |
 | `orientation` | `"horizontal" \| "vertical"` | `horizontal` | Figma set: stepper_indicator_horizontal (text under the circle) or _vertical (text beside it). |
-| `status` | `"error" \| "completed" \| "current" \| "upcoming" \| "locked"` | `upcoming` | Figma "Variant". |
+| `status` | `"error" \| "current" \| "completed" \| "upcoming" \| "locked"` | `upcoming` | Figma "Variant". |
 
 ### `StepperConnector`
 

@@ -53,7 +53,7 @@ export const Disabled: Story = {
 /** Several chips as a multi-select filter (wrap them in a labelled group). */
 export const Group: Story = {
   render: (args) => (
-    <div role="group" aria-label="상태" style={{ display: 'flex', gap: 8 }}>
+    <div role="group" aria-label="상태" style={{ display: 'flex', gap: 'var(--spacing-margin-m-1)' }}>
       <Chip {...args} defaultSelected>
         진행 중
       </Chip>

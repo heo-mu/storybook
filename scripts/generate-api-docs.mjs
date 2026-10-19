@@ -32,6 +32,7 @@ const PUBLIC = {
   Chip: '선택 칩',
   InputChip: '지울 수 있는 입력값 칩',
   FilterChip: '필터 칩(메뉴 · 패널을 여는 트리거)',
+  FilterChipSelect: '필터 칩 + 선택 패널(다중 · 단일, 닫을 때 적용) — Figma chip-filter 선택 예시',
   Calendar: '달력(화면에 펼쳐 둔 형태)',
   DatePicker: '날짜 입력 + 달력',
   Loading: '로딩 표시',

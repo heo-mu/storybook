@@ -4,12 +4,15 @@
 
 ## Figma × Storybook 전체 동기화 · 완성도 개선 (2026-10-19 밤 시작, 진행 중)
 
-체크포인트 (4ebef48). 순서: ① Chart 툴팁 버그 → ② Chip Filter 예시 → ③ Storybook 접근성 경고 → ④ 누락 상태 · 동작 · 사용 예
-→ ⑤ Figma ↔ Storybook 전체 동기화(차트 토큰 개편 포함) → ⑥ 회귀 · 최종 보고. 재개: , 이 절의 상태 줄.
+체크포인트 `checkpoint/pre-full-sync`(4ebef48). 순서: ① Chart 툴팁 버그 → ② Chip Filter 예시 → ③ Storybook 접근성 경고 → ④ 누락 상태 · 동작 · 사용 예
+→ ⑤ Figma ↔ Storybook 전체 동기화(차트 토큰 개편 포함) → ⑥ 회귀 · 최종 보고. 재개: `git log --oneline checkpoint/pre-full-sync..`, 이 절의 상태 줄.
 
-- ① **완료** — 원인:  포털(position: fixed) 툴팁이 화면 밖 차트에서 화면 가장자리로 밀려 다른 차트 위에 남음(문서 · 쇼케이스의 hover 상태 차트 12개),
+- ① **완료**(2397da1) — 원인: `<body>` 포털(position: fixed) 툴팁이 화면 밖 차트에서 화면 가장자리로 밀려 다른 차트 위에 남음(문서 · 쇼케이스의 hover 상태 차트 12개),
   위치는 스크롤 · 크기 변경 때만 갱신. 수정: 툴팁을 그림 영역 안(position: absolute)으로, 배치는 보이는 부분(화면 · 잘림 조상) → 그림 영역 순.
   검증: 다중 차트 페이지 3개(55차트) × 3 엔진 실제 마우스 · 스크롤 · 크기 변경, 스토리 MultipleCharts(마우스 · 빠른 전환 · 키보드 · 스크롤 영역), chart 정합성 통과.
+- ② **완료** — `FilterChipSelect`(공개, 추가): chip-filter + listbox · option sm, 다중(닫을 때 적용) · 단일("전체"로 해제), 칩 글자 "필터명: 값, 값".
+  Figma: 다중 예시 이름 정리, 단일 선택 예시 추가(1149:6756), Rules 04 "필터 칩 선택" 행, chip-filter 주석, 칩 간격 8 → 4px 정정(Rules 08 · Figma 예시 m-1).
+  열린 필터 칩은 Figma처럼 State=Default(react-aria 눌림 무시). 검증: 스토리 테스트 31(다중 흐름 · 단일 · 키보드 · Disabled · 필터 영역), 3 엔진 실제 마우스 · 키보드, chip 정합성 84/84.
 - 시작 시 Figma 재조회: 다른 편집자의 차트 토큰 개편 진행 중(Semantic 69 · Component 724 — ⑤에서 동기화).
 
 ## 코드 정책 → Figma 공식 정책 작업 (2026-10-19, 완료)

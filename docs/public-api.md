@@ -6,15 +6,15 @@
 
 | 분류 | 개수 | 쓰는 법 |
 | --- | ---: | --- |
-| 공개 컴포넌트 | 49 | 화면에 바로 배치합니다. |
+| 공개 컴포넌트 | 50 | 화면에 바로 배치합니다. |
 | 보조 컴포넌트 | 32 | 적힌 상위 컴포넌트 안에서만 조합합니다. |
-| 타입 | 125 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
+| 타입 | 129 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
 | 상수 | 45 | Figma 속성 값 목록(`BUTTON_VARIANTS` 등) — 선택지 UI · 값 검증용 |
-| 함수 | 2 | `showToast()` · `closeToast()` |
+| 함수 | 3 | `filterChipText()` · `showToast()` · `closeToast()` |
 | 아이콘 | 35 | `<이름>Icon` 컴포넌트 |
 | **내부 부품 — 사용 금지** | 7 | 상위 컴포넌트가 그립니다. |
 | **내부 API — 사용 금지** | 13 | 아래 대체 수단을 씁니다. |
-| 합계 | 308 | `src/index.ts`의 export 전체 |
+| 합계 | 314 | `src/index.ts`의 export 전체 |
 
 내부 부품 · 내부 API는 하위 호환을 보장하지 않으며 다음 메이저 버전에서 export 목록에서 빠질 수 있습니다.
 
@@ -24,7 +24,7 @@
 - 스타일: `platform-design-system/styles.css`(컴포넌트 + 토큰), 글꼴 `platform-design-system/fonts.css`, 토큰만 `platform-design-system/tokens.css` · `platform-design-system/tokens/*`.
 - 그 밖의 경로(`platform-design-system/dist/...`, `src/...`)는 `package.json` `exports`에 없어 가져올 수 없고, 가져와서도 안 됩니다.
 
-## 1. 공개 컴포넌트 (49)
+## 1. 공개 컴포넌트 (50)
 
 | 컴포넌트 | 용도 | Figma | 함께 쓰는 보조 컴포넌트 |
 | --- | --- | --- | --- |
@@ -44,6 +44,7 @@
 | [`Chip`](./api.md#chip) | 선택 칩 | `chip-multi` 201:12711 |  |
 | [`InputChip`](./api.md#chip) | 지울 수 있는 입력값 칩 | `chip-input` 558:26017 |  |
 | [`FilterChip`](./api.md#chip) | 필터 칩(메뉴 · 패널을 여는 트리거) | `chip-filter` 558:25704 |  |
+| [`FilterChipSelect`](./api.md#chip) | 필터 칩 + 선택 패널(다중 · 단일, 닫을 때 적용) — Figma chip-filter 선택 예시 | `chip-filter` 558:25704 |  |
 | [`Calendar`](./api.md#calendar) | 달력(화면에 펼쳐 둔 형태) | `date-picker_calendar` 144:1644 · `date-picker_header` 144:1377 · `date-picker_day` 144:1033 |  |
 | [`DatePicker`](./api.md#datepicker) | 날짜 입력 + 달력 | `date-picker_trigger` 144:723 · `date-picker_message` 144:888 |  |
 | [`Loading`](./api.md#loading) | 로딩 표시 | `loading` 675:5644 |  |

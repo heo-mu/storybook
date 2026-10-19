@@ -12,19 +12,19 @@ Storybook 각 Usage 문서의 **정책** 절은 이 표의 ID를 그대로 씁�
 
 ## 요약
 
-전체 **153개** — 분류 A 51 · B 86 · C 16.
+전체 **156개** — 분류 A 53 · B 87 · C 16.
 
 | 처리 상태 | 뜻 | 개수 |
 | --- | --- | --- |
-| **Figma 정의 정책** | Figma 변형 · 컴포넌트 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씀(Figma 재조회로 확인) | 39 |
-| **Figma 문서화 정책** | 변형으로 그리지 않는 동작 · 규칙 — Figma "Design System Rules" 02–09장 표와 컴포넌트 Dev Mode 주석에 기록(Figma 재조회로 확인) | 96 |
+| **Figma 정의 정책** | Figma 변형 · 컴포넌트 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씀(Figma 재조회로 확인) | 41 |
+| **Figma 문서화 정책** | 변형으로 그리지 않는 동작 · 규칙 — Figma "Design System Rules" 02–09장 표와 컴포넌트 Dev Mode 주석에 기록(Figma 재조회로 확인) | 97 |
 | **개발 구현 세부 사항** | 디자인 컴포넌트에 넣지 않는 기술 구현 — Rules 10장에 목록, Storybook "개발 구현 세부 사항" | 16 |
 | **Figma 반영 대기** | Figma 정리가 필요하지만 아직 반영하지 않은 항목 — 반영 완료로 표시하지 않음 | 2 |
 
 | 분류 \ 상태 | Figma 정의 | Figma 문서화 | 개발 구현 | 반영 대기 |
 | --- | --- | --- | --- | --- |
-| A 시각 상태 | 39 | 10 | 0 | 2 |
-| B 동작 · 상호작용 | 0 | 86 | 0 | 0 |
+| A 시각 상태 | 41 | 10 | 0 | 2 |
+| B 동작 · 상호작용 | 0 | 87 | 0 | 0 |
 | C 기술 구현 | 0 | 0 | 16 | 0 |
 
 분류 원칙: **A** 시각 상태는 가능한 한 Figma 변형 · 속성(기존 토큰 사용), **B** 동작은 불필요한 변형 대신 규칙 문서 · 주석, **C** 기술 구현은 개발 문서에만.
@@ -165,7 +165,10 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | CHIP-01 | B | InputChip 칩 전체가 삭제 버튼, Enter · Space · Delete · Backspace | X 아이콘(12px)만 그려짐 | 터치 대상 확보를 위해 칩 전체가 삭제 대상 | Rules 04 · Chip 주석 | Figma 문서화 정책 | Rules 04 |
 | CHIP-02 | A | 포커스: 브라우저 기본 링 | Focus 상태 없음 | 포커스 링: 2px `colors/border/focus`(brand/700), 바깥 2px 간격, 모서리는 컴포넌트 모서리 + 4px. `:focus-visible`(키보드)일 때만 | Figma 컴포넌트 속성 `Focus`(boolean) + 숨김 "Focus ring" 레이어 | Figma 정의 정책 | chip-multi 201:12711 · chip-input 558:26017 · chip-filter 558:25704 · Rules 02 |
-| CHIP-03 | B | Chip 그룹: 사용처에서 role="group"과 간격 | 그룹 컴포넌트 · 간격 없음 | 칩 사이 8px(`m-2`), 줄바꿈 시 같은 간격 | Rules 08 | Figma 문서화 정책 | Rules 08 |
+| CHIP-03 | B | Chip 그룹: 사용처에서 role="group"과 간격 | 그룹 컴포넌트 · 간격 없음 | 칩 사이 4px(`m-1`, Figma 예시 바인딩), 줄바꿈 시 같은 간격 — 2026-10-19 밤 8px에서 정정 | Rules 08 | Figma 문서화 정책 | Rules 08 |
+| CHIP-04 | B | FilterChip은 트리거만 — 선택 패널 · 선택 방식 · 적용 시점 · 해제는 사용처마다 직접 구현 | Figma에 다중 선택 예시(1011:12956)만, 단일 선택 · 해제 규칙 없음 | 다중(기본): 패널 유지 · 닫을 때 적용 · 모두 끄면 해제, 단일: 고르면 적용 · 닫힘 · "전체"로 해제, 칩 글자 "필터명: 값, 값"(3개 넘으면 "외 N") — FilterChipSelect | Figma 단일 선택 예시 추가(1149:6756) · Rules 04 행 · chip-filter 주석 | Figma 문서화 정책 | chip-filter 558:25704 · 예시 1011:12956 · 1149:6756 · Rules 04 1149:6982 · Rules 04 |
+| CHIP-05 | A | 열린 필터 칩이 Pressed 모양(react-aria가 열린 동안 트리거를 눌림으로 둠) | Figma는 열린 칩을 State=Default · Expanded=True로 그림 | Figma 그대로 — 실제로 누르는 동안만 Pressed | 이미 Figma 변형(Expanded=True) | Figma 정의 정책 | chip-filter 558:25704 · Rules 02 |
+| CHIP-06 | A | 선택 패널 없음 | — | listbox · option Size=sm, 칩 아래 4px · 시작 정렬 · 최소 160px | Figma 선택 예시의 배치 · 인스턴스 | Figma 정의 정책 | listbox 97:2665 · option 97:2286 (예시 1011:13310) · Rules 05 |
 
 ### DashboardFilterBar
 

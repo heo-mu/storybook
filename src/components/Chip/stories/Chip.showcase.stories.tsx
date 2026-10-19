@@ -168,14 +168,14 @@ function Tags() {
   const [open, setOpen] = useState(false);
   return (
     <div style={{ display: 'grid', gap: 16 }}>
-      <div style={{ display: 'flex', gap: 8 }}>
+      <div style={{ display: 'flex', gap: 'var(--spacing-margin-m-1)' }}>
         {tags.map((t) => (
           <InputChip key={t} size="sm" onRemove={() => setTags((all) => all.filter((x) => x !== t))}>
             {t}
           </InputChip>
         ))}
       </div>
-      <div style={{ display: 'flex', gap: 8 }}>
+      <div style={{ display: 'flex', gap: 'var(--spacing-margin-m-1)' }}>
         <Chip size="sm">알림 켜짐</Chip>
         <FilterChip size="sm" expanded={open} onPress={() => setOpen((o) => !o)}>
           기간
@@ -215,7 +215,7 @@ export const Interaction: Story = {
 /** Buttons with state: aria-pressed (Chip), "삭제" in the name (InputChip), aria-expanded (FilterChip). */
 export const Accessibility: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 8 }}>
+    <div style={{ display: 'flex', gap: 'var(--spacing-margin-m-1)' }}>
       <Chip defaultSelected>선택됨</Chip>
       <InputChip>태그</InputChip>
       <FilterChip expanded={false}>필터</FilterChip>

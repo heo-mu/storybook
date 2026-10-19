@@ -185,6 +185,22 @@
   --_ic: var(--_ic-pressed);
 }
 
+/* react-aria keeps a menu / listbox trigger "pressed" while its overlay is open; Figma draws an open chip-filter as
+ * State=Default (Expanded=True), and Hover when the pointer is over it. Only a real press shows Pressed. */
+.ds-chip[data-kind='filter'][aria-expanded='true'][data-pressed]:not(:active) {
+  --_bg: var(--_bg-default);
+  --_bd: var(--_bd-default);
+  --_fg: var(--_fg-default);
+  --_ic: var(--_ic-default);
+}
+
+.ds-chip[data-kind='filter'][aria-expanded='true'][data-pressed]:hover:not(:active) {
+  --_bg: var(--_bg-hover);
+  --_bd: var(--_bd-hover);
+  --_fg: var(--_fg-hover);
+  --_ic: var(--_ic-hover);
+}
+
 .ds-chip:disabled {
   --_bg: var(--_bg-disabled);
   --_bd: var(--_bd-disabled);
@@ -240,4 +256,20 @@
 .ds-chip:focus-visible {
   outline: var(--border-width-border-2) solid var(--colors-border-focus);
   outline-offset: var(--spacing-padding-p-0_5);
+}
+
+/*
+ * FilterChipSelect — chip-filter + listbox / option Size=sm (Figma "chip-filter 선택 예시", 1011:12956): the panel
+ * opens 4px (spacing/margin/m-1) below the chip, aligned to its start, at least as wide as the Figma listbox
+ * (160px) or the chip. The listbox scrolls when the popover is limited to the space in the viewport.
+ */
+.ds-filter-chip-select {
+  display: inline-flex;
+}
+
+.ds-filter-chip-select__popover {
+  display: flex;
+  flex-direction: column;
+  min-width: max(160px, var(--trigger-width));
+  outline: none;
 }
