@@ -14,6 +14,10 @@
   (Figma에서 변수 삭제). 별칭은 두지 않습니다.
 - `BUTTON_TONES`에 Secondary · Solid 추가(3번째) — 이제 내부 API.
 
+### 호환성 변경 — 토큰 이름 규칙 (F81)
+- 대괄호가 들어간 Figma 변수 이름은 대괄호를 뺀 CSS 변수로 생성합니다(이스케이프 불필요):
+  `--border-radius-rounded-\[2px\]` → `--border-radius-rounded-2px`, `\[5px\]` → `5px`, `\[12px\]` → `12px`. 별칭은 두지 않습니다(배포 전).
+
 ### Figma 수정 반영 (2026-10-19, [docs/figma-fix-requests.md](docs/figma-fix-requests.md))
 - 화면 변화 없는 바인딩 복구: Button Primary · Outline 테두리가 `--colors-button-primary-outline-border-default` 사용(리터럴 #004a38 제거),
   12px 모서리는 Figma 변수에서 생성(등록 대기 목록 비움), `sm/leading-normal/underline`의 자간 · 굵기가 변수 참조(값 같음).
@@ -35,7 +39,7 @@
 - Storybook **Components / Button / Tertiary Background** — Tertiary 배경 변경 전후 비교.
 - **Button · IconButton**: Secondary · Solid(Figma 56개 변형, 352개 전체). `appearance`를 생략하면 Secondary는 이전처럼 Outline.
 - `closeToast(key)` — `showToast()`가 돌려준 토스트를 코드에서 닫기.
-- 공통 토큰 `--border-radius-rounded-\[12px\]`(F69, Figma 등록 대기 — `figma-pending/primitive.txt`). MetricCard · DashboardFilterBar가 사용.
+- 공통 토큰 `--border-radius-rounded-12px`(F69, Figma `border-radius/rounded-[12px]`). MetricCard · DashboardFilterBar가 사용.
 - 문서: `docs/public-api.md`(공개 49 · 보조 32 · 사용 금지 내부 API, 자동 생성), `docs/breaking-changes.md`, `docs/figma-fix-requests.md`,
   `docs/release-checklist.md`. `api.md`에 분류 표시.
 

@@ -45,7 +45,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | --- | --- | --- | --- |
 | B1 | Component 컬렉션 최상위에 그룹 없는 변수 7개: `default`, `hover`, `pressed`, `disabled`, `active`, `selected`, `disabled-selected` | 생성하지 않음 (Button 범위 밖, 이름 충돌 위험) | 어느 컴포넌트용인지 그룹 경로 부여 |
 | B2 | `colors/gray`(단계 없음)와 **`colors/gray 2`(공백 포함)**가 같은 값 #f2f2f3 | `--colors-gray`, `--colors-gray-2`로 생성 | 하나로 통합하고 공백 제거 |
-| B3 | **`border-radius/rounded-[5px]`** — 이름에 대괄호 | CSS 변수 이스케이프 필요: `--border-radius-rounded-\[5px\]` | `rounded-5` 같은 이름으로 변경 |
+| B3 | **`border-radius/rounded-[5px]`** — 이름에 대괄호 | **해결(2026-10-19, F81)** — 토큰 생성기가 대괄호를 빼고 생성: `--border-radius-rounded-5px` (이스케이프 없음) | — |
 | B4 | Radius 크기 순서와 이름 불일치: `rounded`(4) < `rounded-[5px]`(5) < **`rounded-sm`(6)** < `rounded-md`(8) | 값 그대로 | `sm`이 기본보다 크지 않도록 이름 정리 |
 | B5 | `colors/white` = #fdfdfd, `colors/black` = #222222 (순백·순흑 아님). 반면 `alpha/white/*`, `button/progress/border`는 #ffffff | 값 그대로 | 이름이 값과 맞는지 확인 |
 | B6 | Theme `brand-status/danger`와 `brand-status/error`가 같은 값 (red/600, red/100) | 둘 다 생성 | 용도 구분 또는 통합 |
@@ -166,7 +166,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F78 | chart `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873이 `series/compare` — hover=no 짝(762:5921)은 `series/02`. 간단 스타일 hover 변형의 툴팁 표시도 막대 색과 다름 | 변경 안 함 | 짝 변형과 맞추기 |
 | F79 | chart 세트에 `hover` 속성 추가 — 24개 변형(2026-10-19 다른 편집) | 코드 · 검증은 12개 기준 유지, R3 변형만 개별 기준 이미지 | 새 구조로 동기화할지 결정 |
 | F80 | **Accordion 프레임(796:5813) 삭제**, `accordion-item`(796:6071)이 페이지에서 분리(2026-10-19 다른 편집) | Storybook · 패키지에는 Accordion 유지 | 복구 또는 폐기 결정 |
-| F81 | `border-radius/rounded-[2px]`(VariableID:873:4798) WEB code syntax `var(--radius-2px)` — 코드의 CSS 변수는 `--border-radius-rounded-\[2px\]` | 변경 안 함 | code syntax 수정 |
+| F81 | `border-radius/rounded-[2px]`(VariableID:873:4798) WEB code syntax `var(--radius-2px)` — 코드의 CSS 변수는 `--border-radius-rounded-\[2px\]` | **해결(2026-10-19)** — 생성 규칙 개선(`[값]` → `값`): `--border-radius-rounded-2px` · `-5px` · `-12px`. Figma WEB code syntax 3개를 같은 이름으로 | — |
 | F82 | table_value_editable Filter · Hover · Empty(693:7163) 칩만 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | Figma 그대로 | 의도 확인 |
 | F83 | legacy 화면 시안 19개 프레임이 원격 `radius/xlarge1`(12) 사용 | 변경 안 함(DS 컴포넌트 아님) | 로컬 `rounded-[12px]`로(선택) |
 

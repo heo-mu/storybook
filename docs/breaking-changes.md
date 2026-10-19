@@ -54,6 +54,17 @@ Date Picker(navigation · day), Link, Pagination(item · control), Select option
 
 삭제 · 이름 변경은 없습니다 — [분석](./analysis/tertiary-fill-2026-10-19.md).
 
+### 2026-10-19 — 토큰 이름 규칙 (F81)
+
+| 이전 | 이후 |
+| --- | --- |
+| `--border-radius-rounded-\[2px\]` | `--border-radius-rounded-2px` |
+| `--border-radius-rounded-\[5px\]` | `--border-radius-rounded-5px` |
+| `--border-radius-rounded-\[12px\]` | `--border-radius-rounded-12px` |
+
+토큰 생성기가 Figma 이름의 `[값]`을 `값`으로 바꿉니다(이스케이프가 필요한 CSS 변수 이름 제거). 코드 안의 사용처 3곳(Chart · MetricCard · DashboardFilterBar)은 함께 바꿨고,
+배포 전이라 이전 이름의 별칭은 두지 않습니다. 앱 CSS에서 이전 이름을 썼다면 위 표대로 바꾸면 됩니다.
+
 ## 2. 컴포넌트 API
 
 | 변경 | 종류 | 호환성 |

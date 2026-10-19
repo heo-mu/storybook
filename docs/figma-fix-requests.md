@@ -58,7 +58,7 @@ Rounded 전부 · Square Default · `button_icon` 전부가 이미 outline 토�
 
 ## R4. 12px 모서리 변수 — 완료
 
-- 신규 Primitive 변수 **`border-radius/rounded-[12px]`** = 12(`VariableID:1033:6620`), scopes `CORNER_RADIUS`, WEB code syntax `var(--border-radius-rounded-\[12px\])`(코드의 실제 CSS 변수),
+- 신규 Primitive 변수 **`border-radius/rounded-[12px]`** = 12(`VariableID:1033:6620`), scopes `CORNER_RADIUS`, WEB code syntax `var(--border-radius-rounded-12px)`(코드의 실제 CSS 변수 — F81 생성 규칙 개선 후),
   설명 기재. 기존 `rounded-[2px]` · `rounded-[5px]`와 같은 이름 규칙. 값 12인 기존 모서리 변수 없음(중복 아님).
 - 원격 `radius/xlarge1`(`VariableID:51661197…/138:631`)은 원격 라이브러리의 다른 변수를 다시 가리키는 별칭이며 값 12 — 로컬 변수로 대체.
 - 재연결(4개 모서리 모두, 값 12 그대로): 697:4487 `metric-card` · 698:4163 `dashboard-filter-bar` · 773:6944 · 773:7038 `chart-panel`(원격) · 773:9908 `chart-panel`(바인딩 없던 12).
@@ -118,7 +118,7 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 | N2 | `chart` `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873 | `series/compare` — hover=no 짝(762:5921)은 `series/02` | `series/02`로 | 같은 변형의 툴팁 표시(I1011:15175;693:9774 등)도 막대색과 다름 |
 | N3 | `chart` 세트 구조 변경 | `hover` 속성 추가로 24개 변형(이번 작업 전 다른 편집) | 코드 · 검증 기준을 새 구조로 맞출지 결정 | Chart 검증(현재 12개 기준 + 수정한 변형만 개별 기준) |
 | N4 | Accordion 프레임 796:5813 삭제, `accordion-item` 796:6071 분리 | 원본에 Accordion 없음, Storybook에는 있음 | 복구 또는 컴포넌트 폐기 결정 | `Accordion` · `AccordionItem` 공개 API |
-| N5 | `border-radius/rounded-[2px]`(`VariableID:873:4798`) WEB code syntax | `var(--radius-2px)` — 코드에 없는 이름 | `var(--border-radius-rounded-\[2px\])` | Figma Dev Mode 코드 표시 |
+| N5 | `border-radius/rounded-[2px]`(`VariableID:873:4798`) WEB code syntax | **해결(F81)** — `var(--border-radius-rounded-2px)` | 생성 규칙 개선 | — |
 | N6 | 693:7163 Filter · Hover · Empty 칩(693:8205) | 칩 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | 의도 확인 후 Default로 | Table 쇼케이스 1칸 |
 | N7 | legacy 화면 시안 19개 프레임 | 원격 `radius/xlarge1` | 로컬 `rounded-[12px]`로(값 같음) | 시각 변화 없음, 원격 의존 제거 |
 

@@ -460,7 +460,7 @@
   --border-radius-rounded-none: 0px;
   --border-radius-rounded-sm: 6px;
   --border-radius-rounded: 4px;
-  --border-radius-rounded-\[5px\]: 5px;
+  --border-radius-rounded-5px: 5px;
   --border-radius-rounded-md: 8px;
   --border-radius-rounded-lg: 10px;
   --border-radius-rounded-xl: 14px;
@@ -616,12 +616,12 @@
   --font-tracking-tracking-wide: 2.5px;
   --font-tracking-tracking-wider: 5px;
   --font-tracking-tracking-widest: 10px;
-  --border-radius-rounded-\[2px\]: 2px;
+  --border-radius-rounded-2px: 2px;
   --border-width-border-0: 0px;
   --border-width-border-2_5: 2.5px;
   --border-width-border-3: 3px;
   --spacing-gap-overlap-0_5: -2px;
   --spacing-padding-p-13: 52px;
   --spacing-padding-p-px: 1px;
-  --border-radius-rounded-\[12px\]: 12px;
+  --border-radius-rounded-12px: 12px;
 }

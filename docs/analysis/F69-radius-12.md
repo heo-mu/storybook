@@ -2,7 +2,7 @@
 
 Figma 파일 전체 페이지를 읽기 전용으로 조회해 모서리 12px인 노드를 모두 찾았습니다.
 
-> **2026-10-19 (최종 배포 준비) — A안 적용**: 공통 토큰 `border-radius/rounded-[12px]` = 12 (`--border-radius-rounded-\[12px\]`)을 추가하고
+> **2026-10-19 (최종 배포 준비) — A안 적용**: 공통 토큰 `border-radius/rounded-[12px]` = 12 (`--border-radius-rounded-12px` — F81 이후 이름)을 추가하고
 > `MetricCard` · `DashboardFilterBar`가 사용합니다. Figma에는 아직 없어 **Figma 등록 대기** 토큰으로 관리합니다 — [적용 내용](#적용-내용-2026-10-19).
 
 ## 사용 현황
@@ -37,7 +37,7 @@ A안이 화면을 바꾸지 않고 원격 의존을 없애는 최소 변경입�
 
 | 항목 | 내용 |
 | --- | --- |
-| 이름 | `border-radius/rounded-[12px]` → CSS `--border-radius-rounded-\[12px\]` (로컬 `rounded-[2px]` · `rounded-[5px]`와 같은 규칙, Tailwind 미사용) |
+| 이름 | `border-radius/rounded-[12px]` → CSS `--border-radius-rounded-12px`(F81 생성 규칙, 이전 `--border-radius-rounded-\[12px\]`) (로컬 `rounded-[2px]` · `rounded-[5px]`와 같은 규칙, Tailwind 미사용) |
 | 원본 위치 | `figma-pending/primitive.txt` — Figma 스냅샷(`figma/`)과 체크섬에는 들어가지 않음. `npm run tokens`가 `primitive.css` 끝에 별도 블록으로 내보내고 `tokens.json`에 `"pending"` 표시 |
 | 사용처 | `MetricCard.css` · `DashboardFilterBar.css` (`12px` → 토큰). 화면 변화 없음 — 두 컴포넌트 Chromium · Firefox · WebKit 정합성 통과 |
 | Figma 등록 후 | Figma에 같은 이름의 로컬 변수가 생기고 스냅샷을 다시 추출하면 `npm run tokens`가 이름 중복으로 실패 → `figma-pending/primitive.txt`에서 해당 줄 삭제 |

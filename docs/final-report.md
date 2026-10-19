@@ -167,7 +167,7 @@ Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것
 | 노드 단위 원본 변경 | 68개 세트를 다시 캡처해 비교 → Accordion(모든 Hover 배경 · 펼침 구분선 · Disabled, F50 해소)과 Table 편집 칸 Filter(칩 1개 구성) 반영, 기준 갱신 |
 | 호환성 · 버전 정책 | [breaking-changes.md](./breaking-changes.md) — 외부 배포 전이므로 별칭 없이 **0.1.0으로 첫 배포** 권장, 0.x · 1.0 이후 규칙 |
 | F65 | 가로 막대 기본 비교 막대 = 범례 · 툴팁 `chart/series/compare`. Figma 노드 5개 · 변수 ID 보고(R3) |
-| F69 | 공통 토큰 `--border-radius-rounded-\[12px\]`(기존 `rounded-[2px]` 규칙, Tailwind 없음) — `figma-pending/`에서 생성, 체크섬 밖, Figma 등록 시 자동 감지 |
+| F69 | 공통 토큰 `--border-radius-rounded-12px`(F81 이후 이름, 기존 `rounded-[2px]` 규칙, Tailwind 없음) — `figma-pending/`에서 생성, 체크섬 밖, Figma 등록 시 자동 감지 |
 | 공개 API 분류 | 컴포넌트 88 = **공개 49 · 보조 32 · 내부 부품 7**, export 308(= 307 + `closeToast`) = 컴포넌트 88 + 타입 125 + 상수 45 + 함수 2 + 아이콘 35 + 내부 API 13 — [public-api.md](./public-api.md)(자동 생성, 분류 누락 시 생성 실패) |
 | 문서 | developer-guide · api.md · public-api.md · CHANGELOG 갱신, [release-checklist.md](./release-checklist.md) · [figma-fix-requests.md](./figma-fix-requests.md) 추가 |
 | 회귀 · 외부 Import | typecheck · lint 0, 스토리 테스트 86 파일 · **376개** 통과, build(토큰 = 스냅샷, 변경 없음) · build-storybook, **verify:all 36 × 3 엔진 108/108**, **verify:button 352/352 · 실제 포인터 36/36 × 3 엔진**, axe 376 스토리 그 밖의 위반 0(새 알려진 대비 18: Secondary · Solid Hover · Pressed 흰 글자 3.51 · 2.46:1 — Figma 값, 디자인 확인 필요), 외부 프로젝트(npm pack → Vite 8 + React 19 + TS 6 strict) 타입 검사 · 빌드 · 실행 — Secondary · Solid #007c56, Secondary 기본 Outline 유지, 12px 토큰, `closeToast`, 콘솔 오류 0 |
