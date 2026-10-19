@@ -12,8 +12,8 @@ Figma 원본은 읽기 전용으로만 조회했고 수정하지 않았습니다
 | 구현 컴포넌트 | Figma Component Set · Component 74개(Button 3 포함) → React 컴포넌트 44종(+ 하위 부품), Storybook 사용 문서 37쪽 |
 | 구현 불가 | Popover · Combobox · Drawer — 작업 중 Figma에서 삭제되어 근거 없음 |
 | Figma 정합성 | Button 296 + 그 밖의 842개 변형, Chromium · Firefox · WebKit 3개 엔진 모두 통과 |
-| 스토리 테스트 | 86 파일 · 370개 통과 |
-| 접근성(axe) | 370 스토리 — 그 밖의 위반 0 (알려진 Figma 토큰 대비 400 · react-aria 달력 이름 693, [accessibility.md](./accessibility.md)) |
+| 스토리 테스트 | 87 파일 · 378개 통과 (2026-10-19 정합성 개선 후) |
+| 접근성(axe) | 378 스토리 — 색 대비 0 · 그 밖의 위반 0 (A-1 · A-2 수정, 알려진 대비 목록 없음 · react-aria 달력 이름 693, [accessibility.md](./accessibility.md)) |
 | 빌드 · 타입 · 린트 | typecheck · lint · build · build-storybook 통과 |
 | 외부 사용 검증 | `npm pack`(184 파일) → 새 Vite 8 + React 19 + TypeScript 6 프로젝트에 설치, 컴포넌트 · 하위 부품 · 아이콘 · 상수 60여 개 import — strict 타입 검사(패키지 `.d.ts` 포함) · `vite build` · 브라우저 실행(콘솔 오류 0, 폰트 · 토큰 적용) 통과 |
 | Storybook MCP | 컴포넌트 매니페스트 44 · 문서 37쪽 조회 가능(검증용 Showcase는 `!manifest`로 제외) |
@@ -223,3 +223,23 @@ R7 다중 선택 목록(D3) · R8 Table 안내 글자(삭제된 변수, 3노드,
 새로 결정이 필요한 항목: F77 · F78(차트 hover 변형 바인딩), F79(차트 구조 동기화), F80(Accordion 복구 · 폐기), F81(2px code syntax), F82, F83,
 대비 개선안 A-1 · A-2 와 값 변경 A-3 – A-5 — [figma-fix-requests.md](./figma-fix-requests.md#승인이-필요한-값--정책-변경-변경하지-않음).
 
+
+## 11. Figma · Storybook 전체 정합성 개선 (2026-10-19, Figma 수정 허용 작업)
+
+기록: [analysis/consistency-pass-2026-10-19.md](./analysis/consistency-pass-2026-10-19.md). 시작 체크포인트 `checkpoint/pre-consistency-pass`.
+원격 Push · npm 배포 · Storybook 배포는 하지 않았고 커밋은 로컬에만 있습니다.
+
+| 항목 | 결과 |
+| --- | --- |
+| F81 | 토큰 생성기 규칙 — `rounded-[2px]` → `--border-radius-rounded-2px`(5px · 12px 같음), Figma code syntax 3개 |
+| 회귀 수정 | F81 커밋이 만든 토큰 파일 머리 주석 결함(`*/`) — Button 외 Component 토큰이 브라우저에서 정의되지 않던 문제를 찾아 수정, 생성기에 검사 추가 |
+| F80 | Accordion 복구본을 로컬 변수 · 스타일로(색 58 · 레이아웃 442 · 텍스트 스타일 24), Component 토큰 9개 신설, R5 |
+| F78 | Chart Component 토큰 19개(`colors/chart/{bar,line,point,plot,label,legend,tooltip}/*`) — 24변형 · 범례 · 툴팁 보이는 색 778곳 연결(F77 5노드 제외), 세로 · 가로 막대 같은 규칙 |
+| F79 | 24변형(hover) 코드 · 스토리 · 검증, 간단 스타일 호버 · 키보드, 강조 크기, Hover 결함 2건(감지 영역 · 터치) 근본 수정 |
+| F77 | 수정 제외(지시) — 5노드 그대로 확인, 3 엔진 정합성 통과 |
+| A-1 · A-2 | 색 대비 axe 423 → 0, 컨트롤 경계 2.35 → 3.87:1 — 전후 표 [accessibility.md](./accessibility.md) |
+| 전체 점검 | 원격 사본 92곳 로컬화, code syntax 11개, 다른 컴포넌트 토큰 별칭 1개, 배지 흰 채움 12변형, 변형 위치 1개 |
+| 회귀 | typecheck · lint 0 · build · build-storybook 통과, 스토리 테스트 87 파일 · 378개, axe 378 스토리(색 대비 0 · 그 밖의 위반 0), verify:all 36 컴포넌트 × 3 엔진 108/108, verify:button 352 + 실제 포인터 36 × 3 엔진, Chart Hover 실제 브라우저 6종 × 3 엔진(터치는 Chromium · WebKit), Accordion 실제 브라우저 3 엔진, 외부 Vite + React 19 프로젝트(npm pack → 설치 · strict 타입 · 빌드 · 실행, 콘솔 오류 0), Figma 체크섬 8그룹 일치 |
+
+남은 결정: 차트 보조 계열 막대 대비(1.24 · 1.38:1), SearchField Solid 경계, Segmented 선택 표시, Slider 손잡이 · Segmented 그림자 효과 스타일,
+data-state · 예시 프레임 원격 흰 배경(#ffffff), F77 수정 여부, 그 밖에 [figma-issue-triage.md](./figma-issue-triage.md) 1절.

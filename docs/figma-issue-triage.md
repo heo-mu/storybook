@@ -1,5 +1,10 @@
 # Figma 이슈 분류 (2026-10-19)
 
+> **정합성 개선 작업 반영(2026-10-19 저녁, Figma 수정 허용)** — 해결: F78(Chart Component 토큰) · F79(hover 24변형 · Hover 결함) · F80(Accordion 토큰) ·
+> F81(토큰 이름 규칙) · A-1 · A-2(색 대비 — E12 · F12 · F23 · A-5) · F64(원본 점 위치) · F65-b(간단 막대 색 통일) · F66(툴팁 원격 변수) · F68(Dash Line 색) ·
+> F73(배지 흰 채움) · B10(code syntax 11) · F13 · F28 · F32 · F52(원격 변수 사본) · progress 별칭. F77은 지시로 수정 제외(회귀 확인만).
+> 상세: [analysis/consistency-pass-2026-10-19.md](./analysis/consistency-pass-2026-10-19.md).
+
 > **Figma 수정 작업 반영(2026-10-19 오후)**: R1 · R2(A6) · R3(F65-a) · R4(F69) · R6(F75 일부) · R8(F57) · C3 바인딩을 Figma에서 직접 고쳤습니다.
 > R5(F74)는 Accordion이 원본에서 삭제되어 미확인. 새 항목 F77 – F83과 대비 개선안(A-1 · A-2)은 [figma-fix-requests.md](./figma-fix-requests.md) 참고.
 
@@ -28,8 +33,8 @@ F6은 결정(1절)과 렌더링 차이(3절)에, F57은 코드 작업(2절)과 F
 | ~~E12 · F12 · F23~~ | 대비 부족 — **해결(2026-10-19, A-1 · A-2)**: Figma · 코드 함께 수정, axe 색 대비 0([accessibility.md](./accessibility.md)) | — | — |
 | A11 · F1 · F22 | Focus 상태 없음(Button, 선택 컨트롤, Chip, Segmented, Slider) | 브라우저 기본 포커스 링 | 높음 |
 | F65-a | 가로 막대 기본 Group=yes 비교 막대 `simple/history` ↔ 범례 · 툴팁 `series/compare` — **Figma 수정 요청**([R3](./figma-fix-requests.md#r3-차트-가로-막대--기본--groupyes-비교-막대--완료-지정-5노드)) | **코드는 `series/compare`로 통일(2026-10-19)** | 중간 |
-| F65-b | 간단 스타일 Group=no 지난 기간 색이 세로 · 가로에서 다름 | Figma 변형 그대로 | 중간 |
-| F69 | 대시보드 카드 모서리 12px — Figma에 로컬 변수 등록 · 재바인딩([R4](./figma-fix-requests.md#r4-12px-모서리-변수--완료)) | **공통 토큰 `rounded-[12px]`(Figma 등록 대기, 2026-10-19)** | 중간 |
+| ~~F65-b~~ | 간단 스타일 Group=no 지난 기간 색 — **해결(2026-10-19, F78)**: 세로 · 가로 같은 `colors/chart/bar/history`(Figma · 코드) | — | — |
+| F69 | 대시보드 카드 모서리 12px — Figma에 로컬 변수 등록 · 재바인딩([R4](./figma-fix-requests.md#r4-12px-모서리-변수--완료)) 완료. 남은 것: data-state · 예시 프레임의 원격 흰 배경 `color/background/white`(#ffffff, 로컬은 #fdfdfd) | 토큰 `--border-radius-rounded-12px`(F81 이름) | 낮음 |
 | F60 | Card 그림자(원격 shadow-sm 10%) | elevation-1(12%) | 중간 |
 | F61 | Card 프레임 숨김 — 사용 여부 | 레이어 값으로 구현, 위치 · 크기만 검증 | 중간 |
 | F33 | Breadcrumb 펼친 상태(Role=Open, 메뉴 위치) | … 버튼 아래 메뉴, 현재 항목은 Current | 중간 |
@@ -81,7 +86,7 @@ Badge Outline 모서리 안티에일리어싱, 한글 글자 농도 차이 · ca
 
 ### 샘플 · 예시 데이터 차이 (코드는 실제 데이터로 동작)
 
-E5(카운터 예시 값), F14 · F15(Slider 상자 너비), F58 · F59(Table 관리 모드 예시), F62 · F64 · F67 · F68(Chart 예시), F73(DataState 예시 수치), F55(빈 헤더 너비).
+E5(카운터 예시 값), F14 · F15(Slider 상자 너비), F58 · F59(Table 관리 모드 예시), F62 · F67(Chart 예시 — F64 점 위치는 원본에서 해결, F68 색은 F78로 해결), F73(DataState 예시 수치), F55(빈 헤더 너비).
 
 ### Figma 정리 권장 (화면 영향 없음 — 원본 바인딩 · 이름만 정리)
 
@@ -89,7 +94,7 @@ E5(카운터 예시 값), F14 · F15(Slider 상자 너비), F58 · F59(Table 관
 | --- | --- |
 | 다른 변수 · 상위 레이어 직접 참조 | A5(2026-10-19 원본에서 해결 · 코드 반영), A6([R2](./figma-fix-requests.md#r2-button-secondary--outline-테두리--완료)), B7, E1 · E2 · E3 · E4, E10, F5, F7, F24, F27, F29, F34, F54 |
 | 원격 라이브러리 변수 | **2026-10-19 정리** — 컴포넌트 안 원격 사본 92곳을 같은 이름 · 값의 로컬로(F13 · F28 · F32 · F52 · F66). 남은 것: Slider 손잡이 그림자(로컬 없음), data-state 흰 배경 `color/background/white` #ffffff(로컬 #fdfdfd — F69와 같은 결정), 문서 · legacy 프레임 |
-| 쓰이지 않거나 어긋난 변수 · 속성 | A7, A8, B1, B10, F19, F26, F49, F72 |
+| 쓰이지 않거나 어긋난 변수 · 속성 | A7, A8, B1, ~~B10~~(2026-10-19 해결), F19, F26, F49, F72 |
 | 이름 · 오타 · 정렬 | A1 · A2 · A3(A1은 2026-10-19 동기화로 색 분리 반영), B2 · B3 · B4, B9, C4, F38 · F45(이름 수정 시 토큰 CSS 변수 이름도 바뀜), F70, F74(Accordion 변형 위치 — [R5](./figma-fix-requests.md#r5-accordion-md--hover--expanded-위치--미확인-수정-불가)) |
 | 값 지정 방식 | C2 · C3(삭제된 변수 바인딩 — 코드는 적용값 사용), F57(삭제된 변수 — [R8](./figma-fix-requests.md#r8-table-편집-칸-안내-글자--완료)), C6, F17 · F18(효과 · 원 변수 미연결), F42 · F43(배지 채움 · 크기), F46(Toast 높이 · padding) |
 | 값 · 의도 확인(현재 일관됨) | A10(IconButton 숨김 라벨 → 필수 `aria-label`), B5(white #fdfdfd · black #222222), B6(danger · error 같은 값), F4(Radio 점 9px), F25(요일 영어 표기 — 코드는 로캘), F39(connector padding), E9 · E11 |
