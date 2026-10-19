@@ -47,6 +47,10 @@ Figma **Date Picker** 프레임(149:831)의 `date-picker_trigger`(21개) · `dat
 | State Disabled · Read-only | `disabled` · `readOnly` | Read-only는 달력 버튼 없음 |
 | day Today · Selected · Outside · Disabled | 오늘 · `value` · 다른 달 · `minValue`/`maxValue`/`isDateUnavailable` | |
 | navigation Disabled | 범위 끝 달에서 이전 / 다음 비활성 | |
+| Label Text | `label` | |
+| date-picker_message Alert Text · Type Info · Success · Error | `message` · `messageType` | |
+| date-picker_day Day Text · State Pressed | 날짜 숫자(로캘 형식) · 누르는 동안 | 이름은 "27 2026년 9월 27일 일요일"(정책 `DPCK-05`) |
+| date-picker_navigation Direction Previous · Next · State Pressed | 이전 · 다음 달 버튼(이름 "이전 달" · "다음 달") · 누르는 동안 | |
 
 `name`을 주면 숨겨진 input으로 `YYYY-MM-DD` 값이 폼에 전송됩니다.
 

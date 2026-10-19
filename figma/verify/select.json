@@ -56,9 +56,6 @@
         "icon_size": ".ds-option__check",
         "icon_size/icon/Check": ".ds-option__check > svg",
         "icon_size/icon/Check/Check": ".ds-option__check > svg"
-      },
-      "knownDifferences": {
-        "Size=md, State=Disabled": "underline offset/thickness are AUTO in Figma; Figma draws it ~1.5px lower and thicker than the browser font metrics (glyphs themselves match)"
       }
     },
     {

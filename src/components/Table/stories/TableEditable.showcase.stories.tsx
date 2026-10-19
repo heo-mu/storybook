@@ -1,9 +1,10 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
+import type { Key } from 'react-aria-components';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 import { KeyValueGroup, KeyValueItem, KeyValueTable } from '../Table';
 import { Button, TextButton } from '../../Button';
-import { FilterChip } from '../../Chip';
+import { FilterChip, FilterChipSelect } from '../../Chip';
 import { DatePicker } from '../../DatePicker';
 import { ImageUploadPreview } from '../../FileUploader';
 import { Input } from '../../Input';
@@ -26,6 +27,23 @@ type Story = StoryObj;
 type State = 'Default' | 'Hover' | 'Editing' | 'Disabled';
 type Content = 'Empty' | 'Filled';
 type Type = 'Input' | 'Select' | 'Textarea' | 'Date Picker' | 'Date Range Picker' | 'Phone Number' | 'Filter' | 'Switch' | 'File Upload';
+
+const FILTER_OPTIONS = ['a', 'b', 'c', 'd', 'e'].map((id) => ({ id, label: '옵션명' }));
+
+/** A filled filter cell: `FilterChipSelect` "선택유형" with two values applied; 초기화 clears them (Figma Hover · Filled). */
+function TableFilter({ disabled, reset, open }: { disabled?: boolean; reset?: boolean; open?: boolean }) {
+  const [value, setValue] = useState<Key[]>(['a', 'b']);
+  return (
+    <KeyValueGroup>
+      <FilterChipSelect label="선택유형" options={FILTER_OPTIONS} value={value} onChange={setValue} disabled={disabled} defaultOpen={open} />
+      {reset && (
+        <TextButton rightIcon={<ArrowCounterClockwiseIcon />} onClick={() => setValue([])}>
+          초기화
+        </TextButton>
+      )}
+    </KeyValueGroup>
+  );
+}
 
 /** Story-only stand-in for an uploaded image: the Figma placeholder (grey square with crossed lines). */
 const PLACEHOLDER =
@@ -79,7 +97,7 @@ function EditCell({ type, state, content }: { type: Type; state: State; content:
       );
     // Figma (since 2026-10-19): one chip-filter — Unselected "텍스트 선택" when empty, Selected with the summary when
     // filled; Hover · Empty shows the chip's Hover state, Hover · Filled adds 초기화, Editing is the Selected · Expanded chip
-    // (fixed in Figma 2026-10-19, R6) whose multi-select listbox is not drawn here (no such list in the library — decision item).
+    // with its multi-select listbox (R7 / D3 decided 2026-10-19: FilterChipSelect — the chip and its listbox · option sm).
     case 'Filter':
       if (!filled) {
         return row(
@@ -88,14 +106,7 @@ function EditCell({ type, state, content }: { type: Type; state: State; content:
           </FilterChip>,
         );
       }
-      return row(
-        <KeyValueGroup>
-          <FilterChip size="md" selected expanded={state === 'Editing' || undefined} disabled={disabled}>
-            선택유형: 옵션명, 옵션명
-          </FilterChip>
-          {state === 'Hover' && <TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton>}
-        </KeyValueGroup>,
-      );
+      return row(<TableFilter disabled={disabled} reset={state === 'Hover'} open={state === 'Editing'} />);
     case 'Switch':
       return row(
         <>
@@ -151,7 +162,7 @@ export const EditableMatrix: Story = {
       <TypeTable type="Date Range Picker" cells={[...FIELD_CELLS, ['Editing', 'Filled']]} />
       <TypeTable type="Select" cells={FIELD_CELLS} />
       <TypeTable type="Date Picker" cells={FIELD_CELLS} />
-      <TypeTable type="Filter" cells={[...FIELD_CELLS, ['Editing', 'Filled']]} />
+      <TypeTable type="Filter" cells={FIELD_CELLS} />
       <TypeTable type="Switch" cells={[['Default', 'Empty'], ['Disabled', 'Empty']]} />
       <TypeTable type="File Upload" cells={[['Default', 'Empty']]} />
     </div>
@@ -159,7 +170,7 @@ export const EditableMatrix: Story = {
 };
 
 /** Editing with the list / calendar open (one at a time). */
-export const EditableOpen: StoryObj<{ type: 'Select' | 'Date Picker' }> = {
+export const EditableOpen: StoryObj<{ type: 'Select' | 'Date Picker' | 'Filter' }> = {
   args: { type: 'Select' },
   render: ({ type }) => (
     <div style={{ paddingBottom: 320 }}>
@@ -172,9 +183,13 @@ export const EditableOpen: StoryObj<{ type: 'Select' | 'Date Picker' }> = {
               <SelectOption id="a">옵션명</SelectOption>
             </Select>
           </KeyValueItem>
-        ) : (
+        ) : type === 'Date Picker' ? (
           <KeyValueItem label="항목명" editable valueProps={{ 'data-figma': 'Type=Date Picker, State=Editing, Content=Filled' }}>
             <DatePicker size="sm" aria-label="날짜" defaultValue="2026-10-01" open />
+          </KeyValueItem>
+        ) : (
+          <KeyValueItem label="항목명" valueProps={{ 'data-figma': 'Type=Filter, State=Editing, Content=Filled' }}>
+            <TableFilter open />
           </KeyValueItem>
         )}
       </KeyValueTable>

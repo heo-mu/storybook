@@ -9,6 +9,8 @@ export type SelectOptionProps<T extends object = object> = Omit<ListBoxItemProps
   children: ReactNode;
   /** Figma State "Disabled". */
   disabled?: boolean;
+  /** Figma "Check Icon": the check after the text of the selected option. Off: the semibold brand text alone marks it. @default true */
+  checkIcon?: boolean;
   className?: string;
   style?: CSSProperties;
 };
@@ -18,7 +20,7 @@ export type SelectOptionProps<T extends object = object> = Omit<ListBoxItemProps
  * State: Hover / Pressed = pointer hover / press (keyboard focus uses the Hover look), Selected = the Select
  * value (semibold brand text + check icon), Disabled = `disabled`.
  */
-export function SelectOption<T extends object = object>({ children, disabled, className, style, textValue, ...rest }: SelectOptionProps<T>) {
+export function SelectOption<T extends object = object>({ children, disabled, checkIcon = true, className, style, textValue, ...rest }: SelectOptionProps<T>) {
   const size = useSelectSize();
   return (
     <ListBoxItem
@@ -32,7 +34,7 @@ export function SelectOption<T extends object = object>({ children, disabled, cl
       {({ isSelected }) => (
         <>
           <span className="ds-option__text">{children}</span>
-          {isSelected && (
+          {isSelected && checkIcon && (
             <span className="ds-option__check" aria-hidden="true">
               <CheckIcon />
             </span>

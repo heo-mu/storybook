@@ -51,6 +51,9 @@ const [region, setRegion] = useState<Key | null>(null);
 | State Error · Disabled · Read-only | `invalid` · `disabled` · `readOnly` | Read-only는 화살표 없이 값만 표시, 목록이 열리지 않음 |
 | option State Selected | 현재 값 | 굵은 브랜드 색 + 체크 아이콘 |
 | option State Disabled | `SelectOption disabled` 또는 `disabledKeys` | 키보드 이동에서 건너뜀 |
+| select_message Alert Text · Type Info · Success · Error | `message` · `messageType` | |
+| option Option Text | `SelectOption` children | |
+| option Check Icon | `SelectOption checkIcon` | 기본 켬. 끄면 선택 표시는 굵은 브랜드 글자뿐(2026-10-19) |
 
 `name`을 주면 숨겨진 네이티브 `<select>`가 함께 렌더링되어 폼 전송과 `required` 검증에 참여합니다.
 `className` · `style`은 루트 요소에 적용됩니다. 목록 너비는 필드 너비와 같습니다.
@@ -75,6 +78,8 @@ Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:
 Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
 
 - `SELE-01` **닫힌 상태의 키보드 포커스**: Figma State=Focus(2026-10-19 추가) — 테두리가 `select/outline/outline/border/focus`(gray-darker)로 바뀝니다. Error와 겹치면 Error 테두리를 유지합니다.
+- `SELE-07` **체크 아이콘**: Figma option "Check Icon"은 `SelectOption checkIcon`(기본 켬)입니다. 끄면 선택 표시는 굵은 브랜드 글자뿐입니다.
+- `SELE-08` **md Disabled 글자**: 다른 md 상태와 같은 `base/leading-normal/normal`(밑줄 없음) — 2026-10-19 Figma의 잘못 적용된 텍스트 스타일을 고쳤습니다(F6).
 
 ### Figma 문서화 정책
 

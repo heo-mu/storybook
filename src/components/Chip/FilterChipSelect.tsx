@@ -32,6 +32,8 @@ type FilterChipSelectBase = {
   name?: string;
   /** Called when the panel opens or closes. */
   onOpenChange?: (isOpen: boolean) => void;
+  /** Open the panel on first render (e.g. the Figma Expanded state of a table filter being edited). @default false */
+  defaultOpen?: boolean;
   className?: string;
 };
 
@@ -75,7 +77,7 @@ const CLEAR = '__ds-filter-clear__';
  * (button + listbox: Enter · Space · ↓ open, arrows · type-ahead move, Space · Enter choose, Esc close).
  */
 export const FilterChipSelect = forwardRef(function FilterChipSelect(props: FilterChipSelectProps, ref: ForwardedRef<HTMLButtonElement>) {
-  const { label, options, size = 'md', disabled, maxDisplayed = 3, name, onOpenChange, className } = props;
+  const { label, options, size = 'md', disabled, maxDisplayed = 3, name, onOpenChange, defaultOpen = false, className } = props;
   const single = props.selectionMode === 'single';
   const clearLabel = single ? ((props as FilterChipSelectSingleProps).clearLabel ?? '전체') : undefined;
 
@@ -86,7 +88,7 @@ export const FilterChipSelect = forwardRef(function FilterChipSelect(props: Filt
     if (single) (props as FilterChipSelectSingleProps).onChange?.(next[0] ?? null);
     else (props as FilterChipSelectMultipleProps).onChange?.(next);
   });
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   // The choice while the panel is open. A ref as well: react-aria closes a single Select in the same event as the
   // change, before the state update is rendered.
   const [pending, setPendingState] = useState<Key[]>(applied);

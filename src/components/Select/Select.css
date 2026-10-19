@@ -285,11 +285,3 @@
   color: var(--colors-select-outline-outline-option-check-icon-disabled);
 }
 
-/* Figma md Disabled uses base/leading-normal/underline (Medium, underlined) unlike sm / lg —
- * reproduced as designed, reported in docs/figma-issues.md F6. */
-.ds-option[data-size='md'][data-disabled] {
-  font-weight: var(--typography-base-leading-normal-underline-font-weight);
-  text-decoration: var(--typography-base-leading-normal-underline-text-decoration);
-  /* Figma: skip ink off; offset and thickness AUTO (font metrics). */
-  text-decoration-skip-ink: none;
-}

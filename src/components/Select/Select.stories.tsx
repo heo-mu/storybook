@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, within } from 'storybook/test';
 import { Select } from './Select';
 import { SelectOption } from './SelectOption';
 import { FIELD_MESSAGE_TYPES, FIELD_SIZES } from '../Field';
@@ -13,11 +13,11 @@ const meta = {
     docs: {
       description: {
         component:
-          'Figma component set **select** (95:4740, 21 variants) with **listbox** (97:2665), **option** (97:2286) and ' +
+          'Figma component set **select** (95:4740, 24 variants — State=Focus is keyboard focus) with **listbox** (97:2665), **option** (97:2286) and ' +
           '**select_message** (95:2960). Size → `size`, Label → `label`, Display Text → selected option / `placeholder`, ' +
           'Alert → `message` / `messageType`. State: Hover = :hover, Open = list open (`open` / `defaultOpen`), Completed = has ' +
           'a value, Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`. Options are `SelectOption` children ' +
-          '(`id`, `disabled`). Value: `value` / `defaultValue` / `onChange` (option id). Built on react-aria-components.',
+          '(`id`, `disabled`, `checkIcon` = Figma option "Check Icon"). Value: `value` / `defaultValue` / `onChange` (option id). Built on react-aria-components.',
       },
     },
   },
@@ -98,5 +98,32 @@ export const DynamicItems: Story = {
     >
       {(item: { id: string; name: string }) => <SelectOption id={item.id}>{item.name}</SelectOption>}
     </Select>
+  ),
+};
+
+/** Figma option "Check Icon" off: the selected option is marked by its semibold brand text only. */
+export const WithoutCheckIcon: Story = {
+  args: { defaultValue: 'banana' },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button'));
+    const selected = await within(document.body).findByRole('option', { name: '바나나' });
+    await expect(selected).toHaveAttribute('aria-selected', 'true');
+    await expect(selected.querySelector('.ds-option__check')).toBeNull();
+    await userEvent.keyboard('{Escape}');
+  },
+  render: (args) => (
+    <div style={{ minHeight: 200 }}>
+      <Select {...args}>
+        <SelectOption id="apple" checkIcon={false}>
+          사과
+        </SelectOption>
+        <SelectOption id="banana" checkIcon={false}>
+          바나나
+        </SelectOption>
+        <SelectOption id="grape" checkIcon={false}>
+          포도
+        </SelectOption>
+      </Select>
+    </div>
   ),
 };

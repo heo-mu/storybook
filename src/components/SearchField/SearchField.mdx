@@ -30,6 +30,7 @@ Figma **Search Field** 프레임(216:6742)의 `search-field` 세트(36개)를 �
 | Type Outline · Solid | `appearance` | 기본 `'outline'` |
 | Label / Label Text | `label` | 생략 시 `aria-label` 필수 |
 | State Hover · Focus · Completed · Error · Disabled | 브라우저 상태 · 값 유무 · `invalid` · `disabled` | Figma에 Read-only 상태 없음 |
+| Value Text | `value` / `defaultValue` · `placeholder` | |
 
 ## 동작
 
@@ -41,6 +42,12 @@ Figma **Search Field** 프레임(216:6742)의 `search-field` 세트(36개)를 �
 
 Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `SEAR-02` **Solid Error**: Outline Error처럼 2px 안쪽 오류 테두리(`colors/search-field/solid/border/error`, 2026-10-19 Figma 변수 · 변형 추가) — 이전에는 Solid 오류가 화면에 드러나지 않았습니다(E8).
 
 ### Figma 문서화 정책
 

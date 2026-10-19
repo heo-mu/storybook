@@ -20,7 +20,7 @@
 
 | 분류 | 뜻 | 이슈 ID 수 |
 | --- | --- | --- |
-| **디자인 결정 필요** | Figma에 정책이 없거나 서로 맞지 않아, 디자인이 정해야 코드가 확정됨 | 37 — 해결 · 정책화 20(대비 3 + 이번 17), **남은 결정 17** |
+| **디자인 결정 필요** | Figma에 정책이 없거나 서로 맞지 않아, 디자인이 정해야 코드가 확정됨 | 37 — 해결 · 정책화 · 결정 35, **남은 2**(F65-a · F75, 차트 · 표 원본 정리 — 2026-10-19 밤 확인 대상) |
 | **개발 개선 필요** | 코드 쪽에서 할 일이 있음(일부는 위 결정이 나야 진행) | 9 (완료 8, F57은 코드 변경 없이 Figma 재바인딩 요청) |
 | **허용 가능한 차이** | 화면 · 동작에 문제가 없거나, 렌더링 엔진 · 샘플 데이터 차이로 코드가 처리함. "Figma 정리 권장"은 원본 바인딩 · 이름 정리만 하면 되는 항목 | 76 (F57 · F74 추가) |
 
@@ -33,40 +33,40 @@ F6은 결정(1절)과 렌더링 차이(3절)에, F57은 코드 작업(2절)과 F
 
 | # | 내용 | 현재 코드(임시 정책) | 우선 |
 | --- | --- | --- | --- |
-| F31 (D1) | Button Primary · Outline 테두리 변수 — Figma에서 변수가 삭제되어 색만 남음([R1](./figma-fix-requests.md#r1-button-primary--outline-테두리--완료)). 동기화 자체는 2026-10-19 완료 | 원본에 남은 #004a38 | 높음 |
-| C1 | tracking 변수가 px로 적용(3xl 굵기별 자간 3배 차이) | Figma 적용값 그대로 | 높음 |
+| ~~F31 (D1)~~ | Button Primary · Outline 테두리 — **해결 확인(2026-10-19 밤)**: Figma 24변형이 복구된 `colors/button/primary/outline/border/default`에 연결(Disabled는 테두리 없음), 코드도 같은 토큰 | — | — |
+| ~~C1~~ | tracking px 적용 — **결정(2026-10-19 밤): Figma 적용값 유지**. 화면 디자인이 이 값으로 그려져 있고 %로 바꾸면 모든 글자 폭이 달라짐(광범위 변경). 변수 단위 정리는 디자인 소유자 작업 | — | — |
 | ~~E12 · F12 · F23~~ | 대비 부족 — **해결(2026-10-19, A-1 · A-2)**: Figma · 코드 함께 수정, axe 색 대비 0([accessibility.md](./accessibility.md)) | — | — |
 | ~~A11 · F1 · F22~~ | Focus 상태 — **정책화(2026-10-19)**: Figma 속성 `Focus`(24개 세트, 숨김 링 · `colors/border/focus`) · Select State=Focus, 코드 포커스 링(Rules 02) | — | — |
 | F65-a | 가로 막대 기본 Group=yes 비교 막대 `simple/history` ↔ 범례 · 툴팁 `series/compare` — **Figma 수정 요청**([R3](./figma-fix-requests.md#r3-차트-가로-막대--기본--groupyes-비교-막대--완료-지정-5노드)) | **코드는 `series/compare`로 통일(2026-10-19)** | 중간 |
 | ~~F65-b~~ | 간단 스타일 Group=no 지난 기간 색 — **해결(2026-10-19, F78)**: 세로 · 가로 같은 `colors/chart/bar/history`(Figma · 코드) | — | — |
 | ~~F69~~ | 대시보드 원격 변수 — **해결(2026-10-19)**: 모서리 `rounded-[12px]`(R4), padding · 배경을 로컬 `p-4` · `surface/page`로, 그림자를 효과 스타일 `elevation-3`으로 연결 | — | — |
 | ~~F60~~ | Card 그림자 — **해결(2026-10-19)**: Figma 예시를 로컬 `elevation-1`로 | — | — |
-| F61 | Card 프레임 숨김 — 사용 여부 | 레이어 값으로 구현, 위치 · 크기만 검증 | 중간 |
+| ~~F61~~ | Card 프레임 숨김 — **결정: 코드 Card 유지**(대시보드 · 예시에서 사용, 숨은 프레임의 레이어 값으로 위치 · 크기 검증). Figma 표시 여부는 원본 소유자 영역 — 기능 영향 없음 | — | — |
 | ~~F33~~ | Breadcrumb 펼친 상태 — **정책화**: 메뉴는 … 버튼 아래 2px, 현재 항목은 Current(Rules 05 · 주석) | — | — |
 | ~~F44~~ | Toast 위치 · 개수 · 시간 — **정책화**: 아래 가운데 · 최대 3개 · 안내 5초 · 오류 유지 · 중복 대체(Rules 06 · 주석) | — | — |
 | ~~F48~~ | Tooltip 거리 · 지연 — **정책화**: 화살표 8px, 마우스 0.5초 · 포커스 즉시(Rules 05 · 주석) | — | — |
-| F76 (D3) | Table 편집 칸 Filter · Editing의 다중 선택 목록 — 컴포넌트 없음([R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록--결정-대기-d3)) | 목록 그리지 않음 | 중간 |
+| ~~F76 (D3)~~ | Table 편집 칸 Filter · Editing 다중 선택 목록 — **해결(2026-10-19 밤)**: `FilterChipSelect`(chip-filter + listbox · option sm, 다중). Editing 칸에 실제 목록, 검증 가림 제거 → table_value_editable 49/49 | — | — |
 | F75 | Table 편집 칸 Filter 칩 상태(Editing이 Unselected, Hover 칩 상태 불일치 — [R6](./figma-fix-requests.md#r6-table-편집-칸-filter-칩-상태--6937165-완료-6937167-오류-아님)) | Figma 그대로 | 낮음 |
 | ~~F51~~ | Dialog 덮개 — **해결(2026-10-19)**: `colors/dialog/scrim/default`(검정 50%) 변수 · 덮개 예시 | — | — |
 | ~~F63~~ | Chart 툴팁 위치 — **정책화**: 기준점 옆 12px, 그림 영역 · 화면 안(Rules 05 · chart-tooltip 주석) | — | — |
 | ~~E6~~ | Input 눈 아이콘 — **정책화**: 비밀번호 칸에서만, 상태는 `aria-pressed`(Rules 04) | — | — |
 | ~~E7~~ | 지우기(X) 표시 — **정책화**: Input Hover · Focus, Search Field Focus · Error, Tab 순서 제외(Rules 04) | — | — |
-| E8 | Search Field Solid Error에 오류 표현 없음 | Figma 그대로 | 중간 |
-| F2 | 비활성 라벨 색(Switch tertiary · Checkbox/Radio disabled) | 각 바인딩 | 중간 |
+| ~~E8~~ | Search Field Solid Error 오류 표현 — **해결(2026-10-19 밤)**: 새 변수 `colors/search-field/solid/border/error`(→ error/strong) · Solid Error 3변형에 2px 안쪽 테두리(Outline Error와 같음), 코드 동기화 — 36/36 | — | — |
+| ~~F2~~ | 비활성 라벨 색 — **해결 확인**: Checkbox · Radio · Switch 비활성 라벨 모두 `text/disabled`(A-1 · A-2 결정), 그 밖의 비활성 라벨 `text/inactive`(Rules 02) | — | — |
 | ~~F10~~ | listbox 높이 · 방향 — **정책화**: 화면에 맞춰 내부 스크롤, 공간이 없으면 위로(Rules 05 · select 주석) | — | — |
 | ~~F11~~ | 옵션 키보드 이동 · Hover + Selected — **정책화**: 키보드 = Hover 모양, 선택 표시 우선(Rules 02) | — | — |
-| F20 | Chip 아이콘 크기(16 · 12px) 통일 | 세트별 그대로 | 중간 |
-| C5 | File Uploader 라벨 · 안내 글꼴 Noto Sans KR | 생성값 그대로 | 중간 |
+| ~~F20~~ | Chip 아이콘 크기 — **결정: 유지**. chip-multi 체크(선택 표시)와 chip-input X(삭제)는 역할이 달라 크기도 다름 | — | — |
+| ~~C5~~ | File Uploader 글꼴 — **해결 확인**: Figma 제목 · 안내가 Pretendard 텍스트 스타일 | — | — |
 | ~~F3~~ | 선택 그룹 간격 — **정책화**: 세로 8px · 가로 16px(Rules 08), 코드 그룹에 적용 | — | — |
-| A12 | 비활성 라벨에 `text/placeholder`(`text/disabled` 아님) | Figma 그대로 | 낮음 |
-| F6 | option md Disabled만 밑줄 · Medium | Figma 그대로 | 낮음 |
-| F8 | option Selected 배경 없음 | 투명 | 낮음 |
-| F21 | chip-filter Selected · Disabled 배경 투명 | 세트 그대로 | 낮음 |
+| ~~A12~~ | 비활성 라벨 `text/placeholder` — **해결 확인**: A-1에서 `text/inactive` · `text/disabled`로 분리 | — | — |
+| ~~F6~~ | option md Disabled 밑줄 · Medium — **해결(2026-10-19 밤)**: Figma 텍스트 스타일을 다른 md 상태와 같은 `base/leading-normal/normal`로(97:2331), 코드의 밑줄 재현 · 검증 허용치 삭제 → option 15/15 | — | — |
+| ~~F8~~ | option Selected 배경 없음 — **결정: Figma 그대로**(선택은 굵은 브랜드 글자 + 체크, `SelectOption checkIcon`으로 체크 끄기 가능) | — | — |
+| ~~F21~~ | chip-filter Selected · Disabled 배경 투명 — **결정: Figma 그대로**(테두리 · 글자로 구분) | — | — |
 | ~~F35~~ | Show Parent — **정책화**: Collapsed에만, Full은 전체 경로(Rules 07) | — | — |
-| F36 | item_link Hover 아이콘 바인딩 | Figma 그대로 | 낮음 |
-| F40 | Stepper Current가 Completed보다 밝음 | Figma 그대로 | 낮음 |
+| ~~F36~~ | item_link Hover 아이콘 — **결정: Figma 바인딩 그대로**(`…/icon/default`, 정책 NAVI-05) | — | — |
+| ~~F40~~ | Stepper Current가 Completed보다 밝음 — **결정: 유지**(진행 중 = 테두리 원, 완료 = 채운 원 — 의도된 위계) | — | — |
 | ~~F41~~ | Stepper 애니메이션 — **정책화**: 상태 전환은 즉시(Rules 09) | — | — |
-| B8 | 모드 1개(다크 모드 등 계획 시) | 단일 테마 | 낮음 |
+| ~~B8~~ | 모드 1개 — **결정: 범위 밖**(다크 모드 계획 없음, 토큰 구조는 모드 추가 가능) | — | — |
 
 ## 2. 개발 개선 필요
 

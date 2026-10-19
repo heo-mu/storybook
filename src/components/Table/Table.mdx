@@ -55,6 +55,9 @@ Figma **Table** 프레임(351:3340)의 `table_header`(3개) · `table_body`(8개
 | 예시 행 Hover · Pressed | `onRowAction`이 있는 행 | `table/data/background/hover · pressed` |
 | table_key Type Required | `KeyValueItem required` | 빨간 점, "필수"로 읽힘 |
 | table_value Type Text · Badge | `KeyValueItem` children | |
+| table_value Text · Picture | — | Figma 속성은 있으나 바인딩된 레이어가 없음(정리 요청, figma-issues) |
+| table_value_editable Show unit | `KeyValueItem unit` | 단위가 있을 때만 |
+| table_value_editable State Default · Hover · Editing · Disabled · Content Empty · Filled | 편집 칸 상태(Hover · 포커스 · 열린 목록 = Editing) · 값 유무 | Filter 유형은 `FilterChipSelect`(Editing = 목록 열림, 2026-10-19) |
 
 ## 관리 모드 (table_value_editable)
 
@@ -101,6 +104,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 
 - `TABL-03` **안내 글자 색**: `colors/text/tertiary`. 2026-10-19 Figma 안내 글자도 삭제된 변수 대신 같은 변수에 연결되어 같습니다(F57 해소).
 - `TABL-04` **행 Hover · Pressed 색**: 컴포넌트 변수 `table/data/background/hover · pressed`. 2026-10-19 Figma 예시 행도 이 변수에 연결되어 같습니다(F54 해소).
+- `TABL-10` **Filter 편집 칸의 목록**: Editing은 칩 아래 다중 선택 목록이 열린 상태(Figma) — `FilterChipSelect`로 그립니다. 초기화는 값 전체 해제(2026-10-19, R7 · D3 결정).
 
 ### Figma 문서화 정책
 

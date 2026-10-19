@@ -1,5 +1,5 @@
-# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (711 of 793)
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: accordion background/disabled, border/focus → border/hover, title/disabled); F80 2026-10-19: spacing/size/border-radius/border-width accordion tokens created (restored accordion-item 1035:15648); F78 2026-10-19: colors/chart/* Chart Component tokens created (chart 698:4399, chart-legend-item 697:4514, chart-tooltip 693:9776); A-1/A-2 2026-10-19: disabled labels → text/inactive, control borders → border/gray (hover gray-dark), switch off track 500/600/700, empty-state / stepper / switch text; policy pass: colors/dialog/scrim/default
+# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (712 of 794)
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: accordion background/disabled, border/focus → border/hover, title/disabled); F80 2026-10-19: spacing/size/border-radius/border-width accordion tokens created (restored accordion-item 1035:15648); F78 2026-10-19: colors/chart/* Chart Component tokens created (chart 698:4399, chart-legend-item 697:4514, chart-tooltip 693:9776); A-1/A-2 2026-10-19: disabled labels → text/inactive, control borders → border/gray (hover gray-dark), switch off track 500/600/700, empty-state / stepper / switch text; policy pass: colors/dialog/scrim/default; full sync 2026-10-19 night: colors/search-field/solid/border/error (E8)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 # Lines without [scopes] are scoped ALL_SCOPES.
 #scopes ALL_SCOPES
@@ -66,6 +66,7 @@ colors/search-field/solid/background/error=@S:colors/surface/container-subtle
 colors/search-field/solid/background/disabled=@S:colors/surface/container
 colors/search-field/solid/border/hover=@S:colors/border/gray-subtle
 colors/search-field/solid/border/focus=@S:colors/border/gray-subtle
+colors/search-field/solid/border/error=@T:colors/brand-status/error/strong [STROKE_COLOR]
 colors/search-field/solid/value/default=@S:colors/text/primary
 colors/search-field/solid/icon/default=@S:colors/icon/tertiary
 colors/search-field/solid/icon/disabled=@S:colors/icon/disabled

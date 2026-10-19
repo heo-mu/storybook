@@ -77,10 +77,11 @@
   --ds-field-border-width: var(--border-width-border);
 }
 
+/* Solid Error (Figma 2026-10-19, E8): the same 2px inside error border as Outline — before, the error had no visual sign. */
 .ds-search-field[data-appearance='solid'][data-invalid] {
   --ds-field-bg: var(--colors-search-field-solid-background-error);
-  --ds-field-border-color: transparent;
-  --ds-field-border-width: 0px;
+  --ds-field-border-color: var(--colors-search-field-solid-border-error);
+  --ds-field-border-width: var(--border-width-border-2);
   --ds-field-text: var(--colors-search-field-solid-label-error);
 }
 

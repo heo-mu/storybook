@@ -16,6 +16,10 @@
 - ③ **완료** — 사이드바 경고 25개 스토리(Vitest a11y 'todo' 결과를 수집하는 리포터로 확인) · 6개 규칙을 원인부터 수정: 달력 날짜 칸 이름(숫자 먼저),
   FilterChipSelect 이름(SelectValue), 설명 있는 메뉴 항목 이름, 달력 머리줄 header → div, 여러 nav 고유 이름, 제목만 있는 메뉴 칸 → 정적 마크업,
   Empty 머리글 화면 낭독기 글자, 아이콘 aria-label → role=img. 재실행 394개 모두 통과. verify:a11y를 애드온과 같은 axe 기본 규칙 · 제외 없음으로 강화 → 0.
+- ④ **완료** — Figma 76개 세트의 속성 전체를 Usage 문서와 대조(빠진 속성 설명 추가, 남은 것은 이름 없는 Card 부품 2개 → ⑤에서 이름 정리).
+  코드 · Figma 보완: SelectOption `checkIcon`(Figma Check Icon), option md Disabled 텍스트 스타일 정정(F6, Figma · 코드), Search Field Solid Error
+  오류 테두리(E8, 새 변수 + 3변형), Table Filter 편집 칸 목록 = FilterChipSelect(F76 · R7 · D3, 검증 가림 제거). 남은 디자인 결정 17 → 2
+  (F65-a · F75는 ⑤ 차트 · 표 확인). 스토리 395 · a11y 경고 0.
 - 시작 시 Figma 재조회: 다른 편집자의 차트 토큰 개편 진행 중(Semantic 69 · Component 724 — ⑤에서 동기화).
 
 ## 코드 정책 → Figma 공식 정책 작업 (2026-10-19, 완료)

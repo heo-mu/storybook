@@ -63,7 +63,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | C2 | 변수에 바인딩되지 않은 자간 값: `xs/normal` 1%, `xl`·`2xl` −0.6px, `3xl/normal` −0.75px, `5xl` −1.2px | 값 그대로 생성 | tracking 변수로 바인딩 |
 | C3 | **`sm/leading-normal/underline`이 삭제된 변수 2개에 바인딩**: `font/tracking/normal`(VariableID:359:7941), `font/weight/font-500`(VariableID:359:7905). 줄 높이도 다른 sm 스타일(20px)과 달리 140% | **2026-10-19 해결**: 같은 값 변수로 다시 바인딩, 줄 높이 `leading-5`(20px) — 토큰 재생성(자간 0, Medium, 20px) | — |
 | C4 | 모든 스타일 이름에 `leading-normal`이 붙지만 실제 줄 높이는 고정 px(`leading-3`~`leading-12`) | 이름 그대로 | 이름 규칙 정리 |
-| C5 | `file-uploader/label`, `file-uploader/helper`는 **Noto Sans KR**이며 변수 바인딩 없음 (나머지는 Pretendard Variable) | 값 그대로 생성 | 의도 확인 후 Pretendard·변수로 통일 |
+| C5 | `file-uploader/label`, `file-uploader/helper`는 **Noto Sans KR**이며 변수 바인딩 없음 (나머지는 Pretendard Variable) | **해결 확인(2026-10-19 밤)**: Figma 글꼴이 Pretendard 텍스트 스타일 | — |
 | C6 | Effect Style `elevation-1/2/3/6`이 `shadows/*` 변수에 바인딩되지 않음. 색 #0000001f(12%)는 `shadows/color`(5 · 10 · 25%)에 없음. 4·5 단계 없음 | 값 그대로 `--effect-elevation-*` 생성. `shadows/scale/*`은 조합 규칙이 없어 합성하지 않음 | 그림자 변수로 바인딩하고 스케일 정리 |
 
 ## E. 입력 필드 (Input · Textarea · Search Field)
@@ -77,7 +77,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | E5 | Textarea 카운터 숫자(1 · 50 · 200)는 예시 값 — Error 예시는 최대값(100)을 넘음 | 실제 길이 표시, `maxLength`는 브라우저가 강제 | — |
 | E6 | Input 눈 아이콘(`Icon-eye`)이 Default를 뺀 모든 상태에 표시, 아이콘은 하나뿐(숨김/표시 구분 없음) | **2026-10-19 정책화**(Rules 04): 비밀번호 칸에서만 표시, 상태는 `aria-pressed` | 숨김 상태 아이콘은 필요 시 추가 |
 | E7 | 지우기(X)가 Input은 Hover · Focus, Search Field는 Focus · Error에 표시 — 컴포넌트마다 규칙이 다름 | **2026-10-19 정책화**(Rules 04): 컴포넌트별 Figma 규칙을 공식 정책으로 — Input Hover · Focus, Search Field Focus · Error, 둘 다 Tab 순서 제외 | — |
-| E8 | **Search Field Solid / Error에 테두리가 없음** — 값 색도 Completed와 같아 오류가 시각적으로 구분되지 않음 | Figma 그대로 | 오류 표현 추가 |
+| E8 | **Search Field Solid / Error에 테두리가 없음** — 값 색도 Completed와 같아 오류가 시각적으로 구분되지 않음 | **2026-10-19 밤 해결**: Solid Error에 2px 안쪽 오류 테두리(새 변수 `colors/search-field/solid/border/error`) — Figma · 코드 | — |
 | E9 | Search Field Default · Hover는 `icon_size/icon/MagnifyingGlass`, 나머지 상태는 `MagnifyingGlass` 인스턴스 직접 사용(같은 위치·크기) | 구조 차이 무시, 같은 아이콘 | 인스턴스 구조 통일 |
 | E10 | Search Field Solid의 지우기 아이콘이 Outline 변수(`search-field/outline/icon/default`)에 바인딩 | 바인딩 그대로 | Solid 변수 사용 |
 | E11 | Search Field에 `helper/*` 변수가 있지만 메시지 Variant 없음, Read-only 상태 없음 | 메시지 · Read-only 스타일 미구현 | 필요 시 Variant 추가 |
@@ -88,11 +88,11 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | # | 내용 | 코드 처리 | 제안 |
 | --- | --- | --- | --- |
 | F1 | Checkbox · Radio · Switch · Select(닫힌 상태)에 Focus 상태가 없음 | **2026-10-19 해결**: Figma 속성 `Focus`(숨김 2px 링, `colors/border/focus`) — 코드는 키보드 포커스 링(Design System Rules 02), Select는 State=Focus 변형(테두리) | — |
-| F2 | Switch Disabled 라벨은 `text/tertiary`(#778191), Checkbox · Radio Disabled 라벨은 `text/disabled`(#c9ced6) | 각 바인딩 그대로 | 비활성 라벨 색 통일 |
+| F2 | Switch Disabled 라벨은 `text/tertiary`(#778191), Checkbox · Radio Disabled 라벨은 `text/disabled`(#c9ced6) | **해결 확인**: Checkbox · Radio · Switch 모두 `text/disabled` | — |
 | F3 | Checkbox · Radio 그룹(여러 항목 배치) 컴포넌트와 항목 간격이 없음 | **2026-10-19 정책화**(Rules 08): 그룹 간격 세로 8px · 가로 16px(`m-2` · `m-4`)을 `CheckboxGroup` · `RadioGroup`에 적용 | — |
 | F4 | Radio md 점이 9px이고 위치가 3.5px(반 픽셀) — 가장자리가 흐리게 렌더링됨 | 값 그대로 | 8 / 10px처럼 짝수 크기 |
 | F5 | Select Open의 화살표 색 #404b5d가 변수에 바인딩되지 않음 | 같은 값의 Semantic `colors/icon/secondary` 사용 | Component 변수(`select/…/icon/focus` 등) 바인딩 |
-| F6 | **option md Disabled만 `base/leading-normal/underline`(Medium, 밑줄)** — sm · lg Disabled는 Regular, 밑줄 없음 | Figma 그대로 재현(Medium + 밑줄). 밑줄 위치는 엔진 폰트 지표에 따라 Figma보다 약 1.5px 위 | sm · lg와 같은 텍스트 스타일로 통일 |
+| F6 | **option md Disabled만 `base/leading-normal/underline`(Medium, 밑줄)** — sm · lg Disabled는 Regular, 밑줄 없음 | **2026-10-19 밤 해결**: Figma 텍스트 스타일 `base/leading-normal/normal`로, 코드 밑줄 재현 삭제 | — |
 | F7 | Select 빈 Display Text가 Semantic `colors/text/placeholder`에 직접 바인딩, 값은 `…/label/*` — `…/placeholder/default` · `…/value/*` 변수 미사용 (E1 · E3과 같은 패턴) | 바인딩 그대로 | 값 → `value/*`, 빈 상태 → `placeholder/*` |
 | F8 | option Selected에 배경이 없음(`…/option/background/selected` 변수 미사용) | 투명 배경 | 의도 확인 |
 | F9 | listbox `scroll`(4×100px 막대)이 옵션 5개로 넘치지 않는 상태에서도 고정 레이어로 표시 | 브라우저 스크롤바 스타일(4px, 둥근 모서리, 토큰 색)로 구현 — 내용이 넘칠 때만 표시, 자동 비교에서 제외(수동 검토) | 스크롤 상태 예시임을 명시 |
@@ -162,7 +162,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F73 | data-state Partial 설명 기본값에 실제 수치가 들어 있음. badge_status Outline 12개 변형(sm Square · Rounded × Gray · Point · Success · Warning · Danger · Information)에 변수 없는 흰 배경(#ffffff) — 나머지 Outline 30개는 투명 | 배경 **해결(2026-10-19)** — 12개 변형의 흰 채움 삭제(data-freshness 인스턴스도 따라 투명). 설명 기본값은 그대로 | 샘플 정리 |
 | F74 | accordion-item md · Hover · Expanded가 y 40 — 같은 줄 다른 변형은 y 20 | **해결(2026-10-19)** — 복구된 1035:15685를 y 20으로 | — |
 | F75 | table_value_editable Type=Filter — Editing · Filled(693:7165) 칩이 Unselected, Hover · Filled(693:7167) 칩 State=Default, 693:7165 y 1px | **693:7165 Figma 수정 완료**(R6, Selected · Expanded). 693:7167은 다른 Type과 같은 규칙이라 오류 아님. y 1px은 모든 Editing 변형 공통 | Hover · Empty 칩(F82) |
-| F76 | table_value_editable Type=Filter · Editing에 칩 아래 **다중 선택 목록**(listbox sm + option Selected 2개) — 라이브러리에 칩 트리거 + 다중 선택 목록 컴포넌트 없음 | 목록은 그리지 않고 검증에서 목록 위 4.5px 제외 | 구현 방식 결정(D3, [R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록--결정-대기-d3)) |
+| F76 | table_value_editable Type=Filter · Editing에 칩 아래 **다중 선택 목록**(listbox sm + option Selected 2개) — 라이브러리에 칩 트리거 + 다중 선택 목록 컴포넌트 없음 | **2026-10-19 밤 해결**: `FilterChipSelect`로 칩 + 다중 선택 목록 구현, Editing 칸에 목록 | — |
 | F77 | chart 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261) 비교 막대 5개(1011:14280 · 14288 · 14296 · 14303 · 14310)가 `chart/simple/history` — R3와 같은 오류 | **수정 제외(2026-10-19 지시 — 회귀 확인만)**: 5노드 바인딩 그대로(F78 Chart 토큰 연결에서도 제외), 코드는 hover=no 짝과 같은 `bar/compare`. 정합성 검증 3 엔진 통과(#e2e5e9 vs #d6dae0, 픽셀 임계 이내) | R3와 같은 수정 |
 | F78 | Chart 전용 Component 변수 없음 — 차트 노드가 Semantic(`chart/series/*` 등) · Primitive(`alpha/*`) · 원격 변수에 직접 바인딩. `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes` 1011:14873 색이 hover=no 짝과 달랐음 | **해결(2026-10-19)** — `colors/chart/*` Component 토큰 19개 생성(막대 · 선 · 점 · 그림 영역 · 글자 · 범례 · 툴팁, `VariableID:1052:6697`–`6715`), 차트 세트 24변형 · 범례 · 툴팁의 보이는 색 778곳 연결(F77 5노드 제외). 1011:14873은 원본에서 짝(762:5921)과 함께 `series/compare`로 바뀌어 일치 | — |
 | F79 | chart 세트에 `hover` 속성 추가 — 24개 변형. 간단 스타일에도 호버(안내선 · 빈 원 · 강조 영역 · 툴팁) | **해결(2026-10-19)** — 코드 · 스토리 · 검증 24변형(hover=yes = 활성 항목). 두 스타일 모두 호버 · 키보드 · 탭, 강조 영역 크기 Figma대로, 감지 영역 · 터치 결함 수정. 원본 정리: 1011:14912 막대 배치 · 이름을 짝과 같게, 1011:14987 위치(30, 1334 → 20, 1324), 빈 원의 중복 흰 테두리 5개 삭제 | — |

@@ -418,6 +418,7 @@ A filter chip with its option panel — Figma `chip-filter` (558:25704) + `listb
 | `options` *(필수)* | `FilterChipSelectOption[]` |  | The choices, in order. |
 | `className` | `string` |  |  |
 | `clearLabel` | `string` | `'전체'` | First option that clears the filter (`null` value). |
+| `defaultOpen` | `boolean` | `false` | Open the panel on first render (e.g. the Figma Expanded state of a table filter being edited). |
 | `defaultValue` | `Key \| Key[] \| null` | `[] null` | Initially applied values (uncontrolled). Initially applied value (uncontrolled). |
 | `disabled` | `boolean` |  | Figma chip State "Disabled". |
 | `maxDisplayed` | `number` | `3` | How many applied values the chip names before "외 N". |
@@ -1068,6 +1069,7 @@ Figma component set `option` (97:2286) — one choice of a `Select`; `id` identi
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | Figma "Option Text". |
+| `checkIcon` | `boolean` | `true` | Figma "Check Icon": the check after the text of the selected option. Off: the semibold brand text alone marks it. |
 | `className` | `string` |  |  |
 | `disabled` | `boolean` |  | Figma State "Disabled". |
 | `style` | `CSSProperties` |  |  |

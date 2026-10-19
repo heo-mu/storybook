@@ -76,7 +76,8 @@
       "story": [
         "components-table-editable-showcase--editable-matrix",
         "components-table-editable-showcase--editable-open&args=type:Select",
-        "components-table-editable-showcase--editable-open&args=type:Date Picker"
+        "components-table-editable-showcase--editable-open&args=type:Date Picker",
+        "components-table-editable-showcase--editable-open&args=type:Filter"
       ],
       "background": "#ffffff",
       "variantReferences": [
@@ -368,14 +369,6 @@
             3,
             38
           ]
-        ],
-        "Type=Filter, State=Editing*": [
-          [
-            0,
-            47,
-            320,
-            5
-          ]
         ]
       },
       "ignore": [
@@ -492,7 +485,7 @@
           "optional": true
         }
       },
-      "//maskRectsFor": "field frames centred at y 7.5: their top / bottom edge rows (anti-aliased in Figma) and the text inside the field (part of the field instance, not a Figma text node) — side borders, icons and backgrounds are compared; Filter · Editing: the top of the open multi-select listbox under the chip (y 47.5) — the library has no multi-select list for a filter chip (decision item, docs/analysis/F31-button-sync.md)"
+      "//maskRectsFor": "field frames centred at y 7.5: their top / bottom edge rows (anti-aliased in Figma) and the text inside the field (part of the field instance, not a Figma text node) — side borders, icons and backgrounds are compared"
     }
   ]
 }
