@@ -168,9 +168,13 @@ src/components/<Name>/<Name>.css  →  var(--colors-…), var(--spacing-…), va
 
 - 이름은 Figma 경로의 `/`를 `-`로 바꾼 것. 별칭은 `var()` 참조로 유지되어 상위 토큰을 바꾸면 따라 바뀝니다.
 - `src/tokens/*`는 **생성물**입니다. 직접 수정하지 말고 Figma 변수를 고친 뒤 스냅샷 갱신 → `npm run tokens`.
-- Figma에 없는 토큰을 추가하지 않습니다. 컴포넌트 CSS 안의 `--_…`(밑줄)는 그 컴포넌트 전용 지역 변수입니다.
+- Figma에 없는 토큰을 추가하지 않습니다. 예외는 **Figma 등록 대기 토큰**(`figma-pending/primitive.txt`)뿐입니다 — 팀이 공통 토큰으로
+  결정했지만 Figma에 아직 로컬 변수가 없는 값으로, 지금은 `border-radius/rounded-[12px]`(`--border-radius-rounded-\[12px\]`, F69) 1개입니다.
+  `primitive.css` 끝 별도 블록으로 생성되고 `tokens.json`에 `"pending"`이 붙습니다. Figma에 등록되어 스냅샷에 들어오면 `npm run tokens`가
+  이름 중복으로 실패하므로 그때 해당 줄을 지웁니다(체크섬 대상 아님).
+- 컴포넌트 CSS 안의 `--_…`(밑줄)는 그 컴포넌트 전용 지역 변수입니다.
 - 스냅샷이 원본과 같은지 확인: `npm run figma:checksum` 결과를 Figma에서 `figma/checksum.figma.js`를 실행한 값과 비교.
-- 현재 스냅샷은 2026-10-16 기준으로 동결되어 있습니다(그 뒤 원본 변경: [F31 분석](./analysis/F31-button-sync.md)).
+- 현재 스냅샷은 2026-10-19에 원본과 다시 맞췄습니다(체크섬 8그룹 일치 — [F31](./analysis/F31-button-sync.md)).
 - 토큰 CSS 변수 이름은 앱에서도 쓸 수 있는 **공개 API**입니다 — 이름이 바뀌면 호환성이 깨지는 변경으로 다룹니다(7절).
 
 ## 6. 브라우저 호환성

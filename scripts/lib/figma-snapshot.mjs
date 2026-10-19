@@ -10,15 +10,27 @@ const LINE = /^(.+?)=(.*?)(?: \[([A-Z_,]+)\])?$/;
 
 /** Reads a variables snapshot. Returns [{ collection, name, raw, scopes }] in Figma order. */
 export function readVariables(file, collection) {
+  return readVariablesFile(figmaPath('variables', file), collection);
+}
+
+/**
+ * Decided tokens pending Figma registration (figma-pending/primitive.txt, same format as the snapshot).
+ * Not part of the Figma snapshot or its checksums; build-tokens emits them in their own block, marked `pending`.
+ */
+export function readPendingVariables() {
+  return readVariablesFile(path.join(ROOT, 'figma-pending', 'primitive.txt'), 'Primitive').map((v) => ({ ...v, pending: true }));
+}
+
+function readVariablesFile(filePath, collection) {
   const out = [];
   let prefix = '';
   let defaultScopes = '';
-  for (const line of readFileSync(figmaPath('variables', file), 'utf8').split(/\r?\n/)) {
+  for (const line of readFileSync(filePath, 'utf8').split(/\r?\n/)) {
     if (line.startsWith('#prefix')) { prefix = line.slice('#prefix'.length).trim(); continue; }
     if (line.startsWith('#scopes')) { defaultScopes = line.slice('#scopes'.length).trim(); continue; }
     if (!line || line.startsWith('#')) continue;
     const m = LINE.exec(line);
-    if (!m) throw new Error(`Unparseable line in ${file}: ${line}`);
+    if (!m) throw new Error(`Unparseable line in ${path.basename(filePath)}: ${line}`);
     out.push({ collection, name: prefix + m[1], raw: m[2], scopes: m[3] ?? defaultScopes, explicitScopes: m[3] !== undefined });
   }
   return out;

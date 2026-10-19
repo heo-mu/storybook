@@ -1,8 +1,8 @@
 /*
  * Metric Card — Figma `metric-card` (697:4487): column m-3 apart; padding 16, radius 12, white background and
  * drop shadow 0 1 8 / 12% — the padding, radius and colour are remote library variables (padding/6,
- * radius/xlarge1, color/background/white; figma-issues F69): same-value p-4, the Figma radius 12px (no local
- * radius token of 12) and colors/surface/page; the shadow values equal effect elevation-3.
+ * radius/xlarge1, color/background/white; figma-issues F69): same-value p-4, the common token rounded-[12px]
+ * (pending Figma registration, figma-pending/primitive.txt) and colors/surface/page; the shadow values equal effect elevation-3.
  *   header:     20px icon (icon/tertiary), p-1_5, title sm/leading-normal/medium (text/secondary)
  *   value row:  value 3xl/leading-normal/semibold (text/primary), p-1_5, unit sm/leading-normal/normal
  *               (text/secondary), baseline-aligned
@@ -15,7 +15,7 @@
   flex-direction: column;
   gap: var(--spacing-margin-m-3);
   padding: var(--spacing-padding-p-4);
-  border-radius: 12px;
+  border-radius: var(--border-radius-rounded-\[12px\]);
   background-color: var(--colors-surface-page);
   box-shadow: var(--effect-elevation-3);
 }

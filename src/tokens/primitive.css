@@ -624,3 +624,8 @@
   --spacing-padding-p-13: 52px;
   --spacing-padding-p-px: 1px;
 }
+
+/* Pending Figma registration (figma-pending/primitive.txt): decided tokens not in Figma yet — 1 variables */
+:root {
+  --border-radius-rounded-\[12px\]: 12px;
+}

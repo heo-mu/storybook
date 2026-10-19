@@ -1,0 +1,9 @@
+# Code-side tokens pending Figma registration — NOT part of the read-only Figma snapshot in figma/ and not in its checksums.
+# Each entry is a value the team decided to make a common token although Figma has no local variable for it yet.
+# When Figma gets the variable and the snapshot is re-exported, delete the entry here (npm run tokens fails on a duplicate name).
+# Format: as figma/variables/*.txt — <name>=<value> [<scopes>]; collection Primitive.
+#
+# F69 (2026-10-19): 12px corner radius of the dashboard card containers — metric-card (697:4487), dashboard-filter-bar (698:4163)
+#   and the chart-panel examples. Figma binds the remote library variable radius/xlarge1 (or nothing); the local scale has no 12.
+#   Name follows the local rounded-[2px] / rounded-[5px] convention. Figma registration requested: docs/figma-fix-requests.md.
+border-radius/rounded-[12px]=12 [CORNER_RADIUS]

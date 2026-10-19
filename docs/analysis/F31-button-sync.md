@@ -86,7 +86,7 @@ Primary · Outline 테두리 변수가 원본에서 사라진 상태라 지금 �
 | --- | --- |
 | 스냅샷 | `figma/variables/component-button.txt`(81개) 재추출, `semantic.txt` 1줄 · `component-others.txt` 3줄 갱신. 체크섬 semantic `ecad5e9b` · compButton `26a0d4f2` · compOthers `e50a2578` — 원본과 일치 |
 | 토큰 | CSS 변수 삭제 17 · 추가 25 · 값 변경 9 — 목록과 이전 이름 대응은 [breaking-changes.md](../breaking-changes.md) |
-| Button · IconButton | `BUTTON_TONES` 6개(Secondary · Solid 추가), `appearance` 타입은 그대로 `'solid' | 'outline'`(Variant별 제한 해제). **`appearance` 생략 시 Secondary는 Outline 유지**(`resolveAppearance`) — 기존 코드 화면 변화 없음 |
+| Button · IconButton | `BUTTON_TONES` 6개(Secondary · Solid 추가), `appearance` 타입은 그대로 `'solid' \| 'outline'`(Variant별 제한 해제). **`appearance` 생략 시 Secondary는 Outline 유지**(`resolveAppearance`) — 기존 코드 화면 변화 없음 |
 | IconButton Tertiary · Solid | 원본이 `tertiary/solid/*`로 다시 바인딩(A5 해소) → 코드도 tertiary 토큰 사용 |
 | TextButton | `--colors-button_text-primary-*` · `-secondary-*` 사용. **Secondary는 글자 · 아이콘이 한 단계 연해짐(시각 변경)** |
 | Primary · Outline 테두리 | 원본 42개 노드가 **삭제된 변수**(`VariableID:59:2221` `colors/button/primary/outline/border/default`)를 가리킨 채 색 #004a38만 남음. 코드는 이 값을 리터럴로 쓰고(`Button.css`) **연결할 변수는 정하지 않음** — 결정 D1 |

@@ -1,7 +1,8 @@
 /*
  * Dashboard Filter Bar — Figma `dashboard-filter-bar` (698:4163): row, padding 16, m-4 between the filters (fill)
  * and the actions; white card with radius 12 and shadow 0 1 8 / 12% — the padding, radius and colour are remote
- * library variables (figma-issues F69): same-value p-4, radius 12px (no local token) and colors/surface/page;
+ * library variables (figma-issues F69): same-value p-4, the common token rounded-[12px] (pending Figma registration,
+ * figma-pending/primitive.txt) and colors/surface/page;
  * the shadow values equal effect elevation-3.
  *   filters:  groups m-6 apart with "|" dividers (sm/leading-normal/normal, text/placeholder) — wrap onto further rows
  *             with the same gap when the bar is narrower than its content (code policy)
@@ -16,7 +17,7 @@
   align-items: flex-start;
   gap: var(--spacing-margin-m-4);
   padding: var(--spacing-padding-p-4);
-  border-radius: 12px;
+  border-radius: var(--border-radius-rounded-\[12px\]);
   background-color: var(--colors-surface-page);
   box-shadow: var(--effect-elevation-3);
 }

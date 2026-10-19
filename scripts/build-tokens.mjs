@@ -1,11 +1,12 @@
 // Generates CSS custom properties from the Figma snapshot in /figma.
-// Only values that exist in Figma are emitted; aliases stay aliases (var() references) so the
+// Only values that exist in Figma are emitted, plus the decided tokens pending Figma registration in
+// figma-pending/ (their own block, marked `pending`); aliases stay aliases (var() references) so the
 // Primitive → Theme → Semantic → Component chain is preserved.
 //
 //   node scripts/build-tokens.mjs        → writes src/tokens/*.css and src/tokens/tokens.json
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { ROOT, readAllVariables, readTextStyles, readEffectStyles } from './lib/figma-snapshot.mjs';
+import { ROOT, readAllVariables, readPendingVariables, readTextStyles, readEffectStyles } from './lib/figma-snapshot.mjs';
 
 const OUT = path.join(ROOT, 'src', 'tokens');
 const COLLECTION_BY_INITIAL = { P: 'Primitive', T: 'Theme', S: 'Semantic', C: 'Component' };
@@ -17,7 +18,8 @@ export function cssVarName(name) {
   return `--${ident}`;
 }
 
-const variables = readAllVariables();
+// Once Figma registers a pending token, its snapshot name collides below — then delete it from figma-pending/.
+const variables = [...readAllVariables(), ...readPendingVariables()];
 const byKey = new Map(variables.map((v) => [`${v.collection}:${v.name}`, v]));
 
 // Guard against two Figma variables collapsing onto the same CSS name.
@@ -66,7 +68,7 @@ function block(selector, entries, comment) {
 }
 
 const files = {};
-const json = { source: { fileKey: 'Ry3WecA6sP6lKPop1vXrTp', file: '[Platform] Web Design System', exported: '2026-10-16' }, variables: [], textStyles: [], effectStyles: [] };
+const json = { source: { fileKey: 'Ry3WecA6sP6lKPop1vXrTp', file: '[Platform] Web Design System', exported: '2026-10-16', synced: '2026-10-19', pending: 'figma-pending/primitive.txt' }, variables: [], textStyles: [], effectStyles: [] };
 
 // Component variables are split per component group: colors/<group>/… → components/<group>.css
 // (colors/button_text/* stays with button). Variables without a group path (Figma's root-level
@@ -77,7 +79,7 @@ const componentGroup = (name) => {
 };
 json.skipped = variables.filter((v) => v.collection === 'Component' && !v.name.includes('/')).map((v) => ({ collection: v.collection, name: v.name, reason: 'no group path (global name)' }));
 const outputs = [
-  ['Primitive', 'primitive.css', 'Figma collection "Primitive" (Mode 1)', () => true],
+  ['Primitive', 'primitive.css', 'Figma collection "Primitive" (Mode 1)', (v) => !v.pending],
   ['Theme', 'theme.css', 'Figma collection "Theme" (Mode 1)', () => true],
   ['Semantic', 'semantic.css', 'Figma collection "Semantic" (Mode 1)', () => true],
 ];
@@ -85,13 +87,22 @@ const groups = [...new Set(variables.filter((v) => v.collection === 'Component' 
 for (const g of groups) {
   outputs.push(['Component', `components/${g}.css`, `Figma collection "Component" (Mode 1) — ${g === 'button' ? 'colors/button/*, colors/button_text/*' : `colors/${g}/*`}`, (v) => v.name.includes('/') && componentGroup(v.name) === g]);
 }
+const pushJson = (collection, list, file, extra) => {
+  for (const v of list) {
+    const target = aliasTarget(v.raw);
+    json.variables.push({ collection, name: v.name, cssVar: cssVarName(v.name), type: typeOf(v), scopes: v.scopes, value: cssValue(v), aliasOf: target ? `${target.collection}:${target.name}` : undefined, resolved: resolve(v), file, ...extra });
+  }
+};
 for (const [collection, file, note, pick] of outputs) {
   const list = variables.filter((v) => v.collection === collection && pick(v));
   files[file] = HEADER + block(':root', list.map((v) => [cssVarName(v.name), cssValue(v)]), `${note} — ${list.length} variables`);
-  for (const v of list) {
-    const target = aliasTarget(v.raw);
-    json.variables.push({ collection, name: v.name, cssVar: cssVarName(v.name), type: typeOf(v), scopes: v.scopes, value: cssValue(v), aliasOf: target ? `${target.collection}:${target.name}` : undefined, resolved: resolve(v), file });
-  }
+  pushJson(collection, list, file);
+}
+const pending = variables.filter((v) => v.pending);
+if (pending.length) {
+  const note = `Pending Figma registration (figma-pending/primitive.txt): decided tokens not in Figma yet — ${pending.length} variables`;
+  files['primitive.css'] += '\n' + block(':root', pending.map((v) => [cssVarName(v.name), cssValue(v)]), note);
+  pushJson('Primitive', pending, 'primitive.css', { pending: 'not in Figma yet (figma-pending/primitive.txt)' });
 }
 
 // Text styles → one set of custom properties per style (+ an opt-in utility class).
