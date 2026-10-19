@@ -6,12 +6,12 @@
   --colors-button-primary-solid-background-pressed: var(--colors-fill-primary-strong-pressed);
   --colors-button-primary-solid-background-disabled: var(--colors-fill-disabled-default);
   --colors-button-primary-solid-label-default: var(--colors-text-inverse);
-  --colors-button-primary-solid-label-disabled: var(--colors-text-placeholder);
+  --colors-button-primary-solid-label-disabled: var(--colors-text-inactive);
   --colors-button-primary-solid-icon-default: var(--colors-icon-inverse);
   --colors-button-primary-solid-icon-disabled: var(--colors-icon-disabled);
   --colors-button-secondary-solid-background-default: var(--colors-fill-secondary-strong-default);
   --colors-button-secondary-solid-label-default: var(--colors-text-inverse);
-  --colors-button-secondary-solid-label-disabled: var(--colors-text-placeholder);
+  --colors-button-secondary-solid-label-disabled: var(--colors-text-inactive);
   --colors-button-secondary-solid-icon-default: var(--colors-icon-inverse);
   --colors-button-secondary-solid-icon-disabled: var(--colors-icon-disabled);
   --colors-button-secondary-solid-border-default: var(--colors-fill-secondary-strong-default);
@@ -24,13 +24,13 @@
   --colors-button-primary-outline-background-pressed: var(--colors-fill-primary-subtle-pressed);
   --colors-button-primary-outline-background-disabled: var(--colors-fill-disabled-default);
   --colors-button-primary-outline-label-default: var(--colors-fill-primary-strong-default);
-  --colors-button-primary-outline-label-disabled: var(--colors-text-placeholder);
+  --colors-button-primary-outline-label-disabled: var(--colors-text-inactive);
   --colors-button-primary-outline-icon-default: var(--colors-fill-primary-strong-default);
   --colors-button-primary-outline-icon-disabled: var(--colors-icon-disabled);
   --colors-button-primary-outline-border-default: var(--colors-fill-primary-strong-default);
   --colors-button-secondary-outline-background-default: var(--colors-fill-secondary-subtle-default);
   --colors-button-secondary-outline-label-default: var(--colors-fill-secondary-strong-default);
-  --colors-button-secondary-outline-label-disabled: var(--colors-text-placeholder);
+  --colors-button-secondary-outline-label-disabled: var(--colors-text-inactive);
   --colors-button-secondary-outline-icon-default: var(--colors-fill-secondary-strong-default);
   --colors-button-secondary-outline-icon-disabled: var(--colors-icon-disabled);
   --colors-button-secondary-outline-border-default: var(--colors-fill-secondary-strong-default);
@@ -43,7 +43,7 @@
   --colors-button-tertiary-solid-background-pressed: var(--colors-fill-tertiary-pressed);
   --colors-button-tertiary-solid-background-disabled: var(--colors-fill-disabled-default);
   --colors-button-tertiary-solid-label-default: var(--colors-text-secondary);
-  --colors-button-tertiary-solid-label-disabled: var(--colors-text-placeholder);
+  --colors-button-tertiary-solid-label-disabled: var(--colors-text-inactive);
   --colors-button-tertiary-solid-icon-default: var(--colors-text-secondary);
   --colors-button-tertiary-solid-icon-disabled: var(--colors-icon-disabled);
   --colors-button-tertiary-solid-border-default: var(--colors-fill-secondary-strong-default);
@@ -53,7 +53,7 @@
   --colors-button-tertiary-outline-background-pressed: var(--colors-fill-secondary-subtle-pressed);
   --colors-button-tertiary-outline-background-disabled: var(--colors-fill-disabled-default);
   --colors-button-tertiary-outline-label-default: var(--colors-text-secondary);
-  --colors-button-tertiary-outline-label-disabled: var(--colors-text-placeholder);
+  --colors-button-tertiary-outline-label-disabled: var(--colors-text-inactive);
   --colors-button-tertiary-outline-icon-default: var(--colors-icon-secondary);
   --colors-button-tertiary-outline-icon-disabled: var(--colors-icon-disabled);
   --colors-button-tertiary-outline-border-default: var(--colors-brand-gray-400);
@@ -63,7 +63,7 @@
   --colors-button_text-primary-label-default: var(--colors-text-secondary);
   --colors-button_text-primary-label-hover: var(--colors-text-primary);
   --colors-button_text-primary-label-pressed: var(--colors-text-primary);
-  --colors-button_text-primary-label-disabled: var(--colors-text-placeholder);
+  --colors-button_text-primary-label-disabled: var(--colors-text-inactive);
   --colors-button_text-primary-icon-default: var(--colors-icon-tertiary);
   --colors-button_text-primary-icon-hover: var(--colors-icon-secondary);
   --colors-button_text-primary-icon-pressed: var(--colors-icon-secondary);
@@ -75,7 +75,7 @@
   --colors-button_text-secondary-label-default: var(--colors-text-tertiary);
   --colors-button_text-secondary-label-hover: var(--colors-text-secondary);
   --colors-button_text-secondary-label-pressed: var(--colors-text-secondary);
-  --colors-button_text-secondary-label-disabled: var(--colors-text-placeholder);
+  --colors-button_text-secondary-label-disabled: var(--colors-text-inactive);
   --colors-button_text-secondary-icon-default: var(--colors-icon-placeholder);
   --colors-button_text-secondary-icon-hover: var(--colors-icon-tertiary);
   --colors-button_text-secondary-icon-pressed: var(--colors-icon-tertiary);

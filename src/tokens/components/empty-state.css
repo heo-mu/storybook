@@ -3,6 +3,6 @@
 :root {
   --colors-empty-state-background-default: var(--colors-surface-container-subtle);
   --colors-empty-state-icon-default: var(--colors-icon-placeholder);
-  --colors-empty-state-title-default: var(--colors-text-tertiary);
-  --colors-empty-state-description-default: var(--colors-text-placeholder);
+  --colors-empty-state-title-default: var(--colors-text-secondary);
+  --colors-empty-state-description-default: var(--colors-text-tertiary);
 }

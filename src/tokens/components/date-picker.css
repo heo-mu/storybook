@@ -5,13 +5,13 @@
   --colors-date-picker-trigger-outline-background-completed: var(--colors-surface-page);
   --colors-date-picker-trigger-outline-background-disabled: var(--colors-surface-container);
   --colors-date-picker-trigger-outline-background-read-only: var(--colors-surface-container);
-  --colors-date-picker-trigger-outline-border-default: var(--colors-border-gray-subtle);
-  --colors-date-picker-trigger-outline-border-hover: var(--colors-border-gray);
+  --colors-date-picker-trigger-outline-border-default: var(--colors-border-gray);
+  --colors-date-picker-trigger-outline-border-hover: var(--colors-border-gray-dark);
   --colors-date-picker-trigger-outline-border-focus: var(--colors-border-gray-darker);
-  --colors-date-picker-trigger-outline-border-completed: var(--colors-border-gray-subtle);
+  --colors-date-picker-trigger-outline-border-completed: var(--colors-border-gray);
   --colors-date-picker-trigger-outline-border-error: var(--colors-brand-status-danger-strong);
   --colors-date-picker-trigger-outline-border-disabled: var(--colors-border-disabled);
-  --colors-date-picker-trigger-outline-border-read-only: var(--colors-border-gray-subtle);
+  --colors-date-picker-trigger-outline-border-read-only: var(--colors-border-gray);
   --colors-date-picker-trigger-outline-value-default: var(--colors-text-primary);
   --colors-date-picker-trigger-outline-value-completed: var(--colors-text-primary);
   --colors-date-picker-trigger-outline-value-disabled: var(--colors-text-disabled);

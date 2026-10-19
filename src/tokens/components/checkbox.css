@@ -13,8 +13,8 @@
   --colors-checkbox-background-indeterminate-hover: var(--colors-fill-primary-strong-hover);
   --colors-checkbox-background-indeterminate-pressed: var(--colors-fill-primary-strong-pressed);
   --colors-checkbox-background-indeterminate-disabled: var(--colors-fill-disabled-default);
-  --colors-checkbox-border-unchecked-default: var(--colors-border-gray-subtle);
-  --colors-checkbox-border-unchecked-hover: var(--colors-border-gray);
+  --colors-checkbox-border-unchecked-default: var(--colors-border-gray);
+  --colors-checkbox-border-unchecked-hover: var(--colors-border-gray-dark);
   --colors-checkbox-border-unchecked-pressed: var(--colors-border-brand);
   --colors-checkbox-border-unchecked-disabled: var(--colors-border-disabled);
   --colors-checkbox-border-checked-default: var(--colors-border-transparency);

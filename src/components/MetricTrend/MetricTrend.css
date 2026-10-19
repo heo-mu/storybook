@@ -2,7 +2,8 @@
  * Metric Trend — Figma `metric-trend` (697:4482): padding p-1, gap p-1, border-radius/rounded-sm,
  * colors/dashboard/background/default; 12px icon; change text xs/leading-normal/medium.
  *   Tone Positive: text/brand (icon too) · Negative: status/danger/strong · Neutral: text/secondary + icon/secondary
- *   Direction Disabled: dashboard/background/disabled, icon/disabled, text/placeholder (Minus icon)
+ *   Direction Disabled: dashboard/background/disabled, icon/disabled, text/secondary (Minus icon) — 6.28:1 on the
+ *   disabled background (text/placeholder until A-1, 2026-10-19: 1.7:1)
  */
 
 .ds-metric-trend {
@@ -38,7 +39,7 @@
 }
 
 .ds-metric-trend[data-direction='disabled'] {
-  --_fg: var(--colors-text-placeholder);
+  --_fg: var(--colors-text-secondary);
   --_icon: var(--colors-icon-disabled);
 
   background-color: var(--colors-dashboard-background-disabled);

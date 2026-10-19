@@ -72,6 +72,16 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 `--colors-chart-label-default`, `--colors-chart-legend-label-default`, `--colors-chart-tooltip-{background,title,label,value}-default`.
 기존 Semantic `--colors-chart-*` 변수는 그대로입니다.
 
+### 2026-10-19 — 색 대비 (A-1 · A-2)
+
+| 변경 | 내용 | 호환성 |
+| --- | --- | --- |
+| 추가 | `--colors-text-inactive` | 호환 |
+| 값 변경 — 정의 | `--colors-brand-status-*-strong` 6개(700), `--colors-text-tertiary` · `--colors-text-placeholder`(#596475), `--colors-fill-secondary-strong-hover` · `-pressed`(#006247 · #004a38) | 화면 변경 — 이 변수를 따르는 모든 토큰 |
+| 값 변경 — 별칭 | 비활성 라벨 15개 → `text-inactive`(값 그대로 #a1a8b5), 입력 칸 · Checkbox · Radio 테두리 → `border-gray` / `border-gray-dark`, Switch 트랙 · Disabled 라벨, EmptyState 제목 · 설명, Stepper 잠긴 설명 | 화면 변경(테두리 #a1a8b5 → #778191 등) |
+
+앱 CSS에서 `--colors-text-placeholder`를 비활성 글자에 썼다면 `--colors-text-inactive`로 바꾸면 이전 색이 유지됩니다.
+
 ## 2. 컴포넌트 API
 
 | 변경 | 종류 | 호환성 |
@@ -93,6 +103,10 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 | `Chart` 간단 막대 현재 기간 비교 | #0086d3 → #d6dae0 (Figma 원본 변경) |
 | `Chart` 간단 세로 막대 Group=no 지난 기간 | #d6dae0 → #e2e5e9 (세로 · 가로 같은 규칙, F78) |
 | `Chart` 간단 선 마지막 점 | 빈 원 → 일반 점(빈 원은 활성 항목) |
+| 상태 색(안내 · 성공 · 경고 · 포인트 · 위험 · 오류) | 한 단계 진하게(600 → 700) — 메시지 · 배지 · 토스트 · 알림 · 오류 테두리 |
+| 보조 · 플레이스홀더 글자 | #778191 · #a1a8b5 → #596475 (비활성 라벨은 #a1a8b5 그대로) |
+| 입력 칸 · Checkbox · Radio 테두리, Switch 꺼짐 트랙 | #a1a8b5 → #778191 (hover 한 단계 진하게) |
+| Button Secondary · Solid Hover · Pressed | #009b68 · #02bb7b → #006247 · #004a38 |
 | `Chart` 호버 강조 영역 | 세로 막대 Group=no 64 → 40px, 가로 막대 행 높이 → 32 · 46px, 간단 스타일 추가 |
 | Hover 배경 16곳 | #f9fafb → #f5f6f7 |
 

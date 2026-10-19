@@ -1,5 +1,5 @@
-# Figma snapshot — collection "Semantic" (mode: Mode 1), 71 variables
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: fill/primary/subtle/hover; new colors/fill/tertiary/* — Tertiary surface, created in Figma 2026-10-19; fill/secondary/subtle/hover gray/50 → gray/75 changed in Figma on 2026-10-19 outside this task, synced)
+# Figma snapshot — collection "Semantic" (mode: Mode 1), 72 variables
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: fill/primary/subtle/hover; new colors/fill/tertiary/* — Tertiary surface, created in Figma 2026-10-19; fill/secondary/subtle/hover gray/50 → gray/75 changed in Figma on 2026-10-19 outside this task, synced); A-1/A-2 2026-10-19: text/tertiary · text/placeholder → brand-gray/600, fill/secondary/strong/hover · pressed → brand/800 · 900, text/inactive added
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 colors/border/inverse=@P:colors/white [ALL_SCOPES]
 colors/border/gray-subtler=@T:colors/brand-gray/250 [ALL_SCOPES]
@@ -38,13 +38,13 @@ colors/text/primary=@T:colors/brand-gray/900 [ALL_SCOPES]
 colors/text/secondary=@T:colors/brand-gray/700 [ALL_SCOPES]
 colors/fill/primary/strong/hover=@T:colors/brand/800 [ALL_SCOPES]
 colors/fill/secondary/strong/default=@T:colors/brand/700 [ALL_SCOPES]
-colors/fill/secondary/strong/hover=@T:colors/brand/600 [ALL_SCOPES]
-colors/fill/secondary/strong/pressed=@T:colors/brand/500 [ALL_SCOPES]
+colors/fill/secondary/strong/hover=@T:colors/brand/800 [ALL_SCOPES]
+colors/fill/secondary/strong/pressed=@T:colors/brand/900 [ALL_SCOPES]
 colors/fill/primary/strong/pressed=@T:colors/brand/700 [ALL_SCOPES]
 colors/fill/disabled/default=@T:colors/brand-gray/250 [ALL_SCOPES]
-colors/text/tertiary=@T:colors/brand-gray/500 [ALL_SCOPES]
+colors/text/tertiary=@T:colors/brand-gray/600 [ALL_SCOPES]
 colors/text/inverse=@P:colors/white [ALL_SCOPES]
-colors/text/placeholder=@T:colors/brand-gray/400 [ALL_SCOPES]
+colors/text/placeholder=@T:colors/brand-gray/600 [ALL_SCOPES]
 colors/text/disabled=@T:colors/brand-gray/300 [ALL_SCOPES]
 colors/text/brand=@T:colors/brand/700 [ALL_SCOPES]
 colors/text/link/default=@P:colors/blue/600 [ALL_SCOPES]
@@ -72,3 +72,4 @@ colors/surface/scrim=@P:colors/alpha/black/900 [FRAME_FILL,SHAPE_FILL]
 colors/fill/tertiary/default=@P:colors/gray/150 [FRAME_FILL,SHAPE_FILL]
 colors/fill/tertiary/hover=@P:colors/gray/225 [FRAME_FILL,SHAPE_FILL]
 colors/fill/tertiary/pressed=@P:colors/gray/275 [FRAME_FILL,SHAPE_FILL]
+colors/text/inactive=@T:colors/brand-gray/400 [TEXT_FILL]

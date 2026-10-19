@@ -91,3 +91,24 @@ Figma 원본 수정 · 변수 생성 · 바인딩 변경 · 코드 수정이 모
 - 검증: 정합성 chart 24/24 · legend 3/3 · tooltip 1/1(Chromium · Firefox · WebKit). 간단 선의 바깥 22px 띠만 제외(F64). 실제 브라우저 상호작용
   6종 × 3 엔진(이동 순서 · 깜빡임 · 눈금 열 · 이탈 · 키보드 · 툴팁/범례/표 값 · 색 일치, 터치는 Chromium · WebKit) 통과. 스토리 테스트 추가:
   눈금 열 · 터치 탭 · 바깥 누름 · 간단 스타일 키보드.
+
+## 6. A-1 · A-2 — 색 대비 (완료)
+
+전후 HEX · 대비는 [accessibility.md](../accessibility.md#색-대비--해결-a-1--a-2-2026-10-19)에 정리했습니다. 원칙: 기준을 넘는 가장 가까운 팔레트 단계로 한 번만 이동,
+같은 의미(위험 · 오류)는 함께, 장식용 선 · 비활성 라벨은 그대로, 상태 · 텍스트 위계 유지.
+
+| Figma 변경 | 내용 |
+| --- | --- |
+| Theme 6 | `brand-status/{point,success,warning,danger,error,information}/strong` → `{rose,green,orange,red,red,sky}/700` |
+| Semantic 4 + 신규 1 | `text/tertiary` · `text/placeholder` → brand-gray/600, `fill/secondary/strong/hover` · `pressed` → brand/800 · 900, 신규 `text/inactive`(brand-gray/400, TEXT_FILL, `VariableID:1061:4692`) |
+| Component 별칭 45 | 비활성 라벨 15 → `text/inactive`, 입력 칸 5종 테두리 default · completed · read-only → `border/gray` · hover → `border/gray-dark`(19), Checkbox · Radio 테두리 4, Switch 트랙 3 · Disabled 라벨, EmptyState 제목 · 설명, Stepper 잠긴 설명 |
+| 노드 8 | metric-trend Disabled 글자 3(705:12062 · 12065 · 12068) → `text/secondary`, empty-state 제목 · 설명(724:14951 · 14952) → 자기 Component 토큰, 필터 막대 `|` 3(705:11648 · 11652 · 11712) → `border/gray-subtle`(값 그대로) |
+
+- 쓰기 전 모든 대상의 현재 별칭을 확인하고(다르면 쓰지 않음) 쓴 뒤 다시 읽어 55개 모두 일치 확인. 스냅샷 8그룹 체크섬 Figma와 일치(theme 0f323395 · semantic 72 d570f01a · compButton ab12f8bc · compOthers 5d9a6f44).
+- 코드: 토큰 재생성, MetricTrend Disabled · EmptyState(Component 토큰 사용) · 필터 막대 구분선, Input 오류 테두리 테스트 기대값(#c10007).
+- 검증: axe 378 스토리 색 대비 423 → **0**, 그 밖의 위반 0. `KNOWN_CONTRAST` 목록 삭제(이후 대비 위반은 실패). 컨트롤 경계 실제 측정 3.87:1(8종).
+  Button 352 + 실제 포인터 36 통과(Figma 사양 갱신: Secondary · Solid Hover #006247 · Pressed #004a38, TextButton Secondary 글자 #596475).
+  기준 이미지 22세트 · 변형 13개 재캡처 후 정합성 Chromium 전체 통과.
+- 검증 허용치 변경 2건(숨기지 않고 기록): metric-trend Flat · Negative 아이콘 막대 12×2px — 같은 벡터를 Figma와 Chromium이 다르게 래스터화(다른 Tone은 0.00%),
+  색은 Up · Down Negative에서 비교. data-freshness Stale 배지 글자 dx 0.8 → 0.9px — 잉크 열 13–56 · 질량 같음, 진한 주황에서 무게 중심만 0.86px.
+- 남은 결정(3): 차트 보조 계열 막대(1.24 · 1.38:1), SearchField Solid 채움 경계(1.06:1), Segmented 선택 표시 — accessibility.md.

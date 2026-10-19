@@ -2,39 +2,55 @@
 
 각 컴포넌트의 시맨틱 · 키보드 · ARIA 구현과 자동 검사(Storybook a11y = axe-core, Storybook MCP `test-run`) 결과입니다.
 
-## 미해결: Figma 토큰 색 대비
+## 색 대비 — 해결 (A-1 · A-2, 2026-10-19)
 
-다음 텍스트 색은 Figma 변수 값 그대로 구현되어 있으며 WCAG 2.1 AA 일반 텍스트 기준(4.5:1)에 못 미칩니다.
-토큰 값은 Figma가 기준이므로 코드에서 바꾸지 않았습니다 — 디자인 쪽 조정이 필요합니다.
+Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). 모두 기존 팔레트 안에서 고른 색이고, 기준을 낮추거나 경고를 숨기지 않았습니다.
+흰 배경은 `surface/page` #fdfdfd 기준입니다.
 
-| 용도 | 토큰 | 색 / 배경 | 대비 | 사용처 |
+### 텍스트 (WCAG 1.4.3, 4.5:1)
+
+| 용도 | 토큰 | 이전 | 이후 | 사용처 |
 | --- | --- | --- | --- | --- |
-| 안내(info) 메시지 | `colors/brand-status/information/strong` (sky/600) | #0086d3 / #fdfdfd | 3.85:1 | Input · Textarea · Select 메시지 |
-| 성공(success) 메시지 | `colors/brand-status/success/strong` | #00a63e / #fdfdfd | 3.16:1 | Input · Textarea · Select 메시지 |
-| 보조 텍스트 | `colors/text/tertiary` (gray/500) | #778191 / #fdfdfd | 3.87:1 | Textarea 카운터 최대값 |
-| 선택 안 된 세그먼트 | `colors/segmented-control/unselected/label/default` (text/tertiary) | #778191 / #eff0f3 | 3.46:1 | Segmented Control |
-| 플레이스홀더 | `colors/text/placeholder` (gray/400) | #a1a8b5 / #fdfdfd | 2.35:1 | Input · Textarea · Search Field · Select 플레이스홀더, Stepper Locked 제목 |
-| 잠긴 단계 설명 | `colors/stepper/label/description/locked` (text/disabled) | #c9ced6 / #fdfdfd | 1.55:1 | Stepper Locked(조작 대상이 아니라 비활성 예외에 해당하지 않음) |
-| Badge Point | `colors/badge/status/*/label/point` · `count/background/point` | #ec003f / #ffe4e6 · #fdfdfd, #fdfdfd / #ec003f | 3.77 · 4.45 · 4.45:1 | Badge · BadgeCount Point |
-| Badge Warning | `colors/badge/status/*/label/warning` · `count/background/warning` | #f54900 / #ffedd4 · #fdfdfd, #fdfdfd / #f54900 | 3.13 · 3.53 · 3.53:1 | Badge · BadgeCount Warning |
-| Badge Danger (Filled) | `colors/badge/status/filled/label/danger` | #e7000b / #ffe2e2 | 3.91:1 | Badge Danger Filled |
-| Button Secondary · Solid Hover · Pressed | `colors/button/secondary/solid/label/default`(text/inverse) on `…/background/hover` · `pressed` (fill/secondary/strong/hover · pressed) | #fdfdfd / #009b68 · #02bb7b | 3.51 · 2.46:1 | Button · IconButton Secondary · Solid(2026-10-19 Figma 추가). Default #007c56은 5.14:1로 통과 |
+| 보조 텍스트 | Semantic `text/tertiary` brand-gray/500 → **600** | #778191 3.87:1 (#eff0f3 위 3.46) | #596475 5.89:1 (#eff0f3 위 5.26 · #f5f6f7 위 5.54) | 도움말 · 카운터 · 설명 · Segmented 선택 안 함 · Stepper 설명 · Card · Alert · DataFreshness · 차트 툴팁 제목 등 |
+| 플레이스홀더 · 정보 글자 | Semantic `text/placeholder` brand-gray/400 → **600** | #a1a8b5 2.35:1 | #596475 5.89:1 | Input · Textarea · Select · DatePicker · SearchField 플레이스홀더, Breadcrumb 상위 경로, FileUploader 파일 정보, Table 단위, Stepper 잠긴 단계 제목 |
+| 비활성 라벨(기준 제외) | 새 Semantic `text/inactive` = brand-gray/400 | (`text/placeholder`를 같이 씀) | #a1a8b5 그대로 | Button · TextButton · Chip · Table 편집 칸 · FileUploader · Accordion Disabled 라벨 — 플레이스홀더와 분리해 비활성 표시 유지 |
+| 잠긴 단계 설명 | `stepper/label/description/locked` text/disabled → text/tertiary | #c9ced6 1.55:1 | #596475 5.89:1 | Stepper Locked(조작 대상이 아니라 비활성 예외 아님 — 잠김은 제목 · 표시 원 · "잠김" 낭독으로 구분) |
+| 빈 상태 제목 · 설명 | `empty-state/title` tertiary → **secondary**, `description` placeholder → tertiary | #778191 3.87 · #a1a8b5 2.35 | #404b5d 8.67 · #596475 5.89 | EmptyState · DataState — 제목이 설명보다 한 단계 진한 위계 유지 |
+| MetricTrend Disabled | 노드 바인딩 text/placeholder → **text/secondary** | #a1a8b5 / #d6dae0 1.70:1 | #404b5d / #d6dae0 6.28:1 | 회색 배경 · 회색 아이콘으로 비활성 표시 유지 |
+| 상태 색(안내) | Theme `brand-status/information/strong` sky/600 → **700** | #0086d3 3.85:1 (배지 배경 위 3.40) | #006cab 5.53:1 (#def2fe 위 4.89) | 메시지 · 배지 · 배지 숫자 · 토스트 · 알림 |
+| 상태 색(성공) | `brand-status/success/strong` green/600 → **700** | #00a63e 3.16:1 (#dcfce7 위 2.93) | #008236 4.86:1 (#dcfce7 위 4.50) | 〃 |
+| 상태 색(경고) | `brand-status/warning/strong` orange/600 → **700** | #f54900 3.53:1 (#ffedd4 위 3.13) | #ca3500 5.13:1 (#ffedd4 위 4.56) | 〃 |
+| 상태 색(포인트) | `brand-status/point/strong` rose/600 → **700** | #ec003f 4.45:1 (#ffe4e6 위 3.77) | #c70036 5.93:1 (#ffe4e6 위 5.02) | 배지 · 필수 표시 |
+| 상태 색(위험 · 오류) | `brand-status/danger/strong` · `error/strong` red/600 → **700** | #e7000b 4.69:1 (#ffe2e2 위 3.91 · #f5f6f7 위 4.40) | #c10007 6.31:1 (#ffe2e2 위 5.27 · #f5f6f7 위 5.93) | 오류 메시지 · 테두리, 배지, MetricTrend 하락 — danger · error는 같은 의미라 함께 |
+| Button Secondary · Solid Hover · Pressed | Semantic `fill/secondary/strong/hover` brand/600 → **800**, `pressed` brand/500 → **900** | 흰 글자 / #009b68 3.51 · #02bb7b 2.46 | 흰 글자 / #006247 7.27 · #004a38 10.14 | Button · IconButton Secondary · Solid — Default #007c56(5.14)보다 밝아지면 4.5:1을 넘지 못해 상호작용 때 진해지는 방향으로 바꿈 |
 
-비활성(Disabled) 요소는 WCAG 대비 기준에서 제외됩니다.
+각 상태 색은 다음 한 단계(700)로 기준을 넘는 가장 밝은 값입니다. 옅은 배경(100)과 진한 글자(700)의 위계, `text/primary`(900) > `secondary`(700) >
+`tertiary`(600) > `inactive`(400) > `disabled`(300) 순서를 유지합니다. 비활성(Disabled) 컨트롤의 글자는 WCAG 대비 기준에서 제외됩니다.
 
-### 비텍스트 대비 (WCAG 1.4.11, 3:1)
+### 비텍스트 (WCAG 1.4.11, 3:1)
 
-| 용도 | 토큰 | 색 / 배경 | 대비 | 사용처 |
-| --- | --- | --- | --- | --- |
-| 선택 컨트롤 테두리 | `colors/checkbox/border/unchecked/default`, `colors/radio/border/unselected/default` (border/gray-subtle) | #a1a8b5 / #fdfdfd | 2.35:1 | Checkbox · Radio 선택 안 함 |
-| 스위치 꺼짐 트랙 | `colors/switch/track/off/default` (brand-gray-400) | #a1a8b5 / #fdfdfd | 2.35:1 | Switch 꺼짐 |
+| 용도 | 토큰 | 이전 | 이후 |
+| --- | --- | --- | --- |
+| 입력 칸 테두리(Input · Textarea · Select · DatePicker · SearchField Outline) | default · completed · read-only `border/gray-subtle` → `border/gray`, hover `border/gray` → `border/gray-dark` | #a1a8b5 2.35:1 | #778191 3.87:1 (hover #596475 5.89) |
+| Checkbox · Radio 선택 안 함 테두리 | unchecked · unselected default → `border/gray`, hover → `border/gray-dark` | #a1a8b5 2.35:1 | #778191 3.87:1 |
+| Switch 꺼짐 트랙 | `switch/track/off` default · hover · pressed brand-gray 400 · 500 · 600 → 500 · 600 · 700 | #a1a8b5 2.35:1 | #778191 3.87:1 (흰 thumb 대비 같음) |
+| Switch Disabled 라벨 | `switch/label/disabled` text/tertiary → text/disabled | — | Checkbox · Radio Disabled 라벨과 같게(비활성 예외) |
 
-라벨 텍스트가 함께 있어 컨트롤의 의미는 전달되지만, 컨트롤 경계 자체는 기준 미만입니다(디자인 조정 필요, figma-issues F12).
+장식용 선(Dialog · Tab 밑줄 · Chip hover · 드롭 영역 테두리, 필터 막대 `|`)은 `border/gray-subtle` 그대로입니다.
+측정: 실제 브라우저에서 각 컨트롤의 기본 테두리 · 트랙 색을 읽어 계산(모두 3.87:1).
+
+### 남은 결정 사항 (자동 검사 대상 아님)
+
+| 항목 | 현재 | 이유 |
+| --- | --- | --- |
+| 차트 비교 · 지난 기간 막대 | `bar/compare` #d6dae0 1.38:1 · `bar/history` #e2e5e9 1.24:1 (흰 배경) | 의도적으로 흐린 보조 계열 — 값은 툴팁 · 화면 낭독기 표로 제공. 3:1로 올리면 현재 기간 강조가 약해짐(디자인 결정) |
+| SearchField Solid | 테두리 없이 채움(`surface/container-subtle` #f5f6f7, 1.06:1) | 채움형 변형의 정체성 — 돋보기 아이콘 · 플레이스홀더(5.89:1)로 식별 |
+| Segmented Control 선택 표시 | 흰 칸 + 그림자 + 글자 600 → 700 | 상태 표시 대비 기준 적용 범위(디자인 결정) |
 
 ## 자동 검사 (axe-core)
 
 `node scripts/a11y-audit.mjs`(Storybook 실행 중)가 모든 스토리를 WCAG 2.0 / 2.1 / 2.2 A · AA 규칙으로 검사합니다.
-위 표의 토큰 색 대비와 아래 react-aria 마크업 항목은 "알려진 항목"으로 따로 집계하고, 그 밖의 위반은 실패로 처리합니다.
+아래 react-aria 마크업 항목만 "알려진 항목"으로 따로 집계하고, 그 밖의 위반(색 대비 포함)은 실패로 처리합니다 — 2026-10-19 A-1 · A-2 이후 알려진 색 대비 목록은 비어 있습니다.
 
 | 시점 | 스토리 | 알려진 토큰 대비 | 알려진 react-aria 마크업 | 그 밖의 위반 |
 | --- | --- | --- | --- | --- |
@@ -42,6 +58,7 @@
 | Phase 4 완료 | 262 | 210 (모두 color-contrast) | 693 | 0 |
 | Phase 6 완료 | 311 | 302 (모두 color-contrast) | 693 | 0 |
 | 최종 배포 준비 (2026-10-19) | 376 | 423 (모두 color-contrast — Secondary · Solid Hover · Pressed 18 포함) | 693 | 0 |
+| A-1 · A-2 대비 수정 (2026-10-19) | 378 | **0** (목록 삭제 — 이제 색 대비 위반은 실패) | 693 | 0 |
 
 - **react-aria 마크업 — label-content-name-mismatch (axe 실험 규칙, WCAG 2.5.3)**: 달력 날짜 칸의 이름은 react-aria가 만드는
   전체 날짜("2026년 7월 28일 화요일")이고 보이는 글자는 "28"입니다. 한국어 이름에서는 "28일"로 붙어 axe가 단어 일치로
@@ -65,7 +82,7 @@
 - 지우기(X) 버튼: 마우스 보조 기능이라 Tab 순서에서 제외(`tabIndex=-1`) — 키보드는 전체 선택 후 삭제로 대체.
 - Search Field는 `<input type="search">`(검색 상자 역할), Enter로 `onSearch`.
 - Focus 표시: Figma Focus 상태(테두리 colors/border/gray-darker)가 포커스 표시 역할을 합니다.
-- 자동 검사: 위 색 대비 항목 외 위반 0.
+- 자동 검사: 위반 0.
 
 ### Checkbox · Radio · Switch
 - 네이티브 `<input type="checkbox">` · `<input type="radio">` · `<input type="checkbox" role="switch">`를 `appearance: none`으로

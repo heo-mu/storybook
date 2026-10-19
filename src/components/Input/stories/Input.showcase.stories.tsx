@@ -135,8 +135,8 @@ export const Accessibility: Story = {
     const input = canvas.getByRole('textbox', { name: '전화번호' });
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(input).toHaveAccessibleDescription('전화번호 형식이 아닙니다.');
-    // Figma Error: 2px colors/input/outline/border/error
+    // Figma Error: 2px colors/input/outline/border/error (status/danger/strong — red/700 #c10007 since A-1, 2026-10-19)
     const control = input.closest('.ds-field__control')!;
-    await expect(getComputedStyle(control).boxShadow).toBe('rgb(231, 0, 11) 0px 0px 0px 2px inset');
+    await expect(getComputedStyle(control).boxShadow).toBe('rgb(193, 0, 7) 0px 0px 0px 2px inset');
   },
 };

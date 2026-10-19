@@ -7,7 +7,7 @@
   --colors-accordion-border-default: var(--colors-border-gray-subtler);
   --colors-accordion-border-hover: var(--colors-border-gray-darker);
   --colors-accordion-title-default: var(--colors-text-primary);
-  --colors-accordion-title-disabled: var(--colors-text-placeholder);
+  --colors-accordion-title-disabled: var(--colors-text-inactive);
   --colors-accordion-body-default: var(--colors-text-secondary);
   --colors-accordion-icon-default: var(--colors-icon-tertiary);
   --colors-accordion-icon-disabled: var(--colors-icon-disabled);

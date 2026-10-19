@@ -19,8 +19,8 @@
       },
       "glyphTolerances": {
         "badge_status/Label": {
-          "dx": 0.8,
-          "why": "Hangul glyphs start and end on the same pixel columns as Figma; the browser rasterises them heavier (light grey text), which moves the ink centroid (Stale \"수신 지연\" 0.73px)"
+          "dx": 0.9,
+          "why": "Hangul glyphs start and end on the same pixel columns as Figma (Stale \"수신 지연\": ink columns 13–56 in both, ink mass 78.3 vs 77.9); the browser rasterises them heavier, which moves the ink centroid — 0.73px with orange/600, 0.86px with the darker orange/700 (A-1, 2026-10-19)"
         },
         "Frame */Interval": {
           "dx": 0.7,

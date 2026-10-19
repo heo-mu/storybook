@@ -17,6 +17,6 @@
   --colors-stepper-indicator-error-background-default: var(--colors-status-error-subtle);
   --colors-stepper-indicator-error-icon-default: var(--colors-status-error-strong);
   --colors-stepper-label-description-default: var(--colors-text-tertiary);
-  --colors-stepper-label-description-locked: var(--colors-text-disabled);
+  --colors-stepper-label-description-locked: var(--colors-text-tertiary);
   --colors-stepper-label-description-error: var(--colors-text-tertiary);
 }

@@ -34,7 +34,7 @@ npm 배포 · Storybook 배포 전에 위에서부터 차례로 확인합니다.
 | --- | --- | --- | --- |
 | 3-1 | `npm run verify:all` | 전 컴포넌트 × Chromium · Firefox · WebKit 통과 | ✅ 36 컴포넌트 × 3 엔진 = 108/108 |
 | 3-2 | `npm run verify:button` (+ `-- --browser=firefox` · `webkit`) | 192 · 144 · 16 = 352, 실제 포인터 36/36 | ✅ 352/352 · 36/36, 3 엔진 |
-| 3-3 | `npm run verify:a11y` | `other violations: 0`(알려진 Figma 토큰 대비 문제만 별도 표시) | ✅ 376 스토리, 그 밖의 위반 0(알려진 토큰 대비 423 — Secondary · Solid Hover · Pressed 18 추가, [accessibility.md](./accessibility.md)) |
+| 3-3 | `npm run verify:a11y` | `other violations: 0`(색 대비 포함 — 알려진 대비 목록 없음) | ✅ 378 스토리, 색 대비 0 · 그 밖의 위반 0(A-1 · A-2 수정, [accessibility.md](./accessibility.md)) |
 | 3-4 | 수동 검토 항목([final-report.md 3절](./final-report.md#수동-검토-항목-자동-비교에서-일부-제외)) 눈으로 확인 | 기록된 차이만 | ⏳ 배포 직전 확인(이번 변경이 닿은 항목은 없음) |
 
 ## 4. 패키지

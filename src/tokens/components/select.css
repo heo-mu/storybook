@@ -5,13 +5,13 @@
   --colors-select-outline-outline-background-completed: var(--colors-surface-page);
   --colors-select-outline-outline-background-disabled: var(--colors-surface-container);
   --colors-select-outline-outline-background-read-only: var(--colors-surface-container);
-  --colors-select-outline-outline-border-default: var(--colors-border-gray-subtle);
-  --colors-select-outline-outline-border-hover: var(--colors-border-gray);
+  --colors-select-outline-outline-border-default: var(--colors-border-gray);
+  --colors-select-outline-outline-border-hover: var(--colors-border-gray-dark);
   --colors-select-outline-outline-border-focus: var(--colors-border-gray-darker);
-  --colors-select-outline-outline-border-completed: var(--colors-border-gray-subtle);
+  --colors-select-outline-outline-border-completed: var(--colors-border-gray);
   --colors-select-outline-outline-border-error: var(--colors-status-danger-strong);
   --colors-select-outline-outline-border-disabled: var(--colors-border-disabled);
-  --colors-select-outline-outline-border-read-only: var(--colors-border-gray-subtle);
+  --colors-select-outline-outline-border-read-only: var(--colors-border-gray);
   --colors-select-outline-outline-value-default: var(--colors-text-primary);
   --colors-select-outline-outline-value-completed: var(--colors-text-primary);
   --colors-select-outline-outline-value-disabled: var(--colors-text-disabled);

@@ -129,11 +129,11 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 
 | # | 내용 | 권장안 | 영향 범위 |
 | --- | --- | --- | --- |
-| A-1 | **대비 개선 — 텍스트**: info `sky/600`(3.86:1) · success `green/600`(3.16) · warning `orange/600`(3.54, 배지 3.13) · point `rose/600`(4.45, 배지 3.77) · 배지 danger filled `red/600`(3.91) · `text/tertiary` `gray/500`(3.87) | 한 단계 진하게: `sky/700`(5.53) · `green/700`(4.86) · `orange/700`(5.13, 배지 4.56) · `rose/700`(5.93, 배지 5.02) · `red/700`(5.27) · `gray/600`(5.89) — 모두 기존 팔레트 | Theme `brand-status/*/strong`과 Semantic `text/tertiary`를 쓰는 전 컴포넌트(메시지 · 배지 · 설명 글자) |
-| A-2 | **대비 개선 — 비텍스트 · 상태**: Checkbox · Radio · Switch 테두리 `gray/400`(2.35:1) · Secondary · Solid Hover `emerald/600` · Pressed `emerald/500` 위 흰 글자(3.51 · 2.46) | 테두리 `gray/500`(3.87, 3:1 충족) · Secondary · Solid Hover `emerald/800`(7.27) · Pressed `emerald/900`(10.14) — 단, 진해지는 방향이 Primary와 같아짐 | 선택 컨트롤 3종, Button · IconButton Secondary · Solid |
+| A-1 | **대비 개선 — 텍스트** | **완료(2026-10-19)** — 상태 강조 색 6종 700, `text/tertiary` · `text/placeholder` gray/600, 비활성 라벨용 `text/inactive`(gray/400) 신설, EmptyState 위계 · Stepper 잠긴 설명 · MetricTrend Disabled 조정 | [accessibility.md](./accessibility.md) |
+| A-2 | **대비 개선 — 비텍스트 · 상태** | **완료(2026-10-19)** — 입력 칸 · Checkbox · Radio 테두리 `border/gray`(hover `gray-dark`), Switch 꺼짐 트랙 500 · 600 · 700, Secondary · Solid Hover brand/800 · Pressed brand/900(7.27 · 10.14:1) | [accessibility.md](./accessibility.md) |
 | A-3 | Table 안내 글자 전용 컴포넌트 토큰 | `colors/table/key-value/value/description` → `text/tertiary` 신설 | 표 편집 칸 안내 3노드 |
 | A-4 | `sm/leading-normal/underline` 줄 높이 140%(19.6px) | 다른 sm 스타일처럼 `font/line-height/leading-5`(20px)로 | Link md 높이 0.4px |
-| A-5 | placeholder `gray/400`(2.35:1) | 정책 결정(placeholder 대비 기준 적용 여부) | 입력 컴포넌트 전반 |
+| A-5 | placeholder `gray/400`(2.35:1) | **해결(A-1)** — 플레이스홀더 gray/600(5.89:1), 비활성 라벨은 `text/inactive`로 분리 | — |
 | D3 · D4 | R7 다중 선택 목록 · 간단 스타일 차트 지난 기간 색(F65-b) | [final-report](./final-report.md) 결정 목록 | — |
 
 이미 알려진 그 밖의 원본 이슈는 [figma-issue-triage.md](./figma-issue-triage.md)에 있습니다.

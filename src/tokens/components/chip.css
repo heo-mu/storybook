@@ -14,7 +14,7 @@
   --colors-chip-chip-label-unselected-hover: var(--colors-text-primary);
   --colors-chip-chip-label-unselected-pressed: var(--colors-text-primary);
   --colors-chip-chip-label-selected-default: var(--colors-text-inverse);
-  --colors-chip-chip-label-unselected-disabled: var(--colors-text-placeholder);
+  --colors-chip-chip-label-unselected-disabled: var(--colors-text-inactive);
   --colors-chip-chip-icon-selected-default: var(--colors-icon-inverse);
   --colors-chip-chip-background-selected-default: var(--colors-fill-primary-strong-default);
   --colors-chip-chip-background-selected-hover: var(--colors-fill-primary-strong-hover);
@@ -25,7 +25,7 @@
   --colors-chip-chip-label-selected-hover: var(--colors-text-inverse);
   --colors-chip-chip-border-selected-disabled: var(--colors-border-disabled);
   --colors-chip-chip-label-selected-pressed: var(--colors-text-inverse);
-  --colors-chip-chip-label-selected-disabled: var(--colors-text-placeholder);
+  --colors-chip-chip-label-selected-disabled: var(--colors-text-inactive);
   --colors-chip-chip-icon-unselected-default: var(--colors-icon-secondary);
   --colors-chip-chip-icon-unselected-hover: var(--colors-icon-primary);
   --colors-chip-chip-icon-unselected-pressed: var(--colors-icon-primary);

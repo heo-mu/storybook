@@ -20,11 +20,11 @@
   --colors-chip-filter-label-unselected-default: var(--colors-text-secondary);
   --colors-chip-filter-label-unselected-hover: var(--colors-text-primary);
   --colors-chip-filter-label-unselected-pressed: var(--colors-text-primary);
-  --colors-chip-filter-label-unselected-disabled: var(--colors-text-placeholder);
+  --colors-chip-filter-label-unselected-disabled: var(--colors-text-inactive);
   --colors-chip-filter-label-selected-default: var(--colors-text-brand);
   --colors-chip-filter-label-selected-hover: var(--colors-text-brand);
   --colors-chip-filter-label-selected-pressed: var(--colors-text-brand);
-  --colors-chip-filter-label-selected-disabled: var(--colors-text-placeholder);
+  --colors-chip-filter-label-selected-disabled: var(--colors-text-inactive);
   --colors-chip-filter-icon-unselected-default: var(--colors-icon-secondary);
   --colors-chip-filter-icon-unselected-hover: var(--colors-icon-primary);
   --colors-chip-filter-icon-unselected-pressed: var(--colors-icon-primary);

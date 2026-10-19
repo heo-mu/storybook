@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from 'react';
 
 const caption: CSSProperties = {
   font: '500 11px/16px var(--font-family-basic), sans-serif',
-  // text/secondary: 4.5:1+ contrast on the page surface (text/tertiary is 3.87:1).
+  // text/secondary: 4.5:1+ contrast on the page surface.
   color: 'var(--colors-text-secondary)',
   whiteSpace: 'nowrap',
   textAlign: 'left',

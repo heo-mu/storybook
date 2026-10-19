@@ -7,10 +7,10 @@
   --colors-search-field-outline-background-completed: var(--colors-surface-page);
   --colors-search-field-outline-background-error: var(--colors-surface-page);
   --colors-search-field-outline-background-disabled: var(--colors-surface-container);
-  --colors-search-field-outline-border-default: var(--colors-border-gray-subtle);
-  --colors-search-field-outline-border-hover: var(--colors-border-gray);
+  --colors-search-field-outline-border-default: var(--colors-border-gray);
+  --colors-search-field-outline-border-hover: var(--colors-border-gray-dark);
   --colors-search-field-outline-border-focus: var(--colors-border-gray-darker);
-  --colors-search-field-outline-border-completed: var(--colors-border-gray-subtle);
+  --colors-search-field-outline-border-completed: var(--colors-border-gray);
   --colors-search-field-outline-border-error: var(--colors-brand-status-error-strong);
   --colors-search-field-outline-border-disabled: var(--colors-border-disabled);
   --colors-search-field-outline-value-default: var(--colors-text-primary);

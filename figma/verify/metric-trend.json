@@ -9,7 +9,18 @@
         "icon_size": ".ds-metric-trend__icon",
         "icon_size/*": ".ds-metric-trend__icon",
         "Change": ".ds-metric-trend__label"
-      }
+      },
+      "maskRectsFor": {
+        "Direction=Flat, Tone=Negative": [
+          [
+            4,
+            11,
+            12,
+            2
+          ]
+        ]
+      },
+      "//maskRectsFor": "Flat / Negative minus bar (0.75px tall at y 11.625): same vector and position as Flat / Positive · Neutral (checked in Figma); Figma rasterises it evenly over two pixel rows, Chromium uneven (#e8b8ba / #db7b7e) — only the dark, saturated red/700 (A-1) crosses the pixel threshold (0.56%). The colour is compared in the Up / Down Negative variants, the icon box in the geometry check."
     }
   ]
 }

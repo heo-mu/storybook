@@ -9,8 +9,8 @@
   --colors-radio-background-selected-hover: var(--colors-fill-primary-strong-hover);
   --colors-radio-background-selected-pressed: var(--colors-fill-primary-strong-pressed);
   --colors-radio-background-selected-disabled: var(--colors-fill-disabled-default);
-  --colors-radio-border-unselected-default: var(--colors-border-gray-subtle);
-  --colors-radio-border-unselected-hover: var(--colors-border-gray);
+  --colors-radio-border-unselected-default: var(--colors-border-gray);
+  --colors-radio-border-unselected-hover: var(--colors-border-gray-dark);
   --colors-radio-border-unselected-pressed: var(--colors-border-brand);
   --colors-radio-border-unselected-disabled: var(--colors-border-disabled);
   --colors-radio-border-selected-default: var(--colors-border-transparency);

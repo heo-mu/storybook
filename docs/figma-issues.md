@@ -80,7 +80,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | E9 | Search Field Default · Hover는 `icon_size/icon/MagnifyingGlass`, 나머지 상태는 `MagnifyingGlass` 인스턴스 직접 사용(같은 위치·크기) | 구조 차이 무시, 같은 아이콘 | 인스턴스 구조 통일 |
 | E10 | Search Field Solid의 지우기 아이콘이 Outline 변수(`search-field/outline/icon/default`)에 바인딩 | 바인딩 그대로 | Solid 변수 사용 |
 | E11 | Search Field에 `helper/*` 변수가 있지만 메시지 Variant 없음, Read-only 상태 없음 | 메시지 · Read-only 스타일 미구현 | 필요 시 Variant 추가 |
-| E12 | 메시지 info 색(#0086d3)과 tertiary 텍스트(#778191)가 WCAG AA 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 대비 4.5:1 이상으로 조정 |
+| E12 | 메시지 info 색(#0086d3)과 tertiary 텍스트(#778191)가 WCAG AA 미만 | **해결(2026-10-19, A-1)** — `brand-status/information/strong` sky/700 #006cab(5.53:1), `text/tertiary` gray/600 #596475(5.89:1) — [accessibility.md](./accessibility.md) | — |
 
 ## F. 선택 컨트롤 (Checkbox · Radio · Switch · Select)
 
@@ -97,7 +97,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F9 | listbox `scroll`(4×100px 막대)이 옵션 5개로 넘치지 않는 상태에서도 고정 레이어로 표시 | 브라우저 스크롤바 스타일(4px, 둥근 모서리, 토큰 색)로 구현 — 내용이 넘칠 때만 표시, 자동 비교에서 제외(수동 검토) | 스크롤 상태 예시임을 명시 |
 | F10 | listbox 최대 높이, 위로 열릴 때의 배치가 정의되지 않음 | 화면 남은 공간에 맞춰 높이 제한 · 위로 뒤집기(react-aria 기본) | 최대 높이 정의 |
 | F11 | 옵션의 Hover와 Selected가 겹칠 때, 키보드 이동 중 표현이 정의되지 않음 | 키보드 이동 = Hover 모양, Selected + Hover = Hover 배경 + Selected 글자 | 조합 상태 정의 |
-| F12 | Checkbox · Radio 테두리와 Switch 꺼짐 트랙(#a1a8b5)이 배경 대비 2.35:1 — WCAG 1.4.11(비텍스트 3:1) 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 3:1 이상으로 조정 |
+| F12 | Checkbox · Radio 테두리와 Switch 꺼짐 트랙(#a1a8b5)이 배경 대비 2.35:1 — WCAG 1.4.11(비텍스트 3:1) 미만 | **해결(2026-10-19, A-2)** — 테두리 `border/gray`(#778191, 3.87:1, hover `border/gray-dark`), 트랙 brand-gray 500 · 600 · 700. 입력 칸 테두리도 같은 규칙 | — |
 | F13 | **Slider가 다른 라이브러리(원격) 변수에 바인딩** — 간격 `spacing/margin/m-2_5` · `m-2`, radius `radius/max`(100), 그림자 효과 스타일 `md-3,10`(`color/shadow/shadow-3` #051b3c33, 0 4 6 −1), 단위 · 값 라벨 글꼴 변수 | 같은 이름 · 역할의 로컬 토큰 사용(`radius/max` → `rounded-full`), 그림자는 Figma 값을 그대로 재현 | 이 파일의 변수 · 효과 스타일로 교체 |
 | F14 | Slider 단위 텍스트 "명" 상자가 글자 1개인데 24px(auto-width가 갱신되지 않은 값) | 실제 글자 너비. 검증 스토리에서만 24px로 맞춰 나머지 배치를 비교 | 텍스트 상자 크기 갱신 |
 | F15 | Slider 숫자 필드가 예시 값 "100"에 맞춘 너비(43px) | 가장 긴 값(최솟값 · 최댓값 자릿수)에 맞춘 고정 너비 — 값이 바뀌어도 트랙 길이 유지. 검증 스토리에서만 Figma 너비로 맞춤 | 필드 너비 규칙 정의 |
@@ -108,7 +108,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F20 | Chip 아이콘 크기가 세트마다 다름 — sm: chip-multi 16px, chip-input · chip-filter 12px | 각 세트 그대로 | 통일 |
 | F21 | chip-filter Selected 배경이 투명, Disabled 배경도 투명(chip-multi는 회색 채움) | 각 세트 그대로 | 의도 확인 |
 | F22 | Chip · Segmented Control · Slider에 Focus 상태 없음 (F1과 같음) | 브라우저 기본 포커스 링 | 키보드 포커스 표현 정의 |
-| F23 | 성공 메시지 녹색(#00a63e)이 대비 3.16:1 — WCAG AA 미만 | 값 그대로 — [accessibility.md](./accessibility.md) | 4.5:1 이상으로 조정 |
+| F23 | 성공 메시지 녹색(#00a63e)이 대비 3.16:1 — WCAG AA 미만 | **해결(2026-10-19, A-1)** — `brand-status/success/strong` green/700 #008236(4.86:1, 옅은 배경 위 4.50) | — |
 | F24 | Date Picker 빈 상태가 Semantic `colors/text/placeholder` · `colors/icon/placeholder`에 직접 바인딩(`…/placeholder/default` 미사용) | 바인딩 그대로 | Component 변수 경유 |
 | F25 | 달력 요일이 영어 자리표시(Su Mo …)인데 월 제목은 한국어(2026년 7월), 요일은 `colors/text/tertiary`에 직접 바인딩(`date-picker/weekday/label/default` 미사용) | 요일 · 월 이름 모두 로캘(ko-KR: 일 월 …), 색은 바인딩 그대로 | 언어 통일, Component 변수 사용 |
 | F26 | file-uploader의 "Show Button" 속성이 어떤 레이어에도 연결되지 않음 | 미구현 | 속성 삭제 또는 버튼 추가 |

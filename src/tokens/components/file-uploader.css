@@ -12,7 +12,7 @@
   --colors-file-uploader-border-drag-over: var(--colors-border-brand);
   --colors-file-uploader-border-disabled: var(--colors-border-disabled);
   --colors-file-uploader-label-default: var(--colors-text-primary);
-  --colors-file-uploader-label-disabled: var(--colors-text-placeholder);
+  --colors-file-uploader-label-disabled: var(--colors-text-inactive);
   --colors-file-uploader-helper-default: var(--colors-text-placeholder);
   --colors-file-uploader-icon-default: var(--colors-icon-tertiary);
   --colors-file-uploader-icon-drag-over: var(--colors-icon-secondary);

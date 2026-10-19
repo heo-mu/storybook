@@ -22,5 +22,5 @@
   --colors-table-key-value-value-background-disabled: var(--colors-surface-container-subtle);
   --colors-table-key-value-value-label-default: var(--colors-text-placeholder);
   --colors-table-key-value-value-label-completed: var(--colors-text-primary);
-  --colors-table-key-value-value-label-disabled: var(--colors-text-placeholder);
+  --colors-table-key-value-value-label-disabled: var(--colors-text-inactive);
 }

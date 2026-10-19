@@ -40,7 +40,8 @@
 }
 
 .ds-filter-bar__divider {
-  color: var(--colors-text-placeholder);
+  /* Decorative "|" (Figma border/gray-subtle since A-1 — it stays light while placeholder text got darker). */
+  color: var(--colors-border-gray-subtle);
 }
 
 .ds-filter-bar__group,

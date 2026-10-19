@@ -5,13 +5,13 @@
   --colors-input-outline-background-completed: var(--colors-surface-page);
   --colors-input-outline-background-disabled: var(--colors-surface-container);
   --colors-input-outline-background-read-only: var(--colors-surface-container);
-  --colors-input-outline-border-default: var(--colors-border-gray-subtle);
-  --colors-input-outline-border-hover: var(--colors-border-gray);
+  --colors-input-outline-border-default: var(--colors-border-gray);
+  --colors-input-outline-border-hover: var(--colors-border-gray-dark);
   --colors-input-outline-border-focus: var(--colors-border-gray-darker);
-  --colors-input-outline-border-completed: var(--colors-border-gray-subtle);
+  --colors-input-outline-border-completed: var(--colors-border-gray);
   --colors-input-outline-border-error: var(--colors-status-danger-strong);
   --colors-input-outline-border-disabled: var(--colors-border-disabled);
-  --colors-input-outline-border-read-only: var(--colors-border-gray-subtle);
+  --colors-input-outline-border-read-only: var(--colors-border-gray);
   --colors-input-outline-value-default: var(--colors-text-primary);
   --colors-input-outline-value-completed: var(--colors-text-primary);
   --colors-input-outline-value-disabled: var(--colors-text-disabled);

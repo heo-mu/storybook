@@ -25,7 +25,7 @@ F6은 결정(1절)과 렌더링 차이(3절)에, F57은 코드 작업(2절)과 F
 | --- | --- | --- | --- |
 | F31 (D1) | Button Primary · Outline 테두리 변수 — Figma에서 변수가 삭제되어 색만 남음([R1](./figma-fix-requests.md#r1-button-primary--outline-테두리--완료)). 동기화 자체는 2026-10-19 완료 | 원본에 남은 #004a38 | 높음 |
 | C1 | tracking 변수가 px로 적용(3xl 굵기별 자간 3배 차이) | Figma 적용값 그대로 | 높음 |
-| E12 · F12 · F23 | 대비 부족: info(#0086d3) · tertiary 글자, Checkbox · Radio · Switch 테두리(2.35:1), success(#00a63e), Button Secondary · Solid Hover · Pressed 흰 글자(3.51 · 2.46:1, 2026-10-19 추가 변형) | Figma 값 그대로, [accessibility.md](./accessibility.md)에 기록 | 높음 |
+| ~~E12 · F12 · F23~~ | 대비 부족 — **해결(2026-10-19, A-1 · A-2)**: Figma · 코드 함께 수정, axe 색 대비 0([accessibility.md](./accessibility.md)) | — | — |
 | A11 · F1 · F22 | Focus 상태 없음(Button, 선택 컨트롤, Chip, Segmented, Slider) | 브라우저 기본 포커스 링 | 높음 |
 | F65-a | 가로 막대 기본 Group=yes 비교 막대 `simple/history` ↔ 범례 · 툴팁 `series/compare` — **Figma 수정 요청**([R3](./figma-fix-requests.md#r3-차트-가로-막대--기본--groupyes-비교-막대--완료-지정-5노드)) | **코드는 `series/compare`로 통일(2026-10-19)** | 중간 |
 | F65-b | 간단 스타일 Group=no 지난 기간 색이 세로 · 가로에서 다름 | Figma 변형 그대로 | 중간 |
