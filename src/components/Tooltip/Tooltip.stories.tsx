@@ -18,7 +18,7 @@ const meta = {
       },
     },
   },
-  args: { content: '변경 사항을 저장합니다', placement: 'top', showArrow: true, delay: 300, children: <Button>저장</Button> },
+  args: { content: '변경 사항을 저장합니다', placement: 'top', showArrow: true, children: <Button>저장</Button> },
   argTypes: {
     placement: { control: 'inline-radio', options: TOOLTIP_PLACEMENTS, description: 'Figma "Placement"', table: { defaultValue: { summary: 'top' } } },
     children: { control: false },

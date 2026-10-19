@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { UNSTABLE_ToastQueue as ToastQueue } from 'react-aria-components';
 import { expect, waitFor, within } from 'storybook/test';
 import { Toast, ToastRegion } from '../Toast';
-import type { ToastContent } from '../toastQueue';
+import { closeToast, showToast, toastQueue, type ToastContent } from '../toastQueue';
 import { ALERT_STATUSES, type AlertStatus } from '../../Alert/Alert.options';
 import { Button } from '../../Button';
 import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
@@ -72,6 +72,37 @@ export const Interaction: Story = {
       await userEvent.click(body.getByRole('button', { name: '알림 닫기' }));
       await waitFor(() => expect(body.queryByText('저장했습니다')).not.toBeInTheDocument());
     });
+  },
+};
+
+/** Design System Rules 06: at most 3 on screen, the same message is not stacked, errors stay until closed. */
+export const Policy: Story = {
+  render: () => <ToastRegion />,
+  play: async ({ canvasElement, step }) => {
+    const body = within(canvasElement.ownerDocument.body);
+    const visible = () => toastQueue.visibleToasts;
+    try {
+      await step('showing the same text again replaces the visible toast (no duplicate)', async () => {
+        showToast('저장했습니다', { status: 'success' });
+        showToast('저장했습니다', { status: 'success' });
+        await waitFor(() => expect(body.getAllByText('저장했습니다')).toHaveLength(1));
+        await expect(visible()).toHaveLength(1);
+      });
+      await step('at most 3 toasts on screen; the rest wait', async () => {
+        ['1번', '2번', '3번', '4번'].forEach((m) => showToast(m));
+        await waitFor(() => expect(visible()).toHaveLength(3));
+      });
+      await step('an error stays until closed (no timeout); information closes after 5 s', async () => {
+        toastQueue.visibleToasts.forEach((t) => toastQueue.close(t.key));
+        const err = showToast('저장하지 못했습니다', { status: 'error' });
+        const info = showToast('새 버전이 있습니다');
+        await waitFor(() => expect(visible().length).toBeGreaterThanOrEqual(2));
+        await expect(visible().find((t) => t.key === err)?.timeout).toBeUndefined();
+        await expect(visible().find((t) => t.key === info)?.timeout).toBe(5000);
+      });
+    } finally {
+      for (let i = 0; i < 10 && toastQueue.visibleToasts.length; i++) toastQueue.visibleToasts.forEach((t) => closeToast(t.key));
+    }
   },
 };
 

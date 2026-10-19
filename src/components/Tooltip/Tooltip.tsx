@@ -12,7 +12,7 @@ export type TooltipProps = {
   placement?: TooltipPlacement;
   /** Figma "Arrow". @default true */
   showArrow?: boolean;
-  /** Hover delay before showing, in ms (react-aria default). @default 1500 */
+  /** Hover delay before showing, in ms (keyboard focus shows it at once) — Design System Rules 05. @default 500 */
   delay?: number;
   /** Delay before hiding, in ms. @default 500 */
   closeDelay?: number;
@@ -47,7 +47,7 @@ export function Tooltip({
   children,
   placement = 'top',
   showArrow = true,
-  delay,
+  delay = 500,
   closeDelay,
   open,
   defaultOpen,

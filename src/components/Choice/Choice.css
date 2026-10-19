@@ -68,10 +68,12 @@
 
 /* Checkbox / Radio group — semantic wrapper only. Figma defines no group spacing, so items are laid
  * out without a gap; set one with `className` / `style` (docs/figma-issues.md F3). */
+/* Group spacing (Design System Rules 08): 8px between stacked items, 16px between items in a row (8px between rows). */
 .ds-choice-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: var(--spacing-margin-m-2);
   min-width: 0;
 }
 
@@ -79,6 +81,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  gap: var(--spacing-margin-m-2) var(--spacing-margin-m-4);
 }
 
 /* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside the box / circle / track (the native input). */

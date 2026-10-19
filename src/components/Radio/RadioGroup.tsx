@@ -19,7 +19,7 @@ export type RadioGroupProps = Omit<ComponentPropsWithoutRef<'div'>, 'onChange' |
   disabled?: boolean;
   /** Marks the choice as required (native validation). */
   required?: boolean;
-  /** Stacking direction. Figma defines no spacing between items — pass a gap via `style` / `className`. @default 'vertical' */
+  /** Stacking direction — items are 8px apart (16px in a row), Design System Rules 08. @default 'vertical' */
   orientation?: ChoiceGroupOrientation;
 };
 
