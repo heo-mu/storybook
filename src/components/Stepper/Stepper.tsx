@@ -23,6 +23,7 @@ export type StepperIndicatorProps = Omit<ComponentPropsWithoutRef<'div'>, 'child
  * Figma component sets `stepper_indicator_horizontal` (179:1621) and `stepper_indicator_vertical` (203:3708):
  * 20px circle (number, CheckCircle when completed, WarningCircle on error) with label and sub label. The root is as
  * wide (horizontal) or as tall (vertical) as the circle; the text overflows it centred, as in Figma.
+ * @internal Rendered by `Stepper` — use that (docs/public-api.md).
  */
 export const StepperIndicator = forwardRef<HTMLDivElement, StepperIndicatorProps>(function StepperIndicator(
   { status = 'upcoming', step, label, description, orientation = 'horizontal', className, ...rest },
@@ -65,6 +66,7 @@ export type StepperConnectorProps = Omit<ComponentPropsWithoutRef<'span'>, 'chil
 /**
  * Figma component sets `stepper_connector_horizontal` (179:1614) and `stepper_connector_vertical` (203:4253).
  * The line is an SVG rect so it keeps the Figma geometry (1px centred on the band, i.e. on a half pixel).
+ * @internal Rendered by `Stepper` — use that (docs/public-api.md).
  */
 export function StepperConnector({ completed = false, orientation = 'horizontal', className, ...rest }: StepperConnectorProps) {
   return (

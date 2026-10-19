@@ -58,7 +58,10 @@ export type NavParentItemProps = Omit<ComponentPropsWithoutRef<'button'>, 'child
     expanded?: boolean;
   };
 
-/** Figma component set `item_parent` (180:5246): the button of a menu group. State Hover = :hover. */
+/**
+ * Figma component set `item_parent` (180:5246): the button of a menu group. State Hover = :hover.
+ * @internal Rendered by `NavGroup` — use that (docs/public-api.md).
+ */
 export const NavParentItem = forwardRef<HTMLButtonElement, NavParentItemProps>(function NavParentItem(
   { children, icon, expanded = false, className, ...rest },
   ref,

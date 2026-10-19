@@ -14,14 +14,18 @@ Figma **Toast** 프레임(91:5557)의 `toast`(3개)를 구현했습니다. 잠�
 
 <Source
   language="tsx"
-  code={`import { ToastRegion, showToast } from 'platform-design-system';
+  code={`import { ToastRegion, showToast, closeToast } from 'platform-design-system';
 
 // 앱에 한 번
 <ToastRegion />
 
 // 어디서든
 showToast('저장했습니다', { status: 'success' });
-showToast('저장하지 못했습니다', { status: 'error', timeout: null }); // 닫을 때까지 유지`}
+showToast('저장하지 못했습니다', { status: 'error', timeout: null }); // 닫을 때까지 유지
+
+// 코드에서 닫기: showToast가 돌려준 key
+const key = showToast('업로드 중입니다', { timeout: null });
+closeToast(key);`}
 />
 
 ## Figma 속성 → Props
@@ -39,8 +43,8 @@ showToast('저장하지 못했습니다', { status: 'error', timeout: null }); /
 - **자동으로 닫히는 시간**: 기본 5초(읽을 시간을 위해 최소 5초), `timeout: null`이면 닫을 때까지 유지. 마우스를 올리거나
   포커스가 있는 동안에는 멈춥니다.
 - **긴 메시지**: Figma 높이가 36px 고정이라 한 줄로 두고 말줄임합니다.
-- **react-aria Toast**: react-aria-components 1.22에서 UNSTABLE API입니다. 이 패키지의 `ToastRegion` · `showToast`가 감싸므로
-  라이브러리가 바뀌어도 사용하는 쪽 코드는 그대로입니다.
+- **react-aria Toast**: react-aria-components 1.22에서 UNSTABLE API입니다. 이 패키지의 `ToastRegion` · `showToast` · `closeToast`가 감싸므로
+  라이브러리가 바뀌어도 사용하는 쪽 코드는 그대로입니다. `toastQueue`(react-aria 큐 자체)는 내부 API이니 직접 쓰지 마세요.
 
 ## 키보드
 

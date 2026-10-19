@@ -14,7 +14,10 @@ export type PaginationItemProps = Omit<ComponentPropsWithoutRef<'button'>, 'chil
     current?: boolean;
   };
 
-/** Figma component set `pagination_item` (132:520): one page number button. */
+/**
+ * Figma component set `pagination_item` (132:520): one page number button.
+ * @internal Rendered by `Pagination` — use that (docs/public-api.md).
+ */
 export const PaginationItem = forwardRef<HTMLButtonElement, PaginationItemProps>(function PaginationItem(
   { page, current = false, size = 'sm', shape = 'square', className, 'aria-label': ariaLabel, ...rest },
   ref,
@@ -42,7 +45,10 @@ export type PaginationControlProps = Omit<ComponentPropsWithoutRef<'button'>, 'c
     direction: 'previous' | 'next';
   };
 
-/** Figma component set `pagination_control` (132:604): previous / next page button. */
+/**
+ * Figma component set `pagination_control` (132:604): previous / next page button.
+ * @internal Rendered by `Pagination` — use that (docs/public-api.md).
+ */
 export const PaginationControl = forwardRef<HTMLButtonElement, PaginationControlProps>(function PaginationControl(
   { direction, size = 'sm', shape = 'square', className, 'aria-label': ariaLabel, ...rest },
   ref,

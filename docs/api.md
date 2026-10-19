@@ -2,9 +2,12 @@
 
 `platform-design-system`이 export 하는 전부입니다. **자동 생성 문서** — `npm run docs:api`로 다시 만듭니다(직접 수정하지 마세요).
 
+- 어떤 컴포넌트를 써야 하는지와 사용 금지 목록은 [public-api.md](./public-api.md)에 있습니다. 각 컴포넌트 제목 아래에 분류를 적었습니다.
 - Props 표는 각 컴포넌트가 직접 정의한 Prop만 보여 줍니다. 그 밖의 HTML 속성(`className`, `style`, `aria-*`, 이벤트 등)과
   react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 Usage 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
+
+export 308개: 공개 컴포넌트 49 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 125 · 상수 45 · 함수 2 · 아이콘 35 · 내부 API 13
 
 ## 목차
 
@@ -13,6 +16,8 @@
 ## Accordion
 
 ### `Accordion`
+
+**공개 컴포넌트**
 
 A group of `AccordionItem`s (react-aria-components DisclosureGroup).
 
@@ -28,6 +33,8 @@ A group of `AccordionItem`s (react-aria-components DisclosureGroup).
 
 ### `AccordionItem`
 
+**공개 컴포넌트**
+
 Figma component set `accordion-item` (796:6071): a heading button that shows or hides its panel (react-aria-components Disclosure: aria-expanded / aria-controls, Enter / Space). State Hover = :hover, Expanded = open, Disabled = `disabled`.
 
 | Prop | Type | Default | 설명 |
@@ -40,7 +47,7 @@ Figma component set `accordion-item` (796:6071): a heading button that shows or 
 | `disabled` | `boolean` |  | Figma State "Disabled". |
 | `divider` | `boolean` | `true` | Figma "Show Divider". |
 | `expanded` | `boolean` |  | Open state of a single item outside an `Accordion` (controlled). |
-| `headingLevel` | `2 \| 4 \| 3 \| 5 \| 6` | `3` | Heading level of the title. |
+| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | Heading level of the title. |
 | `id` | `Key` |  | Item id (for `expandedKeys`). |
 | `onExpandedChange` | `((expanded: boolean) => void)` |  | Called when the item opens or closes. |
 
@@ -50,6 +57,8 @@ Figma component set `accordion-item` (796:6071): a heading button that shows or 
 ## Alert
 
 ### `Alert`
+
+**공개 컴포넌트**
 
 Figma component set `alert` (179:6087): an inline message with a status icon, title, description and an optional action. Error alerts use role="alert" (announced at once), the others role="status".
 
@@ -68,6 +77,8 @@ Figma component set `alert` (179:6087): an inline message with a status icon, ti
 
 ### `Badge`
 
+**공개 컴포넌트**
+
 Figma component set `badge_status` (91:6152): a status label with an optional dot. Status colours come from colors/badge/status/{filled\|outline}/*.
 
 | Prop | Type | Default | 설명 |
@@ -81,6 +92,8 @@ Figma component set `badge_status` (91:6152): a status label with an optional do
 
 ### `BadgeDot`
 
+**공개 컴포넌트**
+
 Figma component set `badge_dot` (95:2681): a status dot (e.g. a new-item marker).
 
 | Prop | Type | Default | 설명 |
@@ -89,6 +102,8 @@ Figma component set `badge_dot` (95:2681): a status dot (e.g. a new-item marker)
 | `status` | `"success" \| "danger" \| "basic" \| "gray" \| "point" \| "warning" \| "information"` | `basic` | Figma "Status". |
 
 ### `BadgeCount`
+
+**공개 컴포넌트**
 
 Figma component set `badge_count` (95:2762): a count pill (Digits Single / Multiple follow the number).
 
@@ -104,6 +119,8 @@ Figma component set `badge_count` (95:2762): a count pill (Digits Single / Multi
 ## Breadcrumb
 
 ### `Breadcrumb`
+
+**공개 컴포넌트**
 
 Figma component set `breadcrumb` (712:5106): `<nav>` > `<ol>` of breadcrumb-item + separator groups. Collapsed layout: home · overflow trigger (menu of the hidden ancestors) · parent · current page.
 
@@ -125,6 +142,8 @@ Figma component set `breadcrumb` (712:5106): `<nav>` > `<ol>` of breadcrumb-item
 
 ### `BreadcrumbItem`
 
+⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Breadcrumb` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
+
 Figma component set `breadcrumb-item` (710:4794). Role Link = `href` (an `<a>`; without `href` a `<button>`), Current = `current`, Open = `open`. State Hover / Pressed = :hover / :active.
 
 | Prop | Type | Default | 설명 |
@@ -137,29 +156,35 @@ Figma component set `breadcrumb-item` (710:4794). Role Link = `href` (an `<a>`; 
 
 ### `BreadcrumbSeparator`
 
+⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Breadcrumb` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
+
 Figma `breadcrumb-modern-separator` (710:4795): CaretRight 12px between items.
 
 - 상수: `BREADCRUMB_SIZES`, `BREADCRUMB_LAYOUTS`
-- 타입: `BreadcrumbProps`, `BreadcrumbItemProps`, `BreadcrumbEntry`, `BreadcrumbSize`, `BreadcrumbLayout`
+- 타입: `BreadcrumbProps`, `BreadcrumbItemProps` *(내부 — 사용 금지)*, `BreadcrumbEntry`, `BreadcrumbSize`, `BreadcrumbLayout`
 
 ## Button
 
 ### `Button`
+
+**공개 컴포넌트**
 
 Figma component set `button_basic` (54:2904). State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | Figma "Label Text". |
-| `appearance` | `"solid" \| "outline"` | `'solid'` | Figma "Appearance". Secondary exists only as Outline. |
+| `appearance` | `"solid" \| "outline"` | `'solid' ('outline' for variant "secondary")` | Figma "Appearance". |
 | `disabled` | `boolean` |  | Figma State "Disabled". |
 | `leftIcon` | `ReactNode` |  | Figma "Left Icon" (boolean + icon instance): rendered when provided. Sized to 16px (20px at lg). |
 | `rightIcon` | `ReactNode` |  | Figma "Right Icon" (boolean + icon instance): rendered when provided. Sized to 16px (20px at lg). |
 | `shape` | `"square" \| "rounded"` | `square` | Figma "Shape". |
 | `size` | `"xs" \| "sm" \| "md" \| "lg"` | `xs` | Figma "Size". |
-| `variant` | `"primary" \| "tertiary" \| "secondary"` | `primary` | Figma "Variant". |
+| `variant` | `"primary" \| "secondary" \| "tertiary"` | `primary` | Figma "Variant". |
 
 ### `IconButton`
+
+**공개 컴포넌트**
 
 Figma component set `button_icon` (67:2368). State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
 
@@ -167,13 +192,15 @@ Figma component set `button_icon` (67:2368). State "Hover"/"Pressed" are the nat
 | --- | --- | --- | --- |
 | `aria-label` *(필수)* | `string` |  | Accessible name — the Figma component keeps its "Label" text layer hidden. |
 | `icon` *(필수)* | `ReactNode` |  | The icon instance. Sized to 16px (20px at md). |
-| `appearance` | `"solid" \| "outline"` | `'solid'` | Figma "Appearance". Secondary exists only as Outline. |
+| `appearance` | `"solid" \| "outline"` | `'solid' ('outline' for variant "secondary")` | Figma "Appearance". |
 | `disabled` | `boolean` |  | Figma State "Disabled". |
 | `shape` | `"square" \| "rounded"` | `square` | Figma "Shape". |
 | `size` | `"xs" \| "sm" \| "md"` | `xs` | Figma "Size". |
-| `variant` | `"primary" \| "tertiary" \| "secondary"` | `primary` | Figma "Variant". |
+| `variant` | `"primary" \| "secondary" \| "tertiary"` | `primary` | Figma "Variant". |
 
 ### `TextButton`
+
+**공개 컴포넌트**
 
 Figma component set `button_text` (432:8395). State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
 
@@ -186,13 +213,15 @@ Figma component set `button_text` (432:8395). State "Hover"/"Pressed" are the na
 | `size` | `"sm" \| "md"` | `sm` | Figma "Size". |
 | `variant` | `"primary" \| "secondary"` | `primary` | Figma "Type" ("Primary" / "SecondarySecondary"). Both are bound to the same variables in Ver 0.4. |
 
-- 상수: `BUTTON_VARIANTS`, `BUTTON_APPEARANCES`, `BUTTON_SHAPES`, `BUTTON_SIZES`, `ICON_BUTTON_SIZES`, `TEXT_BUTTON_VARIANTS`, `TEXT_BUTTON_SIZES`, `BUTTON_STATES`, `BUTTON_TONES`
-- 함수: `resolveAppearance`
-- 타입: `ButtonProps`, `IconButtonProps`, `TextButtonProps`, `ButtonVariant`, `ButtonAppearance`, `ButtonShape`, `ButtonSize`, `IconButtonSize`, `TextButtonVariant`, `TextButtonSize`, `ButtonState`, `ButtonToneProps`, `ButtonDisabledProp`
+- 상수: `BUTTON_VARIANTS`, `BUTTON_APPEARANCES`, `BUTTON_SHAPES`, `BUTTON_SIZES`, `ICON_BUTTON_SIZES`, `TEXT_BUTTON_VARIANTS`, `TEXT_BUTTON_SIZES`, `BUTTON_STATES` *(내부 — 사용 금지)*, `BUTTON_TONES` *(내부 — 사용 금지)*
+- 함수: `resolveAppearance` *(내부 — 사용 금지)*
+- 타입: `ButtonProps`, `IconButtonProps`, `TextButtonProps`, `ButtonVariant`, `ButtonAppearance`, `ButtonShape`, `ButtonSize`, `IconButtonSize`, `TextButtonVariant`, `TextButtonSize`, `ButtonState` *(내부 — 사용 금지)*, `ButtonToneProps` *(내부 — 사용 금지)*, `ButtonDisabledProp` *(내부 — 사용 금지)*
 
 ## Calendar
 
 ### `Calendar`
+
+**공개 컴포넌트**
 
 Figma `date-picker_calendar` (144:1644) with `date-picker_header` (144:1377), `date-picker_navigation` (144:1328) and `date-picker_day` (144:1033). Month grid with keyboard navigation (arrows, Page Up / Down, Home / End), from react-aria-components. Weekday and month names follow the locale (react-aria I18nProvider, otherwise the browser).
 
@@ -217,9 +246,13 @@ Figma `date-picker_calendar` (144:1644) with `date-picker_header` (144:1377), `d
 
 ### `Card`
 
+**공개 컴포넌트**
+
 Figma Card (185:6512): header, content and footer in a container — padding p-5 top / bottom, m-4 between the parts, border-radius/rounded-lg, colors/card/background, 1px INSIDE colors/card/border, shadow (figma-issues F60).
 
 ### `CardHeader`
+
+**보조 컴포넌트** — `Card` 안
 
 Figma card_header (218:7173): title, description and an action above a divider.
 
@@ -228,13 +261,17 @@ Figma card_header (218:7173): title, description and an action above a divider.
 | `title` *(필수)* | `ReactNode` |  | Figma "Card Text". |
 | `action` | `ReactNode` |  | Figma "Button" (Button Tertiary · Outline · sm in Figma). |
 | `description` | `ReactNode` |  | Figma "Sub" · "Sub Text". |
-| `headingLevel` | `2 \| 4 \| 3 \| 5 \| 6` | `3` | Heading level of the title. |
+| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | Heading level of the title. |
 
 ### `CardContent`
+
+**보조 컴포넌트** — `Card` 안
 
 Figma card_content: the body, padded p-5 left and right.
 
 ### `CardFooter`
+
+**보조 컴포넌트** — `Card` 안
 
 Figma card_footer (218:7174): full-width buttons m-2 apart (Figma: Primary · Solid · md and Tertiary · Outline · md).
 
@@ -243,6 +280,8 @@ Figma card_footer (218:7174): full-width buttons m-2 apart (Figma: Primary · So
 ## Chart
 
 ### `Chart`
+
+**공개 컴포넌트**
 
 Figma component set `chart` (698:4399): line, vertical bar and horizontal bar charts in the default style (axis labels, value grid, legend, hover / keyboard tooltip) or the simple style (160px, the last category is the current period). One series is Figma Group=no, two are Group=yes. The drawing is SVG sized to the container width; the values are also given to screen readers as a table.
 
@@ -264,6 +303,8 @@ Figma component set `chart` (698:4399): line, vertical bar and horizontal bar ch
 
 ### `ChartLegendItem`
 
+**보조 컴포넌트** — 직접 만드는 범례(`Chart`는 범례를 스스로 그림)
+
 Figma component set `chart-legend-item` (697:4514): a series marker and its label, m-1_5 apart (label xs/leading-normal/normal, text/secondary). `Chart` renders its own legend; use this for custom legends.
 
 | Prop | Type | Default | 설명 |
@@ -273,6 +314,8 @@ Figma component set `chart-legend-item` (697:4514): a series marker and its labe
 | `type` | `"line" \| "dash-line" \| "bar"` | `bar` | Figma "Type": a line, a dashed line (5 / 3) or a 12px square. |
 
 ### `ChartTooltip`
+
+**보조 컴포넌트** — 직접 만드는 차트의 값 표시(`Chart`는 툴팁을 스스로 그림)
 
 Figma component `chart-tooltip` (693:9776): the values of one category — title (xs) above rows of an indicator, the series label and its value. Padding p-2_5, m-1_5 between the title and the rows, rows m-1 apart, alpha/white/800 background, rounded-sm, elevation-3. `Chart` shows it on hover / keyboard navigation.
 
@@ -288,6 +331,8 @@ Figma component `chart-tooltip` (693:9776): the values of one category — title
 
 ### `Checkbox`
 
+**공개 컴포넌트**
+
 Figma component set `checkbox` (99:2389). Selection: Checked = `checked` / `defaultChecked`, Indeterminate = `indeterminate`. State: Hover / Pressed are the native :hover / :active, Disabled = `disabled`. Renders a native `<input type="checkbox">`; its props (name, value, checked, onChange, …) and the ref go to it.
 
 | Prop | Type | Default | 설명 |
@@ -300,6 +345,8 @@ Figma component set `checkbox` (99:2389). Selection: Checked = `checked` / `defa
 | `value` | `string` |  | Form value; inside a `CheckboxGroup` it identifies the checkbox in the group value. |
 
 ### `CheckboxGroup`
+
+**공개 컴포넌트**
 
 Groups `Checkbox`es that have a `value` (role="group") and manages the selected values. Not a Figma component — semantic wrapper only; label it with `aria-label` or `aria-labelledby`.
 
@@ -319,6 +366,8 @@ Groups `Checkbox`es that have a `value` (role="group") and manages the selected 
 
 ### `Chip`
 
+**공개 컴포넌트**
+
 Figma component set `chip-multi` (201:12711) — a toggle chip for multi-select filters. Variant Selected = `selected` (check icon after the label); State Hover / Pressed are :hover / :active, Disabled = `disabled`. Renders `<button aria-pressed>`.
 
 | Prop | Type | Default | 설명 |
@@ -331,6 +380,8 @@ Figma component set `chip-multi` (201:12711) — a toggle chip for multi-select 
 
 ### `InputChip`
 
+**공개 컴포넌트**
+
 Figma component set `chip-input` (558:26017) — an entered value that can be removed (X icon). The whole chip is the remove button, so the target is the full chip height. State Hover / Pressed are :hover / :active, Disabled = `disabled`.
 
 | Prop | Type | Default | 설명 |
@@ -341,6 +392,8 @@ Figma component set `chip-input` (558:26017) — an entered value that can be re
 | `size` | `"xs" \| "sm" \| "md"` | `xs` | Figma "Size". |
 
 ### `FilterChip`
+
+**공개 컴포넌트**
 
 Figma component set `chip-filter` (558:25704) — a chip that opens a filter menu or panel. State Hover / Pressed are :hover / pressed, Disabled = `disabled`. Built on the react-aria `Button`, so it can be the trigger of react-aria overlays; `onPress` (or `onClick`) handles activation.
 
@@ -365,6 +418,8 @@ Figma component set `chip-filter` (558:25704) — a chip that opens a filter men
 
 ### `DashboardFilterBar`
 
+**공개 컴포넌트**
+
 Figma component `dashboard-filter-bar` (698:4163): the query conditions of a dashboard — filter groups m-6 apart with "\|" dividers, and actions p-3 apart at the right, m-4 from the filters, in a white card (padding 16, radius 12, elevation-3 shadow). A `search` landmark.
 
 | Prop | Type | Default | 설명 |
@@ -373,6 +428,8 @@ Figma component `dashboard-filter-bar` (698:4163): the query conditions of a das
 
 ### `DashboardFilterGroup`
 
+**보조 컴포넌트** — `DashboardFilterBar` 안
+
 A labelled group of controls in a `DashboardFilterBar` (`role="group"`, named by its label).
 
 | Prop | Type | Default | 설명 |
@@ -380,6 +437,8 @@ A labelled group of controls in a `DashboardFilterBar` (`role="group"`, named by
 | `label` | `ReactNode` |  | Figma group label ("조회 대상", "조회 기간" …, sm/leading-normal/medium, text/tertiary); names the group. |
 
 ### `DashboardFilterRange`
+
+**보조 컴포넌트** — `DashboardFilterGroup` 안(기간 등 두 값)
 
 Two controls joined by "~" (text/tertiary), m-2 apart — the Figma date range.
 
@@ -393,6 +452,8 @@ Two controls joined by "~" (text/tertiary), m-2 apart — the Figma date range.
 ## DataFreshness
 
 ### `DataFreshness`
+
+**공개 컴포넌트**
 
 Figma component set `data-freshness` (697:4543): how current the data is — a status badge (Outline · sm · Rounded, with dot) and the last-received time with the refresh interval (xs/leading-normal/normal; time text/secondary, "·" and interval text/tertiary, m-0_5 apart), p-2 after the badge.
 
@@ -410,6 +471,8 @@ Figma component set `data-freshness` (697:4543): how current the data is — a s
 ## DataState
 
 ### `DataState`
+
+**공개 컴포넌트**
 
 Figma component set `data-state` (698:4359): what a data area shows instead of its content — Loading (three skeleton bars and a label) or an empty-state message (Empty · No-results · Error · No-access · Partial) with an icon, title, description and a TextButton. The region is a polite live region (`role="status"`).
 
@@ -429,6 +492,8 @@ Figma component set `data-state` (698:4359): what a data area shows instead of i
 ## DatePicker
 
 ### `DatePicker`
+
+**공개 컴포넌트**
 
 Figma component sets `date-picker_trigger` (144:723) and `date-picker_message` (144:888) with the `Calendar` (date-picker_calendar) in a popover. The field accepts typed dates (YYYY.MM.DD, YYYY-MM-DD, YYYYMMDD …, committed on Enter or blur); the calendar button (or Alt + ↓) opens the calendar. State: Hover / Focus = :hover / :focus-within, Completed = has a date, Error = `invalid` or an unusable typed date, Disabled = `disabled`, Read-only = `readOnly`.
 
@@ -465,6 +530,8 @@ Figma component sets `date-picker_trigger` (144:723) and `date-picker_message` (
 
 ### `Dialog`
 
+**공개 컴포넌트**
+
 Figma component `dialog` (149:2838): a modal panel with title, description and buttons (react-aria-components Modal + Dialog: focus moves in and is trapped, Escape closes, focus returns).
 
 | Prop | Type | Default | 설명 |
@@ -488,6 +555,8 @@ Figma component `dialog` (149:2838): a modal panel with title, description and b
 
 ### `DropdownMenu`
 
+**공개 컴포넌트**
+
 Dropdown menu built from the Figma `dropdownmenu_item` (179:4819) and `dropdownmenu_line` (179:5082) components and the menu panel of the Figma examples (Menu Container): padding p-1, 1px border, border-radius/rounded, effect elevation-3. Keyboard, focus and ARIA (menu / menuitem) come from react-aria-components; Escape closes and focus returns to the trigger.
 
 | Prop | Type | Default | 설명 |
@@ -505,6 +574,8 @@ Dropdown menu built from the Figma `dropdownmenu_item` (179:4819) and `dropdownm
 
 ### `DropdownMenuItem`
 
+**보조 컴포넌트** — `DropdownMenu` 안
+
 Figma `dropdownmenu_item` Type Content. State: Hover = pointer hover or keyboard focus, Alert = `danger`, Disabled = `disabled`.
 
 | Prop | Type | Default | 설명 |
@@ -519,6 +590,8 @@ Figma `dropdownmenu_item` Type Content. State: Hover = pointer hover or keyboard
 
 ### `DropdownMenuSection`
 
+**보조 컴포넌트** — `DropdownMenu` 안
+
 A group of items with an optional title (Figma Type Title).
 
 | Prop | Type | Default | 설명 |
@@ -530,6 +603,8 @@ A group of items with an optional title (Figma Type Title).
 
 ### `DropdownMenuSeparator`
 
+**보조 컴포넌트** — `DropdownMenu` 안
+
 Figma `dropdownmenu_line`: divider between groups.
 
 - 타입: `DropdownMenuProps`, `DropdownMenuItemProps`, `DropdownMenuSectionProps`
@@ -537,6 +612,8 @@ Figma `dropdownmenu_line`: divider between groups.
 ## EmptyState
 
 ### `EmptyState`
+
+**공개 컴포넌트**
 
 Figma component `empty-state` (724:14963): a centred message for an empty area — icon, title, description (m-1 apart) and an action m-3 below. 320px wide as in Figma, narrower when the parent is.
 
@@ -558,6 +635,8 @@ Figma component `empty-state` (724:14963): a centred message for an empty area �
 
 ### `FileUploader`
 
+**공개 컴포넌트**
+
 Figma component set `file-uploader` (651:3945): a drop area that also opens the file dialog. State: Hover / Pressed = :hover / :active, Drag-over = files dragged over it, Disabled = `disabled`. The area is a `<button>` (Enter / Space open the dialog); a hidden `<input type="file">` holds the selection for forms.
 
 | Prop | Type | Default | 설명 |
@@ -576,6 +655,8 @@ Figma component set `file-uploader` (651:3945): a drop area that also opens the 
 
 ### `FileUploaderItem`
 
+**보조 컴포넌트** — `FileUploader` 아래 파일 목록
+
 Figma component set `file-uploader-item` (651:3999): one file in an upload list. The actions are the TextButton (button_text Primary sm) with the file name as their description.
 
 | Prop | Type | Default | 설명 |
@@ -590,6 +671,8 @@ Figma component set `file-uploader-item` (651:3999): one file in an upload list.
 | `uploadingLabel` | `string` | `업로드 중` | Accessible name of the spinner. |
 
 ### `ImageUploadPreview`
+
+**보조 컴포넌트** — `KeyValueItem`의 이미지 업로드 칸
 
 The uploaded image of the Figma key-value File Upload cell (`table_value_editable`, 503:23264): a 100px square with a round remove button (18px, padding p-0_5, colors/fill/secondary/subtle/default, 1px colors/border/gray-subtler, X 12px colors/icon/secondary) centred on its top-right corner.
 
@@ -606,6 +689,8 @@ The uploaded image of the Figma key-value File Upload cell (`table_value_editabl
 ## Input
 
 ### `Input`
+
+**공개 컴포넌트**
 
 Figma component set `input` (76:2945) with `input_message` (83:3009). State: Hover / Focus are the native :hover / :focus-within, Completed = the field has a value, Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`. Native input props (value, onChange, name, …) and the ref go to the `<input>`.
 
@@ -629,6 +714,8 @@ Figma component set `input` (76:2945) with `input_message` (83:3009). State: Hov
 
 ### `Link`
 
+**공개 컴포넌트**
+
 Figma component set `link` (111:1509). State: Hover / Pressed / Visited are :hover / :active / :visited, Disabled = `disabled`. Renders a native `<a>`.
 
 | Prop | Type | Default | 설명 |
@@ -647,6 +734,8 @@ Figma component set `link` (111:1509). State: Hover / Pressed / Visited are :hov
 
 ### `Loading`
 
+**공개 컴포넌트**
+
 Figma component set `loading` (675:5644): a spinning arc (gradient from colors/border/transparency to colors/border/brand) with an optional label. Renders `role="status"`, so the label (or `aria-label`, default '로딩 중') is announced politely.
 
 | Prop | Type | Default | 설명 |
@@ -661,6 +750,8 @@ Figma component set `loading` (675:5644): a spinning arc (gradient from colors/b
 
 ### `MetricCard`
 
+**공개 컴포넌트**
+
 Figma component `metric-card` (697:4487): a key figure — header (icon + title), value with unit, and a comparison row (trend + text), m-3 apart inside a white card (padding 16, radius 12, elevation-3 shadow).
 
 | Prop | Type | Default | 설명 |
@@ -668,7 +759,7 @@ Figma component `metric-card` (697:4487): a key figure — header (icon + title)
 | `title` *(필수)* | `ReactNode` |  | Figma "Title" — what the metric is. Rendered as a heading. |
 | `value` *(필수)* | `ReactNode` |  | Figma "Value" (3xl/leading-normal/semibold). |
 | `comparison` | `ReactNode` |  | Figma "Comparison" text after the trend, e.g. "이전 7일 대비". |
-| `headingLevel` | `2 \| 4 \| 3 \| 5 \| 6` | `3` | Heading level of the title. |
+| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | Heading level of the title. |
 | `icon` | `ReactNode` |  | Figma header icon (20px, icon/tertiary; Lightning in Figma). Decorative. |
 | `trend` | `ReactNode` |  | Figma comparison row: the change, usually a `MetricTrend`. |
 | `unit` | `ReactNode` |  | Figma "Unit", baseline-aligned after the value. |
@@ -678,6 +769,8 @@ Figma component `metric-card` (697:4487): a key figure — header (icon + title)
 ## MetricTrend
 
 ### `MetricTrend`
+
+**공개 컴포넌트**
 
 Figma component set `metric-trend` (697:4482): the change of a metric — a 12px direction icon and the change text (xs/leading-normal/medium) on dashboard/background, p-1 padding and gap, rounded-sm.
 
@@ -695,6 +788,8 @@ Figma component set `metric-trend` (697:4482): the change of a metric — a 12px
 
 ### `Navigation`
 
+**공개 컴포넌트**
+
 LNB container from the Figma Navigation example (180:2023): padding p-5, colors/navigation/lnb/background, items m-1_5 apart. Width comes from the layout (240px in the Figma example).
 
 | Prop | Type | Default | 설명 |
@@ -702,6 +797,8 @@ LNB container from the Figma Navigation example (180:2023): padding p-5, colors/
 | `header` | `ReactNode` |  | Area above the menu (the Figma example's logo area), m-4 above the items. |
 
 ### `NavLink`
+
+**보조 컴포넌트** — `Navigation` 안
 
 Figma component set `item_link` (180:6174): a top-level page link. State Hover = :hover.
 
@@ -711,6 +808,8 @@ Figma component set `item_link` (180:6174): a top-level page link. State Hover =
 | `selected` | `boolean` | `false` | Figma Variant "Selected": the current page (`aria-current="page"`). |
 
 ### `NavGroup`
+
+**보조 컴포넌트** — `Navigation` 안
 
 Menu group: `item_parent` and, when expanded, its `item_child` list — indented p-4 with a 1px line (…/child/selected/indicator/selected) and m-2_5 to the items, as in the Figma LNB example.
 
@@ -726,6 +825,8 @@ Menu group: `item_parent` and, when expanded, its `item_child` list — indented
 
 ### `NavChild`
 
+**보조 컴포넌트** — `NavGroup` 안
+
 Figma component set `item_child` (180:6249): a second-level page link. State Hover = :hover.
 
 | Prop | Type | Default | 설명 |
@@ -733,6 +834,8 @@ Figma component set `item_child` (180:6249): a second-level page link. State Hov
 | `selected` | `boolean` | `false` | Figma Variant "Selected": the current page (`aria-current="page"`). |
 
 ### `NavParentItem`
+
+⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `NavGroup` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
 Figma component set `item_parent` (180:5246): the button of a menu group. State Hover = :hover.
 
@@ -742,11 +845,13 @@ Figma component set `item_parent` (180:5246): the button of a menu group. State 
 | `expanded` | `boolean` | `false` | Figma "Expanded". |
 | `icon` | `ReactNode` |  | Figma "Icon" (20px; the Figma placeholder is List). |
 
-- 타입: `NavigationProps`, `NavLinkProps`, `NavGroupProps`, `NavChildProps`, `NavParentItemProps`
+- 타입: `NavigationProps`, `NavLinkProps`, `NavGroupProps`, `NavChildProps`, `NavParentItemProps` *(내부 — 사용 금지)*
 
 ## Pagination
 
 ### `Pagination`
+
+**공개 컴포넌트**
 
 Figma component set `pagination` (132:871) built from `pagination_control` and `pagination_item`: previous, a window of page numbers (Figma shows five, the first current), next. Renders `<nav aria-label="페이지 이동">` with buttons; the current page has `aria-current="page"`.
 
@@ -762,6 +867,8 @@ Figma component set `pagination` (132:871) built from `pagination_control` and `
 
 ### `PaginationItem`
 
+⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Pagination` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
+
 Figma component set `pagination_item` (132:520): one page number button.
 
 | Prop | Type | Default | 설명 |
@@ -773,6 +880,8 @@ Figma component set `pagination_item` (132:520): one page number button.
 
 ### `PaginationControl`
 
+⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Pagination` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
+
 Figma component set `pagination_control` (132:604): previous / next page button.
 
 | Prop | Type | Default | 설명 |
@@ -782,11 +891,13 @@ Figma component set `pagination_control` (132:604): previous / next page button.
 | `size` | `"sm" \| "md" \| "lg"` | `sm` |  |
 
 - 상수: `PAGINATION_SIZES`, `PAGINATION_SHAPES`
-- 타입: `PaginationProps`, `PaginationItemProps`, `PaginationControlProps`, `PaginationSize`, `PaginationShape`
+- 타입: `PaginationProps`, `PaginationItemProps` *(내부 — 사용 금지)*, `PaginationControlProps` *(내부 — 사용 금지)*, `PaginationSize`, `PaginationShape`
 
 ## Progress
 
 ### `Progress`
+
+**공개 컴포넌트**
 
 Figma component `progress` (185:6518): a 6px track (border-radius/rounded-full, colors/progress/border/surface) with the bar (…/indicator) clipped by it. `value` between `minValue` and `maxValue` (0 – 100 by default); role="progressbar" and its values come from react-aria-components. Name it with `aria-label` or `aria-labelledby`.
 
@@ -801,6 +912,8 @@ Figma component `progress` (185:6518): a 6px track (border-radius/rounded-full, 
 
 ### `Radio`
 
+**보조 컴포넌트** — `RadioGroup` 안
+
 Figma component set `radio` (102:2677). Selection "Selected" = checked; State: Hover / Pressed are the native :hover / :active, Disabled = `disabled`. Renders a native `<input type="radio">` (arrow keys move between radios of the same name). Use inside `RadioGroup`, or standalone with `name` / `checked`.
 
 | Prop | Type | Default | 설명 |
@@ -812,6 +925,8 @@ Figma component set `radio` (102:2677). Selection "Selected" = checked; State: H
 | `style` | `CSSProperties` |  | Style of the root `<label>`. |
 
 ### `RadioGroup`
+
+**공개 컴포넌트**
 
 Groups `Radio`s (role="radiogroup") and manages the selected value. Not a Figma component — semantic wrapper only; label it with `aria-label` or `aria-labelledby`.
 
@@ -831,6 +946,8 @@ Groups `Radio`s (role="radiogroup") and manages the selected value. Not a Figma 
 ## SearchField
 
 ### `SearchField`
+
+**공개 컴포넌트**
 
 Figma component set `search-field` (216:6570). State: Hover / Focus = :hover / :focus-within, Completed = has a value, Error = `invalid`, Disabled = `disabled`. The clear (X) button appears in Focus and Error as in Figma. Native input props and the ref go to the `<input type="search">`.
 
@@ -852,6 +969,8 @@ Figma component set `search-field` (216:6570). State: Hover / Focus = :hover / :
 
 ### `SegmentedControl`
 
+**공개 컴포넌트**
+
 Figma component set `segmented-control` (531:24471) with `segmented-item` (524:24397): one choice out of a few options. Items share the width equally (Figma: items fill the control). Built from native radios (role="radiogroup"): arrow keys move the selection, forms receive the value. Label the control with `aria-label` or `aria-labelledby`.
 
 | Prop | Type | Default | 설명 |
@@ -864,6 +983,8 @@ Figma component set `segmented-control` (531:24471) with `segmented-item` (524:2
 | `value` | `string \| null` |  | Selected item value (controlled). |
 
 ### `SegmentedControlItem`
+
+**보조 컴포넌트** — `SegmentedControl` 안
 
 One segment (Figma `segmented-item`). Variant Selected = the control's value; State Hover / Pressed are :hover / :active, Disabled = `disabled` here or on the control. Renders a visually hidden native radio.
 
@@ -880,6 +1001,8 @@ One segment (Figma `segmented-item`). Variant Selected = the control's value; St
 ## Select
 
 ### `Select`
+
+**공개 컴포넌트**
 
 Figma component set `select` (95:4740) with `listbox` (97:2665), `option` (97:2286) and `select_message` (95:2960). Keyboard, focus, typeahead and ARIA come from react-aria-components (button + listbox popover); all styles are the Figma variables. State: Hover = :hover, Open = list open, Completed = has a value, Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`.
 
@@ -915,6 +1038,8 @@ Figma component set `select` (95:4740) with `listbox` (97:2665), `option` (97:22
 
 ### `SelectOption`
 
+**보조 컴포넌트** — `Select` 안
+
 Figma component set `option` (97:2286) — one choice of a `Select`; `id` identifies it in the Select value. State: Hover / Pressed = pointer hover / press (keyboard focus uses the Hover look), Selected = the Select value (semibold brand text + check icon), Disabled = `disabled`.
 
 | Prop | Type | Default | 설명 |
@@ -930,6 +1055,8 @@ Figma component set `option` (97:2286) — one choice of a `Select`; `id` identi
 
 ### `Skeleton`
 
+**공개 컴포넌트**
+
 Figma component set `skeleton` (697:4486): a placeholder shape (colors/skeleton/background, border-radius/rounded; Circle rounded-xl) while content loads. Decorative — announce the loading state on the surrounding region (e.g. `DataState state="loading"`). Static, as in Figma (no animation).
 
 | Prop | Type | Default | 설명 |
@@ -942,6 +1069,8 @@ Figma component set `skeleton` (697:4486): a placeholder shape (colors/skeleton/
 ## Slider
 
 ### `Slider`
+
+**공개 컴포넌트**
 
 Figma component set `slider` (391:1988) with `handle` (391:2013). Pointer, touch and keyboard (arrows, Page Up / Down, Home / End) come from react-aria-components; the optional number field (Figma "Show Input") is the Input component and commits on Enter or blur.
 
@@ -973,6 +1102,8 @@ Figma component set `slider` (391:1988) with `handle` (391:2013). Pointer, touch
 
 ### `Stepper`
 
+**공개 컴포넌트**
+
 Figma component sets `stepper_horizontal` (179:2043) and `stepper_vertical` (203:3949): indicators joined by connectors; a connector is Completed after a completed step. Progress display only (not interactive).
 
 | Prop | Type | Default | 설명 |
@@ -982,6 +1113,8 @@ Figma component sets `stepper_horizontal` (179:2043) and `stepper_vertical` (203
 | `orientation` | `"horizontal" \| "vertical"` | `horizontal` | Figma "Type". |
 
 ### `StepperIndicator`
+
+⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Stepper` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
 Figma component sets `stepper_indicator_horizontal` (179:1621) and `stepper_indicator_vertical` (203:3708): 20px circle (number, CheckCircle when completed, WarningCircle on error) with label and sub label. The root is as wide (horizontal) or as tall (vertical) as the circle; the text overflows it centred, as in Figma.
 
@@ -995,6 +1128,8 @@ Figma component sets `stepper_indicator_horizontal` (179:1621) and `stepper_indi
 
 ### `StepperConnector`
 
+⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Stepper` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
+
 Figma component sets `stepper_connector_horizontal` (179:1614) and `stepper_connector_vertical` (203:4253). The line is an SVG rect so it keeps the Figma geometry (1px centred on the band, i.e. on a half pixel).
 
 | Prop | Type | Default | 설명 |
@@ -1003,11 +1138,13 @@ Figma component sets `stepper_connector_horizontal` (179:1614) and `stepper_conn
 | `orientation` | `"horizontal" \| "vertical"` | `horizontal` | Figma "Type". |
 
 - 상수: `STEPPER_ORIENTATIONS`, `STEPPER_STATUSES`
-- 타입: `StepperProps`, `StepperStep`, `StepperIndicatorProps`, `StepperConnectorProps`, `StepperOrientation`, `StepperStatus`
+- 타입: `StepperProps`, `StepperStep`, `StepperIndicatorProps` *(내부 — 사용 금지)*, `StepperConnectorProps` *(내부 — 사용 금지)*, `StepperOrientation`, `StepperStatus`
 
 ## Switch
 
 ### `Switch`
+
+**공개 컴포넌트**
 
 Figma component set `switch` (107:409). Checked = `checked` / `defaultChecked`; State: Hover / Pressed are the native :hover / :active, Disabled = `disabled`. Renders `<input type="checkbox" role="switch">`; its props (name, checked, onChange, …) and the ref go to it. Space toggles it.
 
@@ -1025,6 +1162,8 @@ Figma component set `switch` (107:409). Checked = `checked` / `defaultChecked`; 
 
 ### `Table`
 
+**공개 컴포넌트**
+
 Data table built from the Figma `table_header` (351:3452) and `table_body` (355:3739) cells, composed as in the Figma table_data example (react-aria-components Table: grid keyboard navigation, selection, sorting, row actions). Rows are clickable when `onRowAction` is set (Figma example Hover / Pressed).
 
 | Prop | Type | Default | 설명 |
@@ -1033,6 +1172,8 @@ Data table built from the Figma `table_header` (351:3452) and `table_body` (355:
 
 ### `TableHeader`
 
+**보조 컴포넌트** — `Table` 안
+
 Header row of `TableColumn`s.
 
 | Prop | Type | Default | 설명 |
@@ -1040,6 +1181,8 @@ Header row of `TableColumn`s.
 | `className` | `string` |  |  |
 
 ### `TableColumn`
+
+**보조 컴포넌트** — `TableHeader` 안
 
 Figma `table_header` Type Text. "Filter" = `allowsSorting` (CaretUpDown; the sort order is announced with aria-sort, the icon turns …/icon/active while sorted), "Info" = `info`.
 
@@ -1052,6 +1195,8 @@ Figma `table_header` Type Text. "Filter" = `allowsSorting` (CaretUpDown; the sor
 
 ### `TableSelectionColumn`
 
+**보조 컴포넌트** — `TableHeader` 안(다중 선택 표)
+
 Figma `table_header` Type Checkbox: the select-all column (selectionMode="multiple").
 
 | Prop | Type | Default | 설명 |
@@ -1059,6 +1204,8 @@ Figma `table_header` Type Checkbox: the select-all column (selectionMode="multip
 | `className` | `string` |  |  |
 
 ### `TableEmptyColumn`
+
+**보조 컴포넌트** — `TableHeader` 안(제목 없는 열)
 
 Figma `table_header` Type Empty: a column without a title (e.g. for actions); name it with `aria-label`.
 
@@ -1068,6 +1215,8 @@ Figma `table_header` Type Empty: a column without a title (e.g. for actions); na
 
 ### `TableBody`
 
+**보조 컴포넌트** — `Table` 안
+
 Rows of the table; `renderEmptyState` shows e.g. an `EmptyState` when there are no rows.
 
 | Prop | Type | Default | 설명 |
@@ -1076,6 +1225,8 @@ Rows of the table; `renderEmptyState` shows e.g. an `EmptyState` when there are 
 
 ### `TableRow`
 
+**보조 컴포넌트** — `TableBody` 안
+
 A body row. Hover / Pressed backgrounds (Figma example) apply when the row has an action.
 
 | Prop | Type | Default | 설명 |
@@ -1083,6 +1234,8 @@ A body row. Hover / Pressed backgrounds (Figma example) apply when the row has a
 | `className` | `string` |  |  |
 
 ### `TableCell`
+
+**보조 컴포넌트** — `TableRow` 안
 
 Figma `table_body` cell.
 
@@ -1093,6 +1246,8 @@ Figma `table_body` cell.
 
 ### `TableSelectionCell`
 
+**보조 컴포넌트** — `TableRow` 안(다중 선택 표)
+
 Figma `table_body` Type Checkbox: the row selection cell.
 
 | Prop | Type | Default | 설명 |
@@ -1100,6 +1255,8 @@ Figma `table_body` Type Checkbox: the row selection cell.
 | `className` | `string` |  |  |
 
 ### `TableDragHandle`
+
+**보조 컴포넌트** — `TableCell` 안(순서 변경 표)
 
 Figma `table_body` Type Reorder: drag handle (List icon) for tables with `dragAndDropHooks`.
 
@@ -1109,9 +1266,13 @@ Figma `table_body` Type Reorder: drag handle (List icon) for tables with `dragAn
 
 ### `KeyValueTable`
 
+**공개 컴포넌트**
+
 Figma table_key-value (example 855:9118): `KeyValueItem`s in a two-column list (`<dl>`). Keys share one column (at least 160px), values fill the rest; only the first row has a top border.
 
 ### `KeyValueItem`
+
+**보조 컴포넌트** — `KeyValueTable` 안
 
 One row: Figma `table_key` (355:4193) + `table_value` (355:4460).
 
@@ -1130,6 +1291,8 @@ One row: Figma `table_key` (355:4193) + `table_value` (355:4460).
 
 ### `KeyValueGroup`
 
+**보조 컴포넌트** — `KeyValueItem` 안(값 여러 개를 한 줄로)
+
 A row of value content m-2 apart (e.g. a button and its hint, or chips and a reset button).
 
 - 타입: `TableProps`, `TableHeaderProps`, `TableColumnProps`, `TableBodyProps`, `TableRowProps`, `TableCellProps`, `KeyValueTableProps`, `KeyValueItemProps`
@@ -1137,6 +1300,8 @@ A row of value content m-2 apart (e.g. a button and its hint, or chips and a res
 ## Tabs
 
 ### `Tabs`
+
+**공개 컴포넌트**
 
 Figma component sets `tab_filled` (91:5000) and `tab_line` (91:5241). Arrow keys move between tabs, Home / End jump to the ends (react-aria-components tablist pattern). State: Hover / Pressed = :hover / press, Selected = the selected tab, Disabled = `disabledKeys` or `Tab disabled`.
 
@@ -1157,6 +1322,8 @@ Figma component sets `tab_filled` (91:5000) and `tab_line` (91:5241). Arrow keys
 
 ### `TabList`
 
+**보조 컴포넌트** — `Tabs` 안
+
 The row of tabs. Figma defines no spacing between tabs, so they sit side by side.
 
 | Prop | Type | Default | 설명 |
@@ -1164,6 +1331,8 @@ The row of tabs. Figma defines no spacing between tabs, so they sit side by side
 | `className` | `string` |  |  |
 
 ### `Tab`
+
+**보조 컴포넌트** — `TabList` 안
 
 One tab (Figma tab_filled / tab_line variant). `id` links it to its `TabPanel`.
 
@@ -1174,6 +1343,8 @@ One tab (Figma tab_filled / tab_line variant). `id` links it to its `TabPanel`.
 | `disabled` | `boolean` |  | Figma State "Disabled". |
 
 ### `TabPanel`
+
+**보조 컴포넌트** — `Tabs` 안
 
 Content of a tab (not styled in Figma).
 
@@ -1187,6 +1358,8 @@ Content of a tab (not styled in Figma).
 ## Textarea
 
 ### `Textarea`
+
+**공개 컴포넌트**
 
 Figma component set `textarea` (86:2597) with `textarea_message` (86:2733). The container is 100px high as in Figma; the text scrolls inside it. Native textarea props and the ref go to the `<textarea>`.
 
@@ -1208,6 +1381,8 @@ Figma component set `textarea` (86:2597) with `textarea_message` (86:2733). The 
 
 ### `Toast`
 
+**공개 컴포넌트**
+
 Figma component set `toast` (91:5927) as a static element (e.g. inside a page). For notifications that appear and disappear use `<ToastRegion />` with `showToast()`.
 
 | Prop | Type | Default | 설명 |
@@ -1220,6 +1395,8 @@ Figma component set `toast` (91:5927) as a static element (e.g. inside a page). 
 
 ### `ToastRegion`
 
+**공개 컴포넌트**
+
 Shows queued toasts (react-aria-components Toast — UNSTABLE in 1.22, wrapped here so the package API stays stable): a labelled region, each toast announced, timers paused while hovered or focused, close button dismisses.
 
 | Prop | Type | Default | 설명 |
@@ -1229,13 +1406,15 @@ Shows queued toasts (react-aria-components Toast — UNSTABLE in 1.22, wrapped h
 | `closeLabel` | `string` | `알림 닫기` | Accessible name of the close buttons. |
 | `queue` | `ToastQueue<ToastContent>` | `new ToastQueue<ToastContent>({ maxVisibleToasts: 5 })` | Queue to show. |
 
-- 함수: `showToast`
+- 함수: `showToast`, `closeToast`
 - 타입: `ToastProps`, `ToastRegionProps`, `ToastContent`
-- 기타 값: `toastQueue`
+- 기타 값: `toastQueue` *(내부 — 사용 금지)*
 
 ## Tooltip
 
 ### `Tooltip`
+
+**공개 컴포넌트**
 
 Figma component set `tooltip` (149:1111): a short label shown on hover and keyboard focus (react-aria-components TooltipTrigger: role="tooltip", aria-describedby on the trigger, Escape closes).
 

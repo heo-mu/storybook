@@ -22,6 +22,7 @@ export type BreadcrumbItemProps = Omit<AnchorHTMLAttributes<HTMLElement>, 'child
 /**
  * Figma component set `breadcrumb-item` (710:4794). Role Link = `href` (an `<a>`; without `href` a `<button>`),
  * Current = `current`, Open = `open`. State Hover / Pressed = :hover / :active.
+ * @internal Rendered by `Breadcrumb` — use that (docs/public-api.md).
  */
 export const BreadcrumbItem = forwardRef<HTMLElement, BreadcrumbItemProps>(function BreadcrumbItem(
   { children, icon, size = 'md', current = false, open = false, href, className, ...rest },
@@ -64,7 +65,10 @@ export const BreadcrumbItem = forwardRef<HTMLElement, BreadcrumbItemProps>(funct
   );
 });
 
-/** Figma `breadcrumb-modern-separator` (710:4795): CaretRight 12px between items. */
+/**
+ * Figma `breadcrumb-modern-separator` (710:4795): CaretRight 12px between items.
+ * @internal Rendered by `Breadcrumb` — use that (docs/public-api.md).
+ */
 export function BreadcrumbSeparator() {
   return (
     <span className="ds-breadcrumb__separator" aria-hidden="true">

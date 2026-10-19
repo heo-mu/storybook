@@ -18,12 +18,16 @@ export const ICON_BUTTON_SIZES = ['xs', 'sm', 'md'] as const;
 export const TEXT_BUTTON_VARIANTS = ['primary', 'secondary'] as const;
 /** Figma "Size" of button_text */
 export const TEXT_BUTTON_SIZES = ['sm', 'md'] as const;
-/** Figma "State" — Hover/Pressed are interaction states (:hover/:active), Disabled is the `disabled` prop. */
+/**
+ * Figma "State" — Hover/Pressed are interaction states (:hover/:active), Disabled is the `disabled` prop.
+ * @internal Stories and parity checks only — not a prop (docs/public-api.md).
+ */
 export const BUTTON_STATES = ['default', 'hover', 'pressed', 'disabled'] as const;
 
 /**
  * Variant × Appearance pairs present in button_basic and button_icon — all six since the Figma sync of 2026-10-19
  * (Secondary / Solid added in Figma; docs/analysis/F31-button-sync.md).
+ * @internal Stories and parity checks only — use BUTTON_VARIANTS / BUTTON_APPEARANCES (docs/public-api.md).
  */
 export const BUTTON_TONES = [
   { variant: 'primary', appearance: 'solid' },
@@ -46,6 +50,7 @@ export type ButtonState = (typeof BUTTON_STATES)[number];
 /**
  * Variant/Appearance props — every pair exists in Figma (Secondary / Solid since 2026-10-19).
  * Without `appearance`, Secondary stays Outline (its only appearance before) and the others are Solid.
+ * @internal Building block of ButtonProps / IconButtonProps — use those.
  */
 export type ButtonToneProps = {
   /** Figma "Variant". @default 'primary' */
@@ -54,13 +59,19 @@ export type ButtonToneProps = {
   appearance?: ButtonAppearance;
 };
 
-/** Figma "State": Hover/Pressed are the native :hover/:active states, Disabled is this prop. */
+/**
+ * Figma "State": Hover/Pressed are the native :hover/:active states, Disabled is this prop.
+ * @internal Building block of the button props types — use ButtonProps / IconButtonProps / TextButtonProps.
+ */
 export type ButtonDisabledProp = {
   /** Figma State "Disabled". */
   disabled?: boolean;
 };
 
-/** The appearance a button renders with: the given one, else Outline for Secondary (backward compatible) and Solid otherwise. */
+/**
+ * The appearance a button renders with: the given one, else Outline for Secondary (backward compatible) and Solid otherwise.
+ * @internal Used by Button and IconButton.
+ */
 export function resolveAppearance(variant: ButtonVariant, appearance: ButtonAppearance | undefined): ButtonAppearance {
   return appearance ?? (variant === 'secondary' ? 'outline' : 'solid');
 }

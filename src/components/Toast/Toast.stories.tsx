@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { useRef } from 'react';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { Toast, ToastRegion } from './Toast';
-import { showToast } from './toastQueue';
+import { closeToast, showToast } from './toastQueue';
 import { ALERT_STATUSES } from '../Alert/Alert.options';
 import { Button } from '../Button';
 
@@ -40,4 +41,30 @@ export const WithRegion: Story = {
       <ToastRegion />
     </div>
   ),
+};
+
+function CloseFromCodeDemo() {
+  const key = useRef<string | null>(null);
+  return (
+    <div style={{ display: 'flex', gap: 8 }}>
+      <Button onClick={() => (key.current = showToast('업로드 중입니다', { timeout: null }))}>업로드 시작</Button>
+      <Button variant="tertiary" appearance="outline" onClick={() => key.current && closeToast(key.current)}>
+        업로드 완료
+      </Button>
+      <ToastRegion />
+    </div>
+  );
+}
+
+/** `showToast()` returns a key; `closeToast(key)` closes that toast from code (e.g. when the work it reports is done). */
+export const CloseFromCode: Story = {
+  render: () => <CloseFromCodeDemo />,
+  play: async ({ canvasElement, userEvent }) => {
+    const canvas = within(canvasElement);
+    const body = within(canvasElement.ownerDocument.body);
+    await userEvent.click(canvas.getByRole('button', { name: '업로드 시작' }));
+    await expect(await body.findByText('업로드 중입니다')).toBeVisible();
+    await userEvent.click(canvas.getByRole('button', { name: '업로드 완료' }));
+    await waitFor(() => expect(body.queryByText('업로드 중입니다')).toBeNull());
+  },
 };
