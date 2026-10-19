@@ -11,27 +11,25 @@
         "pagination_control*/caret-*": ".ds-pagination__icon",
         "pagination_item*": ".ds-pagination__item",
         "pagination_item*/*Number": ".ds-pagination__number"
-      },
-      "knownDifferences": {
-        "Size=sm": "Figma shows previous on page 1 in its Default state; the component disables it (Disabled colours) — compared in pagination_control",
-        "Size=md": "same as sm",
-        "Size=lg": "same as sm"
-      },
-      "maskPixels": [{ "node": "pagination_control", "pad": 1 }]
+      }
     },
     {
       "set": "pagination_item",
       "story": "components-pagination-showcase--item-matrix",
       "background": "#ffffff",
       "harnessCss": "table { table-layout: fixed; } td, th { width: 60px; min-width: 60px; max-width: 60px; } tr > :first-child { width: 140px; min-width: 140px; max-width: 140px; }",
-      "parts": { "Number": ".ds-pagination__number" }
+      "parts": {
+        "Number": ".ds-pagination__number"
+      }
     },
     {
       "set": "pagination_control",
       "story": "components-pagination-showcase--control-matrix",
       "background": "#ffffff",
       "harnessCss": "table { table-layout: fixed; } td, th { width: 60px; min-width: 60px; max-width: 60px; } tr > :first-child { width: 200px; min-width: 200px; max-width: 200px; }",
-      "parts": { "caret-*": ".ds-pagination__icon" }
+      "parts": {
+        "caret-*": ".ds-pagination__icon"
+      }
     }
   ]
 }

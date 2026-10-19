@@ -142,9 +142,11 @@
 }
 
 /* Keyboard focus — no Figma Focus state: the browser focus ring. */
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside. */
 .ds-pagination__item:focus-visible,
 .ds-pagination__control:focus-visible {
-  outline-style: auto;
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: var(--spacing-padding-p-0_5);
 }
 
 @supports (width: calc-size(fit-content, round(up, size, 1px))) {

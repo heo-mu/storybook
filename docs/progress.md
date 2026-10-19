@@ -2,6 +2,13 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
+## 코드 정책 → Figma 공식 정책 작업 (2026-10-19 시작, 진행 중)
+
+체크포인트 태그 `checkpoint/pre-policy-pass`. 정책 목록 원본: `docs/code-policy-audit.md`(145항목 — 상태 A 45 · 동작 B 85 · 기술 C 15).
+그룹 순서: ① Focus 정책(토큰 `colors/border/focus`, 24개 세트 `Focus` 속성, Select Focus 변형, 코드 포커스 링) → ② Figma 정의 보완(Card 효과 · 원격 padding/배경 · Link 텍스트 스타일 · 요일 · Pagination · EmptyState 속성 · Dialog 덮개 · Table 예시) →
+③ 동작 정책 코드 반영(그룹 간격 · Toast · Tooltip 지연) → ④ Figma "Design System Rules"(227:3774) 02–10장 + 컴포넌트 주석 → ⑤ Storybook 문서 재분류 → ⑥ 전체 회귀.
+재개 방법: `git log --oneline checkpoint/pre-policy-pass..`로 끝난 그룹 확인, `docs/code-policy-audit.md`의 상태 열이 "진행 전"인 항목부터. Figma 쓰기 전 체크섬 · 세트 지문 재조회.
+
 ## 작업 방식 (모든 컴포넌트 공통)
 
 1. Figma 분석 — `figma/scripts/analyze-set.figma.js`를 `use_figma`로 실행(SET_ID 교체, 읽기 전용).

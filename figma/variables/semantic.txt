@@ -1,5 +1,5 @@
-# Figma snapshot — collection "Semantic" (mode: Mode 1), 72 variables
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: fill/primary/subtle/hover; new colors/fill/tertiary/* — Tertiary surface, created in Figma 2026-10-19; fill/secondary/subtle/hover gray/50 → gray/75 changed in Figma on 2026-10-19 outside this task, synced); A-1/A-2 2026-10-19: text/tertiary · text/placeholder → brand-gray/600, fill/secondary/strong/hover · pressed → brand/800 · 900, text/inactive added
+# Figma snapshot — collection "Semantic" (mode: Mode 1), 73 variables
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: fill/primary/subtle/hover; new colors/fill/tertiary/* — Tertiary surface, created in Figma 2026-10-19; fill/secondary/subtle/hover gray/50 → gray/75 changed in Figma on 2026-10-19 outside this task, synced); A-1/A-2 2026-10-19: text/tertiary · text/placeholder → brand-gray/600, fill/secondary/strong/hover · pressed → brand/800 · 900, text/inactive added; policy pass 2026-10-19: colors/border/focus added (keyboard focus ring); surface/scrim → alpha/black/500 (Dialog scrim policy)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 colors/border/inverse=@P:colors/white [ALL_SCOPES]
 colors/border/gray-subtler=@T:colors/brand-gray/250 [ALL_SCOPES]
@@ -68,8 +68,9 @@ colors/chart/grid/default=@T:colors/brand-gray/200 [STROKE_COLOR]
 colors/chart/simple/history=@T:colors/brand-gray/200 [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
 colors/chart/simple/history-compare=@T:colors/brand-gray/100 [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
 colors/chart/simple/current-surface=@T:colors/brand/50 [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
-colors/surface/scrim=@P:colors/alpha/black/900 [FRAME_FILL,SHAPE_FILL]
+colors/surface/scrim=@P:colors/alpha/black/500 [FRAME_FILL,SHAPE_FILL]
 colors/fill/tertiary/default=@P:colors/gray/150 [FRAME_FILL,SHAPE_FILL]
 colors/fill/tertiary/hover=@P:colors/gray/225 [FRAME_FILL,SHAPE_FILL]
 colors/fill/tertiary/pressed=@P:colors/gray/275 [FRAME_FILL,SHAPE_FILL]
 colors/text/inactive=@T:colors/brand-gray/400 [TEXT_FILL]
+colors/border/focus=@T:colors/brand/700 [STROKE_COLOR]

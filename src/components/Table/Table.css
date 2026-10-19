@@ -351,3 +351,11 @@
   line-height: var(--typography-xs-leading-normal-normal-line-height);
   letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
 }
+
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, inside the row / cell edge. */
+.ds-table__row[data-focus-visible],
+.ds-table__cell[data-focus-visible],
+.ds-table__column[data-focus-visible] {
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: calc(-1 * var(--border-width-border-2));
+}

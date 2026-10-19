@@ -195,8 +195,11 @@
 }
 
 /* Keyboard focus — no Figma Focus state: the browser focus ring. */
-.ds-calendar__day[data-focus-visible] {
-  outline-style: auto;
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside. */
+.ds-calendar__day[data-focus-visible],
+.ds-calendar__nav-button[data-focus-visible] {
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: var(--spacing-padding-p-0_5);
 }
 
 @supports (width: calc-size(fit-content, round(up, size, 1px))) {

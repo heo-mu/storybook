@@ -202,3 +202,9 @@
     width: calc-size(fit-content, round(up, size, 1px));
   }
 }
+
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside the icon button (password toggle). */
+.ds-field__action:focus-visible {
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: var(--spacing-padding-p-0_5);
+}

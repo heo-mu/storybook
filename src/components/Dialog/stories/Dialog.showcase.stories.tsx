@@ -74,6 +74,12 @@ export const Interaction: StoryObj<{ onConfirm: Mock<() => void> }> = {
       await expect(dialog).toHaveAccessibleDescription('삭제한 파일은 되돌릴 수 없습니다.');
       await waitFor(() => expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true));
     });
+    await step('the modal backdrop is colors/dialog/scrim/default (black 50%, Design System Rules 05)', async () => {
+      const overlay = canvasElement.ownerDocument.querySelector('.ds-dialog-overlay')!;
+      const token = getComputedStyle(canvasElement.ownerDocument.documentElement).getPropertyValue('--colors-dialog-scrim-default').trim();
+      await expect(token).toBe('#00000080');
+      await expect(getComputedStyle(overlay).backgroundColor).toBe('rgba(0, 0, 0, 0.5)');
+    });
     await step('Tab stays inside the dialog', async () => {
       const dialog = body.getByRole('alertdialog');
       for (let i = 0; i < 4; i++) {

@@ -77,13 +77,7 @@
           "compare": "xyh"
         }
       },
-      "maskPixels": [
-        "Date Grid Container/Weekday Row Container/weekday row*"
-      ],
-      "contentDependent": [
-        "weekday-text*"
-      ],
-      "//": "Weekday names follow the locale (ko-KR 일 월 …); Figma shows English placeholders (Su Mo …) — docs/figma-issues.md F25",
+      "//": "Weekday names: Korean in Figma since 2026-10-19 (일 월 …, the locale the component uses) — compared",
       "//day-text": "day numbers are centred whole-pixel boxes; a 13.0x px number rounds up to 14 in the browser and 13 in Figma, so their width is not compared (position and glyphs are)"
     },
     {

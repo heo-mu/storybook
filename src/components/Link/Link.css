@@ -28,8 +28,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* sm/leading-normal/underline binds deleted variables in Figma (docs/figma-issues.md C3): 140% line-height,
- * weight 500 — the generated text-style tokens carry those values. */
+/* sm/leading-normal/underline: 20px line (font/line-height/leading-5) like the other sm styles since 2026-10-19 (A-4). */
 .ds-link[data-size='md'] {
   --ds-link-icon: 18px;
 
@@ -113,8 +112,10 @@
   color: var(--colors-link-icon-disabled);
 }
 
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside. */
 .ds-link:focus-visible {
-  outline-style: auto;
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: var(--spacing-padding-p-0_5);
 }
 
 .ds-link__sr {

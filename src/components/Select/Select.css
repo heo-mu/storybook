@@ -28,6 +28,11 @@
   --ds-field-icon: var(--colors-icon-secondary);
 }
 
+/* Keyboard focus while closed — Figma State=Focus (2026-10-19): the focus border, as Input. Error keeps its border (rule below). */
+.ds-select[data-focus-visible] {
+  --ds-field-border-color: var(--colors-select-outline-outline-border-focus);
+}
+
 .ds-select[data-invalid] {
   --ds-field-border-color: var(--colors-select-outline-outline-border-error);
   --ds-field-border-width: var(--border-width-border-2);

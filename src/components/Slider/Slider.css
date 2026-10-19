@@ -69,12 +69,15 @@
   top: 50%;
   width: 20px;
   height: 20px;
+  border-radius: var(--border-radius-rounded-full);
   outline: none;
 }
 
-/* Keyboard focus (the range input inside the handle): the browser focus ring, as for the other controls. */
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside the 18px knob. */
+/* The 20px thumb holds the knob 1px inside, so the ring is 1px from the thumb edge. */
 .ds-slider__thumb[data-focus-visible] {
-  outline-style: auto;
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: calc(var(--spacing-padding-p-0_5) - 1px);
 }
 
 .ds-slider__knob {

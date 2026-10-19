@@ -151,3 +151,9 @@
 .ds-accordion__item[data-size='sm'] .ds-accordion__body {
   padding: var(--spacing-padding-p-3) var(--spacing-accordion-trigger-padding-x-sm) var(--spacing-accordion-body-padding);
 }
+
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, inside the trigger edge (full-width row). */
+.ds-accordion__trigger[data-focus-visible] {
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: calc(-1 * var(--border-width-border-2));
+}

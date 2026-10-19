@@ -205,3 +205,10 @@
   flex: 1 1 auto;
   min-width: 0;
 }
+
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, inside the row edge (full-width rows). */
+.ds-nav-item:focus-visible,
+.ds-nav-child:focus-visible {
+  outline: var(--border-width-border-2) solid var(--colors-border-focus);
+  outline-offset: calc(-1 * var(--border-width-border-2));
+}

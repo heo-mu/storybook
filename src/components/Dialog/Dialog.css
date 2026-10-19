@@ -3,13 +3,15 @@
  * and footer, content centred; border-radius/rounded-md, colors/dialog/background, 1px INSIDE border …/border,
  * effect elevation-6. Header m-2: title lg/leading-normal/semibold (…/title), description sm/leading-normal/normal
  * (…/description). Footer 240px, buttons m-2 apart filling it.
- * The overlay is transparent: Figma defines no scrim (figma-issues F51).
+ * Overlay: the modal backdrop colors/dialog/scrim/default (→ surface/scrim, black 50%) — Design System Rules 05
+ * (Figma Dialog "Modal example", 2026-10-19; transparent before, figma-issues F51).
  */
 
 .ds-dialog-overlay {
   position: fixed;
   inset: 0;
   display: flex;
+  background-color: var(--colors-dialog-scrim-default);
   align-items: center;
   justify-content: center;
 }
