@@ -1,4 +1,4 @@
-# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (682 of 763)
+# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (682 of 764)
 # Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: accordion background/disabled, border/focus → border/hover, title/disabled)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 # Lines without [scopes] are scoped ALL_SCOPES.
@@ -519,7 +519,7 @@ colors/dropdown-menu/item/icon/disabled=@S:colors/icon/disabled
 colors/dropdown-menu/item/icon/danger=@S:colors/status/danger/strong
 colors/dropdown-menu/item/chevron/disabled=@S:colors/icon/disabled
 colors/dropdown-menu/item/chevron/error=@S:colors/icon/tertiary
-colors/chip-filter/background/unselected/default=@S:colors/surface/page
+colors/chip-filter/background/unselected/default=@S:colors/fill/primary/subtle/default
 colors/chip-filter/background/unselected/hover=@S:colors/fill/primary/subtle/hover
 colors/chip-filter/background/unselected/pressed=@S:colors/fill/primary/subtle/pressed
 colors/chip-filter/background/unselected/disabled=@S:colors/fill/transparent/default

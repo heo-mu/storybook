@@ -176,7 +176,7 @@ Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것
 
 | # | 결정 | 권장 | 영향 |
 | --- | --- | --- | --- |
-| D1 | Button Primary · Outline 테두리에 바인딩할 변수(원본에서 삭제됨) | 컴포넌트 변수 `colors/button/primary/outline/border/default`를 다시 만들어 `fill/primary/strong/default`에 연결 | Figma 42개 노드 재바인딩, 코드는 리터럴 → 토큰 한 줄 |
+| ~~D1~~ | Button Primary · Outline 테두리에 바인딩할 변수(원본에서 삭제됨) — **해소(10절, R1)** | 컴포넌트 변수 `colors/button/primary/outline/border/default`를 다시 만들어 `fill/primary/strong/default`에 연결 | Figma 42개 노드 재바인딩, 코드는 리터럴 → 토큰 한 줄 |
 | D2 | 첫 배포 버전 | **0.1.0**(남은 결정이 API를 바꿀 수 있음) | CHANGELOG `[Unreleased]` → `[0.1.0]`, 태그 |
 | D3 | Table 편집 칸 Filter의 다중 선택 목록(칩 + 체크 목록) | 필요하면 새 컴포넌트로 설계(지금은 그리지 않음) | 새 컴포넌트 또는 기존 DropdownMenu 선택 모드 |
 | D4 | 간단 스타일 차트 지난 기간 색(세로 `series/compare` · 가로 `simple/history`, F65-b) | 디자인 의도 확인 | `markColor` 한 줄 |
@@ -203,4 +203,23 @@ R7 다중 선택 목록(D3) · R8 Table 안내 글자(삭제된 변수, 3노드,
 | 상세 | [analysis/tertiary-fill-2026-10-19.md](./analysis/tertiary-fill-2026-10-19.md) |
 
 작업 중 다른 사람의 Figma 편집이 관찰되었습니다: `fill/secondary/subtle/hover` 값 변경(동기화함), Accordion 프레임 삭제 · Chart 세트 재배치(**반영하지 않음** — 진행 중인 편집으로 판단, 확인 필요).
+
+## 10. Figma 오류 수정과 Storybook 동기화 (2026-10-19, Figma 수정 승인 작업)
+
+상세: [figma-fix-requests.md](./figma-fix-requests.md). 원격 Push · npm 배포 · Storybook 배포는 하지 않았습니다.
+
+| 항목 | 결과 |
+| --- | --- |
+| 안전 조치 | Git 태그 `checkpoint/pre-figma-fixes`, 변경 전 바인딩 · 값 기록. Figma 이름 있는 버전 저장은 MCP 미지원 |
+| 시작 시 원본 재조회 | 다른 편집 확인: Component 별칭 3개(같은 값), Accordion 삭제, Chart `hover` 속성 추가(24개 변형) |
+| R1 | `colors/button/primary/outline/border/default` 복구(`VariableID:1033:4608`, 별칭 `fill/primary/strong/default`) + 42노드 재연결 — **D1 해소** |
+| R2 · R3 · R8 | 8노드 · 5노드 · 3노드 재연결(색 그대로, R3만 원본 색이 #e2e5e9 → #d6dae0으로 바로잡힘) |
+| R4 | `border-radius/rounded-[12px]` 등록(`VariableID:1033:6620`) + 5노드 재연결, 코드의 등록 대기 토큰 해소 |
+| R6 | 693:7165 칩 Selected · Expanded로(693:7167은 오류 아님) |
+| R5 | **미확인** — Accordion이 원본에서 삭제됨(F80) |
+| 추가 조사 | 삭제된 변수 참조 전수 조사 → C3 텍스트 스타일도 수정. 변경 후 삭제 참조 0, 바뀐 세트는 의도한 3개뿐, 체크섬 8그룹 일치 |
+| 코드 | 토큰 재생성, `Button.css` 리터럴 → 토큰, 쇼케이스(R6), 기준 이미지(Table, Chart 개별 변형), 스펙 토큰 이름 |
+
+새로 결정이 필요한 항목: F77 · F78(차트 hover 변형 바인딩), F79(차트 구조 동기화), F80(Accordion 복구 · 폐기), F81(2px code syntax), F82, F83,
+대비 개선안 A-1 · A-2 와 값 변경 A-3 – A-5 — [figma-fix-requests.md](./figma-fix-requests.md#승인이-필요한-값--정책-변경-변경하지-않음).
 

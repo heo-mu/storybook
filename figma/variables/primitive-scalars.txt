@@ -1,4 +1,4 @@
-# Figma snapshot — collection "Primitive" (mode: Mode 1), resolvedType FLOAT/STRING (166 variables)
+# Figma snapshot — collection "Primitive" (mode: Mode 1), resolvedType FLOAT/STRING (167 variables)
 # Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); 7 variables added later the same day were appended (additions only — docs/token-diff.md "Figma 원본 변경 감지")
 # Format: <name>=<value> [<scopes>]   (STRING values are JSON-quoted)
 border-radius/rounded-none=0 [CORNER_RADIUS]
@@ -167,3 +167,4 @@ border-width/border-3=3 [STROKE_FLOAT]
 spacing/gap/overlap-0_5=-2 [GAP]
 spacing/padding/p-13=52 [GAP]
 spacing/padding/p-px=1 [GAP]
+border-radius/rounded-[12px]=12 [CORNER_RADIUS]

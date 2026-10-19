@@ -9,9 +9,16 @@
 
 ### 호환성 변경 (Figma 동기화 2026-10-19 — F31)
 - **토큰 CSS 변수 삭제 · 이름 변경 17개**: `--colors-button_text-*` 12개 → `--colors-button_text-primary-*`(Secondary는 `-secondary-*` 새로 추가),
-  `--colors-accordion-border-focus` → `--colors-accordion-border-hover`, `--colors-button-primary-{solid,outline}-border-{default,disabled}` 4개 삭제
+  `--colors-accordion-border-focus` → `--colors-accordion-border-hover`, `--colors-button-primary-solid-border-{default,disabled}` · `--colors-button-primary-outline-border-disabled` 3개 삭제
+  (`--colors-button-primary-outline-border-default`는 Figma 복구로 유지)
   (Figma에서 변수 삭제). 별칭은 두지 않습니다.
 - `BUTTON_TONES`에 Secondary · Solid 추가(3번째) — 이제 내부 API.
+
+### Figma 수정 반영 (2026-10-19, [docs/figma-fix-requests.md](docs/figma-fix-requests.md))
+- 화면 변화 없는 바인딩 복구: Button Primary · Outline 테두리가 `--colors-button-primary-outline-border-default` 사용(리터럴 #004a38 제거),
+  12px 모서리는 Figma 변수에서 생성(등록 대기 목록 비움), `sm/leading-normal/underline`의 자간 · 굵기가 변수 참조(값 같음).
+- Table 편집 칸 Filter · Editing 칩이 Selected(쇼케이스 · 기준 이미지).
+- Chart 가로 막대 비교 막대: 원본이 `chart/series/compare`로 고쳐져 코드와 일치(개별 기준 이미지).
 
 ### 화면 변경
 - **Button · IconButton Tertiary / Solid 배경**(Figma 2026-10-19 수정): 새 Semantic 토큰 `colors/fill/tertiary/*` — Default #f5f6f7 → #e9ebee,

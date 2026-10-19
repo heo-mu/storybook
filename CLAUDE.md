@@ -19,11 +19,12 @@ to access component and documentation knowledge before answering or acting on UI
 
 - Source of truth is Figma. Use only values that exist there: tokens come from `figma/` snapshots via
   `npm run tokens`; never hand-edit `src/tokens/*` and never add tokens that are not in Figma.
-  The only exception is `figma-pending/primitive.txt`: tokens the team explicitly decided on that await Figma
-  registration (F69 `rounded-[12px]`). Add entries there only on such a decision, and remove them once Figma has them.
+  The only exception is `figma-pending/primitive.txt` (currently empty — F69 `rounded-[12px]` is now in Figma): tokens the
+  team explicitly decided on that await Figma registration. Add entries only on such a decision; remove them once Figma has them.
 - Only implement Figma variant combinations that exist (Button Secondary / Solid exists since the 2026-10-19 sync).
 - The Figma file is read-only for this project — do not modify it unless the user explicitly authorizes a specific
-  change (as for the 2026-10-19 Tertiary fill tokens, docs/analysis/tertiary-fill-2026-10-19.md).
+  change (as for the 2026-10-19 Tertiary fill tokens and the R1–R8 fixes in docs/figma-fix-requests.md). Others edit the file
+  concurrently: re-run the checksums and a fingerprint before trusting the snapshot.
 - Story-only helpers in `src/components/*/stories/` (icons, matrix layout) are not part of the package API.
 
 ## Commands

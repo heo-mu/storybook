@@ -81,9 +81,9 @@
   --typography-sm-leading-normal-bold-text-decoration: none;
   --typography-sm-leading-normal-underline-font-family: var(--font-family-basic);
   --typography-sm-leading-normal-underline-font-size: var(--font-size-text-sm);
-  --typography-sm-leading-normal-underline-font-weight: 500;
+  --typography-sm-leading-normal-underline-font-weight: var(--font-weight-font-medium);
   --typography-sm-leading-normal-underline-line-height: 140%;
-  --typography-sm-leading-normal-underline-letter-spacing: 0px;
+  --typography-sm-leading-normal-underline-letter-spacing: var(--font-tracking-tracking-normal);
   --typography-sm-leading-normal-underline-text-decoration: underline;
   --typography-base-leading-normal-normal-font-family: var(--font-family-basic);
   --typography-base-leading-normal-normal-font-size: var(--font-size-text-base);

@@ -185,7 +185,7 @@ src/components/<Name>/<Name>.css  →  var(--colors-…), var(--spacing-…), va
 - 이름은 Figma 경로의 `/`를 `-`로 바꾼 것. 별칭은 `var()` 참조로 유지되어 상위 토큰을 바꾸면 따라 바뀝니다.
 - `src/tokens/*`는 **생성물**입니다. 직접 수정하지 말고 Figma 변수를 고친 뒤 스냅샷 갱신 → `npm run tokens`.
 - Figma에 없는 토큰을 추가하지 않습니다. 예외는 **Figma 등록 대기 토큰**(`figma-pending/primitive.txt`)뿐입니다 — 팀이 공통 토큰으로
-  결정했지만 Figma에 아직 로컬 변수가 없는 값으로, 지금은 `border-radius/rounded-[12px]`(`--border-radius-rounded-\[12px\]`, F69) 1개입니다.
+  결정했지만 Figma에 아직 로컬 변수가 없는 값입니다. 지금은 **비어 있습니다** — F69의 `rounded-[12px]`은 2026-10-19 Figma에 등록되어 스냅샷으로 옮겼습니다.
   `primitive.css` 끝 별도 블록으로 생성되고 `tokens.json`에 `"pending"`이 붙습니다. Figma에 등록되어 스냅샷에 들어오면 `npm run tokens`가
   이름 중복으로 실패하므로 그때 해당 줄을 지웁니다(체크섬 대상 아님).
 - 컴포넌트 CSS 안의 `--_…`(밑줄)는 그 컴포넌트 전용 지역 변수입니다.

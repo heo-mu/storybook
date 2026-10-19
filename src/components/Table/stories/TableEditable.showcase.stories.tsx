@@ -78,8 +78,8 @@ function EditCell({ type, state, content }: { type: Type; state: State; content:
         { editable: true },
       );
     // Figma (since 2026-10-19): one chip-filter — Unselected "텍스트 선택" when empty, Selected with the summary when
-    // filled; Hover · Empty shows the chip's Hover state, Hover · Filled adds 초기화, Editing is the Expanded chip
-    // (Unselected in Figma) whose multi-select listbox is not drawn here (no such list in the library — decision item).
+    // filled; Hover · Empty shows the chip's Hover state, Hover · Filled adds 초기화, Editing is the Selected · Expanded chip
+    // (fixed in Figma 2026-10-19, R6) whose multi-select listbox is not drawn here (no such list in the library — decision item).
     case 'Filter':
       if (!filled) {
         return row(
@@ -90,7 +90,7 @@ function EditCell({ type, state, content }: { type: Type; state: State; content:
       }
       return row(
         <KeyValueGroup>
-          <FilterChip size="md" selected={state !== 'Editing'} expanded={state === 'Editing' || undefined} disabled={disabled}>
+          <FilterChip size="md" selected expanded={state === 'Editing' || undefined} disabled={disabled}>
             선택유형: 옵션명, 옵션명
           </FilterChip>
           {state === 'Hover' && <TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton>}

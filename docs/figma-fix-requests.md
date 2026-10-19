@@ -1,99 +1,139 @@
-# Figma 원본 수정 요청 (2026-10-19)
+# Figma 원본 수정 요청 · 처리 결과
 
-디자인 시스템 Figma 파일(`Ry3WecA6sP6lKPop1vXrTp`, 페이지 🔵 Ver 0.4)에서 **원본을 고쳐야 하는 항목**을 노드 · 변수 단위로 모았습니다.
-모두 읽기 전용으로 조회했고 원본은 수정하지 않았습니다. 코드가 지금 어떻게 처리하는지도 함께 적었습니다.
+디자인 시스템 Figma 파일(`Ry3WecA6sP6lKPop1vXrTp`, 페이지 🔵 Ver 0.4)에서 원본을 고쳐야 하는 항목입니다.
+**2026-10-19 Figma 수정 작업(사용자 승인)** 으로 자동 수정 대상은 직접 고쳤고, 나머지는 노드 · 변수 ID와 함께 승인 대상으로 남겼습니다.
 
-| # | 항목 | 성격 | 코드 현재 처리 |
+수정 원칙: 삭제된 변수의 명확한 대체 · 의미가 틀린 바인딩 · 같은 컴포넌트 안의 명백한 상태 매핑 오류만 자동 수정하고,
+색 · 글꼴 값 변경, 새 Variant · 구조 변경, 기준이 불명확한 항목은 바꾸지 않았습니다. 지정된 노드 외에는 수정하지 않았습니다.
+
+## 처리 현황
+
+| # | 항목 | 상태 | 결과 |
 | --- | --- | --- | --- |
-| R1 | Button Primary · Outline 테두리가 삭제된 변수를 가리킴 | **결정 + 수정** (D1) | Figma에 남은 색 #004a38을 그대로 사용 |
-| R2 | Button Secondary · Outline 테두리 바인딩이 Shape마다 다름 | 수정 | `secondary/outline/border/default` 하나 |
-| R3 | 차트 가로 막대 비교 막대 바인딩 오류 (F65) | 수정 | `chart/series/compare`로 통일 |
-| R4 | 12px 모서리 로컬 변수 등록 (F69) | 등록 + 재바인딩 | 등록 대기 토큰 `rounded-[12px]` |
-| R5 | Accordion md · Hover · Expanded 변형 위치 | 정리 | 영향 없음(위치만) |
-| R6 | Table 편집 칸 Filter 변형의 칩 상태 | 확인 + 수정 | Figma 그대로 |
-| R7 | Table 편집 칸 Filter · Editing의 다중 선택 목록 | **결정** (D3) | 목록은 그리지 않음 |
-| R8 | Table 편집 칸 안내 글자가 삭제된 변수에 바인딩 (F57) | 수정 | 같은 값 `colors/text/tertiary` |
+| R1 | Button Primary · Outline 테두리가 삭제된 변수를 가리킴 | **완료** | 변수 복구 + 42노드 재연결, #004a38 그대로 |
+| R2 | Button Secondary · Outline 테두리 바인딩이 Shape마다 다름 | **완료** | 8노드 재연결, #007c56 그대로 |
+| R3 | 차트 가로 막대 비교 막대 바인딩 오류 (F65) | **완료** | 지정 5노드 `chart/series/compare` |
+| R4 | 12px 모서리 로컬 변수 등록 (F69) | **완료** | 변수 등록 + 본 페이지 5노드 재연결(legacy 인스턴스 10개 자동) |
+| R5 | Accordion md · Hover · Expanded 위치 | **미확인 — 수정 불가** | 대상 Accordion 프레임이 원본에서 삭제됨(N4) |
+| R6 | Table 편집 칸 Filter 칩 상태 | **완료(693:7165)** · 693:7167 오류 아님 | Editing · Filled 칩 Selected로 |
+| R7 | Table 편집 칸 Filter · Editing의 다중 선택 목록 | 결정 대기 (D3) | 변경 없음 |
+| R8 | Table 편집 칸 안내 글자가 삭제된 변수에 바인딩 (F57) | **완료** | 3노드 `text/tertiary`, #778191 그대로 |
+| C3 | 텍스트 스타일 `sm/leading-normal/underline`이 삭제된 변수에 바인딩 | **완료(바인딩)** · 줄 높이는 승인 대상 | 같은 값 변수로 교체 |
 
-결정이 필요한 항목(D1 · D3 등)은 [final-report.md](./final-report.md)의 결정 목록과 같은 번호입니다.
+작업 전 안전 조치: 로컬 Git 태그 `checkpoint/pre-figma-fixes`, 변경 전 바인딩 · 값 기록(아래 표). Figma 이름 있는 버전 저장은
+MCP에서 지원되지 않아(`saveVersionHistoryAsync` 미지원) 만들지 못했습니다 — Figma 자동 버전 기록과 아래 변경 전 값으로 복구할 수 있습니다.
+
+검증: 변경 후 두 섹션 10,475개 노드 · 전체 텍스트 스타일에서 **삭제된 변수 참조 0개**, 세트 지문 비교에서 바뀐 세트는 `button_basic` · `button_icon` ·
+`table_value_editable`뿐(의도한 변경), 변수 · 스타일 체크섬 8그룹이 로컬 스냅샷과 일치.
 
 ---
 
-## R1. Button Primary · Outline 테두리 — 삭제된 변수
+## R1. Button Primary · Outline 테두리 — 완료
 
-- 대상: `button_basic`(54:2904)의 Primary · Outline Default · Hover · Pressed **24개**, `button_icon`(67:2368)의 같은 **18개** — 변형 루트의 stroke.
-- 현재: stroke가 `VariableID:59:2221`(`colors/button/primary/outline/border/default`)을 가리키지만 이 변수는 **Component 컬렉션에서 삭제됨**
-  (컬렉션 `variableIds`에 없음). 마지막 값은 `colors/fill/primary/strong/default`(`VariableID:28:6598`, #004a38)의 별칭이고, 화면에는 색 #004a38만 남아 있습니다.
-  같은 때 `primary/outline/border/disabled`, `primary/solid/border/default` · `/disabled`도 삭제되었습니다.
-- 요청: 바인딩할 변수를 정해 42개 노드를 다시 연결해 주세요. 후보:
-
-| 안 | 변수 | 비고 |
+| | 변경 전 | 변경 후 |
 | --- | --- | --- |
-| a | `colors/button/primary/outline/border/default` 다시 만들기 → `colors/fill/primary/strong/default` | Secondary · Tertiary처럼 컴포넌트 전용 테두리 변수를 둠(구조 일관) |
-| b | `colors/fill/primary/strong/default` (`VariableID:28:6598`) 직접 | 변수 추가 없음 |
-| c | `colors/button/primary/outline/label/default` (`VariableID:59:2217`) | 글자색과 같은 변수 — 의미상 어색 |
+| 변수 | 삭제된 `VariableID:59:2221` `colors/button/primary/outline/border/default`(컬렉션 Component, ALL_SCOPES, 별칭 `fill/primary/strong/default`) | **`VariableID:1033:4608`** 같은 이름 · 컬렉션 · scopes · 별칭(`VariableID:28:6598`)으로 재생성 — 같은 의미의 유효한 토큰이 없어 중복 아님 |
+| 노드 | 42개 stroke가 삭제된 변수, #004a38, 1px INSIDE | 42개 stroke가 새 변수, **#004a38, 1px INSIDE 그대로** |
 
-- 노드 ID
-  - button_basic: 67:1938 67:1944 67:1950 67:2038 67:2044 67:2050 · 59:1949 59:1955 59:1961 59:2095 59:2101 59:2107 ·
-    59:1919 59:1925 59:1931 59:2065 59:2071 59:2077 · 59:1943 59:1973 59:1979 59:2089 59:2119 59:2125 (xs · sm · md · lg, Square 3 · Rounded 3)
-  - button_icon: 67:2485 67:2489 67:2493 67:2518 67:2522 67:2526 · 67:2386 67:2390 67:2394 67:2452 67:2456 67:2460 ·
-    67:2551 67:2555 67:2559 67:2584 67:2588 67:2592 (xs · sm · md)
-- 결정 후 코드: `Button.css`의 `--ds-button-stroke-color: #004a38`을 해당 토큰으로 바꾸고 스냅샷 재추출 → `npm run tokens` → `npm run verify:button`.
+노드: button_basic 67:1938 67:1944 67:1950 67:2038 67:2044 67:2050 · 59:1949 59:1955 59:1961 59:2095 59:2101 59:2107 · 59:1919 59:1925 59:1931 59:2065 59:2071 59:2077 ·
+59:1943 59:1973 59:1979 59:2089 59:2119 59:2125 / button_icon 67:2485 67:2489 67:2493 67:2518 67:2522 67:2526 · 67:2386 67:2390 67:2394 67:2452 67:2456 67:2460 · 67:2551 67:2555 67:2559 67:2584 67:2588 67:2592.
+Disabled 14개는 원래 테두리 없음(변경 없음). 이전 결정 D1은 이 복구로 해소.
 
-## R2. Button Secondary · Outline 테두리 — Shape마다 다른 변수
+## R2. Button Secondary · Outline 테두리 — 완료
 
-- 대상: `button_basic`의 Secondary · Outline **Square Hover · Pressed 8개** — 67:1994 67:2000 59:2028 59:2034 59:1998 59:2004 59:2046 59:2052.
-- 현재: `colors/button/secondary/solid/border/default`(`VariableID:54:2047`). 나머지 Secondary · Outline(Rounded 전부, Square Default,
-  `button_icon` 전부)은 `colors/button/secondary/outline/border/default`(`VariableID:59:2228`). 두 변수 값은 같습니다(#007c56).
-- 요청: 8개를 `colors/button/secondary/outline/border/default`로 다시 바인딩.
+| | 변경 전 | 변경 후 |
+| --- | --- | --- |
+| 67:1994 67:2000 59:2028 59:2034 59:1998 59:2004 59:2046 59:2052 (Square Hover · Pressed) | `colors/button/secondary/solid/border/default`(`VariableID:54:2047`) #007c56 | `colors/button/secondary/outline/border/default`(`VariableID:59:2228`) **#007c56 그대로**, 1px INSIDE |
 
-## R3. 차트 가로 막대 · 기본 · Group=yes 비교 막대 (F65)
+Rounded 전부 · Square Default · `button_icon` 전부가 이미 outline 토큰을 써서, Square Hover · Pressed만 다른 상태였습니다.
 
-- 대상 변형 733:4930 `Type=Bar Horizontal, Style=Default, Group=yes`(세트 `chart` 698:4399)의 비교 막대 5개:
-  733:4967 · 742:31980 · 742:31986 · 742:31992 · 742:31998.
-- 현재: 그라디언트 정지점 0이 `colors/chart/simple/history`(`VariableID:762:5825`, #e2e5e9), 정지점 1은 바인딩 없는 #e2e5e9 · 40%.
-  같은 차트의 범례(746:33346) · 툴팁(`I742:31704;693:9774`)과 세로 막대 비교 막대는 `colors/chart/series/compare`(`VariableID:697:4134`, #d6dae0).
-- 요청: 정지점 0 → `colors/chart/series/compare`, 정지점 1 → #d6dae0 · 40%. 자세한 근거: [F65 분석](./analysis/F65-chart-compare-color.md).
-- 별도 결정(F65-b): 간단 스타일 Group=no의 지난 기간 막대가 세로 `series/compare` · 가로 `simple/history`로 다름 — 하나로 통일할지.
+## R3. 차트 가로 막대 · 기본 · Group=yes 비교 막대 — 완료 (지정 5노드)
 
-## R4. 12px 모서리 변수 등록 (F69)
+| | 변경 전 | 변경 후 |
+| --- | --- | --- |
+| 733:4967 · 742:31980 · 742:31986 · 742:31992 · 742:31998 (변형 733:4930, 현재 이름 `…, hover=no`) | 그라디언트 정지점 0 `colors/chart/simple/history`(`VariableID:762:5825`, #e2e5e9), 정지점 1 바인딩 없음 #e2e5e9 · 40% | 정지점 0 **`colors/chart/series/compare`(`VariableID:697:4134`, #d6dae0)**, 정지점 1 #d6dae0 · 40% — 세로 막대 비교 막대(728:31488 등)와 같은 값. 그라디언트 방향 · 위치는 그대로 |
 
-- 요청: Primitive에 `border-radius/rounded-[12px]` = 12(`CORNER_RADIUS`) 추가, 원격 `radius/xlarge1`
-  (`VariableID:51661197e51223702f7df7f651a203c9ea6ec323/138:631`)을 쓰는 노드를 새 변수로 재바인딩.
-- Ver 0.4: 697:4487 `metric-card` · 698:4163 `dashboard-filter-bar` · 773:6944 · 773:7038 `chart-panel`, 바인딩 없는 773:9908 `chart-panel`.
-- legacy 페이지 29개: [F69 분석](./analysis/F69-radius-12.md#figma-등록-요청-원본은-수정하지-않음)에 노드 ID 전체.
-- 등록 후 코드: 스냅샷 재추출 → `npm run tokens`가 이름 중복으로 실패 → `figma-pending/primitive.txt`의 해당 줄 삭제(이름이 같아 코드 수정 없음).
+범례(I746:33346;746:33293) · 툴팁 표시 · 세로 막대와 색이 일치합니다. 다른 계열 색은 바꾸지 않았습니다.
+같은 오류가 원본에 새로 추가된 hover 변형에도 복제되어 있습니다 — N1(승인 대상).
 
-## R5. Accordion md · Hover · Expanded 위치
+## R4. 12px 모서리 변수 — 완료
 
-- 대상: `accordion-item`(796:6071)의 796:5903 `Size=md, State=Hover, Expanded=True` — y 40. 같은 줄의 다른 변형은 y 20.
-- 요청: y 20으로 정렬(화면 표현과 무관한 세트 배치 문제). 코드 검증 기준은 실제 위치를 따릅니다.
+- 신규 Primitive 변수 **`border-radius/rounded-[12px]`** = 12(`VariableID:1033:6620`), scopes `CORNER_RADIUS`, WEB code syntax `var(--border-radius-rounded-\[12px\])`(코드의 실제 CSS 변수),
+  설명 기재. 기존 `rounded-[2px]` · `rounded-[5px]`와 같은 이름 규칙. 값 12인 기존 모서리 변수 없음(중복 아님).
+- 원격 `radius/xlarge1`(`VariableID:51661197…/138:631`)은 원격 라이브러리의 다른 변수를 다시 가리키는 별칭이며 값 12 — 로컬 변수로 대체.
+- 재연결(4개 모서리 모두, 값 12 그대로): 697:4487 `metric-card` · 698:4163 `dashboard-filter-bar` · 773:6944 · 773:7038 `chart-panel`(원격) · 773:9908 `chart-panel`(바인딩 없던 12).
+- legacy 페이지: 컴포넌트 인스턴스 10개(773:13550 · 773:13552–13555 · 868:10955 · 868:10957–10960)는 자동으로 로컬 변수를 따름. 나머지 19개 화면 시안 프레임은 원격 변수 그대로(N7).
+- 코드: `figma-pending/primitive.txt`의 등록 대기 항목을 지우고 스냅샷에서 생성(CSS 변수 이름 같음).
 
-## R6. Table 편집 칸 Filter 변형의 칩 상태
+## R5. Accordion md · Hover · Expanded 위치 — 미확인 (수정 불가)
 
-세트 `table_value_editable`(503:23264), 2026-10-19 원본 갱신분.
+대상 796:5903이 속한 `accordion-item`(796:6071)은 페이지에서 분리되어 있고 Accordion 프레임(796:5813)이 원본에서 삭제되어 있습니다(이번 작업 전, 다른 편집).
+캔버스에 없는 노드라 위치를 비교 · 수정할 수 없습니다 — N4 참고. 코드 · 검증 기준은 이전 Accordion 그대로입니다.
 
-| 노드 | 변형 | 현재 | 확인 · 요청 |
+## R6. Table 편집 칸 Filter 칩 상태 — 693:7165 완료, 693:7167 오류 아님
+
+같은 세트의 다른 Type은 칸 상태를 다음처럼 매핑합니다: Hover · Empty → 컨트롤 Default, Hover · Filled → 채워진 상태(Completed), Editing → Focus / Open.
+Filter의 Filled 변형(Default · Disabled · Hover)은 모두 칩 **Selected**입니다.
+
+| 노드 | 변경 전 | 판단 | 변경 후 |
 | --- | --- | --- | --- |
-| 693:7165 | Type=Filter, State=Editing, Content=Filled | 칩이 `Variant=Unselected, Expanded=True`(558:25884)인데 라벨은 선택 요약("선택유형: 옵션명, 옵션명") | 값이 있으므로 `Variant=Selected, Size=md, State=Default, Expanded=True`(570:26566)가 맞는지 확인 |
-| 693:7167 | Type=Filter, State=Hover, Content=Filled | 칩 State=Default | Hover · Empty(693:7163)는 칩 State=Hover — 둘 중 하나로 통일할지 확인 |
-| 693:7165 | (위치) | y 894, 같은 줄 다른 변형 y 895 | 1px 정렬 |
+| 693:7165 Editing · Filled (칩 인스턴스 977:12767) | `Variant=Unselected, Expanded=True`(558:25884), 라벨 "선택유형: 옵션명, 옵션명" | Filled인데 Unselected — 명백한 상태 매핑 오류 | **`Variant=Selected, Size=md, State=Default, Expanded=True`(570:26566)**, 라벨 · 크기 · 위치 그대로 |
+| 693:7167 Hover · Filled | 칩 Selected · State=Default | 다른 Type의 Hover · Filled(컨트롤 자체는 Hover 아님)와 일치 — 오류 아님 | 변경 없음 |
 
-코드(쇼케이스 스토리)는 지금 Figma 그대로(Editing은 Unselected · Expanded) 그립니다.
+Editing 변형이 1px 위(y 894)인 것은 모든 Type의 Editing 변형에 공통이라 의도된 배치로 보고 바꾸지 않았습니다.
+Hover · Empty(693:7163)의 칩만 State=Hover인 점은 N6.
 
-## R7. Table 편집 칸 Filter · Editing의 다중 선택 목록 (결정 D3)
+## R7. Table 편집 칸 Filter · Editing의 다중 선택 목록 — 결정 대기 (D3)
 
-- 693:7165 아래에 `listbox / Size=sm`(97:2664)과 `option`(Selected 2개, Check 아이콘)이 열려 있습니다 — **칩을 눌러 여러 값을 고르는 목록**입니다.
-- 라이브러리에는 칩 트리거 + 다중 선택 목록 컴포넌트가 없습니다(`Select`는 단일 선택, `DropdownMenu`는 `dropdownmenu_item` 모양).
-- 결정 필요: ① 새 컴포넌트(예: 다중 선택 필터 메뉴)로 만들지 ② `DropdownMenu`(선택 모드)로 대신할지 ③ 표 편집 칸에서는 다른 패턴을 쓸지.
-  결정 전에는 쇼케이스에서 목록을 그리지 않고, 정합성 검증에서 목록 영역(위 4.5px)만 제외했습니다.
+693:7165 아래의 `listbox / Size=sm`(97:2664) + `option`(Selected 2개)은 칩 트리거 + 다중 선택 목록입니다. 라이브러리에 해당 컴포넌트가 없어
+① 새 컴포넌트 ② `DropdownMenu` 선택 모드 대체 ③ 다른 패턴 중 결정이 필요합니다. 쇼케이스는 목록을 그리지 않습니다.
 
-## R8. Table 편집 칸 안내 글자 — 삭제된 변수 (F57)
+## R8. Table 편집 칸 안내 글자 — 완료
 
-- 대상: `table_value_editable`(503:23264)의 텍스트 3개 — 355:4281(Type=Switch, State=Default 「설명」) · 540:24708(Type=Switch, State=Disabled 「설명」) ·
-  355:4223(File Upload 안내 「권장 비율 1:1, JPG/PNG, …」).
-- 현재: `VariableID:355:4282` `colors/table/key-value/value/label/hover`에 바인딩 — 이 변수는 Component 컬렉션에 없습니다(삭제). 남은 색은 #778191.
-- 요청: 같은 값의 현재 변수(예: `colors/text/tertiary`, 또는 `colors/table/key-value/value/label/*`에 안내용 변수 추가)로 다시 바인딩.
+| | 변경 전 | 변경 후 |
+| --- | --- | --- |
+| 355:4281 · 540:24708(Switch 「설명」), 355:4223(File Upload 안내) | 삭제된 `VariableID:355:4282` `colors/table/key-value/value/label/hover` — 마지막 값이 `colors/text/tertiary`의 별칭, 표시 #778191 | **`colors/text/tertiary`(`VariableID:47:7518`)** #778191 그대로, 텍스트 스타일 `xs/leading-normal/normal` 그대로 |
+
+삭제된 변수의 원래 연결 대상이자 이 DS에서 보조 · 설명 글자에 쓰는 Semantic 토큰입니다(Dialog · Card · Alert 설명도 같은 값).
+Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 토큰(예: `colors/table/key-value/value/description`)을 둘지는 승인 대상(A-3).
+인스턴스 안의 같은 글자 2개(I507:23880;355:4281, I507:23893;355:4223)는 메인을 따라 바뀌었습니다.
+
+## C3. 텍스트 스타일 `sm/leading-normal/underline` — 바인딩 완료
+
+| 속성 | 변경 전 | 변경 후 |
+| --- | --- | --- |
+| letterSpacing | 삭제된 `font/tracking/normal`(`VariableID:359:7941`) = 0 | `font/tracking/tracking-normal`(`VariableID:369:8669`) = 0 |
+| 굵기 | 삭제된 `font/weight/font-500`(`VariableID:359:7905`, fontStyle "Medium") | fontStyle 바인딩 해제, `font/weight/font-medium`(`VariableID:369:8622`) = 500 |
+
+같은 계열 `xs` · `base/leading-normal/underline`과 같은 바인딩입니다. 글꼴 Medium · 14 · 자간 0 그대로, 사용 노드는 Link md 5개.
+줄 높이 140%(19.6px, 바인딩 없음)는 다른 sm 스타일과 다르지만 값 변경이라 승인 대상(A-4).
 
 ---
 
-이미 알려진 그 밖의 원본 이슈(변수 이름 · 미사용 변수 · 예시 데이터 등)는 [figma-issue-triage.md](./figma-issue-triage.md)의 "디자인 결정 필요"에 있습니다.
+## 새로 발견한 오류 (승인 대상 — 변경하지 않음)
+
+| # | 노드 · 변수 | 현재 | 권장 | 영향 |
+| --- | --- | --- | --- | --- |
+| N1 | `chart` 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261)의 비교 막대 1011:14280 · 1011:14288 · 1011:14296 · 1011:14303 · 1011:14310 | R3와 같은 오류(`simple/history`) | R3와 같은 수정 | 차트 hover 변형 |
+| N2 | `chart` `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873 | `series/compare` — hover=no 짝(762:5921)은 `series/02` | `series/02`로 | 같은 변형의 툴팁 표시(I1011:15175;693:9774 등)도 막대색과 다름 |
+| N3 | `chart` 세트 구조 변경 | `hover` 속성 추가로 24개 변형(이번 작업 전 다른 편집) | 코드 · 검증 기준을 새 구조로 맞출지 결정 | Chart 검증(현재 12개 기준 + 수정한 변형만 개별 기준) |
+| N4 | Accordion 프레임 796:5813 삭제, `accordion-item` 796:6071 분리 | 원본에 Accordion 없음, Storybook에는 있음 | 복구 또는 컴포넌트 폐기 결정 | `Accordion` · `AccordionItem` 공개 API |
+| N5 | `border-radius/rounded-[2px]`(`VariableID:873:4798`) WEB code syntax | `var(--radius-2px)` — 코드에 없는 이름 | `var(--border-radius-rounded-\[2px\])` | Figma Dev Mode 코드 표시 |
+| N6 | 693:7163 Filter · Hover · Empty 칩(693:8205) | 칩 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | 의도 확인 후 Default로 | Table 쇼케이스 1칸 |
+| N7 | legacy 화면 시안 19개 프레임 | 원격 `radius/xlarge1` | 로컬 `rounded-[12px]`로(값 같음) | 시각 변화 없음, 원격 의존 제거 |
+
+작업 중 관찰된 다른 편집(이번 작업이 한 것 아님, 같은 값 — 동기화함): `colors/button/secondary/outline/background/default` · `/hover`가 `fill/secondary/subtle/*`로,
+`colors/chip-filter/background/unselected/default`가 `fill/primary/subtle/default`로 별칭 변경.
+
+## 승인이 필요한 값 · 정책 변경 (변경하지 않음)
+
+| # | 내용 | 권장안 | 영향 범위 |
+| --- | --- | --- | --- |
+| A-1 | **대비 개선 — 텍스트**: info `sky/600`(3.86:1) · success `green/600`(3.16) · warning `orange/600`(3.54, 배지 3.13) · point `rose/600`(4.45, 배지 3.77) · 배지 danger filled `red/600`(3.91) · `text/tertiary` `gray/500`(3.87) | 한 단계 진하게: `sky/700`(5.53) · `green/700`(4.86) · `orange/700`(5.13, 배지 4.56) · `rose/700`(5.93, 배지 5.02) · `red/700`(5.27) · `gray/600`(5.89) — 모두 기존 팔레트 | Theme `brand-status/*/strong`과 Semantic `text/tertiary`를 쓰는 전 컴포넌트(메시지 · 배지 · 설명 글자) |
+| A-2 | **대비 개선 — 비텍스트 · 상태**: Checkbox · Radio · Switch 테두리 `gray/400`(2.35:1) · Secondary · Solid Hover `emerald/600` · Pressed `emerald/500` 위 흰 글자(3.51 · 2.46) | 테두리 `gray/500`(3.87, 3:1 충족) · Secondary · Solid Hover `emerald/800`(7.27) · Pressed `emerald/900`(10.14) — 단, 진해지는 방향이 Primary와 같아짐 | 선택 컨트롤 3종, Button · IconButton Secondary · Solid |
+| A-3 | Table 안내 글자 전용 컴포넌트 토큰 | `colors/table/key-value/value/description` → `text/tertiary` 신설 | 표 편집 칸 안내 3노드 |
+| A-4 | `sm/leading-normal/underline` 줄 높이 140%(19.6px) | 다른 sm 스타일처럼 `font/line-height/leading-5`(20px)로 | Link md 높이 0.4px |
+| A-5 | placeholder `gray/400`(2.35:1) | 정책 결정(placeholder 대비 기준 적용 여부) | 입력 컴포넌트 전반 |
+| D3 · D4 | R7 다중 선택 목록 · 간단 스타일 차트 지난 기간 색(F65-b) | [final-report](./final-report.md) 결정 목록 | — |
+
+이미 알려진 그 밖의 원본 이슈는 [figma-issue-triage.md](./figma-issue-triage.md)에 있습니다.

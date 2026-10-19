@@ -1,5 +1,8 @@
 # Figma 이슈 분류 (2026-10-19)
 
+> **Figma 수정 작업 반영(2026-10-19 오후)**: R1 · R2(A6) · R3(F65-a) · R4(F69) · R6(F75 일부) · R8(F57) · C3 바인딩을 Figma에서 직접 고쳤습니다.
+> R5(F74)는 Accordion이 원본에서 삭제되어 미확인. 새 항목 F77 – F83과 대비 개선안(A-1 · A-2)은 [figma-fix-requests.md](./figma-fix-requests.md) 참고.
+
 > **최종 배포 준비 갱신(2026-10-19)**: F31 동기화 · F65 코드 통일 · F69 토큰 · F50 해소(원본 변경)를 반영했고, 원본 갱신에서 새로 찾은 F74 – F76을 추가했습니다.
 > Figma 원본에서 고칠 항목은 노드 · 변수 ID와 함께 [figma-fix-requests.md](./figma-fix-requests.md)에 있습니다.
 
@@ -20,20 +23,20 @@ F6은 결정(1절)과 렌더링 차이(3절)에, F57은 코드 작업(2절)과 F
 
 | # | 내용 | 현재 코드(임시 정책) | 우선 |
 | --- | --- | --- | --- |
-| F31 (D1) | Button Primary · Outline 테두리 변수 — Figma에서 변수가 삭제되어 색만 남음([R1](./figma-fix-requests.md#r1-button-primary--outline-테두리--삭제된-변수)). 동기화 자체는 2026-10-19 완료 | 원본에 남은 #004a38 | 높음 |
+| F31 (D1) | Button Primary · Outline 테두리 변수 — Figma에서 변수가 삭제되어 색만 남음([R1](./figma-fix-requests.md#r1-button-primary--outline-테두리--완료)). 동기화 자체는 2026-10-19 완료 | 원본에 남은 #004a38 | 높음 |
 | C1 | tracking 변수가 px로 적용(3xl 굵기별 자간 3배 차이) | Figma 적용값 그대로 | 높음 |
 | E12 · F12 · F23 | 대비 부족: info(#0086d3) · tertiary 글자, Checkbox · Radio · Switch 테두리(2.35:1), success(#00a63e), Button Secondary · Solid Hover · Pressed 흰 글자(3.51 · 2.46:1, 2026-10-19 추가 변형) | Figma 값 그대로, [accessibility.md](./accessibility.md)에 기록 | 높음 |
 | A11 · F1 · F22 | Focus 상태 없음(Button, 선택 컨트롤, Chip, Segmented, Slider) | 브라우저 기본 포커스 링 | 높음 |
-| F65-a | 가로 막대 기본 Group=yes 비교 막대 `simple/history` ↔ 범례 · 툴팁 `series/compare` — **Figma 수정 요청**([R3](./figma-fix-requests.md#r3-차트-가로-막대--기본--groupyes-비교-막대-f65)) | **코드는 `series/compare`로 통일(2026-10-19)** | 중간 |
+| F65-a | 가로 막대 기본 Group=yes 비교 막대 `simple/history` ↔ 범례 · 툴팁 `series/compare` — **Figma 수정 요청**([R3](./figma-fix-requests.md#r3-차트-가로-막대--기본--groupyes-비교-막대--완료-지정-5노드)) | **코드는 `series/compare`로 통일(2026-10-19)** | 중간 |
 | F65-b | 간단 스타일 Group=no 지난 기간 색이 세로 · 가로에서 다름 | Figma 변형 그대로 | 중간 |
-| F69 | 대시보드 카드 모서리 12px — Figma에 로컬 변수 등록 · 재바인딩([R4](./figma-fix-requests.md#r4-12px-모서리-변수-등록-f69)) | **공통 토큰 `rounded-[12px]`(Figma 등록 대기, 2026-10-19)** | 중간 |
+| F69 | 대시보드 카드 모서리 12px — Figma에 로컬 변수 등록 · 재바인딩([R4](./figma-fix-requests.md#r4-12px-모서리-변수--완료)) | **공통 토큰 `rounded-[12px]`(Figma 등록 대기, 2026-10-19)** | 중간 |
 | F60 | Card 그림자(원격 shadow-sm 10%) | elevation-1(12%) | 중간 |
 | F61 | Card 프레임 숨김 — 사용 여부 | 레이어 값으로 구현, 위치 · 크기만 검증 | 중간 |
 | F33 | Breadcrumb 펼친 상태(Role=Open, 메뉴 위치) | … 버튼 아래 메뉴, 현재 항목은 Current | 중간 |
 | F44 | Toast 위치 · 간격 · 표시 시간 | 화면 아래 가운데, m-2, 5초 | 중간 |
 | F48 | Tooltip 거리 · 지연 | 화살표 8px, react-aria 기본 지연 | 중간 |
-| F76 (D3) | Table 편집 칸 Filter · Editing의 다중 선택 목록 — 컴포넌트 없음([R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록-결정-d3)) | 목록 그리지 않음 | 중간 |
-| F75 | Table 편집 칸 Filter 칩 상태(Editing이 Unselected, Hover 칩 상태 불일치 — [R6](./figma-fix-requests.md#r6-table-편집-칸-filter-변형의-칩-상태)) | Figma 그대로 | 낮음 |
+| F76 (D3) | Table 편집 칸 Filter · Editing의 다중 선택 목록 — 컴포넌트 없음([R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록--결정-대기-d3)) | 목록 그리지 않음 | 중간 |
+| F75 | Table 편집 칸 Filter 칩 상태(Editing이 Unselected, Hover 칩 상태 불일치 — [R6](./figma-fix-requests.md#r6-table-편집-칸-filter-칩-상태--6937165-완료-6937167-오류-아님)) | Figma 그대로 | 낮음 |
 | F51 | Dialog 뒤 덮개(scrim) | 투명 | 중간 |
 | F63 | Chart 툴팁 위치 규칙(코드 쪽 자동 조정은 이번에 구현 — 아래 2절) | 기준점 옆 p-3, 보이는 그림 영역 · 화면 안 | 낮음 |
 | E6 | Input 눈 아이콘의 용도 · 숨김 상태 아이콘 | 비밀번호 표시 토글(`aria-pressed`) | 중간 |
@@ -63,7 +66,7 @@ F6은 결정(1절)과 렌더링 차이(3절)에, F57은 코드 작업(2절)과 F
 | F71 | DashboardFilterBar "최근 30일" 말줄임 | **완료(2026-10-19)** — SegmentedControl 라벨이 Figma처럼 항목 padding까지 사용, 항목 전체보다 길 때만 말줄임. 검증에서 해당 라벨 비교 재개 |
 | F31 · A4 | 토큰 재생성, `Button.css` 토큰 참조 수정, Secondary · Solid 추가(A4 해소), 기준 재캡처(352) | **완료(2026-10-19)** — 352/352 · 3 엔진. Primary · Outline 테두리 변수만 D1 대기 |
 | F53 · F50 · Accordion | 원본 변경 반영: `border/hover`, Disabled 배경 · 제목, 모든 Hover 배경, 펼친 항목 구분선 | **완료(2026-10-19)** — 3 엔진 통과 |
-| F57 | `table/key-value/value/label/hover` — 확인 결과 **삭제된 변수**(로컬 컬렉션에 없음) | 코드 변경 없음(같은 값 `text/tertiary`). Figma 재바인딩 요청 [R8](./figma-fix-requests.md#r8-table-편집-칸-안내-글자--삭제된-변수-f57) |
+| F57 | `table/key-value/value/label/hover` — 확인 결과 **삭제된 변수**(로컬 컬렉션에 없음) | 코드 변경 없음(같은 값 `text/tertiary`). Figma 재바인딩 요청 [R8](./figma-fix-requests.md#r8-table-편집-칸-안내-글자--완료) |
 | F65-a | `Chart.tsx` `markColor`의 가로 막대 예외 삭제 | **완료(2026-10-19)** — Figma가 고쳐지면 기준 이미지만 재캡처 |
 | F69 | 토큰 `rounded-[12px]` 추가, MetricCard · DashboardFilterBar 적용 | **완료(2026-10-19)** — Figma 등록 후 `figma-pending/`에서 삭제 |
 | F71 · F31 | DashboardFilterBar 예시의 초기화 버튼을 Secondary · Solid로 | **완료(2026-10-19)** — 픽셀 비교 제외 영역 제거 |
@@ -84,9 +87,9 @@ E5(카운터 예시 값), F14 · F15(Slider 상자 너비), F58 · F59(Table 관
 
 | 묶음 | 항목 |
 | --- | --- |
-| 다른 변수 · 상위 레이어 직접 참조 | A5(2026-10-19 원본에서 해결 · 코드 반영), A6([R2](./figma-fix-requests.md#r2-button-secondary--outline-테두리--shape마다-다른-변수)), B7, E1 · E2 · E3 · E4, E10, F5, F7, F24, F27, F29, F34, F54 |
+| 다른 변수 · 상위 레이어 직접 참조 | A5(2026-10-19 원본에서 해결 · 코드 반영), A6([R2](./figma-fix-requests.md#r2-button-secondary--outline-테두리--완료)), B7, E1 · E2 · E3 · E4, E10, F5, F7, F24, F27, F29, F34, F54 |
 | 원격 라이브러리 변수 | F13(Slider), F28(Loading), F32(Dropdown), F52(Accordion), F66(Chart tooltip) — 같은 값의 로컬 토큰 사용 중 |
 | 쓰이지 않거나 어긋난 변수 · 속성 | A7, A8, B1, B10, F19, F26, F49, F72 |
-| 이름 · 오타 · 정렬 | A1 · A2 · A3(A1은 2026-10-19 동기화로 색 분리 반영), B2 · B3 · B4, B9, C4, F38 · F45(이름 수정 시 토큰 CSS 변수 이름도 바뀜), F70, F74(Accordion 변형 위치 — [R5](./figma-fix-requests.md#r5-accordion-md--hover--expanded-위치)) |
-| 값 지정 방식 | C2 · C3(삭제된 변수 바인딩 — 코드는 적용값 사용), F57(삭제된 변수 — [R8](./figma-fix-requests.md#r8-table-편집-칸-안내-글자--삭제된-변수-f57)), C6, F17 · F18(효과 · 원 변수 미연결), F42 · F43(배지 채움 · 크기), F46(Toast 높이 · padding) |
+| 이름 · 오타 · 정렬 | A1 · A2 · A3(A1은 2026-10-19 동기화로 색 분리 반영), B2 · B3 · B4, B9, C4, F38 · F45(이름 수정 시 토큰 CSS 변수 이름도 바뀜), F70, F74(Accordion 변형 위치 — [R5](./figma-fix-requests.md#r5-accordion-md--hover--expanded-위치--미확인-수정-불가)) |
+| 값 지정 방식 | C2 · C3(삭제된 변수 바인딩 — 코드는 적용값 사용), F57(삭제된 변수 — [R8](./figma-fix-requests.md#r8-table-편집-칸-안내-글자--완료)), C6, F17 · F18(효과 · 원 변수 미연결), F42 · F43(배지 채움 · 크기), F46(Toast 높이 · padding) |
 | 값 · 의도 확인(현재 일관됨) | A10(IconButton 숨김 라벨 → 필수 `aria-label`), B5(white #fdfdfd · black #222222), B6(danger · error 같은 값), F4(Radio 점 9px), F25(요일 영어 표기 — 코드는 로캘), F39(connector padding), E9 · E11 |

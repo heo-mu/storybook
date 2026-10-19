@@ -42,7 +42,12 @@ A안이 화면을 바꾸지 않고 원격 의존을 없애는 최소 변경입�
 | 사용처 | `MetricCard.css` · `DashboardFilterBar.css` (`12px` → 토큰). 화면 변화 없음 — 두 컴포넌트 Chromium · Firefox · WebKit 정합성 통과 |
 | Figma 등록 후 | Figma에 같은 이름의 로컬 변수가 생기고 스냅샷을 다시 추출하면 `npm run tokens`가 이름 중복으로 실패 → `figma-pending/primitive.txt`에서 해당 줄 삭제 |
 
-## Figma 등록 요청 (원본은 수정하지 않음)
+## Figma 등록 (2026-10-19 완료)
+
+Figma Primitive에 `border-radius/rounded-[12px]`(`VariableID:1033:6620`)를 등록하고 본 페이지 5개 노드를 다시 연결했습니다(legacy 인스턴스 10개는 자동).
+`figma-pending/primitive.txt`의 항목은 지웠고 토큰은 스냅샷에서 생성됩니다. 아래는 등록 전 요청 내용입니다.
+
+## Figma 등록 요청 (원본은 수정하지 않음 — 당시)
 
 1. **Primitive** 컬렉션(`border-radius/*`)에 `border-radius/rounded-[12px]` = 12, 범위 `CORNER_RADIUS` 추가.
 2. 아래 노드의 모서리를 원격 `radius/xlarge1`(`VariableID:51661197e51223702f7df7f651a203c9ea6ec323/138:631`)에서 새 변수로 다시 바인딩.

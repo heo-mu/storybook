@@ -122,7 +122,10 @@
           "why": "line value labels hug their text and end at the 32px column: Figma rounds the box up to whole pixels, so does calc-size() in Chromium; without it (Firefox, WebKit) \"240\" keeps its narrower sub-pixel width and starts up to 1.08px further right"
         }
       },
-      "//F65": "Bar Horizontal · Default · Group=yes: Figma binds the 5 comparison bars to colors/chart/simple/history (#e2e5e9) while its legend and tooltip use colors/chart/series/compare (#d6dae0); the code uses series/compare for both (Figma fix requested, docs/figma-fix-requests.md). The difference stays inside the pixel threshold, so nothing is masked."
+      "variantReferences": [
+        "Type=Bar Horizontal, Style=Default, Group=yes"
+      ],
+      "//variantReferences": "Type=Bar Horizontal · Default · Group=yes: compared with its own Figma capture of 2026-10-19 (after the R3 fix — comparison bars on colors/chart/series/compare). The chart set itself was restructured in Figma the same day (new hover property, 24 variants) and is not re-baselined yet."
     },
     {
       "set": "chart-legend-item",

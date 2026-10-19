@@ -14,7 +14,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | # | 항목 | 우선순위 |
 | --- | --- | --- |
 | C1 | tracking 변수가 px로 적용됨 (−2.5px) — % 의도로 보임 | 높음 |
-| C3 | `sm/leading-normal/underline`이 삭제된 변수 2개에 바인딩 | 높음 |
+| C3 | **`sm/leading-normal/underline`이 삭제된 변수 2개에 바인딩**: `font/tracking/normal`(VariableID:359:7941), `font/weight/font-500`(VariableID:359:7905). 줄 높이도 다른 sm 스타일(20px)과 달리 140% | **2026-10-19 Figma 수정 완료** — `font/tracking/tracking-normal` · `font/weight/font-medium`(같은 값)으로. 줄 높이 140%는 그대로 | 줄 높이 결정([A-4](./figma-fix-requests.md#승인이-필요한-값--정책-변경-변경하지-않음)) |
 | A1 | `button_text` Type 값 `SecondarySecondary`, Primary와 동일 | 중간 |
 | A5 · A6 | Button 색 바인딩이 다른 Variant 토큰을 참조 | 중간 |
 | A12 | Disabled 라벨이 `text/disabled`가 아닌 `text/placeholder` 사용 | 중간 |
@@ -31,7 +31,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | A3 | Variant 옵션 순서: `button_icon` Size `sm, md, xs`, `button_text` Type `SecondarySecondary, Primary` | 영향 없음 | 작은 것 → 큰 것, Primary 우선으로 정렬 |
 | A4 | `button_basic`·`button_icon`에 **Secondary / Solid 조합이 없음**. 그런데 `colors/button/secondary/solid/*` 토큰은 존재 | **2026-10-19 해소**: Figma에 Secondary / Solid 56개 추가 → 동기화로 구현(F31) | — |
 | A5 | `button_icon` **Tertiary / Solid** 배경이 `colors/button/secondary/solid/background/*`에 바인딩 (`button_basic`은 `tertiary/solid`) | **2026-10-19 해소**: Figma가 `tertiary/solid`로 다시 바인딩 → 코드도 tertiary 토큰 | `colors/button/tertiary/solid/background/*`로 바인딩 |
-| A6 | `button_basic` **Secondary / Outline Hover·Pressed** 테두리가 Shape마다 다름: Square → `secondary/solid/border/default`, Rounded → `secondary/outline/border/default` | `secondary/outline/border/default`로 통일 (값 동일 #007c56) | Square 변형도 `secondary/outline/border/default`로 |
+| A6 | `button_basic` **Secondary / Outline Hover·Pressed** 테두리가 Shape마다 다름: Square → `secondary/solid/border/default`, Rounded → `secondary/outline/border/default` | **2026-10-19 Figma 수정 완료**(R2) — Square 8개를 `secondary/outline/border/default`로, 값 같음 | — |
 | A7 | 쓰이지 않는 토큰: `*/solid/border/*`(Solid에는 테두리 없음), `*/outline/border/disabled`(Disabled에는 테두리 없음), `colors/button/progress/border`(대응 Variant 없음, 별칭이 아닌 원시값 #ffffff) | 토큰은 생성, 컴포넌트에서는 미사용 | 의도 확인 후 삭제 또는 적용 |
 | A8 | `button_text`에 테두리 두께 변수(`border-width/border`)가 바인딩되어 있지만 테두리 색(stroke)이 없음 | 테두리 없음으로 구현 | 바인딩 제거 |
 | A9 | `button_text` Variant들이 컴포넌트 세트 안에서 x=24.5 같은 반 픽셀 위치에 배치 | 영향 없음 (Figma 스크린샷이 반 픽셀로 흐리게 렌더링되어 비교 시 참고) | 정수 위치로 정렬 |
@@ -116,7 +116,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F28 | Loading 간격이 다른 라이브러리(원격) 변수, 그라데이션이 `border/transparency` → `border/brand`(Semantic)에 바인딩 — `loading/spinner/indicator/*` 미사용 | 같은 이름의 로컬 `spacing/margin/m-2_5`, 그라데이션은 바인딩 그대로 | 로컬 · Component 변수 사용 |
 | F29 | file-uploader Drag-over 아이콘이 `…/icon/default`(`…/icon/drag-over` 변수 미사용), Pressed가 `…/focus` 변수 사용 | 바인딩 그대로 | 이름 · 바인딩 정리 |
 | F30 | **점선 테두리가 변마다 대시 간격을 맞춤**(9.85 ~ 10.25px) — CSS · SVG는 외곽선을 따라 이어 그림 | SVG 6 / 4 대시, 위상만 맞춤 — 테두리 픽셀은 수동 검토 | — |
-| F31 | **작업 중 원본 변경**: Button Secondary Solid 신설 · TextButton Secondary 색 분리 · 변수 삭제, `fill/primary/subtle/hover` 값 변경 | **2026-10-19 동기화** — 체크섬 8그룹 원본과 일치, Button 352/352 — [분석](./analysis/F31-button-sync.md). Primary · Outline 테두리는 원본에 남은 #004a38(삭제된 변수) | 테두리 변수 결정 · 재바인딩([R1](./figma-fix-requests.md#r1-button-primary--outline-테두리--삭제된-변수)), Secondary · Outline 바인딩 정리(R2) |
+| F31 | **작업 중 원본 변경**: Button Secondary Solid 신설 · TextButton Secondary 색 분리 · 변수 삭제, `fill/primary/subtle/hover` 값 변경 | **2026-10-19 동기화** — Button 352/352. Primary · Outline 테두리 변수는 Figma에 복구(R1, `VariableID:1033:4608`)되어 코드도 토큰 사용 | — |
 | F32 | `dropdownmenu_line` 세로 padding(`py-1`)과 구분선 두께(`border-width`)가 원격 라이브러리 변수에 바인딩 | 같은 값의 로컬 `spacing/padding/p-1` · `border-width/border` | 로컬 변수 사용 |
 | F33 | **breadcrumb Expanded=True**: 메뉴를 여는 … 버튼은 Link Default인데 현재 페이지 항목이 Role=Open(브랜드 색 · semibold), 메뉴는 경로 오른쪽 끝에 정렬(md x 89 · sm x 60) | 메뉴는 … 버튼 아래 2px(시작 정렬), 현재 페이지는 Current 유지, Role=Open은 `BreadcrumbItem open`으로 제공 | 의도 확인 (결정 필요) |
 | F34 | breadcrumb-item Hover · Pressed · Open · Current Variant의 아이콘 슬롯이 비어 있음(Link Default만 House) — `breadcrumb/home-icon/hover · pressed · current`, `background/focus` · `border/focus` · `border/menu` 변수는 어디에도 바인딩되지 않음 | 아이콘 색은 같은 이름의 변수 사용, focus · menu 변수는 미사용 | 아이콘 슬롯 채우기, 변수 정리 |
@@ -142,7 +142,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F54 | table_data 예시 행의 Hover · Pressed가 의미 변수(`fill/secondary/subtle/hover` · `fill/primary/subtle/pressed`)에 직접 바인딩 — 컴포넌트 변수 `table/data/background/hover · pressed`는 미사용 | 컴포넌트 변수 사용 | 바인딩 정리 |
 | F55 | table_header Type Empty가 자식 없이 48px 너비로 남아 있음(auto layout 잔여 크기) | 최소 너비 48px | — |
 | F56 | table_body · table_value 내용이 반 픽셀 위치(테두리 포함 높이 45 · 51의 가운데)에 놓임 — 브라우저는 글자 · 상자를 정수 픽셀에 그림 | 같은 레이아웃, 글자 위치 0.5px 차이는 알려진 차이로 기록 | — |
-| F57 | table_value_editable 안내 글자(355:4281 · 540:24708 · 355:4223)가 **삭제된 변수** `VariableID:355:4282` `colors/table/key-value/value/label/hover`에 바인딩(로컬 컬렉션에 없음 — 2026-10-19 확인) | 같은 값 `colors/text/tertiary` | 현재 변수로 재바인딩([R8](./figma-fix-requests.md#r8-table-편집-칸-안내-글자--삭제된-변수-f57)) |
+| F57 | table_value_editable 안내 글자(355:4281 · 540:24708 · 355:4223)가 **삭제된 변수** `VariableID:355:4282` `colors/table/key-value/value/label/hover`에 바인딩 | **2026-10-19 Figma 수정 완료**(R8) — 원래 연결 대상 `colors/text/tertiary`로, #778191 그대로 | 전용 컴포넌트 토큰 여부([A-3](./figma-fix-requests.md#승인이-필요한-값--정책-변경-변경하지-않음)) |
 | F58 | table_value_editable 샘플 불일치 — Textarea 유형은 편집 시 한 줄 Input인데 채움 값은 두 줄, Date Picker 채움 값이 자리표시("YYYY.MM.DD"), Filter Disabled Empty만 chip-input, 상태마다 예시 문구가 다름 | 한 줄 Input · 실제 날짜, 두 줄 변형 3개는 수동 검토 | 의도 확인 |
 | F59 | table_value_editable File Upload 버튼 인스턴스 최소 너비 80px, 이미지 자리표시(#d9d9d9 + 대각선)가 변수 없는 값 · 원격 변수 | 최소 너비는 사용 예에 명시, 자리표시는 스토리 전용 이미지 | — |
 | F60 | 카드 그림자가 원격 라이브러리 스타일 `Box Shadow/shadow-sm`(0 1 3 / 10%) — 로컬 효과 스타일에 같은 값 없음(elevation-1은 12%) | `elevation-1` 사용 | 로컬 스타일 추가 또는 elevation-1 사용 (결정 필요) |
@@ -150,18 +150,25 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F62 | chart 샘플 데이터 불일치 — 막대 레이어 이름이 모두 자리표시 값("Bar / 101동 / current / 384"), 툴팁 값 324 · 332가 막대 · 축과 맞지 않음(선 차트 축 최대 240), 날짜 축 선 차트 툴팁 제목이 "104동", 가로 막대 툴팁 "103동"이 102동 행에 표시, 툴팁 계열 이름(이번달/저번달, 전기/가스)과 범례(조회 기간/이전 기간)가 다름 | 데이터로 그림 — 툴팁 · 범례 · 표 모두 `series.label`과 실제 값. 검증 스토리는 그려진 크기에서 값을 역산 | 샘플 정리 |
 | F63 | chart 툴팁 위치가 변형마다 손으로 배치됨 — 선: 점 오른쪽 13.09px · 점 높이 가운데, 세로 막대: 항목 가운데(0.2px 차이) · 그림 영역 위, 가로 막대: 막대 위에 겹침. 호버 상태는 막대 Group=yes · 선 변형에만 그려짐 | 선 · 가로 막대: 기준점(점 · 가장 긴 막대 끝) 오른쪽 `p-3` · 세로 가운데, 세로 막대: 항목 가운데 · 그림 영역 위, 넘치면 왼쪽으로 — 코드 정책. 호버 강조는 Group=no에도 적용 — **2026-10-19**: 툴팁을 <body>로 포털, 보이는 그림 영역 · 화면 안으로 자동 조정(뒤집기 · 이동) | 위치 규칙 정의 (결정 필요) |
 | F64 | chart 간단 선 차트의 점이 기간 이름 가운데에 있지 않고 간격이 고르지 않음(x 14.5 · 82 · 160 · 238 · 302.5, 이름 가운데 27.2 · 93.6 · 160 · 226.4 · 292.8), 선은 프레임 밖(−2.7 · 320.96)까지 그려져 잘림 | 점은 각 기간 가운데, 선은 첫 · 마지막 구간 기울기로 양 끝까지 이어 그림. 그림 영역은 픽셀 비교 제외(수동 검토) | 점 위치 정리 |
-| F65 | chart 비교 계열 색이 변형마다 다름 — 가로 막대 기본 Group=yes 비교 막대 `chart/simple/history`(#e2e5e9)인데 범례 · 툴팁 표시는 `chart/series/compare`(#d6dae0), 세로 막대는 막대 · 범례 모두 compare. 간단 스타일 지난 기간도 세로(Group=no) compare · 가로 simple/history | **2026-10-19**: 기본 스타일 비교 막대를 범례 · 툴팁과 같은 `series/compare`로 통일. 간단 스타일은 Figma 그대로 | 막대 5개 재바인딩([R3](./figma-fix-requests.md#r3-차트-가로-막대--기본--groupyes-비교-막대-f65)), 간단 스타일 색 결정(F65-b) |
+| F65 | chart 비교 계열 색이 변형마다 다름 — 가로 막대 기본 Group=yes 비교 막대 `chart/simple/history`(#e2e5e9)인데 범례 · 툴팁 표시는 `chart/series/compare`(#d6dae0), 세로 막대는 막대 · 범례 모두 compare. 간단 스타일 지난 기간도 세로(Group=no) compare · 가로 simple/history | **2026-10-19 Figma 수정 완료**(R3, 지정 5노드) — 코드와 일치. 새 hover 변형의 같은 오류는 F77 | 간단 스타일 색 결정(F65-b) |
 | F66 | chart-tooltip 제목 · 값 글자색이 원격 라이브러리 변수 `color/text/tertiary`(#6d7882) · `color/text/primary`(#131416), padding 10 · radius 6도 원격 변수. 차트 안 인스턴스에만 배경 흐림 12가 추가됨(메인 컴포넌트는 그림자만) | 같은 이름의 로컬 `colors/text/tertiary`(#778191) · `colors/text/primary`(#131c2b), 같은 값의 `p-2_5` · `rounded-sm`. 흐림은 `Chart` 안 툴팁에만(`blur(6px)` = 반경 12 / 2) | 로컬 변수 바인딩 |
 | F67 | chart 선 모양 — 기본 선 차트 첫 계열만 꼭짓점 모서리 반경 8, 두 번째 계열은 없음. 간단 선 차트 꼭짓점 이음이 섞여 있음(2개 MITER · 나머지 ROUND). 선 · 영역 꼭짓점이 0.3–2.6px 어긋나고 점(마커) 위치도 선과 0.4–0.8px 다름 | 첫 계열 반경 8 · 두 번째 직선(Figma 그대로), 간단 선 이음 둥글게, 점은 선 꼭짓점에 | 통일 |
 | F68 | chart-legend-item — 선 차트 Group=yes 두 번째 범례가 Dash Line 인스턴스인데 점선을 지워 실선(series/02), Dash Line 메인 컴포넌트 색은 `chart/series/compare`. 숨김 레이어 "Current values"(간단 스타일 현재 값 칩), "Axis unit"(가로 막대 단위) | 선 차트 범례는 실선 `line`, `ChartLegendItem type="dash-line"`은 메인 컴포넌트대로(Figma가 20px 선에 맞춘 대시 간격 재현). 숨김 레이어는 구현하지 않음 | 의도 확인 |
-| F69 | 대시보드 컴포넌트가 원격 라이브러리 변수 사용 — metric-card · dashboard-filter-bar의 padding `padding/6`(16) · 모서리 `radius/xlarge1`(12) · 배경 `color/background/white`(#ffffff), data-state 배경 `color/background/white`. 그림자(0 1 8 / 12%)는 효과 스타일 없이 값만 지정 | 같은 값 `p-4`, **모서리 공통 토큰 `rounded-[12px]`(2026-10-19, Figma 등록 대기 — `figma-pending/`)**, `colors/surface/page`(#fdfdfd), 그림자 `elevation-3`(같은 값) | 12px 로컬 변수 등록 · 재바인딩([R4](./figma-fix-requests.md#r4-12px-모서리-변수-등록-f69)) |
+| F69 | 대시보드 컴포넌트가 원격 라이브러리 변수 사용 — metric-card · dashboard-filter-bar의 padding `padding/6`(16) · 모서리 `radius/xlarge1`(12) · 배경 `color/background/white`(#ffffff), data-state 배경 `color/background/white`. 그림자(0 1 8 / 12%)는 효과 스타일 없이 값만 지정 | 모서리: **2026-10-19 Figma에 `border-radius/rounded-[12px]` 등록 · 재연결 완료**(R4). padding · 배경 · 그림자는 같은 값 로컬 토큰 사용 중 | legacy 시안 19개(F83), padding · 배경 원격 변수 |
 | F70 | skeleton Shape 값 이름 "Shape4"(100 × 10, 이름 없는 변형), Circle 모서리 `rounded-xl`(14)이 24px 원보다 큼 | `shape="shape4"` 그대로, 원은 모서리가 잘려 원형 | 이름 정리 |
 | F71 | dashboard-filter-bar 예시 — segmented-control 220px가 라벨보다 좁음(항목 70.67 − 좌우 padding 16 < "최근 30일" 58, Figma는 padding 위로 넘쳐 그림), 초기화 버튼이 스냅샷 이후 추가된 button_icon Secondary · Solid(F31), 컨트롤에 보이는 라벨 없음(Label=false) | **2026-10-19 해결**: SegmentedControl 라벨이 Figma처럼 항목 padding까지 사용(항목보다 길 때만 말줄임). 초기화 버튼 Secondary · Solid(F31 동기화 후), 컨트롤에 `aria-label` 필요 | — |
 | F72 | metric-trend Direction에 상태 값 "Disabled"가 섞여 있고, Disabled 3개(Tone별)는 모양이 같음 | `direction="disabled"`(Tone 무시) | Disabled를 별도 속성으로 |
 | F73 | data-state Partial 설명 기본값에 실제 수치("130대 중 128대 수신 · 누락된 2대…")가 들어 있음. data-freshness 배지 인스턴스에 변수 없는 흰 배경(#ffffff)이 채워져 있음(Badge Outline은 투명) | Partial 설명 기본값 없음, 배지는 Badge 그대로(흰 배경 위에서 같음) | 샘플 정리 |
-| F74 | accordion-item md · Hover · Expanded(796:5903)가 y 40 — 같은 줄 다른 변형은 y 20 (2026-10-19 원본 갱신분) | 검증 기준이 실제 위치를 따름(화면 영향 없음) | 세트 배치 정렬([R5](./figma-fix-requests.md#r5-accordion-md--hover--expanded-위치)) |
-| F75 | table_value_editable Type=Filter(2026-10-19 원본 갱신: 칩 1개 구성) — Editing · Filled(693:7165) 칩이 `Unselected, Expanded=True`인데 라벨은 선택 요약(Selected · Expanded 570:26566 있음), Hover · Filled(693:7167) 칩은 State=Default인데 Hover · Empty(693:7163)는 State=Hover, 693:7165 y 1px 어긋남 | Figma 그대로 구성 | 칩 상태 확인 · 정렬([R6](./figma-fix-requests.md#r6-table-편집-칸-filter-변형의-칩-상태)) |
-| F76 | table_value_editable Type=Filter · Editing에 칩 아래 **다중 선택 목록**(listbox sm + option Selected 2개) — 라이브러리에 칩 트리거 + 다중 선택 목록 컴포넌트 없음 | 목록은 그리지 않고 검증에서 목록 위 4.5px 제외 | 구현 방식 결정(D3, [R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록-결정-d3)) |
+| F74 | accordion-item md · Hover · Expanded(796:5903)가 y 40 — 같은 줄 다른 변형은 y 20 | **미확인** — Accordion 프레임이 원본에서 삭제되어 수정 불가(F80) | F80 결정 후 |
+| F75 | table_value_editable Type=Filter — Editing · Filled(693:7165) 칩이 Unselected, Hover · Filled(693:7167) 칩 State=Default, 693:7165 y 1px | **693:7165 Figma 수정 완료**(R6, Selected · Expanded). 693:7167은 다른 Type과 같은 규칙이라 오류 아님. y 1px은 모든 Editing 변형 공통 | Hover · Empty 칩(F82) |
+| F76 | table_value_editable Type=Filter · Editing에 칩 아래 **다중 선택 목록**(listbox sm + option Selected 2개) — 라이브러리에 칩 트리거 + 다중 선택 목록 컴포넌트 없음 | 목록은 그리지 않고 검증에서 목록 위 4.5px 제외 | 구현 방식 결정(D3, [R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록--결정-대기-d3)) |
+| F77 | chart 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261) 비교 막대 5개(1011:14280 · 14288 · 14296 · 14303 · 14310)가 `chart/simple/history` — R3와 같은 오류 | 변경 안 함(지정 노드 밖, 다른 사람이 추가한 변형) | R3와 같은 수정 |
+| F78 | chart `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873이 `series/compare` — hover=no 짝(762:5921)은 `series/02`. 간단 스타일 hover 변형의 툴팁 표시도 막대 색과 다름 | 변경 안 함 | 짝 변형과 맞추기 |
+| F79 | chart 세트에 `hover` 속성 추가 — 24개 변형(2026-10-19 다른 편집) | 코드 · 검증은 12개 기준 유지, R3 변형만 개별 기준 이미지 | 새 구조로 동기화할지 결정 |
+| F80 | **Accordion 프레임(796:5813) 삭제**, `accordion-item`(796:6071)이 페이지에서 분리(2026-10-19 다른 편집) | Storybook · 패키지에는 Accordion 유지 | 복구 또는 폐기 결정 |
+| F81 | `border-radius/rounded-[2px]`(VariableID:873:4798) WEB code syntax `var(--radius-2px)` — 코드의 CSS 변수는 `--border-radius-rounded-\[2px\]` | 변경 안 함 | code syntax 수정 |
+| F82 | table_value_editable Filter · Hover · Empty(693:7163) 칩만 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | Figma 그대로 | 의도 확인 |
+| F83 | legacy 화면 시안 19개 프레임이 원격 `radius/xlarge1`(12) 사용 | 변경 안 함(DS 컴포넌트 아님) | 로컬 `rounded-[12px]`로(선택) |
 
 ## D. 작업 중 관찰된 원본 변경
 

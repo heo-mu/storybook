@@ -9,7 +9,7 @@
 
 | 구분 | 개수 | 호환성 |
 | --- | ---: | --- |
-| 삭제 · 이름 변경 | 17 | **깨짐** — 앱 CSS가 이 이름을 쓰면 값이 사라짐 |
+| 삭제 · 이름 변경 | 17 → **16** | **깨짐** — 앱 CSS가 이 이름을 쓰면 값이 사라짐(2026-10-19 오후 R1로 1개 복구) |
 | 추가 | 26 | 호환 (Figma 25 + 등록 대기 1) |
 | 값 변경 — 정의 자체 | 9 | 화면 변경 |
 | 값 변경 — 별칭을 따라 | 16 | 화면 변경 (`fill/primary/subtle/hover` #f9fafb → #f5f6f7) |
@@ -21,7 +21,7 @@
 | `--colors-accordion-border-focus` | `--colors-accordion-border-hover` | 같음(#131c2b) |
 | `--colors-button_text-{background,label,icon}-{default,hover,pressed,disabled}` (12) | `--colors-button_text-primary-…` (같은 꼬리) | 같음(단 `background-hover`는 #f5f6f7) |
 | | `--colors-button_text-secondary-…` (12, 새로 추가) | Secondary 글자 · 아이콘이 한 단계 연함 |
-| `--colors-button-primary-outline-border-default` | **대응 없음** (Figma에서 변수 삭제 — R1 · D1) | #004a38 |
+| `--colors-button-primary-outline-border-default` | **복구됨** — 2026-10-19 Figma에 같은 이름 · 별칭으로 재생성(R1), 이름 · 값 그대로 | #004a38 |
 | `--colors-button-primary-outline-border-disabled` | 대응 없음 | #d6dae0 |
 | `--colors-button-primary-solid-border-default` | 대응 없음 | #004a38 |
 | `--colors-button-primary-solid-border-disabled` | 대응 없음 | #d6dae0 |
@@ -80,7 +80,7 @@ Date Picker(navigation · day), Link, Pagination(item · control), Select option
 
 | 안 | 버전 | 의미 | 권장 |
 | --- | --- | --- | --- |
-| A | **0.1.0** | 첫 공개. 결정 대기 항목(D1 · D3 · F65 · F69 Figma 반영 · 내부 export 제거)이 남아 API가 아직 바뀔 수 있음을 표시 | **권장** |
+| A | **0.1.0** | 첫 공개. 결정 대기 항목(D3 · F65-b · F79 차트 구조 · F80 Accordion · 내부 export 제거)이 남아 API가 아직 바뀔 수 있음을 표시 | **권장** |
 | B | 1.0.0-rc.0 | 1.0 후보. 남은 결정이 API를 바꾸지 않는다는 확신이 있을 때 | |
 | C | 1.0.0 | 안정판 선언. 이후 이름 변경은 모두 메이저 | 결정 대기 항목 해소 후 |
 
