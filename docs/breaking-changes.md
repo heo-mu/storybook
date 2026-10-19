@@ -44,6 +44,16 @@
 `fill/primary/subtle/hover`를 쓰는 Hover 배경: Accordion, Button Primary · Secondary Outline, Checkbox, Radio, Chip, Chip Filter,
 Date Picker(navigation · day), Link, Pagination(item · control), Select option, Tab filled(2), Table 행 — 채널당 4단계 어두워짐.
 
+### 2026-10-19 오후 — Tertiary 배경 토큰(Figma 수정)
+
+| 변경 | 내용 | 호환성 |
+| --- | --- | --- |
+| 추가 3 | `--colors-fill-tertiary-default · hover · pressed` (#e9ebee · #dcdfe4 · #d0d4db) | 호환 |
+| 값 변경 3 | `--colors-button-tertiary-solid-background-{default,hover,pressed}` → 위 토큰의 별칭(이름 그대로) | 화면 변경 |
+| 값 변경 1 | `--colors-fill-secondary-subtle-hover` #f9fafb → #f5f6f7(Figma에서 변경) | 화면 변경 |
+
+삭제 · 이름 변경은 없습니다 — [분석](./analysis/tertiary-fill-2026-10-19.md).
+
 ## 2. 컴포넌트 API
 
 | 변경 | 종류 | 호환성 |

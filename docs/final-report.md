@@ -191,3 +191,16 @@ Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것
 R3 차트 비교 막대(5노드, F65) · R4 12px 변수 등록 · 재바인딩(5 + 29노드, F69) · R5 Accordion 변형 위치(1노드) · R6 Table Filter 칩 상태(3노드) ·
 R7 다중 선택 목록(D3) · R8 Table 안내 글자(삭제된 변수, 3노드, F57).
 
+## 9. Tertiary 배경 Semantic Token (2026-10-19, Figma 수정 승인 작업)
+
+| 항목 | 결과 |
+| --- | --- |
+| 원인 | Tertiary / Solid 배경이 `surface/container-subtle`(gray/75 #f5f6f7) — 페이지(#fdfdfd) 대비 1.06:1, 상태 간 L\* 차이 약 2 |
+| Figma 신규 Semantic | `colors/fill/tertiary/default · hover · pressed` → Primitive `gray/150 · 225 · 275`(#e9ebee · #dcdfe4 · #d0d4db), scopes FRAME_FILL · SHAPE_FILL, WEB code syntax |
+| Figma 바인딩 | `button_basic` 24 · `button_icon` 18 변형의 배경 → 신규 토큰. Component `button/tertiary/solid/background/*`도 신규 토큰 별칭으로. Chip 등 다른 컴포넌트는 용도가 달라 유지 |
+| Figma 검증 | 변경 전후 지문: 76개 세트 중 바뀐 것은 Dialog(인스턴스가 따라감)뿐, 체크섬 8그룹 일치 |
+| 코드 | 토큰 재생성, `Button.css` Tertiary / Solid → `--colors-fill-tertiary-*`, 기준 이미지 · 스펙 갱신, 비교 스토리 **Components / Button / Tertiary Background** |
+| 상세 | [analysis/tertiary-fill-2026-10-19.md](./analysis/tertiary-fill-2026-10-19.md) |
+
+작업 중 다른 사람의 Figma 편집이 관찰되었습니다: `fill/secondary/subtle/hover` 값 변경(동기화함), Accordion 프레임 삭제 · Chart 세트 재배치(**반영하지 않음** — 진행 중인 편집으로 판단, 확인 필요).
+

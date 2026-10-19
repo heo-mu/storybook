@@ -74,6 +74,20 @@ import { Button, IconButton, TextButton } from 'platform-design-system';
 
 Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수(192 / 144 / 16)를 테스트로 검증합니다.
 
+### Tertiary / Solid 배경 (2026-10-19)
+
+Tertiary / Solid의 배경은 Semantic 토큰 **`colors/fill/tertiary/*`** 를 씁니다(Figma에서 Button · IconButton의 Default · Hover · Pressed 채우기를 이 토큰에 바인딩).
+이전 배경(`surface/container-subtle` #f5f6f7)은 페이지(#fdfdfd)와 대비가 1.06:1로 거의 보이지 않아, 같은 회색 단계 체계를 유지하며 진하게 조정했습니다.
+
+| State | 토큰 | Primitive | 값 | 이전 |
+| --- | --- | --- | --- | --- |
+| Default | `--colors-fill-tertiary-default` | `gray/150` | #e9ebee | #f5f6f7 |
+| Hover | `--colors-fill-tertiary-hover` | `gray/225` | #dcdfe4 | #eff0f3 |
+| Pressed | `--colors-fill-tertiary-pressed` | `gray/275` | #d0d4db | #e9ebee |
+| Disabled | `--colors-button-tertiary-solid-background-disabled`(fill/disabled) | `gray/250` | #d6dae0 | 변경 없음 |
+
+Props · 사용법은 그대로이고 색만 바뀝니다. 비교: Storybook **Components / Button / Tertiary Background**.
+
 ## 상태 (State)
 
 <Canvas of={StatesStories.ButtonStates} />

@@ -1,8 +1,8 @@
 /*
  * Button family — implemented from the Figma "Button" frame (58:4971) of
  * [Platform] Web Design System / 🔵 Ver 0.4:
- *   .ds-button       ← component set "button_basic" (54:2904, 160 variants)
- *   .ds-icon-button  ← component set "button_icon"  (67:2368, 120 variants)
+ *   .ds-button       ← component set "button_basic" (54:2904, 192 variants)
+ *   .ds-icon-button  ← component set "button_icon"  (67:2368, 144 variants)
  *   .ds-text-button  ← component set "button_text"  (432:8395, 16 variants)
  * Every value below is a Figma variable (CSS custom property from src/tokens) or a value read
  * from the component itself. State "Hover" → :hover, "Pressed" → :active, "Disabled" → :disabled.
@@ -184,11 +184,12 @@
   --ds-button-icon-disabled: var(--colors-button-secondary-solid-icon-disabled);
 }
 
+/* Tertiary / Solid background: Figma binds Default · Hover · Pressed to the Semantic tertiary surface tokens (2026-10-19). */
 .ds-button[data-variant='tertiary'][data-appearance='solid'],
 .ds-icon-button[data-variant='tertiary'][data-appearance='solid'] {
-  --ds-button-bg-default: var(--colors-button-tertiary-solid-background-default);
-  --ds-button-bg-hover: var(--colors-button-tertiary-solid-background-hover);
-  --ds-button-bg-pressed: var(--colors-button-tertiary-solid-background-pressed);
+  --ds-button-bg-default: var(--colors-fill-tertiary-default);
+  --ds-button-bg-hover: var(--colors-fill-tertiary-hover);
+  --ds-button-bg-pressed: var(--colors-fill-tertiary-pressed);
   --ds-button-bg-disabled: var(--colors-button-tertiary-solid-background-disabled);
   --ds-button-label-default: var(--colors-button-tertiary-solid-label-default);
   --ds-button-label-disabled: var(--colors-button-tertiary-solid-label-disabled);

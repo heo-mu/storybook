@@ -35,6 +35,7 @@
 | 9 | 통합 QA · 최종 보고 | 완료 ([final-report.md](./final-report.md)) |
 | 10 | 전달 전 안정화 (F31 · F65 · F69 분석, 차트 툴팁 · 필터 바 라벨, 이슈 분류, 개발자 문서) | 완료 |
 | 11 | 최종 배포 준비 (F31 동기화 · Secondary/Solid, F65 색 통일, F69 토큰, 공개 API 분류, 배포 전 체크리스트) | 완료 — [final-report.md 8절](./final-report.md#8-최종-배포-준비-2026-10-19) |
+| 12 | Tertiary 배경 Semantic Token (Figma 수정 + 코드 동기화) | 완료 — [final-report.md 9절](./final-report.md#9-tertiary-배경-semantic-token-2026-10-19-figma-수정-승인-작업) |
 
 ## 검증 현황
 

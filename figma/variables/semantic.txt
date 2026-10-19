@@ -1,5 +1,5 @@
-# Figma snapshot — collection "Semantic" (mode: Mode 1), 68 variables
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: fill/primary/subtle/hover)
+# Figma snapshot — collection "Semantic" (mode: Mode 1), 71 variables
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: fill/primary/subtle/hover; new colors/fill/tertiary/* — Tertiary surface, created in Figma 2026-10-19; fill/secondary/subtle/hover gray/50 → gray/75 changed in Figma on 2026-10-19 outside this task, synced)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 colors/border/inverse=@P:colors/white [ALL_SCOPES]
 colors/border/gray-subtler=@T:colors/brand-gray/250 [ALL_SCOPES]
@@ -55,7 +55,7 @@ colors/fill/primary/subtle/default=@P:colors/white [ALL_SCOPES]
 colors/fill/primary/subtle/hover=@P:colors/gray/75 [ALL_SCOPES]
 colors/fill/primary/subtle/pressed=@P:colors/gray/100 [ALL_SCOPES]
 colors/fill/secondary/subtle/default=@P:colors/white [ALL_SCOPES]
-colors/fill/secondary/subtle/hover=@P:colors/gray/50 [ALL_SCOPES]
+colors/fill/secondary/subtle/hover=@P:colors/gray/75 [ALL_SCOPES]
 colors/fill/secondary/subtle/pressed=@P:colors/gray/100 [ALL_SCOPES]
 colors/fill/transparent/default=@P:colors/alpha/white/0 [ALL_SCOPES]
 colors/fill/transparent/hover=@P:colors/alpha/black/50 [ALL_SCOPES]
@@ -69,3 +69,6 @@ colors/chart/simple/history=@T:colors/brand-gray/200 [FRAME_FILL,SHAPE_FILL,STRO
 colors/chart/simple/history-compare=@T:colors/brand-gray/100 [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
 colors/chart/simple/current-surface=@T:colors/brand/50 [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
 colors/surface/scrim=@P:colors/alpha/black/900 [FRAME_FILL,SHAPE_FILL]
+colors/fill/tertiary/default=@P:colors/gray/150 [FRAME_FILL,SHAPE_FILL]
+colors/fill/tertiary/hover=@P:colors/gray/225 [FRAME_FILL,SHAPE_FILL]
+colors/fill/tertiary/pressed=@P:colors/gray/275 [FRAME_FILL,SHAPE_FILL]

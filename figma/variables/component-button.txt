@@ -1,5 +1,5 @@
 # Figma snapshot — collection "Component" (mode: Mode 1), subset: colors/button/* and colors/button_text/* (81 of 763 variables)
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), re-exported 2026-10-19 via Figma MCP use_figma (read-only) — F31 sync (docs/analysis/F31-button-sync.md)
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), re-exported 2026-10-19 via Figma MCP use_figma (read-only) — F31 sync; tertiary/solid/background/{default,hover,pressed} re-aliased to colors/fill/tertiary/* in Figma 2026-10-19 (docs/analysis/F31-button-sync.md)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 colors/button/primary/solid/background/default=@S:colors/fill/primary/strong/default [ALL_SCOPES]
 colors/button/primary/solid/background/hover=@S:colors/fill/primary/strong/hover [ALL_SCOPES]
@@ -37,9 +37,9 @@ colors/button/secondary/outline/border/disabled=@S:colors/fill/disabled/default 
 colors/button/secondary/outline/background/hover=@S:colors/fill/primary/subtle/hover [ALL_SCOPES]
 colors/button/secondary/outline/background/pressed=@S:colors/fill/primary/subtle/pressed [ALL_SCOPES]
 colors/button/secondary/outline/background/disabled=@S:colors/fill/disabled/default [ALL_SCOPES]
-colors/button/tertiary/solid/background/default=@S:colors/surface/container-subtle [ALL_SCOPES]
-colors/button/tertiary/solid/background/hover=@S:colors/surface/container [ALL_SCOPES]
-colors/button/tertiary/solid/background/pressed=@S:colors/surface/overlay [ALL_SCOPES]
+colors/button/tertiary/solid/background/default=@S:colors/fill/tertiary/default [ALL_SCOPES]
+colors/button/tertiary/solid/background/hover=@S:colors/fill/tertiary/hover [ALL_SCOPES]
+colors/button/tertiary/solid/background/pressed=@S:colors/fill/tertiary/pressed [ALL_SCOPES]
 colors/button/tertiary/solid/background/disabled=@S:colors/fill/disabled/default [ALL_SCOPES]
 colors/button/tertiary/solid/label/default=@S:colors/text/secondary [ALL_SCOPES]
 colors/button/tertiary/solid/label/disabled=@S:colors/text/placeholder [ALL_SCOPES]
