@@ -6,6 +6,9 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 각 항목에 **코드 처리**(현재 구현이 어떻게 대응하는지)와 **제안**(디자인 쪽 정리안)을 적었습니다.
 우선순위: **높음** = 의도와 다르게 보일 가능성이 있음 · **중간** = 혼동·유지보수 위험 · **낮음** = 정리 권장.
 
+**분류(2026-10-19)**: 전 항목을 디자인 결정 필요 / 개발 개선 필요 / 허용 가능한 차이로 나눈 표는 [figma-issue-triage.md](./figma-issue-triage.md),
+재분석 문서는 [F31 Button 동기화](./analysis/F31-button-sync.md) · [F65 차트 비교 색](./analysis/F65-chart-compare-color.md) · [F69 12px 모서리](./analysis/F69-radius-12.md).
+
 ## 요약
 
 | # | 항목 | 우선순위 |
@@ -145,7 +148,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F60 | 카드 그림자가 원격 라이브러리 스타일 `Box Shadow/shadow-sm`(0 1 3 / 10%) — 로컬 효과 스타일에 같은 값 없음(elevation-1은 12%) | `elevation-1` 사용 | 로컬 스타일 추가 또는 elevation-1 사용 (결정 필요) |
 | F61 | Card 프레임(185:6512)이 숨김 — 스크린샷 · 내보내기가 1×1로 렌더링되어 픽셀 기준 이미지를 만들 수 없음 | 레이어 값으로 구현, 위치 · 크기만 검증(`geometryOnly`) | 숨김 이유 · 사용 여부 확인 (결정 필요) |
 | F62 | chart 샘플 데이터 불일치 — 막대 레이어 이름이 모두 자리표시 값("Bar / 101동 / current / 384"), 툴팁 값 324 · 332가 막대 · 축과 맞지 않음(선 차트 축 최대 240), 날짜 축 선 차트 툴팁 제목이 "104동", 가로 막대 툴팁 "103동"이 102동 행에 표시, 툴팁 계열 이름(이번달/저번달, 전기/가스)과 범례(조회 기간/이전 기간)가 다름 | 데이터로 그림 — 툴팁 · 범례 · 표 모두 `series.label`과 실제 값. 검증 스토리는 그려진 크기에서 값을 역산 | 샘플 정리 |
-| F63 | chart 툴팁 위치가 변형마다 손으로 배치됨 — 선: 점 오른쪽 13.09px · 점 높이 가운데, 세로 막대: 항목 가운데(0.2px 차이) · 그림 영역 위, 가로 막대: 막대 위에 겹침. 호버 상태는 막대 Group=yes · 선 변형에만 그려짐 | 선 · 가로 막대: 기준점(점 · 가장 긴 막대 끝) 오른쪽 `p-3` · 세로 가운데, 세로 막대: 항목 가운데 · 그림 영역 위, 넘치면 왼쪽으로 — 코드 정책. 호버 강조는 Group=no에도 적용 | 위치 규칙 정의 (결정 필요) |
+| F63 | chart 툴팁 위치가 변형마다 손으로 배치됨 — 선: 점 오른쪽 13.09px · 점 높이 가운데, 세로 막대: 항목 가운데(0.2px 차이) · 그림 영역 위, 가로 막대: 막대 위에 겹침. 호버 상태는 막대 Group=yes · 선 변형에만 그려짐 | 선 · 가로 막대: 기준점(점 · 가장 긴 막대 끝) 오른쪽 `p-3` · 세로 가운데, 세로 막대: 항목 가운데 · 그림 영역 위, 넘치면 왼쪽으로 — 코드 정책. 호버 강조는 Group=no에도 적용 — **2026-10-19**: 툴팁을 <body>로 포털, 보이는 그림 영역 · 화면 안으로 자동 조정(뒤집기 · 이동) | 위치 규칙 정의 (결정 필요) |
 | F64 | chart 간단 선 차트의 점이 기간 이름 가운데에 있지 않고 간격이 고르지 않음(x 14.5 · 82 · 160 · 238 · 302.5, 이름 가운데 27.2 · 93.6 · 160 · 226.4 · 292.8), 선은 프레임 밖(−2.7 · 320.96)까지 그려져 잘림 | 점은 각 기간 가운데, 선은 첫 · 마지막 구간 기울기로 양 끝까지 이어 그림. 그림 영역은 픽셀 비교 제외(수동 검토) | 점 위치 정리 |
 | F65 | chart 비교 계열 색이 변형마다 다름 — 가로 막대 기본 Group=yes 비교 막대 `chart/simple/history`(#e2e5e9)인데 범례 · 툴팁 표시는 `chart/series/compare`(#d6dae0), 세로 막대는 막대 · 범례 모두 compare. 간단 스타일 지난 기간도 세로(Group=no) compare · 가로 simple/history | Figma 변형별 그대로 | 색 통일 (결정 필요) |
 | F66 | chart-tooltip 제목 · 값 글자색이 원격 라이브러리 변수 `color/text/tertiary`(#6d7882) · `color/text/primary`(#131416), padding 10 · radius 6도 원격 변수. 차트 안 인스턴스에만 배경 흐림 12가 추가됨(메인 컴포넌트는 그림자만) | 같은 이름의 로컬 `colors/text/tertiary`(#778191) · `colors/text/primary`(#131c2b), 같은 값의 `p-2_5` · `rounded-sm`. 흐림은 `Chart` 안 툴팁에만(`blur(6px)` = 반경 12 / 2) | 로컬 변수 바인딩 |
@@ -153,7 +156,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F68 | chart-legend-item — 선 차트 Group=yes 두 번째 범례가 Dash Line 인스턴스인데 점선을 지워 실선(series/02), Dash Line 메인 컴포넌트 색은 `chart/series/compare`. 숨김 레이어 "Current values"(간단 스타일 현재 값 칩), "Axis unit"(가로 막대 단위) | 선 차트 범례는 실선 `line`, `ChartLegendItem type="dash-line"`은 메인 컴포넌트대로(Figma가 20px 선에 맞춘 대시 간격 재현). 숨김 레이어는 구현하지 않음 | 의도 확인 |
 | F69 | 대시보드 컴포넌트가 원격 라이브러리 변수 사용 — metric-card · dashboard-filter-bar의 padding `padding/6`(16) · 모서리 `radius/xlarge1`(12) · 배경 `color/background/white`(#ffffff), data-state 배경 `color/background/white`. 그림자(0 1 8 / 12%)는 효과 스타일 없이 값만 지정 | 같은 값 `p-4`, 모서리 12px(로컬 모서리 토큰에 12 없음: rounded-lg 10 · rounded-xl 14), `colors/surface/page`(#fdfdfd), 그림자 `elevation-3`(같은 값) | 로컬 변수 · 모서리 토큰 정의 (결정 필요) |
 | F70 | skeleton Shape 값 이름 "Shape4"(100 × 10, 이름 없는 변형), Circle 모서리 `rounded-xl`(14)이 24px 원보다 큼 | `shape="shape4"` 그대로, 원은 모서리가 잘려 원형 | 이름 정리 |
-| F71 | dashboard-filter-bar 예시 — segmented-control 220px가 라벨보다 좁음(항목 70.67 − 좌우 padding 16 < "최근 30일" 58, Figma는 padding 위로 넘쳐 그림), 초기화 버튼이 스냅샷 이후 추가된 button_icon Secondary · Solid(F31), 컨트롤에 보이는 라벨 없음(Label=false) | SegmentedControl은 말줄임(수동 검토), 예시는 Secondary · Outline으로 대체하고 그 영역 픽셀 제외, 각 컨트롤에 `aria-label` 필요 | 예시 크기 · 버튼 정리 |
+| F71 | dashboard-filter-bar 예시 — segmented-control 220px가 라벨보다 좁음(항목 70.67 − 좌우 padding 16 < "최근 30일" 58, Figma는 padding 위로 넘쳐 그림), 초기화 버튼이 스냅샷 이후 추가된 button_icon Secondary · Solid(F31), 컨트롤에 보이는 라벨 없음(Label=false) | **2026-10-19 해결**: SegmentedControl 라벨이 Figma처럼 항목 padding까지 사용(항목보다 길 때만 말줄임) — 해당 라벨 검증 재개. 초기화 버튼은 Secondary · Outline으로 대체(F31), 컨트롤에 `aria-label` 필요 | 예시 크기 · 버튼 정리 |
 | F72 | metric-trend Direction에 상태 값 "Disabled"가 섞여 있고, Disabled 3개(Tone별)는 모양이 같음 | `direction="disabled"`(Tone 무시) | Disabled를 별도 속성으로 |
 | F73 | data-state Partial 설명 기본값에 실제 수치("130대 중 128대 수신 · 누락된 2대…")가 들어 있음. data-freshness 배지 인스턴스에 변수 없는 흰 배경(#ffffff)이 채워져 있음(Badge Outline은 투명) | Partial 설명 기본값 없음, 배지는 Badge 그대로(흰 배경 위에서 같음) | 샘플 정리 |
 
