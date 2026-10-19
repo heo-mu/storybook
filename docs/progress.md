@@ -2,7 +2,7 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
-## 코드 정책 → Figma 공식 정책 작업 (2026-10-19 시작, 진행 중)
+## 코드 정책 → Figma 공식 정책 작업 (2026-10-19, 완료)
 
 체크포인트 태그 `checkpoint/pre-policy-pass`. 정책 목록 원본: `docs/code-policy-audit.md`(145항목 — 상태 A 45 · 동작 B 85 · 기술 C 15).
 그룹 순서: ① Focus 정책(토큰 `colors/border/focus`, 24개 세트 `Focus` 속성, Select Focus 변형, 코드 포커스 링) → ② Figma 정의 보완(Card 효과 · 원격 padding/배경 · Link 텍스트 스타일 · 요일 · Pagination · EmptyState 속성 · Dialog 덮개 · Table 예시) →
@@ -10,7 +10,7 @@
 재개 방법: `git log --oneline checkpoint/pre-policy-pass..`로 끝난 그룹 확인, `docs/code-policy-audit.md`의 상태 열이 "진행 전"인 항목부터. Figma 쓰기 전 체크섬 · 세트 지문 재조회.
 
 진행: ①–③ 완료(6b38274 · c1e78df). ④ Figma Rules 02–10장(227:3774 · 계속 1100:5082) · 주석 17개(13개 세트) · 대시보드 그림자 효과 스타일 연결 — 완료.
-⑤ Usage MDX 37개 "정책" 절 재분류, `docs/code-policy-audit.md`(152항목), triage · issues · fix-requests · accessibility · CHANGELOG · breaking-changes, Select Focus 3변형 검증 추가 — 완료. ⑥ 전체 회귀 — 진행.
+⑤ Usage MDX 37개 "정책" 절 재분류, `docs/code-policy-audit.md`(152항목), triage · issues · fix-requests · accessibility · CHANGELOG · breaking-changes, Select Focus 3변형 검증 추가 — 완료. ⑥ 전체 회귀 — 완료(결과 [final-report.md 12절](./final-report.md#12-코드-정책--figma-공식-정책-2026-10-19-밤-figma-수정-허용-작업)).
 
 ## 작업 방식 (모든 컴포넌트 공통)
 
@@ -58,7 +58,7 @@
 | Checkbox | 36 | 36/36 | 36/36 | 36/36 | 통과 |
 | Radio | 24 | 24/24 | 24/24 | 24/24 | 통과 |
 | Switch | 16 | 16/16 | 16/16 | 16/16 | 통과 |
-| Select (select · listbox · option · select_message) | 21 + 3 + 15 + 3 | 42/42 | 42/42 | 42/42 | 통과 |
+| Select (select · listbox · option · select_message) | 24 + 3 + 15 + 3 (State=Focus 3 추가, 2026-10-19) | 45/45 | 45/45 | 45/45 | 통과 |
 | Slider (slider · handle) | 2 + 5 | 7/7 | 7/7 | 7/7 | 통과 |
 | Segmented Control (control · item) | 3 + 18 | 21/21 | 21/21 | 21/21 | 통과 |
 | Chip (chip-multi · chip-input · chip-filter) | 24 + 12 + 48 | 84/84 | 84/84 | 84/84 | 통과 |

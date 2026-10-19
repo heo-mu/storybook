@@ -12,8 +12,8 @@ Figma 원본은 읽기 전용으로만 조회했고 수정하지 않았습니다
 | 구현 컴포넌트 | Figma Component Set · Component 74개(Button 3 포함) → React 컴포넌트 44종(+ 하위 부품), Storybook 사용 문서 37쪽 |
 | 구현 불가 | Popover · Combobox · Drawer — 작업 중 Figma에서 삭제되어 근거 없음 |
 | Figma 정합성 | Button 296 + 그 밖의 842개 변형, Chromium · Firefox · WebKit 3개 엔진 모두 통과 |
-| 스토리 테스트 | 87 파일 · 378개 통과 (2026-10-19 정합성 개선 후) |
-| 접근성(axe) | 378 스토리 — 색 대비 0 · 그 밖의 위반 0 (A-1 · A-2 수정, 알려진 대비 목록 없음 · react-aria 달력 이름 693, [accessibility.md](./accessibility.md)) |
+| 스토리 테스트 | 88 파일 · 383개 통과 (2026-10-19 코드 정책 → Figma 정책화 후) |
+| 접근성(axe) | 383 스토리 — 색 대비 0 · 그 밖의 위반 0 (A-1 · A-2 수정, 알려진 대비 목록 없음 · react-aria 달력 이름 693, [accessibility.md](./accessibility.md)) |
 | 빌드 · 타입 · 린트 | typecheck · lint · build · build-storybook 통과 |
 | 외부 사용 검증 | `npm pack`(184 파일) → 새 Vite 8 + React 19 + TypeScript 6 프로젝트에 설치, 컴포넌트 · 하위 부품 · 아이콘 · 상수 60여 개 import — strict 타입 검사(패키지 `.d.ts` 포함) · `vite build` · 브라우저 실행(콘솔 오류 0, 폰트 · 토큰 적용) 통과 |
 | Storybook MCP | 컴포넌트 매니페스트 44 · 문서 37쪽 조회 가능(검증용 Showcase는 `!manifest`로 제외) |
@@ -243,3 +243,24 @@ R7 다중 선택 목록(D3) · R8 Table 안내 글자(삭제된 변수, 3노드,
 
 남은 결정: 차트 보조 계열 막대 대비(1.24 · 1.38:1), SearchField Solid 경계, Segmented 선택 표시, Slider 손잡이 · Segmented 그림자 효과 스타일,
 data-state · 예시 프레임 원격 흰 배경(#ffffff), F77 수정 여부, 그 밖에 [figma-issue-triage.md](./figma-issue-triage.md) 1절.
+
+## 12. 코드 정책 → Figma 공식 정책 (2026-10-19 밤, Figma 수정 허용 작업)
+
+시작 체크포인트 `checkpoint/pre-policy-pass`(e6b5f40), 커밋 6b38274 · c1e78df · 22cfc5e와 이 절의 회귀 커밋. 원격 Push · npm 배포 · Storybook 배포는 하지 않았습니다.
+항목별 출처 · 결정 · Figma ID · 처리 상태: [code-policy-audit.md](./code-policy-audit.md). Figma 변경 목록: [figma-fix-requests.md P절](./figma-fix-requests.md#p-코드-정책--figma-공식-정책-2026-10-19-밤-사용자-승인-작업).
+
+| # | 항목 | 결과 |
+| --- | --- | --- |
+| 1 | 코드 전용 정책 전체 | **152개**(분류 A 시각 상태 51 · B 동작 86 · C 기술 15) — Usage MDX 37쪽 · docs · CSS/TSX 주석 · Props 기본값 · 상태/상호작용 코드에서 수집 |
+| 2 | Variant · Property · 변수 · 스타일로 반영(Figma 정의 정책) | **39개** — `Focus` 속성 24세트 766변형(숨김 링 · 토큰 바인딩), Select State=Focus 3변형, Dialog 덮개 변수 · 예시, Card · 대시보드 그림자 효과 스타일, 원격 padding · 배경 로컬화, Link 텍스트 스타일 줄 높이, 달력 요일, Pagination 예시, EmptyState `Show Button`, Table 예시 |
+| 3 | Figma Rules에 문서화(Figma 문서화 정책) | **96개** — 기존 "Design System Rules"(227:3774)에 02–06장, 같은 스타일의 계속 프레임(1100:5082)에 07–10장(표 50행), 컴포넌트 Dev Mode 주석 17개(13세트). 항목마다 Rules 본문 · 주석에 있는지 Figma 재조회로 대조(빠진 3곳 — 탭 패널 · 입력 칸 안 버튼 · Toast 닫기, 진행 막대 · 단계 모션 — 보완) |
+| 4 | 개발 구현 세부 사항 | **15개** — 포털 · z-index, 제어/비제어, 네이티브 요소, 엔진 대응, UNSTABLE Toast 감싸기 등(Rules 10장 목록) |
+| — | Figma 반영 대기 | **2개** — Segmented 선택 그림자(같은 값의 효과 스타일 없음, 등록은 디자인 결정 · F18), Table Textarea 두 줄 예시(F58). 반영 완료로 표시하지 않음 |
+| 5 | 새 · 수정 토큰과 컴포넌트 | 추가 `colors/border/focus`(→ brand/700) · `colors/dialog/scrim/default`, 값 `surface/scrim` 검정 90 → 50%, `sm/leading-normal/underline` 줄 높이 20px. 컴포넌트: 모든 포커스 가능한 컨트롤의 포커스 링, Select Focus 테두리, Dialog 덮개, Toast(최대 3 · 오류 유지 · 중복 대체), Tooltip 지연 500ms, 선택 그룹 간격 8 · 16px(`:where`로 사용처 간격 우선) |
+| 6 | Storybook | Usage 37쪽의 "코드 정책" → **정책** 절(4분류, 항목 ID), Foundations/Focus(링 · 키보드 검사), Toast Policy · Dialog 덮개 · GroupSpacing(Checkbox · Radio) 상호작용 테스트, Select 매트릭스에 State=Focus, 그룹 스토리의 임의 `style` 간격 제거 |
+| 7 | 접근성 | 포커스 표시를 형태별(바깥 링 · 안쪽 링 · 입력 칸 테두리 · 목록 Hover 모양)로 정의 — 링 5.14:1(회색 배경 4.59:1), 키보드에만. 오류 토스트 유지(2.2.1), 모달 덮개 · 포커스 가둠, Tooltip Esc, 모션 줄이기. [accessibility.md](./accessibility.md) |
+| 8 | 회귀 | typecheck · lint 0 · build · build-storybook 통과 / 스토리 테스트 88 파일 · 383개 / axe 383 스토리 색 대비 0 · 그 밖의 위반 0 / verify:all 36 컴포넌트 × 3 엔진 108/108(854/857 변형, 3개는 F58 수동 검토) / verify:button 352 + 실제 포인터 36 × 3 엔진 / 키보드 포커스 링 23개 컴포넌트 × 3 엔진(WebKit 링크 2개는 Tab이 링크를 건너뛰는 기본 설정이라 키보드 포커스로 확인) / 외부 Vite + React 19 프로젝트(npm pack → strict 타입 · 빌드 · 3 엔진 실행: 포커스 링 키보드에만, 그룹 8 · 16px, 토스트 중복 1 · 최대 3 · 오류 5초 후 유지, 덮개 50%, Tooltip 250ms 없음 · 750ms 표시, 콘솔 오류 0 — Firefox는 Pretendard 글꼴 파일 name 표 경고만) |
+| 9 | Figma 실패 · 미해결 | 쓰기 실패 없음(글꼴 로드 오류 1회는 재시도 전 원인 수정). **원본 동시 변경 감지**: 최종 회귀 중 다른 편집자가 차트 그라데이션 변수 22개를 추가하고 차트 Component 변수 6개 이름을 바꿨으며 `chart` 세트 118곳에 연결 — 범위 밖 · 진행 중이라 동기화 보류([token-diff.md](./token-diff.md#원본-변경-감지-2026-10-19-밤--차트-그라데이션-동기화-보류)); 그 외 체크섬은 스냅샷과 같음. 남은 결정은 [figma-issue-triage.md](./figma-issue-triage.md) 1절(17) |
+
+주의: 이전 작업(c1e78df)의 그룹 간격 3 엔진 측정은 스토리에 `style` 간격이 있던 상태였습니다. 이번에 스토리의 임의 간격을 지우고 스토리 테스트(GroupSpacing)와 외부 프로젝트에서 컴포넌트 자체 간격을 다시 확인했습니다.
+

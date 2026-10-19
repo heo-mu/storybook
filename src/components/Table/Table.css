@@ -341,8 +341,8 @@
   display: none;
 }
 
-/* Hint after a control (Switch, file upload): Figma …/value/label/hover — added after the token snapshot;
- * the same colour as colors/text/tertiary, which is used here (figma-issues F57). */
+/* Hint after a control (Switch, file upload): colors/text/tertiary — Figma binds the same variable since R8
+ * (2026-10-19; it was bound to the deleted …/value/label/hover, figma-issues F57). */
 .ds-kv__hint {
   color: var(--colors-text-tertiary);
   font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;

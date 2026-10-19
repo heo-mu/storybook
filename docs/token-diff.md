@@ -3,6 +3,9 @@
 > **2026-10-19**: 아래 "원본 변경 감지" 내용은 F31 동기화로 반영되어 스냅샷이 원본과 다시 같습니다(체크섬 8그룹 일치).
 > 반영 결과와 토큰 변경 목록은 [analysis/F31-button-sync.md](./analysis/F31-button-sync.md) · [breaking-changes.md](./breaking-changes.md).
 
+> **2026-10-19 밤 — 원본 변경 감지(동기화 보류)**: 코드 정책 작업의 최종 회귀에서 체크섬이 달라졌습니다. 같은 시간대에 다른 편집자가 만든 차트 그라데이션
+> 작업(VariableID:1113:5009 – 1113:5030)이며, 이 작업 범위 밖이고 진행 중이라 스냅샷 · 토큰 · 코드 · 기준 이미지는 바꾸지 않았습니다. 아래 표는 [원본 변경 감지 (2026-10-19 밤)](#원본-변경-감지-2026-10-19-밤--차트-그라데이션-동기화-보류).
+
 Figma **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`)의 Variables / Styles를 다시 추출해,
 Button 구현 시점의 스냅샷(`figma/`)과 비교한 결과입니다. 비교는 정렬된 `name=value [scopes]` 줄의 체크섬
 (`npm run figma:checksum` ↔ `figma/checksum.figma.js`)과 그룹별 변수 개수로 했습니다.
@@ -101,3 +104,19 @@ File Uploader 구현 중 Loading이 바인딩한 `spacing/padding/p-px`가 스�
 - **결정 필요**: 원본 최신 버전으로 동기화할지(→ Button에 Secondary Solid 추가 · TextButton Secondary 색 · 삭제 변수 대응,
   Hover 배경 #f5f6f7로 전 컴포넌트 재검증) 여부. 동기화 절차: 그룹별 재추출 → `npm run tokens` → `npm run verify:all` ·
   `npm run verify:button`(기준 이미지 재캡처 포함).
+
+## 원본 변경 감지 (2026-10-19 밤) — 차트 그라데이션, 동기화 보류
+
+`npm run figma:checksum`(스냅샷) ↔ `figma/checksum.figma.js`(원본) 비교. 새 변수 22개를 빼고 계산하면 Primitive 색 · Theme · Semantic은 스냅샷과 같고,
+Component 그 외는 차트 6개 이름 변경만 다릅니다(접두어별 해시로 특정). Primitive 스칼라 · Button · Text Style · Effect Style은 그대로입니다.
+
+| 그룹 | 스냅샷 | 원본 | 내용 |
+| --- | --- | --- | --- |
+| Primitive 색 | 456 `3f5c6866` | 460 `7c6a827c` | 추가 4: `colors/alpha/emerald-700/400` #007c5666, `alpha/gray-250/400` #d6dae066, `alpha/gray-200/400` #e2e5e966, `alpha/gray-100/400` #eff0f366 |
+| Theme | 44 `0f323395` | 48 `d6be150c` | 추가 4: `colors/brand-alpha/700/400`, `brand-gray-alpha/{250,200,100}/400` |
+| Semantic | 73 `df7ed8af` | 77 `76b9910e` | 추가 4: `colors/chart/gradient/{brand,compare,history,history-compare}/fade` |
+| Component 그 외 | 711 `ac8b1d13` | 721 `127ecc5b` | 추가 10: `colors/chart/bar/{primary,compare,history,history-compare}/gradient/{start,end}/default`, `chart/simple/current/background/default`, `chart/simple/current/value/compare/default`. **이름 변경 6**(값 같음): `colors/chart/bar/{primary,compare,history,history-compare}` · `line/{primary,compare}` → 각 `…/default` |
+| 그 밖 4그룹 | — | 같음 | Primitive 스칼라 167 · Button 82 · Text 46 · Effect 4 |
+
+원본의 `chart` 세트(698:4399)에는 그라데이션 채움 118곳이 새 변수에 연결되어 있습니다(막대 · 영역 — 디자인 변경 진행 중).
+동기화하면 토큰 CSS 변수 6개 이름이 바뀌고(호환성 변경) 차트 화면이 달라지므로 별도 작업으로 다룹니다. 그 전까지 차트 검증은 기존 기준 이미지(변경 전 원본) 기준입니다.
