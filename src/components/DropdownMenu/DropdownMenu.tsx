@@ -8,7 +8,6 @@ import {
   Popover,
   Pressable,
   Separator,
-  Text,
   type Key,
   type MenuItemProps,
   type Placement,
@@ -100,15 +99,11 @@ export function DropdownMenuItem({ children, description, icon, chevron = false,
           {icon}
         </span>
       )}
+      {/* Plain text, no label / description slots: the item is named by all of its visible text (label, then
+          description), so the name holds what is shown (WCAG 2.5.3 Label in Name). */}
       <span className="ds-dropdown__text">
-        <Text slot="label" className="ds-dropdown__label">
-          {children}
-        </Text>
-        {description != null && description !== false && (
-          <Text slot="description" className="ds-dropdown__description">
-            {description}
-          </Text>
-        )}
+        <span className="ds-dropdown__label">{children}</span>
+        {description != null && description !== false && <span className="ds-dropdown__description">{description}</span>}
       </span>
       {chevron && <CaretRightIcon className="ds-dropdown__chevron" />}
     </MenuItem>

@@ -12,19 +12,19 @@ Storybook 각 Usage 문서의 **정책** 절은 이 표의 ID를 그대로 씁�
 
 ## 요약
 
-전체 **156개** — 분류 A 53 · B 87 · C 16.
+전체 **161개** — 분류 A 53 · B 92 · C 16.
 
 | 처리 상태 | 뜻 | 개수 |
 | --- | --- | --- |
 | **Figma 정의 정책** | Figma 변형 · 컴포넌트 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씀(Figma 재조회로 확인) | 41 |
-| **Figma 문서화 정책** | 변형으로 그리지 않는 동작 · 규칙 — Figma "Design System Rules" 02–09장 표와 컴포넌트 Dev Mode 주석에 기록(Figma 재조회로 확인) | 97 |
+| **Figma 문서화 정책** | 변형으로 그리지 않는 동작 · 규칙 — Figma "Design System Rules" 02–09장 표와 컴포넌트 Dev Mode 주석에 기록(Figma 재조회로 확인) | 102 |
 | **개발 구현 세부 사항** | 디자인 컴포넌트에 넣지 않는 기술 구현 — Rules 10장에 목록, Storybook "개발 구현 세부 사항" | 16 |
 | **Figma 반영 대기** | Figma 정리가 필요하지만 아직 반영하지 않은 항목 — 반영 완료로 표시하지 않음 | 2 |
 
 | 분류 \ 상태 | Figma 정의 | Figma 문서화 | 개발 구현 | 반영 대기 |
 | --- | --- | --- | --- | --- |
 | A 시각 상태 | 41 | 10 | 0 | 2 |
-| B 동작 · 상호작용 | 0 | 87 | 0 | 0 |
+| B 동작 · 상호작용 | 0 | 92 | 0 | 0 |
 | C 기술 구현 | 0 | 0 | 16 | 0 |
 
 분류 원칙: **A** 시각 상태는 가능한 한 Figma 변형 · 속성(기존 토큰 사용), **B** 동작은 불필요한 변형 대신 규칙 문서 · 주석, **C** 기술 구현은 개발 문서에만.
@@ -213,6 +213,7 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 | DPCK-02 | B | 달력: 필드 아래 4px, 왼쪽 정렬, 공간 없으면 위로 | 위치 규칙 없음 | 오버레이 공통 규칙(05) | Rules 05 | Figma 문서화 정책 | Rules 05 |
 | DPCK-03 | A | 요일 이름 로캘(ko-KR 일 월 …) | Figma 요일 영어 자리표시(Su Mo …) | 요일은 로캘 — 한국어 "일 월 화 수 목 금 토" | Figma 달력 요일 글자를 한국어로 | Figma 정의 정책 | date-picker_calendar 144:1644 · Rules 08 |
 | DPCK-04 | A | 포커스: 날짜 · 달력 버튼에 브라우저 기본 링 | Focus 상태 없음 | 포커스 링: 2px `colors/border/focus`(brand/700), 바깥 2px 간격, 모서리는 컴포넌트 모서리 + 4px. `:focus-visible`(키보드)일 때만 | Figma 컴포넌트 속성 `Focus`(boolean) + 숨김 "Focus ring" 레이어 | Figma 정의 정책 | date-picker_day 144:1033 · date-picker_navigation 144:1328 · Rules 02 |
+| DPCK-05 | B | 날짜 칸 이름 = react-aria 전체 날짜("2026년 9월 27일 일요일") — 보이는 "27"이 이름의 낱말이 아님(axe 2.5.3, 한국어 "27일") | 이름 규칙 없음 | 보이는 숫자 먼저 + 전체 날짜: "27 2026년 9월 27일 일요일"(선택됨 · 오늘 문구 유지) | Rules 03 이름과 설명 행 | Figma 문서화 정책 | Rules 03 |
 
 ### Dialog
 
@@ -236,6 +237,7 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 | DROP-03 | B | 트리거 아래 4px, 시작 정렬, 화면 밖이면 뒤집기 | 위치 규칙 없음 | 오버레이 공통 규칙(05) | Rules 05 | Figma 문서화 정책 | Rules 05 |
 | DROP-04 | B | 너비는 내용에 맞춤 | 예시 고정 너비만 | 내용에 맞춤(최소 트리거 너비 없음) | Rules 08 | Figma 문서화 정책 | Rules 08 |
 | DROP-05 | B | 하위 메뉴 열림 미구현(chevron 모양만) | 하위 메뉴 패널 없음 | 하위 메뉴 지원 안 함 — chevron은 다른 화면으로 이동 표시로만 | Rules 05 | Figma 문서화 정책 | Rules 05 |
+| DROP-06 | B | 설명이 있는 항목: 이름 = 라벨, 설명 = aria-describedby — 보이는 설명이 이름에 없음(axe 2.5.3) | — | 라벨 + 설명 전체가 이름 | Rules 03 이름과 설명 행 | Figma 문서화 정책 | Rules 03 |
 
 ### EmptyState
 
@@ -420,6 +422,7 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 | TABL-06 | B | 정렬: aria-sort, 아이콘은 활성 색만 | 방향 아이콘 하나 | 정렬 방향은 aria-sort, 활성 열 아이콘은 `header/icon/active` | Rules 07 | Figma 문서화 정책 | Rules 07 |
 | TABL-07 | B | 편집 아이콘은 버튼으로 감싸 이름 지정 | 아이콘만 | 누를 수 있는 아이콘은 버튼 + 이름 | Rules 03 | Figma 문서화 정책 | Rules 03 |
 | TABL-08 | A | 행 · 칸 · 열 머리글 키보드 포커스: 브라우저 기본 링 | Focus 상태 없음 | 포커스 링(안쪽형): 2px `colors/border/focus`를 행 안쪽 가장자리에 — 폭을 채우는 행은 이웃 · 부모에 가려지지 않도록 안쪽에 그림 | Rules 02(Figma 컴포넌트 속성 없음 — 규칙이 기준) | Figma 문서화 정책 | Rules 02 |
+| TABL-09 | B | Empty 머리글은 aria-label만 — 머리글 칸에 글자 없음(axe empty-table-header) | Figma Empty는 빈 머리글 | 화면에는 비우고 이름을 화면 낭독기용 글자로 함께 넣음(TableEmptyColumn) | Rules 03 이름과 설명 행 | Figma 문서화 정책 | Rules 03 |
 
 ### Tabs
 
@@ -488,6 +491,8 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 | COMM-06 | B | 목록 · 메뉴 글자 입력으로 항목 찾기(typeahead) | — | Select · Dropdown은 글자 입력으로 항목 이동 | Rules 04 | Figma 문서화 정책 | Rules 04 |
 | COMM-07 | B | 애니메이션 · prefers-reduced-motion | 모션 토큰 없음 | 상태 전환은 즉시, 반복 모션(스피너)은 동작 줄이기에서 느리게 | Rules 09 | Figma 문서화 정책 | Rules 09 |
 | COMM-08 | C | calc-size() 미지원 엔진 fallback(1px 미만) | — | 개발 구현 | Rules 10 | 개발 구현 세부 사항 | Rules 10 |
+| COMM-09 | B | 아이콘은 항상 aria-hidden — aria-label을 줘도 이름이 가려짐 | — | 장식 아이콘은 aria-hidden, 의미 있는 아이콘은 aria-label → role="img" | Rules 03 이름과 설명 행 | Figma 문서화 정책 | Rules 03 |
+| COMM-10 | B | 같은 화면의 여러 nav(Breadcrumb · Pagination) 이름이 같음(axe landmark-unique) | — | 같은 종류의 랜드마크가 여럿이면 aria-label로 서로 다른 이름 | Rules 03 이름과 설명 행 | Figma 문서화 정책 | Rules 03 |
 
 ## Figma 반영 대기
 

@@ -359,3 +359,13 @@
   outline: var(--border-width-border-2) solid var(--colors-border-focus);
   outline-offset: calc(-1 * var(--border-width-border-2));
 }
+
+/* Text for screen readers only (the name of an Empty header column). */
+.ds-table__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

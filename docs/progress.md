@@ -13,6 +13,9 @@
 - ② **완료** — `FilterChipSelect`(공개, 추가): chip-filter + listbox · option sm, 다중(닫을 때 적용) · 단일("전체"로 해제), 칩 글자 "필터명: 값, 값".
   Figma: 다중 예시 이름 정리, 단일 선택 예시 추가(1149:6756), Rules 04 "필터 칩 선택" 행, chip-filter 주석, 칩 간격 8 → 4px 정정(Rules 08 · Figma 예시 m-1).
   열린 필터 칩은 Figma처럼 State=Default(react-aria 눌림 무시). 검증: 스토리 테스트 31(다중 흐름 · 단일 · 키보드 · Disabled · 필터 영역), 3 엔진 실제 마우스 · 키보드, chip 정합성 84/84.
+- ③ **완료** — 사이드바 경고 25개 스토리(Vitest a11y 'todo' 결과를 수집하는 리포터로 확인) · 6개 규칙을 원인부터 수정: 달력 날짜 칸 이름(숫자 먼저),
+  FilterChipSelect 이름(SelectValue), 설명 있는 메뉴 항목 이름, 달력 머리줄 header → div, 여러 nav 고유 이름, 제목만 있는 메뉴 칸 → 정적 마크업,
+  Empty 머리글 화면 낭독기 글자, 아이콘 aria-label → role=img. 재실행 394개 모두 통과. verify:a11y를 애드온과 같은 axe 기본 규칙 · 제외 없음으로 강화 → 0.
 - 시작 시 Figma 재조회: 다른 편집자의 차트 토큰 개편 진행 중(Semantic 69 · Component 724 — ⑤에서 동기화).
 
 ## 코드 정책 → Figma 공식 정책 작업 (2026-10-19, 완료)

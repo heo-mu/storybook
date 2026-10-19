@@ -159,7 +159,8 @@ export const BodyMatrix: Story = {
       <BodyCell figma="Type=Checkbox" selection />
       <ReorderCell />
       <BodyCell figma="Type=Icon">
-        <NotePencilIcon />
+        {/* An icon that carries meaning is named (a row header needs text for screen readers). */}
+        <NotePencilIcon aria-label="편집" />
       </BodyCell>
       <BodyCell figma="Type=Switch">
         <Switch size="sm" aria-label="사용" />

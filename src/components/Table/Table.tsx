@@ -82,9 +82,21 @@ export function TableSelectionColumn({ className, ...rest }: { className?: strin
   );
 }
 
-/** Figma `table_header` Type Empty: a column without a title (e.g. for actions); name it with `aria-label`. */
-export function TableEmptyColumn({ className, ...rest }: Omit<ColumnProps, 'className' | 'children'> & { className?: string }) {
-  return <Column {...rest} className={cx('ds-table__column', className)} data-type="empty" />;
+/**
+ * Figma `table_header` Type Empty: a column without a visible title (e.g. for actions); name it with `aria-label`.
+ * The name is also inside the header cell as text for screen readers only, so the header is not empty for assistive
+ * technology (axe empty-table-header) while it stays blank on screen as in Figma.
+ */
+export function TableEmptyColumn({
+  className,
+  'aria-label': label,
+  ...rest
+}: Omit<ColumnProps, 'className' | 'children'> & { className?: string; /** Name of the column (also screen-reader text in the header). */ 'aria-label'?: string }) {
+  return (
+    <Column {...rest} aria-label={label} className={cx('ds-table__column', className)} data-type="empty">
+      {label ? <span className="ds-table__sr">{label}</span> : null}
+    </Column>
+  );
 }
 
 export type TableBodyProps<T> = Omit<RACTableBodyProps<T>, 'className'> & { className?: string };

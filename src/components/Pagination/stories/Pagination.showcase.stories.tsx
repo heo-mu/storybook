@@ -24,11 +24,11 @@ export const Overview: Story = {
     <div>
       <StorySection title="Size (sm · md · lg)" direction="column">
         {PAGINATION_SIZES.map((size) => (
-          <Pagination key={size} size={size} totalPages={12} defaultPage={6} />
+          <Pagination key={size} size={size} totalPages={12} defaultPage={6} aria-label={`페이지 — ${size}`} />
         ))}
       </StorySection>
       <StorySection title="Rounded" direction="column">
-        <Pagination shape="rounded" size="md" totalPages={3} />
+        <Pagination shape="rounded" size="md" totalPages={3} aria-label="페이지 — rounded" />
       </StorySection>
     </div>
   ),
@@ -41,7 +41,7 @@ export const VariantMatrix: Story = {
       columns={['pagination']}
       rows={PAGINATION_SIZES.map((size) => ({
         label: size,
-        cells: [{ figma: `Size=${size}`, node: <Pagination size={size} totalPages={5} defaultPage={1} /> }],
+        cells: [{ figma: `Size=${size}`, node: <Pagination size={size} totalPages={5} defaultPage={1} aria-label={`페이지 — ${size}`} /> }],
       }))}
     />
   ),

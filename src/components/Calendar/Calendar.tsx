@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties } from 'react';
+import { useCallback, useId, useMemo, type CSSProperties, type ReactNode } from 'react';
 import {
   Button,
   Calendar as AriaCalendar,
@@ -41,6 +41,30 @@ export type CalendarProps = {
 };
 
 /**
+ * The day number of a cell. react-aria names the cell with the full date ("2026년 7월 28일 화요일"), where Korean joins
+ * the number to "일", so the visible label "28" is not a word of that name (WCAG 2.5.3 Label in Name). The cell is
+ * labelled by the visible number first, then by its own react-aria label (self reference keeps the selected / today
+ * wording): "28 2026년 7월 28일 화요일". aria-labelledby is set on the DOM node (react-aria owns the cell's props).
+ */
+function DayLabel({ children }: { children: ReactNode }) {
+  const id = useId();
+  const ref = useCallback(
+    (el: HTMLSpanElement | null) => {
+      const cell = el?.parentElement;
+      if (!cell) return;
+      if (!cell.id) cell.id = `${id}-cell`;
+      cell.setAttribute('aria-labelledby', `${id} ${cell.id}`);
+    },
+    [id],
+  );
+  return (
+    <span id={id} ref={ref} className="ds-calendar__day-label">
+      {children}
+    </span>
+  );
+}
+
+/**
  * Figma `date-picker_calendar` (144:1644) with `date-picker_header` (144:1377), `date-picker_navigation`
  * (144:1328) and `date-picker_day` (144:1033). Month grid with keyboard navigation (arrows, Page Up / Down,
  * Home / End), from react-aria-components. Weekday and month names follow the locale (react-aria I18nProvider,
@@ -79,7 +103,8 @@ export function Calendar({
       isDisabled={disabled}
       autoFocus={autoFocus}
     >
-      <header className="ds-calendar__header">
+      {/* A div, not <header>: the calendar title row is not a page banner landmark. */}
+      <div className="ds-calendar__header">
         <Heading className="ds-calendar__title" />
         <div className="ds-calendar__nav">
           <Button slot="previous" className="ds-calendar__nav-button">
@@ -89,14 +114,14 @@ export function Calendar({
             <CaretRightIcon />
           </Button>
         </div>
-      </header>
+      </div>
       <div className="ds-calendar__grid-wrap">
         <CalendarGrid className="ds-calendar__grid">
           <CalendarGridHeader>{(day) => <CalendarHeaderCell className="ds-calendar__weekday">{day}</CalendarHeaderCell>}</CalendarGridHeader>
           <CalendarGridBody>
             {(date) => (
               <CalendarCell date={date} className="ds-calendar__day">
-                {({ formattedDate }) => <span className="ds-calendar__day-label">{formattedDate}</span>}
+                {({ formattedDate }) => <DayLabel>{formattedDate}</DayLabel>}
               </CalendarCell>
             )}
           </CalendarGridBody>

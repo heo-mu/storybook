@@ -1,5 +1,5 @@
 import { forwardRef, useRef, useState, type ForwardedRef } from 'react';
-import { ListBox, Popover, Select as AriaSelect, type Key } from 'react-aria-components';
+import { ListBox, Popover, Select as AriaSelect, SelectValue, type Key } from 'react-aria-components';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
 import { SelectSizeContext } from '../Select/SelectContext';
@@ -120,7 +120,8 @@ export const FilterChipSelect = forwardRef(function FilterChipSelect(props: Filt
   const content = (
     <>
       <FilterChip ref={ref} size={size} selected={applied.length > 0} disabled={disabled}>
-        {text}
+        {/* SelectValue: react-aria names the trigger with it, so the name holds the visible text (WCAG 2.5.3). */}
+        <SelectValue className="ds-filter-chip-select__value">{() => text}</SelectValue>
       </FilterChip>
       <Popover className="ds-filter-chip-select__popover" placement="bottom start" offset={4}>
         <SelectSizeContext.Provider value="sm">

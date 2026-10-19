@@ -27,9 +27,9 @@ const CURRENT = '프로그램 등록';
 export const Overview: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
-      <Breadcrumb items={ITEMS} current={CURRENT} />
-      <Breadcrumb items={ITEMS} current={CURRENT} layout="collapsed" />
-      <Breadcrumb items={ITEMS} current={CURRENT} size="sm" />
+      <Breadcrumb items={ITEMS} current={CURRENT} aria-label="이동 경로 — Full" />
+      <Breadcrumb items={ITEMS} current={CURRENT} layout="collapsed" aria-label="이동 경로 — Collapsed" />
+      <Breadcrumb items={ITEMS} current={CURRENT} size="sm" aria-label="이동 경로 — sm" />
     </div>
   ),
 };
@@ -75,7 +75,7 @@ export const BreadcrumbMatrix: Story = {
         label: size,
         cells: (['full', 'collapsed'] as const).map((layout) => ({
           figma: `Size=${size}, Layout=${layout === 'full' ? 'Full' : 'Collapsed'}, Expanded=False`,
-          node: <Breadcrumb items={ITEMS} current={CURRENT} size={size} layout={layout} />,
+          node: <Breadcrumb items={ITEMS} current={CURRENT} size={size} layout={layout} aria-label={`이동 경로 — ${size} ${layout}`} />,
         })),
       }))}
     />

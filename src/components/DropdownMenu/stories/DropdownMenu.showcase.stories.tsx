@@ -86,13 +86,13 @@ export const ItemMatrix: Story = {
           cells: [
             {
               figma: 'Type=Title, State=None',
-              // A menu holding only a title is not a valid menu for assistive technology: visual cell only,
-              // excluded from the axe audit (scripts/a11y-audit.mjs).
+              // Figma Type=Title alone: a menu holding only a title is not a valid menu (role=menu needs items), so the
+              // cell draws the same section-title markup as static text — the look DropdownMenuSection gives it in a menu.
               node: (
-                <div data-a11y-exclude="title-only menu">
-                  <Menu aria-label="title">
-                    <DropdownMenuSection title="제목">{[]}</DropdownMenuSection>
-                  </Menu>
+                <div className="ds-dropdown__section">
+                  <div className="ds-dropdown__title">
+                    <span className="ds-dropdown__title-text">제목</span>
+                  </div>
                 </div>
               ),
             },

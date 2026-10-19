@@ -1230,10 +1230,11 @@ Figma `table_header` Type Checkbox: the select-all column (selectionMode="multip
 
 **보조 컴포넌트** — `TableHeader` 안(제목 없는 열)
 
-Figma `table_header` Type Empty: a column without a title (e.g. for actions); name it with `aria-label`.
+Figma `table_header` Type Empty: a column without a visible title (e.g. for actions); name it with `aria-label`. The name is also inside the header cell as text for screen readers only, so the header is not empty for assistive technology (axe empty-table-header) while it stays blank on screen as in Figma.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
+| `aria-label` | `string` |  |  |
 | `className` | `string` |  |  |
 
 ### `TableBody`

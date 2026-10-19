@@ -72,8 +72,8 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 
 ## 자동 검사 (axe-core)
 
-`node scripts/a11y-audit.mjs`(Storybook 실행 중)가 모든 스토리를 WCAG 2.0 / 2.1 / 2.2 A · AA 규칙으로 검사합니다.
-아래 react-aria 마크업 항목만 "알려진 항목"으로 따로 집계하고, 그 밖의 위반(색 대비 포함)은 실패로 처리합니다 — 2026-10-19 A-1 · A-2 이후 알려진 색 대비 목록은 비어 있습니다.
+`npm run verify:a11y`(Storybook 실행 중)가 모든 스토리를 **Storybook a11y 애드온과 같은 axe 기본 규칙**(WCAG 2.0 / 2.1 / 2.2 A · AA + 모범 사례)으로,
+제외 영역 없이 검사합니다(2026-10-19 밤부터 — 그 전에는 WCAG 태그만, `[data-a11y-exclude]` 칸 제외). 알려진 항목 목록(토큰 대비 · react-aria 마크업)은 모두 비어 있어 모든 위반이 실패입니다.
 
 | 시점 | 스토리 | 알려진 토큰 대비 | 알려진 react-aria 마크업 | 그 밖의 위반 |
 | --- | --- | --- | --- | --- |
@@ -82,13 +82,22 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 | Phase 6 완료 | 311 | 302 (모두 color-contrast) | 693 | 0 |
 | 최종 배포 준비 (2026-10-19) | 376 | 423 (모두 color-contrast — Secondary · Solid Hover · Pressed 18 포함) | 693 | 0 |
 | A-1 · A-2 대비 수정 (2026-10-19) | 378 | **0** (목록 삭제 — 이제 색 대비 위반은 실패) | 693 | 0 |
+| 사이드바 경고 정리 (2026-10-19 밤, 기본 규칙 · 제외 없음) | 394 | 0 | **0** | **0** |
 
-- **react-aria 마크업 — label-content-name-mismatch (axe 실험 규칙, WCAG 2.5.3)**: 달력 날짜 칸의 이름은 react-aria가 만드는
-  전체 날짜("2026년 7월 28일 화요일")이고 보이는 글자는 "28"입니다. 한국어 이름에서는 "28일"로 붙어 axe가 단어 일치로
-  인정하지 않습니다(숫자는 이름에 포함). 라이브러리가 이름을 바꿀 방법을 제공하지 않아 알려진 항목으로 둡니다.
+### Storybook 사이드바 경고(노란 삼각형) — 해결 (2026-10-19 밤)
+
+`a11y.test: 'todo'`라서 Storybook 테스트(Vitest) 실행 때 axe 위반이 있는 스토리는 사이드바에 경고로 표시됩니다. 25개 스토리 · 6개 규칙을 원인부터 고쳤습니다
+(규칙을 끄거나 제외하지 않음). 다시 실행한 결과 394개 스토리 모두 통과.
+
+| 규칙 | 스토리 · 노드 | 원인 | 수정 |
+| --- | --- | --- | --- |
+| label-content-name-mismatch (WCAG 2.5.3, axe 4.14 정식) | 17 · 736 | 달력 날짜 칸 이름이 react-aria의 전체 날짜("2026년 9월 27일 일요일") — 한국어는 숫자가 "27일"로 붙어 보이는 "27"이 이름의 낱말이 아님. FilterChipSelect 칩 이름이 필터명뿐. 설명이 있는 메뉴 항목 이름이 라벨뿐 | 날짜 칸은 보이는 숫자 먼저 + react-aria 이름(`aria-labelledby`) → "27 2026년 9월 27일 일요일 선택됨". 칩 글자를 react-aria `SelectValue`로 → 이름에 지금 글자. 메뉴 항목은 라벨 + 설명 전체가 이름 |
+| landmark-banner-is-top-level · no-duplicate-banner · unique | 8 · 25 | 달력 머리줄이 `<header>`(배너 랜드마크) · 한 화면의 여러 `nav`가 같은 이름 | 달력 머리줄 `div`. 여러 Breadcrumb · Pagination을 둔 스토리는 랜드마크마다 이름(앱에서도 같은 규칙) |
+| aria-required-children | 1 · 1 | 제목만 있는 메뉴(시각 검증 칸) | 메뉴가 아닌 정적 제목 마크업으로 같은 모양 |
+| empty-table-header | 3 · 11 | Figma Empty 머리글이 `aria-label`만, 아이콘만 있는 행 머리글 | `TableEmptyColumn`이 이름을 화면 낭독기용 글자로 함께 넣음. 의미 있는 아이콘은 `aria-label` → 아이콘이 `role="img"`(이전에는 `aria-hidden`이 이름을 가림) |
 - Phase 3 · 4 검사에서 고친 코드 문제: FileUploader 드롭 영역 이름을 보이는 글자(제목 + 도움말)로 변경(2.5.3),
   Tabs 검증 스토리에 TabPanel 추가(aria-controls 대상).
-- `[data-a11y-exclude]`: 단독으로는 유효한 위젯이 아닌 시각 검증 칸(예: 제목만 있는 메뉴)은 검사에서 제외하고 스토리에 이유를 적습니다.
+- 시각 검증 칸도 유효한 마크업이어야 합니다 — `[data-a11y-exclude]` 제외는 2026-10-19 밤에 없앴습니다.
 
 ## 컴포넌트별
 
@@ -141,7 +150,7 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 ### DatePicker · Calendar
 - 필드는 `<input>`(라벨 · `aria-invalid` · 메시지 설명), 해석할 수 없거나 선택할 수 없는 날짜를 입력하면 Error 상태 + `aria-invalid`.
 - 달력 버튼(이름 "달력 열기", `aria-expanded`)이 Dialog를 열고, Dialog 이름은 필드 라벨입니다. Alt + ↓로도 열립니다.
-- Calendar(react-aria): `role="grid"` + 날짜 버튼(이름 예: "2026년 7월 30일 목요일"), 비활성 날짜 `aria-disabled`,
+- Calendar(react-aria): `role="grid"` + 날짜 버튼(이름 예: "30 2026년 7월 30일 목요일" — 보이는 숫자 먼저, WCAG 2.5.3), 비활성 날짜 `aria-disabled`,
   이전 / 다음 달 버튼 이름은 로캘 문구. 방향키 · Page Up/Down · Home/End.
 - `name`을 주면 숨은 input으로 ISO 날짜를 전송합니다.
 
@@ -247,5 +256,6 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 ### Dropdown Menu
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.
+  설명(`description`)이 있는 항목은 라벨 + 설명 전체가 이름입니다(보이는 글자가 모두 이름에 — WCAG 2.5.3).
 - Enter · Space · ↓ / ↑로 열면 첫 / 마지막 항목에 포커스, 방향키 · Home · End · 글자 입력으로 이동, Esc로 닫고 트리거로 복귀.
 - 키보드 포커스는 Hover 모양으로 표시합니다(Design System Rules 02 — 목록 항목 포커스).
