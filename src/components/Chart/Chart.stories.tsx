@@ -15,10 +15,10 @@ const meta = {
     docs: {
       description: {
         component:
-          'Figma component set **chart** (698:4399, 12 variants) with chart-legend-item (697:4514) and chart-tooltip (693:9776). ' +
+          'Figma component set **chart** (698:4399, 24 variants) with chart-legend-item (697:4514) and chart-tooltip (693:9776). ' +
           'Type → `type` (line · bar-vertical · bar-horizontal), Style → `variant` (default · simple), Group → the number of ' +
           '`series` (one = no, two = yes: the second is the comparison). Default style: Y / X axis labels → `yAxisLabel` / ' +
-          '`xAxisLabel`, value grid → `ticks`, legend from the series labels, hover / keyboard tooltip (`activeIndex`). ' +
+          '`xAxisLabel`, value grid → `ticks`, legend from the series labels. hover=yes → the active category (`activeIndex`: pointer, tap or keyboard, both styles). ' +
           'Simple style: 160px, the last category is the current period. Width follows the container.',
       },
     },
@@ -81,7 +81,7 @@ export const Line: Story = {
   ),
 };
 
-/** Simple style: compact, no axes or legend; the last category is the current period (brand colour). */
+/** Simple style: compact, no axes or legend; the last category is the current period (brand colour). Hover / keyboard show the tooltip as in the default style. */
 export const Simple: Story = {
   args: {
     variant: 'simple',

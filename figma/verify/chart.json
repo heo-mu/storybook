@@ -7,7 +7,8 @@
       "background": "#ffffff",
       "harnessCss": ".ds-chart__tooltip { visibility: hidden !important; }",
       "ignore": [
-        "**/chart-tooltip"
+        "**/chart-tooltip",
+        "chart-tooltip"
       ],
       "parts": {
         "Chart annotation / axes/*": {
@@ -91,17 +92,6 @@
           "optional": true
         }
       },
-      "maskRectsFor": {
-        "Type=Line, Style=Simple, *": [
-          [
-            0,
-            0,
-            320,
-            132
-          ]
-        ]
-      },
-      "//maskRectsFor": "simple line plots — the Figma sample points are placed by hand (not at the period label centres, uneven spacing), the code puts each point at its period's centre (figma-issues F64); the tooltip inside the chart is hidden here and its Figma area masked: its placement is a code policy (F63), the tooltip itself is checked in the chart-tooltip set",
       "glyphTolerances": {
         "Chart annotation / axes/*": {
           "dx": 1.6,
@@ -122,10 +112,24 @@
           "why": "line value labels hug their text and end at the 32px column: Figma rounds the box up to whole pixels, so does calc-size() in Chromium; without it (Firefox, WebKit) \"240\" keeps its narrower sub-pixel width and starts up to 1.08px further right"
         }
       },
-      "variantReferences": [
-        "Type=Bar Horizontal, Style=Default, Group=yes"
-      ],
-      "//variantReferences": "Type=Bar Horizontal · Default · Group=yes: compared with its own Figma capture of 2026-10-19 (after the R3 fix — comparison bars on colors/chart/series/compare). The chart set itself was restructured in Figma the same day (new hover property, 24 variants) and is not re-baselined yet."
+      "//ignore": "the tooltip inside the chart is hidden in the harness and its Figma area masked: its placement is a code policy (F63); the tooltip itself is checked in the chart-tooltip set",
+      "maskRectsFor": {
+        "Type=Line, Style=Simple, *": [
+          [
+            0,
+            0,
+            22,
+            132
+          ],
+          [
+            298,
+            0,
+            22,
+            132
+          ]
+        ]
+      },
+      "//maskRectsFor": "simple line plots, outside the first and last period: Figma draws the line on to the frame edges by hand (end slopes 40–78% of the neighbouring segment, the comparison line stops 0.3px before the edge); the code continues the first / last segment (figma-issues F64 code policy). The points and segments between the periods are compared."
     },
     {
       "set": "chart-legend-item",

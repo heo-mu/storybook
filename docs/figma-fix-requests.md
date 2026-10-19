@@ -114,9 +114,9 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 
 | # | 노드 · 변수 | 현재 | 권장 | 영향 |
 | --- | --- | --- | --- | --- |
-| N1 | `chart` 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261)의 비교 막대 1011:14280 · 1011:14288 · 1011:14296 · 1011:14303 · 1011:14310 | R3와 같은 오류(`simple/history`) | R3와 같은 수정 | 차트 hover 변형 |
-| N2 | `chart` `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873 | `series/compare` — hover=no 짝(762:5921)은 `series/02` | `series/02`로 | 같은 변형의 툴팁 표시(I1011:15175;693:9774 등)도 막대색과 다름 |
-| N3 | `chart` 세트 구조 변경 | `hover` 속성 추가로 24개 변형(이번 작업 전 다른 편집) | 코드 · 검증 기준을 새 구조로 맞출지 결정 | Chart 검증(현재 12개 기준 + 수정한 변형만 개별 기준) |
+| N1 | `chart` 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261)의 비교 막대 1011:14280 · 1011:14288 · 1011:14296 · 1011:14303 · 1011:14310 | R3와 같은 오류(`simple/history`) — **2026-10-19 지시로 수정 제외(F77, 회귀 확인만)** | R3와 같은 수정 | 차트 hover 변형 |
+| N2 | `chart` `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873 | **해결** — 원본에서 짝 762:5921도 `series/compare`로 바뀌어 일치(가로 막대 간단 Group=yes도 같음), F78로 `colors/chart/bar/compare` 연결 · 코드 동기화 | — | — |
+| N3 | `chart` 세트 구조 변경 | **해결(F79)** — 코드 · 스토리 · 검증을 24개 변형으로 동기화, 기준 이미지 · geometry 재생성 | — | — |
 | N4 | Accordion 프레임 삭제 | **해결** — 재등록(1035:15645) 후 F80으로 토큰 연결 · 동기화 | — | — |
 | N5 | `border-radius/rounded-[2px]`(`VariableID:873:4798`) WEB code syntax | **해결(F81)** — `var(--border-radius-rounded-2px)` | 생성 규칙 개선 | — |
 | N6 | 693:7163 Filter · Hover · Empty 칩(693:8205) | 칩 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | 의도 확인 후 Default로 | Table 쇼케이스 1칸 |

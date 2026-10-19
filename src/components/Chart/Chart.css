@@ -3,21 +3,24 @@
  *   default style: "Chart annotation / axes" (Y / X axis labels, p-4 apart, p-1 below, xs/leading-normal/normal,
  *                  text/secondary) · plot (228px; Bar Horizontal Group=yes 268px) · "Chart annotation / legend"
  *                  (centred, p-5 apart, wraps p-2, p-3 above)
- *   line:          value labels right-aligned in a 32px column, plot from x 44; grid y 12–196 (chart/grid/default,
- *                  1px); category labels at y 208; series border-2 (first: vector corner radius 8); markers on inner
- *                  points r 4 + border-2 border/inverse; active point surface/page + border-3; hover guide border/gray
- *                  1px dash 4 / 4; one series also has an area (series colour 20% → 0%); "최고" badge 8px above the
- *                  highest point
+ *   colours:       Chart Component tokens (F78) — colors/chart/bar/* and line/* (series), point/*, plot/* (grid,
+ *                  axis, baseline, hover guide, hover highlight), label/default, legend/label/default, tooltip/*
+ *   line:          value labels right-aligned in a 32px column, plot from x 44; grid y 12–196 (1px); category labels
+ *                  at y 208; series border-2 (first: vector corner radius 8); markers on inner points r 4 + border-2;
+ *                  one series also has an area (series colour 20% → 0%); "최고" badge 8px above the highest point
  *   bar vertical:  plot area y 28–200, categories p-4 apart, bars 16px (pair p-2 apart, rounded top), labels 80px
- *                  at y 208 (sm medium); hover highlight 64px alpha/black/50
+ *                  at y 208 (sm medium)
  *   bar horizontal: p-2 above, rows over 188px (Group=yes 228px), labels 40px (sm medium) p-3 before the track,
- *                  bars 16px (Group=yes 12px, p-1_5 apart, rounded right), zero / axis baselines border/gray-subtler,
- *                  inner grid lines, tick labels p-2 below
+ *                  bars 16px (Group=yes 12px, p-1_5 apart, rounded right), zero / axis baselines, inner grid lines,
+ *                  tick labels p-2 below
  *   simple:        160px, clipped; plot 132px (p-1 above the largest value), period labels at y 140 in columns
- *                  p-3 apart; baseline chart/simple/history (round caps); bars 24px (Group=yes 14px, p-1 apart);
- *                  horizontal rows 28px (Group=yes 34px) m-2 apart, labels 32px, bars 12px (Group=yes 8px, 8px
- *                  apart) up to 90% of the track; line border-2_5 (comparison border-2, dash 3 / 3), markers r 4
- *                  with a 2px inside surface/page ring, the last point surface/page + border-3
+ *                  p-3 apart; baseline (round caps); bars 24px (Group=yes 14px, p-1 apart); horizontal rows 28px
+ *                  (Group=yes 34px) m-2 apart, labels 32px, bars 12px (Group=yes 8px, 8px apart) up to 90% of the
+ *                  track; line border-2_5 (comparison border-2, dash 3 / 3), markers r 4 with a 2px inside ring
+ *   hover:         Figma hover=yes, both styles — line: guide 1px dash 4 / 4 over the grid (simple: full height) and a
+ *                  ring (r 4, border-3) on each series; bars: highlight band behind the category — vertical 40 / 64px
+ *                  wide (simple 48px) over the plot area (simple: from the top), horizontal 32 / 46px tall (simple
+ *                  28px) over the track; tooltip beside the anchor
  *   bars:          linear gradient from the series colour at the value end to 40% of it at the axis
  * Geometry custom properties (--_<name> on .ds-chart__plot) are read by Chart.tsx to draw the SVG.
  */
@@ -35,7 +38,12 @@
   overflow: hidden;
 }
 
-/* Colours — chart marks, legend markers and tooltip indicators. */
+/*
+ * Series colours — chart marks, legend markers and tooltip indicators. Chart Component tokens per mark (Figma F78):
+ * colors/chart/bar/* for bars, Bar legend markers and the tooltip of bar charts; colors/chart/line/* for lines,
+ * points, the area, line legend markers and the tooltip of line charts. A colour without a token for its mark
+ * (a custom legend or tooltip) falls back to the Semantic series colour.
+ */
 :where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='brand'] {
   --_c: var(--colors-chart-series-brand);
 }
@@ -56,6 +64,30 @@
   --_c: var(--colors-chart-simple-history-compare);
 }
 
+:is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='brand'] {
+  --_c: var(--colors-chart-bar-primary);
+}
+
+:is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='compare'] {
+  --_c: var(--colors-chart-bar-compare);
+}
+
+:is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='history'] {
+  --_c: var(--colors-chart-bar-history);
+}
+
+:is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='history-compare'] {
+  --_c: var(--colors-chart-bar-history-compare);
+}
+
+:is(.ds-chart[data-type='line'], .ds-chart-legend-item:not([data-type='bar']), .ds-chart-tooltip[data-mark='line']) [data-color='brand'] {
+  --_c: var(--colors-chart-line-primary);
+}
+
+:is(.ds-chart[data-type='line'], .ds-chart-legend-item:not([data-type='bar']), .ds-chart-tooltip[data-mark='line']) [data-color='02'] {
+  --_c: var(--colors-chart-line-compare);
+}
+
 /* Axis labels */
 .ds-chart__axes {
   display: flex;
@@ -66,7 +98,7 @@
 .ds-chart__axis-label {
   flex: 1 1 0;
   min-width: 0;
-  color: var(--colors-text-secondary);
+  color: var(--colors-chart-label-default);
   font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
   font-size: var(--typography-xs-leading-normal-normal-font-size);
   font-weight: var(--typography-xs-leading-normal-normal-font-weight);
@@ -89,13 +121,16 @@
   outline-style: auto;
 }
 
+.ds-chart__plot {
+  --_tooltip-gap: var(--spacing-padding-p-3);
+  --_tooltip-margin: var(--spacing-padding-p-3);
+}
+
 .ds-chart[data-variant='default'] .ds-chart__plot {
   --_plot-height: 228px;
   --_value-label-width: 32px;
   --_plot-left: 44px;
   --_label-top: 208px;
-  --_tooltip-gap: var(--spacing-padding-p-3);
-  --_tooltip-margin: var(--spacing-padding-p-3);
   --_bar-radius: var(--border-radius-rounded);
 }
 
@@ -115,6 +150,11 @@
   --_category-gap: var(--spacing-padding-p-4);
   --_bar-size: 16px;
   --_pair-gap: var(--spacing-padding-p-2);
+  /* Hover highlight: the bars plus p-3 on each side (16 + 24; Group=yes 16 + 8 + 16 + 24). */
+  --_highlight-size: 40px;
+}
+
+.ds-chart[data-type='bar-vertical'][data-variant='default'][data-group='yes'] .ds-chart__plot {
   --_highlight-size: 64px;
 }
 
@@ -126,12 +166,15 @@
   --_row-label-gap: var(--spacing-padding-p-3);
   --_bar-size: 16px;
   --_pair-gap: var(--spacing-padding-p-1_5);
+  /* Hover highlight: the bars plus p-2 above and below (16 + 16; Group=yes 12 + 6 + 12 + 16). */
+  --_highlight-size: 32px;
 }
 
 .ds-chart[data-type='bar-horizontal'][data-variant='default'][data-group='yes'] .ds-chart__plot {
   --_plot-height: 268px;
   --_body-height: 228px;
   --_bar-size: 12px;
+  --_highlight-size: 46px;
 }
 
 .ds-chart[data-variant='simple'] .ds-chart__plot {
@@ -148,6 +191,7 @@
 .ds-chart[data-type='bar-vertical'][data-variant='simple'] .ds-chart__plot {
   --_bar-size: 24px;
   --_pair-gap: var(--spacing-padding-p-1);
+  --_highlight-size: 48px;
 }
 
 .ds-chart[data-type='bar-vertical'][data-variant='simple'][data-group='yes'] .ds-chart__plot {
@@ -162,6 +206,7 @@
   --_bar-size: 12px;
   --_pair-gap: 8px;
   --_bar-max: 0.9;
+  --_highlight-size: 28px;
 }
 
 .ds-chart[data-type='bar-horizontal'][data-variant='simple'][data-group='yes'] .ds-chart__plot {
@@ -195,29 +240,29 @@
 }
 
 .ds-chart__grid {
-  stroke: var(--colors-chart-grid-default);
+  stroke: var(--colors-chart-plot-grid-default);
   stroke-width: var(--border-width-border);
 }
 
 .ds-chart__axis {
-  stroke: var(--colors-border-gray-subtler);
+  stroke: var(--colors-chart-plot-axis-default);
   stroke-width: var(--border-width-border);
 }
 
 .ds-chart__baseline {
-  stroke: var(--colors-chart-simple-history);
+  stroke: var(--colors-chart-plot-baseline-default);
   stroke-width: var(--border-width-border);
   stroke-linecap: round;
 }
 
 .ds-chart__guide {
-  stroke: var(--colors-border-gray);
+  stroke: var(--colors-chart-plot-guide-hover);
   stroke-width: var(--border-width-border);
   stroke-dasharray: 4 4;
 }
 
 .ds-chart__highlight {
-  fill: var(--colors-alpha-black-50);
+  fill: var(--colors-chart-plot-highlight-hover);
 }
 
 .ds-chart__line {
@@ -239,16 +284,13 @@
 
 .ds-chart__point {
   fill: var(--_c);
-  stroke: var(--colors-border-inverse);
+  stroke: var(--colors-chart-point-border-default);
   stroke-width: var(--border-width-border-2);
 }
 
-.ds-chart[data-variant='simple'] .ds-chart__point {
-  stroke: var(--colors-surface-page);
-}
-
+/* The active category (Figma hover=yes) */
 .ds-chart .ds-chart__point[data-current] {
-  fill: var(--colors-surface-page);
+  fill: var(--colors-chart-point-background-hover);
   stroke: var(--_c);
   stroke-width: var(--border-width-border-3);
 }
@@ -264,7 +306,7 @@
 .ds-chart__category {
   position: absolute;
   box-sizing: border-box;
-  color: var(--colors-text-secondary);
+  color: var(--colors-chart-label-default);
   white-space: nowrap;
 }
 
@@ -364,7 +406,7 @@
   flex-shrink: 0;
   align-items: center;
   gap: var(--spacing-padding-p-1_5);
-  color: var(--colors-text-secondary);
+  color: var(--colors-chart-legend-label-default);
   font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
   font-size: var(--typography-xs-leading-normal-normal-font-size);
   font-weight: var(--typography-xs-leading-normal-normal-font-weight);
@@ -406,13 +448,13 @@
   gap: var(--spacing-margin-m-1_5);
   padding: var(--spacing-padding-p-2_5);
   border-radius: var(--border-radius-rounded-sm);
-  background-color: var(--colors-alpha-white-800);
+  background-color: var(--colors-chart-tooltip-background-default);
   box-shadow: var(--effect-elevation-3);
   white-space: nowrap;
 }
 
 .ds-chart-tooltip__title {
-  color: var(--colors-text-tertiary);
+  color: var(--colors-chart-tooltip-title-default);
   font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
   font-size: var(--typography-xs-leading-normal-normal-font-size);
   font-weight: var(--typography-xs-leading-normal-normal-font-weight);
@@ -445,7 +487,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-margin-m-1_5);
-  color: var(--colors-text-secondary);
+  color: var(--colors-chart-tooltip-label-default);
 }
 
 .ds-chart-tooltip__indicator {
@@ -457,7 +499,7 @@
 }
 
 .ds-chart-tooltip__value {
-  color: var(--colors-text-primary);
+  color: var(--colors-chart-tooltip-value-default);
 }
 
 /* Screen-reader text (data table, announcements) */

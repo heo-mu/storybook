@@ -65,6 +65,13 @@ Date Picker(navigation · day), Link, Pagination(item · control), Select option
 토큰 생성기가 Figma 이름의 `[값]`을 `값`으로 바꿉니다(이스케이프가 필요한 CSS 변수 이름 제거). 코드 안의 사용처 3곳(Chart · MetricCard · DashboardFilterBar)은 함께 바꿨고,
 배포 전이라 이전 이름의 별칭은 두지 않습니다. 앱 CSS에서 이전 이름을 썼다면 위 표대로 바꾸면 됩니다.
 
+### 2026-10-19 — Chart Component 토큰 (F78)
+
+Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,history,history-compare}`, `--colors-chart-line-{primary,compare}`,
+`--colors-chart-point-{border-default,background-hover}`, `--colors-chart-plot-{grid-default,axis-default,baseline-default,guide-hover,highlight-hover}`,
+`--colors-chart-label-default`, `--colors-chart-legend-label-default`, `--colors-chart-tooltip-{background,title,label,value}-default`.
+기존 Semantic `--colors-chart-*` 변수는 그대로입니다.
+
 ## 2. 컴포넌트 API
 
 | 변경 | 종류 | 호환성 |
@@ -73,6 +80,8 @@ Date Picker(navigation · day), Link, Pagination(item · control), Select option
 | `BUTTON_TONES`에 `{ secondary, solid }` 추가(3번째) | 상수 변경 | 위치로 읽는 코드는 깨짐 — 이제 **내부 API**(스토리 · 검증용) |
 | `closeToast(key)` 추가 | 추가 | 호환. `toastQueue`는 **내부 API**로 분류(여전히 export) |
 | 내부 부품 7 · 내부 API 13 분류 | 문서 · JSDoc `@internal` | export는 그대로 — 제거는 결정 D5 |
+| `Chart variant="simple"`: 그림 영역이 초점을 받고 호버 · 탭 · 키보드로 툴팁 표시(F79) | 동작 추가 | 호환(Props 같음). 간단 차트가 Tab 순서에 들어감 |
+| `ChartLegendItem type="dash-line"` `color` 기본값 `brand` → `02` | 기본값 변경 | `color`를 넘기지 않은 dash-line 범례만 색이 바뀜 |
 
 ## 3. 화면(시각) 변경
 
@@ -81,6 +90,10 @@ Date Picker(navigation · day), Link, Pagination(item · control), Select option
 | `TextButton variant="secondary"` | 글자 #404b5d → #778191, 아이콘 #778191 → #a1a8b5 (Hover · Pressed도 한 단계 연함) |
 | `Accordion` | Hover 배경이 모든 크기에서 보임, 펼친 항목 구분선 진하게, Disabled 회색 배경 · 제목 #a1a8b5 |
 | `Chart` 가로 막대 · 기본 비교 막대 | #e2e5e9 → #d6dae0 (범례 · 툴팁과 같은 색) |
+| `Chart` 간단 막대 현재 기간 비교 | #0086d3 → #d6dae0 (Figma 원본 변경) |
+| `Chart` 간단 세로 막대 Group=no 지난 기간 | #d6dae0 → #e2e5e9 (세로 · 가로 같은 규칙, F78) |
+| `Chart` 간단 선 마지막 점 | 빈 원 → 일반 점(빈 원은 활성 항목) |
+| `Chart` 호버 강조 영역 | 세로 막대 Group=no 64 → 40px, 가로 막대 행 높이 → 32 · 46px, 간단 스타일 추가 |
 | Hover 배경 16곳 | #f9fafb → #f5f6f7 |
 
 ## 4. 버전 정책 제안

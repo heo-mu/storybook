@@ -8,8 +8,9 @@ import { ChartTooltip } from './ChartTooltip';
 
 # Chart — 사용 가이드
 
-Figma **chart**(698:4399, 12개 변형)와 **chart-legend-item**(697:4514), **chart-tooltip**(693:9776)을 구현했습니다.
-선 · 세로 막대 · 가로 막대 차트를 기본 스타일(축 이름, 값 눈금, 범례, 툴팁)과 간단 스타일(160px, 마지막 항목이 현재 기간)로 그립니다.
+Figma **chart**(698:4399, 24개 변형 = Type 3 × Style 2 × Group 2 × hover 2)와 **chart-legend-item**(697:4514),
+**chart-tooltip**(693:9776)을 구현했습니다. 선 · 세로 막대 · 가로 막대 차트를 기본 스타일(축 이름, 값 눈금, 범례)과 간단 스타일(160px,
+마지막 항목이 현재 기간)로 그리고, 두 스타일 모두 Figma `hover=yes` 상태(안내선 · 빈 원 / 강조 영역 · 툴팁)를 보여 줍니다.
 그림은 컨테이너 너비에 맞춘 SVG이고, 같은 값을 화면 낭독기용 표로도 제공합니다.
 
 <Canvas of={Showcase.Figma} />
@@ -47,30 +48,40 @@ Figma **chart**(698:4399, 12개 변형)와 **chart-legend-item**(697:4514), **ch
 | Y Axis Label · X Axis Label | `yAxisLabel` · `xAxisLabel` | 기본 스타일 |
 | 값 눈금(0–400, 0–240) | `ticks` | 없으면 0부터 4칸(1 · 1.5 · 2 · 2.5 · 3 · 4 · 5 · 6 · 8 × 10ⁿ 간격) |
 | 카테고리 · 기간 이름 | `categories` | |
-| 툴팁이 보이는 항목(Figma 호버 표시) | `activeIndex` · `defaultActiveIndex` · `onActiveIndexChange` | 기본 스타일 |
+| hover (no · yes) — hover=yes가 그린 항목 | `activeIndex` · `defaultActiveIndex` · `onActiveIndexChange` | 포인터 · 탭 · 키보드로 바뀜, 두 스타일 모두 |
 | "최고" 배지 | `maxLabel` | 선 차트 기본 스타일, `false`로 숨김 |
-| chart-legend-item | `ChartLegendItem` (`type` line · dash-line · bar, `color`) | `Chart`가 범례를 직접 그림 — 별도 범례용 |
+| chart-legend-item | `ChartLegendItem` (`type` line · dash-line · bar, `color`) | `Chart`가 범례를 직접 그림 — 별도 범례용. `color` 기본값: dash-line `02`, 나머지 `brand`(Figma 메인 컴포넌트) |
 | chart-tooltip | `ChartTooltip` (`title`, `items`) | `Chart`가 직접 표시 — 별도 사용용 |
 
-## 색 (Figma 변형별 — 가로 막대 기본의 비교 막대만 예외)
+## 색 — Chart Component 토큰 (Figma F78)
 
-| | 첫 계열 | 두 번째 계열 |
+모든 차트 노드가 Chart 전용 Component 변수에 바인딩되어 있습니다(Primitive → Semantic → Component). 세로 · 가로 막대는 같은 규칙,
+범례 표시 · 툴팁 표시는 그 계열의 막대 · 선 토큰을 그대로 씁니다.
+
+| 역할 | Component 토큰 | Semantic |
 | --- | --- | --- |
-| 선 | `chart/series/brand` | `chart/series/02` (간단 스타일: 점선 3 / 3) |
-| 세로 막대 기본 | `chart/series/brand` | `chart/series/compare` |
-| 가로 막대 기본 | `chart/series/brand` | `chart/series/compare` — 막대 · 범례 · 툴팁 같은 색. Figma 막대는 `chart/simple/history`로 바인딩되어 있어 원본 수정 요청(F65) |
-| 간단 막대 — 현재 기간(마지막) | `chart/series/brand` | `chart/series/02` |
-| 간단 막대 — 지난 기간 | 1계열: 세로 `chart/series/compare` · 가로 `chart/simple/history` / 2계열: `chart/simple/history` | `chart/simple/history-compare` |
+| 막대 — 첫 계열 · 간단 스타일 현재 기간 | `colors/chart/bar/primary` | `chart/series/brand` |
+| 막대 — 비교 계열(Group=yes) · 간단 스타일 현재 기간 비교 | `colors/chart/bar/compare` | `chart/series/compare` |
+| 막대 — 간단 스타일 지난 기간(첫 계열 · 비교) | `colors/chart/bar/history` · `bar/history-compare` | `chart/simple/history` · `history-compare` |
+| 선 · 점 · 아래 면 — 첫 계열 / 두 번째 계열 | `colors/chart/line/primary` · `line/compare` | `chart/series/brand` · `series/02` (간단 스타일 비교 선: 점선 3 / 3) |
+| 점 테두리 · 호버 빈 원 안쪽 | `colors/chart/point/border/default` · `point/background/hover` | `border/inverse` · `surface/page` |
+| 값 격자 · 축 기준선 · 간단 기준선 | `colors/chart/plot/grid/default` · `plot/axis/default` · `plot/baseline/default` | `chart/grid/default` · `border/gray-subtler` · `chart/grid/default` |
+| 호버 안내선 · 호버 강조 영역 | `colors/chart/plot/guide/hover` · `plot/highlight/hover` | `border/gray` · `fill/transparent/hover` |
+| 축 이름 · 눈금 · 항목 이름 / 범례 글자 | `colors/chart/label/default` / `legend/label/default` | `text/secondary` |
+| 툴팁 배경 · 제목 · 계열 이름 · 값 | `colors/chart/tooltip/background · title · label · value/default` | `alpha/white/800` · `text/tertiary` · `text/secondary` · `text/primary` |
 
 막대는 값 쪽 끝의 계열 색에서 축 쪽 40%로 흐려지는 그라디언트, 한 계열 선 차트는 아래 면(계열 색 20% → 0%)이 있습니다.
+(Figma 그라디언트의 끝 색은 변수에 묶으면 투명도를 잃어 값으로 남아 있습니다 — 시작 색과 같은 색의 40% · 0%.)
+`ChartLegendItem` · `ChartTooltip`을 따로 쓸 때 그 표시에 맞는 토큰이 없는 색(예: 선 범례에 `compare`)은 Semantic 계열 색을 씁니다.
 
 ## 상호작용 · 접근성
 
-- 기본 스타일의 그림 영역은 키보드로 초점을 받습니다(`role="group"`, 이름 `plotLabel`). ←/→(↑/↓)로 항목 이동,
+- 그림 영역은 키보드로 초점을 받습니다(`role="group"`, 이름 `plotLabel`, 두 스타일 모두). ←/→(↑/↓)로 항목 이동,
   Home / End, Esc로 툴팁을 닫습니다. 이동한 항목의 값은 `aria-live` 영역으로 읽어 줍니다.
-- 포인터를 올리면 가장 가까운 항목의 툴팁 · 강조(막대: `alpha/black/50` 영역, 선: 점선 안내선 · 빈 원)가 보입니다.
+- 포인터를 올리면 가장 가까운 항목의 Figma hover=yes 표시가 보입니다 — 선: 점선 안내선 · 계열마다 빈 원, 막대: 강조 영역, 그리고 툴팁.
+  감지 영역은 데이터 영역입니다: 기본 스타일 값 눈금 열(왼쪽 32px)과 가로 막대의 눈금 줄 위에서는 표시하지 않습니다.
+- 터치: 탭하면 그 항목이 표시되고, 그림 영역 밖을 누르면 닫힙니다(손가락을 떼도 유지). 끌면 따라 움직입니다.
 - 그림(SVG · 눈금 글자 · 범례 · 툴팁)은 보조 기술에서 숨기고, 모든 값을 표(`<table>`, 캡션 = `aria-label`)로 제공합니다.
-- 간단 스타일은 툴팁이 없어(Figma) 초점을 받지 않고 표만 제공합니다.
 
 ## 코드 정책 (Figma에서 정해지지 않은 부분)
 
@@ -79,7 +90,8 @@ Figma **chart**(698:4399, 12개 변형)와 **chart-legend-item**(697:4514), **ch
   왼쪽으로 뒤집고, 양쪽 모두 들어가지 않으면 여유가 큰 쪽에서 영역 안으로 옮깁니다. 영역보다 크면 화면 안에만 맞춥니다.
   툴팁은 `<body>`로 포털(`position: fixed`, react-aria 오버레이와 같은 z-index 100000)되어 `overflow: hidden` 부모(Card 등)에
   잘리지 않고, 스크롤 · 창 크기 변경을 따라갑니다.
-- **호버 표시**: Figma는 막대 Group=yes 변형에만 호버 상태를 그렸습니다. 같은 강조 · 툴팁을 Group=no에도 씁니다.
+- **호버 표시**: Figma `hover=yes` 변형 그대로입니다(강조 영역: 세로 막대 40 · 64px, 간단 48px / 가로 막대 32 · 46px, 간단 28px).
+  Figma는 간단 스타일에서 마지막(현재) 기간의 호버만 그렸고, 코드는 모든 항목에 같은 표시를 씁니다.
 - **간단 선 차트의 점**: Figma 샘플 점은 기간 이름 가운데에 있지 않습니다(F64). 코드는 각 기간 가운데에 두고, 선은 첫 · 마지막
   구간의 기울기로 양 끝까지 이어 그립니다.
 - **값 범위**: 0 이상 값만 정의되어 있습니다. 눈금 범위를 벗어나는 값은 범위 끝에 그립니다. 간단 스타일은 가장 큰 값을 위(세로)

@@ -36,3 +36,58 @@ Figma 원본 수정 · 변수 생성 · 바인딩 변경 · 코드 수정이 모
 - 코드: `Accordion.css`가 새 Component 토큰 사용(트리거 padding · min-height · 모서리, 본문 padding, 구분선 두께). 값이 같아 화면 변화 없음.
   Figma ID를 1035:15648 · 1035:15645로 갱신(문서 · JSDoc · geometry), 기준 이미지 재캡처.
 - 검증: 정합성 3 엔진 통과. 실제 브라우저(3 엔진): 기본 투명 · 구분선 #d6dae0, 마우스 Hover 배경 #f5f6f7 · 구분선 #131c2b, Tab 포커스 링, Enter 펼침(패널 표시) · Space 접힘. 스토리 테스트 7개 통과.
+
+## 3. 회귀 수정 — Component 토큰 파일 머리 주석 (F81 작업에서 생긴 결함, 완료)
+
+- 원인: F81 커밋(41c5276)에서 토큰 생성기의 그룹 설명을 `*/<그룹>/*`로 바꿔, 모든 `components/<그룹>.css`(Button 제외 33개)의 머리
+  주석이 중간에서 닫혔습니다. 나머지 글자가 `:root` 선택자 앞에 붙어 브라우저가 규칙 전체를 버렸고, Button 외 Component 토큰이
+  모두 정의되지 않은 상태였습니다(F80 확인은 이전 CSS가 남아 있던 개발 서버에서 한 것으로 보임).
+- 수정: 설명을 `<kind>/<그룹>/…`로, 생성기가 `*/`가 든 주석을 만들지 않도록 검사 추가(`scripts/build-tokens.mjs`). 브라우저에서
+  `--colors-accordion-background-hover` #f5f6f7 · `--colors-badge-status-outline-border-basic` #007c56 등 다시 정의됨 확인, `:root` 규칙 6 → 40.
+- 이후 전체 회귀(정합성 3 엔진 · 스토리 · 접근성)를 이 수정 위에서 다시 실행합니다.
+
+## 4. F78 — Chart Component Variables (완료)
+
+| Component 토큰 | Alias(Semantic / Primitive) | 연결한 노드 |
+| --- | --- | --- |
+| `colors/chart/bar/primary` | `chart/series/brand` | 막대 첫 계열 · 간단 현재 기간, Bar 범례 표시, 막대 차트 툴팁 첫 표시 |
+| `colors/chart/bar/compare` | `chart/series/compare` | 비교 막대(Group=yes) · 간단 현재 기간 비교, 범례 · 툴팁 두 번째 표시 |
+| `colors/chart/bar/history` · `history-compare` | `chart/simple/history` · `history-compare` | 간단 스타일 지난 기간 |
+| `colors/chart/line/primary` · `compare` | `chart/series/brand` · `series/02` | 선 · 점 · 아래 면 · 빈 원 테두리, 선 범례, 선 차트 툴팁 표시 |
+| `colors/chart/point/border/default` · `point/background/hover` | `border/inverse` · `surface/page` | 점 테두리(기본 `border/inverse` · 간단 `surface/page` 두 가지였던 것 통일, 값 같음) · 빈 원 안쪽 |
+| `colors/chart/plot/grid/default` · `axis/default` · `baseline/default` | `chart/grid/default` · `border/gray-subtler` · `chart/grid/default` | 값 격자 · 가로 막대 축 · 간단 기준선(이전 `chart/simple/history` — 계열 색을 기준선에 쓰던 것, 값 같음) |
+| `colors/chart/plot/guide/hover` · `highlight/hover` | `border/gray` · `fill/transparent/hover` | 호버 안내선 · 호버 강조 영역(이전 Primitive `alpha/black/50` 직접, 값 같음) |
+| `colors/chart/label/default` · `legend/label/default` | `text/secondary` | 축 이름 · 눈금 · 항목 이름 208곳 · 범례 글자 |
+| `colors/chart/tooltip/background · title · label · value/default` | `alpha/white/800` · `text/tertiary` · `text/secondary` · `text/primary` | chart-tooltip(제목 · 값은 원격 변수였음 — F66) |
+
+- 생성: `VariableID:1052:6697` – `6715`, scopes 지정(막대 SHAPE_FILL, 선 SHAPE_FILL · STROKE_COLOR, 선 계열 STROKE_COLOR, 글자 TEXT_FILL,
+  툴팁 배경 FRAME_FILL), WEB code syntax `var(--colors-chart-…)`, 설명 "Alias → …". 기존 Semantic 이름과 CSS 이름이 겹치지 않게
+  격자는 `plot/grid`(Semantic `chart/grid/default`와 구분).
+- 연결: 세트 24변형 노드 색 바인딩 — 글자 208 · 격자 52 · 점 테두리 54 · 선 · 점 72 · 막대 그라디언트 109 · 축 8 · 기준선 8 · 안내선 4 ·
+  강조 8 · 빈 원 6, 인스턴스 재정의 13(나머지는 메인 컴포넌트 상속). 감사 결과 보이는 색 778곳이 Chart 토큰, 예외는 F77 5노드와 배지 자체 토큰.
+- 그라디언트 끝 색(40% · 0%)은 값으로 둠: 정지점에 변수를 묶으면 투명도가 변수 값(1)으로 바뀜(임시 노드로 확인 후 삭제).
+- 색 규칙 통일: 세로 · 가로 막대가 같은 토큰. 간단 세로 막대 Group=no 지난 기간 8노드 `series/compare`(#d6dae0) → `bar/history`(#e2e5e9,
+  끝 색도 #e2e5e9 40%) — 가로 · Group=yes와 같은 규칙. 선의 두 번째 계열은 의미가 다른 지표(전기 · 가스)라 `series/02` 유지.
+- 원본에서 바뀐 것(다른 편집, 이번에 확인): 간단 Group=yes 현재 기간 비교 막대 `series/02` → `series/compare`(세로 · 가로 · hover 모두),
+  간단 선 마지막 점 빈 원 → 일반 점(빈 원은 hover=yes), 간단 선 점이 기간 가운데로(F64), 간단 선 기간 이름 동 이름으로.
+- 코드: `components/chart.css` 생성, `Chart.css`가 모든 색을 Chart 토큰으로(표시별 막대 / 선 토큰, 별도 범례 · 툴팁에서 해당 토큰이
+  없는 색만 Semantic). `markColor`가 간단 현재 기간 비교 `compare` · 지난 기간 `history`(세로 · 가로 같음), `ChartLegendItem` dash-line
+  기본 색 `02`. 비교 대상 노드 값이 같은 바인딩 교체는 화면 변화 없음.
+
+## 5. F79 — Chart hover 변형 · 선 차트 Hover (완료)
+
+| 항목 | 이전 | 이후 |
+| --- | --- | --- |
+| 지원 변형 | 12개(호버 표시는 기본 스타일만, Group=yes 막대 · 선 그림 기준) | 24개 — hover=no · yes, 간단 스타일 호버(안내선 · 빈 원 / 강조 영역 · 툴팁) |
+| 강조 영역 | 세로 막대 64px 고정, 가로 막대 행 전체 높이(37.6 · 45.6px), 간단 없음 | Figma: 세로 40 · 64px(막대 + p-3 양쪽), 간단 48px(위부터 기준선까지) / 가로 32 · 46px(막대 + p-2 위아래), 간단 28px |
+| 간단 선 마지막 점 | 항상 빈 원 | 일반 점(빈 원은 활성 항목만 — Figma hover=no / yes) |
+| 감지 영역 | 값 눈금 열(왼쪽 32px) 위에서도 첫 항목 표시, 가로 막대 눈금 줄 위에서 마지막 항목 | 데이터 영역만(밖이면 닫힘) |
+| 터치 | 탭해도 툴팁이 나오지 않음 — `pointermove`만 쓰고(탭은 발생 안 함) 손가락을 떼면 `pointerleave`로 닫힘(근본 원인) | `pointerdown`으로 선택, 터치의 `pointerleave`는 무시, 그림 밖을 누르면 닫힘(WebKit은 탭으로 초점이 빠지지 않아 blur만으로는 못 닫음) |
+| 중복 알림 | — | blur와 바깥 누름이 한 이벤트에서 겹쳐도 `onActiveIndexChange` 한 번 |
+| 원본 정리 | 1011:14912 막대 간격 · 데이터가 짝과 다름(y 7/19 · 너비 · 이름), 1011:14987 위치 (30, 1334), 빈 원 아래 중복 흰 테두리(값 없음) 5개 | 짝 762:5833과 같게(y 5/21, 너비 · 이름), (20, 1324), 삭제 |
+
+- 원인 분석: 선 차트 호버 자체(가장 가까운 항목, 안내선 · 빈 원, 툴팁 위치 갱신, 깜빡임)는 실제 포인터 측정에서 정상(3 엔진, 85단계 이동 중
+  사라짐 0). 결함은 위 두 가지(감지 영역, 터치)였고 CSS가 아니라 입력 처리에서 고쳤습니다.
+- 검증: 정합성 chart 24/24 · legend 3/3 · tooltip 1/1(Chromium · Firefox · WebKit). 간단 선의 바깥 22px 띠만 제외(F64). 실제 브라우저 상호작용
+  6종 × 3 엔진(이동 순서 · 깜빡임 · 눈금 열 · 이탈 · 키보드 · 툴팁/범례/표 값 · 색 일치, 터치는 Chromium · WebKit) 통과. 스토리 테스트 추가:
+  눈금 열 · 터치 탭 · 바깥 누름 · 간단 스타일 키보드.

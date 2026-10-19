@@ -65,7 +65,7 @@
 | [`Tooltip`](./api.md#tooltip) | 툴팁 | `tooltip` 149:1111 |  |
 | [`EmptyState`](./api.md#emptystate) | 빈 상태 안내 | `empty-state` 724:14963 |  |
 | [`Accordion`](./api.md#accordion) | 아코디언 묶음 | — |  |
-| [`AccordionItem`](./api.md#accordion) | 아코디언 항목(단독 사용 가능) | `accordion-item` 796:6071 |  |
+| [`AccordionItem`](./api.md#accordion) | 아코디언 항목(단독 사용 가능) | `accordion-item` 1035:15648 |  |
 | [`Dialog`](./api.md#dialog) | 대화 상자 | `dialog` 149:2838 |  |
 | [`Table`](./api.md#table) | 데이터 표(정렬 · 선택 · 순서 변경) | `table_header` 351:3452 · `table_body` 355:3739 | `TableHeader` `TableBody` |
 | [`KeyValueTable`](./api.md#table) | 항목명–값 표(조회 · 관리 모드) | — | `KeyValueItem` |

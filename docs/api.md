@@ -35,7 +35,7 @@ A group of `AccordionItem`s (react-aria-components DisclosureGroup).
 
 **공개 컴포넌트**
 
-Figma component set `accordion-item` (796:6071): a heading button that shows or hides its panel (react-aria-components Disclosure: aria-expanded / aria-controls, Enter / Space). State Hover = :hover, Expanded = open, Disabled = `disabled`.
+Figma component set `accordion-item` (1035:15648): a heading button that shows or hides its panel (react-aria-components Disclosure: aria-expanded / aria-controls, Enter / Space). State Hover = :hover, Expanded = open, Disabled = `disabled`.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -283,18 +283,18 @@ Figma card_footer (218:7174): full-width buttons m-2 apart (Figma: Primary · So
 
 **공개 컴포넌트**
 
-Figma component set `chart` (698:4399): line, vertical bar and horizontal bar charts in the default style (axis labels, value grid, legend, hover / keyboard tooltip) or the simple style (160px, the last category is the current period). One series is Figma Group=no, two are Group=yes. The drawing is SVG sized to the container width; the values are also given to screen readers as a table.
+Figma component set `chart` (698:4399): line, vertical bar and horizontal bar charts in the default style (axis labels, value grid, legend) or the simple style (160px, the last category is the current period). One series is Figma Group=no, two are Group=yes. Both styles show the Figma hover=yes state for the active category — guide line and rings (line) or highlight band (bars) and the tooltip — on pointer hover, tap or keyboard (arrow keys, Home / End, Escape). The drawing is SVG sized to the container width; the values are also given to screen readers as a table.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `categories` *(필수)* | `string[]` |  | Category (x axis; y axis for `bar-horizontal`) labels. |
 | `series` *(필수)* | `ChartSeries[]` |  | One series (Figma Group=no) or two (Group=yes: the second is the comparison). Further series are ignored. |
-| `activeIndex` | `number \| null` |  | Category whose tooltip is shown (default style), or `null` (controlled). |
+| `activeIndex` | `number \| null` |  | Category whose tooltip is shown (hover / keyboard / tap), or `null` (controlled). |
 | `defaultActiveIndex` | `number \| null` | `null` | Initial `activeIndex` (uncontrolled). |
 | `formatValue` | `((value: number) => string)` | `(value: number) => value.toLocaleString('ko-KR')` | Formats values (ticks, tooltip, data table). |
 | `maxLabel` | `ReactNode` | `최고` | Badge over the highest value of the first series (line, default style); `false` hides it. |
 | `onActiveIndexChange` | `((index: number \| null) => void)` |  |  |
-| `plotLabel` | `string` | `차트 항목: 화살표 키로 값 확인` | Accessible name of the plot, which takes keyboard focus (default style). |
+| `plotLabel` | `string` | `차트 항목: 화살표 키로 값 확인` | Accessible name of the plot, which takes keyboard focus. |
 | `ticks` | `number[]` |  | Value-axis ticks of the default style, lowest first; the axis spans the first to the last. Default: 4 steps from 0. |
 | `type` | `"line" \| "bar-vertical" \| "bar-horizontal"` | `bar-vertical` | Figma "Type". |
 | `variant` | `"default" \| "simple"` | `default` | Figma "Style": `default` has axes, a legend and a tooltip; `simple` is the compact 160px chart whose last category is the current period. |
@@ -305,12 +305,12 @@ Figma component set `chart` (698:4399): line, vertical bar and horizontal bar ch
 
 **보조 컴포넌트** — 직접 만드는 범례(`Chart`는 범례를 스스로 그림)
 
-Figma component set `chart-legend-item` (697:4514): a series marker and its label, m-1_5 apart (label xs/leading-normal/normal, text/secondary). `Chart` renders its own legend; use this for custom legends.
+Figma component set `chart-legend-item` (697:4514): a series marker and its label, m-1_5 apart (label xs/leading-normal/normal, colors/chart/legend/label/default; marker colors/chart/bar/* for `bar`, colors/chart/line/* for the lines). `Chart` renders its own legend; use this for custom legends.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | Figma "Label". |
-| `color` | `"brand" \| "compare" \| "02" \| "history" \| "history-compare"` | `brand` | Series colour of the marker. |
+| `color` | `"brand" \| "compare" \| "02" \| "history" \| "history-compare"` | `type === 'dash-line' ? '02' : 'brand'` | Series colour of the marker. |
 | `type` | `"line" \| "dash-line" \| "bar"` | `bar` | Figma "Type": a line, a dashed line (5 / 3) or a 12px square. |
 
 ### `ChartTooltip`

@@ -48,12 +48,12 @@ export type ChartProps = Omit<ComponentPropsWithoutRef<'figure'>, 'children'> & 
   formatValue?: (value: number) => string;
   /** Badge over the highest value of the first series (line, default style); `false` hides it. @default '최고' */
   maxLabel?: ReactNode;
-  /** Category whose tooltip is shown (default style), or `null` (controlled). */
+  /** Category whose tooltip is shown (hover / keyboard / tap), or `null` (controlled). */
   activeIndex?: number | null;
   /** Initial `activeIndex` (uncontrolled). @default null */
   defaultActiveIndex?: number | null;
   onActiveIndexChange?: (index: number | null) => void;
-  /** Accessible name of the plot, which takes keyboard focus (default style). @default '차트 항목: 화살표 키로 값 확인' */
+  /** Accessible name of the plot, which takes keyboard focus. @default '차트 항목: 화살표 키로 값 확인' */
   plotLabel?: string;
 };
 
@@ -95,21 +95,21 @@ function readMetrics(el: HTMLElement): Metrics {
   return Object.fromEntries(METRICS.map((name) => [name, parseFloat(style.getPropertyValue(`--_${name}`)) || 0])) as Metrics;
 }
 
-/** Bar / line colour of series `k` (Figma per variant). */
-function markColor(type: ChartType, variant: ChartVariant, group: boolean, k: number, current: boolean): ChartColor {
+/**
+ * Bar / line colour of series `k` — the same rule for vertical and horizontal bars (Figma Chart Component tokens
+ * colors/chart/bar/* and colors/chart/line/*): main series brand, comparison `compare` (bars) or `02` (lines); in
+ * simple bar charts the past periods are `history` / `history-compare` and the current period brand / `compare`.
+ */
+function markColor(type: ChartType, variant: ChartVariant, k: number, current: boolean): ChartColor {
   if (variant === 'simple' && type !== 'line') {
-    if (current) return k === 0 ? 'brand' : '02';
-    if (group) return k === 0 ? 'history' : 'history-compare';
-    return type === 'bar-vertical' ? 'compare' : 'history';
+    if (current) return k === 0 ? 'brand' : 'compare';
+    return k === 0 ? 'history' : 'history-compare';
   }
   if (k === 0) return 'brand';
-  if (type === 'line') return '02';
-  // Comparison bars use the legend / tooltip colour colors/chart/series/compare in both directions. Figma binds the
-  // Bar Horizontal ones to colors/chart/simple/history — a binding error reported for correction (F65, docs/analysis).
-  return 'compare';
+  return type === 'line' ? '02' : 'compare';
 }
 
-/** Legend and tooltip colour of series `k` (Figma: colors/chart/series/compare for the bar comparison). */
+/** Legend and tooltip colour of series `k`. */
 const keyColor = (type: ChartType, k: number): ChartColor => (k === 0 ? 'brand' : type === 'line' ? '02' : 'compare');
 
 type TooltipAnchor = { x: number; y: number; gap: number; vertical: 'top' | 'center' };
@@ -119,7 +119,8 @@ type Scene = {
   labels: ReactNode;
   overlay?: ReactNode;
   anchor?: TooltipAnchor;
-  hit?: (x: number, y: number) => number;
+  /** Category under a plot point, or null outside the data (e.g. over the value-label column). */
+  hit?: (x: number, y: number) => number | null;
 };
 
 type SceneInput = {
@@ -137,6 +138,8 @@ type SceneInput = {
 };
 
 const clampIndex = (i: number, n: number) => Math.min(n - 1, Math.max(0, i));
+/** Index of the band (columns or rows `pitch` apart, `gap` between them) that a coordinate falls in. */
+const bandIndex = (pos: number, start: number, pitch: number, gap: number, n: number) => clampIndex(Math.floor((pos - start + gap / 2) / pitch), n);
 /** How far the simple line continues past the plot edges before the SVG clips it (more than half its width). */
 const EDGE_OVERRUN = 4;
 const valueAt = (s: ChartSeries, i: number) => (Number.isFinite(s.data[i]) ? s.data[i] : 0);
@@ -168,8 +171,11 @@ function lineScene(input: SceneInput): Scene {
   let yOf: (v: number) => number;
   let base: number;
   let labels: ReactNode;
+  let hit: Scene['hit'];
   if (simple) {
     const cols = bands(n, width, m['category-gap']);
+    const pitch = n > 1 ? cols[1][0] - cols[0][0] : width;
+    hit = (x) => bandIndex(x, 0, pitch, m['category-gap'], n);
     const max = Math.max(0, ...series.flatMap((s) => categories.map((_, i) => valueAt(s, i)))) || 1;
     base = m['draw-height'];
     xs = cols.map(([x, w]) => x + w / 2);
@@ -184,6 +190,9 @@ function lineScene(input: SceneInput): Scene {
     const plotW = width - left;
     base = m['grid-bottom'];
     xs = categories.map((_, i) => left + (n > 1 ? (plotW * i) / (n - 1) : plotW / 2));
+    const step = n > 1 ? plotW / (n - 1) : 1;
+    // Nearest category; the value-label column is not part of the hover area.
+    hit = (x) => (x < m['value-label-width'] ? null : clampIndex(Math.round((x - left) / step), n));
     yOf = (v) => scale(v, ticks[0], ticks[ticks.length - 1], base, m['grid-top']);
     labels = (
       <>
@@ -200,18 +209,19 @@ function lineScene(input: SceneInput): Scene {
   // Simple: the line runs on past the plot edges (Figma; clipped there), continuing its first and last segments.
   const run = (k: number) => (simple ? extendToEdges(points[k], -EDGE_OVERRUN, width + EDGE_OVERRUN, 0, base) : points[k]);
   const order = series.map((_, k) => k).reverse();
+  // The active (hovered / keyboard) category gets a ring on every series (Figma hover=yes); the default style draws
+  // no markers at the first and last category.
   const dots = (k: number) => {
-    const color = markColor('line', variant, group, k, false);
-    const current = simple ? n - 1 : active;
+    const color = markColor('line', variant, k, false);
     return (
       <g key={`dots-${k}`}>
         {points[k].map(([x, y], i) =>
-          i === current || (!simple && (i === 0 || i === n - 1)) ? null : (
+          i === active || (!simple && (i === 0 || i === n - 1)) ? null : (
             <circle key={i} className="ds-chart__point" data-color={color} cx={x} cy={y} r={m['point-radius']} />
           ),
         )}
-        {current != null && current < n && (
-          <circle className="ds-chart__point" data-current="" data-color={color} cx={points[k][current][0]} cy={points[k][current][1]} r={m['ring-radius']} />
+        {active != null && (
+          <circle className="ds-chart__point" data-current="" data-color={color} cx={points[k][active][0]} cy={points[k][active][1]} r={m['ring-radius']} />
         )}
       </g>
     );
@@ -221,19 +231,21 @@ function lineScene(input: SceneInput): Scene {
       key={`line-${k}`}
       className="ds-chart__line"
       data-series={k}
-      data-color={markColor('line', variant, group, k, false)}
+      data-color={markColor('line', variant, k, false)}
       d={!simple && k === 0 ? roundedPolyline(run(k), m['line-corner']) : polyline(run(k))}
     />
   );
   const area = !group && <path key="area" className="ds-chart__area" d={areaPath(run(0), base)} fill={fill('brand', 'area')} />;
+  // Hover guide under everything: over the grid (default) or the whole drawing height (simple).
+  const guide = active != null && <line key="guide" className="ds-chart__guide" x1={xs[active]} x2={xs[active]} y1={simple ? 0 : m['grid-top']} y2={base} />;
   let svg: ReactNode;
   if (simple) {
     const baseline = <line key="baseline" className="ds-chart__baseline" x1={0} x2={width} y1={base} y2={base} />;
-    svg = group ? [baseline, ...order.flatMap((k) => [line(k), dots(k)])] : [area, baseline, line(0), dots(0)];
+    svg = group ? [guide, baseline, ...order.flatMap((k) => [line(k), dots(k)])] : [guide, area, baseline, line(0), dots(0)];
   } else {
     svg = (
       <>
-        {active != null && <line className="ds-chart__guide" x1={xs[active]} x2={xs[active]} y1={m['grid-top']} y2={base} />}
+        {guide}
         {ticks.map((t) => (
           <line key={t} className="ds-chart__grid" x1={m['plot-left']} x2={width} y1={yOf(t)} y2={yOf(t)} />
         ))}
@@ -262,20 +274,18 @@ function lineScene(input: SceneInput): Scene {
       </Badge>
     );
   }
-  const step = n > 1 ? (width - m['plot-left']) / (n - 1) : 1;
   return {
     svg,
     labels,
     overlay,
     anchor: active != null ? { x: xs[active], y: points[0][active][1], gap: m['tooltip-gap'], vertical: 'center' } : undefined,
-    hit: (x) => clampIndex(Math.round((x - m['plot-left']) / step), n),
+    hit,
   };
 }
 
 function barVerticalScene(input: SceneInput): Scene {
   const { variant, categories, series, ticks, width, m, active, fill } = input;
   const n = categories.length;
-  const group = series.length > 1;
   const simple = variant === 'simple';
   const left = simple ? 0 : m['plot-left'];
   const top = simple ? m['draw-top'] : m['grid-top'];
@@ -286,6 +296,8 @@ function barVerticalScene(input: SceneInput): Scene {
   const barW = m['bar-size'];
   const gap = m['pair-gap'];
   const pairW = series.length * barW + (series.length - 1) * gap;
+  // Hover highlight: over the grid (default) or from the top of the chart to the baseline (simple).
+  const highlightTop = simple ? 0 : top;
   const svg = (
     <>
       {simple ? (
@@ -298,10 +310,10 @@ function barVerticalScene(input: SceneInput): Scene {
         const c = x + w / 2;
         return (
           <g key={i}>
-            {!simple && active === i && <rect className="ds-chart__highlight" x={c - m['highlight-size'] / 2} y={top} width={m['highlight-size']} height={bottom - top} />}
+            {active === i && <rect className="ds-chart__highlight" x={c - m['highlight-size'] / 2} y={highlightTop} width={m['highlight-size']} height={bottom - highlightTop} />}
             {series.map((s, k) => {
               const y = yOf(valueAt(s, i));
-              const color = markColor('bar-vertical', variant, group, k, i === n - 1);
+              const color = markColor('bar-vertical', variant, k, i === n - 1);
               return <path key={k} className="ds-chart__bar" data-color={color} d={barPath(c - pairW / 2 + k * (barW + gap), y, barW, bottom - y, m['bar-radius'], 'up')} fill={fill(color, 'v')} />;
             })}
           </g>
@@ -329,15 +341,15 @@ function barVerticalScene(input: SceneInput): Scene {
   return {
     svg,
     labels,
-    anchor: active != null && cols[active] ? { x: cols[active][0] + cols[active][1] / 2, y: top, gap: 0, vertical: 'top' } : undefined,
-    hit: (x) => clampIndex(Math.floor((x - left + m['category-gap'] / 2) / pitch), n),
+    anchor: active != null && cols[active] ? { x: cols[active][0] + cols[active][1] / 2, y: highlightTop, gap: 0, vertical: 'top' } : undefined,
+    // The value-label column (default style) is not part of the hover area.
+    hit: (x) => (!simple && x < m['value-label-width'] ? null : bandIndex(x, left, pitch, m['category-gap'], n)),
   };
 }
 
 function barHorizontalScene(input: SceneInput): Scene {
   const { variant, categories, series, ticks, width, m, active, fill } = input;
   const n = categories.length;
-  const group = series.length > 1;
   const simple = variant === 'simple';
   const trackLeft = m['row-label-width'] + m['row-label-gap'];
   const trackW = width - trackLeft;
@@ -371,9 +383,9 @@ function barHorizontalScene(input: SceneInput): Scene {
       )}
       {rows.map(([y, h], i) => (
         <g key={i}>
-          {!simple && active === i && <rect className="ds-chart__highlight" x={trackLeft} y={y} width={trackW} height={h} />}
+          {active === i && <rect className="ds-chart__highlight" x={trackLeft} y={y + h / 2 - m['highlight-size'] / 2} width={trackW} height={m['highlight-size']} />}
           {series.map((s, k) => {
-            const color = markColor('bar-horizontal', variant, group, k, i === n - 1);
+            const color = markColor('bar-horizontal', variant, k, i === n - 1);
             const d = barPath(trackLeft, y + h / 2 - pairH / 2 + k * (barH + gap), lengthOf(valueAt(s, i)), barH, m['bar-radius'], 'right');
             return <path key={k} className="ds-chart__bar" data-color={color} d={d} fill={fill(color, 'h')} />;
           })}
@@ -409,7 +421,14 @@ function barHorizontalScene(input: SceneInput): Scene {
             vertical: 'center',
           }
         : undefined,
-    hit: (_x, y) => clampIndex(Math.floor((y - m['pad-top']) / (m['body-height'] / n)), n),
+    // Rows only: not the value-axis labels below them (default) or the space around the rows (simple).
+    hit: (_x, y) => {
+      const pitch = rows.length > 1 ? rows[1][0] - rows[0][0] : rows[0][1];
+      const rowGap = pitch - rows[0][1];
+      const last = rows[rows.length - 1];
+      if (y < rows[0][0] - rowGap / 2 || y > last[0] + last[1] + rowGap / 2) return null;
+      return bandIndex(y, rows[0][0], pitch, rowGap, n);
+    },
   };
 }
 
@@ -417,9 +436,10 @@ const defaultFormat = (value: number) => value.toLocaleString('ko-KR');
 
 /**
  * Figma component set `chart` (698:4399): line, vertical bar and horizontal bar charts in the default style (axis labels,
- * value grid, legend, hover / keyboard tooltip) or the simple style (160px, the last category is the current period).
- * One series is Figma Group=no, two are Group=yes. The drawing is SVG sized to the container width; the values are
- * also given to screen readers as a table.
+ * value grid, legend) or the simple style (160px, the last category is the current period). One series is Figma
+ * Group=no, two are Group=yes. Both styles show the Figma hover=yes state for the active category — guide line and
+ * rings (line) or highlight band (bars) and the tooltip — on pointer hover, tap or keyboard (arrow keys, Home / End,
+ * Escape). The drawing is SVG sized to the container width; the values are also given to screen readers as a table.
  */
 export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   {
@@ -446,7 +466,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   const group = series.length > 1;
   const n = categories.length;
   const simple = variant === 'simple';
-  const interactive = !simple && n > 0;
+  const interactive = n > 0;
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const [activeValue, setActive] = useControllableState<number | null>(activeIndex, defaultActiveIndex, onActiveIndexChange);
   const active = interactive && activeValue != null && activeValue >= 0 && activeValue < n ? activeValue : null;
@@ -532,10 +552,30 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   }, [tooltipOpen]);
 
   const summary = (i: number) => `${categories[i]}: ${series.map((s) => `${s.label} ${formatValue(valueAt(s, i))}`).join(', ')}`;
+  // Latest requested category, so two handlers of one event (blur + outside press) report a change only once.
+  const activeRef = useRef(active);
   const move = (next: number | null, announce: boolean) => {
-    if (next !== active) setActive(next);
+    if (next !== activeRef.current) {
+      activeRef.current = next;
+      setActive(next);
+    }
     if (announce) setAnnouncement(next == null ? '' : summary(next));
   };
+  // A tap shows the tooltip until the next press outside the plot (touch has no hover to leave); a tap does not always
+  // move focus away from the plot (WebKit), so blur alone cannot close it.
+  const closeOnOutsidePress = useRef<(e: Event) => void>(() => {});
+  useLayoutEffect(() => {
+    activeRef.current = active;
+    closeOnOutsidePress.current = (e) => {
+      if (!plotRef.current?.contains(e.target as Node)) move(null, false);
+    };
+  });
+  useEffect(() => {
+    if (!tooltipOpen) return;
+    const onPress = (e: Event) => closeOnOutsidePress.current(e);
+    document.addEventListener('pointerdown', onPress, true);
+    return () => document.removeEventListener('pointerdown', onPress, true);
+  }, [tooltipOpen]);
   const pointerIndex = (e: PointerEvent<HTMLDivElement>) => {
     if (!scene?.hit || !size) return null;
     const r = e.currentTarget.getBoundingClientRect();
@@ -587,8 +627,13 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
               'aria-label': plotLabel,
               onKeyDown,
               onBlur: () => move(null, false),
+              // pointerdown: taps (touch fires no pointermove without dragging) and clicks.
+              onPointerDown: (e: PointerEvent<HTMLDivElement>) => move(pointerIndex(e), false),
               onPointerMove: (e: PointerEvent<HTMLDivElement>) => move(pointerIndex(e), false),
-              onPointerLeave: () => move(null, false),
+              // Touch fires pointerleave when the finger lifts: keep the tapped category (closed by an outside press).
+              onPointerLeave: (e: PointerEvent<HTMLDivElement>) => {
+                if (e.pointerType !== 'touch') move(null, false);
+              },
             }
           : { 'aria-hidden': true })}
       >
@@ -615,6 +660,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
                 <ChartTooltip
                   ref={tooltipRef}
                   className="ds-chart__tooltip"
+                  data-mark={type === 'line' ? 'line' : 'bar'}
                   aria-hidden="true"
                   title={categories[active]}
                   items={series.map((s, k) => ({ label: s.label, value: formatValue(valueAt(s, active)), color: keyColor(type, k) }))}

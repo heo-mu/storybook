@@ -18,7 +18,8 @@ type Story = StoryObj;
 
 // Figma sample data. The layer names carry placeholder values ("Bar / 101동 / current / 384" on every bar), so the
 // values are derived from the drawn geometry: bar height × 400 / 172, bar width × 400 / 548, line vertex y on the
-// 0–240 grid (196 − y) × 240 / 184. Simple bars use the values in their layer names (they match the geometry).
+// 0–240 grid (196 − y) × 240 / 184. Simple bars use the values in their layer names (they match the geometry); simple
+// line points: (132 − y) × 224 / 128.
 const BUILDINGS = ['101동', '102동', '103동', '104동', '105동'];
 const DATES = ['10.07', '10.08', '10.09', '10.10', '10.11', '10.12', '10.13'];
 const MONTHS = ['6월', '7월', '8월', '9월', '10월'];
@@ -28,16 +29,17 @@ const AXES_BUILDINGS = { yAxisLabel: 'Y축: 전력 사용량 (kWh)', xAxisLabel:
 const AXES_HORIZONTAL = { yAxisLabel: 'Y축: 동별 구분', xAxisLabel: 'X축: 전력 사용량 (kWh)' };
 const AXES_DATES = { yAxisLabel: 'Y축: 전력 사용량 (kWh)', xAxisLabel: 'X축: 날짜 (월.일)' };
 
-const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = [
+// The Figma variants without the hover property; `hover` is the category drawn in their hover=yes copy.
+const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: ChartProps }> = [
   {
     name: 'Type=Line, Style=Default, Group=yes',
     width: 984,
+    hover: 4,
     props: {
       type: 'line',
       ...AXES_DATES,
       categories: DATES,
       ticks: LINE_TICKS,
-      activeIndex: 4,
       series: [
         { label: '전기', data: [140.3337, 194.4758, 132.0042, 185.5513, 159.3727, 218.8696, 218.8696] },
         { label: '가스', data: [175, 185, 171, 199, 205, 209, 216] },
@@ -47,18 +49,19 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   {
     name: 'Type=Line, Style=Default, Group=no',
     width: 984,
+    hover: 4,
     props: {
       type: 'line',
       ...AXES_DATES,
       categories: DATES,
       ticks: LINE_TICKS,
-      activeIndex: 4,
       series: [{ label: '전기', data: [140.3337, 194.4758, 132.0042, 185.5513, 159.3727, 218.8696, 218.8696] }],
     },
   },
   {
     name: 'Type=Bar Horizontal, Style=Default, Group=no',
     width: 600,
+    hover: 1,
     props: {
       type: 'bar-horizontal',
       ...AXES_HORIZONTAL,
@@ -70,12 +73,12 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   {
     name: 'Type=Bar Horizontal, Style=Default, Group=yes',
     width: 600,
+    hover: 1,
     props: {
       type: 'bar-horizontal',
       ...AXES_HORIZONTAL,
       categories: BUILDINGS,
       ticks: BAR_TICKS,
-      activeIndex: 1,
       series: [
         { label: '조회 기간', data: [331.5036, 289.1679, 255.5474, 276.4307, 289.2482] },
         { label: '이전 기간', data: [367.1825, 319.7372, 283.0511, 306.1825, 320.3796] },
@@ -85,12 +88,12 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   {
     name: 'Type=Bar Vertical, Style=Default, Group=yes',
     width: 600,
+    hover: 3,
     props: {
       type: 'bar-vertical',
       ...AXES_BUILDINGS,
       categories: BUILDINGS,
       ticks: BAR_TICKS,
-      activeIndex: 3,
       series: [
         { label: '조회 기간', data: [320.2326, 264.9302, 301.2093, 304.6744, 384] },
         { label: '이전 기간', data: [330.2326, 273.2093, 310.6279, 314.186, 396] },
@@ -100,6 +103,7 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   {
     name: 'Type=Bar Vertical, Style=Default, Group=no',
     width: 600,
+    hover: 3,
     props: {
       type: 'bar-vertical',
       ...AXES_BUILDINGS,
@@ -111,15 +115,17 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   {
     name: 'Type=Line, Style=Simple, Group=no',
     width: 320,
-    props: { type: 'line', variant: 'simple', categories: MONTHS, series: [{ label: '조회 기간', data: [83.0725, 161, 142.8, 224, 165.095] }] },
+    hover: 4,
+    props: { type: 'line', variant: 'simple', categories: BUILDINGS, series: [{ label: '조회 기간', data: [83.0725, 161, 142.8, 224, 165.095] }] },
   },
   {
     name: 'Type=Line, Style=Simple, Group=yes',
     width: 320,
+    hover: 4,
     props: {
       type: 'line',
       variant: 'simple',
-      categories: MONTHS,
+      categories: BUILDINGS,
       series: [
         { label: '조회 기간', data: [83.0725, 161, 142.8, 224, 165.095] },
         { label: '비교 기간', data: [97.0725, 128.8, 84.35, 175, 194.4075] },
@@ -129,11 +135,13 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   {
     name: 'Type=Bar Vertical, Style=Simple, Group=no',
     width: 320,
+    hover: 4,
     props: { type: 'bar-vertical', variant: 'simple', categories: MONTHS, series: [{ label: '조회 기간', data: [148, 198, 136, 224, 184] }] },
   },
   {
     name: 'Type=Bar Vertical, Style=Simple, Group=yes',
     width: 320,
+    hover: 4,
     props: {
       type: 'bar-vertical',
       variant: 'simple',
@@ -147,11 +155,13 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   {
     name: 'Type=Bar Horizontal, Style=Simple, Group=no',
     width: 320,
+    hover: 3,
     props: { type: 'bar-horizontal', variant: 'simple', categories: MONTHS.slice(1), series: [{ label: '조회 기간', data: [198, 136, 224, 184] }] },
   },
   {
     name: 'Type=Bar Horizontal, Style=Simple, Group=yes',
     width: 320,
+    hover: 3,
     props: {
       type: 'bar-horizontal',
       variant: 'simple',
@@ -164,7 +174,12 @@ const FIGMA_CHARTS: Array<{ name: string; width: number; props: ChartProps }> = 
   },
 ];
 
-/** The 12 Figma variants with the Figma sample data (active category as drawn in Figma). */
+const FIGMA_CHARTS = FIGMA_BASE.flatMap(({ name, width, hover, props }) => [
+  { name: `${name}, hover=no`, width, props },
+  { name: `${name}, hover=yes`, width, props: { ...props, activeIndex: hover } },
+]);
+
+/** The 24 Figma variants with the Figma sample data (hover=yes: the active category drawn in Figma). */
 export const Figma: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 40, justifyItems: 'start' }}>
@@ -182,7 +197,7 @@ export const FigmaParts: Story = {
       <ChartLegendItem data-figma="legend:Type=Line" type="line">
         조회 기간
       </ChartLegendItem>
-      <ChartLegendItem data-figma="legend:Type=Dash Line" type="dash-line" color="compare">
+      <ChartLegendItem data-figma="legend:Type=Dash Line" type="dash-line">
         조회 기간
       </ChartLegendItem>
       <ChartLegendItem data-figma="legend:Type=Bar" type="bar">
@@ -243,6 +258,59 @@ export const Interaction: StoryObj<{ onActiveIndexChange: Mock<(index: number | 
       await userEvent.unhover(plot);
       await waitFor(() => expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(null));
     });
+    await step('the value-label column is not part of the hover area', async () => {
+      const box = plot.getBoundingClientRect();
+      await userEvent.pointer({ target: plot, coords: { clientX: box.left + 44 + 49, clientY: box.top + 100 } });
+      await waitFor(() => expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(0));
+      await userEvent.pointer({ target: plot, coords: { clientX: box.left + 10, clientY: box.top + 100 } });
+      await waitFor(() => expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(null));
+      await expect(document.querySelector('.ds-chart__tooltip')).toBeNull();
+      await userEvent.unhover(plot);
+    });
+    await step('touch: a tap shows the category until a press outside the plot', async () => {
+      const box = plot.getBoundingClientRect();
+      // A tap fires pointerdown / pointerup / pointerleave (finger lifted) and no pointermove.
+      await userEvent.pointer({ keys: '[TouchA]', target: plot, coords: { clientX: box.left + 44 + 2 * 114.4 + 49, clientY: box.top + 100 } });
+      await waitFor(() => expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(2));
+      await expect(document.querySelector('.ds-chart__tooltip')).toHaveTextContent('103동');
+      await userEvent.pointer({ keys: '[TouchA]', target: canvasElement.ownerDocument.body, coords: { clientX: 5, clientY: 5 } });
+      await waitFor(() => expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(null));
+      await expect(document.querySelector('.ds-chart__tooltip')).toBeNull();
+    });
+  },
+};
+
+/** Simple style: the plot takes focus too (Figma hover=yes) — arrow keys show the highlight and the tooltip. */
+export const SimpleInteraction: Story = {
+  render: () => (
+    <Chart
+      style={{ width: 320 }}
+      aria-label="월별 사용량"
+      type="bar-vertical"
+      variant="simple"
+      categories={MONTHS}
+      series={[
+        { label: '사용량', data: [148, 198, 136, 224, 184] },
+        { label: '비교 기간', data: [170, 185, 168, 204, 212] },
+      ]}
+    />
+  ),
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const plot = canvas.getByRole('group', { name: '차트 항목: 화살표 키로 값 확인' });
+    await userEvent.tab();
+    await expect(plot).toHaveFocus();
+    await userEvent.keyboard('{End}');
+    await expect(canvas.getByText('10월: 사용량 184, 비교 기간 212')).toBeInTheDocument();
+    await expect(canvasElement.querySelector('.ds-chart__highlight')).not.toBeNull();
+    const tip = document.querySelector('.ds-chart__tooltip');
+    await expect(tip).toHaveTextContent('10월사용량184비교 기간212');
+    // Indicators use the bar tokens of the series: current period brand, comparison compare (Figma hover=yes).
+    const indicators = [...tip!.querySelectorAll('.ds-chart-tooltip__indicator')].map((el) => getComputedStyle(el).getPropertyValue('--_c').trim());
+    const token = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    await expect(indicators).toEqual([token('--colors-chart-bar-primary'), token('--colors-chart-bar-compare')]);
+    await expect(indicators.every(Boolean)).toBe(true);
+    await userEvent.keyboard('{Escape}');
+    await expect(document.querySelector('.ds-chart__tooltip')).toBeNull();
   },
 };
 
@@ -265,8 +333,8 @@ export const Accessibility: Story = {
     await expect(canvas.getByRole('columnheader', { name: '10월' })).toBeInTheDocument();
     await expect(canvas.getByRole('rowheader', { name: '사용량' })).toBeInTheDocument();
     await expect(canvas.getByRole('cell', { name: '224' })).toBeInTheDocument();
-    // Simple charts have no tooltip, so the plot is not focusable.
-    await expect(canvas.queryByRole('group')).toBeNull();
+    // The plot is a focusable group in both styles (simple charts have a hover / keyboard tooltip since Figma hover=yes).
+    await expect(canvas.getByRole('group', { name: '차트 항목: 화살표 키로 값 확인' })).toHaveAttribute('tabindex', '0');
   },
 };
 
