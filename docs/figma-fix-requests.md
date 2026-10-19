@@ -133,6 +133,29 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 
 남긴 것(Figma 반영 대기): Segmented 선택 항목 그림자(0 1 2 / 9%, 같은 값의 효과 스타일 없음 — 등록은 디자인 결정, F18), Table Textarea 유형 두 줄 예시(F58).
 
+## S. Figma × Storybook 전체 동기화 (2026-10-19 밤, 사용자 승인 작업)
+
+쓰기 전마다 대상 노드를 다시 읽고 변경 전 값을 기록했습니다. 이름 · 크기 · 레이아웃 · 인스턴스 호환을 유지했고, 대량 삭제는 없습니다.
+변경 후 변수 · 스타일 체크섬 8그룹이 로컬 스냅샷과 일치(Primitive 456 · 167, Theme 44, Semantic 69, Component 82 · 725, 텍스트 46, 효과 4).
+
+| 단계 | 대상 | 변경 | ID |
+| --- | --- | --- | --- |
+| ① 차트 툴팁 | Rules 05 위치 셀 · Rules 10 포털 셀, chart-tooltip 주석 | 툴팁은 자기 차트 그림 영역 안 · 보이는 부분 우선 · 다른 차트와 공유 · 겹침 없음, 포털 대상에서 제외 | 1097:5368 · 1100:5699 · 1100:5701 · 693:9776 |
+| ② 필터 칩 | 다중 선택 예시 이름 "Calendar Container" → "chip-filter 다중 선택 예시"(구조 그대로) | 이름만 | 1011:12956 |
+| ② 필터 칩 | 단일 선택 예시 추가(원본 복제 — chip-filter · listbox · option 인스턴스) | 새 프레임 | 1149:6756(열 1149:6761 · 6768 · 6786 · 6793 · 6811) |
+| ② 필터 칩 | Rules 04 "필터 칩 선택" 행, chip-filter 주석, Rules 08 칩 간격 8 → 4px(예시 바인딩 m-1에 맞춤) · chip-input 주석 정정 | 문서 | 1149:6982(셀 1149:6984 · 6986 · 6988) · 558:25704 · 558:26017 |
+| ③ 접근성 | Rules 03 "이름과 설명" 행 — 보이는 글자가 이름에 포함(WCAG 2.5.3), 같은 종류 랜드마크는 서로 다른 이름 | 문서 | 1097:5110 안 |
+| ④ 상태 | option md Disabled 텍스트 스타일 `base/leading-normal/underline` → `base/leading-normal/normal`(F6) | 스타일 | 97:2331 |
+| ④ 상태 | Component 변수 `colors/search-field/solid/border/error`(→ `brand-status/error/strong`, STROKE_COLOR, WEB code syntax) · Solid Error 3변형에 2px 안쪽 테두리(E8) | 변수 1 · 3변형 | VariableID:1158:7281 · 439:10252 · 439:10295 · 439:10338 |
+| ⑤ 차트 | 개편 뒤 삭제된 변수 5개를 가리키던 차트 노드 91곳 → 같은 색의 현재 변수(`line/primary` · `line/02` · `surface/container-subtle` · `chart/series/02` · `bar/compare/gradient/start`) | 바인딩만, 색 그대로 | 698:4399 안 · 삭제 변수 VariableID:1129:5009 · 1129:5011 · 1113:5029 · 1113:5030 · 1052:6698 |
+| ⑤ 차트 | WEB code syntax 4개 정정 — `line/02 · 03 · 04/default`(→ `var(--colors-chart-line-0N-default)`), `label/legend/default`(→ `var(--colors-chart-label-legend-default)`) | code syntax | — |
+| ⑤ 차트 | **점선 복원**: 범례 Dash Line 표시선 5 / 3, 간단 선 Group=yes 비교 선 3 / 3(개편에서 실선이 됨, F85 — 디자이너 확인 필요) | `dashPattern` | 703:4817 · 762:5858 · 1011:15054 |
+| ⑤ 원격 | 컴포넌트 안 아이콘 7곳의 원격 `colors/icon/secondary` → 같은 값의 로컬 변수(값이 다른 355:4444 · 355:4445는 그대로, F86) | 바인딩만 | I476:20465 · I476:20410 · I476:20390 · I693:8187 · I675:4864 · I773:6950 · I773:7044 하위 |
+| ⑤ Card | 부품 컴포넌트 이름 "Frame 2147239186" · "Wrapper" → `card_header` · `card_footer`, 설명 추가(F88) | 이름 · 설명 | 218:7173 · 218:7174 |
+
+관찰된 다른 편집(이번 작업이 한 것 아님 — 코드 · 스냅샷을 맞춤): 차트 토큰 개편(F84 — Semantic 4개 삭제, Component chart 변수 재구성,
+샘플 글자 · 툴팁 계열 이름 너비 규칙).
+
 ## 새로 발견한 오류 (승인 대상 — 변경하지 않음)
 
 | # | 노드 · 변수 | 현재 | 권장 | 영향 |

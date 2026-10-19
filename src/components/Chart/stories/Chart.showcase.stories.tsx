@@ -67,7 +67,7 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
       ...AXES_HORIZONTAL,
       categories: BUILDINGS,
       ticks: BAR_TICKS,
-      series: [{ label: '조회 기간', data: [364.9124, 323.7883, 301.7372, 251.4526, 319.7883] }],
+      series: [{ label: '유형', data: [364.9124, 323.7883, 301.7372, 251.4526, 319.7883] }],
     },
   },
   {
@@ -80,8 +80,8 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
       categories: BUILDINGS,
       ticks: BAR_TICKS,
       series: [
-        { label: '조회 기간', data: [331.5036, 289.1679, 255.5474, 276.4307, 289.2482] },
-        { label: '이전 기간', data: [367.1825, 319.7372, 283.0511, 306.1825, 320.3796] },
+        { label: '유형', data: [331.5036, 289.1679, 255.5474, 276.4307, 289.2482] },
+        { label: '유형', data: [367.1825, 319.7372, 283.0511, 306.1825, 320.3796] },
       ],
     },
   },
@@ -95,8 +95,8 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
       categories: BUILDINGS,
       ticks: BAR_TICKS,
       series: [
-        { label: '조회 기간', data: [320.2326, 264.9302, 301.2093, 304.6744, 384] },
-        { label: '이전 기간', data: [330.2326, 273.2093, 310.6279, 314.186, 396] },
+        { label: '유형', data: [320.2326, 264.9302, 301.2093, 304.6744, 384] },
+        { label: '유형', data: [330.2326, 273.2093, 310.6279, 314.186, 396] },
       ],
     },
   },
@@ -109,14 +109,14 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
       ...AXES_BUILDINGS,
       categories: BUILDINGS,
       ticks: BAR_TICKS,
-      series: [{ label: '조회 기간', data: [320.2326, 264.9302, 301.2093, 304.6744, 384] }],
+      series: [{ label: '유형', data: [320.2326, 264.9302, 301.2093, 304.6744, 384] }],
     },
   },
   {
     name: 'Type=Line, Style=Simple, Group=no',
     width: 320,
     hover: 4,
-    props: { type: 'line', variant: 'simple', categories: BUILDINGS, series: [{ label: '조회 기간', data: [83.0725, 161, 142.8, 224, 165.095] }] },
+    props: { type: 'line', variant: 'simple', categories: DATES.slice(0, 5), series: [{ label: '전기', data: [83.0725, 161, 142.8, 224, 165.095] }] },
   },
   {
     name: 'Type=Line, Style=Simple, Group=yes',
@@ -125,10 +125,10 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
     props: {
       type: 'line',
       variant: 'simple',
-      categories: BUILDINGS,
+      categories: DATES.slice(0, 5),
       series: [
-        { label: '조회 기간', data: [83.0725, 161, 142.8, 224, 165.095] },
-        { label: '비교 기간', data: [97.0725, 128.8, 84.35, 175, 194.4075] },
+        { label: '전기', data: [83.0725, 161, 142.8, 224, 165.095] },
+        { label: '가스', data: [97.0725, 128.8, 84.35, 175, 194.4075] },
       ],
     },
   },
@@ -136,7 +136,7 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
     name: 'Type=Bar Vertical, Style=Simple, Group=no',
     width: 320,
     hover: 4,
-    props: { type: 'bar-vertical', variant: 'simple', categories: MONTHS, series: [{ label: '조회 기간', data: [148, 198, 136, 224, 184] }] },
+    props: { type: 'bar-vertical', variant: 'simple', categories: MONTHS, series: [{ label: '이번달', data: [148, 198, 136, 224, 184] }] },
   },
   {
     name: 'Type=Bar Vertical, Style=Simple, Group=yes',
@@ -147,8 +147,8 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
       variant: 'simple',
       categories: MONTHS,
       series: [
-        { label: '조회 기간', data: [148, 198, 136, 224, 184] },
-        { label: '비교 기간', data: [170, 185, 168, 204, 212] },
+        { label: '이번달', data: [148, 198, 136, 224, 184] },
+        { label: '저번달', data: [170, 185, 168, 204, 212] },
       ],
     },
   },
@@ -156,7 +156,7 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
     name: 'Type=Bar Horizontal, Style=Simple, Group=no',
     width: 320,
     hover: 3,
-    props: { type: 'bar-horizontal', variant: 'simple', categories: MONTHS.slice(1), series: [{ label: '조회 기간', data: [198, 136, 224, 184] }] },
+    props: { type: 'bar-horizontal', variant: 'simple', categories: MONTHS.slice(1), series: [{ label: '이번달', data: [198, 136, 224, 184] }] },
   },
   {
     name: 'Type=Bar Horizontal, Style=Simple, Group=yes',
@@ -167,8 +167,8 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
       variant: 'simple',
       categories: MONTHS.slice(1),
       series: [
-        { label: '조회 기간', data: [198, 136, 224, 184] },
-        { label: '비교 기간', data: [185, 168, 204, 212] },
+        { label: '이번달', data: [198, 136, 224, 184] },
+        { label: '저번달', data: [185, 168, 204, 212] },
       ],
     },
   },
@@ -190,25 +190,27 @@ export const Figma: Story = {
   ),
 };
 
-/** chart-legend-item (3 variants) and chart-tooltip on their own. */
+/** chart-legend-item (3 variants, Figma sample label "유형" since the 2026-10-19 chart rework) and chart-tooltip on their own. */
 export const FigmaParts: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 40, alignItems: 'flex-start' }}>
+    // Whole-pixel 120px slots: without calc-size (Firefox, WebKit) a label is a fractional width, and a part laid out
+    // after it would start between pixels.
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 120px)', columnGap: 40, alignItems: 'start', justifyItems: 'start' }}>
       <ChartLegendItem data-figma="legend:Type=Line" type="line">
-        조회 기간
+        유형
       </ChartLegendItem>
       <ChartLegendItem data-figma="legend:Type=Dash Line" type="dash-line">
-        조회 기간
+        유형
       </ChartLegendItem>
       <ChartLegendItem data-figma="legend:Type=Bar" type="bar">
-        조회 기간
+        유형
       </ChartLegendItem>
       <ChartTooltip
         data-figma="tooltip:chart-tooltip"
         title="yyyy년 mm월 dd일"
         items={[
-          { label: 'RS-139', value: '1.025', color: 'brand' },
-          { label: 'RS-201', value: '1.025', color: 'compare' },
+          { label: '유형', value: '1.025', color: 'brand' },
+          { label: '유형', value: '1.025', color: 'compare' },
         ]}
       />
     </div>
@@ -307,7 +309,7 @@ export const SimpleInteraction: Story = {
     // Indicators use the bar tokens of the series: current period brand, comparison compare (Figma hover=yes).
     const indicators = [...tip!.querySelectorAll('.ds-chart-tooltip__indicator')].map((el) => getComputedStyle(el).getPropertyValue('--_c').trim());
     const token = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    await expect(indicators).toEqual([token('--colors-chart-bar-primary'), token('--colors-chart-bar-compare')]);
+    await expect(indicators).toEqual([token('--colors-chart-bar-primary-gradient-start-default'), token('--colors-chart-bar-compare-gradient-start-default')]);
     await expect(indicators.every(Boolean)).toBe(true);
     await userEvent.keyboard('{Escape}');
     await expect(document.querySelector('.ds-chart__tooltip')).toBeNull();
@@ -386,6 +388,30 @@ export const TooltipFlip: Story = {
     const area = visiblePlot(canvasElement.querySelector('.ds-chart__plot')!);
     await expect(tip.top).toBeGreaterThanOrEqual(area.top - 0.5);
     await expect(tip.bottom).toBeLessThanOrEqual(area.bottom + 0.5);
+  },
+};
+
+/**
+ * Series names in the tooltip are at least 40 and at most 80px wide (Figma "Pressure label" min / max width): a short
+ * name keeps the 40px column, a longer one wraps, and the values stay in one column.
+ */
+export const TooltipLabelWidth: Story = {
+  render: () => (
+    <ChartTooltip
+      title="10월 1일"
+      items={[
+        { label: '전기', value: '324', color: 'brand' },
+        { label: '공용 전기 사용량(지하 주차장)', value: '332', color: 'compare' },
+      ]}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const [short, long] = [...canvasElement.querySelectorAll('.ds-chart-tooltip__text')].map((el) => el.getBoundingClientRect());
+    await expect(short.width).toBeCloseTo(40, 0);
+    await expect(long.width).toBeLessThanOrEqual(80);
+    await expect(long.height).toBeGreaterThan(short.height);
+    const values = [...canvasElement.querySelectorAll('.ds-chart-tooltip__value')].map((el) => el.getBoundingClientRect().left);
+    await expect(values[0]).toBeCloseTo(values[1], 1);
   },
 };
 

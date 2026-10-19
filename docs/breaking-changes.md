@@ -90,6 +90,25 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 | 값 변경 — 별칭 | `--colors-surface-scrim` `alpha/black/900` → `alpha/black/500`(검정 90% → 50%) | 이 토큰을 쓰는 앱 화면만 연해짐 |
 | 값 변경 — 정의 | `--typography-sm-leading-normal-underline-line-height` 140% → `var(--font-line-height-leading-5)`(20px) | 14px 글자 기준 19.6 → 20px |
 
+### 2026-10-19 밤 — Chart 토큰 개편 동기화 (F84)
+
+Figma에서 다른 편집자가 Chart 변수를 재구성했습니다(1527 → 1536개). 배포 전이라 이전 이름의 별칭은 두지 않습니다.
+위의 "Chart Component 토큰 (F78)" 절의 이름 중 막대 · 선 · 범례 이름은 이 표로 대체됩니다.
+
+| 변경 | 이전 | 이후 | 호환성 |
+| --- | --- | --- | --- |
+| 이름 변경 | `--colors-chart-bar-{primary,compare,history,history-compare}` | `--colors-chart-bar-<계열>-gradient-start-default`(+ `-gradient-end-default` = 시작 색 40%) | **깨짐** — 앱 CSS에서 썼다면 `-gradient-start-default`로 |
+| 이름 변경 | `--colors-chart-line-{primary,compare}` | `--colors-chart-line-{primary,compare}-default` | **깨짐** |
+| 이름 변경 | `--colors-chart-legend-label-default` | `--colors-chart-label-legend-default` | **깨짐** |
+| 삭제(Semantic) | `--colors-chart-grid-default` · `--colors-chart-simple-history` · `--colors-chart-simple-history-compare` · `--colors-chart-simple-current-surface` | — (격자는 `--colors-chart-plot-grid-default`, 지난 기간은 `--colors-chart-bar-history*-gradient-start-default`) | **깨짐** |
+| 추가 | — | `--colors-chart-bar-{02,03,04}-gradient-{start,end}-default`, `--colors-chart-line-{02,03,04}-default` | 호환 |
+| 값 변경 | `--colors-chart-line-compare` = `series/02`(#0086d3) | `--colors-chart-line-compare-default` = `series/compare`(#d6dae0) | 선 차트에 `color: 'compare'`를 직접 준 계열만 파랑 → 회색. 기본 두 번째 선은 `02`(파랑) 그대로 |
+| 값 변경 | `--colors-chart-plot-grid-default` · `-baseline-default` #e2e5e9 | `border/gray-subtler` #d6dae0 | 격자 · 기준선 한 단계 진함 |
+| 값 변경 | `--colors-chart-tooltip-background-default` 흰색 80%(#ffffffcc) | `surface/page`(#fdfdfd) | 툴팁 배경 불투명 |
+| 값 변경 | 간단 막대 지난 기간 #e2e5e9 | `surface/overlay` #e9ebee | 한 단계 연함 |
+
+투명도가 있는 Figma 별칭(그라디언트 끝)은 `color-mix(in srgb, var(시작 색) 40%, transparent)`로 생성됩니다 — Chrome 111 · Firefox 113 · Safari 16.2 이상([browser-support.md](./browser-support.md)).
+
 ## 2. 컴포넌트 API
 
 | 변경 | 종류 | 호환성 |
@@ -104,6 +123,13 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 | 기본 토스트 큐 최대 3개(이전 5) | 동작 변경(Rules 06) | 4개째부터는 앞의 토스트가 닫힐 때까지 대기(새 토스트가 먼저 보임) |
 | `Tooltip` `delay` 기본값 1500 → 500 | 기본값 변경(Rules 05) | `delay`를 넘긴 코드는 그대로 |
 | `CheckboxGroup` · `RadioGroup` 기본 간격 0 → 세로 8px · 가로 16px | 기본 스타일 변경(Rules 08) | `style` · `className`의 `gap`이 우선 — 간격을 직접 주던 코드는 그대로 |
+| `Chart` 툴팁: `<body>` 포털(`position: fixed`) → 그림 영역 안 `position: absolute`(2026-10-19 밤, CHAR-08) | DOM 위치 변경 | Props 같음. `.ds-chart__tooltip`을 `body` 아래에서 찾던 테스트 · 스타일만 영향 — 이제 `.ds-chart__plot` 안 |
+| `FilterChipSelect` · `filterChipText` 추가(필터 칩 + 선택 목록, 다중 · 단일) | 추가 | 호환. `FilterChip` Props 그대로 |
+| `SelectOption checkIcon`(기본 `true`) | 추가 | 호환 |
+| `TableEmptyColumn` `aria-label` | 추가 | 호환 — 머리글 칸에 화면 낭독기 글자 |
+| 아이콘: `aria-label`을 넘기면 `role="img"`(없으면 `aria-hidden`) | 접근성 속성 | 화면 같음 |
+| `Calendar` 날짜 칸 이름 = 보이는 숫자 + 전체 날짜(`aria-labelledby`), 머리줄 `<header>` → `<div>` | 접근성 속성 · 마크업 | 화면 같음. `header` 선택자로 찾던 테스트만 영향 |
+| `DropdownMenu` 항목 라벨 · 설명이 `Text` 슬롯 대신 일반 `span`(`ds-dropdown__label` · `__description`) | 마크업 | 화면 같음, 이름 = 라벨 + 설명 |
 
 ## 3. 화면(시각) 변경
 
@@ -124,6 +150,10 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 | 키보드 포커스 표시(모든 컨트롤) | 브라우저 기본 표시 → 2px `colors/border/focus` 링(#007c56, 바깥 2px · 행은 안쪽) — 앱이 `:focus-visible`을 따로 꾸몄다면 겹칠 수 있음 |
 | `Select` 닫힌 상태 키보드 포커스 | 링 대신 Focus 테두리(`select/outline/outline/border/focus`) |
 | `Dialog` 모달 | 투명 → 검정 50% 덮개 |
+| `Chart` 격자 · 기준선 · 툴팁 배경 · 간단 막대 지난 기간(F84) | #e2e5e9 → #d6dae0 · 흰색 80% → #fdfdfd · #e2e5e9 → #e9ebee |
+| `ChartTooltip` 계열 이름 | 최소 40 · 최대 80px(넘으면 줄바꿈) — 짧은 이름도 값 열이 40px 뒤 |
+| `Select` 옵션 md Disabled | 밑줄 · Medium → 다른 md 상태와 같은 글자(F6) |
+| `SearchField` Solid 오류 | 테두리 없음 → 2px 오류 테두리(E8) |
 
 ## 4. 버전 정책 제안
 

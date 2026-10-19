@@ -1,0 +1,60 @@
+# Figma ↔ Storybook 동기화 상태 (컴포넌트별)
+
+생성: 2026-10-19 09:06 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-19 06:47 UTC), 스토리 테스트 + a11y 리포터 실행, Usage 문서의 Figma 속성 대조.
+
+| 열 | 기준 |
+| --- | --- |
+| Figma 정의 확인 | 검증 설정의 모든 Figma 세트가 원본에 있음 — 세트 · ID · 검증 변형 수 / 원본 변형 수 |
+| Storybook 구현 확인 | 쇼케이스가 검증 대상 변형을 모두 렌더링(Chromium 보고서 rendered = expected) |
+| 시각적 정합성 확인 | 변형별 DOM · 픽셀 · 글자 위치 검사 통과 수 — Chromium / Firefox / WebKit |
+| 인터랙션 검증 | 컴포넌트 스토리의 `play` 함수 수와 스토리 테스트 결과(실제 브라우저 Vitest) |
+| 접근성 검증 | Storybook a11y(axe 기본 규칙) 경고가 있는 스토리 수 — 사이드바 삼각형과 같은 결과 |
+| 문서 동기화 완료 | Usage MDX가 있고 모든 Figma 속성(변형 축 · Boolean · 글자 · 인스턴스)이 문서에 언급됨 |
+
+| 컴포넌트 | Figma 정의 확인 | Storybook 구현 확인 | 시각적 정합성 확인 (C / F / W) | 인터랙션 검증 | 접근성 검증 | 문서 동기화 완료 |
+| --- | --- | --- | --- | --- | --- | --- |
+| button (Button) | ✓ button_basic 54:2904 · 192/192<br>button_icon 67:2368 · 144/144<br>button_text 432:8395 · 16/16 | ✓ | ✓ 352/352 / 352/352 / 352/352 | ✓ play 8 · 스토리 24 | ✓ 경고 0 | ✓ |
+| accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
+| alert (Alert) | ✓ alert 179:6087 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
+| badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 1 · 스토리 9 | ✓ 경고 0 | ✓ |
+| breadcrumb (Breadcrumb) | ✓ breadcrumb-item 710:4794 · 12/12<br>breadcrumb 712:5106 · 6/6 | ✓ | ✓ 18/18 / 18/18 / 18/18 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
+| card (Card) | ✓ card_header 218:7173 · 1/1<br>card_footer 218:7174 · 1/1<br>card 185:8050 (예시 프레임) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
+| chart (Chart) | ✓ chart 698:4399 · 24/24<br>chart-legend-item 697:4514 · 3/3<br>chart-tooltip 693:9776 · 1/1 | ✓ | ✓ 28/28 / 28/28 / 28/28 | ✓ play 8 · 스토리 16 | ✓ 경고 0 | ✓ |
+| checkbox (Checkbox) | ✓ checkbox 99:2389 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 4 · 스토리 13 | ✓ 경고 0 | ✓ |
+| chip (Chip) | ✓ chip-multi 201:12711 · 24/24<br>chip-input 558:26017 · 12/12<br>chip-filter 558:25704 · 48/48 | ✓ | ✓ 84/84 / 84/84 / 84/84 | ✓ play 9 · 스토리 31 | ✓ 경고 0 | ✓ |
+| dashboard-filter-bar (DashboardFilterBar) | ✓ dashboard-filter-bar 698:4163 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
+| data-freshness (DataFreshness) | ✓ data-freshness 697:4543 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
+| data-state (DataState) | ✓ data-state 698:4359 · 6/6 | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 8 | ✓ 경고 0 | ✓ |
+| date-picker (DatePicker · Calendar) | ✓ date-picker_trigger 144:723 · 21/21<br>date-picker_message 144:888 · 3/3<br>date-picker_calendar 144:1644 · 1/1<br>date-picker_day 144:1033 · 7/7<br>date-picker_navigation 144:1328 · 8/8 | ✓ | ✓ 40/40 / 40/40 / 40/40 | ✓ play 6 · 스토리 24 | ✓ 경고 0 | ✓ |
+| dialog (Dialog) | ✓ dialog 149:2838 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
+| dropdown-menu (DropdownMenu) | ✓ dropdownmenu_item 179:4819 · 5/5<br>dropdownmenu_line 179:5082 · 1/1 | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 9 | ✓ 경고 0 | ✓ |
+| empty-state (EmptyState) | ✓ empty-state 724:14963 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
+| file-uploader (FileUploader · Loading) | ✓ file-uploader 651:3945 · 5/5<br>file-uploader-item 651:3999 · 3/3<br>loading 675:5644 · 2/2 | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 17 | ✓ 경고 0 | ✓ |
+| input (Input) | ✓ input 76:2945 · 21/21 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
+| link (Link) | ✓ link 111:1509 · 15/15 | ✓ | ✓ 15/15 / 15/15 / 15/15 | ✓ play 3 · 스토리 9 | ✓ 경고 0 | ✓ |
+| metric-card (MetricCard) | ✓ metric-card 697:4487 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
+| metric-trend (MetricTrend) | ✓ metric-trend 697:4482 · 12/12 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
+| navigation (Navigation) | ✓ item_parent 180:5246 · 4/4<br>item_link 180:6174 · 4/4<br>item_child 180:6249 · 4/4 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 2 · 스토리 9 | ✓ 경고 0 | ✓ |
+| pagination (Pagination) | ✓ pagination 132:871 · 3/3<br>pagination_item 132:520 · 24/24<br>pagination_control 132:604 · 48/48 | ✓ | ✓ 75/75 / 75/75 / 75/75 | ✓ play 2 · 스토리 11 | ✓ 경고 0 | ✓ |
+| progress (Progress) | ✓ progress 185:6518 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
+| radio (Radio) | ✓ radio 102:2677 · 24/24 | ✓ | ✓ 24/24 / 24/24 / 24/24 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
+| search-field (SearchField) | ✓ search-field 216:6570 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
+| segmented-control (SegmentedControl) | ✓ segmented-control 531:24471 · 3/3<br>segmented-item 524:24397 · 18/18 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
+| select (Select) | ✓ select 95:4740 · 24/24<br>listbox 97:2665 · 3/3<br>option 97:2286 · 15/15<br>select_message 95:2960 · 3/3 | ✓ | ✓ 45/45 / 45/45 / 45/45 | ✓ play 5 · 스토리 19 | ✓ 경고 0 | ✓ |
+| skeleton (Skeleton) | ✓ skeleton 697:4486 · 4/4 | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
+| slider (Slider) | ✓ slider 391:1988 · 2/2<br>handle 391:2013 · 5/5 | ✓ | ✓ 7/7 / 7/7 / 7/7 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
+| stepper (Stepper) | ✓ stepper_indicator_horizontal 179:1621 · 5/5<br>stepper_indicator_vertical 203:3708 · 5/5<br>stepper_connector_horizontal 179:1614 · 2/2<br>stepper_connector_vertical 203:4253 · 2/2<br>stepper_horizontal 179:2043 · 3/3<br>stepper_vertical 203:3949 · 3/3 | ✓ | ✓ 20/20 / 20/20 / 20/20 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
+| switch (Switch) | ✓ switch 107:409 · 16/16 | ✓ | ✓ 16/16 / 16/16 / 16/16 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
+| table (Table) | ✓ table_header 351:3452 · 3/3<br>table_body 355:3739 · 8/8<br>table_key 355:4193 · 2/2<br>table_value 355:4460 · 2/2<br>table_value_editable 503:23264 · 52/52 | ✓ | ✓ 67/67 / 67/67 / 67/67 | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
+| tabs (Tabs) | ✓ tab_filled 91:5000 · 60/60<br>tab_line 91:5241 · 30/30 | ✓ | ✓ 90/90 / 90/90 / 90/90 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
+| textarea (Textarea) | ✓ textarea 86:2597 · 14/14 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 11 | ✓ 경고 0 | ✓ |
+| toast (Toast) | ✓ toast 91:5927 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 4 · 스토리 8 | ✓ 경고 0 | ✓ |
+| tooltip (Tooltip) | ✓ tooltip 149:1111 · 4/4 | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
+
+요약: 37개 검증 단위 — Figma 정의 37 · 구현 37 · 시각 3 엔진 37 · 인터랙션 37 · 접근성 37 · 문서 37. 스토리 테스트 396개(실패 0, a11y 경고 0).
+
+검증 설정에 따로 없는 Figma 세트 3개: `input_message` 83:3009 — `input` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만) · `textarea_message` 86:2733 — `textarea` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만) · `date-picker_header` 144:1377 — `date-picker_calendar` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만).
+
+**자동으로 검증하지 못한 부분(미검증)**: 실제 화면 낭독기(NVDA · JAWS · VoiceOver)의 낭독 내용, 실제 터치 기기 · 모바일 브라우저,
+Figma 프로토타입 연결(대조 대상 아님 — Figma 쪽 동작 기준은 변형 · Design System Rules · 컴포넌트 주석이며 문서 대조로만 확인),
+Figma 주석 · Rules 문구의 의미 일치(사람 검토). 시각 정합성은 검증 설정이 매핑한 레이어 · 픽셀 범위 안에서만 판정합니다.

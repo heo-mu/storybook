@@ -20,7 +20,12 @@
   코드 · Figma 보완: SelectOption `checkIcon`(Figma Check Icon), option md Disabled 텍스트 스타일 정정(F6, Figma · 코드), Search Field Solid Error
   오류 테두리(E8, 새 변수 + 3변형), Table Filter 편집 칸 목록 = FilterChipSelect(F76 · R7 · D3, 검증 가림 제거). 남은 디자인 결정 17 → 2
   (F65-a · F75는 ⑤ 차트 · 표 확인). 스토리 395 · a11y 경고 0.
-- 시작 시 Figma 재조회: 다른 편집자의 차트 토큰 개편 진행 중(Semantic 69 · Component 724 — ⑤에서 동기화).
+- ⑤ **완료** — 다른 편집자의 차트 토큰 개편(F84) 동기화: 스냅샷(Semantic 69 · Component 725), 생성기 투명도 별칭 → `color-mix()`, 차트 CSS 색 연결,
+  범례 · 툴팁 · 간단 선 샘플(“유형” · 10.07–10.11), 툴팁 계열 이름 40–80px, 범례 · 툴팁 글자 정수 px, 기준 이미지 · geometry 재생성 → chart 24 · 범례 3 · 툴팁 1
+  3 엔진 통과. Figma: 삭제 변수 참조 91곳 재연결 · code syntax 4개 · 점선 복원 3노드(F85, 확인 필요) · 아이콘 원격 바인딩 7곳 · Card 부품 이름(F88).
+  CSS 주석 조기 종료 검사(`npm run lint`), 문서: breaking-changes · CHANGELOG · token-diff · figma-fix-requests S절 · figma-issues F84–F88 · triage,
+  Figma 속성 ↔ 문서 대조 전부 언급, 컴포넌트별 상태표 [sync-status.md](./sync-status.md)(37개 단위 6열). 체크섬 8그룹 원본과 일치, 스토리 396 · a11y 경고 0.
+- ⑥ 진행 전 — 전체 회귀(3 엔진 verify:all · verify:button, 스토리 · axe, 빌드, 실제 마우스 · 키보드 탐침, 외부 프로젝트 설치) 후 sync-status 재생성 · 최종 보고.
 
 ## 코드 정책 → Figma 공식 정책 작업 (2026-10-19, 완료)
 

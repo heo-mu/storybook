@@ -45,17 +45,35 @@ function unitFor(v) {
   throw new Error(`No unit rule for ${v.collection}:${v.name} [${v.scopes}]`);
 }
 
+// Alias, optionally with an opacity (Figma colour alias with opacity, snapshot "@S:name*40%").
+const ALIAS = /^@([PTSC]):(.+?)(?:\*(\d+(?:\.\d+)?)%)?$/;
+
 function aliasTarget(raw) {
-  const m = /^@([PTSC]):(.+)$/.exec(raw);
+  const m = ALIAS.exec(raw);
   if (!m) return null;
   const target = byKey.get(`${COLLECTION_BY_INITIAL[m[1]]}:${m[2]}`);
   if (!target) throw new Error(`Alias target not in snapshot: ${raw}`);
   return target;
 }
 
+/** Opacity (0–100) of an alias with opacity, or null. */
+const aliasOpacity = (raw) => {
+  const m = ALIAS.exec(raw);
+  return m && m[3] !== undefined ? Number(m[3]) : null;
+};
+
+/** #rrggbb[aa] with its alpha multiplied by `opacity` %. */
+function withOpacity(hex, opacity) {
+  const a = hex.length === 9 ? parseInt(hex.slice(7, 9), 16) / 255 : 1;
+  return hex.slice(0, 7) + Math.round(a * (opacity / 100) * 255).toString(16).padStart(2, '0');
+}
+
 function cssValue(v) {
   const target = aliasTarget(v.raw);
-  if (target) return `var(${cssVarName(target.name)})`;
+  if (target) {
+    const opacity = aliasOpacity(v.raw);
+    return opacity === null ? `var(${cssVarName(target.name)})` : `color-mix(in srgb, var(${cssVarName(target.name)}) ${opacity}%, transparent)`;
+  }
   if (v.raw.startsWith('#')) return v.raw;
   if (v.raw.startsWith('"')) return JSON.stringify(JSON.parse(v.raw));
   return `${Number(v.raw)}${unitFor(v)}`;
@@ -64,7 +82,10 @@ function cssValue(v) {
 function resolve(v, depth = 0) {
   if (depth > 10) throw new Error(`Alias loop at ${v.name}`);
   const target = aliasTarget(v.raw);
-  return target ? resolve(target, depth + 1) : cssValue(v);
+  if (!target) return cssValue(v);
+  const opacity = aliasOpacity(v.raw);
+  const value = resolve(target, depth + 1);
+  return opacity === null ? value : withOpacity(value, opacity);
 }
 
 const typeOf = (v) => (resolve(v).startsWith('#') ? 'color' : v.raw.startsWith('"') ? 'string' : 'number');

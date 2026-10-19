@@ -3,8 +3,9 @@
  *   default style: "Chart annotation / axes" (Y / X axis labels, p-4 apart, p-1 below, xs/leading-normal/normal,
  *                  text/secondary) · plot (228px; Bar Horizontal Group=yes 268px) · "Chart annotation / legend"
  *                  (centred, p-5 apart, wraps p-2, p-3 above)
- *   colours:       Chart Component tokens (F78) — colors/chart/bar/* and line/* (series), point/*, plot/* (grid,
- *                  axis, baseline, hover guide, hover highlight), label/default, legend/label/default, tooltip/*
+ *   colours:       Chart Component tokens (F78, reworked 2026-10-19) — colors/chart/bar/<series>/gradient/start · end,
+ *                  line/<series>, point, plot (grid, axis, baseline, hover guide, hover highlight), label/default,
+ *                  label/legend/default, tooltip
  *   line:          value labels right-aligned in a 32px column, plot from x 44; grid y 12–196 (1px); category labels
  *                  at y 208; series border-2 (first: vector corner radius 8); markers on inner points r 4 + border-2;
  *                  one series also has an area (series colour 20% → 0%); "최고" badge 8px above the highest point
@@ -39,10 +40,11 @@
 }
 
 /*
- * Series colours — chart marks, legend markers and tooltip indicators. Chart Component tokens per mark (Figma F78):
- * colors/chart/bar/* for bars, Bar legend markers and the tooltip of bar charts; colors/chart/line/* for lines,
- * points, the area, line legend markers and the tooltip of line charts. A colour without a token for its mark
- * (a custom legend or tooltip) falls back to the Semantic series colour.
+ * Series colours — chart marks, legend markers and tooltip indicators. Chart Component tokens per mark (Figma chart
+ * token rework, synced 2026-10-19): bars use colors/chart/bar/<series>/gradient/{start,end}/default (start = the series
+ * colour at the value end, end = the same colour at 40% at the axis — --_c and --_c-end), and so do Bar legend markers
+ * and the indicators of bar tooltips (start); lines, points, the area, line legend markers and line tooltips use
+ * colors/chart/line/<series>/default. A colour without a token for its mark falls back to the Semantic series colour.
  */
 :where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='brand'] {
   --_c: var(--colors-chart-series-brand);
@@ -56,36 +58,42 @@
   --_c: var(--colors-chart-series-02);
 }
 
+/* Past periods of simple bar charts: there is no Semantic series colour for them, only the bar tokens. */
 :where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='history'] {
-  --_c: var(--colors-chart-simple-history);
+  --_c: var(--colors-chart-bar-history-gradient-start-default);
+  --_c-end: var(--colors-chart-bar-history-gradient-end-default);
 }
 
 :where(.ds-chart, .ds-chart-legend-item, .ds-chart-tooltip) [data-color='history-compare'] {
-  --_c: var(--colors-chart-simple-history-compare);
+  --_c: var(--colors-chart-bar-history-compare-gradient-start-default);
+  --_c-end: var(--colors-chart-bar-history-compare-gradient-end-default);
 }
 
 :is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='brand'] {
-  --_c: var(--colors-chart-bar-primary);
+  --_c: var(--colors-chart-bar-primary-gradient-start-default);
+  --_c-end: var(--colors-chart-bar-primary-gradient-end-default);
 }
 
 :is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='compare'] {
-  --_c: var(--colors-chart-bar-compare);
+  --_c: var(--colors-chart-bar-compare-gradient-start-default);
+  --_c-end: var(--colors-chart-bar-compare-gradient-end-default);
 }
 
-:is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='history'] {
-  --_c: var(--colors-chart-bar-history);
-}
-
-:is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='history-compare'] {
-  --_c: var(--colors-chart-bar-history-compare);
+:is(.ds-chart:not([data-type='line']), .ds-chart-legend-item[data-type='bar'], .ds-chart-tooltip:not([data-mark='line'])) [data-color='02'] {
+  --_c: var(--colors-chart-bar-02-gradient-start-default);
+  --_c-end: var(--colors-chart-bar-02-gradient-end-default);
 }
 
 :is(.ds-chart[data-type='line'], .ds-chart-legend-item:not([data-type='bar']), .ds-chart-tooltip[data-mark='line']) [data-color='brand'] {
-  --_c: var(--colors-chart-line-primary);
+  --_c: var(--colors-chart-line-primary-default);
+}
+
+:is(.ds-chart[data-type='line'], .ds-chart-legend-item:not([data-type='bar']), .ds-chart-tooltip[data-mark='line']) [data-color='compare'] {
+  --_c: var(--colors-chart-line-compare-default);
 }
 
 :is(.ds-chart[data-type='line'], .ds-chart-legend-item:not([data-type='bar']), .ds-chart-tooltip[data-mark='line']) [data-color='02'] {
-  --_c: var(--colors-chart-line-compare);
+  --_c: var(--colors-chart-line-02-default);
 }
 
 /* Axis labels */
@@ -229,8 +237,10 @@
   stop-color: var(--_c);
 }
 
+/* Bars: the end stop is the gradient end token (the series colour at 40%, Figma colors/chart/bar/<series>/gradient/end). */
 .ds-chart__stop[data-end] {
-  stop-opacity: 0.4;
+  stop-color: var(--_c-end, var(--_c));
+  stop-opacity: 1;
 }
 
 [data-kind='area'] > .ds-chart__stop {
@@ -238,6 +248,7 @@
 }
 
 [data-kind='area'] > .ds-chart__stop[data-end] {
+  stop-color: var(--_c);
   stop-opacity: 0;
 }
 
@@ -352,7 +363,10 @@
   text-align: right;
 }
 
-/* Tick labels that hug their text are whole pixels wide, like Figma's auto-width text boxes (aligned inside them). */
+/*
+ * Tick, legend and tooltip labels that hug their text are whole pixels wide, like Figma's auto-width text boxes
+ * (aligned inside them) — so legend items and tooltip columns after them start on whole pixels too.
+ */
 .ds-chart__labels [data-anchor='center'] {
   text-align: center;
 }
@@ -365,6 +379,7 @@
   .ds-chart__labels [data-anchor='center'],
   .ds-chart__labels [data-anchor='end'],
   .ds-chart__labels [data-anchor='end-middle'],
+  .ds-chart-legend-item__label,
   .ds-chart-tooltip__title,
   .ds-chart-tooltip__text,
   .ds-chart-tooltip__value {
@@ -411,7 +426,7 @@
   flex-shrink: 0;
   align-items: center;
   gap: var(--spacing-padding-p-1_5);
-  color: var(--colors-chart-legend-label-default);
+  color: var(--colors-chart-label-legend-default);
   font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
   font-size: var(--typography-xs-leading-normal-normal-font-size);
   font-weight: var(--typography-xs-leading-normal-normal-font-weight);
@@ -493,6 +508,14 @@
   align-items: center;
   gap: var(--spacing-margin-m-1_5);
   color: var(--colors-chart-tooltip-label-default);
+}
+
+/* Figma "Pressure label": min width 40, max width 80 (since the 2026-10-19 rework) — longer names wrap. */
+.ds-chart-tooltip__text {
+  min-width: 40px;
+  max-width: 80px;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .ds-chart-tooltip__indicator {

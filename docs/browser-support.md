@@ -138,6 +138,8 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   선 차트 값 눈금은 calc-size 없는 엔진(Firefox · WebKit)에서 글자 상자가 소수점 너비로 남아 "240"이 최대 1.08px 오른쪽(허용 1.1px).
   가로 막대 행(37.6 · 45.6px)의 카테고리 이름은 소수점 y라 세로 0.51px 차이. 숨긴 데이터 표는 div로 감쌌습니다 — Firefox는 잘라 낸
   `<table>`의 `<caption>`을 그대로 그립니다. 차트 안 툴팁의 `backdrop-filter`는 세 엔진 모두 지원.
+  막대 그라디언트 끝 토큰(`--colors-chart-bar-*-gradient-end-default`, Figma 투명도 별칭)은 `color-mix(in srgb, …)`(Chrome 111+,
+  Firefox 113+, Safari 16.2+). 범례 · 툴팁 글자 상자도 calc-size로 정수 px — 없는 엔진에서는 1px 미만 좁음(툴팁 계열 이름은 최소 40px라 영향 없음).
 
 ## Dashboard components (Skeleton · MetricTrend · DataFreshness · MetricCard · DataState · DashboardFilterBar)
 

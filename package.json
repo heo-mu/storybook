@@ -30,7 +30,7 @@
     "figma:checksum": "node scripts/snapshot-checksum.mjs",
     "typecheck": "tsc -b",
     "build": "npm run tokens && tsc -b && vite build -c vite.lib.config.ts && tsc -p tsconfig.build.json && node scripts/copy-dist-assets.mjs",
-    "lint": "oxlint",
+    "lint": "oxlint && node scripts/check-css-comments.mjs",
     "test": "vitest run --project=storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

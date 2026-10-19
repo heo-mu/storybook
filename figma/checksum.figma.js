@@ -7,7 +7,8 @@ const byId = new Map(vars.map((v) => [v.id, v]));
 const ci = new Map(cols.map((c) => [c.id, c.name[0]]));
 const hex = (c) => '#' + [c.r, c.g, c.b].map((x) => Math.round(x * 255).toString(16).padStart(2, '0')).join('') + (c.a !== undefined && c.a < 1 ? Math.round(c.a * 255).toString(16).padStart(2, '0') : '');
 const ref = (a) => (byId.get(a.id) ? ci.get(byId.get(a.id).variableCollectionId) + ':' + byId.get(a.id).name : 'ext:' + a.id);
-const fmt = (val) => (val && typeof val === 'object' && val.type === 'VARIABLE_ALIAS') ? '@' + ref(val) : (val && typeof val === 'object' && 'r' in val) ? hex(val) : JSON.stringify(val);
+// A colour alias with opacity ({ color: alias, opacity: 0–100 }) is written "@S:name*40%" as in the snapshot.
+const fmt = (val) => (val && typeof val === 'object' && val.type === 'VARIABLE_ALIAS') ? '@' + ref(val) : (val && typeof val === 'object' && val.color && val.color.type === 'VARIABLE_ALIAS' && typeof val.opacity === 'number') ? '@' + ref(val.color) + '*' + val.opacity + '%' : (val && typeof val === 'object' && 'r' in val) ? hex(val) : JSON.stringify(val);
 const al = (a) => (a && a.type === 'VARIABLE_ALIAS' ? ref(a) : JSON.stringify(a));
 const fnv = (s) => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(16).padStart(8, '0'); };
 const list = (name, pred) => { const col = cols.find((c) => c.name === name); const m = col.modes[0].modeId; return col.variableIds.map((id) => byId.get(id)).filter((v) => v && pred(v)).map((v) => [v, v.valuesByMode[m]]); };

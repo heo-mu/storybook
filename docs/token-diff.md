@@ -3,8 +3,8 @@
 > **2026-10-19**: 아래 "원본 변경 감지" 내용은 F31 동기화로 반영되어 스냅샷이 원본과 다시 같습니다(체크섬 8그룹 일치).
 > 반영 결과와 토큰 변경 목록은 [analysis/F31-button-sync.md](./analysis/F31-button-sync.md) · [breaking-changes.md](./breaking-changes.md).
 
-> **2026-10-19 밤 — 원본 변경 감지(동기화 보류)**: 코드 정책 작업의 최종 회귀에서 체크섬이 달라졌습니다. 같은 시간대에 다른 편집자가 만든 차트 그라데이션
-> 작업(VariableID:1113:5009 – 1113:5030)이며, 이 작업 범위 밖이고 진행 중이라 스냅샷 · 토큰 · 코드 · 기준 이미지는 바꾸지 않았습니다. 아래 표는 [원본 변경 감지 (2026-10-19 밤)](#원본-변경-감지-2026-10-19-밤--차트-그라데이션-동기화-보류).
+> **2026-10-19 밤 — 동기화 완료**: 차트 그라데이션 · 토큰 개편(다른 편집자)을 전체 동기화 ⑤에서 반영했습니다 — 스냅샷이 원본과 다시 같습니다(체크섬 8그룹 일치).
+> [동기화 완료 (2026-10-19 밤)](#동기화-완료-2026-10-19-밤-전체-동기화--원본과-일치). 그 전의 보류 기록은 [원본 변경 감지 (2026-10-19 밤)](#원본-변경-감지-2026-10-19-밤--차트-그라데이션-동기화-보류).
 
 Figma **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`)의 Variables / Styles를 다시 추출해,
 Button 구현 시점의 스냅샷(`figma/`)과 비교한 결과입니다. 비교는 정렬된 `name=value [scopes]` 줄의 체크섬
@@ -120,3 +120,21 @@ Component 그 외는 차트 6개 이름 변경만 다릅니다(접두어별 해�
 
 원본의 `chart` 세트(698:4399)에는 그라데이션 채움 118곳이 새 변수에 연결되어 있습니다(막대 · 영역 — 디자인 변경 진행 중).
 동기화하면 토큰 CSS 변수 6개 이름이 바뀌고(호환성 변경) 차트 화면이 달라지므로 별도 작업으로 다룹니다. 그 전까지 차트 검증은 기존 기준 이미지(변경 전 원본) 기준입니다.
+
+## 동기화 완료 (2026-10-19 밤, 전체 동기화 ⑤) — 원본과 일치
+
+위의 보류 이후 다른 편집자의 차트 개편이 끝나(그라데이션 중간 단계의 alpha Primitive · Theme · Semantic `gradient/*/fade`는 원본에서 다시 삭제),
+스냅샷 · 토큰 · 코드 · 기준 이미지를 원본에 맞췄습니다. 변경 내용 · 호환성: [breaking-changes.md](./breaking-changes.md#2026-10-19-밤--chart-토큰-개편-동기화-f84), [figma-issues.md F84](./figma-issues.md).
+
+| 그룹 | 보류 시점 스냅샷 | 동기화 후 (= 원본) | 내용 |
+| --- | --- | --- | --- |
+| Primitive 색 | 456 `3f5c6866` | 456 `3f5c6866` | 같음(중간 단계 alpha 4개는 원본에서 삭제) |
+| Primitive 스칼라 | 167 `66f20300` | 167 `66f20300` | 같음 |
+| Theme | 44 `0f323395` | 44 `0f323395` | 같음 |
+| Semantic | 73 `df7ed8af` | 69 `0e231747` | 삭제 4: `colors/chart/grid/default`, `chart/simple/{history,history-compare,current/surface}` |
+| Component — Button | 82 `ab12f8bc` | 82 `ab12f8bc` | 같음 |
+| Component — 그 외 | 711 `ac8b1d13` | 725 `749060c7` | Chart 삭제 · 이름 변경 7(`bar/{primary,compare,history,history-compare}`, `line/{primary,compare}`, `legend/label/default`) · 추가 20(막대 그라디언트 시작 · 끝 × 7계열, `line/{primary,compare,02,03,04}/default`, `label/legend/default`) · 별칭 변경 3(격자 · 기준선 → `border/gray-subtler`, 툴팁 배경 → `surface/page`), 그리고 ④의 `colors/search-field/solid/border/error`(E8) 1 |
+| Text · Effect | 46 · 4 | 46 · 4 | 같음 |
+
+생성 CSS 변수 1527 → 1536(삭제 11 · 추가 20). 그라디언트 끝 변수는 Figma "투명도가 있는 별칭"(`{ color: alias, opacity: 40 }`)이며
+스냅샷에서 `@S:name*40%`, CSS에서 `color-mix(in srgb, var(--…) 40%, transparent)`로 나타냅니다(`scripts/build-tokens.mjs` · `figma/checksum.figma.js`).

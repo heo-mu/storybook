@@ -7,6 +7,23 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Figma × Storybook 전체 동기화 (2026-10-19 밤, Figma와 함께)
+Figma 변경 기록: [docs/figma-fix-requests.md S절](docs/figma-fix-requests.md#s-figma--storybook-전체-동기화-2026-10-19-밤-사용자-승인-작업),
+호환성: [docs/breaking-changes.md](docs/breaking-changes.md), 컴포넌트별 상태: [docs/sync-status.md](docs/sync-status.md).
+- **Fixed — Chart 툴팁**: 화면 밖 차트의 툴팁이 화면 가장자리로 밀려 다른 차트 위에 남던 문제. 툴팁을 `<body>` 포털 대신 자기 그림 영역 안에 그리고,
+  보이는 부분(화면 · 잘림 조상 ∩ 그림 영역) 안에 배치합니다(CHAR-01 · CHAR-08). 다중 차트 스토리 `MultipleCharts` 추가.
+- **Added — `FilterChipSelect`**: 필터 칩 + 선택 목록(다중: 닫을 때 적용 / 단일: 고르면 적용 · "전체"로 해제), 칩 글자 "필터명: 값, 값"(`filterChipText`).
+  Table 편집 칸 Filter 목록도 이 컴포넌트(F76).
+- **Added**: `SelectOption checkIcon`(Figma Check Icon), `TableEmptyColumn aria-label`.
+- **접근성**: Storybook 사이드바 경고 25개 스토리 → 0(원인 수정 — 달력 날짜 칸 이름, 메뉴 항목 이름, 빈 표 머리글, 아이콘 `role="img"`, 고유 nav 이름 등).
+  `npm run verify:a11y`가 애드온과 같은 axe 기본 규칙 · 제외 없음.
+- **화면**: Select 옵션 md Disabled 글자(F6), Search Field Solid 오류 테두리(E8, 새 토큰 `--colors-search-field-solid-border-error`).
+- **Chart 토큰 개편 동기화(F84)** — **호환성 변경**: `--colors-chart-bar-*` → `-gradient-start/end-default`, `--colors-chart-line-*` → `-default`,
+  `--colors-chart-legend-label-default` → `--colors-chart-label-legend-default`, Semantic `--colors-chart-grid-default` · `--colors-chart-simple-*` 삭제,
+  계열 02 · 03 · 04 토큰 추가. 격자 · 기준선 #d6dae0, 툴팁 배경 불투명, 툴팁 계열 이름 최소 40 · 최대 80px. 토큰 생성기가 Figma 투명도 별칭을
+  `color-mix()`로 생성.
+- **Lint**: `npm run lint`가 CSS 주석이 `*/`로 일찍 닫히는 경우를 찾습니다(`scripts/check-css-comments.mjs` — 차트 그라디언트 규칙이 버려졌던 원인).
+
 ### 코드 정책 → Figma 공식 정책 (2026-10-19, Figma와 함께)
 코드에만 있던 정책 152개를 Figma에 정의하거나(변형 · 속성 · 변수 · 스타일 39개, Design System Rules 02–09장 · 주석 96개) 개발 구현(15개)으로
 나누었습니다. 남은 Figma 반영 대기 2개. 목록 · 출처 · 상태: [docs/code-policy-audit.md](docs/code-policy-audit.md).
@@ -84,7 +101,7 @@
   `StepperIndicator` · `StepperConnector` · `NavParentItem`과 그 Props 타입.
 
 ### Changed
-- **Chart**: 툴팁을 `<body>`로 포털(`position: fixed`)하고, 보이는 그림 영역과 화면 안으로 자동 배치(넘치면 뒤집기 · 가장자리에서 이동, 스크롤 · 창 크기 변경 추적).
+- **Chart**: 툴팁을 `<body>`로 포털(`position: fixed`)하고, 보이는 그림 영역과 화면 안으로 자동 배치(넘치면 뒤집기 · 가장자리에서 이동, 스크롤 · 창 크기 변경 추적). — 2026-10-19 밤 그림 영역 안 배치로 대체(위 "전체 동기화" 절).
   `overflow: hidden` 부모 안에서도 잘리지 않습니다. 테스트에서 툴팁을 찾을 때는 `document`에서 조회하세요.
 - **SegmentedControl**: 라벨이 항목 내용 상자보다 넓으면 Figma처럼 좌우 padding까지 쓰고, 항목 전체보다 넓을 때만 말줄임
   (DashboardFilterBar의 "최근 30일"이 잘리던 문제).

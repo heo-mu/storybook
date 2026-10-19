@@ -170,6 +170,11 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F81 | `border-radius/rounded-[2px]`(VariableID:873:4798) WEB code syntax `var(--radius-2px)` — 코드의 CSS 변수는 `--border-radius-rounded-\[2px\]` | **해결(2026-10-19)** — 생성 규칙 개선(`[값]` → `값`): `--border-radius-rounded-2px` · `-5px` · `-12px`. Figma WEB code syntax 3개를 같은 이름으로 | — |
 | F82 | table_value_editable Filter · Hover · Empty(693:7163) 칩만 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | Figma 그대로 | 의도 확인 |
 | F83 | legacy 화면 시안 19개 프레임이 원격 `radius/xlarge1`(12) 사용 | 변경 안 함(DS 컴포넌트 아님) | 로컬 `rounded-[12px]`로(선택) |
+| F84 | **차트 토큰 개편(다른 편집자, 2026-10-19 밤)** — Semantic `chart/grid` · `chart/simple/*` 4개 삭제, Component `colors/chart/bar/<계열>` → `bar/<계열>/gradient/start · end/default`(끝 = 시작 색 40% 투명도 별칭), `line/{primary,compare}` → `line/<계열>/default` + `line/02 · 03 · 04`, `legend/label` → `label/legend`, 격자 · 기준선 → `border/gray-subtler`, 툴팁 배경 → `surface/page`. 샘플 글자 "유형" · 간단 선 기간 "10.07–10.11", 툴팁 계열 이름 최소 40 · 최대 80px. 개편 뒤 차트 노드 91곳이 삭제된 변수 5개(`VariableID:1129:5009` · `1129:5011` · `1113:5029` · `1113:5030` · `1052:6698`)를 가리켰고, WEB code syntax 4개(`line/02 · 03 · 04` → `line-compare`, `label/legend` → 이전 이름)가 틀렸음 | **해결(2026-10-19 밤)** — 91곳을 같은 색의 현재 변수로 다시 연결, code syntax 4개 정정(Figma). 스냅샷 · 토큰 생성기(투명도 별칭 → `color-mix()`) · 차트 CSS · 스토리 샘플 · 기준 이미지 · geometry 동기화 — chart 24 · 범례 3 · 툴팁 1 정합성 3 엔진 통과 | — |
+| F85 | 개편에서 **점선이 사라짐** — 범례 `Type=Dash Line` 표시선(703:4817), 간단 선 Group=yes 비교 선(762:5858 · 1011:15054)이 실선 | **복원(2026-10-19 밤)** — 범례 5 / 3, 비교 선 3 / 3(변형 이름 "Dash Line" · Rules 03 "색만으로 구분하지 않음" 근거, 개편 전 값). 디자이너 확인 필요 — 실선이 의도였다면 되돌리고 Rules 03 보완 | 의도 확인 |
+| F86 | **남은 원격 라이브러리 바인딩** — table_value 이미지 자리표시 벡터 355:4444 · 355:4445(인스턴스 I507:23893 포함)의 `color/border/gray`(로컬 같은 이름 변수와 값이 다름), 손잡이 그림자(F13), 문서 · 예시 프레임. 컴포넌트 안 아이콘 7곳의 원격 `colors/icon/secondary`는 같은 값 로컬 변수로 교체(2026-10-19 밤) | 값이 다른 원격 바인딩은 그대로(색 결정 필요), 코드는 자리표시를 스토리 전용 이미지로 | 로컬 변수 지정 |
+| F87 | table_value(355:4460)의 Boolean 속성 `Text#355:12` · `Picture#355:23`이 어떤 레이어에도 연결되지 않음(바꿔도 화면 변화 없음) | 코드에 대응 속성 없음(`Type`만 사용) | 속성 삭제 또는 레이어 연결 |
+| F88 | Card 부품 컴포넌트 이름이 자동 이름("Frame 2147239186" · "Wrapper") | **해결(2026-10-19 밤)** — `card_header`(218:7173) · `card_footer`(218:7174), 설명 추가. 코드 `CardHeader` · `CardFooter`, 검증 이름 동기화 | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

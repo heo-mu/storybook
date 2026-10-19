@@ -158,7 +158,7 @@
         "Frame 2147240250/Frame 2147240235/Info container*/Indicator": ".ds-chart-tooltip__indicator",
         "Frame 2147240250/Frame 2147240249/Pressure label*": ".ds-chart-tooltip__value"
       },
-      "//parts": "label rows: their width is the label text width (Figma measures \"RS-201\" 47px, the browser 47.0x) — the column they share is checked through the value x positions and the root width"
+      "//parts": "label rows: the label is at least 40 and at most 80px wide (Figma min / max width since the 2026-10-19 rework), so a short label such as \"유형\" keeps the 40px column — checked through the value x positions and the root width"
     }
   ]
 }

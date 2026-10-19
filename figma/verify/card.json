@@ -32,10 +32,10 @@
       "background": "#ffffff",
       "geometryOnly": "hidden Figma frame (F61)",
       "parts": {
-        "Frame 2147239186": ".ds-card__header",
+        "card_header": ".ds-card__header",
         "Wrapper": ".ds-card__content",
         "Wrapper/Rectangle 421": ".ds-card__content > *",
-        "Wrapper#2": ".ds-card__footer"
+        "card_footer": ".ds-card__footer"
       }
     }
   ]
