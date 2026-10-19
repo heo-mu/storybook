@@ -21,3 +21,18 @@ Figma 원본 수정 · 변수 생성 · 바인딩 변경 · 코드 수정이 모
 - 같은 패턴 전수 조사: 이스케이프가 필요한 이름은 이 3개뿐(`colors/gray 2`는 공백 → `-`로 문제 없음).
 - 호환성: CSS 변수 3개 이름 변경 — 배포 전이라 별칭 없음([breaking-changes.md](../breaking-changes.md)). 공개 TS API 영향 없음.
 - 검증: Chart · MetricCard · DashboardFilterBar 정합성 통과(Chromium).
+
+## 2. F80 — Accordion 복구본 토큰 연결 (완료)
+
+| 항목 | 변경 전 | 변경 후 |
+| --- | --- | --- |
+| 색 바인딩 | 원격 라이브러리의 `colors/accordion/*` 사본 11종(58곳) | 로컬 `colors/accordion/*`(789:5702 – 826:9584) — 값 동일 |
+| 레이아웃 | 원격 `spacing/padding/*` · `border-radius/rounded-none` · `border-width/border` 사본, 원격 accordion 토큰(442곳) | 로컬 같은 이름 변수, 아래 신규 Component 토큰 |
+| 신규 Component 토큰 | 없음(원격에만) | `spacing/accordion/trigger-padding-x/md`(→p-3) · `/sm`(→p-2_5) · `spacing/accordion/padding/md`(→p-2_5) · `/sm`(→p-2) · `spacing/accordion/body-padding`(→p-3) · `size/accordion/trigger-height/md`(→p-11) · `/sm`(→p-9) · `border-radius/accordion/default`(→rounded) · `border-width/accordion/default`(→border) — `VariableID:1042:6697` – `6705`, scopes · WEB code syntax 지정 |
+| 텍스트 | 원격 텍스트 스타일 사본(24개 노드) | 같은 이름의 로컬 스타일 — 글꼴 · 크기 · 줄 높이 · 자간 같음 |
+| 배치(R5) | 1035:15685 y 40 | y 20 |
+
+- 결과: `accordion-item` 안의 로컬이 아닌 변수 · 스타일 참조 0개. 스냅샷 Component 그룹 체크섬 Figma와 일치(691 · 3c79a700).
+- 코드: `Accordion.css`가 새 Component 토큰 사용(트리거 padding · min-height · 모서리, 본문 padding, 구분선 두께). 값이 같아 화면 변화 없음.
+  Figma ID를 1035:15648 · 1035:15645로 갱신(문서 · JSDoc · geometry), 기준 이미지 재캡처.
+- 검증: 정합성 3 엔진 통과. 실제 브라우저(3 엔진): 기본 투명 · 구분선 #d6dae0, 마우스 Hover 배경 #f5f6f7 · 구분선 #131c2b, Tab 포커스 링, Enter 펼침(패널 표시) · Space 접힘. 스토리 테스트 7개 통과.

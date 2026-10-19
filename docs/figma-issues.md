@@ -159,13 +159,13 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F71 | dashboard-filter-bar 예시 — segmented-control 220px가 라벨보다 좁음(항목 70.67 − 좌우 padding 16 < "최근 30일" 58, Figma는 padding 위로 넘쳐 그림), 초기화 버튼이 스냅샷 이후 추가된 button_icon Secondary · Solid(F31), 컨트롤에 보이는 라벨 없음(Label=false) | **2026-10-19 해결**: SegmentedControl 라벨이 Figma처럼 항목 padding까지 사용(항목보다 길 때만 말줄임). 초기화 버튼 Secondary · Solid(F31 동기화 후), 컨트롤에 `aria-label` 필요 | — |
 | F72 | metric-trend Direction에 상태 값 "Disabled"가 섞여 있고, Disabled 3개(Tone별)는 모양이 같음 | `direction="disabled"`(Tone 무시) | Disabled를 별도 속성으로 |
 | F73 | data-state Partial 설명 기본값에 실제 수치("130대 중 128대 수신 · 누락된 2대…")가 들어 있음. data-freshness 배지 인스턴스에 변수 없는 흰 배경(#ffffff)이 채워져 있음(Badge Outline은 투명) | Partial 설명 기본값 없음, 배지는 Badge 그대로(흰 배경 위에서 같음) | 샘플 정리 |
-| F74 | accordion-item md · Hover · Expanded(796:5903)가 y 40 — 같은 줄 다른 변형은 y 20 | **미확인** — Accordion 프레임이 원본에서 삭제되어 수정 불가(F80) | F80 결정 후 |
+| F74 | accordion-item md · Hover · Expanded가 y 40 — 같은 줄 다른 변형은 y 20 | **해결(2026-10-19)** — 복구된 1035:15685를 y 20으로 | — |
 | F75 | table_value_editable Type=Filter — Editing · Filled(693:7165) 칩이 Unselected, Hover · Filled(693:7167) 칩 State=Default, 693:7165 y 1px | **693:7165 Figma 수정 완료**(R6, Selected · Expanded). 693:7167은 다른 Type과 같은 규칙이라 오류 아님. y 1px은 모든 Editing 변형 공통 | Hover · Empty 칩(F82) |
 | F76 | table_value_editable Type=Filter · Editing에 칩 아래 **다중 선택 목록**(listbox sm + option Selected 2개) — 라이브러리에 칩 트리거 + 다중 선택 목록 컴포넌트 없음 | 목록은 그리지 않고 검증에서 목록 위 4.5px 제외 | 구현 방식 결정(D3, [R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록--결정-대기-d3)) |
 | F77 | chart 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261) 비교 막대 5개(1011:14280 · 14288 · 14296 · 14303 · 14310)가 `chart/simple/history` — R3와 같은 오류 | 변경 안 함(지정 노드 밖, 다른 사람이 추가한 변형) | R3와 같은 수정 |
 | F78 | chart `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873이 `series/compare` — hover=no 짝(762:5921)은 `series/02`. 간단 스타일 hover 변형의 툴팁 표시도 막대 색과 다름 | 변경 안 함 | 짝 변형과 맞추기 |
 | F79 | chart 세트에 `hover` 속성 추가 — 24개 변형(2026-10-19 다른 편집) | 코드 · 검증은 12개 기준 유지, R3 변형만 개별 기준 이미지 | 새 구조로 동기화할지 결정 |
-| F80 | **Accordion 프레임(796:5813) 삭제**, `accordion-item`(796:6071)이 페이지에서 분리(2026-10-19 다른 편집) | Storybook · 패키지에는 Accordion 유지 | 복구 또는 폐기 결정 |
+| F80 | Accordion 프레임 삭제 후 **재등록**(1035:15645, `accordion-item` 1035:15648) — 복구본이 원격 라이브러리 변수 · 텍스트 스타일 사본에 바인딩되어 있었음 | **해결(2026-10-19)** — 색 58개 · 레이아웃 442개 · 글자 변수를 로컬 변수로, 텍스트 스타일 24개를 로컬 스타일로 교체(값 동일). 누락된 Component 토큰 9개(`spacing/accordion/*` · `size/accordion/*` · `border-radius/accordion/default` · `border-width/accordion/default`) 생성 | — |
 | F81 | `border-radius/rounded-[2px]`(VariableID:873:4798) WEB code syntax `var(--radius-2px)` — 코드의 CSS 변수는 `--border-radius-rounded-\[2px\]` | **해결(2026-10-19)** — 생성 규칙 개선(`[값]` → `값`): `--border-radius-rounded-2px` · `-5px` · `-12px`. Figma WEB code syntax 3개를 같은 이름으로 | — |
 | F82 | table_value_editable Filter · Hover · Empty(693:7163) 칩만 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | Figma 그대로 | 의도 확인 |
 | F83 | legacy 화면 시안 19개 프레임이 원격 `radius/xlarge1`(12) 사용 | 변경 안 함(DS 컴포넌트 아님) | 로컬 `rounded-[12px]`로(선택) |

@@ -91,7 +91,7 @@ const outputs = [
 ];
 const groups = [...new Set(variables.filter((v) => v.collection === 'Component' && v.name.includes('/')).map((v) => componentGroup(v.name)))].sort();
 for (const g of groups) {
-  outputs.push(['Component', `components/${g}.css`, `Figma collection "Component" (Mode 1) — ${g === 'button' ? 'colors/button/*, colors/button_text/*' : `colors/${g}/*`}`, (v) => v.name.includes('/') && componentGroup(v.name) === g]);
+  outputs.push(['Component', `components/${g}.css`, `Figma collection "Component" (Mode 1) — ${g === 'button' ? 'colors/button/*, colors/button_text/*' : `*/${g}/*`}`, (v) => v.name.includes('/') && componentGroup(v.name) === g]);
 }
 const pushJson = (collection, list, file, extra) => {
   for (const v of list) {

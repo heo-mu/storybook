@@ -58,7 +58,7 @@ export type AccordionItemProps = {
 };
 
 /**
- * Figma component set `accordion-item` (796:6071): a heading button that shows or hides its panel
+ * Figma component set `accordion-item` (1035:15648): a heading button that shows or hides its panel
  * (react-aria-components Disclosure: aria-expanded / aria-controls, Enter / Space). State Hover = :hover,
  * Expanded = open, Disabled = `disabled`.
  */

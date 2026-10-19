@@ -14,7 +14,7 @@
 | R2 | Button Secondary · Outline 테두리 바인딩이 Shape마다 다름 | **완료** | 8노드 재연결, #007c56 그대로 |
 | R3 | 차트 가로 막대 비교 막대 바인딩 오류 (F65) | **완료** | 지정 5노드 `chart/series/compare` |
 | R4 | 12px 모서리 로컬 변수 등록 (F69) | **완료** | 변수 등록 + 본 페이지 5노드 재연결(legacy 인스턴스 10개 자동) |
-| R5 | Accordion md · Hover · Expanded 위치 | **미확인 — 수정 불가** | 대상 Accordion 프레임이 원본에서 삭제됨(N4) |
+| R5 | Accordion md · Hover · Expanded 위치 | **완료(재등록 후)** | 1035:15685 y 40 → 20 |
 | R6 | Table 편집 칸 Filter 칩 상태 | **완료(693:7165)** · 693:7167 오류 아님 | Editing · Filled 칩 Selected로 |
 | R7 | Table 편집 칸 Filter · Editing의 다중 선택 목록 | 결정 대기 (D3) | 변경 없음 |
 | R8 | Table 편집 칸 안내 글자가 삭제된 변수에 바인딩 (F57) | **완료** | 3노드 `text/tertiary`, #778191 그대로 |
@@ -117,7 +117,7 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 | N1 | `chart` 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261)의 비교 막대 1011:14280 · 1011:14288 · 1011:14296 · 1011:14303 · 1011:14310 | R3와 같은 오류(`simple/history`) | R3와 같은 수정 | 차트 hover 변형 |
 | N2 | `chart` `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873 | `series/compare` — hover=no 짝(762:5921)은 `series/02` | `series/02`로 | 같은 변형의 툴팁 표시(I1011:15175;693:9774 등)도 막대색과 다름 |
 | N3 | `chart` 세트 구조 변경 | `hover` 속성 추가로 24개 변형(이번 작업 전 다른 편집) | 코드 · 검증 기준을 새 구조로 맞출지 결정 | Chart 검증(현재 12개 기준 + 수정한 변형만 개별 기준) |
-| N4 | Accordion 프레임 796:5813 삭제, `accordion-item` 796:6071 분리 | 원본에 Accordion 없음, Storybook에는 있음 | 복구 또는 컴포넌트 폐기 결정 | `Accordion` · `AccordionItem` 공개 API |
+| N4 | Accordion 프레임 삭제 | **해결** — 재등록(1035:15645) 후 F80으로 토큰 연결 · 동기화 | — | — |
 | N5 | `border-radius/rounded-[2px]`(`VariableID:873:4798`) WEB code syntax | **해결(F81)** — `var(--border-radius-rounded-2px)` | 생성 규칙 개선 | — |
 | N6 | 693:7163 Filter · Hover · Empty 칩(693:8205) | 칩 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | 의도 확인 후 Default로 | Table 쇼케이스 1칸 |
 | N7 | legacy 화면 시안 19개 프레임 | 원격 `radius/xlarge1` | 로컬 `rounded-[12px]`로(값 같음) | 시각 변화 없음, 원격 의존 제거 |

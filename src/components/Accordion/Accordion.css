@@ -1,14 +1,15 @@
 /*
- * Accordion — Figma `accordion-item` (796:6071).
- *   trigger: md padding p-2_5 p-3 / sm p-2 p-2_5 (remote variables in Figma — local equivalents), gap p-2,
- *            border-radius/rounded; title md base/leading-normal/medium · sm sm/leading-normal/medium (Expanded:
+ * Accordion — Figma `accordion-item` (1035:15648, restored 2026-10-19 — F80).
+ *   trigger: padding spacing/accordion/padding × spacing/accordion/trigger-padding-x (md 10 12 · sm 8 10), min-height
+ *            size/accordion/trigger-height (44 · 36), gap p-2, border-radius/accordion/default; title md base/leading-normal/medium · sm sm/leading-normal/medium (Expanded:
  *            semibold, colors/accordion/title/*), description xs/leading-normal/normal (…/body) p-1 below;
  *            caret 16px (CaretDown …/icon/default, CaretUp …/icon/expanded, …/icon/disabled)
  *   divider: Figma line directly under the trigger, drawn on the trigger's last pixel row (::after) —
  *            colors/accordion/border/default; Hover and Expanded …/border/hover (renamed from …/border/focus; Expanded
  *            uses it since the Figma update of 2026-10-19)
  *   disabled: …/background/disabled (fill/disabled) and …/title/disabled (text/placeholder) since the 2026-10-19 sync
- *   body:    md padding p-3 · sm p-3 p-2_5, text sm/leading-normal/normal (…/body/default)
+ *   body:    padding top p-3, sides …/trigger-padding-x, bottom spacing/accordion/body-padding; text sm/leading-normal/normal
+ *   divider: thickness border-width/accordion/default
  * State: Default → Hover (divider and trigger background …/background/hover in every size — Figma since 2026-10-19, F50) → Disabled.
  */
 
@@ -38,10 +39,11 @@
   align-items: center;
   gap: var(--spacing-padding-p-2);
   width: 100%;
+  min-height: var(--size-accordion-trigger-height-md);
   margin: 0;
-  padding: var(--spacing-padding-p-2_5) var(--spacing-padding-p-3);
+  padding: var(--spacing-accordion-padding-md) var(--spacing-accordion-trigger-padding-x-md);
   border: 0;
-  border-radius: var(--border-radius-rounded);
+  border-radius: var(--border-radius-accordion-default);
   background-color: var(--_bg);
   font: inherit;
   text-align: left;
@@ -50,7 +52,8 @@
 }
 
 .ds-accordion__item[data-size='sm'] .ds-accordion__trigger {
-  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-2_5);
+  min-height: var(--size-accordion-trigger-height-sm);
+  padding: var(--spacing-accordion-padding-sm) var(--spacing-accordion-trigger-padding-x-sm);
 }
 
 .ds-accordion__heading-text {
@@ -130,13 +133,13 @@
 .ds-accordion__trigger[data-divider]::after {
   position: absolute;
   inset: auto 0 0;
-  height: var(--border-width-border);
+  height: var(--border-width-accordion-default);
   background-color: var(--_divider);
   content: '';
 }
 
 .ds-accordion__body {
-  padding: var(--spacing-padding-p-3);
+  padding: var(--spacing-padding-p-3) var(--spacing-accordion-trigger-padding-x-md) var(--spacing-accordion-body-padding);
   color: var(--colors-accordion-body-default);
   font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
   font-size: var(--typography-sm-leading-normal-normal-font-size);
@@ -146,5 +149,5 @@
 }
 
 .ds-accordion__item[data-size='sm'] .ds-accordion__body {
-  padding: var(--spacing-padding-p-3) var(--spacing-padding-p-2_5);
+  padding: var(--spacing-padding-p-3) var(--spacing-accordion-trigger-padding-x-sm) var(--spacing-accordion-body-padding);
 }

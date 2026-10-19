@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Figma component set **accordion-item** (796:6071, 10 variants). `Accordion` > `AccordionItem` (react-aria-components ' +
+          'Figma component set **accordion-item** (1035:15648, 10 variants). `Accordion` > `AccordionItem` (react-aria-components ' +
           'DisclosureGroup / Disclosure). Size → `size`, Expanded → `expandedKeys` / `defaultExpandedKeys` (or `expanded` on a ' +
           'single item), Disabled → `disabled`, Title Text → `title`, Show Description → `description`, Show Divider → ' +
           '`divider`, Body → children. One item open at a time unless `allowsMultipleExpanded`.',
