@@ -52,13 +52,13 @@ Figma **chart**(698:4399, 12개 변형)와 **chart-legend-item**(697:4514), **ch
 | chart-legend-item | `ChartLegendItem` (`type` line · dash-line · bar, `color`) | `Chart`가 범례를 직접 그림 — 별도 범례용 |
 | chart-tooltip | `ChartTooltip` (`title`, `items`) | `Chart`가 직접 표시 — 별도 사용용 |
 
-## 색 (Figma 변형별 그대로)
+## 색 (Figma 변형별 — 가로 막대 기본의 비교 막대만 예외)
 
 | | 첫 계열 | 두 번째 계열 |
 | --- | --- | --- |
 | 선 | `chart/series/brand` | `chart/series/02` (간단 스타일: 점선 3 / 3) |
 | 세로 막대 기본 | `chart/series/brand` | `chart/series/compare` |
-| 가로 막대 기본 | `chart/series/brand` | 막대 `chart/simple/history`, 범례 · 툴팁 `chart/series/compare` (figma-issues F65) |
+| 가로 막대 기본 | `chart/series/brand` | `chart/series/compare` — 막대 · 범례 · 툴팁 같은 색. Figma 막대는 `chart/simple/history`로 바인딩되어 있어 원본 수정 요청(F65) |
 | 간단 막대 — 현재 기간(마지막) | `chart/series/brand` | `chart/series/02` |
 | 간단 막대 — 지난 기간 | 1계열: 세로 `chart/series/compare` · 가로 `chart/simple/history` / 2계열: `chart/simple/history` | `chart/simple/history-compare` |
 

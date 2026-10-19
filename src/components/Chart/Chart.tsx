@@ -104,8 +104,9 @@ function markColor(type: ChartType, variant: ChartVariant, group: boolean, k: nu
   }
   if (k === 0) return 'brand';
   if (type === 'line') return '02';
-  // Figma: the comparison bars of Bar Horizontal use colors/chart/simple/history, Bar Vertical colors/chart/series/compare.
-  return type === 'bar-horizontal' ? 'history' : 'compare';
+  // Comparison bars use the legend / tooltip colour colors/chart/series/compare in both directions. Figma binds the
+  // Bar Horizontal ones to colors/chart/simple/history — a binding error reported for correction (F65, docs/analysis).
+  return 'compare';
 }
 
 /** Legend and tooltip colour of series `k` (Figma: colors/chart/series/compare for the bar comparison). */

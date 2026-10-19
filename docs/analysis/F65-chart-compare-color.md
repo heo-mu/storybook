@@ -1,6 +1,9 @@
 # F65 — 차트 비교 막대와 범례 색이 다른 원인 (2026-10-19)
 
-Figma `chart`(698:4399)를 읽기 전용으로 조회해 막대 · 범례 · 툴팁의 색 바인딩을 비교했습니다. 코드는 바꾸지 않았습니다.
+Figma `chart`(698:4399)를 읽기 전용으로 조회해 막대 · 범례 · 툴팁의 색 바인딩을 비교했습니다.
+
+> **2026-10-19 (최종 배포 준비)**: 코드에서 가로 막대 · 기본 · Group=yes의 비교 막대를 범례 · 툴팁과 같은 `chart/series/compare`로 통일했습니다.
+> Figma 원본은 수정하지 않았고, 고칠 노드와 변수는 아래 [Figma 수정 요청](#figma-수정-요청-정확한-노드--변수)에 있습니다. 간단 스타일(F65-b)은 그대로입니다.
 
 ## 결론
 
@@ -28,9 +31,30 @@ Figma `chart`(698:4399)를 읽기 전용으로 조회해 막대 · 범례 · 툴
 
 ## 코드 처리
 
-- 지금은 **Figma 변형 그대로**(가로 막대 비교 막대 `simple/history`, 범례 · 툴팁 `series/compare`)입니다. 새 색 정책을 코드에서 정하지 않았습니다.
-- Figma에서 가로 막대 비교 막대를 `series/compare`로 고치면, 코드 변경은 `Chart.tsx`의 `markColor` 한 줄(가로 막대 예외 삭제)과
-  검증 기준 재캡처입니다.
+- **2026-10-19부터**: `Chart.tsx`의 `markColor`에서 가로 막대 예외를 지워 기본 스타일 비교 막대는 방향과 관계없이 `series/compare`(#d6dae0)입니다.
+  범례 · 툴팁과 같은 색이고, 세로 막대 기본과도 같습니다.
+- 간단 스타일(Group=no 지난 기간: 세로 `series/compare` · 가로 `simple/history`)은 **Figma 그대로** 둡니다(디자인 결정 필요 — F65-b).
+- 검증: 원본 기준 이미지는 아직 `simple/history`(#e2e5e9)로 그려져 있지만 채널 차 12의 그라디언트라 픽셀 임계값 안이어서 마스크 없이 통과합니다
+  (`figma/verify/chart.json`의 `//F65` 메모). 원본이 고쳐지면 기준 이미지만 다시 캡처하면 됩니다.
+
+## Figma 수정 요청 (정확한 노드 · 변수)
+
+대상 변형: `chart` 세트 698:4399 › **733:4930** `Type=Bar Horizontal, Style=Default, Group=yes`
+
+| 노드 ID | 경로(변형 기준) | 현재 채우기 | 요청 |
+| --- | --- | --- | --- |
+| 733:4967 | Category / 101동 / … / Bar / 101동 / previous / 396 | GRADIENT_LINEAR: 정지점 0 `colors/chart/simple/history`, 정지점 1 바인딩 없음 #e2e5e9 · 40% | 정지점 0 → `colors/chart/series/compare`, 정지점 1 → #d6dae0 · 40%(세로 막대 비교 막대와 같게) |
+| 742:31980 | Category / 102동 / … / previous / 396 | 같음 | 같음 |
+| 742:31986 | Category / 103동 / … / previous / 396 | 같음 | 같음 |
+| 742:31992 | Category / 104동 / … / previous / 396 | 같음 | 같음 |
+| 742:31998 | Category / 105동 / … / previous / 396 | 같음 | 같음 |
+
+| 변수 | ID | Key | 컬렉션 | 값 |
+| --- | --- | --- | --- | --- |
+| 현재: `colors/chart/simple/history` | `VariableID:762:5825` | `deba2c0811f778e64c56899340f6260fdac3c0a5` | Semantic | → `colors/brand-gray/200` (#e2e5e9) |
+| 목표: `colors/chart/series/compare` | `VariableID:697:4134` | `ec44aa6a989669fd9f0288d85a8a536bb69f5385` | Semantic | → `colors/brand-gray/250` (#d6dae0) |
+
+같은 변형의 범례(`chart-legend-item` 746:33346, 견본 `I746:33346;746:33293`)와 툴팁 표시(`I742:31704;693:9774`)는 이미 `series/compare`입니다.
 
 ## 요청 사항 (디자인)
 
