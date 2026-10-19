@@ -153,4 +153,4 @@ Figma에 정의가 없거나 서로 맞지 않아 코드 정책으로 정한 것
 | "최근 30일" 잘림 | SegmentedControl 라벨이 Figma처럼 항목 padding까지 사용 → 잘림 해소, 해당 라벨 검증 재개 |
 | 이슈 분류 | 113개 ID: 디자인 결정 37 · 개발 개선 7(완료 2) · 허용 차이 74 — [분류표](./figma-issue-triage.md) |
 | 개발자 문서 | [developer-guide.md](./developer-guide.md), [api.md](./api.md)(자동 생성), [CHANGELOG.md](../CHANGELOG.md) |
-| 회귀 · 외부 Import | {{STABILIZATION_QA}} |
+| 회귀 · 외부 Import | verify:all 36개 컴포넌트 × 3 엔진 108/108, verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 86 파일 · 374개, typecheck · lint · build(토큰 변경 없음) · build-storybook, axe 374 스토리 그 밖의 위반 0, 외부 프로젝트(npm pack → Vite 8 + React 19 + TS 6) 타입 검사 · 빌드 · 실행 — 화면 가장자리 차트 툴팁이 `<body>`에서 보이는 그림 영역 안, "최근 30일" 잘림 없음, 콘솔 오류 0 |

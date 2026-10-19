@@ -33,7 +33,7 @@
 | 7 | Table · Card · Chart · Loading | 완료 |
 | 8 | Dashboard components | 완료 |
 | 9 | 통합 QA · 최종 보고 | 완료 ([final-report.md](./final-report.md)) |
-| 10 | 전달 전 안정화 (F31 · F65 · F69 분석, 차트 툴팁 · 필터 바 라벨, 이슈 분류, 개발자 문서) | 진행 — 회귀 검증 |
+| 10 | 전달 전 안정화 (F31 · F65 · F69 분석, 차트 툴팁 · 필터 바 라벨, 이슈 분류, 개발자 문서) | 완료 |
 
 ## 검증 현황
 
@@ -76,6 +76,9 @@
 | Metric Card | 1 | 1/1 | 1/1 | 1/1 | 통과 |
 | Data State | 6 | 6/6 | 6/6 | 6/6 | 통과 |
 | Dashboard Filter Bar | 1 | 1/1 | 1/1 (calc-size 없음 0.6%) | 1/1 (〃) | 통과 — 초기화 버튼(F31) · "최근 30일" 말줄임(F71) 수동 검토 |
+
+안정화 회귀 검증(2026-10-19): verify:all 108/108, verify:button 296/296 · 포인터 27/27, 스토리 테스트 86 파일 · 374개, typecheck · lint · build ·
+build-storybook 통과, axe 374 스토리 그 밖의 위반 0, 외부 프로젝트 타입 검사 · 빌드 · 실행(툴팁 포털 · 화면 경계, "최근 30일" 잘림 없음, 콘솔 오류 0).
 
 Phase 8 그룹 검증 · Phase 9 통합 QA(2026-10-16, 최종 코드): verify:all 36개 컴포넌트(71세트 · 842변형) × 3 엔진 108/108 통과,
 verify:button 296/296 · 실제 포인터 27/27, 스토리 테스트 86 파일 · 370개 통과, typecheck · lint · build(토큰 변경 없음) · build-storybook 통과,
