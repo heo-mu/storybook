@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  useEffect,
   useId,
   useLayoutEffect,
   useRef,
@@ -9,13 +10,14 @@ import {
   type PointerEvent,
   type ReactNode,
 } from 'react';
+import { createPortal } from 'react-dom';
 import { Badge } from '../Badge';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
 import type { ChartColor, ChartType, ChartVariant } from './Chart.options';
 import { ChartLegendItem } from './ChartLegendItem';
 import { ChartTooltip } from './ChartTooltip';
-import { areaPath, bands, barPath, extendToEdges, niceTicks, polyline, roundedPolyline, scale, type Point } from './chartGeometry';
+import { areaPath, bands, barPath, extendToEdges, niceTicks, placeTooltip, polyline, roundedPolyline, scale, type Point } from './chartGeometry';
 
 export type ChartSeries = {
   /** Series name — legend, tooltip and the data table for screen readers. */
@@ -69,6 +71,7 @@ const METRICS = [
   'ring-radius',
   'badge-offset',
   'tooltip-gap',
+  'tooltip-margin',
   'category-gap',
   'bar-size',
   'bar-radius',
@@ -490,20 +493,42 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
         })
       : null;
 
-  // The tooltip sits beside its anchor (right, or left when it would overflow) inside the plot.
+  // The tooltip is portalled to <body> (position: fixed) so clipping ancestors cannot cut it off, and placed beside
+  // its anchor inside the visible part of the plot and the viewport (placeTooltip); it follows scrolling and resizing.
   const anchor = scene?.anchor;
+  const positionTooltip = useRef<() => void>(() => {});
   useLayoutEffect(() => {
-    const el = tooltipRef.current;
-    if (!el || !anchor || !size) return;
-    const { width, height } = el.getBoundingClientRect();
-    const plotH = size.m['plot-height'];
-    let left = anchor.x + anchor.gap;
-    if (left + width > size.width) left = anchor.x - anchor.gap - width;
-    left = Math.max(0, Math.min(left, size.width - width));
-    const top = anchor.vertical === 'top' ? anchor.y : Math.max(0, Math.min(anchor.y - height / 2, plotH - height));
-    el.style.left = `${left}px`;
-    el.style.top = `${top}px`;
+    positionTooltip.current = () => {
+      const el = tooltipRef.current;
+      const plotEl = plotRef.current;
+      if (!el || !plotEl || !anchor || !size) return;
+      const plot = plotEl.getBoundingClientRect();
+      const k = size.width ? plot.width / size.width : 1;
+      const { width, height } = el.getBoundingClientRect();
+      const root = document.documentElement;
+      const { left, top } = placeTooltip(
+        { x: plot.left + anchor.x * k, y: plot.top + anchor.y * k, gap: anchor.gap * k, vertical: anchor.vertical },
+        { width, height },
+        plot,
+        { width: root.clientWidth, height: root.clientHeight },
+        size.m['tooltip-margin'],
+      );
+      el.style.left = `${left}px`;
+      el.style.top = `${top}px`;
+    };
+    positionTooltip.current();
   });
+  const tooltipOpen = active != null && anchor != null;
+  useEffect(() => {
+    if (!tooltipOpen) return;
+    const update = () => positionTooltip.current();
+    window.addEventListener('scroll', update, { capture: true, passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update, { capture: true });
+      window.removeEventListener('resize', update);
+    };
+  }, [tooltipOpen]);
 
   const summary = (i: number) => `${categories[i]}: ${series.map((s) => `${s.label} ${formatValue(valueAt(s, i))}`).join(', ')}`;
   const move = (next: number | null, announce: boolean) => {
@@ -583,15 +608,18 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
               {scene.labels}
             </div>
             {scene.overlay}
-            {active != null && (
-              <ChartTooltip
-                ref={tooltipRef}
-                className="ds-chart__tooltip"
-                aria-hidden="true"
-                title={categories[active]}
-                items={series.map((s, k) => ({ label: s.label, value: formatValue(valueAt(s, active)), color: keyColor(type, k) }))}
-              />
-            )}
+            {active != null &&
+              typeof document !== 'undefined' &&
+              createPortal(
+                <ChartTooltip
+                  ref={tooltipRef}
+                  className="ds-chart__tooltip"
+                  aria-hidden="true"
+                  title={categories[active]}
+                  items={series.map((s, k) => ({ label: s.label, value: formatValue(valueAt(s, active)), color: keyColor(type, k) }))}
+                />,
+                document.body,
+              )}
           </>
         )}
       </div>

@@ -225,14 +225,14 @@ export const Interaction: StoryObj<{ onActiveIndexChange: Mock<(index: number | 
       await userEvent.keyboard('{ArrowRight}');
       await expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(0);
       await expect(canvas.getByText('101동: 조회 기간 320, 이전 기간 330')).toBeInTheDocument();
-      await expect(canvasElement.querySelector('.ds-chart__tooltip')).toHaveTextContent('101동조회 기간320이전 기간330');
+      await expect(document.querySelector('.ds-chart__tooltip')).toHaveTextContent('101동조회 기간320이전 기간330');
       await userEvent.keyboard('{End}');
       await expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(4);
       await userEvent.keyboard('{ArrowRight}');
       await expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(4);
       await userEvent.keyboard('{Escape}');
       await expect(args.onActiveIndexChange).toHaveBeenLastCalledWith(null);
-      await expect(canvasElement.querySelector('.ds-chart__tooltip')).toBeNull();
+      await expect(document.querySelector('.ds-chart__tooltip')).toBeNull();
     });
     await step('pointer', async () => {
       const box = plot.getBoundingClientRect();
@@ -267,5 +267,71 @@ export const Accessibility: Story = {
     await expect(canvas.getByRole('cell', { name: '224' })).toBeInTheDocument();
     // Simple charts have no tooltip, so the plot is not focusable.
     await expect(canvas.queryByRole('group')).toBeNull();
+  },
+};
+
+const tooltipRect = () => {
+  const el = document.querySelector('.ds-chart__tooltip');
+  if (!el) throw new Error('no tooltip');
+  return el.getBoundingClientRect();
+};
+/** The visible part of the plot, inset by the 12px viewport margin. */
+const visiblePlot = (plot: Element) => {
+  const r = plot.getBoundingClientRect();
+  const root = document.documentElement;
+  return { left: Math.max(r.left, 12), top: Math.max(r.top, 12), right: Math.min(r.right, root.clientWidth - 12), bottom: Math.min(r.bottom, root.clientHeight - 12) };
+};
+const PLACEMENT_SERIES = [
+  { label: '조회 기간', data: [320, 265, 301, 305, 384] },
+  { label: '이전 기간', data: [330, 273, 311, 314, 396] },
+];
+
+/** The last category of a chart that runs past the right edge of the screen: the tooltip stays on screen and in the plot. */
+export const TooltipAtViewportEdge: Story = {
+  render: () => (
+    <div style={{ marginLeft: 'calc(100vw - 340px)', width: 600 }}>
+      <Chart aria-label="화면 경계" type="bar-vertical" categories={BUILDINGS} series={PLACEMENT_SERIES} activeIndex={4} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const area = visiblePlot(canvasElement.querySelector('.ds-chart__plot')!);
+    const tip = tooltipRect();
+    await expect(tip.left).toBeGreaterThanOrEqual(area.left - 0.5);
+    await expect(tip.right).toBeLessThanOrEqual(area.right + 0.5);
+    await expect(tip.top).toBeGreaterThanOrEqual(area.top - 0.5);
+    await expect(tip.bottom).toBeLessThanOrEqual(area.bottom + 0.5);
+  },
+};
+
+/** At the last point of a line chart the tooltip flips to the left of the point. */
+export const TooltipFlip: Story = {
+  render: () => (
+    <div style={{ width: 360 }}>
+      <Chart aria-label="뒤집기" type="line" categories={['10.07', '10.08', '10.09', '10.10']} series={[{ label: '전기', data: [140, 194, 132, 186] }]} activeIndex={3} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const plot = canvasElement.querySelector('.ds-chart__plot')!.getBoundingClientRect();
+    const tip = tooltipRect();
+    // The last point sits on the plot's right edge; the tooltip ends 12px (p-3) before it.
+    await expect(Math.abs(tip.right - (plot.right - 12))).toBeLessThan(1);
+    const area = visiblePlot(canvasElement.querySelector('.ds-chart__plot')!);
+    await expect(tip.top).toBeGreaterThanOrEqual(area.top - 0.5);
+    await expect(tip.bottom).toBeLessThanOrEqual(area.bottom + 0.5);
+  },
+};
+
+/** Inside a container that clips its content (overflow: hidden) the tooltip is not cut off: it is rendered in <body>. */
+export const TooltipInClippingContainer: Story = {
+  render: () => (
+    <div style={{ width: 600, height: 150, overflow: 'hidden' }}>
+      <Chart aria-label="잘림" type="bar-horizontal" categories={BUILDINGS} series={PLACEMENT_SERIES} activeIndex={0} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const tip = document.querySelector('.ds-chart__tooltip')!;
+    await expect(tip.parentElement).toBe(document.body);
+    await expect(canvasElement.contains(tip)).toBe(false);
+    await expect(getComputedStyle(tip).position).toBe('fixed');
   },
 };

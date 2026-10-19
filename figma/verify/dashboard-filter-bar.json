@@ -40,10 +40,6 @@
         "Frame 2147240236": ".ds-filter-bar__actions",
         "Frame 2147240236/button_basic": ".ds-filter-bar__actions .ds-button:not(.ds-icon-button)"
       },
-      "ignore": [
-        "Frame 2147240239/Controls#2/segmented-control/segmented-item#3/Label"
-      ],
-      "//ignore": "the Figma segmented control (220px) is narrower than \"최근 30일\" (item 70.67 − padding 16 < label 58): Figma draws the label over the padding, SegmentedControl truncates it with an ellipsis (figma-issues F71)",
       "pixelTolerance": {
         "firefox": 0.007,
         "webkit": 0.007

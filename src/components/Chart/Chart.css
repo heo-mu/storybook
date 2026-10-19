@@ -95,6 +95,7 @@
   --_plot-left: 44px;
   --_label-top: 208px;
   --_tooltip-gap: var(--spacing-padding-p-3);
+  --_tooltip-margin: var(--spacing-padding-p-3);
   --_bar-radius: var(--border-radius-rounded);
 }
 
@@ -333,12 +334,16 @@
   pointer-events: none;
 }
 
-/* Tooltip inside the chart — Figma instances add a background blur 12 (CSS blur radius = Figma radius / 2). */
+/*
+ * Tooltip of a chart — portalled to <body> and placed by Chart.tsx (position: fixed). z-index 100000 and the 12px
+ * (p-3) distance to the viewport edge are those of the react-aria overlays (Tooltip, Select …). Figma instances add a
+ * background blur 12 (CSS blur radius = Figma radius / 2).
+ */
 .ds-chart__tooltip {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 100000;
   pointer-events: none;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);

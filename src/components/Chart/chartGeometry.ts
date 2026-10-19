@@ -89,3 +89,41 @@ export function barPath(x: number, y: number, w: number, h: number, radius: numb
   const r = Math.min(radius, h / 2, w);
   return `M${f(x)} ${f(y)} H${f(x + w - r)} A${f(r)} ${f(r)} 0 0 1 ${f(x + w)} ${f(y + r)} V${f(y + h - r)} A${f(r)} ${f(r)} 0 0 1 ${f(x + w - r)} ${f(y + h)} H${f(x)} Z`;
 }
+
+export type Rect = { left: number; top: number; right: number; bottom: number };
+
+/**
+ * Tooltip placement in viewport coordinates. The tooltip goes beside its anchor — `gap` to the right, or to the left
+ * when that does not fit — and stays inside the visible part of the plot (plot ∩ viewport shrunk by `margin`).
+ * When it is larger than that area, it keeps to the side with more room and stays inside the viewport instead.
+ */
+export function placeTooltip(
+  anchor: { x: number; y: number; gap: number; vertical: 'top' | 'center' },
+  size: { width: number; height: number },
+  plot: Rect,
+  viewport: { width: number; height: number },
+  margin: number,
+): { left: number; top: number } {
+  const screen: Rect = { left: margin, top: margin, right: viewport.width - margin, bottom: viewport.height - margin };
+  const area: Rect = {
+    left: Math.max(plot.left, screen.left),
+    top: Math.max(plot.top, screen.top),
+    right: Math.min(plot.right, screen.right),
+    bottom: Math.min(plot.bottom, screen.bottom),
+  };
+  const clamp = (v: number, min: number, max: number) => (max < min ? min : Math.min(max, Math.max(min, v)));
+  const right = anchor.x + anchor.gap;
+  const left = anchor.x - anchor.gap - size.width;
+  const fits = (x: number) => x >= area.left && x + size.width <= area.right;
+  let x: number;
+  if (fits(right)) x = right;
+  else if (fits(left)) x = left;
+  else {
+    // Neither side fits (the anchor is near or past an edge): keep the side with more room, moved into the area.
+    const preferred = area.right - anchor.x >= anchor.x - area.left ? right : left;
+    x = size.width <= area.right - area.left ? clamp(preferred, area.left, area.right - size.width) : clamp(preferred, screen.left, screen.right - size.width);
+  }
+  const y0 = anchor.vertical === 'top' ? anchor.y : anchor.y - size.height / 2;
+  const y = size.height <= area.bottom - area.top ? clamp(y0, area.top, area.bottom - size.height) : clamp(y0, screen.top, screen.bottom - size.height);
+  return { left: x, top: y };
+}

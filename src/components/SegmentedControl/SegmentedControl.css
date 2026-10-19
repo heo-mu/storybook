@@ -60,6 +60,7 @@
   --_fg-pressed: var(--colors-segmented-control-unselected-label-pressed);
   --_fg-disabled: var(--colors-segmented-control-unselected-label-disabled);
   --_shadow: none;
+  --_pad-x: var(--spacing-margin-m-1_5);
 
   box-sizing: border-box;
   display: flex;
@@ -67,7 +68,7 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
-  padding: var(--spacing-padding-p-1_5) var(--spacing-margin-m-1_5);
+  padding: var(--spacing-padding-p-1_5) var(--_pad-x);
   border-radius: var(--border-radius-rounded);
   font-family: var(--typography-base-leading-normal-medium-font-family), sans-serif;
   font-size: var(--typography-base-leading-normal-medium-font-size);
@@ -85,7 +86,9 @@
 }
 
 .ds-segmented[data-size='sm'] .ds-segmented__segment {
-  padding: var(--spacing-padding-p-1) var(--spacing-padding-p-2);
+  --_pad-x: var(--spacing-padding-p-2);
+
+  padding: var(--spacing-padding-p-1) var(--_pad-x);
   font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
   font-size: var(--typography-sm-leading-normal-medium-font-size);
   font-weight: var(--typography-sm-leading-normal-medium-font-weight);
@@ -94,7 +97,9 @@
 }
 
 .ds-segmented[data-size='xs'] .ds-segmented__segment {
-  padding: var(--spacing-padding-p-1) var(--spacing-padding-p-1_5);
+  --_pad-x: var(--spacing-padding-p-1_5);
+
+  padding: var(--spacing-padding-p-1) var(--_pad-x);
   font-family: var(--typography-xs-leading-normal-medium-font-family), sans-serif;
   font-size: var(--typography-xs-leading-normal-medium-font-size);
   font-weight: var(--typography-xs-leading-normal-medium-font-weight);
@@ -102,9 +107,17 @@
   letter-spacing: var(--typography-xs-leading-normal-medium-letter-spacing);
 }
 
+/*
+ * A label wider than the segment's content box runs into its inline padding, as Figma draws it (e.g. "최근 30일" in
+ * the 220px dashboard filter bar control); only a label wider than the whole segment is truncated. The label keeps
+ * its natural width (no shrinking) up to the segment's border box and is centred, so a fitting label keeps its box
+ * and the segment's intrinsic width is unchanged.
+ */
 .ds-segmented__label {
   display: block;
+  flex: none;
   min-width: 0;
+  max-width: calc(100% + 2 * var(--_pad-x));
   text-align: center;
   overflow: hidden;
   white-space: nowrap;

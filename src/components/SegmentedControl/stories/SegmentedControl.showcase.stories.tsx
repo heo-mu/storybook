@@ -186,3 +186,35 @@ export const Accessibility: Story = {
     await expect(canvas.getByRole('radio', { name: '인기순' })).not.toBeChecked();
   },
 };
+
+/**
+ * Narrow segments (the Figma dashboard filter bar: 220px, sm): a label wider than the content box runs into the
+ * segment's padding like in Figma; only a label wider than the whole segment is truncated.
+ */
+export const LabelOverflow: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16 }}>
+      <SegmentedControl data-testid="fits" size="sm" aria-label="조회 기간" defaultValue="7d" style={{ width: 220 }}>
+        <SegmentedControlItem value="today">오늘</SegmentedControlItem>
+        <SegmentedControlItem value="7d">최근 7일</SegmentedControlItem>
+        <SegmentedControlItem value="30d">최근 30일</SegmentedControlItem>
+      </SegmentedControl>
+      <SegmentedControl data-testid="long" size="sm" aria-label="긴 라벨" defaultValue="a" style={{ width: 220 }}>
+        <SegmentedControlItem value="a">오늘</SegmentedControlItem>
+        <SegmentedControlItem value="b">지난 분기 전체 기간</SegmentedControlItem>
+      </SegmentedControl>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    const label = (root: HTMLElement, text: string) => [...root.querySelectorAll<HTMLElement>('.ds-segmented__label')].find((l) => l.textContent === text)!;
+    const fits = label(canvas.getByTestId('fits'), '최근 30일');
+    await expect(fits.scrollWidth).toBeLessThanOrEqual(fits.clientWidth);
+    const segment = fits.closest('.ds-segmented__segment')!.getBoundingClientRect();
+    const box = fits.getBoundingClientRect();
+    await expect(box.left).toBeGreaterThanOrEqual(segment.left);
+    await expect(box.right).toBeLessThanOrEqual(segment.right);
+    const long = label(canvas.getByTestId('long'), '지난 분기 전체 기간');
+    await expect(long.scrollWidth).toBeGreaterThan(long.clientWidth);
+    await expect(long.getBoundingClientRect().width).toBeLessThanOrEqual(long.closest('.ds-segmented__segment')!.getBoundingClientRect().width + 0.5);
+  },
+};
