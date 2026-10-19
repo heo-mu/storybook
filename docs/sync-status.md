@@ -1,12 +1,12 @@
 # Figma ↔ Storybook 동기화 상태 (컴포넌트별)
 
-생성: 2026-10-19 09:06 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-19 06:47 UTC), 스토리 테스트 + a11y 리포터 실행, Usage 문서의 Figma 속성 대조.
+생성: 2026-10-19 09:28 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-19 09:11 UTC), 스토리 테스트 + a11y 리포터 실행, Usage 문서의 Figma 속성 대조.
 
 | 열 | 기준 |
 | --- | --- |
 | Figma 정의 확인 | 검증 설정의 모든 Figma 세트가 원본에 있음 — 세트 · ID · 검증 변형 수 / 원본 변형 수 |
 | Storybook 구현 확인 | 쇼케이스가 검증 대상 변형을 모두 렌더링(Chromium 보고서 rendered = expected) |
-| 시각적 정합성 확인 | 변형별 DOM · 픽셀 · 글자 위치 검사 통과 수 — Chromium / Firefox / WebKit |
+| 시각적 정합성 확인 | 변형별 DOM · 픽셀 · 글자 위치 검사 통과 수 — Chromium / Firefox / WebKit. "수동 검토"는 검증 설정에 이유와 함께 비교에서 뺀 변형(Table Textarea 두 줄 값, F58)으로, 통과로 세지 않음 |
 | 인터랙션 검증 | 컴포넌트 스토리의 `play` 함수 수와 스토리 테스트 결과(실제 브라우저 Vitest) |
 | 접근성 검증 | Storybook a11y(axe 기본 규칙) 경고가 있는 스토리 수 — 사이드바 삼각형과 같은 결과 |
 | 문서 동기화 완료 | Usage MDX가 있고 모든 Figma 속성(변형 축 · Boolean · 글자 · 인스턴스)이 문서에 언급됨 |
@@ -45,13 +45,13 @@
 | slider (Slider) | ✓ slider 391:1988 · 2/2<br>handle 391:2013 · 5/5 | ✓ | ✓ 7/7 / 7/7 / 7/7 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | stepper (Stepper) | ✓ stepper_indicator_horizontal 179:1621 · 5/5<br>stepper_indicator_vertical 203:3708 · 5/5<br>stepper_connector_horizontal 179:1614 · 2/2<br>stepper_connector_vertical 203:4253 · 2/2<br>stepper_horizontal 179:2043 · 3/3<br>stepper_vertical 203:3949 · 3/3 | ✓ | ✓ 20/20 / 20/20 / 20/20 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | switch (Switch) | ✓ switch 107:409 · 16/16 | ✓ | ✓ 16/16 / 16/16 / 16/16 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
-| table (Table) | ✓ table_header 351:3452 · 3/3<br>table_body 355:3739 · 8/8<br>table_key 355:4193 · 2/2<br>table_value 355:4460 · 2/2<br>table_value_editable 503:23264 · 52/52 | ✓ | ✓ 67/67 / 67/67 / 67/67 | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
+| table (Table) | ✓ table_header 351:3452 · 3/3<br>table_body 355:3739 · 8/8<br>table_key 355:4193 · 2/2<br>table_value 355:4460 · 2/2<br>table_value_editable 503:23264 · 52/52 | ✓ | ✓ 64/67 (수동 검토 3) / 64/67 (수동 검토 3) / 64/67 (수동 검토 3) | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
 | tabs (Tabs) | ✓ tab_filled 91:5000 · 60/60<br>tab_line 91:5241 · 30/30 | ✓ | ✓ 90/90 / 90/90 / 90/90 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | textarea (Textarea) | ✓ textarea 86:2597 · 14/14 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 11 | ✓ 경고 0 | ✓ |
 | toast (Toast) | ✓ toast 91:5927 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 4 · 스토리 8 | ✓ 경고 0 | ✓ |
 | tooltip (Tooltip) | ✓ tooltip 149:1111 · 4/4 | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
 
-요약: 37개 검증 단위 — Figma 정의 37 · 구현 37 · 시각 3 엔진 37 · 인터랙션 37 · 접근성 37 · 문서 37. 스토리 테스트 396개(실패 0, a11y 경고 0).
+요약: 37개 검증 단위 — Figma 정의 37 · 구현 37 · 시각 3 엔진 37(수동 검토 변형 제외 모두 통과) · 인터랙션 37 · 접근성 37 · 문서 37. 스토리 테스트 396개(실패 0, a11y 경고 0).
 
 검증 설정에 따로 없는 Figma 세트 3개: `input_message` 83:3009 — `input` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만) · `textarea_message` 86:2733 — `textarea` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만) · `date-picker_header` 144:1377 — `date-picker_calendar` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만).
 

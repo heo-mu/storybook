@@ -148,7 +148,7 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 | ④ 상태 | option md Disabled 텍스트 스타일 `base/leading-normal/underline` → `base/leading-normal/normal`(F6) | 스타일 | 97:2331 |
 | ④ 상태 | Component 변수 `colors/search-field/solid/border/error`(→ `brand-status/error/strong`, STROKE_COLOR, WEB code syntax) · Solid Error 3변형에 2px 안쪽 테두리(E8) | 변수 1 · 3변형 | VariableID:1158:7281 · 439:10252 · 439:10295 · 439:10338 |
 | ⑤ 차트 | 개편 뒤 삭제된 변수 5개를 가리키던 차트 노드 91곳 → 같은 색의 현재 변수(`line/primary` · `line/02` · `surface/container-subtle` · `chart/series/02` · `bar/compare/gradient/start`) | 바인딩만, 색 그대로 | 698:4399 안 · 삭제 변수 VariableID:1129:5009 · 1129:5011 · 1113:5029 · 1113:5030 · 1052:6698 |
-| ⑤ 차트 | WEB code syntax 4개 정정 — `line/02 · 03 · 04/default`(→ `var(--colors-chart-line-0N-default)`), `label/legend/default`(→ `var(--colors-chart-label-legend-default)`) | code syntax | — |
+| ⑤ 차트 | WEB code syntax 4개 정정 — `line/02 · 03 · 04/default`(→ `var(--colors-chart-line-0N-default)`), `label/legend/default`(→ `var(--colors-chart-label-legend-default)`) | code syntax | VariableID:1135:16414 · 1135:16415 · 1135:16416 · 1052:6711 |
 | ⑤ 차트 | **점선 복원**: 범례 Dash Line 표시선 5 / 3, 간단 선 Group=yes 비교 선 3 / 3(개편에서 실선이 됨, F85 — 디자이너 확인 필요) | `dashPattern` | 703:4817 · 762:5858 · 1011:15054 |
 | ⑤ 원격 | 컴포넌트 안 아이콘 7곳의 원격 `colors/icon/secondary` → 같은 값의 로컬 변수(값이 다른 355:4444 · 355:4445는 그대로, F86) | 바인딩만 | I476:20465 · I476:20410 · I476:20390 · I693:8187 · I675:4864 · I773:6950 · I773:7044 하위 |
 | ⑤ Card | 부품 컴포넌트 이름 "Frame 2147239186" · "Wrapper" → `card_header` · `card_footer`, 설명 추가(F88) | 이름 · 설명 | 218:7173 · 218:7174 |

@@ -29,7 +29,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Switch 107:188 | `switch` (16) Size sm/md · State 4 · Checked · Label | `Switch` | 2 | 완료 |
 | Slider 379:1562 | `slider` (2) Default/Disabled · Show Input · `handle` (5) | `Slider` | 2 | 완료 |
 | Segmented Control 476:21053 | `segmented-control` (3) Size md/sm/xs · `segmented-item` (18) Selected/Unselected · Size · State | `SegmentedControl`, `SegmentedControlItem` | 2 | 완료 |
-| Chip 180:11829 | `chip-multi` (24) · `chip-input` (12) · `chip-filter` (48, Expanded) | `Chip`, `InputChip`, `FilterChip` | 2 | 완료 |
+| Chip 180:11829 | `chip-multi` (24) · `chip-input` (12) · `chip-filter` (48, Expanded) | `Chip`, `InputChip`, `FilterChip`, `FilterChipSelect`(chip-filter + listbox · option 선택 예시 1011:12956 · 1149:6756, 2026-10-19 밤) | 2 | 완료 |
 | Date Picker 149:831 | `date-picker_trigger` (21) · `_message` (3) · `_day` (7) · `_navigation` (8) · `date-picker_header` · `date-picker_calendar` | `DatePicker`, `Calendar` | 3 | 완료 |
 | File Uploader 675:4910 | `file-uploader` (5) State Default/Hover/Pressed/Drag-over/Disabled · `file-uploader-item` (3) Completed/uploading/download | `FileUploader`, `FileUploaderItem` | 3 | 완료 |
 | ~~Combobox~~ | Figma에서 삭제됨 | — | 3 | 구현 불가 |

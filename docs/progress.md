@@ -2,7 +2,7 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
-## Figma × Storybook 전체 동기화 · 완성도 개선 (2026-10-19 밤 시작, 진행 중)
+## Figma × Storybook 전체 동기화 · 완성도 개선 (2026-10-19 밤, 완료)
 
 체크포인트 `checkpoint/pre-full-sync`(4ebef48). 순서: ① Chart 툴팁 버그 → ② Chip Filter 예시 → ③ Storybook 접근성 경고 → ④ 누락 상태 · 동작 · 사용 예
 → ⑤ Figma ↔ Storybook 전체 동기화(차트 토큰 개편 포함) → ⑥ 회귀 · 최종 보고. 재개: `git log --oneline checkpoint/pre-full-sync..`, 이 절의 상태 줄.
@@ -25,7 +25,9 @@
   3 엔진 통과. Figma: 삭제 변수 참조 91곳 재연결 · code syntax 4개 · 점선 복원 3노드(F85, 확인 필요) · 아이콘 원격 바인딩 7곳 · Card 부품 이름(F88).
   CSS 주석 조기 종료 검사(`npm run lint`), 문서: breaking-changes · CHANGELOG · token-diff · figma-fix-requests S절 · figma-issues F84–F88 · triage,
   Figma 속성 ↔ 문서 대조 전부 언급, 컴포넌트별 상태표 [sync-status.md](./sync-status.md)(37개 단위 6열). 체크섬 8그룹 원본과 일치, 스토리 396 · a11y 경고 0.
-- ⑥ 진행 전 — 전체 회귀(3 엔진 verify:all · verify:button, 스토리 · axe, 빌드, 실제 마우스 · 키보드 탐침, 외부 프로젝트 설치) 후 sync-status 재생성 · 최종 보고.
+- ⑥ **완료** — 전체 회귀: typecheck · lint · build · build-storybook, 스토리 396 · a11y 경고 0 · axe 위반 0, verify:all 108/108, verify:button 352 + 포인터 36 × 3 엔진,
+  키보드 포커스 24 × 3 엔진, 다중 차트 툴팁 55차트 × 3 엔진, FilterChipSelect 실제 마우스 · 키보드 × 3 엔진, 외부 프로젝트(npm pack) × 3 엔진, 체크섬 8그룹 일치.
+  sync-status 재생성(37개 단위 6열 통과), 결과 [final-report.md 13절](./final-report.md#13-figma--storybook-전체-동기화--완성도-개선-2026-10-19-밤-figma-수정-허용-작업).
 
 ## 코드 정책 → Figma 공식 정책 작업 (2026-10-19, 완료)
 

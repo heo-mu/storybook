@@ -11,9 +11,9 @@ Figma 원본은 읽기 전용으로만 조회했고 수정하지 않았습니다
 | --- | --- |
 | 구현 컴포넌트 | Figma Component Set · Component 74개(Button 3 포함) → React 컴포넌트 44종(+ 하위 부품), Storybook 사용 문서 37쪽 |
 | 구현 불가 | Popover · Combobox · Drawer — 작업 중 Figma에서 삭제되어 근거 없음 |
-| Figma 정합성 | Button 296 + 그 밖의 842개 변형, Chromium · Firefox · WebKit 3개 엔진 모두 통과 |
-| 스토리 테스트 | 88 파일 · 383개 통과 (2026-10-19 코드 정책 → Figma 정책화 후) |
-| 접근성(axe) | 383 스토리 — 색 대비 0 · 그 밖의 위반 0 (A-1 · A-2 수정, 알려진 대비 목록 없음 · react-aria 달력 이름 693, [accessibility.md](./accessibility.md)) |
+| Figma 정합성 | Button 352 + 그 밖의 857개 변형(Table Textarea 두 줄 3변형은 수동 검토, F58), Chromium · Firefox · WebKit 3개 엔진 모두 통과 — 컴포넌트별 상태 [sync-status.md](./sync-status.md) (2026-10-19 밤) |
+| 스토리 테스트 | 90 파일 · 396개 통과 (2026-10-19 밤 Figma × Storybook 전체 동기화 후) |
+| 접근성(axe) | 396 스토리 — Storybook 사이드바 경고 0 · 색 대비 0 · 그 밖의 위반 0(axe 기본 규칙, 제외 없음) (A-1 · A-2 수정 · 알려진 위반 목록 없음 — 이전에 따로 둔 react-aria 달력 이름도 원인 수정, [accessibility.md](./accessibility.md)) |
 | 빌드 · 타입 · 린트 | typecheck · lint · build · build-storybook 통과 |
 | 외부 사용 검증 | `npm pack`(184 파일) → 새 Vite 8 + React 19 + TypeScript 6 프로젝트에 설치, 컴포넌트 · 하위 부품 · 아이콘 · 상수 60여 개 import — strict 타입 검사(패키지 `.d.ts` 포함) · `vite build` · 브라우저 실행(콘솔 오류 0, 폰트 · 토큰 적용) 통과 |
 | Storybook MCP | 컴포넌트 매니페스트 44 · 문서 37쪽 조회 가능(검증용 Showcase는 `!manifest`로 제외) |
@@ -264,3 +264,21 @@ data-state · 예시 프레임 원격 흰 배경(#ffffff), F77 수정 여부, �
 
 주의: 이전 작업(c1e78df)의 그룹 간격 3 엔진 측정은 스토리에 `style` 간격이 있던 상태였습니다. 이번에 스토리의 임의 간격을 지우고 스토리 테스트(GroupSpacing)와 외부 프로젝트에서 컴포넌트 자체 간격을 다시 확인했습니다.
 
+## 13. Figma × Storybook 전체 동기화 · 완성도 개선 (2026-10-19 밤, Figma 수정 허용 작업)
+
+시작 체크포인트 `checkpoint/pre-full-sync`(4ebef48), 단계 커밋 2397da1(①) · 4790793(②) · 3385c5d(③) · 31c1f14(④) · 875cef3(⑤)와 이 절의 회귀 커밋.
+원격 Push · npm 배포 · Storybook 배포는 하지 않았습니다. Figma 변경 목록(노드 · 변수 ID): [figma-fix-requests.md S절](./figma-fix-requests.md#s-figma--storybook-전체-동기화-2026-10-19-밤-사용자-승인-작업),
+컴포넌트별 상태표: [sync-status.md](./sync-status.md).
+
+| # | 항목 | 결과 |
+| --- | --- | --- |
+| 1 | 수정한 컴포넌트 | **Chart**(툴팁 배치 · 렌더링, 토큰 개편 색 연결, 툴팁 계열 이름 40–80px, 범례 · 툴팁 글자 정수 px), **Chip**(`FilterChipSelect` · `filterChipText` 추가, 열린 필터 칩 모양), **Calendar**(날짜 칸 이름 · 머리줄 마크업), **DropdownMenu**(라벨 · 설명 마크업), **Table**(`TableEmptyColumn` 이름, Filter 편집 칸 = FilterChipSelect), **Select**(`SelectOption checkIcon`, md Disabled 글자), **SearchField**(Solid 오류 테두리), **아이콘**(`aria-label` → `role="img"`). 기존 Props는 모두 유지(추가만) |
+| 2 | Figma Variables · Nodes | 변수 생성 1(`colors/search-field/solid/border/error` VariableID:1158:7281), code syntax 정정 4(VariableID:1135:16414 · 16415 · 16416 · 1052:6711). 노드: Rules 03 · 04 · 05 · 08 · 10 셀, 주석(693:9776 · 558:25704 · 558:26017), 필터 칩 다중 예시 이름(1011:12956) · 단일 예시 추가(1149:6756), option md Disabled 텍스트 스타일(97:2331), Search Field Solid Error 3변형(439:10252 · 10295 · 10338), 차트 삭제 변수 참조 91곳 재연결(698:4399 안), 점선 복원 3(703:4817 · 762:5858 · 1011:15054), 아이콘 원격 바인딩 7곳, Card 부품 이름 2(218:7173 · 218:7174). 삭제 없음 |
+| 3 | 변경한 Storybook 파일 | 스토리 11개(새 파일 2: `FilterChipSelect.stories.tsx` · `stories/FilterChipSelect.showcase.stories.tsx`), Usage MDX 18개(Chart · Chip · Select · SearchField · Table · DatePicker · DropdownMenu · Breadcrumb · Pagination 외 Figma 속성 → Props 행) |
+| 4 | 새 상태 · 인터랙션 · 사용 예 | 스토리 383 → **396**(+13): FilterChipSelect 10(기본 · 값 · 단일 · Disabled, 쇼케이스 Basic · 다중 · 단일 · 키보드 · Disabled · 필터 영역), Chart `MultipleCharts` · `TooltipLabelWidth`, Select `WithoutCheckIcon`. Table `EditableOpen`(Filter 편집 칸 목록), Search Field Solid Error 테두리, option md Disabled 정정 |
+| 5 | 해결한 접근성 경고 | Storybook 사이드바 경고 **25개 스토리 · 6개 규칙 → 0** — 숨기거나 규칙을 끄지 않고 원인 수정(달력 날짜 칸 이름, 필터 칩 이름, 설명 있는 메뉴 항목 이름, 달력 머리줄 header → div, 여러 nav 고유 이름, 제목만 있는 메뉴 칸 정적 마크업, 빈 머리글 화면 낭독기 글자, 아이콘 이름 role=img). `verify:a11y`를 애드온과 같은 axe 기본 규칙 · 제외 없음으로 강화 |
+| 6 | 차트 툴팁 원인 · 수정 | 원인: 툴팁이 `<body>` 포털(`position: fixed`)이라 화면 밖으로 스크롤된 차트의 툴팁이 화면 가장자리로 밀려 **다른 차트 위에 남음**(문서 · 쇼케이스의 hover 상태 차트 12개), 위치는 스크롤 · 크기 변경 때만 갱신. 수정: 툴팁을 **자기 그림 영역 안**(`position: absolute`)에 그리고, 보이는 부분(그림 영역 ∩ 화면 · `overflow` 조상, 가장자리 12px) 안에 배치 — 들어가지 않으면 뒤집기 · 이동, 보이는 부분이 작으면 그림 영역 안. z-index 상향 · overflow 잘라 내기 없음. Figma Rules 05 · 10과 chart-tooltip 주석에 정책 반영 |
+| 7 | Chip Filter 예시 | `FilterChipSelect`: 다중(목록 유지 · 닫을 때 적용 · 모두 끄면 해제) · 단일(고르면 적용 · 닫힘 · "전체"로 해제), 칩 글자 "필터명: 값, 값"(3개 넘으면 "외 N"), 열린 칩은 Figma State=Default. 실제로 동작하는 예시(정적 아님) — 쇼케이스 필터 영역 · Table Filter 편집 칸. Figma 단일 선택 예시(1149:6756) · Rules 04 "필터 칩 선택" 행 |
+| 8 | 동기화 검증 | [sync-status.md](./sync-status.md) — 검증 단위 **37개(Figma 세트 76 중 73 직접 + 3은 부모 세트 안)** 모두 6열 통과: Figma 정의(원본 실시간 조회 · 변형 수 일치) · Storybook 구현(검증 변형 전부 렌더링) · 시각 정합성 3 엔진(2,562 / 2,571 변형 통과, 나머지 9 = Table Textarea 두 줄 값 3변형 × 3 엔진 수동 검토 F58) · 인터랙션(스토리 테스트) · 접근성(경고 0) · 문서(Figma 속성 전부 Usage에 언급). 토큰: 변수 · 스타일 체크섬 8그룹 원본과 일치(Primitive 456 · 167, Theme 44, Semantic 69, Component 82 · 725, 텍스트 46, 효과 4), 생성 CSS 변수 1,536. 최신 Figma 변형: 차트 24 · 범례 3 · 툴팁 1을 개편 후 기준 이미지 · geometry로 다시 받아 비교 |
+| 9 | 회귀 | typecheck · lint(oxlint 0 · CSS 주석 검사) · build · build-storybook 통과(기존 청크 크기 경고만) / 스토리 테스트 90 파일 · **396개** 통과, 콘솔 출력 없음 / a11y 리포터 396 스토리 경고 0 · `verify:a11y` 396 스토리 위반 0 / `verify:all` 36 컴포넌트 × 3 엔진 **108/108** / `verify:button` 352 변형 + 실제 포인터 36 × 3 엔진 / 키보드 포커스 링 24개 대상 × 3 엔진(WebKit 링크 2개는 Tab이 링크를 건너뛰는 기본 설정이라 키보드 방식 포커스로 확인) / 다중 차트 툴팁 탐침 3쪽 55차트 × 3 엔진 문제 0 · 콘솔 오류 0 / FilterChipSelect 실제 마우스 · 키보드 × 3 엔진(다중 닫을 때 적용 · 단일 고르면 닫힘 · 포커스 복귀 · 초기화) / 외부 Vite 8 + React 19 + TS 6 프로젝트(npm pack → strict 타입 · 빌드 · 3 엔진: 차트 툴팁이 자기 그림 영역 안 · `<body>` 아님, FilterChipSelect 선택 · 해제 · 단일 "전체", `checkIcon={false}`, 이전 정책 항목 그대로, 콘솔 오류 0 — Firefox는 Pretendard 글꼴 name 표 경고만) |
+| 10 | 남은 문제 · 미검증 | **디자이너 확인 필요**: F85 점선 복원(개편에서 실선이 된 범례 Dash Line · 간단 선 비교 선을 이전 값으로 되돌림 — 실선이 의도였다면 Figma · 코드 · Rules 03 함께 변경), F77(가로 막대 hover=yes 비교 막대 5노드, 지시로 수정 제외 — 원본은 `bar/history`, 코드는 hover=no 짝과 같은 `bar/compare`, 픽셀 임계 이내), F82(Table Filter Hover · Empty 칩 State=Hover). **Figma 정리 권장**: F86 값이 다른 원격 바인딩(355:4444 · 355:4445, 손잡이 그림자), F87 연결 없는 table_value Boolean 속성. **호환성 변경**: 차트 토큰 이름 · 삭제(배포 전이라 별칭 없음 — [breaking-changes.md](./breaking-changes.md)). **미검증**: 실제 화면 낭독기 낭독 내용, 실제 터치 기기 · 모바일 브라우저, Figma 프로토타입 연결(대조 대상 아님), Figma Rules · 주석 문구의 의미 일치(사람 검토), Table Textarea 두 줄 값 3변형(F58 수동 검토). Figma 쓰기 실패 없음 |
