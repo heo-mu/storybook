@@ -42,14 +42,19 @@ Figma **Stepper** 프레임(151:697)의 `stepper_horizontal` · `stepper_vertica
 | Sub-Label · Sub-Label Text | 단계의 `description` | |
 | connector State Completed | 완료된 단계 뒤에서 자동 | |
 
-## 코드 정책 (Figma에 정의되지 않은 부분)
+## 정책
 
-- **연결선 길이**: Figma는 가로 180px 고정입니다. 기본은 180px이고, Stepper에 너비를 주면 연결선이 늘어나 채웁니다.
-  세로 연결선은 48px 고정입니다.
-- **스크린 리더 문구**: 완료 · 오류 · 잠김은 색과 아이콘으로만 보이므로 "N단계, 완료"처럼 숨은 문구를 함께 읽습니다.
-- **애니메이션**: Figma에 참고 링크(heroui stepper)만 있고 값이 없어 구현하지 않았습니다.
-- **텍스트 넘침**: Figma처럼 표시기 루트는 원 크기(20px)이고 라벨이 양옆(가로) 또는 위아래(세로)로 넘칩니다.
-  가로 Stepper 양 끝 라벨이 잘리지 않도록 바깥에 여백을 두세요(라벨 폭의 절반).
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `STEP-01` **연결선 길이**: 가로 기본 180px(Figma), Stepper에 너비를 주면 연결선이 남는 폭을 채웁니다. 세로 연결선은 48px 고정입니다(Rules 08).
+- `STEP-02` **스크린 리더 문구**: 완료 · 오류 · 잠김은 색과 아이콘으로만 보이므로 "N단계, 완료"처럼 숨은 문구를 함께 읽습니다(Rules 03).
+- `STEP-03` **애니메이션**: 없습니다 — Figma에는 참고 링크(heroui stepper)만 있고 값이 없습니다(Rules 09).
+- `STEP-04` **텍스트 넘침**: 표시기 루트는 원 크기(20px)이고 라벨이 양옆(가로) 또는 위아래(세로)로 넘칩니다. 가로 Stepper 양 끝 라벨이 잘리지 않도록 바깥에 라벨 폭의 절반만큼 여백을 두세요(Rules 08).
 
 ## 상태
 

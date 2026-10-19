@@ -18,7 +18,7 @@
 | R6 | Table 편집 칸 Filter 칩 상태 | **완료(693:7165)** · 693:7167 오류 아님 | Editing · Filled 칩 Selected로 |
 | R7 | Table 편집 칸 Filter · Editing의 다중 선택 목록 | 결정 대기 (D3) | 변경 없음 |
 | R8 | Table 편집 칸 안내 글자가 삭제된 변수에 바인딩 (F57) | **완료** | 3노드 `text/tertiary`, #778191 그대로 |
-| C3 | 텍스트 스타일 `sm/leading-normal/underline`이 삭제된 변수에 바인딩 | **완료(바인딩)** · 줄 높이는 승인 대상 | 같은 값 변수로 교체 |
+| C3 | 텍스트 스타일 `sm/leading-normal/underline`이 삭제된 변수에 바인딩 | **완료** — 바인딩(R) · 줄 높이 20px(A-4, 2026-10-19 정책 작업) | 같은 값 변수로 교체 |
 
 작업 전 안전 조치: 로컬 Git 태그 `checkpoint/pre-figma-fixes`, 변경 전 바인딩 · 값 기록(아래 표). Figma 이름 있는 버전 저장은
 MCP에서 지원되지 않아(`saveVersionHistoryAsync` 미지원) 만들지 못했습니다 — Figma 자동 버전 기록과 아래 변경 전 값으로 복구할 수 있습니다.
@@ -106,9 +106,32 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 | 굵기 | 삭제된 `font/weight/font-500`(`VariableID:359:7905`, fontStyle "Medium") | fontStyle 바인딩 해제, `font/weight/font-medium`(`VariableID:369:8622`) = 500 |
 
 같은 계열 `xs` · `base/leading-normal/underline`과 같은 바인딩입니다. 글꼴 Medium · 14 · 자간 0 그대로, 사용 노드는 Link md 5개.
-줄 높이 140%(19.6px, 바인딩 없음)는 다른 sm 스타일과 다르지만 값 변경이라 승인 대상(A-4).
+줄 높이 140%(19.6px, 바인딩 없음)는 2026-10-19 정책 작업에서 `font/line-height/leading-5`(20px)로 연결했습니다(A-4 완료).
 
 ---
+
+## P. 코드 정책 → Figma 공식 정책 (2026-10-19 밤, 사용자 승인 작업)
+
+코드에만 있던 정책을 Figma에 정의했습니다. 쓰기 전마다 대상 노드 · 체크섬을 다시 읽었고(공동 편집 파일), 기존 이름 · 크기 · 레이아웃 · 바인딩 ·
+인스턴스 호환을 유지했습니다. 항목별 출처와 처리 상태는 [code-policy-audit.md](./code-policy-audit.md).
+
+| 대상 | 변경 | ID |
+| --- | --- | --- |
+| Semantic 변수 | `colors/border/focus` 추가(→ `colors/brand/700`, STROKE_COLOR) | VariableID:1080:6697 |
+| 포커스 속성 | Boolean 속성 `Focus`(기본 꺼짐) + 숨김 "Focus ring" 레이어(2px, `colors/border/focus` · `border-width/border-2` 바인딩) — 24개 세트 766개 변형. 바깥형: Button 3종 · Checkbox · Radio · Switch · Link · Tabs 2종 · Pagination 2종 · Chip 3종 · Segmented 항목 · Slider 손잡이 · File Uploader · 달력 날짜 · 이동 · Breadcrumb 항목, 안쪽형: Navigation 3종 · Accordion | 54:2904 · 67:2368 · 432:8395 · 99:2389 · 102:2677 · 107:409 · 111:1509 · 91:5000 · 91:5241 · 132:520 · 132:604 · 201:12711 · 558:26017 · 558:25704 · 524:24397 · 391:2013 · 651:3945 · 144:1033 · 144:1328 · 710:4794 · 180:5246 · 180:6174 · 180:6249 · 1035:15648 |
+| Select | State=Focus 변형 3개(테두리 `select/outline/outline/border/focus`), 세트 아래 새 줄 — 세트 너비 2400 유지 | 1081:7873 · 1081:7878 · 1081:7883 |
+| Dialog 덮개 | `colors/surface/scrim` → `colors/alpha/black/500`(검정 50%), Component 변수 `colors/dialog/scrim/default`(→ surface/scrim) 추가, 덮개가 있는 "Modal example" | VariableID:789:5712 · VariableID:1091:7124 · 1091:7126 |
+| Card | 예시 그림자: 원격 shadow-sm → 로컬 효과 스타일 `elevation-1`(F60) | 185:8050 |
+| 대시보드 | metric-card · dashboard-filter-bar · data-state의 원격 `padding/6` · `color/background/white` → 로컬 `p-4` · `colors/surface/page`(F69), metric-card · dashboard-filter-bar 그림자 → 같은 값의 효과 스타일 `elevation-3`(인스턴스 10개 모두 따라감) | 697:4487 · 698:4163 · 698:4359 |
+| 텍스트 스타일 | `sm/leading-normal/underline` 줄 높이 140% → `font/line-height/leading-5`(20px, A-4) | — |
+| Date Picker | 달력 요일 이름 한국어(일 월 화 …, F25) | 144:1644 |
+| Pagination | 1페이지 예시의 이전 버튼 Disabled | 132:871 |
+| Empty State | Boolean 속성 `Show Button` | 724:14963 (`Show Button#1091:0`) |
+| Table | 예시 행 Hover · Pressed를 Component 변수 `table/data/background/*`로(F54) | 355:3739 예시 |
+| 규칙 문서 | "Design System Rules" 02–06장 추가(01장 다음, 같은 표 스타일) · "Design System Rules (계속)" 07–10장(같은 스타일, x 1020 · Variables 사용 가이드 아래) | 227:3774(02 1097:5009 · 03 1097:5110 · 04 1097:5204 · 05 1097:5312 · 06 1100:5009) · 1100:5082(07 1100:5398 · 08 1100:5492 · 09 1100:5579 · 10 1100:5645) |
+| Dev Mode 주석 | 컴포넌트 고유 동작 · 접근성 규칙 17개(Interaction · Accessibility · Development · Content 분류) | 1035:15648 · 179:6087 · 712:5106 · 698:4399 · 693:9776 · 558:26017 · 144:723 · 91:5927 · 149:1111 · 149:2838 · 95:4740 · 391:1988 · 503:23264 |
+
+남긴 것(Figma 반영 대기): Segmented 선택 항목 그림자(0 1 2 / 9%, 같은 값의 효과 스타일 없음 — 등록은 디자인 결정, F18), Table Textarea 유형 두 줄 예시(F58).
 
 ## 새로 발견한 오류 (승인 대상 — 변경하지 않음)
 
@@ -132,7 +155,7 @@ Table에는 안내 글자 전용 토큰이 없습니다 — 컴포넌트 계층 
 | A-1 | **대비 개선 — 텍스트** | **완료(2026-10-19)** — 상태 강조 색 6종 700, `text/tertiary` · `text/placeholder` gray/600, 비활성 라벨용 `text/inactive`(gray/400) 신설, EmptyState 위계 · Stepper 잠긴 설명 · MetricTrend Disabled 조정 | [accessibility.md](./accessibility.md) |
 | A-2 | **대비 개선 — 비텍스트 · 상태** | **완료(2026-10-19)** — 입력 칸 · Checkbox · Radio 테두리 `border/gray`(hover `gray-dark`), Switch 꺼짐 트랙 500 · 600 · 700, Secondary · Solid Hover brand/800 · Pressed brand/900(7.27 · 10.14:1) | [accessibility.md](./accessibility.md) |
 | A-3 | Table 안내 글자 전용 컴포넌트 토큰 | `colors/table/key-value/value/description` → `text/tertiary` 신설 | 표 편집 칸 안내 3노드 |
-| A-4 | `sm/leading-normal/underline` 줄 높이 140%(19.6px) | 다른 sm 스타일처럼 `font/line-height/leading-5`(20px)로 | Link md 높이 0.4px |
+| ~~A-4~~ | `sm/leading-normal/underline` 줄 높이 140%(19.6px) — **완료(2026-10-19)** | 다른 sm 스타일처럼 `font/line-height/leading-5`(20px)로 | Link md 높이 0.4px |
 | A-5 | placeholder `gray/400`(2.35:1) | **해결(A-1)** — 플레이스홀더 gray/600(5.89:1), 비활성 라벨은 `text/inactive`로 분리 | — |
 | D3 · D4 | R7 다중 선택 목록 · 간단 스타일 차트 지난 기간 색(F65-b) | [final-report](./final-report.md) 결정 목록 | — |
 

@@ -106,7 +106,7 @@ function SelectAll() {
         indeterminate={selected.length > 0 && !all}
         onChange={(e) => setSelected(e.target.checked ? options : [])}
       />
-      <CheckboxGroup aria-label="수신 채널" value={selected} onChange={setSelected} name="channel" size="md" style={{ gap: 8, paddingLeft: 22 }}>
+      <CheckboxGroup aria-label="수신 채널" value={selected} onChange={setSelected} name="channel" size="md" style={{ paddingLeft: 22 }}>
         {options.map((o) => (
           <Checkbox key={o} value={o} label={o} />
         ))}
@@ -144,10 +144,36 @@ export const Interaction: Story = {
   },
 };
 
+/** Design System Rules 08: items 8px apart when stacked; 16px apart in a row, 8px between wrapped rows (the group's own CSS — no `style`). */
+export const GroupSpacing: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 24 }}>
+      <CheckboxGroup aria-label="세로" name="spacing-v">
+        {['a', 'b', 'c'].map((v) => <Checkbox key={v} value={v} label={`체크 ${v}`} />)}
+      </CheckboxGroup>
+      <div style={{ width: 200 }}>
+        <CheckboxGroup aria-label="가로" orientation="horizontal" name="spacing-h">
+          {['a', 'b', 'c', 'd', 'e'].map((v) => <Checkbox key={v} value={v} label={`체크 ${v}`} />)}
+        </CheckboxGroup>
+      </div>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    const boxes = (name: string) =>
+      [...canvas.getByRole('group', { name }).children].map((c) => c.getBoundingClientRect());
+    const v = boxes('세로');
+    await expect(v.slice(1).map((r, i) => Math.round(r.top - v[i].bottom))).toEqual([8, 8]);
+    const h = boxes('가로');
+    await expect(Math.round(h[1].left - h[0].right)).toBe(16);
+    const wrapped = h.find((r) => r.top > h[0].bottom)!;
+    await expect(Math.round(wrapped.top - h[0].bottom)).toBe(8);
+  },
+};
+
 /** Native checkbox semantics: name from the label, disabled state, group role. */
 export const Accessibility: Story = {
   render: () => (
-    <CheckboxGroup aria-label="알림 설정" defaultValue={['news']} style={{ gap: 8 }}>
+    <CheckboxGroup aria-label="알림 설정" defaultValue={['news']}>
       <Checkbox value="news" label="소식 받기" />
       <Checkbox value="ads" label="광고 수신" disabled />
       <Checkbox value="hidden" aria-label="라벨 없는 체크박스" />

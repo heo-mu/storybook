@@ -39,12 +39,23 @@ Figma **Card** 프레임(185:6512)의 card_header(218:7173) · card_content · c
 | card_content | `CardContent` | 좌우 p-5 |
 | card_footer | `CardFooter` | 버튼이 너비를 채움 |
 
-## 코드 정책 (Figma에서 정해지지 않은 부분)
+## 정책
 
-- **그림자**: Figma는 원격 라이브러리 스타일(shadow-sm, 0 1 3 / 10%)을 씁니다. 로컬 토큰에 같은 값이 없어 가장 가까운
-  `elevation-1`(0 1 3 / 12%)을 씁니다(figma-issues F60 — 결정 필요).
-- **너비**: 부모 너비를 채웁니다(Figma 예시 320px).
-- **설명 길이**: 예시 문구는 "최대 2줄"이지만 자르기 설정이 없어 자르지 않습니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `CARD-01` **그림자**: 효과 스타일 `elevation-1`(0 1 3 / 12%). 2026-10-19 Figma Card 예시의 원격 그림자(shadow-sm)를 로컬 `elevation-1`로 바꿔 디자인과 코드가 같습니다(F60 해소).
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `CARD-02` **너비**: 부모 너비를 채웁니다. Figma의 320px은 예시 폭입니다(Rules 08).
+- `CARD-03` **설명 길이**: 줄바꿈하며 자르지 않습니다(예시 문구의 "최대 2줄"은 권장 길이, Rules 08).
 
 ## Props
 

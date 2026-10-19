@@ -61,13 +61,24 @@ Figma **Date Picker** 프레임(149:831)의 `date-picker_trigger`(21개) · `dat
 | 달력 | Enter · Space | 선택 후 닫기 |
 | 달력 | Esc | 닫기 |
 
-## 코드 정책 (Figma에 정의되지 않은 동작)
+## 정책
 
-- **직접 입력**: Figma Focus 상태가 있는 텍스트 필드이므로 직접 입력을 지원합니다. 해석할 수 없는 날짜(2026.02.30 등)나
-  범위 밖 날짜는 값을 바꾸지 않고 Error 상태로 표시합니다.
-- **달력 위치**: Figma 예시(Calendar Container)대로 필드 아래 4px, 필드 왼쪽에 맞춤. 공간이 없으면 위로 열립니다.
-- **요일 이름**: Figma는 영어 자리표시(Su Mo …)이지만 월 이름은 한국어(2026년 7월)여서, 둘 다 로캘을 따르도록 했습니다(ko-KR: 일 월 …).
-- **포커스 표시**: Figma에 없어 날짜 · 달력 버튼에 브라우저 기본 포커스 링을 사용합니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `DPCK-03` **요일 이름**: 로캘을 따릅니다(ko-KR: 일 월 화 …). 2026-10-19 Figma 달력 요일도 한국어로 바뀌어 같습니다.
+- `DPCK-04` **포커스**: 날짜 · 이전/다음 달 · 달력 버튼은 키보드 포커스일 때 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — date-picker_day · date-picker_navigation). 입력 칸은 Figma State=Focus 테두리입니다.
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `DPCK-01` **직접 입력**: 지원합니다. 해석할 수 없는 날짜(2026.02.30 등)나 범위 밖 날짜는 값을 바꾸지 않고 Error 상태로 표시합니다(Rules 04 · date-picker_trigger 주석).
+- `DPCK-02` **달력 위치**: 필드 아래 4px, 필드 왼쪽에 맞춤. 공간이 없으면 위로 열립니다(Rules 05).
 
 ## 상태
 

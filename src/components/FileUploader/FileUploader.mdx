@@ -56,13 +56,31 @@ const [files, setFiles] = useState<Upload[]>([]);
 
 Figma의 "Show Button" 속성은 어떤 레이어에도 연결되어 있지 않아 구현하지 않았습니다(figma-issues F26).
 
-## 코드 정책 (Figma에 정의되지 않은 동작)
+## 정책
 
-- **드롭 영역 = 버튼**: 클릭 · Enter · Space로 파일 선택 창을 엽니다. 도움말 텍스트가 버튼 설명(`aria-describedby`)입니다.
-- **드롭 필터**: 드롭한 파일도 `accept`(확장자 · MIME · `image/*`)로 거르고, `multiple`이 아니면 첫 파일만 전달합니다.
-- **항목 버튼 설명**: "삭제" · "다운로드" 버튼은 파일 이름을 설명으로 가집니다(목록에서 구분).
-- **스피너 회전**: Figma에 모션 정의가 없어 1초에 한 바퀴, `prefers-reduced-motion`에서는 3초에 한 바퀴.
-- **점선 테두리**: SVG로 6 / 4 대시를 그립니다. Figma는 대시를 변마다 맞춰 그려 모서리 근처 대시 위치가 최대 3px 다릅니다(수동 검토).
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `FILE-06` **포커스**: 드롭 영역은 키보드 포커스일 때 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — file-uploader).
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `FILE-01` **드롭 영역 = 버튼**: 클릭 · Enter · Space로 파일 선택 창을 엽니다. 도움말 텍스트가 버튼 설명(`aria-describedby`)입니다(Rules 04).
+- `FILE-02` **드롭 필터**: 드롭한 파일도 `accept`(확장자 · MIME · `image/*`)로 거르고, `multiple`이 아니면 첫 파일만 전달합니다(Rules 07).
+- `FILE-03` **항목 버튼 설명**: "삭제" · "다운로드" 버튼은 파일 이름을 설명으로 가집니다(목록에서 구분, Rules 03).
+- `FILE-04` **스피너 회전**: 1초에 한 바퀴, `prefers-reduced-motion`에서는 3초에 한 바퀴(Rules 09).
+
+### 개발 구현 세부 사항
+
+디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
+
+- `FILE-05` **점선 테두리**: SVG로 6 / 4 대시를 그립니다. Figma는 대시를 변마다 맞춰 그려 모서리 근처 대시 위치가 최대 3px 다릅니다(수동 검토).
 
 ## 상태
 

@@ -356,7 +356,7 @@ Groups `Checkbox`es that have a `value` (role="group") and manages the selected 
 | `disabled` | `boolean` |  | Disables every checkbox in the group. |
 | `name` | `string` |  | `name` given to every checkbox in the group (form submission). |
 | `onChange` | `((value: string[]) => void)` |  | Called with the new list of selected values. |
-| `orientation` | `"horizontal" \| "vertical"` | `vertical` | Stacking direction. Figma defines no spacing between items — pass a gap via `style` / `className`. |
+| `orientation` | `"horizontal" \| "vertical"` | `vertical` | Stacking direction — items are 8px apart (16px in a row), Design System Rules 08. |
 | `size` | `"sm" \| "md" \| "lg"` |  | Size applied to every checkbox that does not set its own. |
 | `value` | `string[]` |  | Selected values (controlled). |
 
@@ -936,7 +936,7 @@ Groups `Radio`s (role="radiogroup") and manages the selected value. Not a Figma 
 | `disabled` | `boolean` |  | Disables every radio in the group. |
 | `name` | `string` | `generated` | `name` of the radios (form submission and arrow-key grouping). |
 | `onChange` | `((value: string) => void)` |  | Called with the newly selected value. |
-| `orientation` | `"horizontal" \| "vertical"` | `vertical` | Stacking direction. Figma defines no spacing between items — pass a gap via `style` / `className`. |
+| `orientation` | `"horizontal" \| "vertical"` | `vertical` | Stacking direction — items are 8px apart (16px in a row), Design System Rules 08. |
 | `required` | `boolean` |  | Marks the choice as required (native validation). |
 | `size` | `"sm" \| "md" \| "lg"` |  | Size applied to every radio that does not set its own. |
 | `value` | `string \| null` |  | Selected value (controlled); `null` = nothing selected. |
@@ -1404,7 +1404,7 @@ Shows queued toasts (react-aria-components Toast — UNSTABLE in 1.22, wrapped h
 | `aria-label` | `string` | `알림` | Accessible name of the region. |
 | `className` | `string` |  |  |
 | `closeLabel` | `string` | `알림 닫기` | Accessible name of the close buttons. |
-| `queue` | `ToastQueue<ToastContent>` | `new ToastQueue<ToastContent>({ maxVisibleToasts: 5 })` | Queue to show. |
+| `queue` | `ToastQueue<ToastContent>` | `new ToastQueue<ToastContent>({ maxVisibleToasts: 3 })` | Queue to show. |
 
 - 함수: `showToast`, `closeToast`
 - 타입: `ToastProps`, `ToastRegionProps`, `ToastContent`
@@ -1425,7 +1425,7 @@ Figma component set `tooltip` (149:1111): a short label shown on hover and keybo
 | `className` | `string` |  | Class of the tooltip bubble. |
 | `closeDelay` | `number` | `500` | Delay before hiding, in ms. |
 | `defaultOpen` | `boolean` |  | Initial open state (uncontrolled). |
-| `delay` | `number` | `1500` | Hover delay before showing, in ms (react-aria default). |
+| `delay` | `number` | `500` | Hover delay before showing, in ms (keyboard focus shows it at once) — Design System Rules 05. |
 | `disabled` | `boolean` |  | Disables the tooltip. |
 | `onOpenChange` | `((open: boolean) => void)` |  | Called when the tooltip opens or closes. |
 | `open` | `boolean` |  | Open state (controlled). |

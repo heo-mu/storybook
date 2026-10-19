@@ -46,7 +46,7 @@ platform-design-system/
 │     ├─ <Name>.css                # 스타일 (토큰만 사용, 머리 주석에 Figma 값 기록)
 │     ├─ <Name>.options.ts         # Figma Variant 값 배열 · 유니온 타입 (예: BUTTON_SIZES)
 │     ├─ <Name>.stories.tsx        # 사용 예 스토리 — Storybook MCP 매니페스트에 포함
-│     ├─ <Name>.mdx                # Usage 문서 (Figma → Props 표, 코드 정책, 접근성)
+│     ├─ <Name>.mdx                # Usage 문서 (Figma → Props 표, 정책, 접근성)
 │     ├─ stories/<Name>.showcase.stories.tsx   # Figma 검증 · 테스트 스토리 (`!manifest`)
 │     └─ index.ts
 ├─ figma-pending/                  # Figma 등록 대기 토큰(결정된 값, 스냅샷 · 체크섬 밖) — 5절
@@ -151,7 +151,7 @@ npm run build-storybook    # storybook-static/ — 정적 사이트 (서버 배�
 | 사이드바 | 내용 |
 | --- | --- |
 | `Foundations/Design Tokens` | 전체 토큰 목록 |
-| `Components/<Name>/Usage` | 사용 가이드: 예제 코드, Figma → Props 표, 코드 정책(Figma에 없는 부분), 접근성 |
+| `Components/<Name>/Usage` | 사용 가이드: 예제 코드, Figma → Props 표, 정책(Figma 정의 · Figma 문서화 · 개발 구현 세부 · Figma 반영 대기 — [code-policy-audit.md](./code-policy-audit.md)), 접근성 |
 | `Components/<Name>/<Component>` | Props 표(Docs), Playground, 사용 예 스토리 |
 | `Components/<Name>/Showcase` | Figma 변형 매트릭스 · 상태 · 상호작용 · 접근성 테스트 스토리(검증용, MCP 매니페스트 제외) |
 

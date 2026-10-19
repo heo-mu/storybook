@@ -2,6 +2,29 @@
 
 각 컴포넌트의 시맨틱 · 키보드 · ARIA 구현과 자동 검사(Storybook a11y = axe-core, Storybook MCP `test-run`) 결과입니다.
 
+## 포커스 표시 — Figma 정의 (WCAG 2.4.7 · 2.4.11 · 1.4.11, 2026-10-19)
+
+키보드 포커스(`:focus-visible`)는 Figma **Design System Rules 02**와 컴포넌트 속성 `Focus`(24개 세트, 숨김 링 레이어)로 정의되어 있고, 코드는 그 값을 씁니다.
+링 색 `colors/border/focus`(brand/700 #007c56)는 흰 배경(#fdfdfd) 위 5.14:1, 회색 배경(#eff0f3) 위 4.59:1로 비텍스트 기준 3:1을 넘습니다.
+마우스 클릭에는 그리지 않습니다. 모든 컴포넌트에 같은 모양을 쓰지 않고, 컴포넌트 형태에 맞춘 네 가지를 씁니다.
+
+| 형태 | 표시 | 컴포넌트 |
+| --- | --- | --- |
+| 바깥 링 | 2px 선, 컨트롤 바깥 2px 간격, 모서리 = 컨트롤 모서리 + 4px | Button 3종 · Checkbox · Radio · Switch(상자 · 원 · 트랙만) · Chip 3종 · Link · Tabs(탭 · 패널) · Pagination · Segmented · Slider 손잡이 · File Uploader · Breadcrumb · 달력 날짜 · 이동 · 입력 칸 안 버튼 · Toast 닫기 · 차트 그림 영역 |
+| 안쪽 링 | 2px 선, 행 가장자리 안쪽 — 폭을 채우는 행이 이웃 · 부모에 가려지지 않게 | Navigation 항목 · Accordion 트리거 · Table 행 · 칸 · 열 머리글 |
+| 테두리 | 링 대신 테두리 `border/gray-darker`(Figma State=Focus), Error와 겹치면 Error 테두리 유지 | Input · Textarea · Search Field · Date Picker · Select |
+| Hover 모양 | 목록 안에서 키보드로 이동 중인 항목 — 선택 표시가 우선 | Select 옵션 · Dropdown 메뉴 항목 |
+
+확인: 스토리 `Foundations/Focus`(Keyboard — Tab 이동 중 링 두께 · 색 · 간격 검사), Chromium · Firefox · WebKit에서 17개 컴포넌트의 실제 키보드 포커스 측정,
+Figma 링 레이어와 DOM 링의 화면 비교(2026-10-19).
+
+## 시간 · 움직임 · 오버레이 (WCAG 2.2.1 · 2.3.3 · 1.4.13, 2026-10-19)
+
+- **Toast**(Rules 06): 오류 토스트는 닫을 때까지 남고, 안내 · 성공은 5초 이상 · 마우스를 올리거나 포커스가 있는 동안 멈춥니다. 최대 3개, 같은 문구는 겹치지 않습니다.
+- **Tooltip**(Rules 05): 마우스 0.5초, 키보드 포커스는 즉시. Esc로 닫힙니다.
+- **Dialog**(Rules 05): 모달 덮개(검정 50%)로 뒤 화면 조작을 막고, 포커스를 대화상자 안에 가두며 닫히면 연 요소로 돌려보냅니다.
+- **모션**(Rules 09): 상태 전환은 즉시, 반복 모션(스피너)은 `prefers-reduced-motion`에서 1초 → 3초/바퀴.
+
 ## 색 대비 — 해결 (A-1 · A-2, 2026-10-19)
 
 Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). 모두 기존 팔레트 안에서 고른 색이고, 기준을 낮추거나 경고를 숨기지 않았습니다.
@@ -72,7 +95,7 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 ### Button · IconButton · TextButton
 - 네이티브 `<button>`, 기본 `type="button"`. Disabled = `disabled`.
 - IconButton은 `aria-label` 필수(Figma의 숨겨진 Label). 아이콘은 `aria-hidden`.
-- Focus: Figma에 정의 없음 → 브라우저 기본 포커스 링 유지.
+- Focus: Figma 속성 `Focus` — 바깥 2px 링(위 [포커스 표시](#포커스-표시--figma-정의-wcag-247--2411--1411-2026-10-19)).
 - 자동 검사: 위반 0.
 
 ### Input · Textarea · Search Field
@@ -90,7 +113,8 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 - 루트가 `<label>`이라 라벨 텍스트가 접근 가능한 이름이 됩니다. 라벨이 없으면 `aria-label` 필요.
 - 키보드: Space로 전환, Radio는 같은 그룹 안에서 방향키로 이동 · 선택.
 - `CheckboxGroup`은 `role="group"`, `RadioGroup`은 `role="radiogroup"`(+ `aria-required` / `aria-disabled`) — `aria-label` 또는 `aria-labelledby`로 이름 지정.
-- Focus: Figma 정의 없음 → 입력 요소 자체의 브라우저 기본 포커스 링.
+- Focus: Figma 속성 `Focus` — 상자 · 원 · 트랙 바깥 2px 링(라벨 제외).
+- 그룹 간격: 세로 8px · 가로 16px(Design System Rules 08).
 
 ### Select
 - react-aria-components의 버튼 + 리스트박스 팝업 패턴: 트리거 `<button aria-haspopup="listbox" aria-expanded>`, 목록 `role="listbox"`, 항목 `role="option"` + `aria-selected` / `aria-disabled`.
@@ -103,11 +127,11 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
   (화살표 · Page Up/Down · Home · End)를 지원합니다. Figma에 보이는 라벨이 없어 `aria-label` / `aria-labelledby`가 필요합니다.
 - 숫자 필드는 `Input`(이름 `inputLabel`, 기본 "값 입력"), Enter · 포커스 이동 시 확정, ↑ · ↓로 한 단계 이동.
 - 값 라벨 · 범위 라벨은 시각 정보이므로 `aria-hidden`(값은 range input이 전달).
-- Focus: 핸들에 브라우저 기본 포커스 링 + 값 라벨 표시.
+- Focus: 손잡이에 2px 링(Figma 속성 `Focus`) + 값 라벨 표시.
 
 ### Segmented Control
 - `role="radiogroup"` + 시각적으로 숨긴 네이티브 라디오 — 방향키 이동(비활성 항목 건너뜀), 폼 전송.
-- Focus: 선택된 세그먼트에 브라우저 기본 포커스 링.
+- Focus: 선택된 세그먼트 바깥 2px 링(Figma 속성 `Focus`).
 
 ### Chip · InputChip · FilterChip
 - Chip: `<button aria-pressed>`(켜짐 / 꺼짐). 여러 개를 묶을 때는 사용처에서 `role="group"` + 이름.
@@ -201,10 +225,10 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 ### Chart
 - `<figure>`(이름 = `aria-label`). 그림(SVG) · 눈금 글자 · 범례 · 툴팁은 보조 기술에서 숨기고, 모든 값을 숨긴 표(`<table>` — 캡션 =
   `aria-label`, 열 머리 = 카테고리, 행 머리 = 계열 이름)로 제공합니다. 축 이름은 일반 글자로 읽힙니다.
-- 기본 스타일의 그림 영역은 Tab으로 초점(`role="group"`, 이름 "차트 항목: 화살표 키로 값 확인", 브라우저 기본 포커스 링 — Figma에 Focus 없음).
+- 기본 스타일의 그림 영역은 Tab으로 초점(`role="group"`, 이름 "차트 항목: 화살표 키로 값 확인", 바깥 2px 포커스 링 — Design System Rules 02, 차트에는 Figma 속성 없음).
   ←/→/↑/↓로 항목 이동, Home · End, Esc로 닫기. 이동한 항목의 값("104동: 조회 기간 305, 이전 기간 314")을 `aria-live="polite"`로 알립니다.
 - 포인터 호버의 툴팁은 같은 값을 보여 주는 시각 보조입니다(낭독기는 표 · 알림으로 접근). 간단 스타일은 툴팁이 없어 초점을 받지 않습니다.
-- 색만으로 계열을 구분하지 않도록 범례 · 툴팁에 계열 이름이 함께 나옵니다. 툴팁 제목 `text/tertiary`(#778191)는 알려진 토큰 대비 항목.
+- 색만으로 계열을 구분하지 않도록 범례 · 툴팁에 계열 이름이 함께 나옵니다. 툴팁 제목 `text/tertiary`는 A-1 이후 #596475(5.89:1).
 
 ### Skeleton · Data State
 - Skeleton은 장식(`aria-hidden`). DataState는 `role="status"`(상태가 바뀌면 정중하게 읽음), Loading은 `aria-busy="true"`와 문구
@@ -224,4 +248,4 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 - react-aria-components menu: 트리거 `aria-haspopup="menu"` · `aria-expanded`, 패널 `role="menu"`, 항목 `menuitem`,
   `DropdownMenuSection title`은 `group`의 이름, 구분선 `separator`. 비활성 항목 `aria-disabled`.
 - Enter · Space · ↓ / ↑로 열면 첫 / 마지막 항목에 포커스, 방향키 · Home · End · 글자 입력으로 이동, Esc로 닫고 트리거로 복귀.
-- 키보드 포커스는 Figma Hover 모양으로 표시합니다(Figma에 Focus 상태 없음).
+- 키보드 포커스는 Hover 모양으로 표시합니다(Design System Rules 02 — 목록 항목 포커스).

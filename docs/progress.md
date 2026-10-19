@@ -9,6 +9,9 @@
 ③ 동작 정책 코드 반영(그룹 간격 · Toast · Tooltip 지연) → ④ Figma "Design System Rules"(227:3774) 02–10장 + 컴포넌트 주석 → ⑤ Storybook 문서 재분류 → ⑥ 전체 회귀.
 재개 방법: `git log --oneline checkpoint/pre-policy-pass..`로 끝난 그룹 확인, `docs/code-policy-audit.md`의 상태 열이 "진행 전"인 항목부터. Figma 쓰기 전 체크섬 · 세트 지문 재조회.
 
+진행: ①–③ 완료(6b38274 · c1e78df). ④ Figma Rules 02–10장(227:3774 · 계속 1100:5082) · 주석 17개(13개 세트) · 대시보드 그림자 효과 스타일 연결 — 완료.
+⑤ Usage MDX 37개 "정책" 절 재분류, `docs/code-policy-audit.md`(152항목), triage · issues · fix-requests · accessibility · CHANGELOG · breaking-changes, Select Focus 3변형 검증 추가 — 완료. ⑥ 전체 회귀 — 진행.
+
 ## 작업 방식 (모든 컴포넌트 공통)
 
 1. Figma 분석 — `figma/scripts/analyze-set.figma.js`를 `use_figma`로 실행(SET_ID 교체, 읽기 전용).

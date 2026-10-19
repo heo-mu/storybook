@@ -49,7 +49,7 @@ export const Confirm: Story = {
   args: { role: 'alertdialog', title: '파일을 삭제할까요?', description: '삭제한 파일은 되돌릴 수 없습니다.', trigger: <Button>삭제</Button> },
 };
 
-/** Content between the header and the buttons (code policy — not in the Figma component). */
+/** Content between the header and the buttons (Design System Rules 08: the same m-8 gap — not a part of the Figma component). */
 export const WithContent: Story = {
   args: { children: <p style={{ margin: 0, textAlign: 'center' }}>추가 안내 내용</p> },
 };

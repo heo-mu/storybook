@@ -94,7 +94,24 @@ Props · 사용법은 그대로이고 색만 바뀝니다. 비교: Storybook **C
 
 - **Hover / Pressed**는 별도 Prop이 아니라 실제 포인터 상태(`:hover`, `:active`)로 표현됩니다.
 - **Disabled**는 네이티브 `disabled` 속성입니다. Outline의 Disabled는 Figma와 동일하게 테두리가 없습니다.
-- **Focus**: Figma Button에는 Focus 상태가 정의되어 있지 않습니다. 임의 스타일을 만들지 않고 브라우저 기본 포커스 표시를 유지합니다.
+- **Focus**: 키보드 포커스일 때 2px 포커스 링 — Figma 속성 `Focus`(아래 [정책](#정책)).
+
+## 정책
+
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `BUTT-01` **포커스**: 키보드 포커스(`:focus-visible`)일 때 버튼 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — button_basic · button_icon · button_text). 모서리는 버튼 모서리 + 4px.
+
+### 개발 구현 세부 사항
+
+디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
+
+- `BUTT-02` **상태 표현**: Hover · Pressed는 실제 포인터 상태(`:hover`, `:active`), Disabled는 네이티브 `disabled`(Tab 순서에서 빠짐).
 
 ## 아이콘
 

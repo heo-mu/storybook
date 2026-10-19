@@ -191,7 +191,8 @@ Text Style은 클래스 또는 변수로 씁니다.
 
 - **Hover / Pressed**: 실제 포인터 상태(`:hover`, `:active`)로 표현됩니다. 별도 Prop은 없습니다.
 - **Disabled**: `disabled` Prop. 클릭 이벤트가 발생하지 않습니다.
-- **Focus**: Figma에 정의가 없어 브라우저 기본 포커스 표시를 유지합니다. 전역 CSS에서 `outline: none`으로 지우지 마세요.
+- **Focus**: 키보드 포커스일 때 2px `colors/border/focus` 링(Figma 속성 `Focus`, Design System Rules 02). 전역 CSS에서 `outline: none`으로 지우지 마세요.
+- **정책**: 각 컴포넌트 Usage 문서의 "정책" 절(Figma 정의 · Figma 문서화 · 개발 구현 · Figma 반영 대기)과 [code-policy-audit.md](./code-policy-audit.md).
 
 ## 9. 문제 해결
 

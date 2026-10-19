@@ -53,12 +53,23 @@ Figma **Chip** 프레임(180:11829)의 세 세트를 용도별 컴포넌트로 �
 | State Hover · Pressed | 브라우저 `:hover` · `:active` | |
 | State Disabled | `disabled` | |
 
-## 코드 정책 (Figma에 정의되지 않은 동작)
+## 정책
 
-- **InputChip 삭제 대상**: Figma의 X 아이콘(12px)만 누르는 대신 칩 전체가 삭제 버튼입니다(터치 대상 크기 확보).
-  키보드는 Enter · Space · Delete · Backspace로 삭제합니다.
-- **포커스 표시**: Figma에 Focus 상태가 없어 브라우저 기본 포커스 링을 유지합니다.
-- **Chip 그룹**: Figma에 그룹 컴포넌트 · 간격이 없어 사용처에서 `role="group"`과 간격을 지정합니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `CHIP-02` **포커스**: 키보드 포커스(`:focus-visible`)일 때 칩 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — chip-multi · chip-input · chip-filter).
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `CHIP-01` **InputChip 삭제 대상**: X 아이콘(12px)만이 아니라 칩 전체가 삭제 버튼입니다(터치 대상 크기 확보). 키보드는 Enter · Space · Delete · Backspace(Rules 04 · chip-input 주석).
+- `CHIP-03` **Chip 그룹**: 칩 사이 8px(`spacing/margin/m-2`), 줄바꿈 시 같은 간격(Rules 08). 그룹 컴포넌트는 없으므로 사용처에서 `role="group"`(이름 포함)과 `gap: var(--spacing-margin-m-2)`를 지정합니다.
 
 ## 상태
 

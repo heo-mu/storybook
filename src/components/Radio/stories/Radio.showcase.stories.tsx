@@ -45,12 +45,12 @@ export const Overview: Story = {
         ))}
       </StorySection>
       <StorySection title="RadioGroup (vertical · horizontal)">
-        <RadioGroup aria-label="결제 수단" defaultValue="card" size="md" style={{ gap: 8 }}>
+        <RadioGroup aria-label="결제 수단" defaultValue="card" size="md">
           <Radio value="card" label="카드" />
           <Radio value="bank" label="계좌이체" />
           <Radio value="phone" label="휴대폰" disabled />
         </RadioGroup>
-        <RadioGroup aria-label="기간" defaultValue="7d" orientation="horizontal" size="md" style={{ gap: 16 }}>
+        <RadioGroup aria-label="기간" defaultValue="7d" orientation="horizontal" size="md">
           <Radio value="7d" label="7일" />
           <Radio value="30d" label="30일" />
           <Radio value="90d" label="90일" />
@@ -100,7 +100,7 @@ function Controlled() {
   const [value, setValue] = useState<string | null>(null);
   return (
     <div style={{ display: 'grid', gap: 12 }}>
-      <RadioGroup aria-label="배송 방법" value={value} onChange={setValue} size="md" style={{ gap: 8 }}>
+      <RadioGroup aria-label="배송 방법" value={value} onChange={setValue} size="md">
         <Radio value="normal" label="일반 배송" />
         <Radio value="express" label="빠른 배송" />
         <Radio value="pickup" label="매장 수령" />
@@ -131,10 +131,36 @@ export const Interaction: Story = {
   },
 };
 
+/** Design System Rules 08: items 8px apart when stacked; 16px apart in a row, 8px between wrapped rows (the group's own CSS — no `style`). */
+export const GroupSpacing: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 24 }}>
+      <RadioGroup aria-label="세로" name="spacing-v" defaultValue="a">
+        {['a', 'b', 'c'].map((v) => <Radio key={v} value={v} label={`라디오 ${v}`} />)}
+      </RadioGroup>
+      <div style={{ width: 200 }}>
+        <RadioGroup aria-label="가로" orientation="horizontal" name="spacing-h" defaultValue="a">
+          {['a', 'b', 'c', 'd', 'e'].map((v) => <Radio key={v} value={v} label={`라디오 ${v}`} />)}
+        </RadioGroup>
+      </div>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    const boxes = (name: string) =>
+      [...canvas.getByRole('radiogroup', { name }).children].map((c) => c.getBoundingClientRect());
+    const v = boxes('세로');
+    await expect(v.slice(1).map((r, i) => Math.round(r.top - v[i].bottom))).toEqual([8, 8]);
+    const h = boxes('가로');
+    await expect(Math.round(h[1].left - h[0].right)).toBe(16);
+    const wrapped = h.find((r) => r.top > h[0].bottom)!;
+    await expect(Math.round(wrapped.top - h[0].bottom)).toBe(8);
+  },
+};
+
 /** radiogroup role with an accessible name; radios share one generated name. */
 export const Accessibility: Story = {
   render: () => (
-    <RadioGroup aria-label="공개 범위" defaultValue="team" required style={{ gap: 8 }}>
+    <RadioGroup aria-label="공개 범위" defaultValue="team" required>
       <Radio value="all" label="전체 공개" />
       <Radio value="team" label="팀 공개" />
       <Radio value="me" label="나만 보기" disabled />

@@ -61,10 +61,10 @@ export const WithoutLabel: Story = {
   args: { label: undefined, 'aria-label': '행 선택' },
 };
 
-/** `CheckboxGroup` manages the selected values; item spacing is not defined in Figma, so it is set with `style`. */
+/** `CheckboxGroup` manages the selected values; items are 8px apart (Design System Rules 08). */
 export const Group: Story = {
   render: (args) => (
-    <CheckboxGroup aria-label="관심 분야" defaultValue={['design']} name="interest" size={args.size} style={{ gap: 8 }}>
+    <CheckboxGroup aria-label="관심 분야" defaultValue={['design']} name="interest" size={args.size}>
       <Checkbox value="design" label="디자인" />
       <Checkbox value="dev" label="개발" />
       <Checkbox value="data" label="데이터" disabled />

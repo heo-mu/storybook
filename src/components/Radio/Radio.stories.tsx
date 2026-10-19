@@ -53,10 +53,10 @@ export const Disabled: Story = {
   args: { disabled: true, defaultChecked: true },
 };
 
-/** `RadioGroup` manages the value; item spacing is not defined in Figma, so it is set with `style`. */
+/** `RadioGroup` manages the value; items are 8px apart, 16px in a row (Design System Rules 08). */
 export const Group: Story = {
   render: (args) => (
-    <RadioGroup aria-label="정렬" defaultValue="recent" size={args.size} style={{ gap: 8 }}>
+    <RadioGroup aria-label="정렬" defaultValue="recent" size={args.size}>
       <Radio value="recent" label="최신순" />
       <Radio value="popular" label="인기순" />
       <Radio value="name" label="이름순" />
@@ -66,7 +66,7 @@ export const Group: Story = {
 
 export const HorizontalGroup: Story = {
   render: (args) => (
-    <RadioGroup aria-label="기간" defaultValue="7d" orientation="horizontal" size={args.size} style={{ gap: 16 }}>
+    <RadioGroup aria-label="기간" defaultValue="7d" orientation="horizontal" size={args.size}>
       <Radio value="7d" label="7일" />
       <Radio value="30d" label="30일" />
       <Radio value="90d" label="90일" />

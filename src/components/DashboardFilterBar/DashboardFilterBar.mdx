@@ -39,13 +39,25 @@ Figma **dashboard-filter-bar**(698:4163)를 구현했습니다. 대시보드의 
 | 날짜 ~ 날짜 | `DashboardFilterRange from to` | "~" `text/tertiary`, `m-2` 간격 |
 | 오른쪽 버튼 | `actions` | `p-3` 간격 |
 
-## 코드 정책 (Figma에서 정해지지 않은 부분)
+## 정책
 
-- **좁은 화면**: 그룹이 다음 줄로 넘어갑니다(줄 간격도 `m-6`). Figma는 1616px 한 줄만 있습니다.
-- **원격 변수**: padding · 모서리 · 배경이 원격 라이브러리 변수입니다(F69) — 같은 값 `p-4`, 모서리 12px, `colors/surface/page`.
-- **초기화 버튼**: Figma 예시대로 `IconButton variant="secondary" appearance="solid"`(2026-10-19 F31 동기화로 추가된 변형)입니다.
-- **접근성**: 바는 `role="search"` 랜드마크(`aria-label`, 기본 "조회 조건"), 그룹은 라벨로 이름 붙은 `role="group"`. 각 컨트롤에도
-  `aria-label`을 주세요(Figma 컨트롤에는 보이는 라벨이 없음). "|" · "~"는 장식입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `DFBR-02` **padding · 배경 · 모서리**: 2026-10-19 Figma가 원격 변수(`padding/6`, `color/background/white`) 대신 로컬 `p-4` · `colors/surface/page`에 연결되어 코드와 같습니다. 모서리는 `border-radius/rounded-[12px]`(F69).
+- `DFBR-04` **그림자**: 효과 스타일 `elevation-3`(0 1 8 / 12%). 2026-10-19 Figma에서도 같은 값의 효과 스타일로 연결했습니다.
+- `DFBR-03` **초기화 버튼**: Figma 예시대로 `IconButton variant="secondary" appearance="solid"`(2026-10-19 F31 동기화로 추가된 변형).
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `DFBR-01` **좁은 화면**: 그룹 단위로 다음 줄로 넘어갑니다(줄 간격도 `m-6`). Figma는 1616px 한 줄만 있습니다(Rules 08).
+- `DFBR-05` **접근성**: 바는 `role="search"` 랜드마크(`aria-label`, 기본 "조회 조건"), 그룹은 라벨로 이름 붙은 `role="group"`. 각 컨트롤에도 `aria-label`을 주세요(Figma 컨트롤에는 보이는 라벨이 없음). "|" · "~"는 장식입니다(Rules 03).
 
 ## Props
 

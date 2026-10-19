@@ -37,6 +37,17 @@ Figma **Search Field** 프레임(216:6742)의 `search-field` 세트(36개)를 �
 - 지우기 버튼(X)은 Figma처럼 Focus · Error 상태에서 보입니다(마우스용, `tabIndex=-1`). 누르면 값을 비우고 `onClear`를 호출하며 포커스를 유지합니다.
 - Solid 타입의 Error는 Figma에 테두리가 없습니다(글자색만 변경) — [figma-issues](../../../docs/figma-issues.md) 참고.
 
+## 정책
+
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `SEAR-01` **지우기 버튼**: Focus · Error 상태에서 보이고 Tab 순서에서 제외됩니다(Input과 같은 규칙). Enter로 `onSearch`가 호출됩니다(Rules 04).
+
 ## 상태
 
 <Canvas of={Showcase.States} />

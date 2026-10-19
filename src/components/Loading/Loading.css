@@ -84,7 +84,7 @@
   }
 }
 
-/* Motion is not defined in Figma: one turn per second (code policy); slower with reduced motion. */
+/* Motion — Design System Rules 09: one turn per second; one turn in three seconds with reduced motion. */
 @keyframes ds-loading-spin {
   to {
     transform: rotate(1turn);

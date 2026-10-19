@@ -2,7 +2,7 @@
  * Shared layout for Checkbox (99:2389), Radio (102:2677) and Switch (107:409):
  *   root (horizontal auto-layout, gap spacing/margin/m-1_5, items centred) → control → Label.
  * The control is the native <input> itself (appearance: none) so it keeps native semantics, form
- * participation and the browser focus ring; decorations (check icon, radio dot, switch thumb) are
+ * participation; its keyboard focus ring follows Design System Rules 02 (below); decorations (check icon, radio dot, switch thumb) are
  * absolutely positioned siblings that follow it.
  */
 
@@ -66,9 +66,8 @@
   }
 }
 
-/* Checkbox / Radio group — semantic wrapper only. Figma defines no group spacing, so items are laid
- * out without a gap; set one with `className` / `style` (docs/figma-issues.md F3). */
-/* Group spacing (Design System Rules 08): 8px between stacked items, 16px between items in a row (8px between rows). */
+/* Checkbox / Radio group. Group spacing (Design System Rules 08): 8px between stacked items, 16px between items in a
+ * row (8px between rows). Single-class specificity (:where) so a `className` / `style` gap still overrides it. */
 .ds-choice-group {
   display: flex;
   flex-direction: column;
@@ -77,7 +76,7 @@
   min-width: 0;
 }
 
-.ds-choice-group[data-orientation='horizontal'] {
+.ds-choice-group:where([data-orientation='horizontal']) {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;

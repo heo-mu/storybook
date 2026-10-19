@@ -36,12 +36,24 @@ Figma **data-state**(698:4359, 6개 변형)를 구현했습니다. 데이터 영
 
 `title` · `description` · `actionLabel`로 바꿀 수 있고, `description={null}`은 설명을 숨깁니다.
 
-## 코드 정책 (Figma에서 정해지지 않은 부분)
+## 정책
 
-- **버튼**: `onAction`(또는 `action`)이 있을 때만 그립니다 — 동작 없는 버튼을 두지 않습니다.
-- **Partial 설명**: Figma 기본 문구에 실제 수치("130대 중 128대")가 들어 있어 기본값으로 쓰지 않습니다.
-- **접근성**: 상태가 바뀌면 읽어 주도록 `role="status"`(Loading은 `aria-busy`)입니다. 스켈레톤 · 아이콘은 장식입니다.
-- **배경 · 너비**: 원격 `color/background/white` 대신 `colors/surface/page`(F69), 부모 너비를 채웁니다(Figma 460px).
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `DSTA-04` **배경 · 너비**: 2026-10-19 Figma 배경이 원격 `color/background/white` 대신 `colors/surface/page`에 연결되어 코드와 같습니다(F69). 폭은 부모를 채웁니다(Figma 460px은 예시, Rules 08).
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `DSTA-01` **버튼**: `onAction`(또는 `action`)이 있을 때만 그립니다 — 할 일이 없으면 버튼을 두지 않습니다(Rules 07).
+- `DSTA-02` **Partial 설명**: Figma 기본 문구에 실제 수치("130대 중 128대")가 있어 기본값으로 쓰지 않습니다. 사용처의 실제 수치로 쓰세요(Rules 07).
+- `DSTA-03` **접근성**: 상태가 바뀌면 읽어 주도록 `role="status"`(Loading은 `aria-busy`)입니다. 스켈레톤 · 아이콘은 장식입니다(Rules 03 · 06).
 
 ## Props
 

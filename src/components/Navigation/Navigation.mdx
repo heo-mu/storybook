@@ -38,12 +38,30 @@ parent는 펼침(Expanded), link와 child는 현재 위치(Selected)를 표시�
 | Menu Text | `children` / `label` | 긴 이름은 줄바꿈 |
 | LNB 예시 로고 영역 | `Navigation header` | 메뉴 위 m-4 |
 
-## 코드 정책 (Figma에 정의되지 않은 부분)
+## 정책
 
-- **너비**: 항목은 컨테이너 너비를 채웁니다. Figma 예시의 LNB는 240px(항목 200px + 좌우 p-5)이며 레이아웃에서 지정합니다.
-- **하위 목록 선**: Figma는 1px 선을 반 픽셀 위치(x 15.5–16.5)에 그려 두 열에 흐리게 나뉩니다. 코드도 같은 기하(SVG rect)로 그려 같은 모양입니다(F37).
-- **Pressed · Focus 상태**: Figma에 없어 Pressed는 Hover와 같고, 포커스는 브라우저 기본 포커스 링입니다.
-- **link Hover 아이콘 색**: Figma 바인딩대로 Unselected Hover에서도 `…/icon/default`를 씁니다 (`…/icon/hover` 미사용 — F36).
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `NAVI-04` **포커스**: 키보드 포커스일 때 항목 안쪽 가장자리에 2px `colors/border/focus` 링(Figma 속성 `Focus`, 안쪽형 — item_parent · item_link · item_child).
+- `NAVI-05` **link Hover 아이콘 색**: Figma 바인딩대로 Unselected Hover에서도 `…/icon/default`를 씁니다(`…/icon/hover` 미사용 — F36).
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `NAVI-01` **너비**: 항목은 컨테이너 너비를 채웁니다. Figma 예시의 LNB 240px(항목 200px + 좌우 p-5)은 레이아웃에서 지정합니다(Rules 08).
+- `NAVI-03` **Pressed**: Pressed 상태가 없어 Hover와 같은 모양입니다(Rules 02).
+
+### 개발 구현 세부 사항
+
+디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
+
+- `NAVI-02` **하위 목록 선**: Figma는 1px 선을 반 픽셀 위치(x 15.5–16.5)에 그려 두 열에 흐리게 나뉩니다. 코드도 같은 기하(SVG rect)로 그려 같은 모양입니다(F37).
 
 ## 키보드
 

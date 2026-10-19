@@ -37,13 +37,23 @@ Figma **Badge** 프레임(91:5943)의 `badge_status`(84개) · `badge_dot`(21개
 | Label Text | `children` | |
 | badge_count Digits Single · Multiple | `count` · `max` | `max`(기본 99)보다 크면 "99+" |
 
-## 코드 정책 (Figma에서 정해지지 않은 부분)
+## 정책
 
-- **Outline 배경**: Figma는 sm Outline 일부(Basic 제외)에 바인딩되지 않은 흰색 채움이 있고 나머지는 채움이 없습니다.
-  변수에 근거한 값만 쓰므로 모두 배경 없음입니다(figma-issues F42). 흰 배경 위에서는 같은 모습입니다.
-- **접근성**: Badge는 글자가 그대로 읽힙니다. `BadgeDot`은 장식이며 의미가 있으면 `aria-label`을 주세요(`role="img"`).
-  `BadgeCount`의 숫자만으로 뜻이 부족하면 `aria-label`로 설명하세요.
-- **최대값 표시**: Figma는 "99+"만 보여 줍니다. 기준은 `max`로 바꿀 수 있습니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `BADG-01` **Outline 배경**: 투명. 2026-10-19 Figma에서 변수 없는 흰 채움(12개 변형)을 지워 모든 Outline이 배경 없음으로 같습니다(F42 해소).
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `BADG-02` **접근성**: Badge는 글자가 그대로 읽힙니다. `BadgeDot`은 장식이며 의미가 있으면 `aria-label`을 주세요(`role="img"`). `BadgeCount`의 숫자만으로 뜻이 부족하면 `aria-label`로 설명하세요(Rules 03 — 색만으로 전하지 않기).
+- `BADG-03` **최대값 표시**: 99를 넘으면 "99+"(Rules 08). 기준은 `max`로 바꿀 수 있습니다.
 
 ## 상태
 

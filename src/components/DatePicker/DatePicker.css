@@ -68,7 +68,7 @@
   --ds-field-message-color: var(--colors-date-picker-trigger-outline-helper-error);
 }
 
-/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside. */
+/* Keyboard focus — Design System Rules 02 (no Figma "Focus" property on this part — the rule applies): 2px colors/border/focus, 2px outside. */
 .ds-date-picker__button:focus-visible,
 .ds-date-picker__button[data-focus-visible] {
   outline: var(--border-width-border-2) solid var(--colors-border-focus);

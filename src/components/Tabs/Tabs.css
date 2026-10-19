@@ -162,7 +162,6 @@
   cursor: default;
 }
 
-/* Keyboard focus — no Figma Focus state: the browser focus ring. */
 /* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside. */
 .ds-tab[data-focus-visible] {
   outline: var(--border-width-border-2) solid var(--colors-border-focus);
@@ -173,6 +172,7 @@
   outline: none;
 }
 
+/* Panel — no Figma "Focus" property (no panel component): Design System Rules 02 applies. */
 .ds-tabs__panel[data-focus-visible] {
   outline: var(--border-width-border-2) solid var(--colors-border-focus);
   outline-offset: var(--spacing-padding-p-0_5);

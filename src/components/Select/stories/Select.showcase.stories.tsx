@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ListBox, type Key } from 'react-aria-components';
 import { expect, waitFor, within } from 'storybook/test';
@@ -20,7 +20,7 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-const STATES = ['Default', 'Hover', 'Completed', 'Error', 'Disabled', 'Read-only'] as const;
+const STATES = ['Default', 'Hover', 'Focus', 'Completed', 'Error', 'Disabled', 'Read-only'] as const;
 type State = (typeof STATES)[number] | 'Open';
 
 /** Figma "Display Text" shown in every variant; filled variants select an option with that text. */
@@ -38,12 +38,30 @@ function figmaVariant(size: FieldSize, state: State) {
   switch (state) {
     case 'Default': return { ...base };
     case 'Hover': return { ...base, className: PSEUDO.hover };
+    case 'Focus': return { ...base };
     case 'Open': return { ...base, ...filled, open: true };
     case 'Completed': return { ...base, ...filled };
     case 'Error': return { ...base, ...filled, invalid: true };
     case 'Disabled': return { ...base, disabled: true };
     case 'Read-only': return { ...base, ...filled, readOnly: true };
   }
+}
+
+/**
+ * One Figma select variant. State=Focus (2026-10-19) is the keyboard-focus look: react-aria marks the root
+ * `data-focus-visible` while the trigger has keyboard focus, so the static cell sets that attribute (real keyboard focus
+ * is asserted in Foundations/Focus).
+ */
+function SelectVariant({ size, state }: { size: FieldSize; state: State }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (state === 'Focus') ref.current?.querySelector('.ds-select')?.setAttribute('data-focus-visible', 'true');
+  }, [state]);
+  return (
+    <div ref={ref} style={{ display: 'contents' }}>
+      <Select {...figmaVariant(size, state)}>{FIGMA_OPTIONS}</Select>
+    </div>
+  );
 }
 
 const FRUITS = ['사과', '바나나', '체리', '포도', '키위', '망고', '복숭아', '자두', '수박', '참외', '딸기', '레몬'];
@@ -89,7 +107,7 @@ export const Overview: Story = {
   ),
 };
 
-/** 18 Figma select variants: Size (rows) × State (columns). "Open" needs an open list → see `Open`. */
+/** 21 Figma select variants: Size (rows) × State (columns). "Open" needs an open list → see `Open`. */
 export const VariantMatrix: Story = {
   render: () => (
     <FigmaMatrix
@@ -99,13 +117,13 @@ export const VariantMatrix: Story = {
         label: size,
         cells: STATES.map((state) => ({
           figma: `Size=${size}, State=${state}`,
-          node: <Select {...figmaVariant(size, state)}>{FIGMA_OPTIONS}</Select>,
+          node: <SelectVariant size={size} state={state} />,
         })),
       }))}
     />
   ),
   play: async ({ canvasElement }) => {
-    await expect(canvasElement.querySelectorAll('[data-figma]')).toHaveLength(18);
+    await expect(canvasElement.querySelectorAll('[data-figma]')).toHaveLength(21);
   },
 };
 
@@ -216,7 +234,7 @@ export const States: Story = {
       {STATES.map((state) => (
         <div key={state} style={{ width: 320 }}>
           <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{state}</div>
-          <Select {...figmaVariant('sm', state)}>{FIGMA_OPTIONS}</Select>
+          <SelectVariant size="sm" state={state} />
         </div>
       ))}
     </StorySection>

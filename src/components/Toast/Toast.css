@@ -3,7 +3,7 @@
  * colors/toast/background, 1px INSIDE border colors/toast/border/<status>, effect elevation-3; 20px status icon,
  * message sm/leading-normal/medium (…/label/default), 20px close icon (…/close-icon/default).
  * The height is fixed in Figma, so the message stays on one line (ellipsis).
- * Region layout (position, gap between toasts) is not in Figma: code policy, see Toast.mdx.
+ * Region layout (position, gap between toasts, at most 3) — Design System Rules 06, see Toast.mdx.
  */
 
 .ds-toast {
@@ -84,7 +84,7 @@
   height: 100%;
 }
 
-/* Region: bottom centre, newest at the bottom (code policy — not defined in Figma). */
+/* Region: bottom centre, newest at the bottom (Design System Rules 06). */
 .ds-toast-region {
   position: fixed;
   bottom: var(--spacing-padding-p-5);
@@ -96,7 +96,7 @@
   outline: none;
 }
 
-/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside the close icon. */
+/* Keyboard focus — Design System Rules 02 (no Figma "Focus" property on this part — the rule applies): 2px colors/border/focus, 2px outside the close icon. */
 .ds-toast__close:focus-visible {
   outline: var(--border-width-border-2) solid var(--colors-border-focus);
   outline-offset: var(--spacing-padding-p-0_5);

@@ -34,13 +34,24 @@ Figma **metric-card**(697:4487)를 구현했습니다. 대시보드의 핵심 �
 | Value · Unit | `value` · `unit` | 3xl semibold · sm, 기준선 정렬 |
 | metric-trend · Comparison | `trend` · `comparison` | |
 
-## 코드 정책 (Figma에서 정해지지 않은 부분)
+## 정책
 
-- **원격 변수**: 카드 padding(`padding/6` 16) · 모서리(`radius/xlarge1` 12) · 배경(`color/background/white`)이 원격 라이브러리 변수입니다
-  (figma-issues F69). 같은 값의 `p-4`, 모서리 12px(같은 값의 로컬 토큰 없음), `colors/surface/page`를 씁니다. 그림자는 효과 스타일이 없지만 값이
-  `elevation-3`과 같습니다.
-- **너비**: 부모 너비를 채웁니다(Figma 386px).
-- **접근성**: 카드 전체가 제목으로 이름 붙은 그룹(`role="group"`)입니다. 아이콘은 장식입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+
+### Figma 정의 정책
+
+Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
+
+- `MCAR-01` **padding · 배경 · 모서리**: 2026-10-19 Figma가 원격 변수(`padding/6`, `color/background/white`, `radius/xlarge1`) 대신 로컬 `p-4` · `colors/surface/page` · `border-radius/rounded-[12px]`에 연결되어 코드와 같습니다(F69).
+- `MCAR-02` **그림자**: 효과 스타일 `elevation-3`(0 1 8 / 12%). 2026-10-19 Figma에서도 같은 값의 효과 스타일로 연결했습니다.
+
+### Figma 문서화 정책
+
+Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
+
+- `MCAR-03` **너비**: 부모 너비를 채웁니다. Figma의 386px은 예시 폭입니다(Rules 08).
+- `MCAR-04` **접근성**: 카드 전체가 제목으로 이름 붙은 그룹(`role="group"`)입니다. 아이콘은 장식입니다(Rules 03).
 
 ## Props
 

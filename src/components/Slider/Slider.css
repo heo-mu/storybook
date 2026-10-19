@@ -135,7 +135,7 @@
   pointer-events: none;
 }
 
-/* Shown on hover and drag (Figma) and on keyboard focus (code policy). */
+/* Shown on hover and drag (Figma) and on keyboard focus (Design System Rules 04). */
 .ds-slider__thumb:hover .ds-slider__value-label,
 .ds-slider__thumb:active .ds-slider__value-label,
 .ds-slider__thumb[data-dragging] .ds-slider__value-label,

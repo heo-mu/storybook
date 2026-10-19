@@ -4,7 +4,7 @@
  * library variables (figma-issues F69): same-value p-4 and colors/surface/page; radius border-radius/rounded-[12px]
  * (local Figma variable since 2026-10-19); the shadow values equal effect elevation-3.
  *   filters:  groups m-6 apart with "|" dividers (sm/leading-normal/normal, text/placeholder) — wrap onto further rows
- *             with the same gap when the bar is narrower than its content (code policy)
+ *             with the same gap when the bar is narrower than its content (Design System Rules 08)
  *   group:    label sm/leading-normal/medium (text/tertiary), controls p-2 apart
  *   range:    from · "~" (sm/leading-normal/normal, text/tertiary) · to, m-2 apart
  *   actions:  p-3 apart

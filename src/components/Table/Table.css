@@ -352,7 +352,7 @@
   letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
 }
 
-/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, inside the row / cell edge. */
+/* Keyboard focus — Design System Rules 02 (no Figma "Focus" property on this part — the rule applies): 2px colors/border/focus, inside the row / cell edge. */
 .ds-table__row[data-focus-visible],
 .ds-table__cell[data-focus-visible],
 .ds-table__column[data-focus-visible] {

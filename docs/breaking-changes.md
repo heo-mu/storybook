@@ -82,6 +82,14 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 
 앱 CSS에서 `--colors-text-placeholder`를 비활성 글자에 썼다면 `--colors-text-inactive`로 바꾸면 이전 색이 유지됩니다.
 
+### 2026-10-19 밤 — 코드 정책의 Figma 공식 정책화
+
+| 변경 | 내용 | 호환성 |
+| --- | --- | --- |
+| 추가 | `--colors-border-focus`(→ brand/700), `--colors-dialog-scrim-default`(→ surface/scrim) | 호환 |
+| 값 변경 — 별칭 | `--colors-surface-scrim` `alpha/black/900` → `alpha/black/500`(검정 90% → 50%) | 이 토큰을 쓰는 앱 화면만 연해짐 |
+| 값 변경 — 정의 | `--typography-sm-leading-normal-underline-line-height` 140% → `var(--font-line-height-leading-5)`(20px) | 14px 글자 기준 19.6 → 20px |
+
 ## 2. 컴포넌트 API
 
 | 변경 | 종류 | 호환성 |
@@ -92,6 +100,10 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 | 내부 부품 7 · 내부 API 13 분류 | 문서 · JSDoc `@internal` | export는 그대로 — 제거는 결정 D5 |
 | `Chart variant="simple"`: 그림 영역이 초점을 받고 호버 · 탭 · 키보드로 툴팁 표시(F79) | 동작 추가 | 호환(Props 같음). 간단 차트가 Tab 순서에 들어감 |
 | `ChartLegendItem type="dash-line"` `color` 기본값 `brand` → `02` | 기본값 변경 | `color`를 넘기지 않은 dash-line 범례만 색이 바뀜 |
+| `showToast`: `status: 'error'`의 기본 `timeout` 5000 → `null`(닫을 때까지), 같은 문구 · 상태는 보이는 토스트를 대체 | 기본값 · 동작 변경(Rules 06) | 오류 토스트를 자동으로 닫으려면 `timeout`을 넘기세요. 같은 문구를 여러 개 쌓던 코드는 하나만 보임 |
+| 기본 토스트 큐 최대 3개(이전 5) | 동작 변경(Rules 06) | 4개째부터는 앞의 토스트가 닫힐 때까지 대기(새 토스트가 먼저 보임) |
+| `Tooltip` `delay` 기본값 1500 → 500 | 기본값 변경(Rules 05) | `delay`를 넘긴 코드는 그대로 |
+| `CheckboxGroup` · `RadioGroup` 기본 간격 0 → 세로 8px · 가로 16px | 기본 스타일 변경(Rules 08) | `style` · `className`의 `gap`이 우선 — 간격을 직접 주던 코드는 그대로 |
 
 ## 3. 화면(시각) 변경
 
@@ -109,6 +121,9 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 | Button Secondary · Solid Hover · Pressed | #009b68 · #02bb7b → #006247 · #004a38 |
 | `Chart` 호버 강조 영역 | 세로 막대 Group=no 64 → 40px, 가로 막대 행 높이 → 32 · 46px, 간단 스타일 추가 |
 | Hover 배경 16곳 | #f9fafb → #f5f6f7 |
+| 키보드 포커스 표시(모든 컨트롤) | 브라우저 기본 표시 → 2px `colors/border/focus` 링(#007c56, 바깥 2px · 행은 안쪽) — 앱이 `:focus-visible`을 따로 꾸몄다면 겹칠 수 있음 |
+| `Select` 닫힌 상태 키보드 포커스 | 링 대신 Focus 테두리(`select/outline/outline/border/focus`) |
+| `Dialog` 모달 | 투명 → 검정 50% 덮개 |
 
 ## 4. 버전 정책 제안
 
