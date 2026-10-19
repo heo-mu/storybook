@@ -379,15 +379,18 @@
 }
 
 /*
- * Tooltip of a chart — portalled to <body> and placed by Chart.tsx (position: fixed). z-index 100000 and the 12px
- * (p-3) distance to the viewport edge are those of the react-aria overlays (Tooltip, Select …). Figma instances add a
- * background blur 12 (CSS blur radius = Figma radius / 2).
+ * Tooltip of a chart — inside its own plot (position: absolute, no portal) and placed by Chart.tsx beside the active
+ * item, inside the visible part of the plot (Design System Rules 05): it moves with its chart and is never left over
+ * another one. z-index 1 lifts it over the rest of the chart and the content after it; max-content keeps its width
+ * independent of where it sits in the plot. The 12px (p-3) distance to the viewport edge is that of the react-aria
+ * overlays. Figma instances add a background blur 12 (CSS blur radius = Figma radius / 2).
  */
 .ds-chart__tooltip {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  z-index: 100000;
+  z-index: 1;
+  width: max-content;
   pointer-events: none;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);

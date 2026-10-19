@@ -12,20 +12,20 @@ Storybook 각 Usage 문서의 **정책** 절은 이 표의 ID를 그대로 씁�
 
 ## 요약
 
-전체 **152개** — 분류 A 51 · B 86 · C 15.
+전체 **153개** — 분류 A 51 · B 86 · C 16.
 
 | 처리 상태 | 뜻 | 개수 |
 | --- | --- | --- |
 | **Figma 정의 정책** | Figma 변형 · 컴포넌트 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씀(Figma 재조회로 확인) | 39 |
 | **Figma 문서화 정책** | 변형으로 그리지 않는 동작 · 규칙 — Figma "Design System Rules" 02–09장 표와 컴포넌트 Dev Mode 주석에 기록(Figma 재조회로 확인) | 96 |
-| **개발 구현 세부 사항** | 디자인 컴포넌트에 넣지 않는 기술 구현 — Rules 10장에 목록, Storybook "개발 구현 세부 사항" | 15 |
+| **개발 구현 세부 사항** | 디자인 컴포넌트에 넣지 않는 기술 구현 — Rules 10장에 목록, Storybook "개발 구현 세부 사항" | 16 |
 | **Figma 반영 대기** | Figma 정리가 필요하지만 아직 반영하지 않은 항목 — 반영 완료로 표시하지 않음 | 2 |
 
 | 분류 \ 상태 | Figma 정의 | Figma 문서화 | 개발 구현 | 반영 대기 |
 | --- | --- | --- | --- | --- |
 | A 시각 상태 | 39 | 10 | 0 | 2 |
 | B 동작 · 상호작용 | 0 | 86 | 0 | 0 |
-| C 기술 구현 | 0 | 0 | 15 | 0 |
+| C 기술 구현 | 0 | 0 | 16 | 0 |
 
 분류 원칙: **A** 시각 상태는 가능한 한 Figma 변형 · 속성(기존 토큰 사용), **B** 동작은 불필요한 변형 대신 규칙 문서 · 주석, **C** 기술 구현은 개발 문서에만.
 
@@ -138,13 +138,14 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 
 | ID | 분류 | 이전 | Figma에 없던 것 | 결정 | Figma 반영 | 상태 | ID · 장 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| CHAR-01 | B | 툴팁: 기준점 옆 p-3, 보이는 그림 영역 안으로 뒤집기 · 이동, body 포털 | Figma는 변형마다 손으로 배치(F63) | 선 · 가로 막대: 기준점 오른쪽 12px(넘치면 왼쪽), 세로 막대: 항목 가운데에서 위쪽. 화면 · 그림 영역 밖으로 나가지 않음 | Rules 05 · Chart 주석 | Figma 문서화 정책 | Rules 05 |
+| CHAR-01 | B | 툴팁: 기준점 옆 p-3, 보이는 그림 영역 안으로 뒤집기 · 이동, body 포털(화면 밖 차트의 툴팁이 화면 가장자리에 남아 다른 차트와 겹침 — 2026-10-19 수정) | Figma는 변형마다 손으로 배치(F63) | 선 · 가로 막대: 기준점 오른쪽 12px(넘치면 왼쪽), 세로 막대: 항목 가운데에서 위쪽. 화면 · 그림 영역 밖으로 나가지 않음 | Rules 05 · Chart 주석 | Figma 문서화 정책 | Rules 05 |
 | CHAR-02 | A | 호버 표시: 모든 항목에 hover=yes 모습 | Figma는 간단 스타일에서 현재 기간 호버만 | hover=yes 표시를 모든 항목에 적용 | Figma 변형 hover + Rules 07 | Figma 정의 정책 | chart 698:4399 · Rules 07 |
 | CHAR-03 | B | 감지 영역 = 데이터 영역, 터치 탭 · 바깥 누름, 키보드 화살표 · Home · End · Esc | 차트 Hover 기준 없음 | 포인터는 가장 가까운 항목(값 눈금 열 제외), 탭하면 고정 · 바깥 누르면 해제, 키보드 동일 | Rules 07 · Chart 주석 | Figma 문서화 정책 | Rules 07 |
 | CHAR-04 | C | 간단 선 차트 바깥 선은 첫 · 마지막 구간 기울기로 | Figma 바깥 선은 손으로 그림(F64) | 개발 구현(그리기 규칙) | Rules 10 | 개발 구현 세부 사항 | Rules 10 |
 | CHAR-05 | B | 값 범위: 0 이상, 범위 밖은 끝에 그림, 간단 스타일 최대값 위치 | 음수 · 범위 밖 값 정의 없음 | 0 이상 값만 지원, 범위 밖 값은 축 끝에 표시 | Rules 07 | Figma 문서화 정책 | Rules 07 |
 | CHAR-06 | B | 숨김 레이어(Current values · Axis unit) 미구현 | Figma 숨김 레이어의 용도 없음 | 명세 아님(숨김 레이어는 쓰지 않음) | Chart 주석 | Figma 문서화 정책 | Rules 07 |
 | CHAR-07 | A | 포커스: 그림 영역에 브라우저 기본 링 | Focus 표시 없음 | 포커스 링(02)을 그림 영역에 적용 | Rules 02(Figma 컴포넌트 속성 없음 — 규칙이 기준) | Figma 문서화 정책 | Rules 02 |
+| CHAR-08 | C | 툴팁을 <body>로 포털(position: fixed), 스크롤 · 크기 변경 때만 재배치 | — | 툴팁은 자기 그림 영역 안 position: absolute(포털 없음) — 차트와 함께 움직이고, 보이는 부분(화면 · 잘림 조상)만 다시 계산 | Rules 10 · chart-tooltip 주석 | 개발 구현 세부 사항 | chart-tooltip 693:9776 · Rules 10 |
 
 ### Checkbox
 
@@ -477,7 +478,7 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 | ID | 분류 | 이전 | Figma에 없던 것 | 결정 | Figma 반영 | 상태 | ID · 장 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | COMM-01 | C | value / defaultValue / onChange — 제어 · 비제어 모두 지원 | — | 개발 구현(모든 상태 컴포넌트 공통) | Rules 10 | 개발 구현 세부 사항 | Rules 10 |
-| COMM-02 | C | 오버레이는 <body> 포털, z-index 100000, 스크롤 · 크기 변경 따라감 | — | 개발 구현 | Rules 10 | 개발 구현 세부 사항 | Rules 10 |
+| COMM-02 | C | 오버레이(Select · Tooltip · Dialog · Dropdown)는 <body> 포털, z-index 100000, 스크롤 · 크기 변경 따라감 | — | 개발 구현 | Rules 10 | 개발 구현 세부 사항 | Rules 10 |
 | COMM-03 | B | 오버레이 닫힘 후 포커스가 트리거로 돌아감(react-aria) | 포커스 복귀 규칙 없음 | 모든 오버레이는 닫히면 연 요소로 포커스 복귀 | Rules 05 | Figma 문서화 정책 | Rules 05 |
 | COMM-04 | B | Disabled는 포커스 · 클릭 불가(네이티브 disabled) | — | Disabled는 Tab 순서에서 빠짐, 대비 기준 예외(text/inactive) | Rules 02 | Figma 문서화 정책 | Rules 02 |
 | COMM-05 | B | 입력 오류는 사용처가 error · message로 지정 | 검증 시점 없음 | 검증은 입력을 마친 뒤(blur) 또는 제출 시, 입력 중에는 오류만 해제. 오류 문구는 aria-describedby로 연결 | Rules 04 | Figma 문서화 정책 | Rules 04 |

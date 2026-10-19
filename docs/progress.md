@@ -2,6 +2,16 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
+## Figma × Storybook 전체 동기화 · 완성도 개선 (2026-10-19 밤 시작, 진행 중)
+
+체크포인트 (4ebef48). 순서: ① Chart 툴팁 버그 → ② Chip Filter 예시 → ③ Storybook 접근성 경고 → ④ 누락 상태 · 동작 · 사용 예
+→ ⑤ Figma ↔ Storybook 전체 동기화(차트 토큰 개편 포함) → ⑥ 회귀 · 최종 보고. 재개: , 이 절의 상태 줄.
+
+- ① **완료** — 원인:  포털(position: fixed) 툴팁이 화면 밖 차트에서 화면 가장자리로 밀려 다른 차트 위에 남음(문서 · 쇼케이스의 hover 상태 차트 12개),
+  위치는 스크롤 · 크기 변경 때만 갱신. 수정: 툴팁을 그림 영역 안(position: absolute)으로, 배치는 보이는 부분(화면 · 잘림 조상) → 그림 영역 순.
+  검증: 다중 차트 페이지 3개(55차트) × 3 엔진 실제 마우스 · 스크롤 · 크기 변경, 스토리 MultipleCharts(마우스 · 빠른 전환 · 키보드 · 스크롤 영역), chart 정합성 통과.
+- 시작 시 Figma 재조회: 다른 편집자의 차트 토큰 개편 진행 중(Semantic 69 · Component 724 — ⑤에서 동기화).
+
 ## 코드 정책 → Figma 공식 정책 작업 (2026-10-19, 완료)
 
 체크포인트 태그 `checkpoint/pre-policy-pass`. 정책 목록 원본: `docs/code-policy-audit.md`(145항목 — 상태 A 45 · 동작 B 85 · 기술 C 15).

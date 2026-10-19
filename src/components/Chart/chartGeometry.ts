@@ -92,38 +92,43 @@ export function barPath(x: number, y: number, w: number, h: number, radius: numb
 
 export type Rect = { left: number; top: number; right: number; bottom: number };
 
+/** Intersection of rectangles (may be empty: right < left or bottom < top). */
+export function intersect(a: Rect, ...rest: Rect[]): Rect {
+  return rest.reduce(
+    (r, b) => ({ left: Math.max(r.left, b.left), top: Math.max(r.top, b.top), right: Math.min(r.right, b.right), bottom: Math.min(r.bottom, b.bottom) }),
+    a,
+  );
+}
+
 /**
- * Tooltip placement in viewport coordinates. The tooltip goes beside its anchor — `gap` to the right, or to the left
- * when that does not fit — and stays inside the visible part of the plot (plot ∩ viewport shrunk by `margin`).
- * When it is larger than that area, it keeps to the side with more room and stays inside the viewport instead.
+ * Tooltip placement (Design System Rules 05) — all rectangles in one coordinate space. The tooltip goes beside its
+ * anchor — `gap` to the right, or to the left when that does not fit — inside `visible`, the part of the plot that can
+ * be seen (plot ∩ viewport and clipping ancestors, shrunk by the margin). On an axis where it does not fit there, it
+ * stays inside the plot instead. It never leaves its own chart for the viewport, so a chart scrolled out of view does
+ * not leave its tooltip on top of another one.
  */
 export function placeTooltip(
   anchor: { x: number; y: number; gap: number; vertical: 'top' | 'center' },
   size: { width: number; height: number },
   plot: Rect,
-  viewport: { width: number; height: number },
-  margin: number,
+  visible: Rect,
 ): { left: number; top: number } {
-  const screen: Rect = { left: margin, top: margin, right: viewport.width - margin, bottom: viewport.height - margin };
-  const area: Rect = {
-    left: Math.max(plot.left, screen.left),
-    top: Math.max(plot.top, screen.top),
-    right: Math.min(plot.right, screen.right),
-    bottom: Math.min(plot.bottom, screen.bottom),
-  };
   const clamp = (v: number, min: number, max: number) => (max < min ? min : Math.min(max, Math.max(min, v)));
+  const fitsX = size.width <= visible.right - visible.left;
+  const fitsY = size.height <= visible.bottom - visible.top;
+  const ax: [number, number] = fitsX ? [visible.left, visible.right] : [plot.left, plot.right];
+  const ay: [number, number] = fitsY ? [visible.top, visible.bottom] : [plot.top, plot.bottom];
   const right = anchor.x + anchor.gap;
   const left = anchor.x - anchor.gap - size.width;
-  const fits = (x: number) => x >= area.left && x + size.width <= area.right;
+  const fits = (x: number) => x >= ax[0] && x + size.width <= ax[1];
   let x: number;
   if (fits(right)) x = right;
   else if (fits(left)) x = left;
   else {
     // Neither side fits (the anchor is near or past an edge): keep the side with more room, moved into the area.
-    const preferred = area.right - anchor.x >= anchor.x - area.left ? right : left;
-    x = size.width <= area.right - area.left ? clamp(preferred, area.left, area.right - size.width) : clamp(preferred, screen.left, screen.right - size.width);
+    const preferred = ax[1] - anchor.x >= anchor.x - ax[0] ? right : left;
+    x = clamp(preferred, ax[0], ax[1] - size.width);
   }
   const y0 = anchor.vertical === 'top' ? anchor.y : anchor.y - size.height / 2;
-  const y = size.height <= area.bottom - area.top ? clamp(y0, area.top, area.bottom - size.height) : clamp(y0, screen.top, screen.bottom - size.height);
-  return { left: x, top: y };
+  return { left: x, top: clamp(y0, ay[0], ay[1] - size.height) };
 }

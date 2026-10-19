@@ -10,14 +10,13 @@ import {
   type PointerEvent,
   type ReactNode,
 } from 'react';
-import { createPortal } from 'react-dom';
 import { Badge } from '../Badge';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
 import type { ChartColor, ChartType, ChartVariant } from './Chart.options';
 import { ChartLegendItem } from './ChartLegendItem';
 import { ChartTooltip } from './ChartTooltip';
-import { areaPath, bands, barPath, extendToEdges, niceTicks, placeTooltip, polyline, roundedPolyline, scale, type Point } from './chartGeometry';
+import { areaPath, bands, barPath, extendToEdges, intersect, niceTicks, placeTooltip, polyline, roundedPolyline, scale, type Point, type Rect } from './chartGeometry';
 
 export type ChartSeries = {
   /** Series name — legend, tooltip and the data table for screen readers. */
@@ -435,6 +434,20 @@ function barHorizontalScene(input: SceneInput): Scene {
 const defaultFormat = (value: number) => value.toLocaleString('ko-KR');
 
 /**
+ * The part of the plot that can be seen, in viewport coordinates: the plot ∩ the viewport (inset by `margin`, the
+ * 12px of the react-aria overlays) ∩ every ancestor that clips its content (overflow other than visible).
+ */
+function visibleArea(plotEl: HTMLElement, plot: Rect, margin: number): Rect {
+  const root = document.documentElement;
+  const rects: Rect[] = [{ left: margin, top: margin, right: root.clientWidth - margin, bottom: root.clientHeight - margin }];
+  for (let el = plotEl.parentElement; el && el !== document.body && el !== root; el = el.parentElement) {
+    const style = getComputedStyle(el);
+    if (style.overflowX !== 'visible' || style.overflowY !== 'visible') rects.push(el.getBoundingClientRect());
+  }
+  return intersect(plot, ...rects);
+}
+
+/**
  * Figma component set `chart` (698:4399): line, vertical bar and horizontal bar charts in the default style (axis labels,
  * value grid, legend) or the simple style (160px, the last category is the current period). One series is Figma
  * Group=no, two are Group=yes. Both styles show the Figma hover=yes state for the active category — guide line and
@@ -514,8 +527,10 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
         })
       : null;
 
-  // The tooltip is portalled to <body> (position: fixed) so clipping ancestors cannot cut it off, and placed beside
-  // its anchor inside the visible part of the plot and the viewport (placeTooltip); it follows scrolling and resizing.
+  // The tooltip belongs to its plot (position: absolute inside it — no portal): it moves with its own chart on scroll,
+  // layout shifts and transforms, and other charts never share it. It is placed beside its anchor inside the part of
+  // the plot that can be seen (viewport and clipping ancestors), or inside the plot when that part is too small
+  // (placeTooltip). Scrolling and resizing only re-check which part is visible.
   const anchor = scene?.anchor;
   const positionTooltip = useRef<() => void>(() => {});
   useLayoutEffect(() => {
@@ -526,16 +541,14 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
       const plot = plotEl.getBoundingClientRect();
       const k = size.width ? plot.width / size.width : 1;
       const { width, height } = el.getBoundingClientRect();
-      const root = document.documentElement;
       const { left, top } = placeTooltip(
         { x: plot.left + anchor.x * k, y: plot.top + anchor.y * k, gap: anchor.gap * k, vertical: anchor.vertical },
         { width, height },
         plot,
-        { width: root.clientWidth, height: root.clientHeight },
-        size.m['tooltip-margin'],
+        visibleArea(plotEl, plot, size.m['tooltip-margin']),
       );
-      el.style.left = `${left}px`;
-      el.style.top = `${top}px`;
+      el.style.left = `${(left - plot.left) / k}px`;
+      el.style.top = `${(top - plot.top) / k}px`;
     };
     positionTooltip.current();
   });
@@ -654,19 +667,16 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
               {scene.labels}
             </div>
             {scene.overlay}
-            {active != null &&
-              typeof document !== 'undefined' &&
-              createPortal(
-                <ChartTooltip
-                  ref={tooltipRef}
-                  className="ds-chart__tooltip"
-                  data-mark={type === 'line' ? 'line' : 'bar'}
-                  aria-hidden="true"
-                  title={categories[active]}
-                  items={series.map((s, k) => ({ label: s.label, value: formatValue(valueAt(s, active)), color: keyColor(type, k) }))}
-                />,
-                document.body,
-              )}
+            {active != null && anchor && (
+              <ChartTooltip
+                ref={tooltipRef}
+                className="ds-chart__tooltip"
+                data-mark={type === 'line' ? 'line' : 'bar'}
+                aria-hidden="true"
+                title={categories[active]}
+                items={series.map((s, k) => ({ label: s.label, value: formatValue(valueAt(s, active)), color: keyColor(type, k) }))}
+              />
+            )}
           </>
         )}
       </div>

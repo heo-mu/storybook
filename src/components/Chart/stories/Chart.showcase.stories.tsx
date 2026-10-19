@@ -389,17 +389,127 @@ export const TooltipFlip: Story = {
   },
 };
 
-/** Inside a container that clips its content (overflow: hidden) the tooltip is not cut off: it is rendered in <body>. */
+/**
+ * Inside a container that clips its content (overflow: hidden) the tooltip stays in the part that can be seen: it
+ * belongs to its chart (no portal) and is placed inside the visible part of the plot (Design System Rules 05).
+ */
 export const TooltipInClippingContainer: Story = {
   render: () => (
-    <div style={{ width: 600, height: 150, overflow: 'hidden' }}>
+    <div data-clip="" style={{ width: 600, height: 150, overflow: 'hidden' }}>
       <Chart aria-label="잘림" type="bar-horizontal" categories={BUILDINGS} series={PLACEMENT_SERIES} activeIndex={0} />
     </div>
   ),
   play: async ({ canvasElement }) => {
-    const tip = document.querySelector('.ds-chart__tooltip')!;
-    await expect(tip.parentElement).toBe(document.body);
-    await expect(canvasElement.contains(tip)).toBe(false);
-    await expect(getComputedStyle(tip).position).toBe('fixed');
+    const tip = canvasElement.querySelector('.ds-chart__tooltip')!;
+    await expect(tip.closest('.ds-chart__plot')).toBe(canvasElement.querySelector('.ds-chart__plot'));
+    await expect(getComputedStyle(tip).position).toBe('absolute');
+    const clip = canvasElement.querySelector('[data-clip]')!.getBoundingClientRect();
+    const r = tip.getBoundingClientRect();
+    await expect(r.top).toBeGreaterThanOrEqual(clip.top - 0.5);
+    await expect(r.bottom).toBeLessThanOrEqual(clip.bottom + 0.5);
+    await expect(r.left).toBeGreaterThanOrEqual(clip.left - 0.5);
+    await expect(r.right).toBeLessThanOrEqual(clip.right + 0.5);
+  },
+};
+
+const ownTooltip = (plot: Element) => plot.querySelector('.ds-chart__tooltip');
+/** The part of an element that can be seen: its box ∩ every ancestor that clips (overflow other than visible). */
+const seenRect = (el: Element) => {
+  let r = el.getBoundingClientRect().toJSON() as { left: number; top: number; right: number; bottom: number };
+  for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+    const s = getComputedStyle(p);
+    if (s.overflowX === 'visible' && s.overflowY === 'visible') continue;
+    const b = p.getBoundingClientRect();
+    r = { left: Math.max(r.left, b.left), top: Math.max(r.top, b.top), right: Math.min(r.right, b.right), bottom: Math.min(r.bottom, b.bottom) };
+  }
+  return r;
+};
+/** Every tooltip on the page lies inside its own plot, and the part of it that can be seen covers no other plot. */
+const tooltipsStayHome = (root: ParentNode) => {
+  const plots = [...root.querySelectorAll('.ds-chart__plot')];
+  return [...document.querySelectorAll('.ds-chart__tooltip')].every((t) => {
+    const own = t.closest('.ds-chart__plot');
+    if (!own || !plots.includes(own)) return false;
+    const box = t.getBoundingClientRect();
+    const p = own.getBoundingClientRect();
+    const inside = box.left >= p.left - 1 && box.right <= p.right + 1 && box.top >= p.top - 1 && box.bottom <= p.bottom + 1;
+    const r = seenRect(t);
+    if (r.right - r.left <= 1 || r.bottom - r.top <= 1) return inside; // clipped away by a scroll container
+    const overOther = plots.some((o) => {
+      if (o === own) return false;
+      const q = o.getBoundingClientRect();
+      return Math.min(r.right, q.right) - Math.max(r.left, q.left) > 1 && Math.min(r.bottom, q.bottom) - Math.max(r.top, q.top) > 1;
+    });
+    return inside && !overOther;
+  });
+};
+
+/**
+ * A dashboard with three charts (line, vertical bar, horizontal bar). Each chart reacts only to its own data: hovering
+ * one shows its tooltip in its own plot, moving to another closes the first, quick moves leave no stale tooltip,
+ * keyboard focus works per chart, and scrolling the page or a scroll container keeps every tooltip with its chart.
+ */
+export const MultipleCharts: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 600px)', gap: 24 }}>
+        <Chart data-chart="line" aria-label="일별 사용량" type="line" {...AXES_DATES} categories={DATES} series={[{ label: '전기', data: [140, 194, 132, 186, 150, 210, 205] }, { label: '가스', data: [120, 150, 160, 140, 170, 160, 200] }]} />
+        <Chart data-chart="vertical" aria-label="동별 사용량" type="bar-vertical" {...AXES_BUILDINGS} categories={BUILDINGS} series={PLACEMENT_SERIES} />
+        <Chart data-chart="horizontal" aria-label="동별 사용량 (가로)" type="bar-horizontal" {...AXES_HORIZONTAL} categories={BUILDINGS} series={PLACEMENT_SERIES} />
+        <div data-scroller="" style={{ height: 220, overflow: 'auto', border: '1px dashed var(--colors-border-gray-subtler)' }}>
+          <div style={{ height: 120 }} />
+          <Chart data-chart="scrolled" aria-label="스크롤 영역 안" type="bar-vertical" variant="simple" style={{ width: 320 }} categories={MONTHS} series={[{ label: '사용량', data: [148, 198, 136, 224, 184] }]} activeIndex={4} />
+          <div style={{ height: 400 }} />
+        </div>
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement, userEvent, step }) => {
+    const plotOf = (name: string) => canvasElement.querySelector(`[data-chart="${name}"] .ds-chart__plot`)!;
+    const hoverAt = async (name: string, fx: number, fy = 0.5) => {
+      const plot = plotOf(name);
+      const b = plot.getBoundingClientRect();
+      await userEvent.pointer({ target: plot, coords: { clientX: b.left + b.width * fx, clientY: b.top + b.height * fy } });
+    };
+    const openTooltips = () => [...canvasElement.querySelectorAll('[data-chart]:not([data-chart="scrolled"]) .ds-chart__tooltip')];
+    await step('each chart shows its own tooltip, in its own plot', async () => {
+      for (const [name, title] of [['line', '10.11'], ['vertical', '103동'], ['horizontal', '103동']] as const) {
+        await hoverAt(name, name === 'horizontal' ? 0.5 : 0.62, name === 'horizontal' ? 0.5 : 0.5);
+        await waitFor(() => expect(ownTooltip(plotOf(name))).not.toBeNull());
+        await expect(openTooltips()).toHaveLength(1);
+        await expect(ownTooltip(plotOf(name))).toHaveTextContent(title);
+        await expect(tooltipsStayHome(canvasElement)).toBe(true);
+      }
+    });
+    await step('quick moves between charts leave one tooltip, no stale copy', async () => {
+      for (const name of ['line', 'vertical', 'horizontal', 'vertical', 'line']) await hoverAt(name, 0.3);
+      await waitFor(() => expect(openTooltips()).toHaveLength(1));
+      await expect(ownTooltip(plotOf('line'))).not.toBeNull();
+      await userEvent.unhover(plotOf('line'));
+      await waitFor(() => expect(openTooltips()).toHaveLength(0));
+    });
+    await step('keyboard: focus and arrow keys open the tooltip of the focused chart only', async () => {
+      (plotOf('vertical') as HTMLElement).focus();
+      await userEvent.keyboard('{End}');
+      await expect(ownTooltip(plotOf('vertical'))).toHaveTextContent('105동');
+      await expect(openTooltips()).toHaveLength(1);
+      await userEvent.keyboard('{Escape}');
+      await expect(openTooltips()).toHaveLength(0);
+    });
+    await step('a chart inside a scroll container keeps its tooltip in its plot while scrolled', async () => {
+      const scroller = canvasElement.querySelector('[data-scroller]')!;
+      const tip = ownTooltip(plotOf('scrolled'))!;
+      await expect(tip).toHaveTextContent('10월');
+      for (const top of [0, 60, 140, 260]) {
+        scroller.scrollTop = top;
+        await new Promise((r) => requestAnimationFrame(() => r(null)));
+        await expect(tooltipsStayHome(canvasElement)).toBe(true);
+      }
+      // Scrolled out of the container: the tooltip went with its chart, it is not pinned over the visible area.
+      const box = scroller.getBoundingClientRect();
+      const r = tip.getBoundingClientRect();
+      await expect(r.bottom <= box.top || r.top >= box.bottom).toBe(true);
+      scroller.scrollTop = 0;
+    });
   },
 };
