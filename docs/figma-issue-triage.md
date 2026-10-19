@@ -88,7 +88,7 @@ E5(카운터 예시 값), F14 · F15(Slider 상자 너비), F58 · F59(Table 관
 | 묶음 | 항목 |
 | --- | --- |
 | 다른 변수 · 상위 레이어 직접 참조 | A5(2026-10-19 원본에서 해결 · 코드 반영), A6([R2](./figma-fix-requests.md#r2-button-secondary--outline-테두리--완료)), B7, E1 · E2 · E3 · E4, E10, F5, F7, F24, F27, F29, F34, F54 |
-| 원격 라이브러리 변수 | F13(Slider), F28(Loading), F32(Dropdown), F52(Accordion), F66(Chart tooltip) — 같은 값의 로컬 토큰 사용 중 |
+| 원격 라이브러리 변수 | **2026-10-19 정리** — 컴포넌트 안 원격 사본 92곳을 같은 이름 · 값의 로컬로(F13 · F28 · F32 · F52 · F66). 남은 것: Slider 손잡이 그림자(로컬 없음), data-state 흰 배경 `color/background/white` #ffffff(로컬 #fdfdfd — F69와 같은 결정), 문서 · legacy 프레임 |
 | 쓰이지 않거나 어긋난 변수 · 속성 | A7, A8, B1, B10, F19, F26, F49, F72 |
 | 이름 · 오타 · 정렬 | A1 · A2 · A3(A1은 2026-10-19 동기화로 색 분리 반영), B2 · B3 · B4, B9, C4, F38 · F45(이름 수정 시 토큰 CSS 변수 이름도 바뀜), F70, F74(Accordion 변형 위치 — [R5](./figma-fix-requests.md#r5-accordion-md--hover--expanded-위치--미확인-수정-불가)) |
 | 값 지정 방식 | C2 · C3(삭제된 변수 바인딩 — 코드는 적용값 사용), F57(삭제된 변수 — [R8](./figma-fix-requests.md#r8-table-편집-칸-안내-글자--완료)), C6, F17 · F18(효과 · 원 변수 미연결), F42 · F43(배지 채움 · 크기), F46(Toast 높이 · padding) |

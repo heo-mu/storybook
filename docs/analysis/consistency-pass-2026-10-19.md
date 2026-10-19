@@ -112,3 +112,19 @@ Figma 원본 수정 · 변수 생성 · 바인딩 변경 · 코드 수정이 모
 - 검증 허용치 변경 2건(숨기지 않고 기록): metric-trend Flat · Negative 아이콘 막대 12×2px — 같은 벡터를 Figma와 Chromium이 다르게 래스터화(다른 Tone은 0.00%),
   색은 Up · Down Negative에서 비교. data-freshness Stale 배지 글자 dx 0.8 → 0.9px — 잉크 열 13–56 · 질량 같음, 진한 주황에서 무게 중심만 0.86px.
 - 남은 결정(3): 차트 보조 계열 막대(1.24 · 1.38:1), SearchField Solid 채움 경계(1.06:1), Segmented 선택 표시 — accessibility.md.
+
+## 7. 전체 DS 점검 (완료 — 객관적 오류만 수정)
+
+| 점검 | 결과 | 조치 |
+| --- | --- | --- |
+| 원격 라이브러리 변수 · 스타일 사본 | 페이지 전체 509곳(대부분 legacy · 문서 프레임) | 같은 이름 · 같은 값의 로컬이 있는 92곳을 로컬로(간격 · 글꼴 · padding · 텍스트 스타일 3 · 효과 스타일 1(accordion-item elevation-3)), 원격 `border-width`(1) → `border-width/border` 9곳, `radius/max`(100) → `border-radius/rounded-full` 40곳(알약 모양 4–26px, 같은 화면). 컴포넌트 안 남은 원격: Slider 손잡이 그림자 · data-state 흰 배경 · 표 File Upload 자리표시 선 2개(결정) |
+| 삭제된 변수 참조 | 0 | — |
+| WEB code syntax | 86개 중 11개가 코드에 없는 이름(B10 4 + 7) | 11개 수정 — 전부 일치 |
+| Component 토큰이 다른 컴포넌트 토큰을 별칭 | 1(`progress/border/indicator/default` → `button/primary/solid/background/pressed`) | Semantic `fill/primary/strong/pressed`로(값 같음) |
+| 변수 없는 색 | badge_status Outline 12개 변형 흰 채움(나머지 30개 투명), Slider 손잡이 halo #007c5633, 표 자리표시 #d9d9d9 | badge 12개 채움 삭제(F73), 나머지는 기록 |
+| 변형 배치 | chart 1011:14987(20 · 1324로, F79) · 표 Editing 1px(F75 규칙) · segmented-item(크기별 같은 간격 — 오류 아님) | — |
+| 코드: 손으로 만든 호버 처리 | Chart만 — F79에서 수정 | — |
+| 코드: 하드코딩 색 | Segmented 선택 그림자 #00000017 · Slider 손잡이 그림자 #051b3c33 — Figma에 효과 스타일 없음 | 결정(로컬 효과 스타일 등록 여부) |
+
+- 검증: 바뀐 컴포넌트(badge · slider · accordion · data-freshness · breadcrumb · dropdown-menu · file-uploader · progress) 정합성 통과, badge 기준 이미지 재캡처.
+  스냅샷 8그룹 체크섬 Figma와 일치(compOthers e1251fc4).

@@ -19,7 +19,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | A5 · A6 | Button 색 바인딩이 다른 Variant 토큰을 참조 | 중간 |
 | A12 | Disabled 라벨이 `text/disabled`가 아닌 `text/placeholder` 사용 | 중간 |
 | B2 · B3 | 변수 이름의 공백 · 대괄호 (`gray 2`, `rounded-[5px]`) | 중간 |
-| B10 | WEB code syntax가 다른 변수를 가리킴 (4건) | 중간 |
+| B10 | WEB code syntax가 다른 변수를 가리킴 — **해결(2026-10-19)** | — |
 | 그 외 | 아래 표 | 낮음 |
 
 ## A. Button 컴포넌트 · Variant
@@ -52,7 +52,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | B7 | 레이어 건너뛰기·역할 혼용: `colors/button/tertiary/outline/border/default` → Theme 직접 참조, `colors/button_text/background/*` → Primitive 직접 참조, `primary/outline/label/default` → **fill** 토큰, `primary/solid/icon/default` → **text** 토큰 | 별칭 체인을 그대로 보존 | Component → Semantic → Theme → Primitive 순서와 역할(text / icon / fill / border) 일치 |
 | B8 | 모든 컬렉션이 모드 1개(`Mode 1`) | 단일 테마로 생성 | 다크 모드 등 계획 시 모드 추가 |
 | B9 | `meta/library-version` = `"0.1"`, 페이지 이름은 `Ver 0.4` | 값 그대로 | 버전 동기화 |
-| B10 | WEB code syntax가 지정된 변수 45개 중 4개가 **다른 변수 이름**을 가리킴: `file-uploader/icon/drag-over` → `--colors-file-uploader-icon-success`, `file-uploader/background/focus` → `…-background-hover`, `dashboard/background/disabled` → `…-background-default`, `breadcrumb/background/focus` → `…-background-current-subtle` | 코드 이름은 code syntax가 아니라 변수 경로에서 생성 (Button 범위 밖) | code syntax 수정 또는 제거, 전체 변수에 일관 적용 |
+| B10 | WEB code syntax가 실제 CSS 변수와 다른 이름을 가리킴 — 원래 4건(`file-uploader/icon/drag-over` · `file-uploader/background/focus` · `dashboard/background/disabled` · `breadcrumb/background/focus`) + 전체 점검에서 7건 더(`accordion/border/hover` → 이전 이름 `…-border-focus`, `spacing/padding/p-px` · `p-13` · `spacing/gap/overlap-0_5` · `border-width/border-0` · `border-3` · `border-2_5`의 이름 누락 · 변형) | **해결(2026-10-19)** — 11개 모두 생성기 이름(`var(--…)`)으로 수정, 코드 syntax가 있는 86개 전부 일치 | — |
 
 ## C. 타이포그래피 · 효과
 
@@ -98,7 +98,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F10 | listbox 최대 높이, 위로 열릴 때의 배치가 정의되지 않음 | 화면 남은 공간에 맞춰 높이 제한 · 위로 뒤집기(react-aria 기본) | 최대 높이 정의 |
 | F11 | 옵션의 Hover와 Selected가 겹칠 때, 키보드 이동 중 표현이 정의되지 않음 | 키보드 이동 = Hover 모양, Selected + Hover = Hover 배경 + Selected 글자 | 조합 상태 정의 |
 | F12 | Checkbox · Radio 테두리와 Switch 꺼짐 트랙(#a1a8b5)이 배경 대비 2.35:1 — WCAG 1.4.11(비텍스트 3:1) 미만 | **해결(2026-10-19, A-2)** — 테두리 `border/gray`(#778191, 3.87:1, hover `border/gray-dark`), 트랙 brand-gray 500 · 600 · 700. 입력 칸 테두리도 같은 규칙 | — |
-| F13 | **Slider가 다른 라이브러리(원격) 변수에 바인딩** — 간격 `spacing/margin/m-2_5` · `m-2`, radius `radius/max`(100), 그림자 효과 스타일 `md-3,10`(`color/shadow/shadow-3` #051b3c33, 0 4 6 −1), 단위 · 값 라벨 글꼴 변수 | 같은 이름 · 역할의 로컬 토큰 사용(`radius/max` → `rounded-full`), 그림자는 Figma 값을 그대로 재현 | 이 파일의 변수 · 효과 스타일로 교체 |
+| F13 | **Slider가 다른 라이브러리(원격) 변수에 바인딩** — 간격 `spacing/margin/m-2_5` · `m-2`, radius `radius/max`(100), 그림자 효과 스타일 `md-3,10`(`color/shadow/shadow-3` #051b3c33, 0 4 6 −1), 단위 · 값 라벨 글꼴 변수 | **대부분 해결(2026-10-19)** — 간격 · 글꼴(로컬 텍스트 스타일) · 손잡이 padding을 같은 이름 · 값의 로컬로, `radius/max` → `border-radius/rounded-full`(알약 모양, 같은 화면). 남은 것: 손잡이 그림자 원격 효과 스타일 · 색(로컬에 같은 값 없음) — 코드는 값 그대로 | 손잡이 그림자 로컬 효과 스타일 등록 여부 |
 | F14 | Slider 단위 텍스트 "명" 상자가 글자 1개인데 24px(auto-width가 갱신되지 않은 값) | 실제 글자 너비. 검증 스토리에서만 24px로 맞춰 나머지 배치를 비교 | 텍스트 상자 크기 갱신 |
 | F15 | Slider 숫자 필드가 예시 값 "100"에 맞춘 너비(43px) | 가장 긴 값(최솟값 · 최댓값 자릿수)에 맞춘 고정 너비 — 값이 바뀌어도 트랙 길이 유지. 검증 스토리에서만 Figma 너비로 맞춤 | 필드 너비 규칙 정의 |
 | F16 | Slider 핸들이 채움 끝보다 2px 오른쪽(x 93, 채움 끝 100.5)에 수동 배치 | 핸들 중심을 값 위치에 맞춤 — 핸들 x는 비교에서 제외, 영역 픽셀 마스크 | — |
@@ -113,11 +113,11 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F25 | 달력 요일이 영어 자리표시(Su Mo …)인데 월 제목은 한국어(2026년 7월), 요일은 `colors/text/tertiary`에 직접 바인딩(`date-picker/weekday/label/default` 미사용) | 요일 · 월 이름 모두 로캘(ko-KR: 일 월 …), 색은 바인딩 그대로 | 언어 통일, Component 변수 사용 |
 | F26 | file-uploader의 "Show Button" 속성이 어떤 레이어에도 연결되지 않음 | 미구현 | 속성 삭제 또는 버튼 추가 |
 | F27 | file-uploader-item이 Semantic `surface/page` · `border/gray-subtler`에 직접 바인딩, 다운로드 아이콘이 미바인딩 #404b5d | 바인딩 그대로, 아이콘은 같은 값의 `colors/icon/secondary` | Component 변수 정의 |
-| F28 | Loading 간격이 다른 라이브러리(원격) 변수, 그라데이션이 `border/transparency` → `border/brand`(Semantic)에 바인딩 — `loading/spinner/indicator/*` 미사용 | 같은 이름의 로컬 `spacing/margin/m-2_5`, 그라데이션은 바인딩 그대로 | 로컬 · Component 변수 사용 |
+| F28 | Loading 간격이 다른 라이브러리(원격) 변수, 그라데이션이 `border/transparency` → `border/brand`(Semantic)에 바인딩 — `loading/spinner/indicator/*` 미사용 | 간격 **해결(2026-10-19)** — 로컬 `spacing/margin/m-2_5`로. 그라데이션 바인딩은 그대로 | Component 변수 사용 여부 |
 | F29 | file-uploader Drag-over 아이콘이 `…/icon/default`(`…/icon/drag-over` 변수 미사용), Pressed가 `…/focus` 변수 사용 | 바인딩 그대로 | 이름 · 바인딩 정리 |
 | F30 | **점선 테두리가 변마다 대시 간격을 맞춤**(9.85 ~ 10.25px) — CSS · SVG는 외곽선을 따라 이어 그림 | SVG 6 / 4 대시, 위상만 맞춤 — 테두리 픽셀은 수동 검토 | — |
 | F31 | **작업 중 원본 변경**: Button Secondary Solid 신설 · TextButton Secondary 색 분리 · 변수 삭제, `fill/primary/subtle/hover` 값 변경 | **2026-10-19 동기화** — Button 352/352. Primary · Outline 테두리 변수는 Figma에 복구(R1, `VariableID:1033:4608`)되어 코드도 토큰 사용 | — |
-| F32 | `dropdownmenu_line` 세로 padding(`py-1`)과 구분선 두께(`border-width`)가 원격 라이브러리 변수에 바인딩 | 같은 값의 로컬 `spacing/padding/p-1` · `border-width/border` | 로컬 변수 사용 |
+| F32 | `dropdownmenu_line` 구분선 두께(`border-width`)가 원격 라이브러리 변수에 바인딩 | **해결(2026-10-19)** — 로컬 `border-width/border`(1)로(Breadcrumb 구분선 8곳도 같이) | — |
 | F33 | **breadcrumb Expanded=True**: 메뉴를 여는 … 버튼은 Link Default인데 현재 페이지 항목이 Role=Open(브랜드 색 · semibold), 메뉴는 경로 오른쪽 끝에 정렬(md x 89 · sm x 60) | 메뉴는 … 버튼 아래 2px(시작 정렬), 현재 페이지는 Current 유지, Role=Open은 `BreadcrumbItem open`으로 제공 | 의도 확인 (결정 필요) |
 | F34 | breadcrumb-item Hover · Pressed · Open · Current Variant의 아이콘 슬롯이 비어 있음(Link Default만 House) — `breadcrumb/home-icon/hover · pressed · current`, `background/focus` · `border/focus` · `border/menu` 변수는 어디에도 바인딩되지 않음 | 아이콘 색은 같은 이름의 변수 사용, focus · menu 변수는 미사용 | 아이콘 슬롯 채우기, 변수 정리 |
 | F35 | breadcrumb "Show Parent"가 Full에서도 상위 페이지를 숨김(경로가 끊김) | Collapsed에만 적용 | 의도 확인 |
@@ -158,7 +158,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F70 | skeleton Shape 값 이름 "Shape4"(100 × 10, 이름 없는 변형), Circle 모서리 `rounded-xl`(14)이 24px 원보다 큼 | `shape="shape4"` 그대로, 원은 모서리가 잘려 원형 | 이름 정리 |
 | F71 | dashboard-filter-bar 예시 — segmented-control 220px가 라벨보다 좁음(항목 70.67 − 좌우 padding 16 < "최근 30일" 58, Figma는 padding 위로 넘쳐 그림), 초기화 버튼이 스냅샷 이후 추가된 button_icon Secondary · Solid(F31), 컨트롤에 보이는 라벨 없음(Label=false) | **2026-10-19 해결**: SegmentedControl 라벨이 Figma처럼 항목 padding까지 사용(항목보다 길 때만 말줄임). 초기화 버튼 Secondary · Solid(F31 동기화 후), 컨트롤에 `aria-label` 필요 | — |
 | F72 | metric-trend Direction에 상태 값 "Disabled"가 섞여 있고, Disabled 3개(Tone별)는 모양이 같음 | `direction="disabled"`(Tone 무시) | Disabled를 별도 속성으로 |
-| F73 | data-state Partial 설명 기본값에 실제 수치("130대 중 128대 수신 · 누락된 2대…")가 들어 있음. data-freshness 배지 인스턴스에 변수 없는 흰 배경(#ffffff)이 채워져 있음(Badge Outline은 투명) | Partial 설명 기본값 없음, 배지는 Badge 그대로(흰 배경 위에서 같음) | 샘플 정리 |
+| F73 | data-state Partial 설명 기본값에 실제 수치가 들어 있음. badge_status Outline 12개 변형(sm Square · Rounded × Gray · Point · Success · Warning · Danger · Information)에 변수 없는 흰 배경(#ffffff) — 나머지 Outline 30개는 투명 | 배경 **해결(2026-10-19)** — 12개 변형의 흰 채움 삭제(data-freshness 인스턴스도 따라 투명). 설명 기본값은 그대로 | 샘플 정리 |
 | F74 | accordion-item md · Hover · Expanded가 y 40 — 같은 줄 다른 변형은 y 20 | **해결(2026-10-19)** — 복구된 1035:15685를 y 20으로 | — |
 | F75 | table_value_editable Type=Filter — Editing · Filled(693:7165) 칩이 Unselected, Hover · Filled(693:7167) 칩 State=Default, 693:7165 y 1px | **693:7165 Figma 수정 완료**(R6, Selected · Expanded). 693:7167은 다른 Type과 같은 규칙이라 오류 아님. y 1px은 모든 Editing 변형 공통 | Hover · Empty 칩(F82) |
 | F76 | table_value_editable Type=Filter · Editing에 칩 아래 **다중 선택 목록**(listbox sm + option Selected 2개) — 라이브러리에 칩 트리거 + 다중 선택 목록 컴포넌트 없음 | 목록은 그리지 않고 검증에서 목록 위 4.5px 제외 | 구현 방식 결정(D3, [R7](./figma-fix-requests.md#r7-table-편집-칸-filter--editing의-다중-선택-목록--결정-대기-d3)) |

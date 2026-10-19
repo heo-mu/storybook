@@ -2,5 +2,5 @@
 /* Figma collection "Component" (Mode 1) — <kind>/progress/… — 2 variables */
 :root {
   --colors-progress-border-surface-default: var(--colors-surface-overlay);
-  --colors-progress-border-indicator-default: var(--colors-button-primary-solid-background-pressed);
+  --colors-progress-border-indicator-default: var(--colors-fill-primary-strong-pressed);
 }
