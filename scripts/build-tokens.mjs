@@ -70,6 +70,8 @@ function resolve(v, depth = 0) {
 const typeOf = (v) => (resolve(v).startsWith('#') ? 'color' : v.raw.startsWith('"') ? 'string' : 'number');
 
 function block(selector, entries, comment) {
+  // A "*/" inside the note would end the comment early and turn the rest into an invalid selector, dropping the rule.
+  if (comment?.includes('*/')) throw new Error(`Comment would close early: ${comment}`);
   return `${comment ? `/* ${comment} */\n` : ''}${selector} {\n${entries.map(([k, val]) => `  ${k}: ${val};`).join('\n')}\n}\n`;
 }
 
@@ -91,7 +93,7 @@ const outputs = [
 ];
 const groups = [...new Set(variables.filter((v) => v.collection === 'Component' && v.name.includes('/')).map((v) => componentGroup(v.name)))].sort();
 for (const g of groups) {
-  outputs.push(['Component', `components/${g}.css`, `Figma collection "Component" (Mode 1) — ${g === 'button' ? 'colors/button/*, colors/button_text/*' : `*/${g}/*`}`, (v) => v.name.includes('/') && componentGroup(v.name) === g]);
+  outputs.push(['Component', `components/${g}.css`, `Figma collection "Component" (Mode 1) — ${g === 'button' ? 'colors/button/*, colors/button_text/*' : `<kind>/${g}/…`}`, (v) => v.name.includes('/') && componentGroup(v.name) === g]);
 }
 const pushJson = (collection, list, file, extra) => {
   for (const v of list) {
