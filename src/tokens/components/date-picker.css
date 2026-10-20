@@ -45,7 +45,7 @@
   --colors-date-picker-day-background-default: var(--colors-surface-page);
   --colors-date-picker-day-background-hover: var(--colors-fill-primary-subtle-hover);
   --colors-date-picker-day-background-pressed: var(--colors-fill-primary-subtle-pressed);
-  --colors-date-picker-day-background-today: var(--colors-surface-page);
+  --colors-date-picker-day-background-today: color-mix(in srgb, var(--colors-fill-secondary-strong-default) 10%, transparent);
   --colors-date-picker-day-background-selected: var(--colors-fill-primary-strong-default);
   --colors-date-picker-day-background-outside: var(--colors-surface-page);
   --colors-date-picker-day-background-disabled: var(--colors-surface-page);

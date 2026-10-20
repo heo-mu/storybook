@@ -1,6 +1,7 @@
 # Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (733 of 815)
 # Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: accordion background/disabled, border/focus → border/hover, title/disabled); F80 2026-10-19: spacing/size/border-radius/border-width accordion tokens created (restored accordion-item 1035:15648); F78 2026-10-19: colors/chart/* Chart Component tokens created (chart 698:4399, chart-legend-item 697:4514, chart-tooltip 693:9776); A-1/A-2 2026-10-19: disabled labels → text/inactive, control borders → border/gray (hover gray-dark), switch off track 500/600/700, empty-state / stepper / switch text; policy pass: colors/dialog/scrim/default; full sync 2026-10-19 night: colors/search-field/solid/border/error (E8); chart token rework synced 2026-10-19 night (bar gradient start/end with alias opacity "*40%", line/{primary,compare,02,03,04}/default, label/legend/default; 91 chart paints moved off 5 deleted variables, same colours); v1.0 candidate 2026-10-20: colour scopes from usage (no ALL_SCOPES), required marks colors/{input,textarea,select/outline,date-picker/trigger}/outline/required/default, colors/file-uploader/helper/error; review prep 2026-10-20: colors/alert/status-icon/warning, colors/toast/{border,status-icon}/warning (V-3, alias colors/brand-status/warning/strong)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
+# 2026-10-20: date-picker_day Today background alias updated from surface/page to secondary/strong/default at 10% opacity.
 # Lines without [scopes] are scoped ALL_SCOPES.
 #scopes ALL_SCOPES
 colors/input/outline/background/default=@S:colors/surface/page [FRAME_FILL,SHAPE_FILL]
@@ -402,7 +403,7 @@ colors/date-picker/weekday/label/default=@S:colors/text/tertiary [TEXT_FILL]
 colors/date-picker/day/background/default=@S:colors/surface/page [FRAME_FILL,SHAPE_FILL]
 colors/date-picker/day/background/hover=@S:colors/fill/primary/subtle/hover [FRAME_FILL,SHAPE_FILL]
 colors/date-picker/day/background/pressed=@S:colors/fill/primary/subtle/pressed [FRAME_FILL,SHAPE_FILL]
-colors/date-picker/day/background/today=@S:colors/surface/page [FRAME_FILL,SHAPE_FILL]
+colors/date-picker/day/background/today=@S:colors/fill/secondary/strong/default*10% [FRAME_FILL,SHAPE_FILL]
 colors/date-picker/day/background/selected=@S:colors/fill/primary/strong/default [FRAME_FILL,SHAPE_FILL]
 colors/date-picker/day/background/outside=@S:colors/surface/page [FRAME_FILL,SHAPE_FILL]
 colors/date-picker/day/background/disabled=@S:colors/surface/page [FRAME_FILL,SHAPE_FILL]
