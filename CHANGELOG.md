@@ -7,6 +7,26 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### v1.0 테스트 후보 rc.1 (2026-10-20, Figma와 함께 · 배포하지 않음)
+
+개발팀 검토용 후보입니다(로컬 태그 `checkpoint/v1.0-candidate`). npm · Storybook 배포와 정식 `1.0.0` 출시는 하지 않았고, `package.json` 버전도 바꾸지 않았습니다(버전 번호는 D2 결정). 후보 범위 · 시험 결과 · 남은 결정: [docs/v1.0-candidate.md](docs/v1.0-candidate.md).
+Figma 변경 기록: [docs/figma-fix-requests.md V절](docs/figma-fix-requests.md#v-v10-후보--figma-디자인-시스템-독립-점검--보완-2026-10-20-사용자-승인-작업).
+
+- **Added — 필수 입력**: `Input` · `Textarea` · `Select` · `DatePicker`의 `required` — 라벨 뒤 4px 점(Figma `Required`, 토큰
+  `--colors-<칸>-…-required-default`) + 입력 요소 `required`. `Select`는 버튼 설명으로 "필수"를 전달합니다.
+- **Added — 업로드 실패**: `FileUploaderItem status="error"`(Figma `State=Error`) — 파일 정보 오류 색, "삭제" 버튼 유지, 버튼 설명에 실패 이유.
+  `FILE_UPLOADER_ITEM_STATUSES`에 `'error'` 추가.
+- **Added — 사용 예시**: Storybook `사용 예시/입력 화면 · 대시보드 화면 · 목록 화면`(Figma 사용 예시 화면과 같은 구성).
+- **Added — 토큰**: 필수 표시 4개 · `--colors-file-uploader-helper-error`, 효과 `--effect-elevation-segmented-selected` · `--effect-elevation-slider-handle`
+  (기존 그림자와 같은 값).
+- **화면 변경 — 표**: `Table` 머리글 · 본문 칸 내용을 가운데 정렬(모든 Figma 표 칸 · 예시와 같음). 열마다 다른 정렬(긴 글 왼쪽 · 숫자 오른쪽) 옵션은 검토 항목입니다(V-13).
+- **Added — 표 `id`**: `TableProps`에 `id`(실행 시에는 이미 `<table>`에 전달됐지만 타입이 막고 있었음 — 외부 프로젝트 점검에서 발견). `aria-controls` 대상 등에 씁니다.
+- **Fixed**: `BreadcrumbItem open`에 마우스를 올리거나 누를 때 글자 색이 기본 색으로 바뀌던 문제(Figma Role=Open Hover · Pressed는 `label/focus`).
+- **내부**: 입력 칸 글자 색이 Figma가 연결한 `…-value-*` · `…-placeholder-*` 토큰을 씁니다(값 같음, 화면 변화 없음).
+- **스토리**: 상호작용 테스트 3개(DropdownMenu 접근성 · Table 동작 · 목록 화면)가 React Aria 목록이 그려질 때까지 기다립니다 — Storybook 화면에서 실패로 표시되던 문제(테스트 실행은 통과).
+- **검증 도구**: `verify-figma`가 글자 색도 비교합니다(글자 상자의 가장 진한 픽셀. Chromium은 채널 차 ≤ 40, Firefox · WebKit은 같은 색의 안티에일리어싱
+  농도 차이만 허용). Figma 기준 이미지 전체(71세트) 재캡처.
+
 ### 문서 · 정책 간소화 (2026-10-20, Figma와 함께)
 처음 보는 사람도 바로 이해할 수 있게 Figma · Storybook의 설명을 정리하고, 기술 정보는 개발 문서로 옮겼습니다([docs/README.md](docs/README.md)).
 컴포넌트 · Props · 타입 · 토큰은 바뀌지 않았습니다.

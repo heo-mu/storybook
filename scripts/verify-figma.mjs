@@ -8,7 +8,8 @@
 //   • pixels outside text boxes vs the Figma screenshot (figma/reference/<set>.png) — colours, borders,
 //     icons, radii; text is rasterised differently by Figma and browsers, so text boxes are compared by
 //   • glyph placement (ink centroid of each Figma text box, ±0.5px)
-//   • text colour (the strongest ink pixel of each text box, ≤ textColorTolerance per RGB channel, default 40)
+//   • text colour (the strongest ink pixel of each text box, ≤ textColorTolerance per RGB channel, default 40; in Firefox /
+//     WebKit a larger difference passes only as the same colour at another anti-aliasing coverage — see coverageOnly)
 // Variant positions inside the set come from figma/metadata/section-58-5174.xml.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -83,7 +84,19 @@ function inkColor(img, box) {
     const d = Math.hypot(c[0] - base[0], c[1] - base[1], c[2] - base[2]);
     if (d > bestD) { bestD = d; best = c; }
   }
-  return bestD >= 40 ? best : null;
+  return bestD >= 40 ? { ink: best, base } : null;
+}
+
+/**
+ * Same colour at another coverage: every channel of `dom` sits between the background and `fig` by one common ratio.
+ * A lighter grey of the same hue also fits this shape, so it is only used off Chromium: CSS colour does not depend on the
+ * engine, and a wrong token fails the strict Chromium run of the same story.
+ */
+function coverageOnly(fig, dom, base) {
+  const ratios = [0, 1, 2].filter((i) => Math.abs(fig[i] - base[i]) > 30).map((i) => (dom[i] - base[i]) / (fig[i] - base[i]));
+  if (!ratios.length) return false;
+  const lo = Math.min(...ratios), hi = Math.max(...ratios);
+  return lo >= 0.55 && hi <= 1.15 && hi - lo <= 0.12;
 }
 
 function sideBySide(a, b, diff) {
@@ -304,12 +317,15 @@ for (const set of config.sets) {
       const colors = [];
       for (const t of textBoxes) {
         if (contentDependent.some((re) => re.test(t.p))) continue;
-        const a = inkColor(fig, t), b = inkColor(dom, t);
-        if (!a || !b) continue;
+        const fa = inkColor(fig, t), fb = inkColor(dom, t);
+        if (!fa || !fb) continue;
+        const a = fa.ink, b = fb.ink;
         const d = Math.max(...a.map((v, i) => Math.abs(v - b[i])));
         colors.push({ p: t.p, d });
         const hex = (c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
-        if (d > colorTol) issues.push({ cat: 'text-colour', detail: `${t.p} ink ${hex(b)} vs Figma ${hex(a)} (Δ${d})` });
+        const detail = `${t.p} ink ${hex(b)} vs Figma ${hex(a)} (Δ${d})`;
+        if (d > colorTol && BROWSER !== 'chromium' && coverageOnly(a, b, fa.base)) notes.push(`${detail} — same colour, ${BROWSER} anti-aliasing coverage`);
+        else if (d > colorTol) issues.push({ cat: 'text-colour', detail });
       }
       pixel.textColors = colors;
       if (issues.some((i) => i.cat === 'pixels' || i.cat === 'text-position' || i.cat === 'text-colour')) {
@@ -347,7 +363,7 @@ for (const set of config.sets) {
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);
   lines.push(`  non-text pixels: mean ${((ratios.reduce((a, b) => a + b, 0) / Math.max(1, ratios.length)) * 100).toFixed(2)}% differing, max ${(Math.max(0, ...ratios) * 100).toFixed(2)}%`);
   const textColors = results.flatMap((r) => r.pixel?.textColors ?? []);
-  if (textColors.length) lines.push(`  text colour vs Figma: ${textColors.length} text boxes, max channel Δ${Math.max(...textColors.map((c) => c.d))}`);
+  if (textColors.length) lines.push(`  text colour vs Figma: ${textColors.length} text boxes, max channel Δ${Math.max(...textColors.map((c) => c.d))}${BROWSER === 'chromium' ? '' : ' (above 40 only as the same colour at another anti-aliasing coverage)'}`);
   if (glyphs.length) lines.push(`  glyph offset vs Figma: max |dx| ${Math.max(...glyphs.map((o) => Math.abs(o.dx))).toFixed(2)}px, max |dy| ${Math.max(...glyphs.map((o) => Math.abs(o.dy))).toFixed(2)}px`);
   const noteCount = results.reduce((a, r) => a + r.notes.length, 0);
   if (noteCount) lines.push(`  ~ ${noteCount} sub-pixel text-width notes (Figma whole-pixel text boxes)`);

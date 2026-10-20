@@ -12,6 +12,7 @@
 
 | 문서 | 내용 |
 | --- | --- |
+| [v1.0-candidate.md](./v1.0-candidate.md) | **v1.0 테스트 후보** — 범위 · 시험 결과 · 남은 문제 · 개발팀 검토 항목(처음 보는 개발팀은 여기부터) |
 | [usage.md](./usage.md) | 다른 React 프로젝트에서 설치 · import |
 | [public-api.md](./public-api.md) · [api.md](./api.md) | 공개 컴포넌트 · Props · 타입(자동 생성) |
 | [components/](./components/) | 컴포넌트별 개발 노트 — Figma 속성 ↔ Props, 토큰, 구현 세부, 정책 항목 |

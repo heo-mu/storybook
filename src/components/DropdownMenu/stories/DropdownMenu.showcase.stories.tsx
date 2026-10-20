@@ -197,7 +197,8 @@ export const Accessibility: Story = {
   ),
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('menu', { name: '작업' })).toBeInTheDocument();
-    await expect(canvas.getByRole('group', { name: '편집' })).toBeInTheDocument();
+    // Items appear after React Aria's collection pass (immediate in tests under act(), one render later in the browser).
+    await expect(await canvas.findByRole('group', { name: '편집' })).toBeInTheDocument();
     await expect(canvas.getByRole('menuitem', { name: '삭제' })).toBeInTheDocument();
     await expect(canvas.getByRole('separator')).toBeInTheDocument();
   },

@@ -4,7 +4,7 @@
 목표는 **Figma와의 픽셀 정합성을 유지하면서, 특정 브라우저가 없어도 깨지지 않는 것**입니다.
 
 - 지원 정보: MDN browser-compat-data (2026-10-16 기준)
-- 측정: Playwright로 Chromium 156, Firefox 157, WebKit 27.2(Windows)에서 352개 Variant 전부를(2026-10-19 Figma 동기화 후 재측정)
+- 측정: Playwright로 Chromium 156, Firefox 157, WebKit 27.2(Windows)에서 352개 Variant 전부를(2026-10-20 v1.0 후보 점검에서 재측정)
   `npm run verify:button -- --browser=<engine>`으로 Figma 사양과 비교
 
 ## 측정 결과
@@ -16,6 +16,7 @@
 | 라벨 글자 위치 (Figma 대비) | 가로 ≤ 0.33px, 세로 ≤ 0.13px | 가로 ≤ 0.70px, 세로 ≤ 0.09px | 가로 ≤ 0.60px, 세로 ≤ 0.09px |
 | 실제 마우스 Default / Hover / Pressed | 36/36 | 36/36 | 36/36 |
 | IconButton (텍스트 없음) | 144/144 | 144/144 | 144/144 |
+| 텍스트 버튼 `button_text` 16개 — 라벨 글자 위치 | 가로 ≤ 0.85px(sm, 허용치 안), 세로 ≤ 0.08px | 가로 ≤ 0.21px · 너비 1px 미만 좁음(71.10px) | 가로 ≤ 0.60px · 너비 1px 미만 좁음(71.13px) |
 
 Firefox·WebKit의 차이는 아래 `calc-size()` 한 가지가 원인이며 모두 1px 미만입니다.
 
@@ -151,6 +152,13 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   DataFreshness 배지 0.8px · "·" Firefox 0.5px 위).
 - DashboardFilterBar(Firefox · WebKit): calc-size가 없어 라벨이 1px 미만씩 좁아 오른쪽 그룹이 최대 3.25px 당겨지고 컨트롤 테두리 픽셀이 0.6% 달라
   엔진별 픽셀 허용치 0.7%(Chromium 0.5% 기본).
+
+## 콘솔 경고 (외부 프로젝트 점검, 2026-10-20)
+
+- 패키지를 설치한 Vite + React 앱에서 Chromium · WebKit은 콘솔 오류 · 경고 0건.
+- Firefox는 경고 11건, 모두 `downloadable font: name: name records are not sorted` — 의존성 `pretendard`(^1.3.9)가 제공하는
+  Pretendard Variable 부분 글꼴 파일의 이름 표 순서에 대한 Firefox 글꼴 검사(OTS) 경고입니다. 글꼴은 정상으로 로드되고 Firefox 화면 비교도 통과합니다.
+  글꼴 파일은 고치지 않았고 경고도 숨기지 않았습니다(글꼴 제공처 문제 — v1.0-candidate.md 남은 문제).
 
 ## 검증하지 못한 환경
 

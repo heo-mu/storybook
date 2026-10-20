@@ -21,7 +21,11 @@ import { cx } from '../../utils/cx';
 import { Checkbox } from '../Checkbox';
 import { Tooltip } from '../Tooltip';
 
-export type TableProps = Omit<RACTableProps, 'className'> & { className?: string };
+export type TableProps = Omit<RACTableProps, 'className'> & {
+  className?: string;
+  /** `<table>`의 `id`. 다른 요소의 `aria-controls` 등에서 표를 가리킬 때 씁니다. */
+  id?: string;
+};
 
 /**
  * 여러 항목의 데이터를 행과 열로 보여 주는 표입니다. 화살표 키로 칸을 이동하고, 행 선택 · 정렬 · 행 동작을 지원합니다.

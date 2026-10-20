@@ -1195,6 +1195,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `className` | `string` |  |  |
+| `id` | `string` |  | `<table>`의 `id`. 다른 요소의 `aria-controls` 등에서 표를 가리킬 때 씁니다. |
 
 ### `TableHeader`
 

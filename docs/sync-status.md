@@ -1,6 +1,6 @@
 # Figma ↔ Storybook 동기화 상태 (컴포넌트별)
 
-생성: 2026-10-20 01:20 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-20 00:55 UTC), 스토리 테스트 + a11y 리포터 실행, 개발 노트(docs/components)의 Figma 속성 대조.
+생성: 2026-10-20 03:23 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-20 02:38 UTC), 스토리 테스트 + a11y 리포터 실행, 개발 노트(docs/components)의 Figma 속성 대조.
 
 | 열 | 기준 |
 | --- | --- |
@@ -25,12 +25,12 @@
 | dashboard-filter-bar (DashboardFilterBar) | ✓ dashboard-filter-bar 698:4163 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
 | data-freshness (DataFreshness) | ✓ data-freshness 697:4543 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | data-state (DataState) | ✓ data-state 698:4359 · 6/6 | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 8 | ✓ 경고 0 | ✓ |
-| date-picker (DatePicker · Calendar) | ✓ date-picker_trigger 144:723 · 21/21<br>date-picker_message 144:888 · 3/3<br>date-picker_calendar 144:1644 · 1/1<br>date-picker_day 144:1033 · 7/7<br>date-picker_navigation 144:1328 · 8/8 | ✓ | ✓ 40/40 / 40/40 / 40/40 | ✓ play 6 · 스토리 24 | ✓ 경고 0 | ✓ |
+| date-picker (DatePicker · Calendar) | ✓ date-picker_trigger 144:723 · 21/21<br>date-picker_message 144:888 · 3/3<br>date-picker_calendar 144:1644 · 1/1<br>date-picker_day 144:1033 · 7/7<br>date-picker_navigation 144:1328 · 8/8 | ✓ | ✓ 40/40 / 40/40 / 40/40 | ✓ play 7 · 스토리 26 | ✓ 경고 0 | ✓ |
 | dialog (Dialog) | ✓ dialog 149:2838 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | dropdown-menu (DropdownMenu) | ✓ dropdownmenu_item 179:4819 · 5/5<br>dropdownmenu_line 179:5082 · 1/1 | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 9 | ✓ 경고 0 | ✓ |
 | empty-state (EmptyState) | ✓ empty-state 724:14963 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
-| file-uploader (FileUploader · Loading) | ✓ file-uploader 651:3945 · 5/5<br>file-uploader-item 651:3999 · 3/3<br>loading 675:5644 · 2/2 | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 17 | ✓ 경고 0 | ✓ |
-| input (Input) | ✓ input 76:2945 · 21/21 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
+| file-uploader (FileUploader · Loading) | ✓ file-uploader 651:3945 · 5/5<br>file-uploader-item 651:3999 · 4/4<br>loading 675:5644 · 2/2 | ✓ | ✓ 11/11 / 11/11 / 11/11 | ✓ play 2 · 스토리 18 | ✓ 경고 0 | ✓ |
+| input (Input) | ✓ input 76:2945 · 21/21 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 4 · 스토리 14 | ✓ 경고 0 | ✓ |
 | link (Link) | ✓ link 111:1509 · 15/15 | ✓ | ✓ 15/15 / 15/15 / 15/15 | ✓ play 3 · 스토리 9 | ✓ 경고 0 | ✓ |
 | metric-card (MetricCard) | ✓ metric-card 697:4487 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | metric-trend (MetricTrend) | ✓ metric-trend 697:4482 · 12/12 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
@@ -40,18 +40,18 @@
 | radio (Radio) | ✓ radio 102:2677 · 24/24 | ✓ | ✓ 24/24 / 24/24 / 24/24 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
 | search-field (SearchField) | ✓ search-field 216:6570 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | segmented-control (SegmentedControl) | ✓ segmented-control 531:24471 · 3/3<br>segmented-item 524:24397 · 18/18 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
-| select (Select) | ✓ select 95:4740 · 24/24<br>listbox 97:2665 · 3/3<br>option 97:2286 · 15/15<br>select_message 95:2960 · 3/3 | ✓ | ✓ 45/45 / 45/45 / 45/45 | ✓ play 5 · 스토리 19 | ✓ 경고 0 | ✓ |
+| select (Select) | ✓ select 95:4740 · 24/24<br>listbox 97:2665 · 3/3<br>option 97:2286 · 15/15<br>select_message 95:2960 · 3/3 | ✓ | ✓ 45/45 / 45/45 / 45/45 | ✓ play 6 · 스토리 21 | ✓ 경고 0 | ✓ |
 | skeleton (Skeleton) | ✓ skeleton 697:4486 · 4/4 | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | slider (Slider) | ✓ slider 391:1988 · 2/2<br>handle 391:2013 · 5/5 | ✓ | ✓ 7/7 / 7/7 / 7/7 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | stepper (Stepper) | ✓ stepper_indicator_horizontal 179:1621 · 5/5<br>stepper_indicator_vertical 203:3708 · 5/5<br>stepper_connector_horizontal 179:1614 · 2/2<br>stepper_connector_vertical 203:4253 · 2/2<br>stepper_horizontal 179:2043 · 3/3<br>stepper_vertical 203:3949 · 3/3 | ✓ | ✓ 20/20 / 20/20 / 20/20 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | switch (Switch) | ✓ switch 107:409 · 16/16 | ✓ | ✓ 16/16 / 16/16 / 16/16 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | table (Table) | ✓ table_header 351:3452 · 3/3<br>table_body 355:3739 · 8/8<br>table_key 355:4193 · 2/2<br>table_value 355:4460 · 2/2<br>table_value_editable 503:23264 · 52/52 | ✓ | ✓ 64/67 (수동 검토 3) / 64/67 (수동 검토 3) / 64/67 (수동 검토 3) | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
 | tabs (Tabs) | ✓ tab_filled 91:5000 · 60/60<br>tab_line 91:5241 · 30/30 | ✓ | ✓ 90/90 / 90/90 / 90/90 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
-| textarea (Textarea) | ✓ textarea 86:2597 · 14/14 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 11 | ✓ 경고 0 | ✓ |
+| textarea (Textarea) | ✓ textarea 86:2597 · 14/14 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 4 · 스토리 13 | ✓ 경고 0 | ✓ |
 | toast (Toast) | ✓ toast 91:5927 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 4 · 스토리 8 | ✓ 경고 0 | ✓ |
 | tooltip (Tooltip) | ✓ tooltip 149:1111 · 4/4 | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
 
-요약: 37개 검증 단위 — Figma 정의 37 · 구현 37 · 시각 3 엔진 37(수동 검토 변형 제외 모두 통과) · 인터랙션 37 · 접근성 37 · 문서 37. 스토리 테스트 396개(실패 0, a11y 경고 0).
+요약: 37개 검증 단위 — Figma 정의 37 · 구현 37 · 시각 3 엔진 37(수동 검토 변형 제외 모두 통과) · 인터랙션 37 · 접근성 37 · 문서 37. 스토리 테스트 408개(실패 0, a11y 경고 0).
 
 ## 문서 점검 (2026-10-20 문서 · 정책 간소화)
 

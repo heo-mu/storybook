@@ -2,7 +2,7 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
-## v1.0 테스트 후보 준비 (2026-10-20, 진행 중)
+## v1.0 테스트 후보 준비 (2026-10-20, 완료)
 
 체크포인트 `checkpoint/pre-v1-candidate`(2c7dc48). 순서: ① Figma 독립 점검 · 보완 → ② Storybook 동기화 → ③ 전체 QA → ④ v1.0 후보 정리.
 재개: `git log --oneline checkpoint/pre-v1-candidate..`, 이 절과 [v1.0-candidate.md](./v1.0-candidate.md).
@@ -19,6 +19,11 @@
   검증 강화: verify-figma에 **글자 색 비교** 추가(글자 상자의 가장 진한 픽셀, 채널 차 ≤ 40 — 옛 기준 이미지로 실패하는지 먼저 확인).
   이 검사와 전체 검증으로 찾은 Figma 문제를 Figma에서 먼저 고침: F33(Breadcrumb 펼침 변형을 정책대로), F92(파일 실패 변형 이름 속성 연결), F93(① 바인딩 때 빠진 누름 원 불투명도),
   Dashboard 예시 범례 "유형" → "이번달 · 저번달". 결과: 스토리 테스트 408/408, Chromium 정합성 전체 통과(Breadcrumb · Slider 수정 후).
+- ③ **완료** — 3 엔진 정합성 108/108(71세트 · 858변형, 수동 검토 3), Button 352 × 3, 스토리 408 · axe 위반 0, 포커스 · 툴팁 · FilterChipSelect 탐침, 외부 앱(npm pack) 3 엔진,
+  정적 빌드 문서 · 스토리 문구 · 콘솔 검사, Figma 체크섬 · 컴포넌트 속성 76개 재확인(QA 중 변경 없음). 고친 것: 글자 색 판정의 엔진별 기준(Firefox · WebKit은 같은 색의 농도 차만),
+  `Table` `id` 타입(외부 앱에서 발견), 브라우저에서 React Aria 목록보다 먼저 찾던 상호작용 테스트 3개, browser-support.md 갱신. 결과 표: [v1.0-candidate.md 8절](./v1.0-candidate.md#8-시험-결과).
+- ④ **완료** — [v1.0-candidate.md](./v1.0-candidate.md)(범위 · 토큰 · 상태 · 사용법 · API · 동기화 · 시험 결과 · 남은 문제 · 검토 항목 R-1 – R-7 · 결정 V-1 – V-13),
+  CHANGELOG "v1.0 테스트 후보 rc.1", sync-status.md 재생성, 로컬 태그 `checkpoint/v1.0-candidate`. 배포 · Push · 버전 변경 없음.
 
 ## Figma · Storybook 문서 · 정책 간소화 (2026-10-20, 완료)
 
@@ -177,6 +182,9 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 ## 다음 작업
 
+**v1.0 테스트 후보(2026-10-20)**: 개발팀 검토 — [v1.0-candidate.md](./v1.0-candidate.md) 10절 R-1 – R-7(버전 번호 포함)과 11절 남은 결정 V-1 – V-13.
+디자인 결정이 나면 Figma → 코드 순서로 반영하고 이 문서에 기록합니다.
+
 모든 Phase 완료. 남은 일은 [final-report.md 8절](./final-report.md#8-최종-배포-준비-2026-10-19)의 결정(D1 – D6)과 [Figma 수정 요청](./figma-fix-requests.md)(R1 – R8) 반영,
 그리고 배포 승인 후 [release-checklist.md](./release-checklist.md)의 배포 단계입니다. 아래는 이전 결정 항목의 현재 상태입니다.
 
@@ -191,8 +199,7 @@ WebKit select md Disabled 저대비 글자의 무게중심 측정 노이즈(이�
 
 **결정 필요 — Toast 표시 위치 · 간격 · 시간(F44)**: Figma에 없어 코드 정책으로 정했습니다.
 
-**결정 필요 — Breadcrumb 펼친 상태(F33)**: Figma는 메뉴가 열린 동안 현재 페이지 항목을 Role=Open으로 그렸습니다. 코드는 … 버튼이
-메뉴를 열고 현재 페이지는 Current로 둡니다.
+**Breadcrumb 펼친 상태(F33) — 해결(2026-10-20)**: Figma 펼침 변형을 정책(Rules 05)대로 고쳤습니다 — 현재 페이지 항목 Role=Current, 메뉴는 … 항목 아래 2px 시작 정렬(figma-issues.md F33).
 
 **Figma 원본 변경(F31) — 동기화 완료(2026-10-19)**: 스냅샷 체크섬 8그룹이 원본과 일치하고 Button 352개 · 기준 이미지가 최신입니다.
 Primary · Outline 테두리 변수(원본에서 삭제)만 결정 D1 대기입니다.

@@ -222,7 +222,7 @@ export const Interaction: StoryObj<{ onRowAction: Mock<(key: unknown) => void> }
   name: '동작',
   args: { onRowAction: fn() },
   render: (args) => (
-    <Table aria-label="설비 목록" selectionMode="multiple" onRowAction={args.onRowAction}>
+    <Table id="equipment-table" aria-label="설비 목록" selectionMode="multiple" onRowAction={args.onRowAction}>
       <TableHeader>
         <TableSelectionColumn />
         <TableColumn isRowHeader>설비명</TableColumn>
@@ -241,7 +241,13 @@ export const Interaction: StoryObj<{ onRowAction: Mock<(key: unknown) => void> }
   ),
   play: async ({ args, canvas, userEvent, step }) => {
     const grid = canvas.getByRole('grid', { name: '설비 목록' });
+    // Rows appear after React Aria's collection pass (immediate in tests under act(), one render later in the browser).
+    await waitFor(() => expect(within(grid).getAllByRole('row')).toHaveLength(1 + ROWS.length));
     const rows = within(grid).getAllByRole('row');
+    await step('id reaches the <table> (aria-controls target)', async () => {
+      await expect(grid.tagName).toBe('TABLE');
+      await expect(grid).toHaveAttribute('id', 'equipment-table');
+    });
     await step('clicking a row runs its action', async () => {
       await userEvent.click(within(rows[2]).getByText('2호기 공조'));
       await expect(args.onRowAction).toHaveBeenCalledWith('2');

@@ -300,3 +300,16 @@ data-state · 예시 프레임 원격 흰 배경(#ffffff), F77 수정 여부, �
 | 8 | 기능 · API | 라이브러리 소스 80개 파일은 주석 · JSDoc만 바뀜(TypeScript로 주석을 뺀 코드 비교 — 동일). Props · 타입 · 토큰 · 동작 변화 없음. 스토리 ID 그대로(메타 `id` 고정), 자동 생성 컴포넌트 문서 45쪽만 `--docs` → `--문서` |
 | 9 | 검증 | typecheck · lint · 라이브러리 빌드 · Storybook 빌드 통과(기존 청크 크기 경고만) / 스토리 테스트 90 파일 · **396개** 통과, 콘솔 출력 0 / a11y 경고 0 · `verify:a11y` 396 스토리 위반 0 / `verify:all` 36 컴포넌트 × 3 엔진 **108/108** / `verify:button` 352 변형 + 실제 포인터 36 × 3 엔진 / **화면 문구 재검사**: 빌드된 Storybook의 문서 83쪽 · 스토리 396개 렌더링 결과에서 노드 · 변수 ID · 버전명 · 날짜 · 파일 경로 · 정책 ID · MCP · 영어 문장 0(Storybook 자체 UI 문구와 예시 데이터 — 외부 링크 예시 "Figma 열기", 시각 값 `2026-10-14T09:30` — 제외) / Figma 재조회: 체크섬 8그룹 · 컴포넌트 속성 76세트 변화 없음, 주석 0, Rules 02–09장 / 점검표 [sync-status.md](./sync-status.md): 37개 단위 × 동기화 6열 + 문서 3열 모두 통과 |
 | 10 | 남은 점 · 미검증 | **Storybook 자체 UI 문구**는 영어(Props 표 머리글 Name · Description · Default · Control, "Show code", 컨트롤 없음 안내, 시작 안내 패널) — Storybook에 번역 설정이 없어 그대로 둠. **사람 검토 권장**: 한국어 표현의 자연스러움, Figma Rules와 Storybook 설명의 의미 일치, 예시에서 옮긴 문장(Alert · Dialog · EmptyState의 버튼 종류, Tabs · DropdownMenu · Navigation · Stepper의 `aria-label` 권장, 각 페이지 "언제 사용하나요"의 쓰임 설명). 영어로 둔 이름: 컴포넌트명 · 속성 값이 이름인 스토리 8개(`Secondary` · `Solid` · `Filled` 등). 자동 생성 컴포넌트 문서 주소가 `--문서`로 바뀜(배포 전이라 외부 링크 영향 없음). 이전 결정 대기 그대로: F85(점선 복원 확인) · F77 · F82 · F86 · F87 |
+
+## 15. v1.0 테스트 후보 (2026-10-20, Figma 수정 허용 작업)
+
+기준: "현재 디자인 시스템만으로 실제 웹 서비스를 개발할 때 필요한 UI와 사용 규칙이 충분히 준비되어 있는가".
+시작 체크포인트 `checkpoint/pre-v1-candidate`(2c7dc48), 끝 체크포인트 `checkpoint/v1.0-candidate`(로컬 태그). 원격 Push · npm 배포 · Storybook 배포 ·
+정식 1.0.0 출시 · `package.json` 버전 변경은 하지 않았습니다. 전체 내용은 [v1.0-candidate.md](./v1.0-candidate.md).
+
+| # | 항목 | 결과 |
+| --- | --- | --- |
+| 1 | Figma 점검 · 보완 | 변수 code syntax · 범위 정리, 필수 입력(4세트 80변형) · 파일 실패 상태와 토큰, 속성 연결 · 원격 변수 · 아이콘 대비 결함 수정, 사용 예시 화면 3개, 규칙 표 3행. QA에서 찾아 먼저 고친 것: F33 · F92 · F93, 대시보드 예시 범례 |
+| 2 | Storybook 동기화 | `required`(Input · Textarea · Select · DatePicker), `FileUploaderItem status="error"`, 표 칸 가운데 정렬, Breadcrumb 펼친 항목 Hover 글자 색, 입력 칸 글자 · 효과 토큰, 사용 예시 3쪽, 기준 이미지 71세트 재캡처, 글자 색 비교 검사 |
+| 3 | QA | 3 엔진 정합성 108/108 · Button 352 × 3 · 스토리 408 · axe 위반 0 · 외부 앱 3 엔진 · 콘솔 · 문서 문구 · Figma 최신 상태 — [v1.0-candidate.md 8절](./v1.0-candidate.md#8-시험-결과). 고친 것: 글자 색 엔진별 판정, `Table` `id` 타입, 상호작용 테스트 3개 |
+| 4 | 남은 점 | 미검증(실제 화면 낭독기 · 실기기 Safari · 큰 데이터 · 확대 · 고대비, axe 검토 필요 항목), Firefox 글꼴 경고 · Storybook 자체 경고 — [9절](./v1.0-candidate.md#9-남은-문제--제약). 개발팀 검토 R-1 – R-7, 디자인 결정 V-1 – V-13 |

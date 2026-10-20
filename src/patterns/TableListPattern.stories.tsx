@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
+import { expect, waitFor } from 'storybook/test';
 import { Button } from '../components/Button';
 import { FilterChip } from '../components/Chip';
 import { DataState } from '../components/DataState';
@@ -128,7 +128,8 @@ export const TableList: Story = {
   play: async ({ canvas, userEvent, step }) => {
     const table = canvas.getByRole('grid', { name: '목록' });
     await step('표 · 페이지 이동', async () => {
-      await expect(canvas.getAllByRole('row')).toHaveLength(1 + ROWS.length + 2);
+      // Rows appear after React Aria's collection pass (immediate in tests under act(), one render later in the browser).
+      await waitFor(() => expect(canvas.getAllByRole('row')).toHaveLength(1 + ROWS.length + 2));
       await expect(canvas.getByRole('button', { name: '1 페이지' })).toHaveAttribute('aria-current', 'page');
       await userEvent.click(canvas.getByRole('button', { name: '다음 페이지' }));
       await expect(canvas.getByRole('button', { name: '2 페이지' })).toHaveAttribute('aria-current', 'page');
