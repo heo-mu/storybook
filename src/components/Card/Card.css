@@ -13,10 +13,10 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-margin-m-4);
-  padding: var(--spacing-padding-p-5) 0;
+  gap: var(--spacing-card-gap-default);
+  padding: var(--spacing-card-padding-block-default) var(--spacing-card-padding-inline-default);
   overflow: hidden;
-  border-radius: var(--border-radius-rounded-lg);
+  border-radius: var(--border-radius-card-default);
   background-color: var(--colors-card-background-default);
   box-shadow:
     inset 0 0 0 var(--border-width-border) var(--colors-card-border-default),
@@ -27,8 +27,8 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: var(--spacing-margin-m-1_5);
-  padding: 0 var(--spacing-padding-p-5) var(--spacing-padding-p-3);
+  gap: var(--spacing-card-header-gap-default);
+  padding: 0 var(--spacing-card-header-padding-inline-default) var(--spacing-card-header-padding-bottom-default);
   box-shadow: inset 0 calc(-1 * var(--border-width-border)) 0 0 var(--colors-card-divider-default);
 }
 
@@ -70,15 +70,15 @@
 
 .ds-card__content {
   box-sizing: border-box;
-  padding: 0 var(--spacing-padding-p-5);
+  padding: 0 var(--spacing-card-content-padding-inline-default);
 }
 
 .ds-card__footer {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-margin-m-2);
-  padding: 0 var(--spacing-padding-p-5);
+  gap: var(--spacing-card-footer-gap-default);
+  padding: 0 var(--spacing-card-footer-padding-inline-default);
 }
 
 .ds-card__footer > * {
