@@ -70,9 +70,9 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 
 | # | 내용 | 코드 처리 | 제안 |
 | --- | --- | --- | --- |
-| E1 | 값 텍스트가 `colors/input/outline/label/*`에 바인딩(이름은 label). `…/value/*`, `…/placeholder/*` 변수는 쓰이지 않음 | 바인딩 그대로(label 토큰 = 값/플레이스홀더 색) | 값 텍스트를 `value/*`, 빈 상태를 `placeholder/*`에 바인딩 |
+| E1 | 값 텍스트가 `colors/input/outline/label/*`에 바인딩(이름은 label). `…/value/*`, `…/placeholder/*` 변수는 쓰이지 않음 | **해결(2026-10-20 v1.0 후보 점검)** — 입력 칸 값 · 빈 글자를 `value/*` · `placeholder/*` 토큰으로 다시 연결(input · textarea · select · date-picker 72곳, 값 같음). `label/*` 토큰은 이제 값 글자에 쓰이지 않음(이름 정리는 결정 V-8) | 값 텍스트를 `value/*`, 빈 상태를 `placeholder/*`에 바인딩 |
 | E2 | 필드 라벨이 Component 변수가 아닌 Semantic `colors/text/secondary`에 직접 바인딩(세 필드 공통) | 바인딩 그대로 | Rules 03에 따라 Component 변수 경유 |
-| E3 | Textarea 빈 텍스트가 Semantic `colors/text/placeholder`에 직접 바인딩(Input은 Component 변수) | 바인딩 그대로 | Component 변수로 통일 |
+| E3 | Textarea 빈 텍스트가 Semantic `colors/text/placeholder`에 직접 바인딩(Input은 Component 변수) | **해결(2026-10-20 v1.0 후보 점검)** — Textarea 빈 글자 → `colors/textarea/outline/placeholder/default`(값 같음) | Component 변수로 통일 |
 | E4 | Textarea Error 카운터가 Input 변수 `colors/input/outline/helper/error`에 바인딩, 현재 글자 수는 Semantic `colors/text/brand`(같은 값의 `textarea/outline/counter/completed` 미사용) | 바인딩 그대로 | `textarea/outline/counter/*`로 통일 |
 | E5 | Textarea 카운터 숫자(1 · 50 · 200)는 예시 값 — Error 예시는 최대값(100)을 넘음 | 실제 길이 표시, `maxLength`는 브라우저가 강제 | — |
 | E6 | Input 눈 아이콘(`Icon-eye`)이 Default를 뺀 모든 상태에 표시, 아이콘은 하나뿐(숨김/표시 구분 없음) | **2026-10-19 정책화**(Rules 04): 비밀번호 칸에서만 표시, 상태는 `aria-pressed` | 숨김 상태 아이콘은 필요 시 추가 |
@@ -99,12 +99,12 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F10 | listbox 최대 높이, 위로 열릴 때의 배치가 정의되지 않음 | **2026-10-19 정책화**(Rules 05 · select 주석): 화면에 맞춰 높이 제한 · 내부 스크롤, 공간이 없으면 위로 | — |
 | F11 | 옵션의 Hover와 Selected가 겹칠 때, 키보드 이동 중 표현이 정의되지 않음 | **2026-10-19 정책화**(Rules 02): 키보드 이동 = Hover 모양, 선택 표시(글자 · 체크)가 Hover보다 우선 | — |
 | F12 | Checkbox · Radio 테두리와 Switch 꺼짐 트랙(#a1a8b5)이 배경 대비 2.35:1 — WCAG 1.4.11(비텍스트 3:1) 미만 | **해결(2026-10-19, A-2)** — 테두리 `border/gray`(#778191, 3.87:1, hover `border/gray-dark`), 트랙 brand-gray 500 · 600 · 700. 입력 칸 테두리도 같은 규칙 | — |
-| F13 | **Slider가 다른 라이브러리(원격) 변수에 바인딩** — 간격 `spacing/margin/m-2_5` · `m-2`, radius `radius/max`(100), 그림자 효과 스타일 `md-3,10`(`color/shadow/shadow-3` #051b3c33, 0 4 6 −1), 단위 · 값 라벨 글꼴 변수 | **대부분 해결(2026-10-19)** — 간격 · 글꼴(로컬 텍스트 스타일) · 손잡이 padding을 같은 이름 · 값의 로컬로, `radius/max` → `border-radius/rounded-full`(알약 모양, 같은 화면). 남은 것: 손잡이 그림자 원격 효과 스타일 · 색(로컬에 같은 값 없음) — 코드는 값 그대로 | 손잡이 그림자 로컬 효과 스타일 등록 여부 |
+| F13 | **Slider가 다른 라이브러리(원격) 변수에 바인딩** — 간격 `spacing/margin/m-2_5` · `m-2`, radius `radius/max`(100), 그림자 효과 스타일 `md-3,10`(`color/shadow/shadow-3` #051b3c33, 0 4 6 −1), 단위 · 값 라벨 글꼴 변수 | **해결(2026-10-20 v1.0 후보 점검)** — 손잡이 그림자 → 로컬 효과 스타일 `elevation-slider-handle`(같은 값), 값 라벨 글꼴 변수 → 로컬 같은 이름 변수, 누름 원 → `colors/slider/background/handle/default` 20% | 손잡이 그림자 로컬 효과 스타일 등록 여부 |
 | F14 | Slider 단위 텍스트 "명" 상자가 글자 1개인데 24px(auto-width가 갱신되지 않은 값) | 실제 글자 너비. 검증 스토리에서만 24px로 맞춰 나머지 배치를 비교 | 텍스트 상자 크기 갱신 |
 | F15 | Slider 숫자 필드가 예시 값 "100"에 맞춘 너비(43px) | 가장 긴 값(최솟값 · 최댓값 자릿수)에 맞춘 고정 너비 — 값이 바뀌어도 트랙 길이 유지. 검증 스토리에서만 Figma 너비로 맞춤 | 필드 너비 규칙 정의 |
 | F16 | Slider 핸들이 채움 끝보다 2px 오른쪽(x 93, 채움 끝 100.5)에 수동 배치 | 핸들 중심을 값 위치에 맞춤 — 핸들 x는 비교에서 제외, 영역 픽셀 마스크 | — |
 | F17 | Slider 채움 막대가 8px 높이로 4px 트랙에 잘려 보임, Pressed 원(#007c5633)이 변수 미바인딩 | 구조 그대로 재현(8px 채움 + 트랙 clip), 원은 핸들 색 20%(`color-mix`) | 채움 높이 정리, 변수 바인딩 |
-| F18 | Segmented Control 선택 항목 그림자(#00000017, 0 1 2)가 변수 · 효과 스타일 미연결, md 가로 여백이 `spacing/margin/m-1_5`(padding이 아닌 margin 변수) | 값 그대로 재현 — 같은 값의 효과 스타일이 없어 등록 결정 대기(code-policy-audit SEGM-03 "Figma 반영 대기") | 효과 스타일 등록 · padding 변수 사용 |
+| F18 | Segmented Control 선택 항목 그림자(#00000017, 0 1 2)가 변수 · 효과 스타일 미연결, md 가로 여백이 `spacing/margin/m-1_5`(padding이 아닌 margin 변수) | **해결(2026-10-20 v1.0 후보 점검)** — 선택 항목 그림자 → 로컬 효과 스타일 `elevation-segmented-selected`(같은 값) | 효과 스타일 등록 · padding 변수 사용 |
 | F19 | Segmented Control 선택 항목의 Hover · Pressed Variant는 없지만 변수(`…/selected/background/hover` 등)는 있음 | 변수 사용(값이 Default와 같아 시각 변화 없음) | Variant 추가 또는 변수 정리 |
 | F20 | Chip 아이콘 크기가 세트마다 다름 — sm: chip-multi 16px, chip-input · chip-filter 12px | 각 세트 그대로 | 통일 |
 | F21 | chip-filter Selected 배경이 투명, Disabled 배경도 투명(chip-multi는 회색 채움) | 각 세트 그대로 | 의도 확인 |
@@ -163,7 +163,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F74 | accordion-item md · Hover · Expanded가 y 40 — 같은 줄 다른 변형은 y 20 | **해결(2026-10-19)** — 복구된 1035:15685를 y 20으로 | — |
 | F75 | table_value_editable Type=Filter — Editing · Filled(693:7165) 칩이 Unselected, Hover · Filled(693:7167) 칩 State=Default, 693:7165 y 1px | **693:7165 Figma 수정 완료**(R6, Selected · Expanded). 693:7167은 다른 Type과 같은 규칙이라 오류 아님. y 1px은 모든 Editing 변형 공통 | Hover · Empty 칩(F82) |
 | F76 | table_value_editable Type=Filter · Editing에 칩 아래 **다중 선택 목록**(listbox sm + option Selected 2개) — 라이브러리에 칩 트리거 + 다중 선택 목록 컴포넌트 없음 | **2026-10-19 밤 해결**: `FilterChipSelect`로 칩 + 다중 선택 목록 구현, Editing 칸에 목록 | — |
-| F77 | chart 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261) 비교 막대 5개(1011:14280 · 14288 · 14296 · 14303 · 14310)가 `chart/simple/history` — R3와 같은 오류 | **수정 제외(2026-10-19 지시 — 회귀 확인만)**: 5노드 바인딩 그대로(F78 Chart 토큰 연결에서도 제외), 코드는 hover=no 짝과 같은 `bar/compare`. 정합성 검증 3 엔진 통과(#e2e5e9 vs #d6dae0, 픽셀 임계 이내) | R3와 같은 수정 |
+| F77 | chart 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261) 비교 막대 5개(1011:14280 · 14288 · 14296 · 14303 · 14310)가 `chart/simple/history` — R3와 같은 오류 | **해결(2026-10-20 v1.0 후보 점검)** — hover=yes 비교 막대 5노드 → `colors/chart/bar/compare/gradient/*`(hover=no 짝 · 범례 · 툴팁과 같은 색) | R3와 같은 수정 |
 | F78 | Chart 전용 Component 변수 없음 — 차트 노드가 Semantic(`chart/series/*` 등) · Primitive(`alpha/*`) · 원격 변수에 직접 바인딩. `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes` 1011:14873 색이 hover=no 짝과 달랐음 | **해결(2026-10-19)** — `colors/chart/*` Component 토큰 19개 생성(막대 · 선 · 점 · 그림 영역 · 글자 · 범례 · 툴팁, `VariableID:1052:6697`–`6715`), 차트 세트 24변형 · 범례 · 툴팁의 보이는 색 778곳 연결(F77 5노드 제외). 1011:14873은 원본에서 짝(762:5921)과 함께 `series/compare`로 바뀌어 일치 | — |
 | F79 | chart 세트에 `hover` 속성 추가 — 24개 변형. 간단 스타일에도 호버(안내선 · 빈 원 · 강조 영역 · 툴팁) | **해결(2026-10-19)** — 코드 · 스토리 · 검증 24변형(hover=yes = 활성 항목). 두 스타일 모두 호버 · 키보드 · 탭, 강조 영역 크기 Figma대로, 감지 영역 · 터치 결함 수정. 원본 정리: 1011:14912 막대 배치 · 이름을 짝과 같게, 1011:14987 위치(30, 1334 → 20, 1324), 빈 원의 중복 흰 테두리 5개 삭제 | — |
 | F80 | Accordion 프레임 삭제 후 **재등록**(1035:15645, `accordion-item` 1035:15648) — 복구본이 원격 라이브러리 변수 · 텍스트 스타일 사본에 바인딩되어 있었음 | **해결(2026-10-19)** — 색 58개 · 레이아웃 442개 · 글자 변수를 로컬 변수로, 텍스트 스타일 24개를 로컬 스타일로 교체(값 동일). 누락된 Component 토큰 9개(`spacing/accordion/*` · `size/accordion/*` · `border-radius/accordion/default` · `border-width/accordion/default`) 생성 | — |
@@ -172,9 +172,12 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F83 | legacy 화면 시안 19개 프레임이 원격 `radius/xlarge1`(12) 사용 | 변경 안 함(DS 컴포넌트 아님) | 로컬 `rounded-[12px]`로(선택) |
 | F84 | **차트 토큰 개편(다른 편집자, 2026-10-19 밤)** — Semantic `chart/grid` · `chart/simple/*` 4개 삭제, Component `colors/chart/bar/<계열>` → `bar/<계열>/gradient/start · end/default`(끝 = 시작 색 40% 투명도 별칭), `line/{primary,compare}` → `line/<계열>/default` + `line/02 · 03 · 04`, `legend/label` → `label/legend`, 격자 · 기준선 → `border/gray-subtler`, 툴팁 배경 → `surface/page`. 샘플 글자 "유형" · 간단 선 기간 "10.07–10.11", 툴팁 계열 이름 최소 40 · 최대 80px. 개편 뒤 차트 노드 91곳이 삭제된 변수 5개(`VariableID:1129:5009` · `1129:5011` · `1113:5029` · `1113:5030` · `1052:6698`)를 가리켰고, WEB code syntax 4개(`line/02 · 03 · 04` → `line-compare`, `label/legend` → 이전 이름)가 틀렸음 | **해결(2026-10-19 밤)** — 91곳을 같은 색의 현재 변수로 다시 연결, code syntax 4개 정정(Figma). 스냅샷 · 토큰 생성기(투명도 별칭 → `color-mix()`) · 차트 CSS · 스토리 샘플 · 기준 이미지 · geometry 동기화 — chart 24 · 범례 3 · 툴팁 1 정합성 3 엔진 통과 | — |
 | F85 | 개편에서 **점선이 사라짐** — 범례 `Type=Dash Line` 표시선(703:4817), 간단 선 Group=yes 비교 선(762:5858 · 1011:15054)이 실선 | **복원(2026-10-19 밤)** — 범례 5 / 3, 비교 선 3 / 3(변형 이름 "Dash Line" · Rules 03 "색만으로 구분하지 않음" 근거, 개편 전 값). 디자이너 확인 필요 — 실선이 의도였다면 되돌리고 Rules 03 보완 | 의도 확인 |
-| F86 | **남은 원격 라이브러리 바인딩** — table_value 이미지 자리표시 벡터 355:4444 · 355:4445(인스턴스 I507:23893 포함)의 `color/border/gray`(로컬 같은 이름 변수와 값이 다름), 손잡이 그림자(F13), 문서 · 예시 프레임. 컴포넌트 안 아이콘 7곳의 원격 `colors/icon/secondary`는 같은 값 로컬 변수로 교체(2026-10-19 밤) | 값이 다른 원격 바인딩은 그대로(색 결정 필요), 코드는 자리표시를 스토리 전용 이미지로 | 로컬 변수 지정 |
-| F87 | table_value(355:4460)의 Boolean 속성 `Text#355:12` · `Picture#355:23`이 어떤 레이어에도 연결되지 않음(바꿔도 화면 변화 없음) | 코드에 대응 속성 없음(`Type`만 사용) | 속성 삭제 또는 레이어 연결 |
+| F86 | **남은 원격 라이브러리 바인딩** — table_value 이미지 자리표시 벡터 355:4444 · 355:4445(인스턴스 I507:23893 포함)의 `color/border/gray`(로컬 같은 이름 변수와 값이 다름), 손잡이 그림자(F13), 문서 · 예시 프레임. 컴포넌트 안 아이콘 7곳의 원격 `colors/icon/secondary`는 같은 값 로컬 변수로 교체(2026-10-19 밤) | **해결(2026-10-20 v1.0 후보 점검)** — 컴포넌트 안: 이미지 자리표시 → `colors/surface/overlay` · `colors/border/gray-subtle`, 필터 막대 초기화 아이콘(어두운 회색 원격 변수 — 초록 버튼 위에서 거의 안 보였음) → 버튼 아이콘 토큰, 데이터 상태 텍스트 버튼 아이콘 → `button_text` 아이콘 토큰. 남은 원격 바인딩은 문서 · 예시 프레임의 글자 꾸밈뿐(결정 V-11) | 로컬 변수 지정 |
+| F87 | table_value(355:4460)의 Boolean 속성 `Text#355:12` · `Picture#355:23`이 어떤 레이어에도 연결되지 않음(바꿔도 화면 변화 없음) | **해결(2026-10-20 v1.0 후보 점검)** — 연결되지 않은 `Text` · `Picture` 속성 삭제(인스턴스 8개 — 동작 변화 없음) | 속성 삭제 또는 레이어 연결 |
 | F88 | Card 부품 컴포넌트 이름이 자동 이름("Frame 2147239186" · "Wrapper") | **해결(2026-10-19 밤)** — `card_header`(218:7173) · `card_footer`(218:7174), 설명 추가. 코드 `CardHeader` · `CardFooter`, 검증 이름 동기화 | — |
+| F89 | select State=Focus 변형 3개(1081:7873 · 7878 · 7883)에 속성 연결이 빠짐 — Label · Label Text · Display Text가 Focus 상태에서 적용되지 않음 | **해결(2026-10-20)** — Default 변형과 같은 연결로 복구 | — |
+| F90 | input `Icon-eye` 기본값이 켜짐 — 인스턴스 58개 중 53개가 직접 끔(눈 아이콘은 비밀번호 칸에서만 — Rules 04) | **해결(2026-10-20)** — 기본값 끔(비밀번호 칸만 켬). Default 변형에는 눈 레이어가 없어 기존 인스턴스 화면 변화 없음 | — |
+| F91 | 사용 예시 설명 문구 오류 — Accordion 예시에 Select 설명, Chip 설명에 Table 설명이 복사되어 있음. 예시 프레임 이름이 "Calendar Container" 등으로 내용과 맞지 않음 | **해결(2026-10-20)** — 설명을 실제 내용으로, 예시 프레임 19개 이름을 "<컴포넌트> 사용 예시" 등으로 | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

@@ -39,6 +39,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 지우기 · 비밀번호 | 지우기(X)는 마우스 보조 — Input은 Hover · Focus, Search Field는 Focus · Error에서 보이고 Tab 순서 제외, 키보드는 전체 선택 후 삭제. 눈 아이콘은 비밀번호 칸에서만, 상태는 `aria-pressed` | `clearable` · `type="password"` |
 | 선택 · 삭제 | Indeterminate를 누르면 전체 선택(Checked). InputChip은 칩 전체가 삭제 대상(클릭 · Enter · Space · Delete · Backspace). 드롭 영역은 버튼(Enter · Space) | — |
 | 필터 칩 선택 | 다중(기본): 옵션을 켜고 끄는 동안 패널 유지, 칩 글자 "필터명: 값, 값"(3개를 넘으면 "외 N"), 닫을 때(Esc · 바깥 · 칩) 적용되어 Selected. 모두 끄고 닫으면 해제. 단일: 고르면 바로 적용 · 닫힘, 첫 옵션 "전체"로 해제. 패널은 칩 아래 4px · 시작 정렬 · 최소 160px. 키보드: Enter · Space · ↓ 열기, 방향키 · 글자 이동, Space · Enter 선택, Esc 닫고 칩으로. 열린 칩은 State=Default · Expanded=True | `FilterChipSelect` · `aria-expanded` · listbox(`aria-multiselectable`) |
+| 필수 입력 | Input · Textarea · Select · Date Picker의 `Required` — 라벨 뒤 4px 점(`colors/<field>/…/required/default` → `status/point/strong`), 라벨과 8px(m-2). 코드: `required` → 점 표시(aria-hidden) + 입력 요소 `required`(화면 낭독기가 "필수"로 읽음). 표 키(`table_key` Type=Required)와 같은 표시 | Figma `Required` 속성 |
 | 값 표시 | Slider 값 라벨은 Hover · 드래그 · 키보드 포커스 중 표시, 숫자 칸은 가장 긴 값 폭(트랙 길이 고정). Textarea 카운터는 실제 길이 / 최대 길이(`maxLength` 강제) | — |
 | 외부 링크 | 화살표 아이콘은 새 창으로 여는 링크에만, 숨은 "(새 창)" 문구 | Link `external` |
 
@@ -61,6 +62,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | --- | --- | --- |
 | Toast | 화면 아래 가운데(아래 20px), 토스트 사이 8px, 최대 3개(새 토스트가 보이고 오래된 것은 대기). 안내 · 성공 5초, 오류는 닫을 때까지(닫기 아이콘). Hover · 포커스 중 정지. 같은 문구 · 상태는 겹치지 않고 다시 표시 | `spacing/padding/p-5` · `spacing/margin/m-2` · `role=status` |
 | Alert | 화면 상태를 설명하는 고정 메시지 — 사용자가 닫지 않음(닫아야 하면 Toast). 설명은 줄바꿈, 자르지 않음. 폭은 부모를 채움 | 오류 `role=alert`, 그 밖 `status` |
+| 처리 중 | 저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼을 Disabled로 두고 옆에 Loading(sm)을 표시. 버튼 안 스피너 상태는 디자인 결정 대기(V-2) | Form 사용 예시 |
 | 진행 · 로딩 | 진행률을 알면 Progress, 모르면 Loading. Skeleton은 장식이며 감싸는 영역(DataState)이 불러오는 중을 알림 | `aria-busy` · `role=status` |
 
 ## 07. 데이터 — 차트 · 표 · 목록 · 빈 상태
@@ -71,7 +73,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 표 | 편집 칸은 Hover · 포커스일 때 입력 상자. 선택한 행은 배경 강조 없이 체크박스로. 정렬 방향은 `aria-sort`, 활성 열 아이콘 색 `header/icon/active`. 누를 수 있는 아이콘은 버튼 + 이름 | `table/data/*` |
 | 페이지 이동 | 현재 페이지 주변 고정 개수, 생략 기호 없음. 처음 · 끝에서는 이전 · 다음 Disabled | — |
 | 빈 · 오류 상태 | 할 일이 없으면 버튼을 두지 않음(Figma `Show Button` 끔, 코드 `action` 생략). 설명은 사용처의 실제 수치로 | — |
-| 파일 | `accept`에 맞지 않는 파일은 받지 않음. 여러 개가 아니면 첫 파일만 | — |
+| 파일 | `accept`에 맞지 않는 파일은 받지 않음. 여러 개가 아니면 첫 파일만. 업로드에 실패한 파일은 목록에 `status="error"`(파일 정보 오류 색 + 삭제 버튼)로 표시 | file-uploader-item State=Error |
 | 펼침 · 경로 | Accordion은 기본 하나만 펼침(비교 화면만 `allowsMultipleExpanded`). Breadcrumb `Show Parent`는 Collapsed에만, Full은 전체 경로 | — |
 
 ## 08. 레이아웃 · 콘텐츠

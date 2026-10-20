@@ -1,7 +1,9 @@
-# Figma snapshot — local Effect Styles (4)
+# Figma snapshot — local Effect Styles (6)
 # Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only)
 # Format: name :: TYPE color x,y r<blur> sp<spread> [HIDDEN] blendMode   (multiple effects separated by " ;; ")
 elevation-1 :: DROP_SHADOW #0000001f 0,1 r3 sp0  NORMAL
 elevation-2 :: DROP_SHADOW #0000001f 0,1 r5 sp0  NORMAL
 elevation-3 :: DROP_SHADOW #0000001f 0,1 r8 sp0  NORMAL
 elevation-6 :: DROP_SHADOW #0000001f 0,1 r18 sp0  NORMAL
+elevation-segmented-selected :: DROP_SHADOW #00000017 0,1 r2 sp0  NORMAL
+elevation-slider-handle :: DROP_SHADOW #051b3c33 0,4 r6 sp-1  NORMAL

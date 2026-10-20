@@ -6,7 +6,8 @@ import path from 'node:path';
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const figmaPath = (...p) => path.join(ROOT, 'figma', ...p);
 
-const LINE = /^(.+?)=(.*?)(?: \[([A-Z_,]+)\])?$/;
+// `[]` = no scopes (hidden from Figma pickers, e.g. Primitive / Theme colours since 2026-10-20)
+const LINE = /^(.+?)=(.*?)(?: \[([A-Z_,]*)\])?$/;
 
 /** Reads a variables snapshot. Returns [{ collection, name, raw, scopes }] in Figma order. */
 export function readVariables(file, collection) {

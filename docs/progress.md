@@ -2,6 +2,17 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
+## v1.0 테스트 후보 준비 (2026-10-20, 진행 중)
+
+체크포인트 `checkpoint/pre-v1-candidate`(2c7dc48). 순서: ① Figma 독립 점검 · 보완 → ② Storybook 동기화 → ③ 전체 QA → ④ v1.0 후보 정리.
+재개: `git log --oneline checkpoint/pre-v1-candidate..`, 이 절과 [v1.0-candidate.md](./v1.0-candidate.md).
+- ① **완료** — 토큰: 모든 변수 WEB code syntax, 색 변수 범위(scopes) 정리, 필수 표시 · 파일 실패 토큰 5개, 효과 스타일 2개(같은 값).
+  바인딩: 입력 칸 값 · 빈 글자 72곳(E1 · E3), F77 · F13 · F18 · F86(컴포넌트) · F87 해결, 초기화 아이콘 대비 문제 해결. 상태: 필수 입력(\`Required\`, 4세트 80변형),
+  파일 실패(\`State=Error\`). 결함: select Focus 속성 연결(F89), input 눈 아이콘 기본값(F90), 예시 이름 · 설명(F91).
+  예시: Form · Dashboard · Table 목록 화면(섹션 "사용 예시 화면"). 정책 표 3행. 검증: 컴포넌트 결합 감사 0건(손잡이 레이어 흐림은 의도), 색 변수 ALL_SCOPES 0,
+  code syntax 누락 0, 체크섬 8그룹 일치, 화면 확인(스크린숏). 남은 결정 V-1 – V-12.
+- ② 진행 전 — 코드: 토큰 재생성(완료), Slider · Segmented 그림자 토큰, 입력 칸 값 토큰 이름, \`required\`(4개), FileUploaderItem \`error\`, Chart F77 기준 이미지, 표 자리표시 이미지, 문서 · 스토리.
+
 ## Figma · Storybook 문서 · 정책 간소화 (2026-10-20, 완료)
 
 체크포인트 `checkpoint/pre-docs-simplify`(df820dc). 기준: 처음 보는 사람이 용도 · 사용법을 빠르게 이해하고, 개발자는 기술 정보를 쉽게 찾는가.
