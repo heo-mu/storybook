@@ -79,3 +79,13 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `Navigation` 컨테이너: padding p-5, `colors/navigation/lnb/background`, 항목 사이 m-1_5. 너비는 레이아웃이 정합니다(Figma 예시 240px).
 - `NavGroup` 하위 목록: p-4 들여쓰기, 1px 선(`…/child/selected/indicator/selected`), 선과 항목 사이 m-2_5 — Figma LNB 예시와 같습니다.
 - `NavLink` · `NavChild`의 State Hover는 `:hover`입니다. 그룹은 `aria-expanded`가 있는 버튼이고, 선택된 항목은 `aria-current="page"`입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Navigation.showcase.stories.tsx / Overview`: The Figma LNB example: two groups (one expanded with a selected child) and two links, 240px wide.
+- `Navigation.showcase.stories.tsx / ParentMatrix`: Figma `item_parent` (4): State × Expanded, 200px wide.
+- `Navigation.showcase.stories.tsx / LinkMatrix`: Figma `item_link` (4): State × Variant, 200px wide.
+- `Navigation.showcase.stories.tsx / ChildMatrix`: Figma `item_child` (4): State × Variant, 200px wide.

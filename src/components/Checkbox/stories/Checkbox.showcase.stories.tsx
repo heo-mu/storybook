@@ -11,7 +11,7 @@ import { koLabel } from '../../../storybook/koLabel';
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs checkbox`.
 const meta = {
-  title: '컴포넌트/Checkbox/전체 보기',
+  title: "Components/Checkbox/Gallery",
   id: 'components-checkbox-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -38,7 +38,7 @@ function figmaVariant(selection: Selection, size: ChoiceSize, state: State) {
 }
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -60,9 +60,9 @@ export const Overview: Story = {
   ),
 };
 
-/** All 36 Figma variants: Selection × Size (rows) × State (columns). */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -84,7 +84,7 @@ export const VariantMatrix: Story = {
 
 /** Every state at size md. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <div>
       {SELECTIONS.map((selection) => (
@@ -122,7 +122,7 @@ function SelectAll() {
 
 /** Click and Space toggle; a parent checkbox shows Indeterminate while only some children are checked. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <SelectAll />,
   play: async ({ canvas, userEvent, step }) => {
     const parent = canvas.getByRole('checkbox', { name: '전체 동의' });
@@ -150,7 +150,7 @@ export const Interaction: Story = {
   },
 };
 
-/** Design System Rules 08: items 8px apart when stacked; 16px apart in a row, 8px between wrapped rows (the group's own CSS — no `style`). */
+/** 세로·가로 그룹의 항목 간격과 줄바꿈을 비교합니다. */
 export const GroupSpacing: Story = {
   name: '그룹 간격',
   render: () => (
@@ -179,7 +179,7 @@ export const GroupSpacing: Story = {
 
 /** Native checkbox semantics: name from the label, disabled state, group role. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <CheckboxGroup aria-label="알림 설정" defaultValue={['news']}>
       <Checkbox value="news" label="소식 받기" />
@@ -198,10 +198,10 @@ export const Accessibility: Story = {
   },
 };
 
-/** Rules 04 "묶음 오류": input_message Error 6px under the group, the items carry aria-invalid and read the message; a
+/** Rules 04 "그룹 오류": input_message Error 6px under the group, the items carry aria-invalid and read the message; a
  * message without `invalid` is the grey help text. */
 export const GroupMessage: Story = {
-  name: '묶음 메시지',
+  name: "그룹 메시지",
   render: () => (
     <div style={{ display: 'flex', gap: 48 }}>
       <CheckboxGroup aria-label="오류 묶음" invalid message="하나 이상 고르세요." orientation="horizontal">

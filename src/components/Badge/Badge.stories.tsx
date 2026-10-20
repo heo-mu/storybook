@@ -4,7 +4,7 @@ import { BADGE_APPEARANCES, BADGE_SHAPES, BADGE_SIZES, BADGE_STATUSES } from './
 
 // 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/Badge.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: '컴포넌트/Badge/Badge',
+  title: "Components/Badge/Badge",
   id: 'components-badge-badge',
   component: Badge,
   tags: ['autodocs'],
@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '상태를 짧은 글자로 알려 주는 배지입니다. 색은 `status`, 모양은 `appearance`, 크기는 `size`로 고르며, 점만 필요하면 `BadgeDot`, 개수는 `BadgeCount`를 씁니다.',
+          "상태나 개수를 간결하게 표시합니다. 사용자 동작을 실행하는 버튼과 구분해 사용합니다.",
       },
     },
   },
@@ -29,10 +29,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 모든 Props를 직접 바꿔 볼 수 있습니다. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const OutlineRounded: Story = {
-  name: 'Outline · 둥근 모양',
+  name: "Outline Rounded",
   args: { children: '경고', status: 'warning', appearance: 'outline', shape: 'rounded', size: 'md' },
 };
 

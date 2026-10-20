@@ -3,9 +3,7 @@ import { cx } from '../../utils/cx';
 
 export type CardProps = ComponentPropsWithoutRef<'div'>;
 
-/**
- * 관련된 내용을 한 상자로 묶는 카드입니다. 안에 `CardHeader` · `CardContent` · `CardFooter`를 넣고, 너비는 부모를 채웁니다.
- */
+/** 관련 정보와 동작을 하나의 영역으로 묶습니다. 헤더·본문·푸터를 필요한 만큼 조합합니다. */
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ className, ...rest }, ref) {
   return <div {...rest} ref={ref} className={cx('ds-card', className)} />;
 });
@@ -21,7 +19,7 @@ export type CardHeaderProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
   headingLevel?: 2 | 3 | 4 | 5 | 6;
 };
 
-/** 카드 머리글입니다. 제목 · 설명 · 버튼을 두고, 아래에 구분선이 있습니다. */
+/** 카드 헤더입니다. 제목 · 설명 · 버튼을 두고, 아래에 구분선이 있습니다. */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function CardHeader(
   { title, description, action, headingLevel = 3, className, ...rest },
   ref,

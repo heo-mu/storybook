@@ -11,7 +11,7 @@ import { LightningIcon } from '../icons';
 
 // Mirrors the Figma usage example "Dashboard 화면 예시" (section 사용 예시 화면) with the library components.
 const meta = {
-  title: '사용 예시/대시보드 화면',
+  title: "Examples/Dashboard",
   id: 'patterns-dashboard',
   tags: ['autodocs', '!manifest'],
   parameters: {
@@ -73,7 +73,7 @@ const row = { display: 'flex', gap: 'var(--spacing-margin-m-6)', flexWrap: 'wrap
 
 /** 조회 조건 · 지표 카드 4개 · 선/막대 차트(툴팁) · 결과 없음 · 불러오는 중을 한 화면에 모은 예시입니다. */
 export const Dashboard: Story = {
-  name: '대시보드 화면',
+  name: '에너지 사용 현황',
   render: () => (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-margin-m-8)', padding: 'var(--spacing-padding-p-6)', minWidth: 0 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--spacing-margin-m-4)', flexWrap: 'wrap' }}>

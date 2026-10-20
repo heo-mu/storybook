@@ -10,7 +10,7 @@ import { PSEUDO_PARAMETERS, figmaCase, stateProps } from './story-helpers';
 // Figma "State": Default → Hover → Pressed → Disabled. Hover/Pressed are forced with
 // storybook-addon-pseudo-states; in an app they come from the real pointer (:hover / :active).
 const meta = {
-  title: '컴포넌트/Button/상태별 보기',
+  title: "Components/Button/States",
   id: 'components-button-states',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_PARAMETERS, controls: { disable: true } },

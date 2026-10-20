@@ -4,7 +4,7 @@ import { ListIcon } from '../../icons';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Navigation.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Navigation/Navigation',
+  title: "Components/Navigation/Navigation",
   id: 'components-navigation-navigation',
   component: Navigation,
   tags: ['autodocs'],
@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '화면 왼쪽에 두는 메뉴(LNB)입니다. 바로 이동하는 메뉴는 `NavLink`, 펼치는 메뉴 그룹은 `NavGroup`과 하위 메뉴 `NavChild`로 만들고, 지금 페이지에는 `selected`를 줍니다.',
+          "화면의 주요 페이지로 이동하는 사이드 내비게이션입니다. 링크와 펼칠 수 있는 메뉴 그룹으로 구성합니다.",
       },
     },
   },
@@ -50,9 +50,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
-/** 첫 단계 메뉴가 지금 페이지로 선택된 모양입니다. */
+/** 첫 단계 메뉴가 현재 페이지로 선택된 모양입니다. */
 export const SelectedLink: Story = {
   name: '선택된 링크',
   render: (args) => (
@@ -69,7 +69,7 @@ export const SelectedLink: Story = {
 
 /** 아이콘 없이 글자만 있는 메뉴입니다. */
 export const WithoutIcons: Story = {
-  name: '아이콘 없음',
+  name: "Without Icons",
   render: (args) => (
     <Navigation {...args}>
       <NavGroup label="에너지 관리" defaultExpanded>

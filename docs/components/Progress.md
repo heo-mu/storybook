@@ -42,3 +42,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - 트랙: 높이 6px, `border-radius/rounded-full`, 색 `colors/progress/border/surface/default`. 막대(`colors/progress/border/indicator/default`)는 트랙 안에서 잘립니다.
 - react-aria-components `ProgressBar` 기반입니다. `role="progressbar"`와 `aria-valuenow` · `aria-valuetext`가 자동으로 붙습니다.
 - react-aria 쪽 Props(`value` · `minValue` · `maxValue` · `valueLabel` · `aria-label` 등)는 docgen `propFilter`(node_modules 제외)로 MDX Props 표에 나오지 않습니다. 자동 문서(autodocs)의 설명은 `Progress.stories.tsx`의 `argTypes`에 적혀 있습니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Progress.showcase.stories.tsx / Figma`: Figma `progress`: 430px track, bar 189px (value 189 of 430).

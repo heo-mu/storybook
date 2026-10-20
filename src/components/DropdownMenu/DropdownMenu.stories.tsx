@@ -6,7 +6,7 @@ import { FolderSimpleDashedIcon } from '../../icons';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/DropdownMenu.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/DropdownMenu/DropdownMenu',
+  title: "Components/DropdownMenu/DropdownMenu",
   id: 'components-dropdownmenu-dropdownmenu',
   component: DropdownMenu,
   tags: ['autodocs'],
@@ -14,7 +14,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '버튼을 누르면 펼쳐지는 동작 메뉴입니다. 여는 버튼은 `trigger`로 넘기고, 안에 `DropdownMenuItem` · `DropdownMenuSection` · `DropdownMenuSeparator`를 넣습니다.',
+          "버튼을 누르면 관련 동작 목록이 열립니다. 이동·복제·삭제처럼 같은 대상에 적용할 작업을 모아 제공합니다.",
       },
     },
   },
@@ -55,16 +55,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Open: Story = {
-  name: '열림',
+  name: "Open",
   args: { open: true },
 };
 
 /** 아이콘 없이 글자만 있는 메뉴입니다(예: 정렬 메뉴). */
 export const TextOnly: Story = {
-  name: '글자만',
+  name: "Text Only",
   args: { 'aria-label': '정렬', trigger: <Button variant="secondary" appearance="outline">정렬</Button> },
   render: (args) => (
     <DropdownMenu {...args}>
@@ -77,7 +77,7 @@ export const TextOnly: Story = {
 
 /** 이름 아래에 설명(`description`)이 있는 항목입니다. */
 export const WithDescription: Story = {
-  name: '설명 있음',
+  name: "With Description",
   args: { open: true },
   render: (args) => (
     <DropdownMenu {...args}>

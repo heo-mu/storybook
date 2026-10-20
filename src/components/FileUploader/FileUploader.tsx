@@ -39,10 +39,7 @@ function matchesAccept(file: File, accept: string | undefined) {
     .some((a) => (a.startsWith('.') ? name.endsWith(a) : a.endsWith('/*') ? type.startsWith(a.slice(0, -1)) : type === a));
 }
 
-/**
- * 파일을 끌어다 놓거나 눌러서 고르는 업로드 영역입니다. 영역은 버튼이라 Enter · Space로도 파일 선택 창이 열리고,
- * 파일을 위로 끌어오면 모양이 바뀝니다.
- */
+/** 드래그 앤 드롭 또는 파일 선택 창으로 파일을 받습니다. 선택한 파일은 FileUploaderItem으로 표시합니다. */
 export const FileUploader = forwardRef<HTMLInputElement, FileUploaderProps>(function FileUploader(
   { title = '파일을 끌어다 놓거나 선택하세요', helperText, showIcon = true, accept, multiple = false, disabled = false, onFilesSelected, name, id, className, style },
   ref,

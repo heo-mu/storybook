@@ -53,3 +53,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
 - Figma 컴포넌트 세트: `textarea`(86:2597), `textarea_message`(86:2733).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Textarea.showcase.stories.tsx / VariantMatrix`: All 14 Figma variants: Size (rows) × State (columns).
+- `Textarea.showcase.stories.tsx / RequiredMark`: Figma Required on (every size): the dot after the label; the textarea is required for assistive technology and form checks.
+- `Textarea.showcase.stories.tsx / HelperMessage`: Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field.

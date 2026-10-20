@@ -64,10 +64,7 @@ function DayLabel({ children }: { children: ReactNode }) {
   );
 }
 
-/**
- * 한 달 단위로 날짜를 보여 주고 고르는 달력입니다. `DatePicker` 안에서 쓰이며, 화면에 펼쳐 두고 따로 쓸 수도 있습니다.
- * 방향키 · Page Up · Page Down · Home · End로 날짜를 옮기고, 월 · 요일 이름은 언어 설정을 따릅니다.
- */
+/** 달력에서 날짜를 선택합니다. 입력 필드와 함께 사용하려면 DatePicker를 사용합니다. */
 export function Calendar({
   value,
   defaultValue = null,

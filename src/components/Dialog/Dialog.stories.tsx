@@ -5,7 +5,7 @@ import { Button } from '../Button';
 
 // 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/Dialog.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: '컴포넌트/Dialog/Dialog',
+  title: "Components/Dialog/Dialog",
   id: 'components-dialog-dialog',
   component: Dialog,
   tags: ['autodocs'],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '화면 위에 떠서 사용자의 응답을 받는 대화상자입니다. `title` · `description` · `actions`로 내용을 채우고, `trigger` 또는 `open` · `onOpenChange`로 엽니다.',
+          "사용자의 확인이나 선택이 필요할 때 여는 모달 대화상자입니다. 열린 동안 배경 화면의 조작을 제한합니다.",
       },
     },
   },
@@ -28,7 +28,7 @@ const meta = {
           취소
         </Button>
         <Button size="lg" onClick={close}>
-          사용자 행동
+          확인
         </Button>
       </>
     ),
@@ -41,7 +41,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 모든 Props를 직접 바꿔 볼 수 있습니다. 버튼을 눌러 대화상자를 열어 보세요. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 /** 삭제처럼 사용자의 흐름을 멈추고 확인받는 대화상자입니다(`role="alertdialog"`). */
 export const Confirm: Story = {
@@ -51,6 +51,6 @@ export const Confirm: Story = {
 
 /** 제목과 버튼 사이에 내용을 넣은 예입니다. */
 export const WithContent: Story = {
-  name: '내용 있음',
+  name: "본문 콘텐츠",
   args: { children: <p style={{ margin: 0, textAlign: 'center' }}>추가 안내 내용</p> },
 };

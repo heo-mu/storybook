@@ -136,3 +136,18 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 Chromium(Chrome · Edge 129+)에서는 352개 Variant가 Figma와 픽셀 단위로 같습니다.
 Firefox · Safari는 `calc-size()`를 지원하지 않아 텍스트가 있는 버튼의 너비가 1px 미만 좁게 그려지고, 그 외(높이 · 간격 · 색 · 테두리 · 상태)는 같습니다.
 측정 결과와 Fallback은 `docs/browser-support.md`, 외부 프로젝트 사용 예제는 `docs/usage.md`를 참고하세요.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Overview.stories.tsx / Overview`: The whole Button family (Figma frame "Button", 58:4971) at a glance.
+- `TertiaryBackground.stories.tsx / BeforeAfter`: Tertiary / Solid on the page surface (#fdfdfd): before and after the Figma change, with the token values and their contrast to the page.
+- `Tests.stories.tsx / CssCheck`: The token stylesheet is loaded: computed styles equal Figma Primary/Solid/xs/Square/Default.
+- `Tests.stories.tsx / PropTransitions`: Changing props re-renders the button into the matching Figma variant.
+- `Tests.stories.tsx / IconButtonAccessibleName`: The hidden Figma label becomes the accessible name; the icon itself is aria-hidden.
+
+- `VariantMatrix.stories.tsx / ButtonMatrix`: `button_basic` — 6 Variant×Appearance × 4 States (rows) × 4 Sizes × 2 Shapes (columns) = 192.
+- `VariantMatrix.stories.tsx / IconButtonMatrix`: `button_icon` — 6 Variant×Appearance × 4 States × 3 Sizes × 2 Shapes = 144.
+- `VariantMatrix.stories.tsx / TextButtonMatrix`: `button_text` — 2 Types × 4 States (rows) × 2 Sizes (columns) = 16.

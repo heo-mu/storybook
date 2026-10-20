@@ -6,15 +6,15 @@ import { InputChip } from './InputChip';
 import { FilterChip } from './FilterChip';
 import { FilterChipSelect } from './FilterChipSelect';
 
-<Meta title="컴포넌트/Chip/사용 방법" id="components-chip-usage" name="Docs" />
+<Meta title="Components/Chip/Usage" id="components-chip-usage" name="Docs" />
 
 # Chip
 
-칩은 필터를 켜고 끄거나, 입력한 값을 보여 주거나, 필터 목록을 여는 작은 버튼입니다. 용도에 따라 네 가지 컴포넌트 중에서 고릅니다.
+필터 선택, 입력된 태그 삭제, 옵션 목록 열기에 사용하는 컴포넌트입니다. 목적에 따라 Chip·InputChip·FilterChip·FilterChipSelect를 선택합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -35,12 +35,12 @@ import { FilterChipSelect } from './FilterChipSelect';
 <Canvas of={Showcase.States} />
 
 - 마우스를 올리거나 누르면 모양이 바뀝니다.
-- `selected`이면 선택됨 모양입니다. 필터 칩에서는 값이 적용되었다는 뜻이며, 테두리와 글자가 브랜드 색이 됩니다.
+- `selected`이면 선택 상태입니다. 필터 칩에서는 값이 적용되었다는 뜻이며, 테두리와 글자가 브랜드 색이 됩니다.
 - `expanded`이면 필터 칩이 펼침 모양이 됩니다.
 - `disabled`이면 누를 수 없습니다.
-- 키보드로 선택하면 포커스 테두리가 보입니다.
+- 키보드 포커스를 받으면 포커스 테두리가 보입니다.
 
-## 사용 방법
+## 사용 예시
 
 ### Chip · InputChip · FilterChip
 
@@ -70,12 +70,12 @@ import { FilterChipSelect } from './FilterChipSelect';
 
 ### FilterChipSelect
 
-칩을 누르면 칩 아래에 옵션 목록이 열립니다. 값이 적용되면 칩이 선택됨 모양이 되고, 글자가 "필터명: 값, 값"으로 바뀝니다. 값이 3개를 넘으면 "외 N"으로 줄여 보여 줍니다.
+칩을 누르면 칩 아래에 옵션 목록이 열립니다. 필터를 적용하면 칩이 강조되고, 글자가 "필터명: 값, 값"으로 바뀝니다. 값이 3개를 넘으면 "외 N"으로 줄여 보여 줍니다.
 
 | 선택 방식 | 쓰임 | 동작 |
 | --- | --- | --- |
-| 여러 개 고르기(`selectionMode="multiple"`, 기본) | 동 · 설비 종류처럼 여러 값으로 거르는 필터 | 목록이 열린 채로 옵션을 켜고 끕니다. 목록을 닫을 때 적용됩니다. 모두 끄고 닫으면 필터가 풀립니다. |
-| 하나 고르기(`selectionMode="single"`) | 기간 · 상태처럼 하나만 고르는 필터 | 고르면 바로 적용되고 목록이 닫힙니다. 첫 옵션 "전체"(`clearLabel`)를 고르면 필터가 풀립니다. |
+| 다중 선택(`selectionMode="multiple"`, 기본) | 동 · 설비 종류처럼 여러 값으로 거르는 필터 | 목록이 열린 채로 옵션을 켜고 끕니다. 목록을 닫을 때 적용됩니다. 모든 옵션을 해제하고 닫으면 필터가 초기화됩니다. |
+| 단일 선택(`selectionMode="single"`) | 기간 · 상태처럼 하나만 고르는 필터 | 고르면 바로 적용되고 목록이 닫힙니다. 첫 옵션 "전체"(`clearLabel`)를 고르면 필터가 초기화됩니다. |
 
 <Canvas of={FilterShowcase.MultipleSelection} />
 
@@ -106,7 +106,7 @@ const [status, setStatus] = useState<Key | null>(null);  // 하나 고르기: Ke
 - `FilterChipSelect`는 Space · Enter로 옵션을 고르고, Esc로 닫습니다. 닫으면 키보드 위치가 칩으로 돌아옵니다.
 - 화면 낭독기는 필터 칩을 지금 보이는 글자("동: 101동, 103동")로 읽습니다.
 
-## 주의사항
+## 사용 규칙
 
 - `Chip`에 `selected`를 넘기면 선택 상태를 바깥에서 관리합니다. 넘기지 않으면 `defaultSelected`로 시작해 칩이 스스로 관리합니다.
 - `FilterChipSelect`의 여러 개 고르기는 목록을 닫을 때(Esc · 바깥 누르기 · 칩 누르기) 한 번만 `onChange`를 호출합니다.

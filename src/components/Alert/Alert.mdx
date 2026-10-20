@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Alert.showcase.stories';
 import { Alert } from './Alert';
 
-<Meta title="컴포넌트/Alert/사용 방법" id="components-alert-usage" name="Docs" />
+<Meta title="Components/Alert/Usage" id="components-alert-usage" name="Docs" />
 
 # Alert
 
-알림은 화면 안에 머물며 상태나 안내를 전하는 메시지입니다. 잠시 나타났다 사라지는 메시지는 토스트(Toast)를 씁니다.
+현재 화면에서 알아야 할 상태나 안내를 지속적으로 표시합니다. 일시적인 작업 결과는 Toast를 사용합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 점검 예정 · 업로드 실패처럼 지금 화면의 상태를 설명할 때 씁니다.
 - 알림에는 닫기 버튼이 없습니다. 사용자가 닫아야 하는 메시지는 토스트(Toast)를 씁니다.
@@ -28,7 +28,7 @@ import { Alert } from './Alert';
 - 제목(`title`)만 쓰거나 설명(`description`)을 더할 수 있습니다.
 - 필요한 동작은 `action`에 버튼으로 넣습니다. 버튼은 `Button`의 `tertiary` · `outline` · `xs`를 씁니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

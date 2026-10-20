@@ -133,3 +133,13 @@ Figma 정리를 기다리는 항목입니다. 정리될 때까지 아래처럼 �
 - `KeyValueTable`은 Figma table_key-value 예시(855:9118)이며 `<dl>` 두 열 목록입니다. 키 열은 하나의 열을 공유(최소 160px)하고 값이 나머지를 채우며, 첫 행만 위 테두리가 있습니다.
 - `KeyValueItem`은 Figma `table_key`(355:4193) + `table_value`(355:4460) 한 행입니다. `stack`은 값 내용을 `m-2` 간격으로 세로로 쌓고(Figma File Upload 칸), `KeyValueGroup`은 내용을 `m-2` 간격으로 가로로 둡니다.
 - Filter 편집 칸: 편집 칸 Showcase는 비어 있으면 `FilterChip`("텍스트 선택"), 값이 있으면 `FilterChipSelect`와 초기화 `TextButton`(`KeyValueGroup`)을 씁니다. 목록은 `FilterChipSelect`로 엽니다(`TABL-10`).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Table.showcase.stories.tsx / HeaderMatrix`: Figma `table_header` (3): Type Text · Checkbox · Empty.
+- `Table.showcase.stories.tsx / BodyMatrix`: Figma `table_body` (8): the cell types.
+- `Table.showcase.stories.tsx / KeyValueMatrix`: Figma `table_key` (2) and `table_value` (2) in a key-value table 480px wide (the first row, which adds the top border, is not a Figma cell).
+- `TableEditable.showcase.stories.tsx / EditableMatrix`: Figma `table_value_editable` (52) without the open list / calendar (see `EditableOpen`).

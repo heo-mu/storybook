@@ -4,7 +4,7 @@ import { STEPPER_ORIENTATIONS } from './Stepper.options';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Stepper.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Stepper/Stepper',
+  title: "Components/Stepper/Stepper",
   id: 'components-stepper-stepper',
   component: Stepper,
   tags: ['autodocs'],
@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '여러 단계로 된 과정에서 지금 몇 번째 단계인지 보여 줍니다(누를 수 없음). 단계는 `steps`, 지금 단계는 `currentStep`(0부터), 방향은 `orientation`으로 정합니다.',
+          "여러 단계로 이루어진 과정의 현재 위치와 진행 상태를 표시합니다. 단계 이동 버튼으로 사용하지 않습니다.",
       },
     },
   },
@@ -37,10 +37,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Vertical: Story = {
-  name: '세로',
+  name: "Vertical",
   args: { orientation: 'vertical' },
 };
 
@@ -60,6 +60,6 @@ export const ErrorAndLocked: Story = {
 
 /** 설명 없이 제목만 있는 단계입니다. */
 export const LabelsOnly: Story = {
-  name: '라벨만',
+  name: "Label Only",
   args: { steps: [{ label: '장바구니' }, { label: '배송 정보' }, { label: '결제' }] },
 };

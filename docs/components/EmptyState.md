@@ -52,3 +52,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - 세로 가운데 정렬입니다. 아이콘 · 제목 · 설명은 `m-1` 간격으로 붙고, `action`은 글 묶음 아래 `m-3` 간격에 놓입니다.
 - 아이콘은 16px이며 Figma 자리 표시 아이콘은 Database입니다. `aria-hidden`으로 감싸 장식으로 처리합니다.
 - 너비는 CSS `width: 320px; max-width: 100%`입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `EmptyState.showcase.stories.tsx / Figma`: Figma `empty-state` with its default content (Icon and Description on).

@@ -13,7 +13,7 @@ const AGES = [
 ];
 
 const meta = {
-  title: '컴포넌트/Chip/FilterChipSelect',
+  title: "Components/Chip/FilterChipSelect",
   id: 'components-chip-filterchipselect',
   component: FilterChipSelect,
   tags: ['autodocs'],
@@ -21,7 +21,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '필터 칩과 옵션 목록이 함께 있는 필터입니다. 여러 값을 고르면 `selectionMode="multiple"`(기본, 목록을 닫을 때 적용), 하나만 고르면 `selectionMode="single"`(고르면 바로 적용)을 씁니다.',
+          "필터 칩과 옵션 목록을 함께 제공합니다. 다중 선택은 목록을 닫을 때, 단일 선택은 항목을 선택하는 즉시 적용됩니다.",
       },
     },
   },
@@ -35,7 +35,7 @@ const meta = {
   argTypes: {
     label: { control: 'text', description: '필터 이름' },
     size: { control: 'inline-radio', options: CHIP_SIZES, description: '크기', table: { defaultValue: { summary: 'md' } } },
-    disabled: { control: 'boolean', description: '비활성 — 누를 수 없고 키보드로도 선택되지 않음' },
+    disabled: { control: 'boolean', description: '비활성 — 조작과 키보드 포커스 제한' },
     maxDisplayed: { control: { type: 'number', min: 1, max: 5 } },
     options: { control: 'object' },
   },
@@ -44,18 +44,18 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** 여러 개 고르기(기본)입니다. 목록을 닫을 때 고른 값이 적용됩니다. */
-export const Playground: Story = { name: '직접 체험' };
+/** 다중 선택 예시입니다. 목록을 닫으면 선택한 값이 필터에 적용됩니다. */
+export const Playground: Story = { name: "Playground" };
 
-/** 처음부터 값이 적용된 필터입니다. 선택됨 모양으로 "나이대: 20대, 30대"가 보입니다. */
+/** 처음부터 값이 적용된 필터입니다. 선택 상태로 "나이대: 20대, 30대"가 보입니다. */
 export const WithValue: Story = {
-  name: '값 있음',
+  name: '필터 적용',
   args: { defaultValue: ['20', '30'] },
 };
 
-/** 하나 고르기입니다. 첫 옵션 "전체"를 고르면 필터가 풀립니다. */
+/** 단일 선택 예시입니다. 첫 옵션 "전체"를 선택하면 필터가 초기화됩니다. */
 export const Single: Story = {
-  name: '하나 선택',
+  name: "Single Selection",
   args: {
     label: '기간',
     selectionMode: 'single',
@@ -69,6 +69,6 @@ export const Single: Story = {
 };
 
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   args: { disabled: true, defaultValue: ['20'] },
 };

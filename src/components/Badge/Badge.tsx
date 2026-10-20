@@ -17,9 +17,7 @@ export type BadgeProps = Omit<ComponentPropsWithoutRef<'span'>, 'children'> & {
   dot?: boolean;
 };
 
-/**
- * 상태를 짧은 글자로 알려 주는 배지입니다. 보여 주기만 하며 누를 수 없습니다.
- */
+/** 상태나 개수를 간결하게 표시합니다. 사용자 동작을 실행하는 버튼과 구분해 사용합니다. */
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   { children, status = 'basic', appearance = 'filled', size = 'sm', shape = 'square', dot = true, className, ...rest },
   ref,

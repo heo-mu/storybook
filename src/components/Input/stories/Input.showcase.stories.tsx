@@ -11,7 +11,7 @@ import { expectHelperMessage } from '../../../storybook/helperMessage';
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs input`.
 const meta = {
-  title: '컴포넌트/Input/전체 보기',
+  title: "Components/Input/Gallery",
   id: 'components-input-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -40,7 +40,7 @@ function figmaVariant(size: FieldSize, state: State) {
 }
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -64,9 +64,9 @@ export const Overview: Story = {
   ),
 };
 
-/** All 21 Figma variants: Size (rows) × State (columns). */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -84,7 +84,7 @@ export const VariantMatrix: Story = {
 
 /** Every state at size sm. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="State">
       {STATES.map((state) => (
@@ -99,7 +99,7 @@ export const States: Story = {
 
 /** Typing fills the field (Completed), the clear button empties it, the eye toggles password visibility. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => (
     <div style={{ width: 320, display: 'grid', gap: 24 }}>
       <Input label="이름" placeholder="이름 입력" />
@@ -134,7 +134,7 @@ export const Interaction: Story = {
 
 /** Label, error and message wiring for assistive technology. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <div style={{ width: 320 }}>
       <Input label="전화번호" defaultValue="010-12" invalid message="전화번호 형식이 아닙니다." />
@@ -150,9 +150,9 @@ export const Accessibility: Story = {
   },
 };
 
-/** Figma Required on (every size): the dot after the label; the input is required for assistive technology and form checks. */
+/** 라벨의 필수 표시와 입력 요소의 필수 상태를 확인합니다. */
 export const RequiredMark: Story = {
-  name: '필수 표시',
+  name: "Required",
   render: () => (
     <form style={{ width: 320, display: 'grid', gap: 24 }} onSubmit={(event) => event.preventDefault()}>
       {FIELD_SIZES.map((size) => (
@@ -177,9 +177,9 @@ export const RequiredMark: Story = {
   },
 };
 
-/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+/** 도움말과 오류 메시지, 비활성 필드의 표시를 비교합니다. */
 export const HelperMessage: Story = {
-  name: '도움말',
+  name: "Helper Text",
   render: () => (
     <div style={{ display: 'flex', gap: 24 }}>
       <Input label="비밀번호" message="8자 이상, 영문과 숫자를 섞어 입력하세요." />

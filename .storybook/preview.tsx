@@ -15,6 +15,16 @@ const preview: Preview = {
     ),
   ],
   parameters: {
+    options: {
+      storySort: {
+        method: 'alphabetical',
+        order: [
+          'Foundations', ['Design Tokens', 'Focus'],
+          'Components', ['*', ['Usage', '*', 'Overview', 'States', 'Variants', 'Gallery', 'Editable Cells', 'Surface Comparison', 'Checks']],
+          'Examples', ['Form', 'Dashboard', 'Table List'],
+        ],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

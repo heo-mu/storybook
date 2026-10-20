@@ -9,17 +9,17 @@ import { SelectSizeContext } from './SelectContext';
 export type SelectProps<T extends object = object> = {
   /** 크기. 옵션 높이도 함께 맞춰집니다. @default 'sm' */
   size?: FieldSize;
-  /** 선택 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
+  /** 선택 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
   /** 아무것도 고르지 않았을 때 보이는 글자. @default '내용 선택' */
   placeholder?: string;
-  /** 선택 칸 아래에 보이는 도움말 메시지. */
+  /** 선택 필드 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
   /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
   /** 오류 — 오류 테두리로 표시합니다. */
   invalid?: boolean;
-  /** 비활성 — 고를 수 없고 키보드로도 선택되지 않습니다. */
+  /** 비활성 — 고를 수 없고 키보드 포커스를 받지 않습니다. */
   disabled?: boolean;
   /** 읽기 전용 — 화살표 없이 값만 보이고 목록이 펼쳐지지 않습니다. */
   readOnly?: boolean;
@@ -58,10 +58,7 @@ export type SelectProps<T extends object = object> = {
   style?: CSSProperties;
 };
 
-/**
- * 목록을 펼쳐 옵션 하나를 고르는 선택 칸입니다. 옵션은 `SelectOption`으로 넣고, 값은 선택한 옵션의 `id`입니다.
- * 마우스와 키보드(방향키 · Enter · Esc · 글자 입력)로 모두 조작할 수 있습니다.
- */
+/** 옵션 목록에서 항목 하나를 선택합니다. SelectOption으로 목록을 구성합니다. */
 export function Select<T extends object = object>({
   size = 'sm',
   label,

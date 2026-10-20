@@ -16,15 +16,12 @@ export type FilterChipProps = Omit<ButtonProps, 'children' | 'className' | 'isDi
    * `MenuTrigger` · `DialogTrigger` 안에서는 자동으로 정해집니다.
    */
   expanded?: boolean;
-  /** 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. */
+  /** 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. */
   disabled?: boolean;
   className?: string;
 };
 
-/**
- * 필터 메뉴나 패널을 여는 칩입니다. `MenuTrigger` · `DialogTrigger`의 트리거로 쓸 수 있고,
- * 누르면 `onPress`(또는 `onClick`)가 호출됩니다.
- */
+/** 필터 메뉴나 패널을 여는 칩입니다. 적용된 조건과 펼침 상태를 표시하며 메뉴는 별도로 연결합니다. */
 export const FilterChip = forwardRef<HTMLButtonElement, FilterChipProps>(function FilterChip(
   { size = 'xs', children, selected = false, expanded, disabled, className, ...rest },
   ref,

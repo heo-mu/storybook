@@ -10,7 +10,7 @@ import { CaretLeftIcon, CaretRightIcon, PlusIcon } from './figma-icons';
 // Interaction / style tests run by `npm test` (Vitest + Playwright). Expected values are the
 // Figma values of the Button frame (see figma/button-spec.json).
 const meta = {
-  title: '컴포넌트/Button/동작 확인',
+  title: "Components/Button/Checks",
   id: 'components-button-tests',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -19,7 +19,7 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-/** The token stylesheet is loaded: computed styles equal Figma Primary/Solid/xs/Square/Default. */
+/** 버튼에 기본 스타일이 적용되는지 확인합니다. */
 export const CssCheck: Story = {
   name: 'CSS 확인',
   render: () => (
@@ -69,7 +69,7 @@ function PropTransitionsHarness() {
   );
 }
 
-/** Changing props re-renders the button into the matching Figma variant. */
+/** Props를 변경했을 때 종류·크기·상태가 함께 바뀌는지 확인합니다. */
 export const PropTransitions: Story = {
   name: 'Props 변경',
   render: () => <PropTransitionsHarness />,
@@ -110,7 +110,7 @@ export const PropTransitions: Story = {
   },
 };
 
-/** The hidden Figma label becomes the accessible name; the icon itself is aria-hidden. */
+/** 아이콘 버튼의 동작 이름이 보조 기술에 전달되는지 확인합니다. */
 export const IconButtonAccessibleName: Story = {
   name: 'IconButton 이름',
   render: () => <IconButton icon={<PlusIcon />} aria-label="추가" />,

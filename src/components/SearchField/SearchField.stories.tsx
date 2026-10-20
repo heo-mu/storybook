@@ -6,7 +6,7 @@ import { FIELD_SIZES } from '../Field';
 
 // 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/SearchField.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/SearchField/SearchField',
+  title: "Components/SearchField/SearchField",
   id: 'components-searchfield-searchfield',
   component: SearchField,
   tags: ['autodocs'],
@@ -14,12 +14,12 @@ const meta = {
     docs: {
       description: {
         component:
-          '검색어를 입력받는 입력 칸입니다. 모양은 `appearance`, 크기는 `size`로 고르고, Enter 키를 누르면 `onSearch`가 호출됩니다.',
+          "검색어를 입력하고 Enter 키로 검색을 요청합니다. 일반 텍스트 입력에는 Input을 사용합니다.",
       },
     },
   },
   args: {
-    label: '라벨명',
+    label: '검색어',
     placeholder: '검색어 입력',
     size: 'sm',
     appearance: 'outline',
@@ -32,7 +32,7 @@ const meta = {
   argTypes: {
     size: { control: 'inline-radio', options: FIELD_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
     appearance: { control: 'inline-radio', options: SEARCH_FIELD_APPEARANCES, description: '모양 — 테두리(outline) · 채움(solid)', table: { defaultValue: { summary: 'outline' } } },
-    label: { control: 'text', description: '입력 칸 위 라벨 — 없으면 aria-label을 붙임' },
+    label: { control: 'text', description: '입력 필드 위 라벨 — 없으면 aria-label을 붙임' },
     invalid: { control: 'boolean', description: '오류 — 오류 테두리로 표시' },
     disabled: { control: 'boolean', description: '비활성 — 입력할 수 없음' },
   },
@@ -42,7 +42,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Solid: Story = {
   name: 'Solid',
@@ -50,16 +50,16 @@ export const Solid: Story = {
 };
 
 export const WithoutLabel: Story = {
-  name: '라벨 없음',
+  name: "Without Label",
   args: { label: undefined, 'aria-label': '검색' },
 };
 
 export const Large: Story = {
-  name: '큰 크기',
+  name: "Large",
   args: { size: 'lg', defaultValue: '검색어' },
 };
 
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   args: { disabled: true },
 };

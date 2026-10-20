@@ -27,9 +27,7 @@ export type FileUploaderItemProps = Omit<ComponentPropsWithoutRef<'div'>, 'child
   uploadingLabel?: string;
 };
 
-/**
- * 업로드 목록에서 파일 하나를 보여 주는 줄입니다. 버튼은 파일 이름을 설명으로 함께 읽어 어느 파일의 버튼인지 구분됩니다.
- */
+/** 파일 이름·정보와 업로드 상태를 표시합니다. 상태에 따라 삭제 또는 다운로드 동작을 제공합니다. */
 export const FileUploaderItem = forwardRef<HTMLDivElement, FileUploaderItemProps>(function FileUploaderItem(
   {
     fileName,

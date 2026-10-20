@@ -13,7 +13,7 @@ export type BreadcrumbItemProps = Omit<AnchorHTMLAttributes<HTMLElement>, 'child
   icon?: ReactNode;
   /** 크기. @default 'md' */
   size?: BreadcrumbSize;
-  /** 지금 페이지 — 링크가 아닌 글자로 보이고, 화면 낭독기에 현재 페이지로 알려집니다. */
+  /** 현재 페이지 — 링크가 아닌 글자로 보이고, 화면 낭독기에 현재 페이지로 알려집니다. */
   current?: boolean;
   /** 메뉴가 열린 항목 — 강조된 글자로 보입니다. */
   open?: boolean;
@@ -86,9 +86,9 @@ export type BreadcrumbEntry = {
 };
 
 export type BreadcrumbProps = Omit<ComponentPropsWithoutRef<'nav'>, 'children'> & {
-  /** 맨 위 단계부터 지금 페이지의 바로 위 페이지까지의 경로. */
+  /** 맨 위 단계부터 현재 페이지의 바로 위 페이지까지의 경로. */
   items: BreadcrumbEntry[];
-  /** 지금 페이지 이름. */
+  /** 현재 페이지 이름. */
   current: ReactNode;
   /** 홈 아이콘의 링크 주소. @default '/' */
   homeHref?: string;
@@ -97,10 +97,10 @@ export type BreadcrumbProps = Omit<ComponentPropsWithoutRef<'nav'>, 'children'> 
   /** 크기. @default 'md' */
   size?: BreadcrumbSize;
   /**
-   * 배치. `collapsed`는 홈 · 상위 페이지 · 지금 페이지만 보여 주고 나머지 경로를 … 메뉴에 넣습니다. @default 'full'
+   * 배치. `collapsed`는 홈 · 상위 페이지 · 현재 페이지만 보여 주고 나머지 경로를 … 메뉴에 넣습니다. @default 'full'
    */
   layout?: BreadcrumbLayout;
-  /** `collapsed`에서 상위 페이지를 지금 페이지 옆에 보여 줄지 여부. @default true */
+  /** `collapsed`에서 상위 페이지를 현재 페이지 옆에 보여 줄지 여부. @default true */
   showParent?: boolean;
   /** … 메뉴가 열렸는지 여부. 넘기면 바깥에서 관리합니다. */
   expanded?: boolean;
@@ -116,10 +116,7 @@ export type BreadcrumbProps = Omit<ComponentPropsWithoutRef<'nav'>, 'children'> 
   menuTitle?: string;
 };
 
-/**
- * 지금 페이지의 위치를 홈부터 이어지는 경로로 보여 줍니다.
- * `collapsed` 배치에서는 홈 · … 메뉴(가려진 경로) · 상위 페이지 · 지금 페이지 순으로 보입니다.
- */
+/** 홈에서 현재 페이지까지의 계층 경로를 표시하고 상위 페이지로 이동할 수 있게 합니다. */
 export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb(
   {
     items,

@@ -6,7 +6,7 @@ import { Button } from '../../Button';
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs card` (card_header, card_footer, card — geometry only: the Figma frame is hidden).
 const meta = {
-  title: '컴포넌트/Card/전체 보기',
+  title: "Components/Card/Gallery",
   id: 'components-card-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -18,9 +18,9 @@ type Story = StoryObj;
 /** Story-only stand-in for the content (the grey 280 × 100 rectangle of the Figma example). */
 const Placeholder = () => <div style={{ height: 100, background: 'var(--colors-surface-container)' }} />;
 
-/** The Figma parts on their own and the Figma example card (320px wide). */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div style={{ display: 'flex', gap: 40, alignItems: 'flex-start' }}>
       <div style={{ display: 'grid', gap: 24, width: 320 }}>
@@ -67,7 +67,7 @@ export const Figma: Story = {
 
 /** The title is a heading (level 3 by default); actions are ordinary buttons. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <Card style={{ width: 320 }}>
       <CardHeader title="에너지 사용량" description="이번 달 누적" headingLevel={2} />

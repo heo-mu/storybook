@@ -5,15 +5,15 @@ import { Button } from './Button';
 import { IconButton } from './IconButton';
 import { TextButton } from './TextButton';
 
-<Meta title="컴포넌트/Button/사용 방법" id="components-button-usage" name="Docs" />
+<Meta title="Components/Button/Usage" id="components-button-usage" name="Docs" />
 
 # Button
 
-버튼은 사용자가 행동을 실행할 때 사용합니다. 중요도와 용도에 따라 종류와 크기를 고를 수 있습니다.
+저장·조회·다음 단계 이동 등 사용자 동작을 실행합니다. 동작의 중요도에 맞춰 종류를 선택합니다.
 
 <Canvas of={OverviewStories.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -38,11 +38,11 @@ import { TextButton } from './TextButton';
 <Canvas of={StatesStories.ButtonStates} />
 
 - 마우스를 올리거나 누르면 모양이 바뀝니다.
-- `disabled`이면 누를 수 없고 키보드로도 선택되지 않습니다.
-- 키보드로 선택하면 포커스 테두리가 보입니다.
+- `disabled`이면 누를 수 없고 키보드 포커스를 받지 않습니다.
+- 키보드 포커스를 받으면 포커스 테두리가 보입니다.
 - 저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼을 `disabled`로 바꾸고, 버튼 옆에 `Loading`(sm)을 함께 보여 줍니다. 버튼 안에는 로딩 표시를 넣지 않습니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -60,7 +60,7 @@ import { Button, IconButton, TextButton } from 'platform-design-system';
 ## 아이콘
 
 - `leftIcon` · `rightIcon` · `icon`에 아이콘 요소를 넘기면 버튼 크기에 맞게 표시됩니다.
-- 아이콘은 글자 색을 따르므로 SVG에 `fill="currentColor"`를 씁니다.
+- 아이콘은 텍스트 색을 따르므로 SVG에 `fill="currentColor"`를 씁니다.
 
 ## 접근성
 

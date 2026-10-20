@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Badge.showcase.stories';
 import { Badge, BadgeDot, BadgeCount } from './Badge';
 
-<Meta title="컴포넌트/Badge/사용 방법" id="components-badge-usage" name="Docs" />
+<Meta title="Components/Badge/Usage" id="components-badge-usage" name="Docs" />
 
 # Badge
 
-배지는 상태나 개수를 짧게 알려 주는 표시입니다. 보여 주기만 하며 누를 수 없습니다.
+상태나 개수를 간결하게 표시합니다. 사용자 동작을 실행하는 버튼과 구분해 사용합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -28,7 +28,7 @@ import { Badge, BadgeDot, BadgeCount } from './Badge';
 - `Badge` 앞의 점은 `dot={false}`로 숨길 수 있습니다.
 - `BadgeCount`는 `max`(기본 99)보다 큰 수를 "99+"처럼 줄여 보여 줍니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

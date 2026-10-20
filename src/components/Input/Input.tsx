@@ -6,17 +6,17 @@ import { FieldLabelRow, FieldMessage, setNativeValue, useFieldValue, useMergedRe
 export type InputProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className' | 'style' | 'required'> & {
   /** 크기. @default 'sm' */
   size?: FieldSize;
-  /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
+  /** 입력 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. */
+  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 필드에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. */
   required?: boolean;
-  /** 입력 칸 아래에 보이는 도움말 메시지. */
+  /** 입력 필드 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
   /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
   /** 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. */
   invalid?: boolean;
-  /** 마우스를 올리거나 키보드로 선택하면 지우기 버튼(X)을 보여 줍니다. @default true */
+  /** 마우스를 올리거나 키보드 포커스를 받으면 지우기 버튼(X)을 보여 줍니다. @default true */
   clearable?: boolean;
   /** 지우기 버튼으로 값을 비운 뒤 호출됩니다. */
   onClear?: () => void;
@@ -30,10 +30,7 @@ export type InputProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'class
   style?: CSSProperties;
 };
 
-/**
- * 한 줄짜리 글자를 입력받는 입력 칸입니다. 라벨 · 도움말 메시지 · 비밀번호 보기 버튼을 붙일 수 있고,
- * 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
- */
+/** 이름·이메일 등 한 줄의 텍스트를 입력받습니다. 라벨, 도움말, 오류 메시지와 비밀번호 표시 기능을 제공합니다. */
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     size = 'sm',

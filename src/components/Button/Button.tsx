@@ -19,9 +19,7 @@ export type ButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 
     children: ReactNode;
   };
 
-/**
- * 사용자가 행동을 실행하는 버튼입니다. 마우스를 올리거나 누르면 모양이 바뀌고, `disabled`이면 누를 수 없습니다.
- */
+/** 저장·조회·다음 단계 이동 등 사용자 동작을 실행합니다. 동작의 중요도에 맞춰 종류를 선택합니다. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant = 'primary', appearance, size = 'xs', shape = 'square', leftIcon, rightIcon, children, className, type = 'button', ...rest },
   ref,

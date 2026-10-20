@@ -3,15 +3,15 @@ import * as Showcase from './stories/DataState.showcase.stories';
 import * as DataStateStories from './DataState.stories';
 import { DataState } from './DataState';
 
-<Meta title="컴포넌트/DataState/사용 방법" id="components-datastate-usage" name="Docs" />
+<Meta title="Components/DataState/Usage" id="components-datastate-usage" name="Docs" />
 
 # DataState
 
-데이터 영역에 내용 대신 보여 주는 안내입니다. 불러오는 중, 빈 상태, 결과 없음, 오류, 권한 없음, 일부만 표시를 알립니다.
+데이터 영역의 로딩·빈 결과·오류·접근 제한·일부 데이터 누락 상태를 안내합니다.
 
 <Canvas of={DataStateStories.ErrorState} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 표나 차트 같은 데이터 영역에 보여 줄 내용이 없거나 아직 준비되지 않았을 때, 그 자리에 둡니다.
 
@@ -32,7 +32,7 @@ import { DataState } from './DataState';
 - `description={null}`이면 설명을 숨깁니다.
 - `loading`은 스켈레톤 막대와 문구를 보여 줍니다. 문구는 `loadingLabel`로 바꿉니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -49,7 +49,7 @@ import { DataState } from './DataState';
 - 상태가 바뀌면 화면 낭독기가 새 문구를 읽어 줍니다.
 - 스켈레톤과 아이콘은 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다.
 
-## 주의사항
+## 사용 규칙
 
 - 버튼은 `onAction`(또는 `action`)을 넘길 때만 나타납니다. 할 일이 없으면 버튼을 두지 않습니다.
 - `partial`에는 기본 설명이 없습니다. 실제 수치를 `description`으로 넣습니다.

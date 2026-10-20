@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Navigation.showcase.stories';
 import { Navigation, NavLink, NavGroup, NavChild } from './Navigation';
 
-<Meta title="컴포넌트/Navigation/사용 방법" id="components-navigation-usage" name="Docs" />
+<Meta title="Components/Navigation/Usage" id="components-navigation-usage" name="Docs" />
 
 # Navigation
 
-Navigation은 화면 왼쪽에 두는 메뉴(LNB)입니다. 바로 이동하는 메뉴와, 펼쳐서 하위 메뉴를 보여 주는 메뉴 그룹으로 이루어집니다.
+화면의 주요 페이지로 이동하는 사이드 내비게이션입니다. 링크와 펼칠 수 있는 메뉴 그룹으로 구성합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -22,12 +22,12 @@ Navigation은 화면 왼쪽에 두는 메뉴(LNB)입니다. 바로 이동하는 
 ## 상태
 
 - 마우스를 올리면 모양이 바뀝니다. 누를 때의 모양은 마우스를 올렸을 때와 같습니다.
-- `NavLink` · `NavChild`에 `selected`를 주면 지금 페이지로 강조됩니다.
+- `NavLink` · `NavChild`에 `selected`를 주면 현재 페이지로 강조됩니다.
 - `NavGroup`을 펼치면 화살표가 위쪽으로 바뀌고 하위 메뉴가 보입니다.
-- 키보드로 선택하면 항목 안쪽에 포커스 테두리가 보입니다.
+- 키보드 포커스를 받으면 항목 안쪽에 포커스 테두리가 보입니다.
 - 긴 메뉴 이름은 줄을 바꿔 보여 줍니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

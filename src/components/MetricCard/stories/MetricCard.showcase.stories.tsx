@@ -7,7 +7,7 @@ import { LightningIcon } from '../../../icons';
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs metric-card`.
 const meta = {
-  title: '컴포넌트/MetricCard/전체 보기',
+  title: "Components/MetricCard/Gallery",
   id: 'components-metriccard-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -16,9 +16,9 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-/** The Figma metric card (386px). */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <MetricCard
       data-figma="metric-card"
@@ -39,7 +39,7 @@ export const Figma: Story = {
 
 /** A group named by its title heading. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => <MetricCard title="누적 전력 사용량" value="1,248" unit="kWh" headingLevel={2} />,
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('heading', { level: 2, name: '누적 전력 사용량' })).toBeInTheDocument();

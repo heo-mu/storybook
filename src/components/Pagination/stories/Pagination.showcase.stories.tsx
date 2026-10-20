@@ -9,7 +9,7 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs pagination` (sets pagination, pagination_item, pagination_control).
 const meta = {
-  title: '컴포넌트/Pagination/전체 보기',
+  title: "Components/Pagination/Gallery",
   id: 'components-pagination-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -21,7 +21,7 @@ type Story = StoryObj;
 const pseudo = (state: string) => (state === 'Hover' ? PSEUDO.hover : state === 'Pressed' ? PSEUDO.pressed : undefined);
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)" direction="column">
@@ -36,9 +36,9 @@ export const Overview: Story = {
   ),
 };
 
-/** Figma `pagination` (3): five pages, the first current (previous is disabled on page 1 in code). */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       columns={['pagination']}
@@ -50,9 +50,9 @@ export const VariantMatrix: Story = {
   ),
 };
 
-/** Figma `pagination_item` (24): Shape × Size (rows) × State (columns). */
+/** 항목의 크기와 상태별 표현을 비교합니다. */
 export const ItemMatrix: Story = {
-  name: '항목 모든 변형',
+  name: "Items",
   render: () => (
     <FigmaMatrix
       columns={['Default', 'Hover', 'Pressed', 'Current']}
@@ -69,9 +69,9 @@ export const ItemMatrix: Story = {
   ),
 };
 
-/** Figma `pagination_control` (48): Direction × Shape × Size (rows) × State (columns). */
+/** 이전·다음 페이지 버튼의 크기와 상태를 비교합니다. */
 export const ControlMatrix: Story = {
-  name: '이전 · 다음 버튼 모든 변형',
+  name: "Controls",
   render: () => (
     <FigmaMatrix
       columns={['Default', 'Hover', 'Pressed', 'Disabled']}
@@ -100,7 +100,7 @@ export const ControlMatrix: Story = {
 
 /** Items and controls in every state at size md. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="Item (Default · Hover · Pressed · Current) · Control (Default · Hover · Pressed · Disabled)">
       <PaginationItem page={1} size="md" />
@@ -127,7 +127,7 @@ function Controlled() {
 
 /** Page numbers, previous / next, the window follows the current page; bounds disable the controls. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <Controlled />,
   play: async ({ canvas, userEvent, step }) => {
     const prev = canvas.getByRole('button', { name: '이전 페이지' });
@@ -151,7 +151,7 @@ export const Interaction: Story = {
 
 /** nav landmark with labelled buttons; the current page is aria-current="page". */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => <Pagination totalPages={3} defaultPage={2} aria-label="검색 결과 페이지" />,
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('navigation', { name: '검색 결과 페이지' })).toBeInTheDocument();

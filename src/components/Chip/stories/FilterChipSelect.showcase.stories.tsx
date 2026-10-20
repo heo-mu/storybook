@@ -9,7 +9,7 @@ import { Badge } from '../../Badge';
 // Interaction and application examples of FilterChipSelect (not in the MCP manifest) — Figma "chip-filter 선택 예시"
 // (1011:12956, multiple) and "단일 선택 예시" (Design System Rules 07).
 const meta = {
-  title: '컴포넌트/Chip/FilterChipSelect/전체 보기',
+  title: "Components/Chip/FilterChipSelect/Gallery",
   id: 'components-chip-filterchipselect-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -23,7 +23,7 @@ const FIGMA_FILTERS = ['나이대', '색상', '성별', '스타일'];
 const chipOf = (root: HTMLElement, name: RegExp | string) => within(root).getByRole('button', { name });
 const listbox = () => within(document.body).findByRole('listbox');
 
-/** Figma "기본": the four filters of the Figma example, nothing applied. */
+/** 조건이 적용되지 않은 필터의 기본 구성입니다. */
 export const Basic: Story = {
   name: '기본',
   render: () => (
@@ -35,12 +35,9 @@ export const Basic: Story = {
   ),
 };
 
-/**
- * Multiple selection — the Figma flow 기본 → 기본 열림 → 선택 중 → 선택 완료 → 다시 열림 → 다시 선택 중 → 다시 선택 완료,
- * then turning every option off removes the filter.
- */
+/** 여러 옵션을 선택하고 목록을 닫아 필터를 적용합니다. 전체 해제 동작도 확인합니다. */
 export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = {
-  name: '여러 개 선택',
+  name: "Multiple Selection",
   args: { onChange: fn() },
   render: (args) => (
     <div style={{ display: 'flex', gap: 4, minHeight: 260 }}>
@@ -104,7 +101,7 @@ export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = 
 
 /** Single selection: choosing applies and closes; "전체" removes the filter. */
 export const SingleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = {
-  name: '하나 선택',
+  name: "Single Selection",
   args: { onChange: fn() },
   render: (args) => (
     <div style={{ minHeight: 220 }}>
@@ -149,7 +146,7 @@ export const SingleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = {
 
 /** Keyboard only: Tab to the chip, ↓ opens, arrows move, Space toggles, Esc applies and returns focus to the chip. */
 export const Keyboard: Story = {
-  name: '키보드',
+  name: "Keyboard",
   render: () => (
     <div style={{ minHeight: 240 }}>
       <FilterChipSelect label="색상" options={OPTIONS} />
@@ -174,7 +171,7 @@ export const Keyboard: Story = {
 
 /** Disabled: no panel, not focusable by Tab. */
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   render: () => <FilterChipSelect label="스타일" options={OPTIONS} disabled defaultValue={['1']} />,
   play: async ({ canvasElement, userEvent }) => {
     const chip = chipOf(canvasElement, /^스타일/);
@@ -277,7 +274,7 @@ export const FilterArea: Story = {
 
 /** The chip's accessible name is its visible text — the filter name alone, then "필터명: 값" — never the label twice (WCAG 2.5.3). */
 export const AccessibleName: Story = {
-  name: '접근 가능한 이름',
+  name: "Accessible Name",
   render: () => (
     <div style={{ display: 'flex', gap: 4, minHeight: 260 }}>
       <FilterChipSelect label="상태" options={OPTIONS} />

@@ -39,9 +39,7 @@ export type DropdownMenuProps = {
   className?: string;
 };
 
-/**
- * 버튼을 누르면 펼쳐지는 동작 메뉴입니다. 방향키로 항목을 옮기고, Esc로 닫으면 키보드 위치가 트리거로 돌아갑니다.
- */
+/** 버튼을 누르면 관련 동작 목록이 열립니다. 이동·복제·삭제처럼 같은 대상에 적용할 작업을 모아 제공합니다. */
 export function DropdownMenu({
   trigger,
   children,
@@ -80,7 +78,7 @@ export type DropdownMenuItemProps = Omit<MenuItemProps, 'className' | 'children'
   className?: string;
 };
 
-/** 메뉴 항목 하나입니다. 마우스를 올리거나 키보드로 선택하면 같은 모양으로 바뀝니다. */
+/** 메뉴 항목 하나입니다. 마우스를 올리거나 키보드 포커스를 받으면 같은 모양으로 바뀝니다. */
 export function DropdownMenuItem({ children, description, icon, chevron = false, danger = false, disabled, className, textValue, ...rest }: DropdownMenuItemProps) {
   return (
     <MenuItem

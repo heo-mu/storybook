@@ -7,7 +7,7 @@ import { Button } from '../../Button';
 // Visual verification (not in the MCP manifest). The cell carries the data-figma name checked by
 // `node scripts/verify-figma.mjs progress` (single component `progress`).
 const meta = {
-  title: '컴포넌트/Progress/전체 보기',
+  title: "Components/Progress/Gallery",
   id: 'components-progress-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj;
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div style={{ display: 'grid', gap: 16, width: 430 }}>
       <Progress aria-label="업로드" value={25} />
@@ -27,9 +27,9 @@ export const Overview: Story = {
   ),
 };
 
-/** Figma `progress`: 430px track, bar 189px (value 189 of 430). */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div data-figma="progress" style={{ width: 430 }}>
       <Progress aria-label="진행률" value={189} maxValue={430} />
@@ -39,7 +39,7 @@ export const Figma: Story = {
 
 /** The bar follows `value`; role="progressbar" exposes it (aria-valuenow / aria-valuetext). */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: function Render() {
     const [value, setValue] = useState(30);
     return (
@@ -59,7 +59,7 @@ export const Interaction: Story = {
 };
 
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <div style={{ width: 430 }}>
       <span id="p-label">보고서 생성</span>

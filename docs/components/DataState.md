@@ -59,3 +59,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - 버튼은 `TextButton` Primary · sm이며, 상태별 오른쪽 아이콘(위 표의 › · ↺)이 붙습니다.
 - `title` · `description` · `actionLabel`의 기본값은 Figma의 상태별 텍스트 속성("Empty Title" · "Error Description" …) 값입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `DataState.showcase.stories.tsx / Figma`: The 6 Figma variants (460px).

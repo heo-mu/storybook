@@ -9,7 +9,7 @@ import { koLabel } from '../../../storybook/koLabel';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs link`.
 const meta = {
-  title: '컴포넌트/Link/전체 보기',
+  title: "Components/Link/Gallery",
   id: 'components-link-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -22,7 +22,7 @@ const STATES = ['Default', 'Hover', 'Pressed', 'Visited', 'Disabled'] as const;
 const stateClass = { Hover: PSEUDO.hover, Pressed: PSEUDO.pressed, Visited: PSEUDO.visited } as Record<string, string>;
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -44,9 +44,9 @@ export const Overview: Story = {
   ),
 };
 
-/** All 15 Figma variants (Figma "Icon" on): Size (rows) × State (columns). */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -70,7 +70,7 @@ export const VariantMatrix: Story = {
 
 /** Every state at size md. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="State">
       {STATES.map((state) => (
@@ -84,7 +84,7 @@ export const States: Story = {
 
 /** Keyboard: Tab focuses the link, a disabled link is skipped. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => (
     <div style={{ display: 'flex', gap: 16 }}>
       <Link href="#first">첫 번째</Link>
@@ -104,7 +104,7 @@ export const Interaction: Story = {
 
 /** External links announce the new tab; disabled links keep the link role with aria-disabled. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <div style={{ display: 'flex', gap: 16 }}>
       <Link href="https://www.figma.com" external>

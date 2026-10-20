@@ -5,7 +5,7 @@ import { Button } from '../Button';
 
 // 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/Alert.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: '컴포넌트/Alert/Alert',
+  title: "Components/Alert/Alert",
   id: 'components-alert-alert',
   component: Alert,
   tags: ['autodocs'],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '화면 안에 머물며 상태나 안내를 전하는 알림입니다. 종류는 `status`로 고르고, 필요한 동작은 `action`에 버튼으로 넣습니다.',
+          "현재 화면에서 알아야 할 상태나 안내를 지속적으로 표시합니다. 일시적인 작업 결과는 Toast를 사용합니다.",
       },
     },
   },
@@ -29,10 +29,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 모든 Props를 직접 바꿔 볼 수 있습니다. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const WithAction: Story = {
-  name: '버튼 있음',
+  name: "Action",
   args: {
     status: 'error',
     title: '연결이 끊겼습니다',
@@ -46,7 +46,7 @@ export const WithAction: Story = {
 };
 
 export const TitleOnly: Story = {
-  name: '제목만',
+  name: "Title Only",
   args: { status: 'success', title: '저장했습니다', description: undefined },
 };
 

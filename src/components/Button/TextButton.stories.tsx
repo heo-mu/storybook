@@ -5,7 +5,7 @@ import { TEXT_BUTTON_SIZES, TEXT_BUTTON_VARIANTS } from './Button.options';
 import { ICON_MAPPING, ICON_OPTIONS } from './stories/icon-controls';
 
 const meta = {
-  title: '컴포넌트/Button/TextButton',
+  title: "Components/Button/TextButton",
   id: 'components-button-textbutton',
   component: TextButton,
   tags: ['autodocs'],
@@ -13,12 +13,12 @@ const meta = {
     docs: {
       description: {
         component:
-          '배경 없이 글자로만 보이는 가벼운 버튼입니다. 더보기처럼 덜 강조할 행동에 씁니다.',
+          "더보기 등 강조도가 낮은 보조 동작에 사용하는 텍스트 버튼입니다.",
       },
     },
   },
   args: {
-    children: '라벨명',
+    children: '저장',
     variant: 'primary',
     size: 'sm',
     disabled: false,
@@ -30,7 +30,7 @@ const meta = {
     leftIcon: { control: 'select', options: ICON_OPTIONS, mapping: ICON_MAPPING, description: '글자 왼쪽 아이콘' },
     rightIcon: { control: 'select', options: ICON_OPTIONS, mapping: ICON_MAPPING, description: '글자 오른쪽 아이콘' },
     children: { control: 'text', description: '버튼 글자' },
-    disabled: { control: 'boolean', description: '비활성 — 누를 수 없고 키보드로도 선택되지 않음' },
+    disabled: { control: 'boolean', description: '비활성 — 조작과 키보드 포커스 제한' },
   },
 } satisfies Meta<typeof TextButton>;
 
@@ -38,14 +38,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 모든 Props를 직접 바꿔 볼 수 있습니다. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Medium: Story = {
-  name: '중간 크기',
+  name: "Medium",
   args: { size: 'md' },
 };
 
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   args: { disabled: true },
 };

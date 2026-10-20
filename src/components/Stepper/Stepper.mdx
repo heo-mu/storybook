@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Stepper.showcase.stories';
 import { Stepper, StepperIndicator, StepperConnector } from './Stepper';
 
-<Meta title="컴포넌트/Stepper/사용 방법" id="components-stepper-usage" name="Docs" />
+<Meta title="Components/Stepper/Usage" id="components-stepper-usage" name="Docs" />
 
 # Stepper
 
-Stepper는 여러 단계로 된 과정에서 지금 몇 번째 단계인지 보여 줍니다. 진행 상황을 보여 주기만 하며, 단계를 누를 수는 없습니다.
+여러 단계로 이루어진 과정의 현재 위치와 진행 상태를 표시합니다. 단계 이동 버튼으로 사용하지 않습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 가입 절차처럼 여러 단계를 차례로 거치는 과정에서 진행 상황을 보여 줄 때 씁니다.
 
@@ -27,8 +27,8 @@ Stepper는 여러 단계로 된 과정에서 지금 몇 번째 단계인지 보�
 | 단계 상태 | 뜻 |
 | --- | --- |
 | `completed` | 끝난 단계. 체크 아이콘이 보입니다 |
-| `current` | 지금 단계 |
-| `upcoming` | 아직 오지 않은 단계 |
+| `current` | 현재 단계 |
+| `upcoming` | 진행 예정 단계 |
 | `locked` | 잠긴 단계 |
 | `error` | 오류가 있는 단계. 경고 아이콘이 보입니다 |
 
@@ -36,7 +36,7 @@ Stepper는 여러 단계로 된 과정에서 지금 몇 번째 단계인지 보�
 - 잠김 · 오류는 단계의 `status`로 직접 정합니다.
 - 완료된 단계 뒤의 연결선은 완료 모양으로 바뀝니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -62,11 +62,11 @@ Stepper는 여러 단계로 된 과정에서 지금 몇 번째 단계인지 보�
 
 - `aria-label`로 과정 이름(예: "가입 절차")을 붙이면 화면 낭독기가 무엇의 단계인지 알려 줍니다.
 - 화면 낭독기는 각 단계를 "2단계, 완료"처럼 번호와 상태를 함께 읽습니다. 색과 아이콘으로만 보이는 상태도 말로 전달됩니다.
-- 지금 단계는 화면 낭독기에 현재 단계로 알려집니다.
+- 현재 단계는 화면 낭독기에 현재 단계로 알려집니다.
 
-## 주의사항
+## 사용 규칙
 
-- 단계 글자는 원을 가운데에 두고 양옆(가로)이나 위아래(세로)로 넘쳐 보입니다.
+- 라벨은 단계 아이콘을 기준으로 정렬되며 아이콘보다 넓게 표시될 수 있습니다.
 - 가로 Stepper는 양 끝 글자가 잘리지 않도록 바깥에 글자 폭의 절반만큼 여백을 둡니다.
 
 ## Props

@@ -13,7 +13,7 @@ import { expectHelperMessage } from '../../../storybook/helperMessage';
 // `node scripts/verify-figma.mjs date-picker` (sets date-picker_trigger, date-picker_message; the calendar
 // sets are in Calendar/Showcase).
 const meta = {
-  title: '컴포넌트/DatePicker/전체 보기',
+  title: "Components/DatePicker/Gallery",
   id: 'components-datepicker-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -44,7 +44,7 @@ function figmaVariant(size: FieldSize, state: State) {
 }
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -64,9 +64,9 @@ export const Overview: Story = {
   ),
 };
 
-/** All 21 Figma trigger variants: Size (rows) × State (columns). */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -82,9 +82,9 @@ export const VariantMatrix: Story = {
   },
 };
 
-/** Figma `date-picker_message` (Info · Success · Error · Helper; Helper also in a disabled field — State=Disabled). */
+/** 도움말·안내·성공·오류 메시지를 비교합니다. */
 export const MessageMatrix: Story = {
-  name: '메시지 모든 변형',
+  name: "Messages",
   render: () => (
     <div className="ds-date-picker">
       <FigmaMatrix
@@ -115,7 +115,7 @@ export const MessageMatrix: Story = {
 
 /** Every state at size sm. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="State">
       {STATES.map((state) => (
@@ -128,9 +128,9 @@ export const States: Story = {
   ),
 };
 
-/** The field with its calendar open (Figma example "Calendar Container"). */
+/** 목록이나 패널이 열린 상태를 확인합니다. */
 export const Open: Story = {
-  name: '열림',
+  name: "Open",
   render: () => (
     // Padding keeps the popover clear of react-aria's 12px viewport margin, so it can align with the field.
     <div style={{ width: 296, padding: 24, paddingBottom: 300 }}>
@@ -161,7 +161,7 @@ function Controlled() {
 
 /** Typing a date, invalid text, choosing from the calendar. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <Controlled />,
   play: async ({ canvas, canvasElement, userEvent, step }) => {
     const input = canvas.getByRole('textbox', { name: '방문일' });
@@ -202,7 +202,7 @@ export const Interaction: Story = {
 
 /** Field label, invalid state and message; the hidden input submits ISO dates. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <form aria-label="예약" style={{ width: 320 }}>
       <DatePicker label="예약일" name="date" defaultValue="2026-07-30" invalid message="예약할 수 없는 날짜입니다." />
@@ -217,9 +217,9 @@ export const Accessibility: Story = {
   },
 };
 
-/** Figma Required on (every size): the dot after the label; the date input is required for assistive technology and form checks. */
+/** 라벨의 필수 표시와 입력 요소의 필수 상태를 확인합니다. */
 export const RequiredMark: Story = {
-  name: '필수 표시',
+  name: "Required",
   render: () => (
     <div style={{ width: 320, display: 'grid', gap: 24 }}>
       {FIELD_SIZES.map((size) => (
@@ -239,9 +239,9 @@ export const RequiredMark: Story = {
   },
 };
 
-/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+/** 도움말과 오류 메시지, 비활성 필드의 표시를 비교합니다. */
 export const HelperMessage: Story = {
-  name: '도움말',
+  name: "Helper Text",
   render: () => (
     <div style={{ display: 'flex', gap: 24 }}>
       <DatePicker label="방문일" message="평일만 고를 수 있습니다." />

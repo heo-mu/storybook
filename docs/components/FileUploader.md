@@ -94,3 +94,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `FileUploaderItem`의 버튼은 `TextButton`(button_text Primary sm)입니다.
 - `Loading`은 `colors/border/transparency` → `colors/border/brand` 그라데이션 호이며, `role="status"`라 라벨(또는 `aria-label`, 기본 "로딩 중")이 정중하게(polite) 읽힙니다.
 - `ImageUploadPreview`는 Figma key-value File Upload 셀(`table_value_editable`, 503:23264)의 업로드 이미지입니다: 100px 정사각형, 오른쪽 위 모서리 중앙에 둥근 삭제 버튼(18px, padding p-0_5, `colors/fill/secondary/subtle/default`, 1px `colors/border/gray-subtler`, X 12px `colors/icon/secondary`).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `FileUploader.showcase.stories.tsx / DropzoneMatrix`: Figma `file-uploader` (5 states), 353px wide.
+- `FileUploader.showcase.stories.tsx / ItemMatrix`: Figma `file-uploader-item` (Completed · uploading · download · Error), 320px wide.
+- `FileUploader.showcase.stories.tsx / LoadingMatrix`: Figma `loading` (md · sm) with the label.

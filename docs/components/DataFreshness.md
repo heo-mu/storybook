@@ -53,3 +53,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
 
 - 시각 · "·" · 갱신 주기는 `xs/leading-normal/normal`, 서로 `m-0_5` 간격이며 배지 뒤 간격은 `p-2`입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `DataFreshness.showcase.stories.tsx / Figma`: The 3 Figma variants.

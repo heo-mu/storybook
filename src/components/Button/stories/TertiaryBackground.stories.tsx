@@ -12,7 +12,7 @@ import { PSEUDO_PARAMETERS, figmaCase, stateProps } from './story-helpers';
 // tokens the Component variables used before (surface/container-subtle · container · overlay, still in Figma),
 // the new one is colors/fill/tertiary/*. Story-only comparison — the component itself always uses the new tokens.
 const meta = {
-  title: '컴포넌트/Button/Tertiary 배경 비교',
+  title: "Components/Button/Surface Comparison",
   id: 'components-button-tertiary-background',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_PARAMETERS, controls: { disable: true } },
@@ -60,17 +60,17 @@ function Row({ label, style, id }: { label: string; style?: CSSProperties; id: s
   );
 }
 
-/** Tertiary / Solid on the page surface (#fdfdfd): before and after the Figma change, with the token values and their contrast to the page. */
+/** 중립 표면색과 Tertiary 전용 색을 비교합니다. 실제 버튼에는 Tertiary 전용 색을 사용합니다. */
 export const BeforeAfter: Story = {
-  name: '이전 · 이후',
+  name: "Surface Comparison",
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
-      <Row label="이전" style={BEFORE} id="before" />
-      <Row label="현재" id="after" />
+      <Row label="중립 표면색" style={BEFORE} id="before" />
+      <Row label="Tertiary 전용 색" id="after" />
       <table style={{ borderCollapse: 'collapse' }}>
         <thead>
           <tr>
-            {['State', '이전 토큰', '값', '대비(page)', '현재 토큰', '값', '대비(page)'].map((h, i) => (
+            {['State', '중립 표면색', '값', '페이지 대비', 'Tertiary 전용 색', '값', '페이지 대비'].map((h, i) => (
               <th key={i} style={{ ...cell, fontWeight: 500 }} scope="col">
                 {h}
               </th>

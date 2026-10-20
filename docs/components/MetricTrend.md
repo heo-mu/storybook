@@ -51,3 +51,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - 방향 아이콘은 12px이고, 배경 `dashboard/background`, padding · 아이콘과 글자 간격 `p-1`, 모서리 `rounded-sm`입니다.
 - children은 Figma "Change Text", `direction`은 "Direction", `tone`은 "Tone"입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `MetricTrend.showcase.stories.tsx / Figma`: Direction × Tone (12 Figma variants).

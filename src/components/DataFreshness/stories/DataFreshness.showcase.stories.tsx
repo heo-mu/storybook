@@ -5,7 +5,7 @@ import { DataFreshness } from '../DataFreshness';
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs data-freshness`.
 const meta = {
-  title: '컴포넌트/DataFreshness/전체 보기',
+  title: "Components/DataFreshness/Gallery",
   id: 'components-datafreshness-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -14,9 +14,9 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-/** The 3 Figma variants. */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div style={{ display: 'grid', gap: 24, justifyItems: 'start' }}>
       <DataFreshness data-figma="State=Fresh" state="fresh" timestamp="2026.10.14 09:30" interval="자동 갱신 1분" />
@@ -28,7 +28,7 @@ export const Figma: Story = {
 
 /** Read as one phrase; the "·" separator is hidden. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => <DataFreshness data-testid="freshness" state="stale" timestamp="2026.10.14 09:30" dateTime="2026-10-14T09:30" interval="자동 갱신 1분" />,
   play: async ({ canvas }) => {
     const root = canvas.getByTestId('freshness');

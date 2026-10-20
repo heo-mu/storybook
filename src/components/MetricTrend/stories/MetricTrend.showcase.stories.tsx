@@ -6,7 +6,7 @@ import { METRIC_TREND_DIRECTIONS, METRIC_TREND_TONES } from '../MetricTrend.opti
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs metric-trend`.
 const meta = {
-  title: '컴포넌트/MetricTrend/전체 보기',
+  title: "Components/MetricTrend/Gallery",
   id: 'components-metrictrend-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -17,9 +17,9 @@ type Story = StoryObj;
 
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
-/** Direction × Tone (12 Figma variants). */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, max-content)', gap: 24 }}>
       {METRIC_TREND_TONES.map((tone) =>
@@ -35,7 +35,7 @@ export const Figma: Story = {
 
 /** The icon is decorative; the direction is read before the change. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <p>
       전력 사용량{' '}

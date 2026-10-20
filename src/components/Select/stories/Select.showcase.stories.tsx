@@ -15,7 +15,7 @@ import { expectHelperMessage } from '../../../storybook/helperMessage';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs select` (sets select, listbox, option, select_message).
 const meta = {
-  title: '컴포넌트/Select/전체 보기',
+  title: "Components/Select/Gallery",
   id: 'components-select-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -71,7 +71,7 @@ function SelectVariant({ size, state }: { size: FieldSize; state: State }) {
 const FRUITS = ['사과', '바나나', '체리', '포도', '키위', '망고', '복숭아', '자두', '수박', '참외', '딸기', '레몬'];
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -112,9 +112,9 @@ export const Overview: Story = {
   ),
 };
 
-/** 21 Figma select variants: Size (rows) × State (columns). "Open" needs an open list → see `Open`. */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -133,9 +133,9 @@ export const VariantMatrix: Story = {
   },
 };
 
-/** Figma State "Open" for one size (`size` arg): the field with its list open below it. */
+/** 목록이나 패널이 열린 상태를 확인합니다. */
 export const Open: StoryObj<{ size: FieldSize }> = {
-  name: '열림',
+  name: "Open",
   args: { size: 'sm' },
   argTypes: { size: { control: 'inline-radio', options: FIELD_SIZES } },
   parameters: { controls: { disable: false } },
@@ -161,9 +161,9 @@ export const Open: StoryObj<{ size: FieldSize }> = {
 
 const SELECTED_ROW = 2;
 
-/** Figma `listbox` (3 sizes): five options, the third selected. */
+/** 옵션 목록의 크기별 구성을 비교합니다. */
 export const ListboxMatrix: Story = {
-  name: '목록 모든 변형',
+  name: "Listbox",
   render: () => (
     <FigmaMatrix
       cellWidth={332}
@@ -191,9 +191,9 @@ export const ListboxMatrix: Story = {
 
 const OPTION_STATES = ['Default', 'Hover', 'Pressed', 'Selected', 'Disabled'] as const;
 
-/** Figma `option` (15): Size (rows) × State (columns). */
+/** 선택·비활성 등 옵션 상태를 비교합니다. */
 export const OptionMatrix: Story = {
-  name: '옵션 모든 변형',
+  name: "Options",
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -221,9 +221,9 @@ export const OptionMatrix: Story = {
   ),
 };
 
-/** Figma `select_message` (Info · Success · Error · Helper; Helper also in a disabled field — State=Disabled). */
+/** 도움말·안내·성공·오류 메시지를 비교합니다. */
 export const MessageMatrix: Story = {
-  name: '메시지 모든 변형',
+  name: "Messages",
   render: () => (
     <div className="ds-select">
       <FigmaMatrix
@@ -254,7 +254,7 @@ export const MessageMatrix: Story = {
 
 /** Every state at size sm (Open: see `Open`). */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="State">
       {STATES.map((state) => (
@@ -267,7 +267,7 @@ export const States: Story = {
   ),
 };
 
-/** A long list scrolls inside the popover (Figma "scroll" indicator = the styled scrollbar). */
+/** 옵션이 많은 목록에서 스크롤과 선택 동작을 확인합니다. */
 export const LongList: Story = {
   name: '긴 목록',
   render: () => (
@@ -297,7 +297,7 @@ function Controlled() {
 
 /** Mouse and keyboard: open, move, select, close; focus returns to the field. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <Controlled />,
   play: async ({ canvas, canvasElement, userEvent, step }) => {
     const body = within(canvasElement.ownerDocument.body);
@@ -335,7 +335,7 @@ export const Interaction: Story = {
 
 /** Label, description and invalid state reach the trigger; the hidden native select carries the form value. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <form style={{ width: 320 }} aria-label="주문">
       <Select label="배송지" name="region" defaultValue="seoul" invalid message="배송할 수 없는 지역입니다.">
@@ -354,9 +354,9 @@ export const Accessibility: Story = {
   },
 };
 
-/** Figma Required on (every size): the dot after the label; the trigger button is described as "필수" (a button has no required state). */
+/** 라벨의 필수 표시와 입력 요소의 필수 상태를 확인합니다. */
 export const RequiredMark: Story = {
-  name: '필수 표시',
+  name: "Required",
   render: () => (
     <div style={{ width: 320, display: 'grid', gap: 24 }}>
       {FIELD_SIZES.map((size) => (
@@ -380,9 +380,9 @@ export const RequiredMark: Story = {
   },
 };
 
-/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+/** 도움말과 오류 메시지, 비활성 필드의 표시를 비교합니다. */
 export const HelperMessage: Story = {
-  name: '도움말',
+  name: "Helper Text",
   render: () => (
     <div style={{ display: 'flex', gap: 24 }}>
       <Select label="부서" placeholder="부서 선택" message="인사 정보에 등록된 부서를 고릅니다.">

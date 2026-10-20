@@ -12,7 +12,7 @@ import { Textarea } from '../components/Textarea';
 
 // Mirrors the Figma usage example "Form 사용 예시" (section 사용 예시 화면) with the library components.
 const meta = {
-  title: '사용 예시/입력 화면',
+  title: "Examples/Form",
   id: 'patterns-form',
   tags: ['autodocs', '!manifest'],
   parameters: {
@@ -147,7 +147,7 @@ function FormExample() {
 
 /** 필수 표시 · 도움말 · 오류 메시지 · 선택 · 날짜 · 라디오 · 메모 · 동의, 저장 중 · 필수 동의 오류 상태까지 한 화면에 모은 예시입니다. */
 export const Form: Story = {
-  name: '입력 화면',
+  name: '담당자 등록',
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-margin-m-8)', width: 500, maxWidth: '100%' }}>
       <FormExample />

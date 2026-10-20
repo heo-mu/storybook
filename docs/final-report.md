@@ -313,3 +313,49 @@ data-state · 예시 프레임 원격 흰 배경(#ffffff), F77 수정 여부, �
 | 2 | Storybook 동기화 | `required`(Input · Textarea · Select · DatePicker), `FileUploaderItem status="error"`, 표 칸 가운데 정렬, Breadcrumb 펼친 항목 Hover 글자 색, 입력 칸 글자 · 효과 토큰, 사용 예시 3쪽, 기준 이미지 71세트 재캡처, 글자 색 비교 검사 |
 | 3 | QA | 3 엔진 정합성 108/108 · Button 352 × 3 · 스토리 408 · axe 위반 0 · 외부 앱 3 엔진 · 콘솔 · 문서 문구 · Figma 최신 상태 — [v1.0-candidate.md 8절](./v1.0-candidate.md#8-시험-결과). 고친 것: 글자 색 엔진별 판정, `Table` `id` 타입, 상호작용 테스트 3개 |
 | 4 | 남은 점 | 미검증(실제 화면 낭독기 · 실기기 Safari · 큰 데이터 · 확대 · 고대비, axe 검토 필요 항목), Firefox 글꼴 경고 · Storybook 자체 경고 — [9절](./v1.0-candidate.md#9-남은-문제--제약). 개발팀 검토 R-1 – R-7, 디자인 결정 V-1 – V-13 |
+
+## 16. Codex 인수인계 · Storybook 콘텐츠 개선 (2026-10-20)
+
+시작 HEAD `0aef52d`와 로컬 체크포인트, 작업 트리, progress·candidate·sync-status의 기록을 확인했습니다.
+기존 미커밋 기능·QA·Figma 기준 변경은 보존하고 이번 콘텐츠 개선 커밋에서 제외했습니다.
+이 절이 현재 콘텐츠와 검증 상태이며, 위의 396·408 Story 기록은 각 작업 당시 결과입니다.
+
+| 항목 | 결과 |
+| --- | --- |
+| 메뉴 | `Foundations / Components / Examples`. 컴포넌트는 이름순, Usage를 먼저 배치하고 기존 그룹 깊이와 모든 Story를 유지 |
+| 상태·예시 이름 | 직접 체험 → Playground, 모든 변형 → Variants, 전체 보기 → Gallery, 라벨만 → Label Only. 값 있음은 DatePicker의 Selected Date, Select의 Selected, FilterChipSelect의 필터 적용으로 구분. MetricTrend의 disabled는 비교 데이터 없음 |
+| 문서 | 37개 Usage와 Design Tokens, 자동 문서의 컴포넌트·Props 설명, Story 설명과 예시 문구 검토. 키보드 포커스와 선택 상태를 구분하고 날짜 선택 가능 기간·지표의 방향과 의미를 명확히 설명 |
+| 내부 정보 | 검증용 변형 수·Figma 참조·구현 이력은 기존 컴포넌트별 개발 문서 37개에 보존. 사용 문서는 목적·종류·상태·사용 예시·Props·사용 규칙에 집중 |
+| 실제 제약 정정 | Table 편집 셀은 한 줄 입력 기준. 여러 줄 입력을 지원하는 것처럼 읽히던 안내를 수정하고 V-14/F58 결정은 미완료로 유지 |
+| ID·링크 | 시작 시점과 정적 빌드의 **509개 ID 및 importPath 일치**, 추가·삭제 0. 자동 문서의 기존 `--문서` 주소와 MDX의 `--docs` 주소도 유지. 렌더링된 내부 링크 49개 유효 |
+| 실제 화면 | 라이브 서버와 최종 정적 빌드에서 각각 **423 Story + 86 문서** 렌더링 확인. 최종 빌드 오류 0, 지정한 어색한 메뉴 표현·조사 오류·내부 식별자 패턴 검출 0. 스크린샷·별도 QA 결과 파일 생성 없음 |
+| MCP 문서 | 전체 목록과 컴포넌트 문서 확인. 최종 FilterChipSelect·DatePicker·MetricTrend의 설명·Props·예시와 Table Usage 재조회 성공 |
+| 검사 | TypeScript·oxlint/CSS 주석 검사·Storybook 빌드 통과. MCP `test-run`으로 **93개 파일·423개 Story 통과**, 접근성 검사 활성화. 마지막 전체 실행의 MCP 응답까지 확인 |
+| 코드·디자인 | 라이브러리 컴포넌트의 이번 변경은 주석·문서뿐임을 TypeScript AST 출력 비교로 확인. 기존 미커밋 disabled 변경은 별도로 보존. 디자인 토큰·CSS·Figma 원본 수정 없음 |
+| Figma | 원본 파일 읽기와 Variables 조회 성공. 로컬 Variables 1,551개(Primitive 623 / Semantic 69 / Component 815 / Theme 44). `use_figma` 읽기 실행과 편집 API 노출 확인. 실제 쓰기 동작·파일 편집 ACL은 비파괴 조회만으로 확정하지 않음 |
+| 기존 QA | Chromium·Firefox·WebKit 각 36개 보고서, 864개 렌더링, issues·missing 0(2026-10-20 14:04–14:14 KST). 수동 검토 3개는 자동 통과에 포함하지 않음. 이번 문구 작업에서 전체 Figma 시각 정합성 검사는 재실행하지 않음 |
+
+### 실행 환경 이슈
+
+기존 서버가 종료된 뒤 6006 포트가 비어 있음을 확인하고 기존 npm 스크립트로 복구했습니다.
+전체 테스트는 통과했지만 기본 약 4GB 힙 한도에서 서버가 `JavaScript heap out of memory`로 종료되어 MCP 응답이 실패했습니다.
+Coverage를 UI에서 꺼도 재현되어 커버리지만의 문제로 단정하지 않았습니다.
+현재 서버 프로세스에만 8GB 한도를 적용한 뒤 전체 테스트의 정상 MCP 응답과 후속 문서 조회를 확인했습니다.
+영구 설정·npm 스크립트·의존성은 변경하지 않았습니다.
+
+서버가 실행 중이면 그대로 재사용합니다. 종료된 경우에만 PowerShell에서 다음과 같이 실행할 수 있습니다.
+
+```powershell
+$env:NODE_OPTIONS = '--max-old-space-size=8192'
+npm run storybook -- --ci
+```
+
+Storybook 테스트 UI의 Coverage는 꺼져 있고 Interactions·Accessibility는 유지했습니다.
+빌드에는 청크 크기와 preview.tsx의 docgen 제외 안내가 남습니다. 라이브 화면 순회 중 React Aria의 Pressable 포커스 경고도 관찰했으며 컴포넌트 동작을 이번 문구 작업에서 변경하지 않았습니다.
+기본 메모리 한도의 근본 원인 조사는 별도 환경 개선 과제입니다.
+
+### 미완료 항목
+
+- 디자인 검수: V-1–V-5 최종 화면 확인, V-6 차트 점선, V-12 Card 공개 여부, V-13 표 정렬, V-14/F58 여러 줄 편집 정책.
+- 수동 QA: 실제 화면 낭독기, 실기기 Safari·모바일, 200% 확대·고대비, 대용량 데이터.
+- 버전 결정·정식 v1.0 릴리스·원격 Push·Vercel·npm 배포는 진행하지 않았습니다.

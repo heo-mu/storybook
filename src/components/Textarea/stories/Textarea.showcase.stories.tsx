@@ -10,7 +10,7 @@ import { expectHelperMessage } from '../../../storybook/helperMessage';
 
 // Visual verification (not in the MCP manifest): `node scripts/verify-figma.mjs textarea`.
 const meta = {
-  title: '컴포넌트/Textarea/전체 보기',
+  title: "Components/Textarea/Gallery",
   id: 'components-textarea-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -39,7 +39,7 @@ function figmaVariant(size: TextareaSize, state: State) {
 }
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <StorySection title="Size (sm · md) · message · counter">
       <div style={{ width: 320 }}><Textarea label="요청 사항" placeholder="내용 입력" maxLength={100} /></div>
@@ -49,9 +49,9 @@ export const Overview: Story = {
   ),
 };
 
-/** All 14 Figma variants: Size (rows) × State (columns). */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -68,7 +68,7 @@ export const VariantMatrix: Story = {
 };
 
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="State (sm)">
       {STATES.map((state) => (
@@ -83,7 +83,7 @@ export const States: Story = {
 
 /** Typing updates the counter and the Completed state. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => (
     <div style={{ width: 320 }}>
       <Textarea label="메모" placeholder="내용 입력" maxLength={20} />
@@ -101,7 +101,7 @@ export const Interaction: Story = {
 };
 
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <div style={{ width: 320 }}>
       <Textarea label="사유" defaultValue="짧음" maxLength={100} invalid message="10자 이상 입력하세요." />
@@ -115,9 +115,9 @@ export const Accessibility: Story = {
   },
 };
 
-/** Figma Required on (every size): the dot after the label; the textarea is required for assistive technology and form checks. */
+/** 라벨의 필수 표시와 입력 요소의 필수 상태를 확인합니다. */
 export const RequiredMark: Story = {
-  name: '필수 표시',
+  name: "Required",
   render: () => (
     <div style={{ width: 320, display: 'grid', gap: 24 }}>
       {TEXTAREA_SIZES.map((size) => (
@@ -137,9 +137,9 @@ export const RequiredMark: Story = {
   },
 };
 
-/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+/** 도움말과 오류 메시지, 비활성 필드의 표시를 비교합니다. */
 export const HelperMessage: Story = {
-  name: '도움말',
+  name: "Helper Text",
   render: () => (
     <div style={{ display: 'flex', gap: 24 }}>
       <Textarea label="메모" message="받는 분께 전할 내용을 적어 주세요." maxLength={100} showCount />

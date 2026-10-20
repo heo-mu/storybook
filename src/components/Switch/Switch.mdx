@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Switch.showcase.stories';
 import { Switch } from './Switch';
 
-<Meta title="컴포넌트/Switch/사용 방법" id="components-switch-usage" name="Docs" />
+<Meta title="Components/Switch/Usage" id="components-switch-usage" name="Docs" />
 
 # Switch
 
-설정을 켜고 끄는 스위치입니다. 켜짐과 꺼짐 두 가지 상태만 있습니다.
+알림·자동 저장 등 두 상태를 갖는 설정을 켜거나 끕니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 알림 받기 · 자동 저장처럼 켜거나 끄는 설정에 사용합니다.
 
@@ -25,10 +25,10 @@ import { Switch } from './Switch';
 <Canvas of={Showcase.States} />
 
 - 마우스를 올리거나 누르면 모양이 바뀝니다.
-- `disabled`이면 누를 수 없고 키보드로도 선택되지 않습니다.
-- 키보드로 선택하면 스위치 둘레에 포커스 테두리가 보입니다.
+- `disabled`이면 누를 수 없고 키보드 포커스를 받지 않습니다.
+- 키보드 포커스를 받으면 스위치 둘레에 포커스 테두리가 보입니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -45,7 +45,7 @@ import { Switch } from './Switch';
 - `label`이 없으면 `aria-label`로 이름을 꼭 붙입니다.
 - Space 키로 켜고 끕니다. 화면 낭독기에는 "켜짐" 또는 "꺼짐"으로 전달됩니다.
 
-## 주의사항
+## 사용 규칙
 
 - 나머지 `<input>` 속성과 `ref`는 실제 스위치에 전달되고, `className` · `style`은 라벨을 포함한 바깥 요소에 적용됩니다.
 

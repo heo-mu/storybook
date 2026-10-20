@@ -13,7 +13,7 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs file-uploader` (sets file-uploader, file-uploader-item, loading).
 const meta = {
-  title: '컴포넌트/FileUploader/전체 보기',
+  title: "Components/FileUploader/Gallery",
   id: 'components-fileuploader-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -36,7 +36,7 @@ function DragOver({ children }: { children: ReactNode }) {
 }
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div style={{ width: 353, display: 'grid', gap: 16 }}>
       <FileUploader helperText={FIGMA_HELPER} multiple accept=".pdf,.hwp,.docx,.jpg,.png" />
@@ -53,9 +53,9 @@ export const Overview: Story = {
   ),
 };
 
-/** Figma `file-uploader` (5 states), 353px wide. */
+/** 파일 첨부 영역의 기본·드래그·비활성 상태를 비교합니다. */
 export const DropzoneMatrix: Story = {
-  name: '첨부 영역 모든 변형',
+  name: "Dropzone",
   render: () => (
     <FigmaMatrix
       cellWidth={353}
@@ -75,9 +75,9 @@ export const DropzoneMatrix: Story = {
   ),
 };
 
-/** Figma `file-uploader-item` (Completed · uploading · download · Error), 320px wide. */
+/** 항목의 크기와 상태별 표현을 비교합니다. */
 export const ItemMatrix: Story = {
-  name: '항목 모든 변형',
+  name: "Items",
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -101,9 +101,9 @@ export const ItemMatrix: Story = {
   ),
 };
 
-/** Figma `loading` (md · sm) with the label. */
+/** 로딩 표시의 크기를 비교합니다. */
 export const LoadingMatrix: Story = {
-  name: '로딩 모든 변형',
+  name: "Loading",
   render: () => (
     <FigmaMatrix
       columns={['loading']}
@@ -117,7 +117,7 @@ export const LoadingMatrix: Story = {
 
 /** Every drop-area state. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="State" direction="column">
       {STATES.map((state) => {
@@ -160,7 +160,7 @@ function Uploads({ onFilesSelected }: { onFilesSelected: (files: File[]) => void
 
 /** Dropping files (filtered by `accept`) lists them; the remove button deletes an item. */
 export const Interaction: StoryObj<{ onFilesSelected: (files: File[]) => void }> = {
-  name: '동작',
+  name: "Interaction",
   args: { onFilesSelected: fn() },
   render: (args) => <Uploads onFilesSelected={args.onFilesSelected} />,
   play: async ({ args, canvas, canvasElement, userEvent, step }) => {
@@ -188,7 +188,7 @@ export const Interaction: StoryObj<{ onFilesSelected: (files: File[]) => void }>
 
 /** The drop area is a button described by the helper text; the spinner is a status; a failed file's remove button reads the reason. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <div style={{ width: 353, display: 'grid', gap: 8 }}>
       <FileUploader helperText={FIGMA_HELPER} />

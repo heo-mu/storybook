@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, TableS
 // Mirrors the Figma usage example "Table 목록 화면 예시" (section 사용 예시 화면) with the library components,
 // including its sample texts (항목명 · 데이터 · 라벨명).
 const meta = {
-  title: '사용 예시/목록 화면',
+  title: "Examples/Table List",
   id: 'patterns-table-list',
   tags: ['autodocs', '!manifest'],
   parameters: {
@@ -113,7 +113,7 @@ function ListExample() {
 
 /** 검색 · 필터 · 등록 · 표 · 페이지 이동과, 결과가 없을 때의 표를 한 화면에 모은 예시입니다. */
 export const TableList: Story = {
-  name: '목록 화면',
+  name: '설비 목록',
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-margin-m-8)' }}>
       <ListExample />

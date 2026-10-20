@@ -99,3 +99,17 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `Calendar` 키보드는 react-aria-components 달력 패턴입니다: 방향키, Page Up · Page Down(달), Home · End(주의 처음 · 끝), Enter · Space(선택). 월 · 요일 이름은 react-aria 로캘(`I18nProvider`, 없으면 브라우저)을 따릅니다.
 - `Calendar`의 `autoFocus`는 `DatePicker`가 달력을 열 때 날짜 칸으로 포커스를 옮기는 데 씁니다.
 - `Calendar`의 day 상태: Today(오늘) · Selected(`value`) · Outside(다른 달) · Disabled(`minValue` · `maxValue` · `isDateUnavailable`) · Hover · Pressed.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Calendar.showcase.stories.tsx / CalendarMatrix`: Figma `date-picker_calendar`: July 2026, today the 29th, the 30th selected (today fixed for the story).
+- `Calendar.showcase.stories.tsx / DayMatrix`: Figma `date-picker_day` (7): the day "1" of a calendar in each state (today fixed to 2026-07-01; Hover / Pressed forced on the whole calendar).
+- `Calendar.showcase.stories.tsx / NavigationMatrix`: Figma `date-picker_navigation` (8): previous / next buttons of calendars in each state.
+- `DatePicker.showcase.stories.tsx / VariantMatrix`: All 21 Figma trigger variants: Size (rows) × State (columns).
+- `DatePicker.showcase.stories.tsx / MessageMatrix`: Figma `date-picker_message` (Info · Success · Error · Helper; Helper also in a disabled field — State=Disabled).
+- `DatePicker.showcase.stories.tsx / Open`: The field with its calendar open (Figma example "Calendar Container").
+- `DatePicker.showcase.stories.tsx / RequiredMark`: Figma Required on (every size): the dot after the label; the date input is required for assistive technology and form checks.
+- `DatePicker.showcase.stories.tsx / HelperMessage`: Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field.

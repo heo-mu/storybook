@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Link.showcase.stories';
 import { Link } from './Link';
 
-<Meta title="컴포넌트/Link/사용 방법" id="components-link-usage" name="Docs" />
+<Meta title="Components/Link/Usage" id="components-link-usage" name="Docs" />
 
 # Link
 
-Link는 다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다.
+다른 페이지나 문서로 이동하는 텍스트 링크입니다. 현재 화면에서 동작을 실행할 때는 Button을 사용합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 이용약관처럼 다른 페이지나 문서로 이동할 때 씁니다.
 - 새 창으로 여는 링크에는 `external`을 켭니다.
@@ -27,10 +27,10 @@ Link는 다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다
 
 - 마우스를 올리거나 누르면 모양이 바뀝니다.
 - 이미 방문한 링크는 방문한 모양으로 보입니다.
-- `disabled`이면 누를 수 없고 키보드로도 선택되지 않습니다.
-- 키보드로 선택하면 포커스 테두리가 보입니다.
+- `disabled`이면 누를 수 없고 키보드 포커스를 받지 않습니다.
+- 키보드 포커스를 받으면 포커스 테두리가 보입니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

@@ -59,3 +59,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
 - Figma 컴포넌트 세트: `search-field`(216:6570).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `SearchField.showcase.stories.tsx / VariantMatrix`: All 36 Figma variants: Type × Size (rows) × State (columns).

@@ -48,3 +48,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `SKEL-02` **크기 조절**: `style`의 width / height로 바꿀 수 있습니다(색 · 모서리는 그대로).
 
 ## Props
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Skeleton.showcase.stories.tsx / Figma`: The 4 Figma variants.

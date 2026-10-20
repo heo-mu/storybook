@@ -10,10 +10,7 @@ export type DashboardFilterBarProps = ComponentPropsWithoutRef<'div'> & {
   'aria-label'?: string;
 };
 
-/**
- * 대시보드의 조회 조건을 한곳에 모아 보여 주는 막대입니다. 조건 묶음 사이에 구분선이 들어가고, 오른쪽 끝에 버튼을 둡니다.
- * 화면이 좁으면 묶음 단위로 다음 줄로 넘어갑니다.
- */
+/** 대시보드의 조회 조건과 실행 버튼을 한곳에 배치합니다. 조건을 그룹으로 구성할 수 있습니다. */
 export const DashboardFilterBar = forwardRef<HTMLDivElement, DashboardFilterBarProps>(function DashboardFilterBar(
   { children, actions, className, 'aria-label': ariaLabel = '조회 조건', ...rest },
   ref,

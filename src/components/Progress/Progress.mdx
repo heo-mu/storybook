@@ -2,20 +2,20 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Progress.showcase.stories';
 import { Progress } from './Progress';
 
-<Meta title="컴포넌트/Progress/사용 방법" id="components-progress-usage" name="Docs" />
+<Meta title="Components/Progress/Usage" id="components-progress-usage" name="Docs" />
 
 # Progress
 
-진행 막대는 작업이 얼마나 진행되었는지 막대 길이로 보여 줍니다.
+작업의 진행률을 막대로 표시합니다. 진행률을 알 수 없는 작업에는 Loading을 사용합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 업로드처럼 진행률을 알 수 있는 작업에 씁니다.
 - 진행률을 알 수 없으면 진행 막대 대신 Loading을 씁니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

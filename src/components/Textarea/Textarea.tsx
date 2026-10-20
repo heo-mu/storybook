@@ -7,11 +7,11 @@ import type { TextareaSize } from './Textarea.options';
 export type TextareaProps = Omit<ComponentPropsWithoutRef<'textarea'>, 'className' | 'style' | 'required'> & {
   /** 크기. @default 'sm' */
   size?: TextareaSize;
-  /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
+  /** 입력 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. */
+  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 필드에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. */
   required?: boolean;
-  /** 입력 칸 아래에 보이는 도움말 메시지. */
+  /** 입력 필드 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
   /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
@@ -25,10 +25,7 @@ export type TextareaProps = Omit<ComponentPropsWithoutRef<'textarea'>, 'classNam
   style?: CSSProperties;
 };
 
-/**
- * 여러 줄 글자를 입력받는 입력 칸입니다. 높이가 고정되어 내용이 넘치면 안에서 스크롤되고,
- * 나머지 `<textarea>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
- */
+/** 요청 사항·사유 등 여러 줄의 텍스트를 입력받습니다. 글자 수 제한과 현재 입력량을 표시할 수 있습니다. */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
   { size = 'sm', label, required = false, message, messageType, invalid = false, showCount = true, className, style, id, value, defaultValue, onChange, disabled, readOnly, maxLength, 'aria-describedby': describedBy, ...rest },
   ref,

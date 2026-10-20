@@ -5,7 +5,7 @@ import { DataState } from '../DataState';
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs data-state`.
 const meta = {
-  title: '컴포넌트/DataState/전체 보기',
+  title: "Components/DataState/Gallery",
   id: 'components-datastate-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -16,9 +16,9 @@ type Story = StoryObj;
 
 const noop = () => {};
 
-/** The 6 Figma variants (460px). */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 460px)', gap: 20, alignItems: 'start' }}>
       <DataState data-figma="State=Loading" state="loading" />
@@ -33,7 +33,7 @@ export const Figma: Story = {
 
 /** A polite live region; the button calls `onAction`. */
 export const Accessibility: StoryObj<{ onAction: () => void }> = {
-  name: '접근성',
+  name: "Accessibility",
   args: { onAction: fn() },
   render: (args) => (
     <div style={{ width: 460 }}>

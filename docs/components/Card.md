@@ -64,3 +64,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `CardHeader`: Figma card_header(218:7173) — 제목 · 설명 · 버튼 아래에 구분선. 제목은 Figma "Card Text", 설명은 "Sub" · "Sub Text", 버튼은 "Button"(Figma에서 Button Tertiary · Outline · sm).
 - `CardContent`: Figma card_content — 좌우 padding `p-5`.
 - `CardFooter`: Figma card_footer(218:7174) — 너비를 채우는 버튼 `m-2` 간격(Figma: Primary · Solid · md와 Tertiary · Outline · md).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Card.showcase.stories.tsx / Figma`: The Figma parts on their own and the Figma example card (320px wide).

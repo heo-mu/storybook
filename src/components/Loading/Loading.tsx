@@ -9,10 +9,7 @@ export type LoadingProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
   label?: ReactNode;
 };
 
-/**
- * 불러오거나 처리하는 중임을 알리는 회전 표시입니다. 화면 낭독기가 `label`(없으면 `aria-label`, 기본 '로딩 중')을
- * 다른 안내를 끊지 않고 읽어 줍니다.
- */
+/** 데이터를 불러오거나 작업을 처리 중임을 표시합니다. 진행률을 알 수 있는 작업에는 Progress를 사용합니다. */
 export const Loading = forwardRef<HTMLDivElement, LoadingProps>(function Loading(
   { size = 'md', label, className, 'aria-label': ariaLabel, ...rest },
   ref,

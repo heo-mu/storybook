@@ -19,10 +19,7 @@ export type SegmentedControlProps = Omit<ComponentPropsWithoutRef<'div'>, 'onCha
   disabled?: boolean;
 };
 
-/**
- * 몇 개의 옵션을 나란히 보여 주고 그중 하나를 고르는 컨트롤입니다. 옵션들은 너비를 똑같이 나눠 쓰고,
- * 방향키로 선택이 이동합니다. `aria-label` 또는 `aria-labelledby`로 이름을 붙입니다.
- */
+/** 관련 옵션을 나란히 표시하고 하나를 선택합니다. 일간·주간·월간처럼 소수의 옵션을 전환할 때 사용합니다. */
 export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(function SegmentedControl(
   { size = 'md', value, defaultValue = null, onChange, name, disabled, className, children, ...rest },
   ref,

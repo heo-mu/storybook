@@ -14,9 +14,7 @@ export type InputChipProps = Omit<ComponentPropsWithoutRef<'button'>, 'children'
   removeLabel?: string;
 };
 
-/**
- * 입력한 값을 보여 주고 지울 수 있는 칩입니다. 칩 전체가 지우기 버튼이고, `disabled`이면 누를 수 없습니다.
- */
+/** 입력된 태그를 표시하고 삭제할 수 있는 칩입니다. */
 export const InputChip = forwardRef<HTMLButtonElement, InputChipProps>(function InputChip(
   { size = 'xs', children, onRemove, removeLabel = '삭제', onClick, onKeyDown, className, ...rest },
   ref,

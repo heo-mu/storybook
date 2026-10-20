@@ -8,7 +8,7 @@ import { Button } from '../Button';
 
 // 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/Toast.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: '컴포넌트/Toast/Toast',
+  title: "Components/Toast/Toast",
   id: 'components-toast-toast',
   component: Toast,
   tags: ['autodocs'],
@@ -16,7 +16,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '잠시 나타났다 사라지는 토스트입니다. 앱에 `<ToastRegion />`을 한 번 두고 `showToast(메시지, { status })`로 띄우며, `Toast`는 같은 모양을 페이지 안에 고정으로 그릴 때 씁니다.',
+          "작업 결과를 화면 아래에 알립니다. 안내·성공은 자동으로 닫히고, 주의·오류는 사용자가 닫을 때까지 유지됩니다.",
       },
     },
   },
@@ -28,7 +28,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 모든 Props를 직접 바꿔 볼 수 있습니다. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 /** `ToastRegion`을 두고 `showToast()`로 토스트를 띄웁니다. 오류는 닫을 때까지 남습니다. */
 export const WithRegion: Story = {

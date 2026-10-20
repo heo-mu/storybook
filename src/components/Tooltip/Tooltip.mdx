@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Tooltip.showcase.stories';
 import { Tooltip } from './Tooltip';
 
-<Meta title="컴포넌트/Tooltip/사용 방법" id="components-tooltip-usage" name="Docs" />
+<Meta title="Components/Tooltip/Usage" id="components-tooltip-usage" name="Docs" />
 
 # Tooltip
 
-툴팁은 요소에 마우스를 올리거나 키보드로 선택하면 짧은 설명을 보여 줍니다.
+요소에 마우스를 올리거나 키보드 포커스를 두면 짧은 보충 설명을 표시합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 버튼이나 아이콘이 무엇을 하는지 짧게 설명할 때 씁니다.
 
@@ -22,10 +22,10 @@ import { Tooltip } from './Tooltip';
 ## 상태
 
 - 마우스를 올리면 0.5초 뒤에 나타납니다. 시간은 `delay`로 바꿀 수 있습니다.
-- 키보드로 선택하면 바로 나타납니다.
+- 키보드 포커스를 받으면 바로 나타납니다.
 - 마우스나 포커스가 떠나거나 Esc를 누르면 닫힙니다. 닫히기까지의 시간은 `closeDelay`로 바꿀 수 있습니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -45,9 +45,9 @@ import { Tooltip } from './Tooltip';
 ## 접근성
 
 - 툴팁 글자는 감싼 요소의 설명으로 화면 낭독기가 읽습니다.
-- Tab으로 요소를 선택하면 툴팁이 나타나고, Esc로 닫습니다.
+- Tab으로 요소에 포커스를 두면 툴팁이 나타나고, Esc로 닫습니다.
 
-## 주의사항
+## 사용 규칙
 
 - 감싸는 요소는 ref와 props를 전달하는 컴포넌트여야 합니다. `Button` · `IconButton` · `TextButton` · `Link`를 쓸 수 있습니다.
 

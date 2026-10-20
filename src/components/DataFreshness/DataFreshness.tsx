@@ -20,9 +20,7 @@ export type DataFreshnessProps = Omit<ComponentPropsWithoutRef<'div'>, 'children
 const STATUS: Record<DataFreshnessState, BadgeStatus> = { fresh: 'success', stale: 'warning', offline: 'gray' };
 const LABELS: Record<DataFreshnessState, string> = { fresh: '최근 수신', stale: '수신 지연', offline: '연결 끊김' };
 
-/**
- * 데이터가 얼마나 최신인지 상태 배지, 마지막 수신 시각, 갱신 주기로 보여 줍니다.
- */
+/** 데이터의 최신 상태, 마지막 수신 시각, 갱신 주기를 표시합니다. */
 export const DataFreshness = forwardRef<HTMLDivElement, DataFreshnessProps>(function DataFreshness(
   { state = 'fresh', label = LABELS[state], timestamp, dateTime, interval, className, ...rest },
   ref,

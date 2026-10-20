@@ -5,7 +5,7 @@ import { TABS_APPEARANCES, TABS_SHAPES, TABS_SIZES, TABS_VARIANTS } from './Tabs
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Tabs.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Tabs/Tabs',
+  title: "Components/Tabs/Tabs",
   id: 'components-tabs-tabs',
   component: Tabs,
   tags: ['autodocs'],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '한 화면의 내용을 탭으로 나눠 보여 줍니다. 모양은 `appearance`(밑줄 · 채움), 선택 색은 `variant`, 크기는 `size`로 고르고, `Tab`과 `TabPanel`은 같은 `id`로 잇습니다.',
+          "같은 화면의 관련 콘텐츠를 구분하고 탭을 선택해 전환합니다.",
       },
     },
   },
@@ -54,7 +54,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Filled: Story = {
   name: 'Filled',
@@ -62,11 +62,11 @@ export const Filled: Story = {
 };
 
 export const FilledRounded: Story = {
-  name: 'Filled · 둥근 모양',
+  name: "Filled Rounded",
   args: { appearance: 'filled', shape: 'rounded', variant: 'secondary', size: 'md' },
 };
 
 export const Large: Story = {
-  name: '큰 크기',
+  name: "Large",
   args: { size: 'lg' },
 };

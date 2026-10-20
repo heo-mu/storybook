@@ -61,3 +61,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - Figma 컴포넌트 세트: `tooltip`(149:1111).
 - react-aria-components `TooltipTrigger` · `Tooltip` 기반입니다. 말풍선은 `role="tooltip"`이고 트리거에 `aria-describedby`가 붙습니다. 트리거는 `Focusable`로 감쌉니다.
 - `closeDelay`는 값을 넘기지 않으면 react-aria 기본값(500ms)을 씁니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Tooltip.showcase.stories.tsx / Matrix`: Figma `tooltip` (4): Placement with the arrow, each tooltip open next to its trigger.

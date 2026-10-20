@@ -69,3 +69,12 @@ Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
 - Figma 컴포넌트 세트: `input`(76:2945), `input_message`(83:3009).
 - 지우기 버튼 아이콘은 Figma `icon/X`, 비밀번호 표시 버튼 아이콘은 Figma `Icon-eye`입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Input.showcase.stories.tsx / VariantMatrix`: All 21 Figma variants: Size (rows) × State (columns).
+- `Input.showcase.stories.tsx / RequiredMark`: Figma Required on (every size): the dot after the label; the input is required for assistive technology and form checks.
+- `Input.showcase.stories.tsx / HelperMessage`: Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field.

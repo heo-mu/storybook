@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/DropdownMenu.showcase.stories';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuSection } from './DropdownMenu';
 
-<Meta title="컴포넌트/DropdownMenu/사용 방법" id="components-dropdownmenu-usage" name="Docs" />
+<Meta title="Components/DropdownMenu/Usage" id="components-dropdownmenu-usage" name="Docs" />
 
 # DropdownMenu
 
-DropdownMenu는 버튼을 누르면 펼쳐지는 동작 메뉴입니다. 새 폴더 · 이동 · 삭제처럼 고를 수 있는 작업을 모아 보여 줍니다.
+버튼을 누르면 관련 동작 목록이 열립니다. 이동·복제·삭제처럼 같은 대상에 적용할 작업을 모아 제공합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -28,11 +28,11 @@ DropdownMenu는 버튼을 누르면 펼쳐지는 동작 메뉴입니다. 새 폴
 
 ## 상태
 
-- 마우스를 올리거나 키보드로 선택하면 항목의 모양이 바뀝니다. 두 경우의 모양은 같습니다.
+- 마우스를 올리거나 키보드 포커스를 받으면 항목의 모양이 바뀝니다. 두 경우의 모양은 같습니다.
 - `disabled`이면 고를 수 없고, 방향키로 옮길 때도 건너뜁니다.
 - 메뉴가 열려도 트리거 버튼의 모양은 바뀌지 않습니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

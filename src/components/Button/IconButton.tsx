@@ -16,9 +16,7 @@ export type IconButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children
     'aria-label': string;
   };
 
-/**
- * 아이콘만 있는 버튼입니다. 종류 · 모양 · 상태는 Button과 같고, `aria-label`로 이름을 꼭 붙입니다.
- */
+/** 아이콘으로 동작을 표현하는 버튼입니다. `aria-label`로 동작의 이름을 제공합니다. */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
   { variant = 'primary', appearance, size = 'xs', shape = 'square', icon, className, type = 'button', ...rest },
   ref,

@@ -17,9 +17,7 @@ export type ChipProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 't
   onSelectedChange?: (selected: boolean) => void;
 };
 
-/**
- * 여러 개를 켜고 끄는 필터 칩입니다. 선택되면 글자 뒤에 체크 아이콘이 붙고, `disabled`이면 누를 수 없습니다.
- */
+/** 필터 선택, 입력된 태그 삭제, 옵션 목록 열기에 사용하는 컴포넌트입니다. 목적에 따라 Chip·InputChip·FilterChip·FilterChipSelect를 선택합니다. */
 export const Chip = forwardRef<HTMLButtonElement, ChipProps>(function Chip(
   { size = 'xs', children, selected, defaultSelected = false, onSelectedChange, onClick, className, ...rest },
   ref,

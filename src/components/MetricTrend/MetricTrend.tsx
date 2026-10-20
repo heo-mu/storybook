@@ -8,7 +8,7 @@ export type MetricTrendProps = Omit<ComponentPropsWithoutRef<'span'>, 'children'
   children: ReactNode;
   /** 방향 — 아이콘이 바뀝니다. `disabled`(비교할 값이 없음)는 회색으로 표시합니다. @default 'up' */
   direction?: MetricTrendDirection;
-  /** 좋고 나쁨 — 색이 바뀝니다. 좋음(`positive`) · 나쁨(`negative`) · 중립(`neutral`). @default 'positive' */
+  /** 긍정·부정 의미 — 색이 바뀝니다. 좋음(`positive`) · 나쁨(`negative`) · 중립(`neutral`). @default 'positive' */
   tone?: MetricTrendTone;
   /**
    * 방향이 아이콘으로만 보이므로 화면 낭독기가 증감 앞에 읽는 글자.
@@ -20,9 +20,7 @@ export type MetricTrendProps = Omit<ComponentPropsWithoutRef<'span'>, 'children'
 const ICONS = { up: TrendUpIcon, down: TrendDownIcon, flat: MinusIcon, disabled: MinusIcon };
 const LABELS: Record<MetricTrendDirection, string | undefined> = { up: '증가', down: '감소', flat: '변동 없음', disabled: undefined };
 
-/**
- * 지표의 증감을 방향 아이콘과 함께 보여 줍니다. 방향은 `direction`, 그 변화가 좋은지 나쁜지는 `tone`으로 고릅니다.
- */
+/** 지표의 증감과 그 의미를 함께 표시합니다. 증가·감소 방향과 긍정·부정 평가는 별도로 지정합니다. */
 export const MetricTrend = forwardRef<HTMLSpanElement, MetricTrendProps>(function MetricTrend(
   { children, direction = 'up', tone = 'positive', directionLabel = LABELS[direction], className, ...rest },
   ref,

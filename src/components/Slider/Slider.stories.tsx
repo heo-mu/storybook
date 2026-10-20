@@ -4,7 +4,7 @@ import { Slider } from './Slider';
 
 // 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Slider.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Slider/Slider',
+  title: "Components/Slider/Slider",
   id: 'components-slider-slider',
   component: Slider,
   tags: ['autodocs'],
@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '정해진 범위 안에서 숫자 값을 고르는 슬라이더입니다. 범위는 `minValue` · `maxValue` · `step`으로 정하고, 보이는 라벨이 없으므로 `aria-label`을 꼭 붙입니다.',
+          "정해진 범위에서 수치를 조절합니다. 드래그와 키보드를 지원하며 숫자 입력 필드를 함께 사용할 수 있습니다.",
       },
     },
   },
@@ -30,8 +30,8 @@ const meta = {
     onChangeEnd: fn(),
   },
   argTypes: {
-    showInput: { control: 'boolean', description: '오른쪽 숫자 입력 칸 표시' },
-    valueLabel: { control: 'boolean', description: '마우스를 올리거나 드래그하거나 키보드로 선택하면 손잡이 위에 값 표시' },
+    showInput: { control: 'boolean', description: '오른쪽 숫자 입력 필드 표시' },
+    valueLabel: { control: 'boolean', description: '마우스를 올리거나 드래그하거나 키보드 포커스를 받으면 손잡이 위에 값 표시' },
     disabled: { control: 'boolean', description: '비활성 — 값을 바꿀 수 없음' },
     unit: { control: 'text' },
   },
@@ -41,10 +41,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const WithoutInput: Story = {
-  name: '입력 칸 없음',
+  name: "Without Input",
   args: { showInput: false },
 };
 
@@ -54,6 +54,6 @@ export const Percent: Story = {
 };
 
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   args: { disabled: true },
 };

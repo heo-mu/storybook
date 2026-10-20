@@ -57,3 +57,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - 머리글(아이콘 + 제목) · 값과 단위 · 비교 행(증감 + 문구)은 `m-3` 간격이며, 흰 카드(padding 16, 모서리 12, `elevation-3` 그림자) 안에 있습니다.
 - 값은 `3xl/leading-normal/semibold`, 비교 행은 Figma comparison row(`trend` + "Comparison" 글자)입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `MetricCard.showcase.stories.tsx / Figma`: The Figma metric card (386px).

@@ -10,7 +10,7 @@ export type SearchFieldProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 
   size?: FieldSize;
   /** 모양 — 테두리(outline) · 채움(solid). @default 'outline' */
   appearance?: SearchFieldAppearance;
-  /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
+  /** 입력 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
   /** 오류 — 오류 테두리로 표시합니다. */
   invalid?: boolean;
@@ -24,10 +24,7 @@ export type SearchFieldProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 
   style?: CSSProperties;
 };
 
-/**
- * 검색어를 입력받는 입력 칸입니다. Enter 키를 누르면 `onSearch`가 호출되고, 키보드로 선택했거나 오류일 때
- * 지우기 버튼(X)이 나타납니다. 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
- */
+/** 검색어를 입력하고 Enter 키로 검색을 요청합니다. 일반 텍스트 입력에는 Input을 사용합니다. */
 export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(function SearchField(
   { size = 'sm', appearance = 'outline', label, invalid = false, onSearch, onClear, className, style, id, value, defaultValue, onChange, onKeyDown, disabled, ...rest },
   ref,

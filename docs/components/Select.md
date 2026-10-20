@@ -104,3 +104,17 @@ Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
 - Figma 컴포넌트 세트: `select`(95:4740), `listbox`(97:2665), `option`(97:2286), `select_message`(95:2960).
 - react-aria-components 구성: 필드는 `Button`, 목록은 `Popover` 안의 `ListBox`, 옵션은 `ListBoxItem`입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Select.showcase.stories.tsx / VariantMatrix`: 21 Figma select variants: Size (rows) × State (columns). "Open" needs an open list → see `Open`.
+- `Select.showcase.stories.tsx / Open`: Figma State "Open" for one size (`size` arg): the field with its list open below it.
+- `Select.showcase.stories.tsx / ListboxMatrix`: Figma `listbox` (3 sizes): five options, the third selected.
+- `Select.showcase.stories.tsx / OptionMatrix`: Figma `option` (15): Size (rows) × State (columns).
+- `Select.showcase.stories.tsx / MessageMatrix`: Figma `select_message` (Info · Success · Error · Helper; Helper also in a disabled field — State=Disabled).
+- `Select.showcase.stories.tsx / LongList`: A long list scrolls inside the popover (Figma "scroll" indicator = the styled scrollbar).
+- `Select.showcase.stories.tsx / RequiredMark`: Figma Required on (every size): the dot after the label; the trigger button is described as "필수" (a button has no required state).
+- `Select.showcase.stories.tsx / HelperMessage`: Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field.

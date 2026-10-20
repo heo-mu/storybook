@@ -88,16 +88,13 @@ export type StepperStep = {
 export type StepperProps = Omit<ComponentPropsWithoutRef<'ol'>, 'children'> & {
   /** 단계 목록(순서대로). */
   steps: StepperStep[];
-  /** 지금 단계의 순서(0부터 셈). 앞 단계는 완료, 뒤 단계는 예정으로 보입니다. @default 0 */
+  /** 현재 단계의 순서(0부터 셈). 앞 단계는 완료, 뒤 단계는 예정으로 보입니다. @default 0 */
   currentStep?: number;
   /** 방향 — 가로(`horizontal`) · 세로(`vertical`). @default 'horizontal' */
   orientation?: StepperOrientation;
 };
 
-/**
- * 여러 단계로 된 과정에서 지금 몇 번째 단계인지 보여 줍니다. 완료된 단계 뒤의 연결선은 완료 모양이 되며,
- * 진행 상황을 보여 주기만 하고 누를 수는 없습니다.
- */
+/** 여러 단계로 이루어진 과정의 현재 위치와 진행 상태를 표시합니다. 단계 이동 버튼으로 사용하지 않습니다. */
 export const Stepper = forwardRef<HTMLOListElement, StepperProps>(function Stepper(
   { steps, currentStep = 0, orientation = 'horizontal', className, ...rest },
   ref,

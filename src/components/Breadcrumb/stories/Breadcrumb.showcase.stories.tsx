@@ -8,7 +8,7 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs breadcrumb` (sets breadcrumb-item, breadcrumb).
 const meta = {
-  title: '컴포넌트/Breadcrumb/전체 보기',
+  title: "Components/Breadcrumb/Gallery",
   id: 'components-breadcrumb-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -26,7 +26,7 @@ const ITEMS: BreadcrumbEntry[] = [
 const CURRENT = '프로그램 등록';
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <Breadcrumb items={ITEMS} current={CURRENT} aria-label="이동 경로 — Full" />
@@ -45,9 +45,9 @@ const ITEM_CELLS = [
   { role: 'Open', state: 'Pressed' },
 ] as const;
 
-/** Figma `breadcrumb-item` (12): Role Link / Current / Open × State × Size ("Show Icon" off as in the set). */
+/** 항목의 크기와 상태별 표현을 비교합니다. */
 export const ItemMatrix: Story = {
-  name: '항목 모든 변형',
+  name: "Items",
   render: () => (
     <FigmaMatrix
       columns={ITEM_CELLS.map((c) => `${c.role} · ${c.state}`)}
@@ -69,9 +69,9 @@ export const ItemMatrix: Story = {
   ),
 };
 
-/** Figma `breadcrumb` Layout Full / Collapsed (Expanded False). Expanded True: `BreadcrumbExpanded`. */
+/** 전체 경로와 축약 경로를 비교합니다. */
 export const BreadcrumbMatrix: Story = {
-  name: '경로 모든 변형',
+  name: "Breadcrumb Variants",
   render: () => (
     <FigmaMatrix
       columns={['Full', 'Collapsed']}
@@ -86,12 +86,9 @@ export const BreadcrumbMatrix: Story = {
   ),
 };
 
-/**
- * Figma `breadcrumb` Layout Collapsed, Expanded True (one size per story so the open menus do not overlap).
- * The menu panel is 200 × 110 like the Figma `dropdownmenu` frame.
- */
+/** 생략된 경로를 메뉴로 펼친 상태입니다. */
 export const BreadcrumbExpanded: StoryObj<{ size: BreadcrumbSize }> = {
-  name: '경로 펼침',
+  name: "Expanded Breadcrumb",
   args: { size: 'md' },
   render: ({ size }) => (
     <div style={{ paddingBottom: 160 }}>
@@ -123,7 +120,7 @@ export const BreadcrumbExpanded: StoryObj<{ size: BreadcrumbSize }> = {
 
 /** Overflow menu: click / Enter opens, arrows move, Enter chooses, Escape closes and focus returns to the trigger. */
 export const Interaction: StoryObj<{ onAction: Mock<(id: unknown) => void> }> = {
-  name: '동작',
+  name: "Interaction",
   args: { onAction: fn() },
   render: (args) => (
     <div style={{ paddingBottom: 160 }}>
@@ -163,7 +160,7 @@ export const Interaction: StoryObj<{ onAction: Mock<(id: unknown) => void> }> = 
 
 /** nav landmark, ordered list, current page, home and overflow names. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => <Breadcrumb items={ITEMS} current={CURRENT} layout="collapsed" />,
   play: async ({ canvas }) => {
     const nav = canvas.getByRole('navigation', { name: '이동 경로' });

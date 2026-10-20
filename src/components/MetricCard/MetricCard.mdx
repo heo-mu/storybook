@@ -3,15 +3,15 @@ import * as Showcase from './stories/MetricCard.showcase.stories';
 import * as MetricCardStories from './MetricCard.stories';
 import { MetricCard } from './MetricCard';
 
-<Meta title="컴포넌트/MetricCard/사용 방법" id="components-metriccard-usage" name="Docs" />
+<Meta title="Components/MetricCard/Usage" id="components-metriccard-usage" name="Docs" />
 
 # MetricCard
 
-대시보드의 핵심 지표 하나를 제목, 값과 단위, 이전 기간과의 비교로 보여 주는 카드입니다.
+핵심 지표의 값과 단위, 이전 기간 대비 변화를 요약합니다.
 
 <Canvas of={Showcase.Figma} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 대시보드에서 핵심 지표 하나를 크게 보여 줄 때 씁니다.
 - 지표가 여러 개면 카드를 가로로 나란히 둡니다.
@@ -30,7 +30,7 @@ import { MetricCard } from './MetricCard';
 
 - `title`과 `value`만 꼭 넣고, 나머지는 필요할 때만 넣습니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -52,7 +52,7 @@ import { MetricCard } from './MetricCard';
 - 제목은 제목 요소(기본 `<h3>`)입니다. 페이지 구조에 맞게 `headingLevel`로 바꿉니다.
 - 아이콘은 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다.
 
-## 주의사항
+## 사용 규칙
 
 - 카드는 부모 너비를 채웁니다. 너비는 카드를 감싼 영역에서 정합니다.
 

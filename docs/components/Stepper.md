@@ -65,3 +65,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - 표시기는 20px 원(번호, 완료이면 CheckCircle, 오류이면 WarningCircle)과 라벨 · 서브 라벨입니다. 루트는 원과 같은 너비(가로) 또는 높이(세로)이고, 글자는 Figma처럼 가운데 맞춰 넘칩니다.
 - 연결선은 SVG rect로 그려 Figma 기하(1px 선이 띠 가운데 = 반 픽셀 위치)를 그대로 따릅니다.
 - 예전 스토리 설명은 "`StepperIndicator` · `StepperConnector`는 직접 배치용으로 export"라고 했지만, 지금 분류는 내부 부품(사용 금지, `@internal`)입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Stepper.showcase.stories.tsx / IndicatorMatrix`: Figma `stepper_indicator_horizontal` and `stepper_indicator_vertical` (5 each).
+- `Stepper.showcase.stories.tsx / ConnectorMatrix`: Figma `stepper_connector_horizontal` and `stepper_connector_vertical` (Default / Completed).
+- `Stepper.showcase.stories.tsx / StepperMatrix`: Figma `stepper_horizontal` and `stepper_vertical`: Steps 3 · 4 · 5 (current step 2; vertical 5 steps: step 4).

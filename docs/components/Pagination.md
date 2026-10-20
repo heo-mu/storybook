@@ -61,3 +61,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - Figma 컴포넌트 세트: `pagination`(132:871) · `pagination_item`(132:520) · `pagination_control`(132:604).
 - `Pagination`은 `<nav aria-label="페이지 이동">` 안에 이전 버튼 · 페이지 번호 창 · 다음 버튼을 그립니다. Figma 예시는 번호 5개, 첫 번호가 Current입니다.
 - 예전 스토리 설명은 "`PaginationItem` · `PaginationControl`은 직접 배치용으로 export"라고 했지만, 지금 분류는 내부 부품(사용 금지, `@internal`)이라 사용자 문서는 `Pagination`만 안내합니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Pagination.showcase.stories.tsx / VariantMatrix`: Figma `pagination` (3): five pages, the first current (previous is disabled on page 1 in code).
+- `Pagination.showcase.stories.tsx / ItemMatrix`: Figma `pagination_item` (24): Shape × Size (rows) × State (columns).
+- `Pagination.showcase.stories.tsx / ControlMatrix`: Figma `pagination_control` (48): Direction × Shape × Size (rows) × State (columns).

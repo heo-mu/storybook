@@ -9,7 +9,7 @@ import { koLabel } from '../../../storybook/koLabel';
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs switch`.
 const meta = {
-  title: '컴포넌트/Switch/전체 보기',
+  title: "Components/Switch/Gallery",
   id: 'components-switch-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -34,7 +34,7 @@ function figmaVariant(size: SwitchSize, state: State, checked: (typeof CHECKED)[
 }
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (sm · md)">
@@ -52,9 +52,9 @@ export const Overview: Story = {
   ),
 };
 
-/** All 16 Figma variants: Checked × Size (rows) × State (columns). */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -76,7 +76,7 @@ export const VariantMatrix: Story = {
 
 /** Every state at size md. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <div>
       {CHECKED.map((checked) => (
@@ -92,7 +92,7 @@ export const States: Story = {
 
 /** Click or Space toggles; the thumb moves to the end of the track. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <Switch size="md" label="알림 받기" />,
   play: async ({ canvas, userEvent, step }) => {
     const sw = canvas.getByRole('switch', { name: '알림 받기' });
@@ -114,7 +114,7 @@ export const Interaction: Story = {
 
 /** role="switch" exposes on/off; the label names it. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <div style={{ display: 'grid', gap: 8 }}>
       <Switch label="자동 저장" defaultChecked />

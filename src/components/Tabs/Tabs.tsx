@@ -40,9 +40,7 @@ export type TabsProps = {
   style?: CSSProperties;
 };
 
-/**
- * 한 화면의 내용을 탭으로 나눠 보여 줍니다. ← → 방향키로 탭을 옮기고, Home · End로 처음과 끝 탭으로 갑니다.
- */
+/** 같은 화면의 관련 콘텐츠를 구분하고 탭을 선택해 전환합니다. */
 export function Tabs({ appearance = 'line', variant = 'primary', size = 'sm', shape = 'square', className, children, ...rest }: TabsProps) {
   return (
     <TabsStyleContext.Provider value={{ appearance, variant, size, shape }}>

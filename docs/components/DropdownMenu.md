@@ -78,3 +78,11 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `trigger`는 react-aria `Button` · `FilterChip`, 또는 ref와 props를 전달하는 요소(디자인 시스템 `Button` 등)입니다(`Pressable`로 감쌉니다).
 - `DropdownMenuItem` State: Hover = 포인터 hover 또는 키보드 포커스, Alert = `danger`, Disabled = `disabled`.
 - `chevron` JSDoc은 예전에 "하위 메뉴나 다음 단계를 여는 항목"이라고 했지만, `DROP-05`(하위 메뉴 미지원, 다른 화면으로 이동 표시)에 맞춰 고쳤습니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `DropdownMenu.showcase.stories.tsx / ItemMatrix`: Figma `dropdownmenu_item` (5): Content in four states and the group Title, 216px wide.
+- `DropdownMenu.showcase.stories.tsx / LineMatrix`: Figma `dropdownmenu_line`, 224px wide.

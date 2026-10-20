@@ -26,10 +26,7 @@ export type ToastProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
   closeLabel?: string;
 };
 
-/**
- * 토스트를 페이지 안에 고정으로 그립니다.
- * 나타났다 사라지는 토스트는 `<ToastRegion />`과 `showToast()`를 씁니다.
- */
+/** 작업 결과를 화면 아래에 알립니다. 안내·성공은 자동으로 닫히고, 주의·오류는 사용자가 닫을 때까지 유지됩니다. */
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
   { status = 'information', children, showClose = true, onClose, closeLabel = '알림 닫기', className, ...rest },
   ref,
@@ -63,7 +60,7 @@ export type ToastRegionProps = {
 
 /**
  * `showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다.
- * 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드로 선택한 동안에는 자동으로 닫히지 않습니다.
+ * 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드 포커스가 있는 동안에는 자동으로 닫히지 않습니다.
  */
 export function ToastRegion({ queue = toastQueue, 'aria-label': ariaLabel = '알림', closeLabel = '알림 닫기', className }: ToastRegionProps) {
   return (

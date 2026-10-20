@@ -4,15 +4,15 @@ import { FileUploader } from './FileUploader';
 import { FileUploaderItem } from './FileUploaderItem';
 import { Loading } from '../Loading';
 
-<Meta title="컴포넌트/FileUploader/사용 방법" id="components-fileuploader-usage" name="Docs" />
+<Meta title="Components/FileUploader/Usage" id="components-fileuploader-usage" name="Docs" />
 
 # FileUploader
 
-FileUploader는 파일을 끌어다 놓거나 눌러서 고르는 업로드 영역입니다. 고른 파일은 `FileUploaderItem` 목록으로 보여 주고, 업로드 중에는 `Loading`을 표시합니다.
+드래그 앤 드롭 또는 파일 선택 창으로 파일을 받습니다. 선택한 파일은 FileUploaderItem으로 표시합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -42,10 +42,10 @@ FileUploader는 파일을 끌어다 놓거나 눌러서 고르는 업로드 영�
 - 마우스를 올리거나 누르면 업로드 영역의 모양이 바뀝니다.
 - 파일을 영역 위로 끌어오면 놓을 수 있다는 모양으로 바뀝니다.
 - `disabled`이면 누를 수 없고, 파일을 놓아도 받지 않습니다.
-- 키보드로 선택하면 포커스 테두리가 보입니다.
+- 키보드 포커스를 받으면 포커스 테두리가 보입니다.
 - 긴 파일 이름은 말줄임표(…)로 줄여 보여 줍니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

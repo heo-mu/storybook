@@ -3,15 +3,15 @@ import * as Showcase from './stories/Checkbox.showcase.stories';
 import { Checkbox } from './Checkbox';
 import { CheckboxGroup } from './CheckboxGroup';
 
-<Meta title="컴포넌트/Checkbox/사용 방법" id="components-checkbox-usage" name="Docs" />
+<Meta title="Components/Checkbox/Usage" id="components-checkbox-usage" name="Docs" />
 
 # Checkbox
 
-항목을 켜고 끄거나, 여러 옵션 중 여러 개를 고를 때 쓰는 체크박스입니다. 여러 체크박스는 `CheckboxGroup`으로 묶을 수 있습니다.
+독립적인 옵션을 선택하거나 여러 옵션을 함께 선택할 때 사용합니다. CheckboxGroup으로 선택값을 함께 관리할 수 있습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -29,10 +29,10 @@ import { CheckboxGroup } from './CheckboxGroup';
 <Canvas of={Showcase.States} />
 
 - 마우스를 올리거나 누르면 모양이 바뀝니다. 라벨 위에서도 똑같이 동작합니다.
-- `disabled`이면 누를 수 없고 키보드로도 선택되지 않습니다.
-- 키보드로 선택하면 상자 둘레에 포커스 테두리가 보입니다.
+- `disabled`이면 누를 수 없고 키보드 포커스를 받지 않습니다.
+- 키보드 포커스를 받으면 상자 둘레에 포커스 테두리가 보입니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -55,15 +55,15 @@ import { CheckboxGroup } from './CheckboxGroup';
 
 ## CheckboxGroup
 
-- `value`가 있는 체크박스들의 선택값을 배열로 관리합니다. `value` · `onChange`로 직접 관리하거나 `defaultValue`로 처음 값만 정합니다.
+- `value`가 있는 체크박스들의 선택값을 배열로 관리합니다. `value` · `onChange`로 직접 관리하거나 `defaultValue`로 초깃값만 정합니다.
 - `name` · `size` · `disabled`를 주면 그룹 안의 모든 체크박스에 적용됩니다.
 - `orientation`으로 세로(`vertical`, 기본) 또는 가로(`horizontal`) 배치를 고릅니다. 항목 사이 간격은 자동으로 맞춰집니다.
 
-## 묶음 오류
+## 그룹 오류
 
 <Canvas of={Showcase.GroupMessage} />
 
-- 꼭 골라야 하는 항목을 고르지 않았으면 `invalid`와 `message`로 묶음 아래에 오류 메시지를 보여 줍니다. 체크박스 색은 바뀌지 않습니다.
+- 필수 항목이 선택되지 않았으면 `invalid`와 `message`로 그룹 아래에 오류 메시지를 보여 줍니다. 체크박스 색은 바뀌지 않습니다.
 - 필수 동의처럼 체크박스가 하나여도 `CheckboxGroup`으로 감싸 오류 메시지를 붙입니다.
 - `invalid` 없이 `message`만 넣으면 회색 도움말로 보입니다.
 - 화면 낭독기는 각 체크박스를 오류 상태로 알리고 메시지를 설명으로 읽습니다.
@@ -82,7 +82,7 @@ import { CheckboxGroup } from './CheckboxGroup';
 - `CheckboxGroup`에는 `aria-label` 또는 `aria-labelledby`로 그룹 이름을 붙입니다.
 - Space 키로 선택하거나 해제합니다. 일부 선택 상태는 화면 낭독기에 "일부 선택"으로 전달됩니다.
 
-## 주의사항
+## 사용 규칙
 
 - 일부 선택 상태에서 누르면 선택됨으로 바뀝니다. 제어 컴포넌트라면 `onChange`에서 `indeterminate` 값을 다시 계산합니다.
 - 나머지 `<input>` 속성과 `ref`는 실제 체크박스에 전달되고, `className` · `style`은 라벨을 포함한 바깥 요소에 적용됩니다.

@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Input.showcase.stories';
 import { Input } from './Input';
 
-<Meta title="컴포넌트/Input/사용 방법" id="components-input-usage" name="Docs" />
+<Meta title="Components/Input/Usage" id="components-input-usage" name="Docs" />
 
 # Input
 
-한 줄짜리 글자를 입력받는 입력 칸입니다. 라벨과 도움말 메시지를 함께 붙일 수 있고, 비밀번호 입력도 지원합니다.
+이름·이메일 등 한 줄의 텍스트를 입력받습니다. 라벨, 도움말, 오류 메시지와 비밀번호 표시 기능을 제공합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 이름 · 이메일 · 전화번호처럼 짧은 글자를 한 줄로 입력받을 때 사용합니다.
 - 여러 줄을 입력받을 때는 `Textarea`, 검색어를 입력받을 때는 `SearchField`를 사용합니다.
@@ -18,7 +18,7 @@ import { Input } from './Input';
 ## 종류
 
 - 크기는 `size`(`sm` · `md` · `lg`)로 고릅니다. 기본은 `sm`입니다.
-- `message`를 넣으면 입력 칸 아래에 메시지가 보입니다. 메시지 종류는 `messageType`(`helper` · `info` · `success` · `error`)으로 고릅니다.
+- `message`를 넣으면 입력 필드 아래에 메시지가 보입니다. 메시지 종류는 `messageType`(`helper` · `info` · `success` · `error`)으로 고릅니다.
 - `messageType`을 지정하지 않으면 `invalid`일 때 `error`, 아니면 회색 도움말(`helper`)로 보입니다.
 - `type="password"`이면 눈 아이콘 버튼으로 비밀번호를 보이거나 숨길 수 있습니다. 필요 없으면 `revealable={false}`로 끕니다.
 
@@ -33,22 +33,22 @@ import { Input } from './Input';
 
 <Canvas of={Showcase.HelperMessage} />
 
-- 입력 방법이나 형식은 입력 칸 아래 회색 도움말로 미리 알려 줍니다. `message`만 넣으면 도움말로 보입니다.
+- 입력 방법이나 형식은 입력 필드 아래 회색 도움말로 미리 알려 줍니다. `message`만 넣으면 도움말로 보입니다.
 - 도움말에는 아이콘이 없습니다. 상태를 알릴 때만 안내(`info`) · 성공(`success`) · 오류(`error`)를 씁니다.
 - 오류가 나면 같은 자리에 오류 메시지를 보여 줍니다. 비활성 칸의 도움말은 흐린 색입니다.
-- 도움말은 입력 칸 설명으로 화면 낭독기가 함께 읽습니다.
+- 도움말은 입력 필드 설명으로 화면 낭독기가 함께 읽습니다.
 
 ## 상태
 
 <Canvas of={Showcase.States} />
 
-- 마우스를 올리거나 키보드로 선택하면 테두리가 바뀝니다.
-- `invalid`이면 빨간 테두리로 오류를 표시합니다. 키보드로 선택해도 오류 테두리가 유지됩니다.
+- 마우스를 올리거나 키보드 포커스를 받으면 테두리가 바뀝니다.
+- `invalid`이면 빨간 테두리로 오류를 표시합니다. 키보드 포커스를 받아도 오류 테두리가 유지됩니다.
 - `disabled`이면 입력할 수 없고, `readOnly`이면 값을 볼 수만 있습니다.
-- 마우스를 올리거나 키보드로 선택하면 오른쪽에 지우기 버튼(X)이 나타납니다. 누르면 값이 비워지고 `onClear`가 호출됩니다.
+- 마우스를 올리거나 키보드 포커스를 받으면 오른쪽에 지우기 버튼(X)이 나타납니다. 누르면 값이 비워지고 `onClear`가 호출됩니다.
 - 지우기 버튼이 필요 없으면 `clearable={false}`로 끕니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -73,14 +73,14 @@ const [value, setValue] = useState('');
 ## 접근성
 
 - `label`이 없으면 `aria-label`로 이름을 꼭 붙입니다.
-- `invalid`이면 화면 낭독기에도 오류 상태가 전달되고, 도움말 메시지는 입력 칸 설명으로 함께 읽힙니다.
-- `required`이면 입력 칸이 "필수"로 읽힙니다(점은 장식이라 읽지 않습니다). 폼을 보낼 때 브라우저가 빈 칸을 막으며, 직접 검사할 때는 폼에 `noValidate`를 주고 `invalid` · `message`로 알려 줍니다.
+- `invalid`이면 화면 낭독기에도 오류 상태가 전달되고, 도움말 메시지는 입력 필드 설명으로 함께 읽힙니다.
+- `required`이면 입력 필드가 "필수"로 읽힙니다(점은 장식이라 읽지 않습니다). 폼을 보낼 때 브라우저가 빈 칸을 막으며, 직접 검사할 때는 폼에 `noValidate`를 주고 `invalid` · `message`로 알려 줍니다.
 - 지우기 버튼은 마우스용이라 Tab 키로 이동하지 않습니다. 키보드에서는 글자를 모두 선택한 뒤 지웁니다.
 - 비밀번호 보기 버튼은 지금 비밀번호가 보이는지 화면 낭독기에 알려 줍니다.
 
-## 주의사항
+## 사용 규칙
 
-- `value`, `onChange`, `name`, `type`, `autoComplete` 같은 나머지 `<input>` 속성과 `ref`는 실제 입력 칸에 전달됩니다.
+- `value`, `onChange`, `name`, `type`, `autoComplete` 같은 나머지 `<input>` 속성과 `ref`는 실제 입력 필드에 전달됩니다.
 - `className` · `style`은 라벨과 메시지를 감싸는 바깥 요소에 적용됩니다.
 
 ## Props

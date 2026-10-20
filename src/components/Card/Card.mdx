@@ -2,26 +2,26 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as CardStories from './Card.stories';
 import { Card, CardHeader } from './Card';
 
-<Meta title="컴포넌트/Card/사용 방법" id="components-card-usage" name="Docs" />
+<Meta title="Components/Card/Usage" id="components-card-usage" name="Docs" />
 
 # Card
 
-카드는 관련된 내용과 버튼을 한 상자로 묶어 보여 줍니다. 머리글 · 본문 · 바닥글을 조합해 만듭니다.
+관련 정보와 동작을 하나의 영역으로 묶습니다. 헤더·본문·푸터를 필요한 만큼 조합합니다.
 
 <Canvas of={CardStories.Playground} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
-| `Card` | 카드 상자. 안에 아래 부분을 넣습니다. |
+| `Card` | 헤더·본문·푸터를 감싸는 컨테이너 |
 | `CardHeader` | 제목 · 설명 · 오른쪽 버튼 |
 | `CardContent` | 본문 내용 |
-| `CardFooter` | 아래쪽 버튼. 버튼이 너비를 나눠 채웁니다. |
+| `CardFooter` | 하단 동작 영역. 버튼을 동일한 너비로 배치합니다. |
 
-- 필요한 부분만 넣습니다. 예를 들어 바닥글 없이 머리글과 본문만 써도 됩니다.
+- 필요한 부분만 넣습니다. 예를 들어 푸터 없이 헤더와 본문만 써도 됩니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -42,7 +42,7 @@ import { Card, CardHeader } from './Card';
 
 - 카드 제목은 제목 요소(기본 `<h3>`)입니다. 페이지 구조에 맞게 `headingLevel`로 바꿉니다.
 
-## 주의사항
+## 사용 규칙
 
 - 카드는 부모 너비를 채웁니다. 너비는 카드를 감싼 영역에서 정합니다.
 - 설명이 길면 줄바꿈되며 잘리지 않습니다.

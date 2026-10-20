@@ -12,7 +12,7 @@ export type TooltipProps = {
   placement?: TooltipPlacement;
   /** 화살표를 표시합니다. @default true */
   showArrow?: boolean;
-  /** 마우스를 올린 뒤 나타나기까지의 시간(ms). 키보드로 선택하면 바로 나타납니다. @default 500 */
+  /** 마우스를 올린 뒤 나타나기까지의 시간(ms). 키보드 포커스를 받으면 바로 나타납니다. @default 500 */
   delay?: number;
   /** 마우스나 포커스가 떠난 뒤 닫히기까지의 시간(ms). @default 500 */
   closeDelay?: number;
@@ -38,9 +38,7 @@ const ARROW: Record<TooltipPlacement, { w: number; h: number; d: string }> = {
   right: { w: 8, h: 10, d: 'M8 0V10L0 5Z' },
 };
 
-/**
- * 마우스를 올리거나 키보드로 선택하면 짧은 설명을 보여 주는 툴팁입니다. Esc를 누르면 닫힙니다.
- */
+/** 요소에 마우스를 올리거나 키보드 포커스를 두면 짧은 보충 설명을 표시합니다. */
 export function Tooltip({
   content,
   children,

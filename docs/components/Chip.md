@@ -119,3 +119,14 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `FilterChipSelect`는 Figma `chip-filter` + `listbox` · `option` Size=sm("chip-filter 선택 예시", Design System Rules 04 · 07)입니다. 키보드 · 화면 낭독기 동작은 react-aria Select(버튼 + listbox)를 따릅니다.
 - `FilterChipSelect`의 `name`은 숨겨진 네이티브 select가 값을 폼에 실어 보냅니다.
 - `FilterChipSelect`의 `defaultOpen`은 편집 중인 표 필터처럼 Figma Expanded 상태를 처음부터 보여 줄 때 씁니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Chip.showcase.stories.tsx / MultiMatrix`: Figma `chip-multi` (24): Variant × Size (rows) × State (columns).
+- `Chip.showcase.stories.tsx / InputMatrix`: Figma `chip-input` (12): Size (rows) × State (columns).
+- `Chip.showcase.stories.tsx / FilterMatrix`: Figma `chip-filter` (48): Variant × Expanded × Size (rows) × State (columns).
+- `FilterChipSelect.showcase.stories.tsx / Basic`: Figma "기본": the four filters of the Figma example, nothing applied.
+- `FilterChipSelect.showcase.stories.tsx / MultipleSelection`: Multiple selection — the Figma flow 기본 → 기본 열림 → 선택 중 → 선택 완료 → 다시 열림 → 다시 선택 중 → 다시 선택 완료, then turning every option off removes the filter.

@@ -6,7 +6,7 @@ import { FIELD_MESSAGE_TYPES, FIELD_SIZES } from '../Field';
 
 // 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Select.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Select/Select',
+  title: "Components/Select/Select",
   id: 'components-select-select',
   component: Select,
   tags: ['autodocs'],
@@ -14,12 +14,12 @@ const meta = {
     docs: {
       description: {
         component:
-          '목록을 펼쳐 옵션 하나를 고르는 선택 칸입니다. 옵션은 `SelectOption`으로 넣고, 값은 선택한 옵션의 `id`로 `value` · `defaultValue` · `onChange`에서 다룹니다.',
+          "옵션 목록에서 항목 하나를 선택합니다. SelectOption으로 목록을 구성합니다.",
       },
     },
   },
   args: {
-    label: '라벨명',
+    label: '과일',
     placeholder: '내용 선택',
     size: 'sm',
     required: false,
@@ -32,9 +32,9 @@ const meta = {
   },
   argTypes: {
     size: { control: 'inline-radio', options: FIELD_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
-    label: { control: 'text', description: '선택 칸 위 라벨' },
+    label: { control: 'text', description: '선택 필드 위 라벨' },
     placeholder: { control: 'text', description: '아무것도 고르지 않았을 때 보이는 글자' },
-    message: { control: 'text', description: '선택 칸 아래 도움말 메시지' },
+    message: { control: 'text', description: '선택 필드 아래 도움말 메시지' },
     messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 회색 도움말(helper)' },
     required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 알림' },
     invalid: { control: 'boolean', description: '오류 — 오류 테두리로 표시' },
@@ -58,51 +58,51 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Required: Story = {
-  name: '필수 입력',
+  name: "Required",
   args: { label: '과일', required: true },
 };
 
 export const WithValue: Story = {
-  name: '값 있음',
+  name: "Selected",
   args: { defaultValue: 'banana' },
 };
 
 export const Helper: Story = {
-  name: '도움말',
+  name: "Helper Text",
   args: { message: '인사 정보에 등록된 항목만 고를 수 있습니다.' },
 };
 
 export const WithMessage: Story = {
-  name: '메시지 있음',
+  name: "상태 메시지",
   args: { defaultValue: 'apple', message: '하나를 선택하세요.', messageType: 'info' },
 };
 
 export const Invalid: Story = {
-  name: '오류',
+  name: "Error",
   args: { invalid: true, message: '필수 항목입니다.' },
 };
 
 export const Sizes: Story = {
-  name: '크기',
+  name: "Sizes",
   args: { size: 'lg' },
 };
 
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   args: { disabled: true },
 };
 
 export const ReadOnly: Story = {
-  name: '읽기 전용',
+  name: "Read Only",
   args: { readOnly: true, defaultValue: 'grape' },
 };
 
 /** 데이터 목록(`items`)과 렌더 함수로 옵션을 만듭니다. */
 export const DynamicItems: Story = {
-  name: '항목 목록으로',
+  name: "Dynamic Items",
   render: (args) => (
     <Select
       {...args}
@@ -119,7 +119,7 @@ export const DynamicItems: Story = {
 
 /** 체크 아이콘을 끄면 선택된 옵션은 굵은 글자로만 표시됩니다. */
 export const WithoutCheckIcon: Story = {
-  name: '체크 아이콘 없음',
+  name: "Without Check Icon",
   args: { defaultValue: 'banana' },
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole('button'));

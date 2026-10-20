@@ -10,7 +10,7 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs segmented-control` (sets segmented-control, segmented-item).
 const meta = {
-  title: '컴포넌트/SegmentedControl/전체 보기',
+  title: "Components/SegmentedControl/Gallery",
   id: 'components-segmentedcontrol-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -22,7 +22,7 @@ type Story = StoryObj;
 const ITEMS = ['a', 'b', 'c', 'd'];
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Size (md · sm · xs)" direction="column">
@@ -51,9 +51,9 @@ export const Overview: Story = {
   ),
 };
 
-/** Figma `segmented-control` (md · sm · xs): 316px wide, four items, the first selected. */
+/** 크기와 상태별 표현을 비교합니다. */
 export const VariantMatrix: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <FigmaMatrix
       cellWidth={316}
@@ -91,12 +91,9 @@ const ITEM_VARIANTS = [
   ['Unselected', 'Disabled'],
 ] as const;
 
-/**
- * Figma `segmented-item` (18): each item on its own (the control's padding and background are removed
- * in this story so the item is compared as in the Figma set).
- */
+/** 항목의 크기와 상태별 표현을 비교합니다. */
 export const ItemMatrix: Story = {
-  name: '항목 모든 변형',
+  name: "Items",
   render: () => (
     <div className="segmented-item-matrix">
       <style>{'.segmented-item-matrix .ds-segmented { padding: 0; background: none; }'}</style>
@@ -126,7 +123,7 @@ export const ItemMatrix: Story = {
 
 /** Unselected Hover / Pressed, Selected and Disabled at size md. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <StorySection title="State" direction="column">
       <SegmentedControl aria-label="상태" defaultValue="selected">
@@ -159,7 +156,7 @@ function Controlled() {
 
 /** Click selects; arrow keys move the selection and skip disabled items. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <Controlled />,
   play: async ({ canvas, userEvent, step }) => {
     await step('click selects', async () => {
@@ -180,7 +177,7 @@ export const Interaction: Story = {
 
 /** role="radiogroup" with a name; each segment is a radio named by its label. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <SegmentedControl aria-label="정렬" defaultValue="new">
       <SegmentedControlItem value="new">최신순</SegmentedControlItem>
@@ -194,10 +191,7 @@ export const Accessibility: Story = {
   },
 };
 
-/**
- * Narrow segments (the Figma dashboard filter bar: 220px, sm): a label wider than the content box runs into the
- * segment's padding like in Figma; only a label wider than the whole segment is truncated.
- */
+/** 긴 라벨의 말줄임 표시와 전체 이름 제공 여부를 확인합니다. */
 export const LabelOverflow: Story = {
   name: '긴 라벨',
   render: () => (

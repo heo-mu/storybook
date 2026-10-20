@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Tabs.showcase.stories';
 import { Tabs, TabList, Tab, TabPanel } from './Tabs';
 
-<Meta title="컴포넌트/Tabs/사용 방법" id="components-tabs-usage" name="Docs" />
+<Meta title="Components/Tabs/Usage" id="components-tabs-usage" name="Docs" />
 
 # Tabs
 
-Tabs는 한 화면의 내용을 몇 갈래로 나누고, 탭을 눌러 바꿔 보게 합니다.
+같은 화면의 관련 콘텐츠를 구분하고 탭을 선택해 전환합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 주문 상태처럼 같은 화면 안에서 내용을 나눠 보여 줄 때 씁니다.
 - `Tabs` 안에 탭 목록 `TabList`와 탭 `Tab`, 탭마다 내용 `TabPanel`을 넣습니다.
@@ -32,11 +32,11 @@ Tabs는 한 화면의 내용을 몇 갈래로 나누고, 탭을 눌러 바꿔 �
 <Canvas of={Showcase.States} />
 
 - 마우스를 올리거나 누르면 모양이 바뀝니다.
-- 선택된 탭은 선택됨 모양으로 보입니다.
+- 선택된 탭은 배경 또는 밑줄로 강조합니다.
 - `Tab`의 `disabled`이면 고를 수 없고, 방향키로 옮길 때도 건너뜁니다.
-- 키보드로 선택하면 탭과 탭 패널에 포커스 테두리가 보입니다.
+- 키보드 포커스를 받으면 탭과 탭 패널에 포커스 테두리가 보입니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

@@ -20,10 +20,7 @@ export type CheckboxProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'ty
   style?: CSSProperties;
 };
 
-/**
- * 항목을 켜고 끄거나 여러 개를 고르는 체크박스입니다. 선택은 `checked` · `defaultChecked`, 일부 선택은
- * `indeterminate`로 정하고, 나머지 `<input>` 속성과 `ref`는 체크박스에 그대로 전달됩니다.
- */
+/** 독립적인 옵션을 선택하거나 여러 옵션을 함께 선택할 때 사용합니다. CheckboxGroup으로 선택값을 함께 관리할 수 있습니다. */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
   { size, label, indeterminate = false, className, style, disabled, value, name, checked, onChange, ...rest },
   ref,

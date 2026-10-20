@@ -6,7 +6,7 @@ import { Button } from '../../Button';
 // Visual verification (not in the MCP manifest). The open dialog carries the data-figma name checked by
 // `node scripts/verify-figma.mjs dialog` (single component `dialog`).
 const meta = {
-  title: '컴포넌트/Dialog/전체 보기',
+  title: "Components/Dialog/Gallery",
   id: 'components-dialog-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true }, layout: 'fullscreen' },
@@ -15,9 +15,9 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-/** Figma `dialog` with its default content, open. */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div style={{ height: 400 }}>
       <Dialog
@@ -40,7 +40,7 @@ export const Figma: Story = {
 
 /** Opening moves focus into the dialog, Tab stays inside, Escape closes and focus returns to the trigger. */
 export const Interaction: StoryObj<{ onConfirm: Mock<() => void> }> = {
-  name: '동작',
+  name: "Interaction",
   args: { onConfirm: fn() },
   render: (args) => (
     <div style={{ padding: 24, height: 400 }}>

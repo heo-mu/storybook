@@ -10,9 +10,7 @@ export type NavigationProps = ComponentPropsWithoutRef<'nav'> & {
   children: ReactNode;
 };
 
-/**
- * 화면 왼쪽에 두는 메뉴(LNB)의 틀입니다. 너비는 화면 배치에서 정하고, 메뉴 항목은 그 너비를 꽉 채웁니다.
- */
+/** 화면의 주요 페이지로 이동하는 사이드 내비게이션입니다. 링크와 펼칠 수 있는 메뉴 그룹으로 구성합니다. */
 export const Navigation = forwardRef<HTMLElement, NavigationProps>(function Navigation({ header, children, className, ...rest }, ref) {
   return (
     <nav {...rest} ref={ref} className={cx('ds-nav', className)}>
@@ -33,7 +31,7 @@ type ItemBase = {
 
 export type NavLinkProps = ComponentPropsWithoutRef<'a'> &
   ItemBase & {
-    /** 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. */
+    /** 선택됨 — 현재 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. */
     selected?: boolean;
   };
 
@@ -126,7 +124,7 @@ export function NavGroup({ label, icon, children, expanded, defaultExpanded = fa
 export type NavChildProps = ComponentPropsWithoutRef<'a'> & {
   /** 메뉴 이름. */
   children: ReactNode;
-  /** 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. */
+  /** 선택됨 — 현재 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. */
   selected?: boolean;
 };
 

@@ -8,7 +8,7 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs tabs` (sets tab_filled, tab_line).
 const meta = {
-  title: '컴포넌트/Tabs/전체 보기',
+  title: "Components/Tabs/Gallery",
   id: 'components-tabs-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -44,7 +44,7 @@ function FigmaTab({ appearance, variant, size, shape, state }: { appearance: Tab
 }
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
       {(['line', 'filled'] as const).map((appearance) => (
@@ -77,9 +77,9 @@ export const Overview: Story = {
   ),
 };
 
-/** Figma `tab_filled` (60): Variant × Shape × Size (rows) × State (columns). */
+/** 배경으로 선택 상태를 구분하는 탭입니다. */
 export const FilledMatrix: Story = {
-  name: 'Filled 탭 모든 변형',
+  name: "Filled",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -101,9 +101,9 @@ export const FilledMatrix: Story = {
   },
 };
 
-/** Figma `tab_line` (30): Variant × Size (rows) × State (columns). */
+/** 밑줄로 선택 상태를 구분하는 탭입니다. */
 export const LineMatrix: Story = {
-  name: 'Line 탭 모든 변형',
+  name: "Line",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -122,7 +122,7 @@ export const LineMatrix: Story = {
 
 /** Every state, both appearances, size md. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <div>
       {(['line', 'filled'] as const).map((appearance) => (
@@ -138,7 +138,7 @@ export const States: Story = {
 
 /** Arrow keys move and select (automatic activation), disabled tabs are skipped, panels follow. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => (
     <Tabs defaultSelectedKey="a">
       <TabList aria-label="섹션">
@@ -169,7 +169,7 @@ export const Interaction: Story = {
 
 /** tablist / tab / tabpanel with aria-controls and labelled panels. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <Tabs defaultSelectedKey="x">
       <TabList aria-label="보기">

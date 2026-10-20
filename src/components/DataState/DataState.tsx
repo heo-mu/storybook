@@ -64,10 +64,7 @@ const CONTENT: Record<Exclude<DataStateValue, 'loading'>, Content> = {
   },
 };
 
-/**
- * 데이터 영역에 내용 대신 보여 주는 안내입니다. 불러오는 중에는 스켈레톤과 문구를, 나머지 상태에는 아이콘 · 제목 · 설명 · 버튼을 보여 줍니다.
- * 상태가 바뀌면 화면 낭독기가 읽어 줍니다.
- */
+/** 데이터 영역의 로딩·빈 결과·오류·접근 제한·일부 데이터 누락 상태를 안내합니다. */
 export const DataState = forwardRef<HTMLDivElement, DataStateProps>(function DataState(
   { state, title, description, loadingLabel = '데이터를 불러오는 중입니다', actionLabel, onAction, action, className, ...rest },
   ref,

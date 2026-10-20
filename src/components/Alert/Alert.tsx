@@ -16,10 +16,7 @@ export type AlertProps = Omit<ComponentPropsWithoutRef<'div'>, 'title' | 'childr
   action?: ReactNode;
 };
 
-/**
- * 화면 안에 머물며 상태나 안내를 전하는 알림입니다.
- * 오류는 화면 낭독기가 바로 읽고(`role="alert"`), 안내 · 성공 · 주의는 `role="status"`로 읽힙니다.
- */
+/** 현재 화면에서 알아야 할 상태나 안내를 지속적으로 표시합니다. 일시적인 작업 결과는 Toast를 사용합니다. */
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   { status = 'information', title, description, showIcon = true, action, className, role, ...rest },
   ref,

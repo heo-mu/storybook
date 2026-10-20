@@ -6,7 +6,7 @@ import { FIELD_MESSAGE_TYPES } from '../Field';
 
 // 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Textarea.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Textarea/Textarea',
+  title: "Components/Textarea/Textarea",
   id: 'components-textarea-textarea',
   component: Textarea,
   tags: ['autodocs'],
@@ -14,12 +14,12 @@ const meta = {
     docs: {
       description: {
         component:
-          '여러 줄 글자를 입력받는 입력 칸입니다. 크기는 `size`로 고르고, `maxLength`를 정하면 입력한 글자 수가 함께 보입니다.',
+          "요청 사항·사유 등 여러 줄의 텍스트를 입력받습니다. 글자 수 제한과 현재 입력량을 표시할 수 있습니다.",
       },
     },
   },
   args: {
-    label: '라벨명',
+    label: '요청 사항',
     placeholder: '내용 입력',
     size: 'sm',
     maxLength: 100,
@@ -32,8 +32,8 @@ const meta = {
   },
   argTypes: {
     size: { control: 'inline-radio', options: TEXTAREA_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
-    label: { control: 'text', description: '입력 칸 위 라벨' },
-    message: { control: 'text', description: '입력 칸 아래 도움말 메시지' },
+    label: { control: 'text', description: '입력 필드 위 라벨' },
+    message: { control: 'text', description: '입력 필드 아래 도움말 메시지' },
     messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 회색 도움말(helper)' },
     maxLength: { control: 'number', description: '최대 글자 수' },
     showCount: { control: 'boolean', description: '글자 수 표시 — maxLength가 있을 때 보임' },
@@ -48,39 +48,39 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Required: Story = {
-  name: '필수 입력',
+  name: "Required",
   args: { label: '신청 사유', placeholder: '신청 사유 입력', required: true },
 };
 
 export const Helper: Story = {
-  name: '도움말',
+  name: "Helper Text",
   args: { message: '받는 분께 전할 내용을 적어 주세요.' },
 };
 
 export const WithMessage: Story = {
-  name: '메시지 있음',
+  name: "상태 메시지",
   args: { defaultValue: '배송 전 연락 부탁드립니다.', message: '최대 100자까지 입력할 수 있습니다.', messageType: 'info' },
 };
 
 export const Invalid: Story = {
-  name: '오류',
+  name: "Error",
   args: { defaultValue: '내용', invalid: true, message: '10자 이상 입력하세요.' },
 };
 
 export const Medium: Story = {
-  name: '중간 크기',
+  name: "Medium",
   args: { size: 'md' },
 };
 
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   args: { disabled: true },
 };
 
 export const ReadOnly: Story = {
-  name: '읽기 전용',
+  name: "Read Only",
   args: { readOnly: true, defaultValue: '수정할 수 없는 내용' },
 };

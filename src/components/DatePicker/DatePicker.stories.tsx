@@ -5,7 +5,7 @@ import { FIELD_MESSAGE_TYPES, FIELD_SIZES } from '../Field';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/DatePicker.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/DatePicker/DatePicker',
+  title: "Components/DatePicker/DatePicker",
   id: 'components-datepicker-datepicker',
   component: DatePicker,
   tags: ['autodocs'],
@@ -13,12 +13,12 @@ const meta = {
     docs: {
       description: {
         component:
-          '날짜를 직접 입력하거나 달력에서 고르는 입력 칸입니다. 값은 `YYYY-MM-DD` 문자열이고, 고를 수 있는 날짜는 `minValue` · `maxValue` · `isDateUnavailable`로 정합니다.',
+          "날짜를 직접 입력하거나 달력에서 선택합니다. 달력만 표시하려면 Calendar를 사용합니다.",
       },
     },
   },
   args: {
-    label: '라벨명',
+    label: '방문일',
     size: 'sm',
     required: false,
     invalid: false,
@@ -30,7 +30,7 @@ const meta = {
   argTypes: {
     size: { control: 'inline-radio', options: FIELD_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
     label: { control: 'text', description: '라벨' },
-    message: { control: 'text', description: '입력 칸 아래 도움말 메시지' },
+    message: { control: 'text', description: '입력 필드 아래 도움말 메시지' },
     messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 회색 도움말(helper)' },
     required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 읽음' },
     invalid: { control: 'boolean', description: '오류 상태' },
@@ -46,30 +46,30 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Required: Story = {
-  name: '필수 입력',
+  name: "Required",
   args: { label: '방문일', required: true },
 };
 
 export const WithValue: Story = {
-  name: '값 있음',
+  name: "Selected Date",
   args: { defaultValue: '2026-07-30' },
 };
 
 export const Helper: Story = {
-  name: '도움말',
+  name: "Helper Text",
   args: { message: '평일만 고를 수 있습니다.' },
 };
 
 export const WithMessage: Story = {
-  name: '메시지 있음',
+  name: "상태 메시지",
   args: { defaultValue: '2026-07-30', message: '평일만 선택할 수 있습니다.', messageType: 'info' },
 };
 
 export const Range: Story = {
-  name: '기간 선택',
+  name: "선택 가능 기간",
   args: { label: '방문일', minValue: '2026-07-06', maxValue: '2026-07-24', defaultValue: '2026-07-15' },
 };
 
@@ -84,16 +84,16 @@ export const WeekdaysOnly: Story = {
 };
 
 export const Invalid: Story = {
-  name: '오류',
+  name: "Error",
   args: { defaultValue: '2026-07-01', invalid: true, message: '시작일 이후여야 합니다.' },
 };
 
 export const Disabled: Story = {
-  name: '비활성',
+  name: "Disabled",
   args: { disabled: true },
 };
 
 export const ReadOnly: Story = {
-  name: '읽기 전용',
+  name: "Read Only",
   args: { readOnly: true, defaultValue: '2026-07-30' },
 };

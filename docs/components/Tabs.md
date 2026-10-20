@@ -77,3 +77,11 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - Figma 컴포넌트 세트: `tab_filled`(91:5000, 60개) → `appearance="filled"`, `tab_line`(91:5241, 30개) → `appearance="line"`.
 - 키보드는 react-aria-components tablist 패턴입니다(방향키 · Home · End). State: Hover · Pressed = `:hover` · press, Selected = 선택된 탭, Disabled = `disabledKeys` 또는 `Tab disabled`.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Tabs.showcase.stories.tsx / FilledMatrix`: Figma `tab_filled` (60): Variant × Shape × Size (rows) × State (columns).
+- `Tabs.showcase.stories.tsx / LineMatrix`: Figma `tab_line` (30): Variant × Size (rows) × State (columns).

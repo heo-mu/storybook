@@ -3,15 +3,15 @@ import * as Showcase from './stories/SegmentedControl.showcase.stories';
 import { SegmentedControl } from './SegmentedControl';
 import { SegmentedControlItem } from './SegmentedControlItem';
 
-<Meta title="컴포넌트/SegmentedControl/사용 방법" id="components-segmentedcontrol-usage" name="Docs" />
+<Meta title="Components/SegmentedControl/Usage" id="components-segmentedcontrol-usage" name="Docs" />
 
 # SegmentedControl
 
-몇 개의 옵션을 한 줄로 나란히 보여 주고 그중 하나를 고르게 하는 컨트롤입니다. 각 옵션은 `SegmentedControlItem`으로 넣습니다.
+관련 옵션을 나란히 표시하고 하나를 선택합니다. 일간·주간·월간처럼 소수의 옵션을 전환할 때 사용합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -31,9 +31,9 @@ import { SegmentedControlItem } from './SegmentedControlItem';
 
 - 마우스를 올리거나 누르면 모양이 바뀝니다. 선택된 옵션은 모양이 그대로 유지됩니다.
 - 옵션 하나만 막으려면 `SegmentedControlItem`에, 전체를 막으려면 `SegmentedControl`에 `disabled`를 줍니다.
-- 키보드로 선택하면 선택된 옵션 둘레에 포커스 테두리가 보입니다.
+- 키보드 포커스를 받으면 선택된 옵션 둘레에 포커스 테두리가 보입니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -55,9 +55,9 @@ import { SegmentedControlItem } from './SegmentedControlItem';
 - 방향키로 선택이 이동하고, 비활성 옵션은 건너뜁니다.
 - 화면 낭독기는 각 옵션을 "전체 n개 중 n번째"로 읽습니다.
 
-## 주의사항
+## 사용 규칙
 
-- 값은 선택된 옵션의 `value`입니다. `value` · `onChange`로 직접 관리하거나, `defaultValue`로 처음 값만 정합니다.
+- 값은 선택된 옵션의 `value`입니다. `value` · `onChange`로 직접 관리하거나, `defaultValue`로 초깃값만 정합니다.
 - 폼을 보낼 때 선택값이 함께 전송됩니다. 이름은 `name`으로 정하고, 생략하면 자동으로 만들어집니다.
 
 ## Props

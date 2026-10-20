@@ -58,3 +58,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - Figma 컴포넌트 세트: `link`(111:1509, 15개). 네이티브 `<a>`를 그립니다.
 - State: Hover · Pressed · Visited = `:hover` · `:active` · `:visited`, Disabled = `disabled`(`href` 없음, `aria-disabled`, `role="link"`, 포커스되지 않음).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Link.showcase.stories.tsx / VariantMatrix`: All 15 Figma variants (Figma "Icon" on): Size (rows) × State (columns).

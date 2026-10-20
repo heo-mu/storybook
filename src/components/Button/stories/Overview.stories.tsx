@@ -9,7 +9,7 @@ import { figmaCase } from './story-helpers';
 
 // Visual showcase — excluded from the MCP components manifest (uses story-only helpers).
 const meta = {
-  title: '컴포넌트/Button/개요',
+  title: "Components/Button/Overview",
   id: 'components-button-overview',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -18,9 +18,9 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-/** The whole Button family (Figma frame "Button", 58:4971) at a glance. */
+/** 주요 종류와 크기, 구성 방식을 한눈에 비교합니다. */
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <Section title="Button — 종류 × 모양 (md)">

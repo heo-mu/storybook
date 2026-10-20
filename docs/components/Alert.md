@@ -51,3 +51,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - Figma 컴포넌트 세트: `alert`(179:6087). Figma 속성 `Sub`가 켜졌을 때의 `Sub Text`가 `description`입니다.
 - 상태 아이콘은 `statusIcon.ts`의 `STATUS_ICON`(info-fill · check-circle-fill · x-circle-fill)을 Toast와 함께 씁니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Alert.showcase.stories.tsx / Matrix`: Figma `alert` (3): Status, with Icon · Sub · Button on (Figma defaults), 320px wide.

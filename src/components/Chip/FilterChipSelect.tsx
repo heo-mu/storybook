@@ -24,7 +24,7 @@ type FilterChipSelectBase = {
   options: FilterChipSelectOption[];
   /** 크기. @default 'md' */
   size?: ChipSize;
-  /** 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. */
+  /** 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. */
   disabled?: boolean;
   /** 칩에 이름을 보여 줄 값의 수. 넘치면 "외 N"으로 줄입니다. @default 3 */
   maxDisplayed?: number;
@@ -66,11 +66,7 @@ export type FilterChipSelectProps = FilterChipSelectMultipleProps | FilterChipSe
 /** Key of the clearing option of a single-select filter. */
 const CLEAR = '__ds-filter-clear__';
 
-/**
- * 필터 칩과 옵션 목록이 함께 있는 필터입니다. 값이 적용되면 칩이 선택됨 모양이 됩니다.
- * - 여러 개 고르기(기본): 목록이 열린 채로 옵션을 켜고 끄고, 목록을 닫을 때 적용됩니다. 모두 끄고 닫으면 필터가 풀립니다.
- * - 하나 고르기: 고르면 바로 적용되고 닫힙니다. 첫 옵션 "전체"(`clearLabel`)를 고르면 필터가 풀립니다.
- */
+/** 필터 칩과 옵션 목록을 함께 제공합니다. 다중 선택은 목록을 닫을 때, 단일 선택은 항목을 선택하는 즉시 적용됩니다. */
 export const FilterChipSelect = forwardRef(function FilterChipSelect(props: FilterChipSelectProps, ref: ForwardedRef<HTMLButtonElement>) {
   const { label, options, size = 'md', disabled, maxDisplayed = 3, name, onOpenChange, defaultOpen = false, className } = props;
   const single = props.selectionMode === 'single';

@@ -18,9 +18,7 @@ export type TextButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children
   children: ReactNode;
 };
 
-/**
- * 배경 없이 글자로만 보이는 가벼운 버튼입니다. 더보기처럼 덜 강조할 행동에 씁니다.
- */
+/** 더보기 등 강조도가 낮은 보조 동작에 사용하는 텍스트 버튼입니다. */
 export const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(function TextButton(
   { variant = 'primary', size = 'sm', leftIcon, rightIcon, children, className, type = 'button', ...rest },
   ref,

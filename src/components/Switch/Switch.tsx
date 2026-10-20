@@ -13,10 +13,7 @@ export type SwitchProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'type
   style?: CSSProperties;
 };
 
-/**
- * 설정을 켜고 끄는 스위치입니다. 켜짐은 `checked` · `defaultChecked`로 정하고 Space 키로도 바꿀 수 있으며,
- * 나머지 `<input>` 속성과 `ref`는 스위치에 그대로 전달됩니다.
- */
+/** 알림·자동 저장 등 두 상태를 갖는 설정을 켜거나 끕니다. */
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch({ size = 'sm', label, className, style, disabled, ...rest }, ref) {
   return (
     <label className={cx('ds-choice', 'ds-switch', className)} style={style} data-size={size} data-disabled={disabled || undefined}>

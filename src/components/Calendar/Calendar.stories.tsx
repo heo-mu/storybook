@@ -4,7 +4,7 @@ import { Calendar } from './Calendar';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Calendar.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Calendar/Calendar',
+  title: "Components/Calendar/Calendar",
   id: 'components-calendar-calendar',
   component: Calendar,
   tags: ['autodocs'],
@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '한 달 단위로 날짜를 보여 주고 고르는 달력입니다. 값은 `YYYY-MM-DD` 문자열이고, 고를 수 있는 날짜는 `minValue` · `maxValue` · `isDateUnavailable`로 정합니다.',
+          "달력에서 날짜를 선택합니다. 입력 필드와 함께 사용하려면 DatePicker를 사용합니다.",
       },
     },
   },
@@ -31,14 +31,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const WithValue: Story = {
-  name: '값 있음',
+  name: "Selected Date",
   args: { defaultValue: '2026-07-30' },
 };
 
 export const Range: Story = {
-  name: '기간 선택',
+  name: "선택 가능 기간",
   args: { defaultFocusedValue: '2026-07-15', minValue: '2026-07-06', maxValue: '2026-07-24' },
 };

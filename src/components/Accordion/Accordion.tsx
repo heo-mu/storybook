@@ -22,7 +22,7 @@ export type AccordionProps = {
   className?: string;
 };
 
-/** `AccordionItem`을 묶는 아코디언입니다. 기본은 한 번에 한 항목만 펼칩니다. */
+/** 관련 콘텐츠를 접고 펼쳐 필요한 정보부터 확인할 수 있는 컴포넌트입니다. */
 export function Accordion({ children, size = 'md', className, ...rest }: AccordionProps) {
   return (
     <SizeContext.Provider value={size}>
@@ -44,7 +44,7 @@ export type AccordionItemProps = {
   children: ReactNode;
   /** 아래 구분선을 표시합니다. @default true */
   divider?: boolean;
-  /** 비활성 — 펼칠 수 없고 키보드로도 선택되지 않습니다. */
+  /** 비활성 — 펼칠 수 없고 키보드 포커스를 받지 않습니다. */
   disabled?: boolean;
   /** 펼침 여부. `Accordion` 밖에서 단독으로 쓰며 직접 제어할 때 씁니다. */
   expanded?: boolean;

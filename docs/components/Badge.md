@@ -62,3 +62,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - 상태 색은 `colors/badge/status/{filled|outline}/*` 변수를 씁니다.
 - `BadgeDot`은 `aria-label`이 없으면 `aria-hidden`, 있으면 `role="img"`로 렌더링됩니다.
 - `BadgeCount`의 Figma Digits Single · Multiple은 숫자에 따라 정해지며, Multiple은 "99+"(`{max}+`)입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Badge.showcase.stories.tsx / StatusMatrix`: Figma `badge_status` (84): Status × Appearance × Size × Shape.
+- `Badge.showcase.stories.tsx / DotMatrix`: Figma `badge_dot` (21): Status × Size.
+- `Badge.showcase.stories.tsx / CountMatrix`: Figma `badge_count` (14): Status × Digits (Single "1", Multiple "99+").

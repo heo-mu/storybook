@@ -12,10 +12,7 @@ export type EmptyStateProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
   action?: ReactNode;
 };
 
-/**
- * 보여 줄 내용이 없을 때 그 자리 가운데에 안내를 보여 주는 빈 상태입니다.
- * 너비는 320px이고, 부모가 더 좁으면 그 너비에 맞춰 줄어듭니다.
- */
+/** 목록이나 차트에 표시할 내용이 없을 때 이유와 다음 행동을 안내합니다. */
 export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState({ title, description, icon, action, className, ...rest }, ref) {
   return (
     <div {...rest} ref={ref} className={cx('ds-empty-state', className)}>

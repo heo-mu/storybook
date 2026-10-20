@@ -77,3 +77,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `BreadcrumbEntry.id`를 주지 않으면 `items` 안의 순서(index)가 `onAction` 값입니다.
 - `moreLabel`은 Figma … 트리거의 Label Text, `menuTitle`은 `dropdownmenu_item` Type Title에 해당합니다.
 - 예전 스토리 설명은 "`BreadcrumbItem`은 직접 배치용으로 export"라고 했지만, 지금 분류는 내부 부품(사용 금지, `@internal`)입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Breadcrumb.showcase.stories.tsx / ItemMatrix`: Figma `breadcrumb-item` (12): Role Link / Current / Open × State × Size ("Show Icon" off as in the set).
+- `Breadcrumb.showcase.stories.tsx / BreadcrumbMatrix`: Figma `breadcrumb` Layout Full / Collapsed (Expanded False). Expanded True: `BreadcrumbExpanded`.
+- `Breadcrumb.showcase.stories.tsx / BreadcrumbExpanded`: Figma `breadcrumb` Layout Collapsed, Expanded True (one size per story so the open menus do not overlap). The menu panel is 200 × 110 like the Figma `dropdownmenu` frame.

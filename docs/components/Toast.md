@@ -69,3 +69,11 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `ToastRegion`은 react-aria-components Toast(UNSTABLE_ToastRegion · UNSTABLE_Toast)로 이름 있는 영역(landmark), 토스트 낭독, 마우스 오버 · 포커스 중 타이머 정지를 제공합니다.
 - 기본 큐는 `new UNSTABLE_ToastQueue({ maxVisibleToasts: 3 })`이고, `showToast`는 `timeout`을 `Math.max(5000, timeout)`으로 보정합니다.
 - 정적 `Toast`는 `role="status"`로 렌더링됩니다(`role` prop으로 덮어쓸 수 있음).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Toast.showcase.stories.tsx / Matrix`: Figma `toast` (3): Status, Close Icon on.
+- `Toast.showcase.stories.tsx / Policy`: Design System Rules 06: at most 3 on screen, the same message is not stacked, errors stay until closed.

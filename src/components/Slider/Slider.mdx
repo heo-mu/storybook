@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Slider.showcase.stories';
 import { Slider } from './Slider';
 
-<Meta title="컴포넌트/Slider/사용 방법" id="components-slider-usage" name="Docs" />
+<Meta title="Components/Slider/Usage" id="components-slider-usage" name="Docs" />
 
 # Slider
 
-정해진 범위 안에서 숫자 값을 고르는 슬라이더입니다. 옆의 숫자 입력 칸에 값을 직접 입력할 수도 있습니다.
+정해진 범위에서 수치를 조절합니다. 드래그와 키보드를 지원하며 숫자 입력 필드를 함께 사용할 수 있습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 인원 · 투명도처럼 최솟값과 최댓값이 정해진 숫자를 고를 때 사용합니다.
 
@@ -18,8 +18,8 @@ import { Slider } from './Slider';
 
 - 범위는 `minValue` · `maxValue`로 정합니다. 기본은 0부터 100까지입니다.
 - 값 사이 간격은 `step`으로 정합니다. 기본은 1입니다.
-- `showInput`을 켜면 오른쪽에 숫자 입력 칸이 보입니다. 기본은 켜짐입니다.
-- `unit`을 주면 숫자 입력 칸 오른쪽과 값 라벨에 단위가 붙습니다.
+- `showInput`을 켜면 오른쪽에 숫자 입력 필드가 보입니다. 기본은 켜짐입니다.
+- `unit`을 주면 숫자 입력 필드 오른쪽과 값 라벨에 단위가 붙습니다.
 - `valueLabel`을 켜면 손잡이 위에 현재 값이 보입니다. 기본은 켜짐입니다.
 - 숫자 형식은 `formatOptions`로 바꿉니다.
 
@@ -27,12 +27,12 @@ import { Slider } from './Slider';
 
 <Canvas of={Showcase.States} />
 
-- 마우스를 올리거나 드래그하거나 키보드로 선택하면 손잡이 위에 값 라벨이 보입니다.
+- 마우스를 올리거나 드래그하거나 키보드 포커스를 받으면 손잡이 위에 값 라벨이 보입니다.
 - 드래그하는 동안 손잡이 주위에 반투명한 원이 보입니다.
-- 키보드로 선택하면 손잡이에 포커스 테두리가 보입니다.
+- 키보드 포커스를 받으면 손잡이에 포커스 테두리가 보입니다.
 - `disabled`이면 값을 바꿀 수 없습니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -50,7 +50,7 @@ import { Slider } from './Slider';
 ## 접근성
 
 - 화면에 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby`로 이름을 꼭 붙입니다.
-- 숫자 입력 칸의 이름은 `inputLabel`로 정합니다. 기본은 `값 입력`입니다.
+- 숫자 입력 필드의 이름은 `inputLabel`로 정합니다. 기본은 `값 입력`입니다.
 - 키보드로 이렇게 조작합니다.
 
 | 키 | 동작 |
@@ -58,13 +58,13 @@ import { Slider } from './Slider';
 | ← · → · ↑ · ↓ | 한 `step`만큼 이동 |
 | Page Up · Page Down | 크게 이동 |
 | Home · End | 최솟값 · 최댓값으로 이동 |
-| 숫자 입력 칸에서 ↑ · ↓ | 한 `step`만큼 이동 |
+| 숫자 입력 필드에서 ↑ · ↓ | 한 `step`만큼 이동 |
 
-## 주의사항
+## 사용 규칙
 
 - `onChange`는 값이 바뀌는 동안 계속 호출됩니다. 저장처럼 한 번만 할 일은 `onChangeEnd`에서 처리합니다.
-- `onChangeEnd`는 드래그를 마치거나, 키를 누르거나, 숫자 입력 칸의 값을 확정할 때 호출됩니다.
-- 숫자 입력 칸의 값은 Enter를 누르거나 다른 곳을 선택하면 확정됩니다. 범위를 벗어난 값은 범위 안으로, `step`에 맞게 바뀝니다.
+- `onChangeEnd`는 드래그를 마치거나, 키를 누르거나, 숫자 입력 필드의 값을 확정할 때 호출됩니다.
+- 숫자 입력 필드의 값은 Enter를 누르거나 다른 곳을 선택하면 확정됩니다. 범위를 벗어난 값은 범위 안으로, `step`에 맞게 바뀝니다.
 
 ## Props
 

@@ -9,7 +9,7 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs date-picker` (sets date-picker_calendar, date-picker_day, date-picker_navigation).
 const meta = {
-  title: '컴포넌트/Calendar/전체 보기',
+  title: "Components/Calendar/Gallery",
   id: 'components-calendar-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -34,7 +34,7 @@ const dayOne = (outside: boolean) => (root: HTMLElement) =>
   [...root.querySelectorAll('.ds-calendar__day')].find((el) => el.textContent === '1' && el.hasAttribute('data-outside-month') === outside);
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <StorySection title="Calendar (date-picker_calendar)">
       <Calendar aria-label="일정" defaultValue="2026-07-30" />
@@ -43,9 +43,9 @@ export const Overview: Story = {
   ),
 };
 
-/** Figma `date-picker_calendar`: July 2026, today the 29th, the 30th selected (today fixed for the story). */
+/** 오늘과 선택한 날짜를 표시하는 달력입니다. */
 export const CalendarMatrix: Story = {
-  name: '달력 모든 변형',
+  name: "Calendar",
   beforeEach: mockToday('2026-07-29'),
   render: () => (
     <div style={{ padding: 16 }}>
@@ -56,12 +56,9 @@ export const CalendarMatrix: Story = {
   ),
 };
 
-/**
- * Figma `date-picker_day` (7): the day "1" of a calendar in each state (today fixed to 2026-07-01; Hover /
- * Pressed forced on the whole calendar).
- */
+/** 오늘·선택·비활성 등 날짜 셀의 상태를 비교합니다. */
 export const DayMatrix: Story = {
-  name: '날짜 칸 모든 변형',
+  name: "Day States",
   beforeEach: mockToday('2026-07-01'),
   render: () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, padding: 16 }}>
@@ -99,9 +96,9 @@ const navButtons = (direction: 'Previous' | 'Next', state: string): [string, (ro
   (root) => root.querySelectorAll('.ds-calendar__nav-button')[direction === 'Previous' ? 0 : 1] ?? undefined,
 ];
 
-/** Figma `date-picker_navigation` (8): previous / next buttons of calendars in each state. */
+/** 이전·다음 달 이동 버튼의 상태를 비교합니다. */
 export const NavigationMatrix: Story = {
-  name: '이동 버튼 모든 변형',
+  name: "Navigation",
   render: () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, padding: 16 }}>
       <Annotate marks={[navButtons('Previous', 'Default'), navButtons('Next', 'Default')]}>
@@ -126,7 +123,7 @@ export const NavigationMatrix: Story = {
 
 /** Arrow keys move between days, Page Down changes month, Enter selects; previous / next buttons. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <Calendar aria-label="일정" defaultFocusedValue="2026-07-15" />,
   play: async ({ canvas, userEvent, step }) => {
     await step('next month button', async () => {
@@ -149,7 +146,7 @@ export const Interaction: Story = {
 
 /** role="application" grid with labelled day buttons; disabled days are marked. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => <Calendar aria-label="예약일" defaultFocusedValue="2026-07-15" minValue="2026-07-10" />,
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('grid')).toBeInTheDocument();

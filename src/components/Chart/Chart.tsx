@@ -448,10 +448,7 @@ function visibleArea(plotEl: HTMLElement, plot: Rect, margin: number): Rect {
   return intersect(plot, ...rects);
 }
 
-/**
- * 항목별 수치를 선 · 세로 막대 · 가로 막대 차트로 보여 줍니다. 마우스를 올리거나 탭하거나 키보드(화살표 · Home · End · Esc)로
- * 항목을 고르면 그 항목이 강조되고 툴팁에 값이 보입니다. 너비는 감싼 영역에 맞춰지고, 모든 값은 화면 낭독기용 표로도 제공합니다.
- */
+/** 수치의 추이와 항목 간 차이를 선 또는 막대 차트로 보여 줍니다. 툴팁으로 개별 값을 확인할 수 있습니다. */
 export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   {
     type = 'bar-vertical',

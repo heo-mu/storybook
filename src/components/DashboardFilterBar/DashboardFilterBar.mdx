@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as FilterBarStories from './DashboardFilterBar.stories';
 import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from './DashboardFilterBar';
 
-<Meta title="컴포넌트/DashboardFilterBar/사용 방법" id="components-dashboardfilterbar-usage" name="Docs" />
+<Meta title="Components/DashboardFilterBar/Usage" id="components-dashboardfilterbar-usage" name="Docs" />
 
 # DashboardFilterBar
 
-대시보드의 조회 조건을 한곳에 모으고, 오른쪽에 조회 버튼을 두는 막대입니다.
+대시보드의 조회 조건과 실행 버튼을 한곳에 배치합니다. 조건을 그룹으로 구성할 수 있습니다.
 
 <Canvas of={FilterBarStories.Playground} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 대시보드에서 조회 대상 · 조회 기간 같은 조건을 고른 뒤 조회할 때 씁니다.
 - 조건 컨트롤은 디자인 시스템의 Select · FilterChip · SegmentedControl · DatePicker를 `size="sm"`으로 넣습니다.
@@ -28,7 +28,7 @@ import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from '
 
 <Canvas of={FilterBarStories.Narrow} />
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"

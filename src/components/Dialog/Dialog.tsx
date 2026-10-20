@@ -34,10 +34,7 @@ export type DialogProps = {
   [dataAttribute: `data-${string}`]: string | undefined;
 };
 
-/**
- * 화면 위에 떠서 사용자의 응답을 받는 대화상자입니다.
- * 열리면 포커스가 안으로 옮겨져 머물고, Esc로 닫으면 연 요소로 돌아갑니다.
- */
+/** 사용자의 확인이나 선택이 필요할 때 여는 모달 대화상자입니다. 열린 동안 배경 화면의 조작을 제한합니다. */
 export function Dialog({
   title,
   description,

@@ -5,7 +5,7 @@ import { Button } from '../Button';
 
 // 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/Tooltip.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: '컴포넌트/Tooltip/Tooltip',
+  title: "Components/Tooltip/Tooltip",
   id: 'components-tooltip-tooltip',
   component: Tooltip,
   tags: ['autodocs'],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '마우스를 올리거나 키보드로 선택하면 짧은 설명을 보여 주는 툴팁입니다. 대상 요소를 감싸고, 설명은 `content`, 나타날 쪽은 `placement`로 정합니다.',
+          "요소에 마우스를 올리거나 키보드 포커스를 두면 짧은 보충 설명을 표시합니다.",
       },
     },
   },
@@ -29,10 +29,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 모든 Props를 직접 바꿔 볼 수 있습니다. 버튼에 마우스를 올리거나 Tab으로 선택해 보세요. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Open: Story = {
-  name: '열림',
+  name: "Open",
   args: { defaultOpen: true, placement: 'right' },
 };
 

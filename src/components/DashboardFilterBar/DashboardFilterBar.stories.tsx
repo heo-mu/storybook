@@ -7,7 +7,7 @@ import { Select, SelectOption } from '../Select';
 
 // 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/DashboardFilterBar.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/DashboardFilterBar/DashboardFilterBar',
+  title: "Components/DashboardFilterBar/DashboardFilterBar",
   id: 'components-dashboardfilterbar-dashboardfilterbar',
   component: DashboardFilterBar,
   tags: ['autodocs'],
@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '대시보드의 조회 조건을 한곳에 모아 보여 주는 막대입니다. 조건은 `DashboardFilterGroup`으로 묶어 넣고, 오른쪽 버튼은 `actions`에 넣습니다.',
+          "대시보드의 조회 조건과 실행 버튼을 한곳에 배치합니다. 조건을 그룹으로 구성할 수 있습니다.",
       },
     },
   },
@@ -54,11 +54,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 조회 대상과 조회 기간 조건이 있는 막대입니다. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 /** 내용보다 좁으면 묶음 단위로 다음 줄로 넘어갑니다. */
 export const Narrow: Story = {
-  name: '좁은 화면',
+  name: "좁은 컨테이너",
   render: () => (
     <DashboardFilterBar
       style={{ width: 640 }}

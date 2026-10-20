@@ -5,7 +5,7 @@ import { Skeleton } from '../Skeleton';
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs skeleton`.
 const meta = {
-  title: '컴포넌트/Skeleton/전체 보기',
+  title: "Components/Skeleton/Gallery",
   id: 'components-skeleton-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -14,9 +14,9 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-/** The 4 Figma variants. */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
       <Skeleton data-figma="Shape=Line" shape="line" />
@@ -29,7 +29,7 @@ export const Figma: Story = {
 
 /** Skeletons are decorative. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => <Skeleton data-testid="skeleton" shape="block" />,
   play: async ({ canvas }) => {
     await expect(canvas.getByTestId('skeleton')).toHaveAttribute('aria-hidden', 'true');

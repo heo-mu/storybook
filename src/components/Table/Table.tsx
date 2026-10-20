@@ -27,17 +27,14 @@ export type TableProps = Omit<RACTableProps, 'className'> & {
   id?: string;
 };
 
-/**
- * 여러 항목의 데이터를 행과 열로 보여 주는 표입니다. 화살표 키로 칸을 이동하고, 행 선택 · 정렬 · 행 동작을 지원합니다.
- * `onRowAction`이 있으면 행을 누를 수 있습니다.
- */
+/** 여러 항목의 데이터를 비교하고 선택·정렬할 수 있는 표입니다. 단일 항목의 상세 정보는 KeyValueTable을 사용합니다. */
 export function Table({ className, ...rest }: TableProps) {
   return <RACTable {...rest} className={cx('ds-table', className)} />;
 }
 
 export type TableHeaderProps<T> = Omit<RACTableHeaderProps<T>, 'className'> & { className?: string };
 
-/** 열 머리글 행입니다. 안에 `TableColumn`을 넣습니다. */
+/** 열 헤더 행입니다. 안에 `TableColumn`을 넣습니다. */
 export function TableHeader<T extends object>({ className, ...rest }: TableHeaderProps<T>) {
   return <RACTableHeader {...rest} className={cx('ds-table__header', className)} />;
 }
@@ -45,7 +42,7 @@ export function TableHeader<T extends object>({ className, ...rest }: TableHeade
 export type TableColumnProps = Omit<ColumnProps, 'className' | 'children'> & {
   /** 열 제목. */
   children: ReactNode;
-  /** 도움말. 넘기면 정보 아이콘이 붙고, 아이콘에 마우스를 올리거나 키보드로 선택하면 툴팁으로 보입니다. */
+  /** 도움말. 넘기면 정보 아이콘이 붙고, 아이콘에 마우스를 올리거나 키보드 포커스를 받으면 툴팁으로 보입니다. */
   info?: ReactNode;
   /** 화면 낭독기가 읽는 정보 아이콘 이름. @default '도움말' */
   infoLabel?: string;
@@ -53,7 +50,7 @@ export type TableColumnProps = Omit<ColumnProps, 'className' | 'children'> & {
 };
 
 /**
- * 열 머리글입니다. `info`를 주면 도움말 아이콘, `allowsSorting`을 주면 정렬 아이콘이 붙습니다.
+ * 열 헤더입니다. `info`를 주면 도움말 아이콘, `allowsSorting`을 주면 정렬 아이콘이 붙습니다.
  * 정렬 중인 열은 아이콘 색이 바뀌고, 정렬 방향은 화면 낭독기에 전달됩니다.
  */
 export function TableColumn({ children, info, infoLabel = '도움말', className, ...rest }: TableColumnProps) {

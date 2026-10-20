@@ -8,7 +8,7 @@ import { ChartTooltip } from '../ChartTooltip';
 // `node scripts/verify-figma.mjs chart` (sets chart, chart-legend-item, chart-tooltip).
 
 const meta = {
-  title: '컴포넌트/Chart/전체 보기',
+  title: "Components/Chart/Gallery",
   id: 'components-chart-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
@@ -180,9 +180,9 @@ const FIGMA_CHARTS = FIGMA_BASE.flatMap(({ name, width, hover, props }) => [
   { name: `${name}, hover=yes`, width, props: { ...props, activeIndex: hover } },
 ]);
 
-/** The 24 Figma variants with the Figma sample data (hover=yes: the active category drawn in Figma). */
+/** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
-  name: '모든 변형',
+  name: "Variants",
   render: () => (
     <div style={{ display: 'grid', gap: 40, justifyItems: 'start' }}>
       {FIGMA_CHARTS.map(({ name, width, props }) => (
@@ -192,9 +192,9 @@ export const Figma: Story = {
   ),
 };
 
-/** chart-legend-item (3 variants, Figma sample label "유형" since the 2026-10-19 chart rework) and chart-tooltip on their own. */
+/** 범례와 툴팁의 구성 요소를 비교합니다. */
 export const FigmaParts: Story = {
-  name: '구성 요소',
+  name: "Parts",
   render: () => (
     // Whole-pixel 120px slots: without calc-size (Firefox, WebKit) a label is a fractional width, and a part laid out
     // after it would start between pixels.
@@ -222,7 +222,7 @@ export const FigmaParts: Story = {
 
 /** Pointer and keyboard: the plot takes focus; arrow keys move the tooltip and announce the values. */
 export const Interaction: StoryObj<{ onActiveIndexChange: Mock<(index: number | null) => void> }> = {
-  name: '동작',
+  name: "Interaction",
   args: { onActiveIndexChange: fn() },
   render: (args) => (
     <Chart
@@ -286,9 +286,9 @@ export const Interaction: StoryObj<{ onActiveIndexChange: Mock<(index: number | 
   },
 };
 
-/** Simple style: the plot takes focus too (Figma hover=yes) — arrow keys show the highlight and the tooltip. */
+/** 간결한 차트에서 키보드로 항목을 이동하며 툴팁을 확인합니다. */
 export const SimpleInteraction: Story = {
-  name: '간단 스타일 동작',
+  name: "Simple Interaction",
   render: () => (
     <Chart
       style={{ width: 320 }}
@@ -323,7 +323,7 @@ export const SimpleInteraction: Story = {
 
 /** The values are also a table for screen readers; the drawing is hidden from assistive technology. */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <Chart
       style={{ width: 320 }}
@@ -382,7 +382,7 @@ export const TooltipAtViewportEdge: Story = {
 
 /** At the last point of a line chart the tooltip flips to the left of the point. */
 export const TooltipFlip: Story = {
-  name: '툴팁 뒤집기',
+  name: "툴팁 위치 전환",
   render: () => (
     <div style={{ width: 360 }}>
       <Chart aria-label="뒤집기" type="line" categories={['10.07', '10.08', '10.09', '10.10']} series={[{ label: '전기', data: [140, 194, 132, 186] }]} activeIndex={3} />
@@ -399,12 +399,9 @@ export const TooltipFlip: Story = {
   },
 };
 
-/**
- * Series names in the tooltip are at least 40 and at most 80px wide (Figma "Pressure label" min / max width): a short
- * name keeps the 40px column, a longer one wraps, and the values stay in one column.
- */
+/** 짧거나 긴 범례 이름을 사용해도 툴팁의 값 열이 정렬되는지 확인합니다. */
 export const TooltipLabelWidth: Story = {
-  name: '툴팁 계열 이름 너비',
+  name: "긴 범례의 툴팁",
   render: () => (
     <ChartTooltip
       title="10월 1일"
@@ -424,12 +421,9 @@ export const TooltipLabelWidth: Story = {
   },
 };
 
-/**
- * Inside a container that clips its content (overflow: hidden) the tooltip stays in the part that can be seen: it
- * belongs to its chart (no portal) and is placed inside the visible part of the plot (Design System Rules 05).
- */
+/** 높이가 제한된 컨테이너 안에서 툴팁이 잘리지 않고 표시되는지 확인합니다. */
 export const TooltipInClippingContainer: Story = {
-  name: '잘리는 영역 안의 툴팁',
+  name: "스크롤 영역의 툴팁",
   render: () => (
     <div data-clip="" style={{ width: 600, height: 150, overflow: 'hidden' }}>
       <Chart aria-label="잘림" type="bar-horizontal" categories={BUILDINGS} series={PLACEMENT_SERIES} activeIndex={0} />
@@ -486,7 +480,7 @@ const tooltipsStayHome = (root: ParentNode) => {
  * keyboard focus works per chart, and scrolling the page or a scroll container keeps every tooltip with its chart.
  */
 export const MultipleCharts: Story = {
-  name: '여러 차트',
+  name: "여러 차트 배치",
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 600px)', gap: 24 }}>

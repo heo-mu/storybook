@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/MetricTrend.showcase.stories';
 import { MetricTrend } from './MetricTrend';
 
-<Meta title="컴포넌트/MetricTrend/사용 방법" id="components-metrictrend-usage" name="Docs" />
+<Meta title="Components/MetricTrend/Usage" id="components-metrictrend-usage" name="Docs" />
 
 # MetricTrend
 
-지표가 얼마나 늘거나 줄었는지를 방향 아이콘과 함께 보여 줍니다.
+지표의 증감과 그 의미를 함께 표시합니다. 증가·감소 방향과 긍정·부정 평가는 별도로 지정합니다.
 
 <Canvas of={Showcase.Figma} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 지표 값 옆에 이전 기간과 비교한 증감을 보여 줄 때 씁니다. 보통 `MetricCard`의 `trend`에 넣습니다.
 
@@ -25,13 +25,13 @@ import { MetricTrend } from './MetricTrend';
 
 | `tone` | 뜻 | 색 |
 | --- | --- | --- |
-| `positive` | 좋은 변화 | 브랜드 색 |
-| `negative` | 나쁜 변화 | 빨간색 |
-| `neutral` | 좋지도 나쁘지도 않음 | 회색 |
+| `positive` | 긍정적 변화 | 브랜드 색 |
+| `negative` | 부정적 변화 | 빨간색 |
+| `neutral` | 중립 | 회색 |
 
-- 방향과 좋고 나쁨은 따로 정합니다. 사용량처럼 줄어드는 것이 좋은 지표는 `direction="down"` `tone="positive"`를 씁니다.
+- 증감 방향과 긍정·부정 의미는 별도로 정합니다. 에너지 사용량처럼 감소가 목표인 지표는 `direction="down"`과 `tone="positive"`를 함께 사용합니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -44,7 +44,7 @@ import { MetricTrend } from './MetricTrend';
 ## 접근성
 
 - 방향은 아이콘으로만 보이므로, 화면 낭독기는 값 앞에 "증가" · "감소" · "변동 없음"을 읽습니다. `directionLabel`로 바꿀 수 있고, `disabled`는 읽지 않습니다.
-- 좋고 나쁨(`tone`)은 색으로만 구분됩니다. 의미가 중요하면 주변 문장(예: `MetricCard`의 비교 문구)에서 설명합니다.
+- 긍정·부정 의미(`tone`)는 색으로만 구분됩니다. 의미가 중요하면 주변 문장(예: `MetricCard`의 비교 문구)에서 설명합니다.
 
 ## Props
 

@@ -12,15 +12,13 @@ export type LinkProps = Omit<ComponentPropsWithoutRef<'a'>, 'children'> & {
   external?: boolean;
   /** 새 창 아이콘 표시 여부. @default `external` */
   showIcon?: boolean;
-  /** 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. */
+  /** 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. */
   disabled?: boolean;
   /** 새 창 링크에서 화면 낭독기가 글자 뒤에 읽는 말. @default '(새 창)' */
   newTabLabel?: string;
 };
 
-/**
- * 다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다. 마우스를 올리거나 누르면 모양이 바뀌고, 방문한 링크는 방문한 모양으로 보입니다.
- */
+/** 다른 페이지나 문서로 이동하는 텍스트 링크입니다. 현재 화면에서 동작을 실행할 때는 Button을 사용합니다. */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { size = 'sm', children, external = false, showIcon, disabled = false, newTabLabel = '(새 창)', href, target, rel, onClick, className, ...rest },
   ref,

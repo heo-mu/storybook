@@ -63,3 +63,12 @@ Figma 정리를 기다리는 항목입니다. 정리될 때까지 아래처럼 �
 Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
 - Figma 컴포넌트 세트: `segmented-control`(531:24471), `segmented-item`(524:24397).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `SegmentedControl.showcase.stories.tsx / VariantMatrix`: Figma `segmented-control` (md · sm · xs): 316px wide, four items, the first selected.
+- `SegmentedControl.showcase.stories.tsx / ItemMatrix`: Figma `segmented-item` (18): each item on its own (the control's padding and background are removed in this story so the item is compared as in the Figma set).
+- `SegmentedControl.showcase.stories.tsx / LabelOverflow`: Narrow segments (the Figma dashboard filter bar: 220px, sm): a label wider than the content box runs into the segment's padding like in Figma; only a label wider than the whole segment is truncated.

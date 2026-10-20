@@ -16,7 +16,7 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Value cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs table` (set table_value_editable).
 const meta = {
-  title: '컴포넌트/Table/편집 칸 전체 보기',
+  title: "Components/Table/Editable Cells",
   id: 'components-table-editable-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -156,9 +156,9 @@ const FIELD_CELLS: Array<[State, Content]> = [
   ['Hover', 'Filled'],
 ];
 
-/** Figma `table_value_editable` (52) without the open list / calendar (see `EditableOpen`). */
+/** 값의 유형과 상태에 따른 편집 셀을 비교합니다. */
 export const EditableMatrix: Story = {
-  name: '편집 칸 모든 변형',
+  name: "Editable Cells",
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 480px)', gap: 40, alignItems: 'start' }}>
       <TypeTable type="Input" cells={[...FIELD_CELLS, ['Editing', 'Filled']]} />

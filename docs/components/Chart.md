@@ -126,3 +126,14 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
   배경 `alpha/white/800`, `rounded-sm`, `elevation-3`. `title`은 Figma "Time", 행의 `label`은 "Pressure label", `color`는 "Indicator"입니다.
 - `CHART_COLORS`는 Figma 차트 부품이 쓰는 계열 색 `colors/chart/series/{brand, compare, 02}`와 `colors/chart/simple/{history, history-compare}`에 대응합니다.
 - `CHART_TYPES` · `CHART_VARIANTS` · `CHART_LEGEND_TYPES`는 Figma chart "Type" · "Style", chart-legend-item "Type" 값입니다.
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Chart.showcase.stories.tsx / Figma`: The 24 Figma variants with the Figma sample data (hover=yes: the active category drawn in Figma).
+- `Chart.showcase.stories.tsx / FigmaParts`: chart-legend-item (3 variants, Figma sample label "유형" since the 2026-10-19 chart rework) and chart-tooltip on their own.
+- `Chart.showcase.stories.tsx / SimpleInteraction`: Simple style: the plot takes focus too (Figma hover=yes) — arrow keys show the highlight and the tooltip.
+- `Chart.showcase.stories.tsx / TooltipLabelWidth`: Series names in the tooltip are at least 40 and at most 80px wide (Figma "Pressure label" min / max width): a short name keeps the 40px column, a longer one wraps, and the values stay in one column.
+- `Chart.showcase.stories.tsx / TooltipInClippingContainer`: Inside a container that clips its content (overflow: hidden) the tooltip stays in the part that can be seen: it belongs to its chart (no portal) and is placed inside the visible part of the plot (Design System Rules 05).

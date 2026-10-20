@@ -6,7 +6,7 @@ import { Button } from '../Button';
 
 // 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Table.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/Table/Table',
+  title: "Components/Table/Table",
   id: 'components-table-table',
   component: Table,
   tags: ['autodocs'],
@@ -14,14 +14,14 @@ const meta = {
     docs: {
       description: {
         component:
-          '여러 항목의 데이터를 행과 열로 보여 주는 표입니다. 행 선택은 `selectionMode`, 행을 눌렀을 때의 동작은 `onRowAction`으로 정하고, ' +
+          "여러 항목의 데이터를 비교하고 선택·정렬할 수 있는 표입니다. 단일 항목의 상세 정보는 KeyValueTable을 사용합니다." +
           '한 항목의 속성은 `KeyValueTable`로 보여 줍니다.',
       },
     },
   },
   args: { 'aria-label': '설비 목록', selectionMode: 'multiple', onRowAction: fn(), onSelectionChange: fn(), children: null },
   argTypes: {
-    children: { control: false, description: '머리글(`TableHeader`)과 본문(`TableBody`)' },
+    children: { control: false, description: '헤더(`TableHeader`)과 본문(`TableBody`)' },
     selectionMode: { control: 'inline-radio', options: ['none', 'single', 'multiple'], description: '행 선택 방식 — 없음(none) · 하나(single) · 여러 개(multiple)' },
   },
   render: (args) => (
@@ -63,11 +63,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 행 선택 방식을 바꿔 볼 수 있습니다. 행을 누르면 `onRowAction`이 호출됩니다. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 /** 행 선택 체크박스 없이 쓰는 표입니다. */
 export const WithoutSelection: Story = {
-  name: '선택 없음',
+  name: "Without Selection",
   args: { selectionMode: 'none' },
 };
 

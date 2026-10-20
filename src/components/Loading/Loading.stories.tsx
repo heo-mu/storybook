@@ -4,7 +4,7 @@ import { LOADING_SIZES } from './Loading.options';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 FileUploader/stories(LoadingMatrix)에 있습니다.
 const meta = {
-  title: '컴포넌트/Loading/Loading',
+  title: "Components/Loading/Loading",
   id: 'components-loading-loading',
   component: Loading,
   tags: ['autodocs'],
@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '불러오거나 처리하는 중임을 알리는 회전 표시입니다. 크기는 `size`로 고르고, 아래 글자는 `label`로 붙입니다. 글자가 없으면 `aria-label`로 이름을 붙입니다.',
+          "데이터를 불러오거나 작업을 처리 중임을 표시합니다. 진행률을 알 수 있는 작업에는 Progress를 사용합니다.",
       },
     },
   },
@@ -29,14 +29,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Small: Story = {
-  name: '작은 크기',
+  name: "Small",
   args: { size: 'sm' },
 };
 
 export const SpinnerOnly: Story = {
-  name: '스피너만',
+  name: "Spinner Only",
   args: { label: undefined, 'aria-label': '불러오는 중' },
 };

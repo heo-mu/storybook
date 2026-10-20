@@ -13,7 +13,7 @@ import { koLabel } from '../../../storybook/koLabel';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs chip` (sets chip-multi, chip-input, chip-filter).
 const meta = {
-  title: '컴포넌트/Chip/전체 보기',
+  title: "Components/Chip/Gallery",
   id: 'components-chip-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
@@ -30,7 +30,7 @@ const stateProps = (state: State) => ({
 });
 
 export const Overview: Story = {
-  name: '개요',
+  name: "Overview",
   render: () => (
     <div>
       <StorySection title="Chip (chip-multi) — toggle">
@@ -66,9 +66,9 @@ export const Overview: Story = {
   ),
 };
 
-/** Figma `chip-multi` (24): Variant × Size (rows) × State (columns). */
+/** 다중 선택 칩의 종류·크기·상태를 비교합니다. */
 export const MultiMatrix: Story = {
-  name: '선택 칩 모든 변형',
+  name: "Chip",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -92,9 +92,9 @@ export const MultiMatrix: Story = {
   },
 };
 
-/** Figma `chip-input` (12): Size (rows) × State (columns). */
+/** 입력 태그의 크기와 상태를 비교합니다. */
 export const InputMatrix: Story = {
-  name: '입력 칩 모든 변형',
+  name: "InputChip",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -113,9 +113,9 @@ export const InputMatrix: Story = {
   ),
 };
 
-/** Figma `chip-filter` (48): Variant × Expanded × Size (rows) × State (columns). */
+/** 필터 적용 여부와 펼침 상태를 비교합니다. */
 export const FilterMatrix: Story = {
-  name: '필터 칩 모든 변형',
+  name: "FilterChip",
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -140,7 +140,7 @@ export const FilterMatrix: Story = {
 
 /** Every state of each kind at size sm. */
 export const States: Story = {
-  name: '상태별 보기',
+  name: "States",
   render: () => (
     <div>
       {(['Unselected', 'Selected'] as const).map((variant) => (
@@ -194,7 +194,7 @@ function Tags() {
 
 /** Toggle, remove (click or Delete), filter chip expanded state. */
 export const Interaction: Story = {
-  name: '동작',
+  name: "Interaction",
   render: () => <Tags />,
   play: async ({ canvas, userEvent, step }) => {
     await step('Chip toggles aria-pressed', async () => {
@@ -222,7 +222,7 @@ export const Interaction: Story = {
 
 /** Buttons with state: aria-pressed (Chip), "삭제" in the name (InputChip), aria-expanded (FilterChip). */
 export const Accessibility: Story = {
-  name: '접근성',
+  name: "Accessibility",
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--spacing-margin-m-1)' }}>
       <Chip defaultSelected>선택됨</Chip>
@@ -242,7 +242,7 @@ export const Accessibility: Story = {
  * DropdownMenu): the trigger sets aria-expanded, which also flips the caret.
  */
 export const InMenuTrigger: Story = {
-  name: '메뉴 열기 버튼으로',
+  name: "Menu Trigger",
   render: () => (
     <MenuTrigger>
       <FilterChip size="sm">기간</FilterChip>

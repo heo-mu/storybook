@@ -16,10 +16,7 @@ export type RadioProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'type'
   style?: CSSProperties;
 };
 
-/**
- * 여러 옵션 중 하나만 고르는 라디오 버튼입니다. 보통 `RadioGroup` 안에서 쓰고, 단독으로 쓸 때는 `name` · `checked`를
- * 직접 지정합니다. 같은 그룹 안에서는 방향키로 선택이 이동합니다.
- */
+/** 여러 옵션 중 하나를 선택할 때 사용합니다. RadioGroup으로 관련 옵션을 묶어 선택값을 관리합니다. */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
   { size, label, value, className, style, disabled, name, checked, onChange, required, ...rest },
   ref,

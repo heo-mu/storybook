@@ -4,15 +4,15 @@ import { Chart } from './Chart';
 import { ChartLegendItem } from './ChartLegendItem';
 import { ChartTooltip } from './ChartTooltip';
 
-<Meta title="컴포넌트/Chart/사용 방법" id="components-chart-usage" name="Docs" />
+<Meta title="Components/Chart/Usage" id="components-chart-usage" name="Docs" />
 
 # Chart
 
-차트는 항목별 수치를 선이나 막대로 그려 보여 줍니다. 마우스를 올리거나 키보드로 항목을 고르면 툴팁에 값이 보입니다.
+수치의 추이와 항목 간 차이를 선 또는 막대 차트로 보여 줍니다. 툴팁으로 개별 값을 확인할 수 있습니다.
 
 <Canvas of={ChartStories.Playground} />
 
-## 언제 사용하나요
+## 사용 시점
 
 | 컴포넌트 | 쓰임 |
 | --- | --- |
@@ -45,7 +45,7 @@ import { ChartTooltip } from './ChartTooltip';
 - 마우스를 올리면 가장 가까운 항목이 강조되고 툴팁에 값이 보입니다. 선 차트는 안내선과 빈 원, 막대 차트는 강조 영역으로 표시합니다.
 - 터치 화면에서는 탭한 항목이 표시되고, 차트 밖을 누르면 닫힙니다.
 - 툴팁은 차트 안에 표시됩니다. 오른쪽 공간이 모자라면 왼쪽에 표시됩니다.
-- 키보드로 선택하면 그림 영역에 포커스 테두리가 보입니다.
+- 키보드 포커스를 받으면 그림 영역에 포커스 테두리가 보입니다.
 
 ## 색
 
@@ -53,7 +53,7 @@ import { ChartTooltip } from './ChartTooltip';
 - 간단 스타일 막대 차트는 현재 기간(마지막 항목)만 계열 색이고, 지난 기간은 옅은 회색으로 그립니다.
 - 색은 차트 전용 토큰(`colors/chart/*`)을 씁니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -80,14 +80,14 @@ import { ChartTooltip } from './ChartTooltip';
 
 - 차트에는 `aria-label`로 이름을 붙입니다.
 - 그림은 화면 낭독기가 읽지 않는 대신, 모든 값을 화면 낭독기용 표로 제공합니다. 표의 제목은 `aria-label`입니다.
-- 그림 영역은 키보드로 선택할 수 있습니다. ← → (↑ ↓)로 항목을 옮기고, Home · End로 처음 · 마지막 항목, Esc로 툴팁을 닫습니다.
+- 그림 영역은 키보드로 포커스를 이동할 수 있습니다. ← → (↑ ↓)로 항목을 옮기고, Home · End로 처음 · 마지막 항목, Esc로 툴팁을 닫습니다.
 - 키보드로 옮긴 항목의 값은 화면 낭독기가 읽어 줍니다. 그림 영역의 이름은 `plotLabel`로 바꿀 수 있습니다.
 
-## 주의사항
+## 사용 규칙
 
 - 0 이상의 값만 지원합니다. 눈금 범위를 벗어난 값은 범위 끝에 그립니다.
 - 차트 너비는 감싼 영역에 맞춰집니다.
-- 툴팁 항목을 직접 정하려면 `activeIndex`와 `onActiveIndexChange`를 함께 씁니다. `null`이면 툴팁을 숨깁니다. 처음 값만 정하려면 `defaultActiveIndex`를 씁니다.
+- 툴팁 항목을 직접 정하려면 `activeIndex`와 `onActiveIndexChange`를 함께 씁니다. `null`이면 툴팁을 숨깁니다. 초깃값만 정하려면 `defaultActiveIndex`를 씁니다.
 
 ## Props
 

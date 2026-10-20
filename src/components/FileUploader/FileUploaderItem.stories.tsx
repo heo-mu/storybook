@@ -5,7 +5,7 @@ import { FILE_UPLOADER_ITEM_STATUSES } from './FileUploader.options';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/FileUploader.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: '컴포넌트/FileUploader/FileUploaderItem',
+  title: "Components/FileUploader/FileUploaderItem",
   id: 'components-fileuploader-fileuploaderitem',
   component: FileUploaderItem,
   tags: ['autodocs'],
@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '업로드 목록에서 파일 하나를 보여 주는 줄입니다. `status`로 "삭제" 버튼(`completed`), 로딩 표시(`uploading`), "다운로드" 버튼(`download`), 업로드 실패(`error` — 파일 정보가 오류 색, "삭제" 버튼 유지) 중 하나를 고릅니다.',
+          "파일 이름·정보와 업로드 상태를 표시합니다. 상태에 따라 삭제 또는 다운로드 동작을 제공합니다.",
       },
     },
   },
@@ -33,24 +33,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 export const Uploading: Story = {
-  name: '업로드 중',
+  name: "Uploading",
   args: { status: 'uploading', fileInfo: '1.2 MB · 업로드 중' },
 };
 
 export const Download: Story = {
-  name: '내려받기',
+  name: "Download",
   args: { status: 'download', fileInfo: '1.2 MB' },
 };
 
 export const Failed: Story = {
-  name: '업로드 실패',
+  name: "Upload Error",
   args: { status: 'error', fileInfo: '1.2 MB · 업로드 실패' },
 };
 
 export const LongName: Story = {
-  name: '긴 파일 이름',
+  name: "긴 파일명",
   args: { fileName: '2026년_하반기_에너지절약_캠페인_참여안내_최종_수정본.pdf' },
 };

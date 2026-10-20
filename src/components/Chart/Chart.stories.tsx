@@ -8,7 +8,7 @@ const BUILDINGS = ['101동', '102동', '103동', '104동', '105동'];
 const MONTHS = ['6월', '7월', '8월', '9월', '10월'];
 
 const meta = {
-  title: '컴포넌트/Chart/Chart',
+  title: "Components/Chart/Chart",
   id: 'components-chart-chart',
   component: Chart,
   tags: ['autodocs'],
@@ -16,7 +16,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '항목별 수치를 선이나 막대로 그려 보여 주는 차트입니다. 모양은 `type`, 스타일은 `variant`(기본 · 간단)로 고르고, ' +
+          "수치의 추이와 항목 간 차이를 선 또는 막대 차트로 보여 줍니다. 툴팁으로 개별 값을 확인할 수 있습니다." +
           '계열은 `series`에 1개 또는 2개(두 번째는 비교 계열) 넣습니다.',
       },
     },
@@ -49,23 +49,23 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 두 계열을 비교하는 세로 막대 차트입니다. 종류와 스타일을 바꿔 볼 수 있습니다. */
-export const Playground: Story = { name: '직접 체험' };
+export const Playground: Story = { name: "Playground" };
 
 /** 계열이 하나인 차트입니다. */
 export const SingleSeries: Story = {
-  name: '계열 하나',
+  name: "Single Series",
   args: { series: [{ label: '조회 기간', data: [320, 265, 301, 305, 384] }] },
 };
 
 /** 가로 막대 차트입니다. */
 export const BarHorizontal: Story = {
-  name: '가로 막대 차트',
+  name: "Horizontal Bar",
   args: { type: 'bar-horizontal', yAxisLabel: 'Y축: 동별 구분', xAxisLabel: 'X축: 전력 사용량 (kWh)' },
 };
 
 /** 날짜별 선 차트입니다. 첫 계열의 가장 큰 값에 "최고" 배지(`maxLabel`)가 붙고, 계열이 하나면 선 아래 면도 채워집니다. */
 export const Line: Story = {
-  name: '선 차트',
+  name: "Line",
   args: {
     type: 'line',
     'aria-label': '일별 전력 사용량',
@@ -84,9 +84,9 @@ export const Line: Story = {
   ),
 };
 
-/** 축과 범례가 없는 간단 스타일입니다. 마지막 항목이 현재 기간이며, 마우스를 올리거나 키보드로 선택하면 기본 스타일처럼 툴팁이 보입니다. */
+/** 축과 범례가 없는 간단 스타일입니다. 마지막 항목이 현재 기간이며, 마우스를 올리거나 키보드 포커스를 받으면 기본 스타일처럼 툴팁이 보입니다. */
 export const Simple: Story = {
-  name: '간단 스타일',
+  name: "Simple",
   args: {
     variant: 'simple',
     'aria-label': '월별 사용량',
@@ -100,6 +100,6 @@ export const Simple: Story = {
 
 /** 툴팁을 표시할 항목을 `activeIndex`로 직접 정합니다. `null`이면 숨깁니다. */
 export const ControlledTooltip: Story = {
-  name: '툴팁 직접 제어',
+  name: "Controlled Tooltip",
   args: { activeIndex: 3 },
 };

@@ -10,11 +10,11 @@ import { formatDateText, parseDateText } from './dateText';
 export type DatePickerProps = {
   /** 크기. @default 'sm' */
   size?: FieldSize;
-  /** 입력 칸 위 라벨. 라벨이 없으면 `aria-label`을 붙입니다. */
+  /** 입력 필드 위 라벨. 라벨이 없으면 `aria-label`을 붙입니다. */
   label?: ReactNode;
   /** 비어 있을 때 보이는 안내 글자. @default 'YYYY.MM.DD' */
   placeholder?: string;
-  /** 입력 칸 아래 도움말 메시지. */
+  /** 입력 필드 아래 도움말 메시지. */
   message?: ReactNode;
   /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
@@ -24,13 +24,13 @@ export type DatePickerProps = {
   disabled?: boolean;
   /** 읽기 전용 — 날짜만 보여 주고 달력 버튼이 없습니다. */
   readOnly?: boolean;
-  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽습니다. */
+  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 필드에 `required`를 넘겨 화면 낭독기가 "필수"로 읽습니다. */
   required?: boolean;
   /** 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 비어 있습니다. */
   value?: ISODate | null;
-  /** 처음 날짜. `value` 없이 입력 칸이 스스로 값을 관리할 때 씁니다. @default null */
+  /** 처음 날짜. `value` 없이 입력 필드가 스스로 값을 관리할 때 씁니다. @default null */
   defaultValue?: ISODate | null;
-  /** 날짜가 바뀌면 새 날짜로, 입력 칸을 비우면 `null`로 호출됩니다. */
+  /** 날짜가 바뀌면 새 날짜로, 입력 필드를 비우면 `null`로 호출됩니다. */
   onChange?: (value: ISODate | null) => void;
   /** 고를 수 있는 가장 이른 날짜. */
   minValue?: ISODate;
@@ -55,10 +55,7 @@ export type DatePickerProps = {
   style?: CSSProperties;
 };
 
-/**
- * 날짜를 직접 입력하거나 달력에서 고르는 입력 칸입니다. 입력한 날짜는 Enter를 누르거나 입력 칸을 벗어나면 확정되고,
- * 달력 버튼이나 Alt + ↓로 달력을 엽니다.
- */
+/** 날짜를 직접 입력하거나 달력에서 선택합니다. 달력만 표시하려면 Calendar를 사용합니다. */
 export function DatePicker({
   size = 'sm',
   label,

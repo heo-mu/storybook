@@ -16,7 +16,7 @@ import { PlusIcon } from '../icons';
 
 // Design System Rules 02 · Focus (Figma component property "Focus", token colors/border/focus).
 const meta = {
-  title: '기초/포커스',
+  title: "Foundations/Focus",
   id: 'foundations-focus',
   tags: ['!manifest'],
   parameters: {
@@ -32,11 +32,11 @@ const focus = { 'data-pseudo': 'focus' } as const;
 const row = { display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', padding: 8 } as const;
 
 /**
- * 키보드로 선택하면 컨트롤 바깥 2px 거리에 2px 두께의 포커스 테두리(`colors/border/focus`)가 모서리를 따라 보입니다.
- * 메뉴 · 아코디언 · 표처럼 너비를 채우는 행은 안쪽 가장자리에 그리고, 입력 칸과 Select는 테두리 색으로 포커스를 표시합니다.
+ * 키보드 포커스를 받으면 컨트롤 바깥 2px 거리에 2px 두께의 포커스 테두리(`colors/border/focus`)가 모서리를 따라 보입니다.
+ * 메뉴 · 아코디언 · 표처럼 너비를 채우는 행은 안쪽 가장자리에 그리고, 입력 필드과 Select는 테두리 색으로 포커스를 표시합니다.
  */
 export const Rings: Story = {
-  name: '포커스 표시',
+  name: "Focus Ring",
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <div style={row}>
@@ -85,7 +85,7 @@ const focusColor = () => {
 
 /** Tab 키로 실제 컨트롤을 차례로 선택해 볼 수 있습니다. 선택된 컨트롤마다 포커스 테두리가 보입니다. */
 export const Keyboard: Story = {
-  name: '키보드',
+  name: "Keyboard",
   render: () => (
     <div style={{ display: 'grid', gap: 16, width: 360 }}>
       <div style={row}>

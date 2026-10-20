@@ -2,15 +2,15 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Textarea.showcase.stories';
 import { Textarea } from './Textarea';
 
-<Meta title="컴포넌트/Textarea/사용 방법" id="components-textarea-usage" name="Docs" />
+<Meta title="Components/Textarea/Usage" id="components-textarea-usage" name="Docs" />
 
 # Textarea
 
-여러 줄 글자를 입력받는 입력 칸입니다. 최대 글자 수를 정하면 지금까지 입력한 글자 수가 함께 보입니다.
+요청 사항·사유 등 여러 줄의 텍스트를 입력받습니다. 글자 수 제한과 현재 입력량을 표시할 수 있습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 언제 사용하나요
+## 사용 시점
 
 - 요청 사항 · 사유처럼 여러 줄로 길게 입력받을 때 사용합니다.
 - 한 줄만 입력받을 때는 `Input`을 사용합니다.
@@ -19,7 +19,7 @@ import { Textarea } from './Textarea';
 
 - 크기는 `size`(`sm` · `md`)로 고릅니다. 기본은 `sm`입니다.
 - `maxLength`를 정하면 오른쪽 아래에 `입력한 글자 수/최대 글자 수`가 보입니다. 숨기려면 `showCount={false}`로 끕니다.
-- `message`를 넣으면 입력 칸 아래에 메시지가 보입니다. 메시지 종류는 `messageType`(`helper` · `info` · `success` · `error`)으로 고르고, 지정하지 않으면 오류일 때 `error`, 아니면 회색 도움말(`helper`)입니다.
+- `message`를 넣으면 입력 필드 아래에 메시지가 보입니다. 메시지 종류는 `messageType`(`helper` · `info` · `success` · `error`)으로 고르고, 지정하지 않으면 오류일 때 `error`, 아니면 회색 도움말(`helper`)입니다.
 
 ## 필수 입력
 
@@ -32,20 +32,20 @@ import { Textarea } from './Textarea';
 
 <Canvas of={Showcase.HelperMessage} />
 
-- 입력 방법이나 형식은 입력 칸 아래 회색 도움말로 미리 알려 줍니다. `message`만 넣으면 도움말로 보입니다.
+- 입력 방법이나 형식은 입력 필드 아래 회색 도움말로 미리 알려 줍니다. `message`만 넣으면 도움말로 보입니다.
 - 도움말에는 아이콘이 없습니다. 상태를 알릴 때만 안내(`info`) · 성공(`success`) · 오류(`error`)를 씁니다.
 - 오류가 나면 같은 자리에 오류 메시지를 보여 줍니다. 비활성 칸의 도움말은 흐린 색입니다.
-- 도움말은 입력 칸 설명으로 화면 낭독기가 함께 읽습니다.
+- 도움말은 입력 필드 설명으로 화면 낭독기가 함께 읽습니다.
 
 ## 상태
 
 <Canvas of={Showcase.States} />
 
-- 마우스를 올리거나 키보드로 선택하면 테두리가 바뀝니다.
+- 마우스를 올리거나 키보드 포커스를 받으면 테두리가 바뀝니다.
 - `invalid`이면 오류 테두리로 표시합니다.
 - `disabled`이면 입력할 수 없고, `readOnly`이면 값을 볼 수만 있습니다.
 
-## 사용 방법
+## 사용 예시
 
 <Source
   language="tsx"
@@ -63,14 +63,14 @@ import { Textarea } from './Textarea';
 ## 접근성
 
 - `label`이 없으면 `aria-label`로 이름을 꼭 붙입니다.
-- `required`이면 입력 칸이 "필수"로 읽힙니다(점은 장식이라 읽지 않습니다).
-- 도움말 메시지와 글자 수는 입력 칸 설명으로 화면 낭독기가 함께 읽습니다.
+- `required`이면 입력 필드가 "필수"로 읽힙니다(점은 장식이라 읽지 않습니다).
+- 도움말 메시지와 글자 수는 입력 필드 설명으로 화면 낭독기가 함께 읽습니다.
 
-## 주의사항
+## 사용 규칙
 
-- 입력 칸 높이는 고정되어 있습니다. 내용이 넘치면 입력 칸 안에서 스크롤되고, 크기를 조절하는 손잡이는 없습니다.
+- 입력 필드 높이는 고정되어 있습니다. 내용이 넘치면 입력 필드 안에서 스크롤되고, 크기를 조절하는 손잡이는 없습니다.
 - `maxLength`보다 길게는 입력되지 않습니다.
-- 나머지 `<textarea>` 속성과 `ref`는 실제 입력 칸에 전달되고, `className` · `style`은 바깥 요소에 적용됩니다.
+- 나머지 `<textarea>` 속성과 `ref`는 실제 입력 필드에 전달되고, `className` · `style`은 바깥 요소에 적용됩니다.
 
 ## Props
 

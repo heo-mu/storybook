@@ -18,9 +18,7 @@ export type MetricCardProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
   headingLevel?: 2 | 3 | 4 | 5 | 6;
 };
 
-/**
- * 대시보드의 핵심 지표 하나를 제목, 값과 단위, 비교로 보여 주는 카드입니다. 너비는 부모를 채웁니다.
- */
+/** 핵심 지표의 값과 단위, 이전 기간 대비 변화를 요약합니다. */
 export const MetricCard = forwardRef<HTMLDivElement, MetricCardProps>(function MetricCard(
   { title, icon, value, unit, trend, comparison, headingLevel = 3, className, ...rest },
   ref,

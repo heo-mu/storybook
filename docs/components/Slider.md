@@ -79,3 +79,11 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
 - Figma 컴포넌트 세트: `slider`(391:1988), `handle`(391:2013).
+
+
+## Storybook 검증 예시의 내부 참고
+
+사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
+
+- `Slider.showcase.stories.tsx / VariantMatrix`: Figma `slider` (State Default · Disabled), 288px wide. The Figma field hugs the example value "100" (23px); the component reserves room for the longest value instead (docs/figma-issues.md F15), so the matrix sets the field to the Figma width to compare the rest of the layout exactly.
+- `Slider.showcase.stories.tsx / HandleMatrix`: Figma `handle` (5): each cell is a 20×20 box holding the handle of a slider at its minimum value; the rail and range row are hidden so the handle is compared on its own, as in the Figma set.
