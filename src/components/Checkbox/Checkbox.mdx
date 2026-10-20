@@ -59,6 +59,23 @@ import { CheckboxGroup } from './CheckboxGroup';
 - `name` · `size` · `disabled`를 주면 그룹 안의 모든 체크박스에 적용됩니다.
 - `orientation`으로 세로(`vertical`, 기본) 또는 가로(`horizontal`) 배치를 고릅니다. 항목 사이 간격은 자동으로 맞춰집니다.
 
+## 묶음 오류
+
+<Canvas of={Showcase.GroupMessage} />
+
+- 꼭 골라야 하는 항목을 고르지 않았으면 `invalid`와 `message`로 묶음 아래에 오류 메시지를 보여 줍니다. 체크박스 색은 바뀌지 않습니다.
+- 필수 동의처럼 체크박스가 하나여도 `CheckboxGroup`으로 감싸 오류 메시지를 붙입니다.
+- `invalid` 없이 `message`만 넣으면 회색 도움말로 보입니다.
+- 화면 낭독기는 각 체크박스를 오류 상태로 알리고 메시지를 설명으로 읽습니다.
+
+<Source
+  language="tsx"
+  code={`<CheckboxGroup aria-label="약관 동의" value={agreed} onChange={setAgreed}
+  invalid={submitted && !agreed.includes('privacy')} message={submitted && !agreed.includes('privacy') ? '개인정보 수집 · 이용에 동의해야 저장할 수 있습니다.' : undefined}>
+  <Checkbox value="privacy" label="개인정보 수집 · 이용에 동의합니다" />
+</CheckboxGroup>`}
+/>
+
 ## 접근성
 
 - `label`이 없는 체크박스에는 `aria-label`로 이름을 꼭 붙입니다.

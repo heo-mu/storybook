@@ -6,6 +6,7 @@ import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
 import { expectRequiredMark } from '../../../storybook/requiredMark';
+import { expectHelperMessage } from '../../../storybook/helperMessage';
 
 // Visual verification (not in the MCP manifest): `node scripts/verify-figma.mjs textarea`.
 const meta = {
@@ -133,5 +134,23 @@ export const RequiredMark: Story = {
     }
     await expect(canvas.getByRole('textbox', { name: '메모' })).not.toBeRequired();
     await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(TEXTAREA_SIZES.length);
+  },
+};
+
+/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+export const HelperMessage: Story = {
+  name: '도움말',
+  render: () => (
+    <div style={{ display: 'flex', gap: 24 }}>
+      <Textarea label="메모" message="받는 분께 전할 내용을 적어 주세요." maxLength={100} showCount />
+      <Textarea label="메모" message="받는 분께 전할 내용을 적어 주세요." disabled />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const [field, disabled] = canvasElement.querySelectorAll<HTMLElement>('.ds-textarea');
+    await expectHelperMessage(field, '--colors-textarea-outline-helper-default');
+    await expectHelperMessage(disabled, '--colors-textarea-outline-helper-disabled');
+    // the counter stays beside the help text (Figma: helper and counter share the message row)
+    await expect(field.querySelector('.ds-textarea__count')).toBeTruthy();
   },
 };

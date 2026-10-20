@@ -154,6 +154,8 @@ Figma에서 다른 편집자가 Chart 변수를 재구성했습니다(1527 → 1
 | `ChartTooltip` 계열 이름 | 최소 40 · 최대 80px(넘으면 줄바꿈) — 짧은 이름도 값 열이 40px 뒤 |
 | `Select` 옵션 md Disabled | 밑줄 · Medium → 다른 md 상태와 같은 글자(F6) |
 | `SearchField` Solid 오류 | 테두리 없음 → 2px 오류 테두리(E8) |
+| `Table` 칸 내용 | 왼쪽 → 가운데 정렬(Figma 표 칸과 같음, 2026-10-20 v1.0 후보) |
+| 입력 칸 메시지 기본 종류(2026-10-20 검수 준비, V-1) | `messageType`을 정하지 않은 메시지: 파란 안내(`info`, 아이콘) → 회색 도움말(`helper`, 아이콘 없음). 파란 안내가 필요하면 `messageType="info"` |
 
 ## 4. 버전 정책 제안
 

@@ -47,7 +47,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 
 Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
 
-- `BADG-02` **접근성**: Badge는 글자가 그대로 읽힙니다. `BadgeDot`은 장식이며 의미가 있으면 `aria-label`을 주세요(`role="img"`). `BadgeCount`의 숫자만으로 뜻이 부족하면 `aria-label`로 설명하세요(Rules 03 — 색만으로 전하지 않기).
+- `BADG-02` **접근성**: Badge는 글자가 그대로 읽힙니다. `BadgeDot`은 장식이며 의미가 있으면 `aria-label`을 주세요(`role="img"`). `BadgeCount`의 숫자만으로 뜻이 부족하면 `aria-label`로 설명하세요(Rules 03 — 색만으로 전하지 않기). `aria-label`이 있으면 `BadgeCount`도 `role="img"`(2026-10-20 — 일반 `<span>`의 `aria-label`은 ARIA상 금지라 화면 낭독기가 "99+"만 읽을 수 있었음).
 - `BADG-03` **최대값 표시**: 99를 넘으면 "99+"(Rules 08). 기준은 `max`로 바꿀 수 있습니다.
 
 ## 상태

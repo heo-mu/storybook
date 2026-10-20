@@ -103,6 +103,15 @@
   color: var(--ds-textarea-count);
 }
 
+.ds-textarea .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-textarea-outline-helper-default);
+}
+
+/* Figma Type=Helper, State=Disabled — the help text of a disabled field. */
+.ds-textarea[data-disabled] .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-textarea-outline-helper-disabled);
+}
+
 .ds-textarea .ds-field-message[data-type='info'] {
   --ds-field-message-color: var(--colors-textarea-outline-helper-info);
 }

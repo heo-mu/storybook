@@ -68,8 +68,11 @@ export type BadgeCountProps = Omit<ComponentPropsWithoutRef<'span'>, 'children'>
 
 /** 개수를 숫자로 알려 주는 배지입니다. `max`보다 큰 수는 "99+"처럼 줄여 보여 줍니다. */
 export const BadgeCount = forwardRef<HTMLSpanElement, BadgeCountProps>(function BadgeCount({ count, max = 99, status = 'basic', className, ...rest }, ref) {
+  // ARIA does not allow naming a plain <span>: with `aria-label` the badge is an image named by it (as BadgeDot), so
+  // "오류 150개" is read instead of the visible "99+".
+  const labelled = rest['aria-label'] != null || rest['aria-labelledby'] != null;
   return (
-    <span {...rest} ref={ref} className={cx('ds-badge-count', className)} data-status={status}>
+    <span role={labelled ? 'img' : undefined} {...rest} ref={ref} className={cx('ds-badge-count', className)} data-status={status}>
       <span className="ds-badge-count__label">{count > max ? `${max}+` : count}</span>
     </span>
   );

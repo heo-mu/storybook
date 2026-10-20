@@ -15,7 +15,7 @@ export type SelectProps<T extends object = object> = {
   placeholder?: string;
   /** 선택 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
-  /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
+  /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
   /** 오류 — 오류 테두리로 표시합니다. */
   invalid?: boolean;
@@ -141,7 +141,7 @@ export function Select<T extends object = object>({
               </span>
             )}
             {hasMessage && (
-              <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'info')}>
+              <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')}>
                 {message}
               </FieldMessage>
             )}

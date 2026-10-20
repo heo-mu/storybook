@@ -83,6 +83,31 @@
   gap: var(--spacing-margin-m-2) var(--spacing-margin-m-4);
 }
 
+/* Group message — Rules 04 "묶음 오류": Figma input_message under the group, 6px (p-1_5) like a field's message;
+ * colors/input/outline/helper/* as bound in the Figma example (error · helper, helper/disabled when the group is disabled). */
+.ds-choice-field {
+  display: contents;
+}
+
+.ds-choice-field[data-message] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-padding-p-1_5);
+  min-width: 0;
+}
+
+.ds-choice-field .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-default);
+}
+
+.ds-choice-field[data-disabled] .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-disabled);
+}
+
+.ds-choice-field .ds-field-message[data-type='error'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-error);
+}
+
 /* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside the box / circle / track (the native input). */
 .ds-choice__input:focus-visible {
   outline: var(--border-width-border-2) solid var(--colors-border-focus);

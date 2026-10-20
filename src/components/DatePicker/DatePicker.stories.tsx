@@ -31,7 +31,7 @@ const meta = {
     size: { control: 'inline-radio', options: FIELD_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
     label: { control: 'text', description: '라벨' },
     message: { control: 'text', description: '입력 칸 아래 도움말 메시지' },
-    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류' },
+    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 회색 도움말(helper)' },
     required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 읽음' },
     invalid: { control: 'boolean', description: '오류 상태' },
     disabled: { control: 'boolean', description: '비활성 — 입력할 수 없음' },
@@ -56,6 +56,11 @@ export const Required: Story = {
 export const WithValue: Story = {
   name: '값 있음',
   args: { defaultValue: '2026-07-30' },
+};
+
+export const Helper: Story = {
+  name: '도움말',
+  args: { message: '평일만 고를 수 있습니다.' },
 };
 
 export const WithMessage: Story = {

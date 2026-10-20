@@ -59,6 +59,15 @@
 }
 
 /* date-picker_message — colors/date-picker/trigger/outline/helper/* */
+.ds-date-picker .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-date-picker-trigger-outline-helper-default);
+}
+
+/* Figma Type=Helper, State=Disabled — the help text of a disabled field. */
+.ds-date-picker[data-disabled] .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-date-picker-trigger-outline-helper-disabled);
+}
+
 .ds-date-picker .ds-field-message[data-type='info'] {
   --ds-field-message-color: var(--colors-date-picker-trigger-outline-helper-info);
 }

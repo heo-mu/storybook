@@ -25,7 +25,7 @@ import { Alert, Button } from 'platform-design-system';
 
 | Figma | Prop | 비고 |
 | --- | --- | --- |
-| Status Information · Success · Error | `status` | 상태 아이콘(20px)과 색 |
+| Status Information · Success · Warning · Error | `status` | 상태 아이콘(20px)과 색. Warning(2026-10-20 V-3): `warning-fill`(라이브러리 Warning Fill, `WarningFillIcon`) · `colors/alert/status-icon/warning` → `brand-status/warning/strong`, `role="status"` |
 | Alert Text | `title` | |
 | Sub · Sub Text | `description` | |
 | Icon | `showIcon` | |

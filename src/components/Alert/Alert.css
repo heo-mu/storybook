@@ -22,6 +22,10 @@
   --_icon: var(--colors-alert-status-icon-success);
 }
 
+.ds-alert[data-status='warning'] {
+  --_icon: var(--colors-alert-status-icon-warning);
+}
+
 .ds-alert[data-status='error'] {
   --_icon: var(--colors-alert-status-icon-danger);
 }

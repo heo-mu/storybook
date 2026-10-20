@@ -76,3 +76,14 @@ export const HorizontalGroup: Story = {
     </RadioGroup>
   ),
 };
+
+/** 꼭 골라야 하는 항목을 고르지 않았을 때 묶음 아래에 오류 메시지를 보여 줍니다. */
+export const GroupError: Story = {
+  name: '묶음 오류',
+  render: (args) => (
+    <RadioGroup aria-label="구분" required invalid message="구분을 고르세요." orientation="horizontal" size={args.size}>
+      <Radio value="normal" label="일반" />
+      <Radio value="urgent" label="긴급" />
+    </RadioGroup>
+  ),
+};

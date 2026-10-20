@@ -34,7 +34,7 @@ const meta = {
     size: { control: 'inline-radio', options: TEXTAREA_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
     label: { control: 'text', description: '입력 칸 위 라벨' },
     message: { control: 'text', description: '입력 칸 아래 도움말 메시지' },
-    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES },
+    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 회색 도움말(helper)' },
     maxLength: { control: 'number', description: '최대 글자 수' },
     showCount: { control: 'boolean', description: '글자 수 표시 — maxLength가 있을 때 보임' },
     required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 읽음' },
@@ -53,6 +53,11 @@ export const Playground: Story = { name: '직접 체험' };
 export const Required: Story = {
   name: '필수 입력',
   args: { label: '신청 사유', placeholder: '신청 사유 입력', required: true },
+};
+
+export const Helper: Story = {
+  name: '도움말',
+  args: { message: '받는 분께 전할 내용을 적어 주세요.' },
 };
 
 export const WithMessage: Story = {

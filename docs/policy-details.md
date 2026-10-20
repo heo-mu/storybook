@@ -25,7 +25,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 대비 | 글자 4.5:1, 큰 글자 3:1, 컨트롤 경계 · 상태 표시 3:1. 비활성 컨트롤은 예외 | `text/tertiary` · `text/placeholder` gray/600, 상태 강조 700, 컨트롤 테두리 `border/gray`(3.87:1). 측정표: [accessibility.md](./accessibility.md) |
 | 색만으로 전하지 않기 | Badge Dot · MetricTrend · Stepper · Chart의 상태 · 방향 · 계열은 글자 · 아이콘 · 숨은 문구를 함께. MetricTrend의 좋음 · 나쁨은 주변 문장에서 설명. 차트 비교 선은 점선 | MetricTrend `directionLabel` · Stepper "N단계, 완료" · Chart 화면 낭독기 표 |
 | 이름과 설명 | 보이는 라벨이 없으면 `aria-label` 필수. 이름에는 보이는 글자가 그대로 들어감(WCAG 2.5.3) — 달력 날짜는 "28 2026년 7월 28일 화요일"처럼 숫자 먼저, 설명이 있는 메뉴 항목은 라벨 + 설명, 필터 칩은 지금 보이는 글자. 목록 버튼은 대상(파일 이름 등)을 설명으로. 카드 묶음은 제목을 이름으로. 비어 보이는 표 머리글 · 의미 있는 아이콘도 이름(`role="img"`). 같은 종류의 랜드마크(nav 등)가 한 화면에 여럿이면 서로 다른 이름 | IconButton `aria-label` · FileUploaderItem · MetricCard `role=group` · Calendar · DropdownMenuItem · TableEmptyColumn · 아이콘 `aria-label` |
-| 상태 알림 | 오류는 `role="alert"`(즉시), 안내 · 성공 · 상태 변화는 `role="status"`. 계속 바뀌는 시각(DataFreshness)은 읽지 않음 | `aria-live` · 로딩은 `aria-busy` |
+| 상태 알림 | 오류는 `role="alert"`(즉시), 안내 · 성공 · 주의 · 상태 변화는 `role="status"`. 계속 바뀌는 시각(DataFreshness)은 읽지 않음 | `aria-live` · 로딩은 `aria-busy` |
 | 오류 안내 | 오류 문구를 `aria-describedby`로 연결하고 `aria-invalid`. 읽기 전용은 "읽기 전용"을 함께 읽음 | Input · Select · Date Picker · Textarea |
 | 동작 줄이기 | `prefers-reduced-motion`에서 반복 모션을 느리게(스피너 1초 → 3초/바퀴) | Loading CSS |
 
@@ -39,6 +39,8 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 지우기 · 비밀번호 | 지우기(X)는 마우스 보조 — Input은 Hover · Focus, Search Field는 Focus · Error에서 보이고 Tab 순서 제외, 키보드는 전체 선택 후 삭제. 눈 아이콘은 비밀번호 칸에서만, 상태는 `aria-pressed` | `clearable` · `type="password"` |
 | 선택 · 삭제 | Indeterminate를 누르면 전체 선택(Checked). InputChip은 칩 전체가 삭제 대상(클릭 · Enter · Space · Delete · Backspace). 드롭 영역은 버튼(Enter · Space) | — |
 | 필터 칩 선택 | 다중(기본): 옵션을 켜고 끄는 동안 패널 유지, 칩 글자 "필터명: 값, 값"(3개를 넘으면 "외 N"), 닫을 때(Esc · 바깥 · 칩) 적용되어 Selected. 모두 끄고 닫으면 해제. 단일: 고르면 바로 적용 · 닫힘, 첫 옵션 "전체"로 해제. 패널은 칩 아래 4px · 시작 정렬 · 최소 160px. 키보드: Enter · Space · ↓ 열기, 방향키 · 글자 이동, Space · Enter 선택, Esc 닫고 칩으로. 열린 칩은 State=Default · Expanded=True | `FilterChipSelect` · `aria-expanded` · listbox(`aria-multiselectable`) |
+| 도움말 | Input · Textarea · Select · Date Picker 아래 회색 도움말(Figma `*_message` Type=Helper, 아이콘 없음) — `helper/default`(text/tertiary), 비활성 칸 `helper/disabled`. `message`만 주면 도움말, 오류면 같은 자리에 오류 메시지. 메시지는 컨트롤의 `aria-describedby`. 필드 세트의 Boolean `Helper`(기본 끔)로 Figma에서 켬 | Rules 04 "도움말" · Form 사용 예시(부서) |
+| 묶음 오류 | Checkbox · Radio 묶음에서 필수 선택을 하지 않으면 묶음 아래 6px(`p-1_5`)에 `input_message` Error. 상자 · 원 색은 그대로(Figma에 오류 상태 없음). 코드: `CheckboxGroup` · `RadioGroup`의 `invalid` · `message` — 체크박스마다 `aria-invalid`(group에는 쓸 수 없음), radiogroup에 `aria-invalid`, 항목마다 메시지 `aria-describedby`. 동의 하나도 묶음으로 감쌈 | Rules 04 "묶음 오류" · Form 예시 "필수 동의를 하지 않고 저장했을 때" |
 | 필수 입력 | Input · Textarea · Select · Date Picker의 `Required` — 라벨 뒤 4px 점(`colors/<field>/…/required/default` → `status/point/strong`), 라벨과 8px(m-2). 코드: `required` → 점 표시(aria-hidden) + 입력 요소 `required`(화면 낭독기가 "필수"로 읽음). Select는 버튼에 필수 상태가 없어 "필수"를 버튼 설명으로 전달. 표 키(`table_key` Type=Required)와 같은 표시 | Figma `Required` 속성 |
 | 값 표시 | Slider 값 라벨은 Hover · 드래그 · 키보드 포커스 중 표시, 숫자 칸은 가장 긴 값 폭(트랙 길이 고정). Textarea 카운터는 실제 길이 / 최대 길이(`maxLength` 강제) | — |
 | 외부 링크 | 화살표 아이콘은 새 창으로 여는 링크에만, 숨은 "(새 창)" 문구 | Link `external` |
@@ -52,6 +54,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 크기 | Select 목록 높이는 화면에 맞추고 내부 스크롤, 공간이 없으면 위로. Dropdown은 내용 폭. Breadcrumb 메뉴 최소 200px(내용에 맞춰 넓어짐) | — |
 | 열기 · 닫기 | Esc로 닫힘. 바깥 클릭: 메뉴 · 목록 · 달력은 닫힘, Dialog는 닫히지 않음(`isDismissable`일 때만). Tooltip은 포인터 · 포커스가 떠나면 닫힘. 트리거 모양은 바뀌지 않고 `aria-expanded`로 전달 | — |
 | 포커스 이동 · 복귀 | 열리면 오버레이 안으로, 닫히면 연 요소로 돌아감. Dialog는 열린 동안 포커스를 가둠. Date Picker 달력이 닫히면 트리거로 | react-aria `FocusScope` |
+| 대화상자 크기 | 한 가지 420px — 가운데 정렬 확인 · 선택용(제목 · 설명 · 240px 버튼). 안에 넣는 입력은 1–2개까지, 입력이 많은 작업은 화면으로 | Rules 05 "대화상자 크기" |
 | 모달 덮개 | 모달은 검정 50% 덮개로 뒤 화면을 가리고 조작 · 스크롤을 막음 | `colors/dialog/scrim/default` → `surface/scrim`(black 50%) · Dialog "Modal example" |
 | Tooltip 지연 | 마우스 0.5초 뒤, 키보드 포커스는 즉시 | Tooltip `delay` 500 |
 | 하위 메뉴 | 지원하지 않음 — chevron은 다른 화면으로 이동한다는 표시 | — |
@@ -60,9 +63,10 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 
 | 정책 | 상세 기준 | 토큰 · 근거 |
 | --- | --- | --- |
-| Toast | 화면 아래 가운데(아래 20px), 토스트 사이 8px, 최대 3개(새 토스트가 보이고 오래된 것은 대기). 안내 · 성공 5초, 오류는 닫을 때까지(닫기 아이콘). Hover · 포커스 중 정지. 같은 문구 · 상태는 겹치지 않고 다시 표시 | `spacing/padding/p-5` · `spacing/margin/m-2` · `role=status` |
+| Toast | 화면 아래 가운데(아래 20px), 토스트 사이 8px, 최대 3개(새 토스트가 보이고 오래된 것은 대기). 안내 · 성공 5초, 오류 · 주의는 닫을 때까지(닫기 아이콘). Hover · 포커스 중 정지. 같은 문구 · 상태는 겹치지 않고 다시 표시 | `spacing/padding/p-5` · `spacing/margin/m-2` · `role=status` |
 | Alert | 화면 상태를 설명하는 고정 메시지 — 사용자가 닫지 않음(닫아야 하면 Toast). 설명은 줄바꿈, 자르지 않음. 폭은 부모를 채움 | 오류 `role=alert`, 그 밖 `status` |
-| 처리 중 | 저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼을 Disabled로 두고 옆에 Loading(sm)을 표시. 버튼 안 스피너 상태는 디자인 결정 대기(V-2) | Form 사용 예시 |
+| 처리 중 | 저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼을 Disabled로 두고 옆에 Loading(sm)을 표시. 버튼 안 스피너는 쓰지 않음(2026-10-20 V-2 확정 — 버튼 6가지 색마다 새 색이 필요) | Rules 06 "처리 중" · Form 사용 예시 "저장 중일 때" |
+| 주의 | 작업은 계속할 수 있지만 확인이 필요할 때(예: 일부 데이터만 표시). 작업을 막는 문제는 오류. Alert · Toast `Status=Warning` — 주황 삼각형(`brand-status/warning/strong`, 흰 바탕 5.1:1), `role="status"`, 토스트는 닫을 때까지 | Rules 06 "주의" |
 | 진행 · 로딩 | 진행률을 알면 Progress, 모르면 Loading. Skeleton은 장식이며 감싸는 영역(DataState)이 불러오는 중을 알림 | `aria-busy` · `role=status` |
 
 ## 07. 데이터 — 차트 · 표 · 목록 · 빈 상태
@@ -110,11 +114,11 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 컴포넌트 | 분류 | 내용 |
 | --- | --- | --- |
 | select | 동작 | 목록 — 필드 아래 4px, 필드 너비, 높이는 화면에 맞추고 내부 스크롤, 공간이 없으면 위로. 글자 입력으로 항목 이동. 키보드 포커스는 State=Focus(테두리), Error와 겹치면 Error 테두리 유지 |
-| toast | 동작 | 화면 아래 가운데(아래 20px), 토스트 사이 8px. 최대 3개. Information · Success는 5초 뒤 닫힘, Error는 닫을 때까지. Hover · 포커스 중 정지. 같은 문구 · 상태는 다시 표시 |
+| toast | 동작 | 화면 아래 가운데(아래 20px), 토스트 사이 8px. 최대 3개. Information · Success는 5초 뒤 닫힘, Error · Warning은 닫을 때까지. Hover · 포커스 중 정지. 같은 문구 · 상태는 다시 표시 |
 | tooltip | 동작 | 마우스 0.5초 뒤, 키보드 포커스 즉시. 포인터 · 포커스가 떠나거나 Esc로 닫힘. 화살표 끝이 트리거에 닿게(8px) |
 | dialog | 동작 | 덮개 `colors/dialog/scrim/default`(검정 50%). 포커스가 안으로 이동 · 갇힘, Esc로 닫힘, 바깥 클릭은 닫지 않음(dismissable일 때만), 닫히면 연 요소로 복귀 |
 | date-picker_trigger | 동작 | 직접 입력 허용. 해석할 수 없거나 범위 밖 날짜는 State=Error, 값은 바꾸지 않음. 달력은 트리거 아래 4px(공간이 없으면 위), 닫히면 포커스는 트리거로 |
-| alert | 접근성 | Status=Error는 `role="alert"`, Information · Success는 `role="status"` |
+| alert | 접근성 | Status=Error는 `role="alert"`, Information · Success · Warning은 `role="status"` |
 | alert | 콘텐츠 | 고정 메시지(사용자가 닫지 않음), 설명은 줄바꿈 · 자르지 않음, 폭은 부모를 채움 |
 | chip-input | 동작 | 칩 전체가 삭제 대상: 클릭 · Enter · Space · Delete · Backspace. 칩 사이 4px(`spacing/margin/m-1`) |
 | chip-filter | 동작 | 다중: 패널 유지 · 닫을 때 적용 → Variant=Selected("필터명: 값, 값"). 단일: 고르면 적용 · 닫힘, "전체"로 해제. 열린 칩은 State=Default · Expanded=True |

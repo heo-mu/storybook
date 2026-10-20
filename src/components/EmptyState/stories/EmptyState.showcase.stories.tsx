@@ -47,7 +47,7 @@ export const Interaction: StoryObj<{ onAction: Mock<() => void> }> = {
       icon={<DatabaseIcon />}
       title="아직 수집된 데이터가 없습니다"
       action={
-        <TextButton rightIcon={<CaretRightIcon />} onClick={args.onAction}>
+        <TextButton rightIcon={<CaretRightIcon />} onClick={() => args.onAction()}>
           수집 설정 확인
         </TextButton>
       }

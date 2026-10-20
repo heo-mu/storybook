@@ -32,7 +32,8 @@ const [value, setValue] = useState('');
 | Label / Label Text | `label` | 생략하면 라벨 없음 → `aria-label` 지정 |
 | Required | `required` | 라벨 뒤 4px 점(`colors/input/outline/required/default`, 라벨과 m-2) + 입력 요소 `required`. 점은 `aria-hidden` |
 | Alert / Alert Text | `message` | `input_message` |
-| input_message Type Info · Success · Error | `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'info'` |
+| input_message Type Info · Success · Error | `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'helper'`(2026-10-20 전에는 `'info'`) |
+| input_message Type Helper · State Default · Disabled · 필드 `Helper` 속성 | `message`(종류를 정하지 않으면 `'helper'`) | 아이콘 없는 회색 글자 `colors/input/outline/helper/default`, 비활성 칸은 `…/helper/disabled`(Rules 04 "도움말", 2026-10-20 V-1) |
 | Icon-eye | `type="password"` + `revealable` | 비밀번호 표시/숨김 토글. Figma 기본값 끔(2026-10-20, F90) — 비밀번호 칸에서만 켬 |
 | State Hover · Focus | 브라우저 `:hover` · `:focus-within` | |
 | State Completed | 값이 있을 때 자동 | |

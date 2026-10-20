@@ -13,7 +13,7 @@ export type TextareaProps = Omit<ComponentPropsWithoutRef<'textarea'>, 'classNam
   required?: boolean;
   /** 입력 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
-  /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
+  /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
   /** 오류 — 오류 테두리로 표시합니다. */
   invalid?: boolean;
@@ -78,7 +78,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
       {(hasMessage || hasCount) && (
         <div className="ds-textarea__footer">
           {hasMessage && (
-            <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'info')} className="ds-textarea__message">
+            <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')} className="ds-textarea__message">
               {message}
             </FieldMessage>
           )}

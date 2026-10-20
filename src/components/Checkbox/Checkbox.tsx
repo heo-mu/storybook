@@ -56,6 +56,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
         checked={inGroup ? group.isSelected(value) : checked}
         onChange={handleChange}
         disabled={isDisabled}
+        aria-invalid={rest['aria-invalid'] ?? ((inGroup && group.invalid) || undefined)}
+        aria-describedby={cx(rest['aria-describedby'], inGroup ? group.describedBy : undefined) || undefined}
       />
       <CheckBoldIcon className="ds-choice__decoration ds-checkbox__icon ds-checkbox__check" />
       <MinusBoldIcon className="ds-choice__decoration ds-checkbox__icon ds-checkbox__minus" />

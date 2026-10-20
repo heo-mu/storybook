@@ -10,6 +10,7 @@ import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
 import { expectRequiredMark } from '../../../storybook/requiredMark';
+import { expectHelperMessage } from '../../../storybook/helperMessage';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs select` (sets select, listbox, option, select_message).
@@ -220,17 +221,32 @@ export const OptionMatrix: Story = {
   ),
 };
 
-/** Figma `select_message` (Info · Success · Error). */
+/** Figma `select_message` (Info · Success · Error · Helper; Helper also in a disabled field — State=Disabled). */
 export const MessageMatrix: Story = {
   name: '메시지 모든 변형',
   render: () => (
     <div className="ds-select">
       <FigmaMatrix
         columns={['select_message']}
-        rows={(['info', 'success', 'error'] as const).map((type) => ({
-          label: type,
-          cells: [{ figma: `Type=${type.charAt(0).toUpperCase() + type.slice(1)}`, node: <FieldMessage type={type}>Alert 내용</FieldMessage> }],
-        }))}
+        rows={[
+          ...(['info', 'success', 'error', 'helper'] as const).map((type) => ({
+            label: type,
+            cells: [{ figma: `Type=${type.charAt(0).toUpperCase() + type.slice(1)}, State=Default`, node: <FieldMessage type={type}>Alert 내용</FieldMessage> }],
+          })),
+          {
+            label: 'helper · Disabled',
+            cells: [
+              {
+                figma: 'Type=Helper, State=Disabled',
+                node: (
+                  <div className="ds-select" data-disabled="">
+                    <FieldMessage type="helper">Alert 내용</FieldMessage>
+                  </div>
+                ),
+              },
+            ],
+          },
+        ]}
       />
     </div>
   ),
@@ -361,5 +377,25 @@ export const RequiredMark: Story = {
     }
     await expect(canvas.getByRole('button', { name: (name) => name.endsWith('메모') })).not.toHaveAccessibleDescription('필수');
     await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(3);
+  },
+};
+
+/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+export const HelperMessage: Story = {
+  name: '도움말',
+  render: () => (
+    <div style={{ display: 'flex', gap: 24 }}>
+      <Select label="부서" placeholder="부서 선택" message="인사 정보에 등록된 부서를 고릅니다.">
+        <SelectOption id="dev">개발</SelectOption>
+      </Select>
+      <Select label="부서" placeholder="부서 선택" message="인사 정보에 등록된 부서를 고릅니다." disabled>
+        <SelectOption id="dev">개발</SelectOption>
+      </Select>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const [field, disabled] = canvasElement.querySelectorAll<HTMLElement>('.ds-select');
+    await expectHelperMessage(field, '--colors-select-outline-outline-helper-default');
+    await expectHelperMessage(disabled, '--colors-select-outline-outline-helper-disabled');
   },
 };

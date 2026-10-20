@@ -35,7 +35,7 @@ const meta = {
     label: { control: 'text', description: '선택 칸 위 라벨' },
     placeholder: { control: 'text', description: '아무것도 고르지 않았을 때 보이는 글자' },
     message: { control: 'text', description: '선택 칸 아래 도움말 메시지' },
-    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류' },
+    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 회색 도움말(helper)' },
     required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 알림' },
     invalid: { control: 'boolean', description: '오류 — 오류 테두리로 표시' },
     disabled: { control: 'boolean', description: '비활성 — 고를 수 없음' },
@@ -68,6 +68,11 @@ export const Required: Story = {
 export const WithValue: Story = {
   name: '값 있음',
   args: { defaultValue: 'banana' },
+};
+
+export const Helper: Story = {
+  name: '도움말',
+  args: { message: '인사 정보에 등록된 항목만 고를 수 있습니다.' },
 };
 
 export const WithMessage: Story = {

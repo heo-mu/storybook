@@ -21,7 +21,8 @@ import { Alert } from './Alert';
 | --- | --- |
 | `information` | 안내 |
 | `success` | 성공 |
-| `error` | 오류 |
+| `warning` | 주의 — 작업은 계속할 수 있지만 확인이 필요할 때 |
+| `error` | 오류 — 작업을 막는 문제 |
 
 - 종류마다 아이콘과 색이 다릅니다. 아이콘은 `showIcon={false}`로 숨길 수 있습니다.
 - 제목(`title`)만 쓰거나 설명(`description`)을 더할 수 있습니다.
@@ -49,7 +50,7 @@ import { Alert } from './Alert';
 ## 접근성
 
 - `error` 알림은 화면 낭독기가 바로 읽습니다(`role="alert"`).
-- `information` · `success` 알림은 `role="status"`로 읽힙니다. 필요하면 `role`로 바꿀 수 있습니다.
+- `information` · `success` · `warning` 알림은 `role="status"`로 읽힙니다. 필요하면 `role`로 바꿀 수 있습니다.
 
 ## Props
 

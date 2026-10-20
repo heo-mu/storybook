@@ -11,10 +11,10 @@
 | 타입 | 129 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
 | 상수 | 45 | Figma 속성 값 목록(`BUTTON_VARIANTS` 등) — 선택지 UI · 값 검증용 |
 | 함수 | 3 | `filterChipText()` · `showToast()` · `closeToast()` |
-| 아이콘 | 35 | `<이름>Icon` 컴포넌트 |
+| 아이콘 | 36 | `<이름>Icon` 컴포넌트 |
 | **내부 부품 — 사용 금지** | 7 | 상위 컴포넌트가 그립니다. |
 | **내부 API — 사용 금지** | 13 | 아래 대체 수단을 씁니다. |
-| 합계 | 314 | `src/index.ts`의 export 전체 |
+| 합계 | 315 | `src/index.ts`의 export 전체 |
 
 내부 부품 · 내부 API는 하위 호환을 보장하지 않으며 다음 메이저 버전에서 export 목록에서 빠질 수 있습니다.
 
@@ -160,4 +160,4 @@ Figma 하위 세트를 그대로 옮긴 부품으로, 상위 컴포넌트가 상
 ## 4. 상수 · 아이콘
 
 - 상수: `FIELD_SIZES`, `FIELD_MESSAGE_TYPES`, `CHOICE_SIZES`, `CHOICE_GROUP_ORIENTATIONS`, `BUTTON_VARIANTS`, `BUTTON_APPEARANCES`, `BUTTON_SHAPES`, `BUTTON_SIZES`, `ICON_BUTTON_SIZES`, `TEXT_BUTTON_VARIANTS`, `TEXT_BUTTON_SIZES`, `TEXTAREA_SIZES`, `SEARCH_FIELD_APPEARANCES`, `SWITCH_SIZES`, `SEGMENTED_CONTROL_SIZES`, `CHIP_SIZES`, `LOADING_SIZES`, `FILE_UPLOADER_ITEM_STATUSES`, `LINK_SIZES`, `TABS_APPEARANCES`, `TABS_VARIANTS`, `TABS_SIZES`, `TABS_SHAPES`, `PAGINATION_SIZES`, `PAGINATION_SHAPES`, `BREADCRUMB_SIZES`, `BREADCRUMB_LAYOUTS`, `STEPPER_ORIENTATIONS`, `STEPPER_STATUSES`, `BADGE_STATUSES`, `BADGE_APPEARANCES`, `BADGE_SIZES`, `BADGE_SHAPES`, `ALERT_STATUSES`, `TOOLTIP_PLACEMENTS`, `ACCORDION_SIZES`, `CHART_TYPES`, `CHART_VARIANTS`, `CHART_LEGEND_TYPES`, `CHART_COLORS`, `SKELETON_SHAPES`, `METRIC_TREND_DIRECTIONS`, `METRIC_TREND_TONES`, `DATA_FRESHNESS_STATES`, `DATA_STATES`
-- 아이콘: `CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningIcon`
+- 아이콘: `CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`

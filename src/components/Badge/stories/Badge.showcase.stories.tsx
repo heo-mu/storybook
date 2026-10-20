@@ -119,5 +119,7 @@ export const Accessibility: Story = {
     await expect(canvas.getByRole('img', { name: '새 항목' })).toBeInTheDocument();
     await expect(canvasElement.querySelectorAll('.ds-badge-dot[aria-hidden="true"]')).toHaveLength(1);
     await expect(canvas.getByText('999+')).toBeVisible();
+    // aria-label on a plain span is not exposed: the labelled count is an image named by it
+    await expect(canvas.getByRole('img', { name: '알림 1000개' })).toHaveTextContent('999+');
   },
 };

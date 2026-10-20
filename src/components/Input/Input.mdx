@@ -18,8 +18,8 @@ import { Input } from './Input';
 ## 종류
 
 - 크기는 `size`(`sm` · `md` · `lg`)로 고릅니다. 기본은 `sm`입니다.
-- `message`를 넣으면 입력 칸 아래에 도움말 메시지가 보입니다. 메시지 종류는 `messageType`(`info` · `success` · `error`)으로 고릅니다.
-- `messageType`을 지정하지 않으면 `invalid`일 때 `error`, 아니면 `info`로 보입니다.
+- `message`를 넣으면 입력 칸 아래에 메시지가 보입니다. 메시지 종류는 `messageType`(`helper` · `info` · `success` · `error`)으로 고릅니다.
+- `messageType`을 지정하지 않으면 `invalid`일 때 `error`, 아니면 회색 도움말(`helper`)로 보입니다.
 - `type="password"`이면 눈 아이콘 버튼으로 비밀번호를 보이거나 숨길 수 있습니다. 필요 없으면 `revealable={false}`로 끕니다.
 
 ## 필수 입력
@@ -28,6 +28,15 @@ import { Input } from './Input';
 
 - `required`를 주면 라벨 뒤에 점이 붙어 꼭 입력해야 하는 칸임을 알립니다. 점은 라벨이 있을 때만 보입니다.
 - 점은 표의 필수 항목(`KeyValueItem required`)과 같은 색 · 크기입니다.
+
+## 도움말
+
+<Canvas of={Showcase.HelperMessage} />
+
+- 입력 방법이나 형식은 입력 칸 아래 회색 도움말로 미리 알려 줍니다. `message`만 넣으면 도움말로 보입니다.
+- 도움말에는 아이콘이 없습니다. 상태를 알릴 때만 안내(`info`) · 성공(`success`) · 오류(`error`)를 씁니다.
+- 오류가 나면 같은 자리에 오류 메시지를 보여 줍니다. 비활성 칸의 도움말은 흐린 색입니다.
+- 도움말은 입력 칸 설명으로 화면 낭독기가 함께 읽습니다.
 
 ## 상태
 

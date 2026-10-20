@@ -19,7 +19,7 @@ const meta = {
   },
   args: { status: 'information', title: '점검 예정', description: '7월 30일 02:00 – 04:00에 서비스를 점검합니다.', showIcon: true },
   argTypes: {
-    status: { control: 'inline-radio', options: ALERT_STATUSES, description: '종류 — 안내 · 성공 · 오류', table: { defaultValue: { summary: 'information' } } },
+    status: { control: 'inline-radio', options: ALERT_STATUSES, description: '종류 — 안내 · 성공 · 주의 · 오류', table: { defaultValue: { summary: 'information' } } },
     action: { control: false },
   },
   decorators: [(Story) => <div style={{ width: 360 }}>{Story()}</div>],
@@ -48,4 +48,10 @@ export const WithAction: Story = {
 export const TitleOnly: Story = {
   name: '제목만',
   args: { status: 'success', title: '저장했습니다', description: undefined },
+};
+
+/** 작업은 계속할 수 있지만 확인이 필요할 때 씁니다. 작업을 막는 문제는 오류(`error`)로 알립니다. */
+export const Warning: Story = {
+  name: '주의',
+  args: { status: 'warning', title: '일부 데이터만 표시됩니다', description: '설비 3대의 데이터가 늦게 들어오고 있습니다.' },
 };

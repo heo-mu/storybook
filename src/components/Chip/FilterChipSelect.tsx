@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState, type ForwardedRef } from 'react';
+import { forwardRef, useLayoutEffect, useRef, useState, type ForwardedRef } from 'react';
 import { ListBox, Popover, Select as AriaSelect, SelectValue, type Key } from 'react-aria-components';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
@@ -105,6 +105,12 @@ export const FilterChipSelect = forwardRef(function FilterChipSelect(props: Filt
     onOpenChange?.(isOpen);
   };
 
+  // react-aria labels the trigger with "value + aria-label"; the value text already begins with the label, which made
+  // the name "상태: 주의 상태". The SelectValue id is react-aria's, so it is read after mount.
+  const valueRef = useRef<HTMLSpanElement>(null);
+  const [valueId, setValueId] = useState<string>();
+  useLayoutEffect(() => setValueId(valueRef.current?.id || undefined), []);
+
   const items = single && clearLabel != null ? [{ id: CLEAR, label: clearLabel } as FilterChipSelectOption, ...options] : options;
   const common = {
     className: cx('ds-filter-chip-select', className),
@@ -116,9 +122,9 @@ export const FilterChipSelect = forwardRef(function FilterChipSelect(props: Filt
   };
   const content = (
     <>
-      <FilterChip ref={ref} size={size} selected={applied.length > 0} disabled={disabled}>
-        {/* SelectValue: react-aria names the trigger with it, so the name holds the visible text (WCAG 2.5.3). */}
-        <SelectValue className="ds-filter-chip-select__value">{() => text}</SelectValue>
+      <FilterChip ref={ref} aria-labelledby={valueId} size={size} selected={applied.length > 0} disabled={disabled}>
+        {/* The chip is named by this visible text only (WCAG 2.5.3) — see valueId. */}
+        <SelectValue ref={valueRef} className="ds-filter-chip-select__value">{() => text}</SelectValue>
       </FilterChip>
       <Popover className="ds-filter-chip-select__popover" placement="bottom start" offset={4}>
         <SelectSizeContext.Provider value="sm">

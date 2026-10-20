@@ -24,7 +24,7 @@ export const ImageUploadPreview = forwardRef<HTMLDivElement, ImageUploadPreviewP
     <div {...rest} ref={ref} className={cx('ds-image-preview', className)}>
       <img className="ds-image-preview__image" src={src} alt={alt} />
       {onRemove && (
-        <button type="button" className="ds-image-preview__remove" aria-label={removeLabel} onClick={onRemove}>
+        <button type="button" className="ds-image-preview__remove" aria-label={removeLabel} onClick={() => onRemove()}>
           <XIcon />
         </button>
       )}

@@ -75,3 +75,13 @@ export const Group: Story = {
     </CheckboxGroup>
   ),
 };
+
+/** 필수 항목을 고르지 않았을 때 묶음 아래에 오류 메시지를 보여 줍니다. 상자 색은 바뀌지 않습니다. 동의 하나도 묶음으로 감쌉니다. */
+export const GroupError: Story = {
+  name: '묶음 오류',
+  render: (args) => (
+    <CheckboxGroup aria-label="약관 동의" name="terms" size={args.size} invalid message="개인정보 수집 · 이용에 동의해야 저장할 수 있습니다.">
+      <Checkbox value="privacy" label="개인정보 수집 · 이용에 동의합니다" />
+    </CheckboxGroup>
+  ),
+};

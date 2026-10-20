@@ -18,10 +18,10 @@ export const toastQueue = new ToastQueue<ToastContent>({ maxVisibleToasts: 3 });
 
 /**
  * 토스트를 띄우고, `closeToast(key)`에 넘길 key를 돌려줍니다.
- * `timeout`(ms)이 지나면 자동으로 닫히며 5000보다 짧게 정할 수 없습니다. 기본은 5000이고, `status: 'error'`는 `null`(닫을 때까지 유지)입니다.
+ * `timeout`(ms)이 지나면 자동으로 닫히며 5000보다 짧게 정할 수 없습니다. 기본은 5000이고, `status: 'error'` · `'warning'`은 `null`(닫을 때까지 유지)입니다.
  * 한 번에 3개까지 보이고 오래된 토스트는 기다립니다. 같은 문구와 종류를 다시 보내면 겹쳐 쌓지 않고 새로 바꿔 보여 줍니다.
  */
-export function showToast(message: ReactNode, { status = 'information', timeout = status === 'error' ? null : 5000 }: { status?: AlertStatus; timeout?: number | null } = {}) {
+export function showToast(message: ReactNode, { status = 'information', timeout = status === 'error' || status === 'warning' ? null : 5000 }: { status?: AlertStatus; timeout?: number | null } = {}) {
   if (typeof message === 'string' || typeof message === 'number') {
     for (const toast of toastQueue.visibleToasts) {
       if (toast.content.message === message && (toast.content.status ?? 'information') === status) toastQueue.close(toast.key);

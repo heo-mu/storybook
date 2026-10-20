@@ -46,6 +46,10 @@ import { Checkbox, CheckboxGroup } from 'platform-design-system';
 Figma에는 그룹 컴포넌트가 없습니다. `CheckboxGroup`은 `role="group"`과 선택값 배열 관리만 하는 시맨틱 래퍼이며,
 `aria-label` 또는 `aria-labelledby`로 이름을 붙입니다. `value`를 가진 하위 `Checkbox`가 그룹 값에 연결됩니다.
 
+**묶음 오류 · 메시지**(Rules 04 "묶음 오류", 2026-10-20 V-5): `invalid` · `message` — 묶음 아래 Figma `input_message`(Error, 메시지만 있으면 Helper)를
+6px(`p-1_5`) 아래에 둡니다. 색은 Figma 예시가 연결한 `colors/input/outline/helper/*`. `role="group"`에는 `aria-invalid`를 쓸 수 없어 각 체크박스에 `aria-invalid`와 메시지 `aria-describedby`를 붙입니다. 래퍼 `.ds-choice-field`는 메시지가 없으면
+`display: contents`(배치 그대로), 메시지가 생겨도 같은 요소라 묶음이 다시 만들어지지 않고 포커스가 유지됩니다. 상자 · 원의 오류 모양은 Figma에 없어 만들지 않았습니다.
+
 | Prop | 설명 |
 | --- | --- |
 | `value` / `defaultValue` / `onChange` | 선택된 value 배열 (제어 / 비제어) |

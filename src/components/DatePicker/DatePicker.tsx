@@ -16,7 +16,7 @@ export type DatePickerProps = {
   placeholder?: string;
   /** 입력 칸 아래 도움말 메시지. */
   message?: ReactNode;
-  /** 도움말 메시지 종류. @default 오류이면 'error', 그 밖에는 'info' */
+  /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
   /** 오류 상태. 없는 날짜나 고를 수 없는 날짜를 입력해도 오류 상태가 됩니다. */
   invalid?: boolean;
@@ -197,7 +197,7 @@ export function DatePicker({
       </div>
       {name !== undefined && <input type="hidden" name={name} value={date ?? ''} />}
       {hasMessage && (
-        <FieldMessage id={messageId} type={messageType ?? (isInvalid ? 'error' : 'info')}>
+        <FieldMessage id={messageId} type={messageType ?? (isInvalid ? 'error' : 'helper')}>
           {message}
         </FieldMessage>
       )}

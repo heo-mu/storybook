@@ -46,7 +46,8 @@ const [region, setRegion] = useState<Key | null>(null);
 | State Error · Disabled · Read-only | `invalid` · `disabled` · `readOnly` | Read-only는 화살표 없이 값만 표시, 목록이 열리지 않음 |
 | option State Selected | 현재 값 | 굵은 브랜드 색 + 체크 아이콘 |
 | option State Disabled | `SelectOption disabled` 또는 `disabledKeys` | 키보드 이동에서 건너뜀 |
-| select_message Alert Text · Type Info · Success · Error | `message` · `messageType` | |
+| select_message Alert Text · Type Info · Success · Error | `message` · `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'helper'` |
+| select_message Type Helper · State Default · Disabled · 필드 `Helper` 속성 | `message`(종류를 정하지 않으면 `'helper'`) | 아이콘 없는 회색 글자 `colors/select/outline/outline/helper/default`, 비활성 칸은 `…/helper/disabled`(Rules 04 "도움말", 2026-10-20 V-1) |
 | option Option Text | `SelectOption` children | |
 | option Check Icon | `SelectOption checkIcon` | 기본 켬. 끄면 선택 표시는 굵은 브랜드 글자뿐(2026-10-19) |
 

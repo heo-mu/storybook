@@ -68,7 +68,7 @@ export const FileUploaderItem = forwardRef<HTMLDivElement, FileUploaderItemProps
           rightIcon={<XCircleFillIcon />}
           // A failed file's button also reads the failure reason ("…, 업로드 실패").
           aria-describedby={status === 'error' && hasInfo ? `${nameId} ${metaId}` : nameId}
-          onClick={onRemove}
+          onClick={() => onRemove?.()}
         >
           {removeLabel}
         </TextButton>
@@ -78,7 +78,7 @@ export const FileUploaderItem = forwardRef<HTMLDivElement, FileUploaderItemProps
           className="ds-file-item__action ds-file-item__download"
           rightIcon={<DownloadSimpleIcon />}
           aria-describedby={nameId}
-          onClick={onDownload}
+          onClick={() => onDownload?.()}
         >
           {downloadLabel}
         </TextButton>

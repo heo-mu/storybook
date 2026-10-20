@@ -28,7 +28,9 @@ import { Textarea } from 'platform-design-system';
 | Counter | `showCount` + `maxLength` | `현재/최대`. `maxLength`가 있을 때 표시 |
 | State Hover · Focus · Completed · Error · Disabled · Read-only | 브라우저 상태 · 값 유무 · `invalid` · `disabled` · `readOnly` | |
 | Input Text | `value` / `defaultValue` · `placeholder` | |
-| textarea_message Type Info · Success · Error | `message` · `messageType` | |
+| textarea_message Type Info · Success · Error | `message` · `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'helper'` |
+| textarea_message Type Helper · State Default · Disabled · 필드 `Helper` 속성 | `message`(종류를 정하지 않으면 `'helper'`) | 아이콘 없는 회색 글자 `colors/textarea/outline/helper/default`, 비활성 칸은 `…/helper/disabled`(Rules 04 "도움말", 2026-10-20 V-1) |
+| Character count 줄(메시지 · 글자 수) | `.ds-textarea__footer` | F94(2026-10-20): Completed · Error에서 줄 전체가 `Alert`를 따르던 연결을 메시지만 따르게 고침 — 코드는 원래 메시지와 글자 수가 따로 보임 |
 
 ## 정책
 

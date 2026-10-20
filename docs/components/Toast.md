@@ -27,9 +27,9 @@ closeToast(key);
 
 | Figma | Prop | 비고 |
 | --- | --- | --- |
-| Status Information · Success · Error | `status` | 테두리 · 아이콘 색 |
+| Status Information · Success · Warning · Error | `status` | 테두리 · 아이콘 색. Warning(V-3): `colors/toast/border/warning` · `status-icon/warning`, `showToast`의 기본 시간 없음(오류처럼 닫을 때까지) |
 | Alert Text | 메시지(`showToast` 첫 인자 / `children`) | 한 줄, 넘치면 말줄임 |
-| Close Icon | `showClose`(정적 `Toast`), 영역의 토스트는 항상 닫기 버튼 | 이름 "알림 닫기" |
+| Close Icon | `showClose`(정적 `Toast`), 영역의 토스트는 항상 닫기 버튼 | 이름 "알림 닫기". F95(2026-10-20): Figma 속성이 레이어에 연결되지 않던 것을 연결 |
 
 ## 정책
 

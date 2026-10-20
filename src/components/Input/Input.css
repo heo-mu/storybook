@@ -76,6 +76,15 @@
 }
 
 /* Messages — colors/input/outline/helper/* */
+.ds-input .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-default);
+}
+
+/* Figma Type=Helper, State=Disabled — the help text of a disabled field. */
+.ds-input[data-disabled] .ds-field-message[data-type='helper'] {
+  --ds-field-message-color: var(--colors-input-outline-helper-disabled);
+}
+
 .ds-input .ds-field-message[data-type='info'] {
   --ds-field-message-color: var(--colors-input-outline-helper-info);
 }

@@ -274,3 +274,22 @@ export const FilterArea: Story = {
     });
   },
 };
+
+/** The chip's accessible name is its visible text — the filter name alone, then "필터명: 값" — never the label twice (WCAG 2.5.3). */
+export const AccessibleName: Story = {
+  name: '접근 가능한 이름',
+  render: () => (
+    <div style={{ display: 'flex', gap: 4, minHeight: 260 }}>
+      <FilterChipSelect label="상태" options={OPTIONS} />
+    </div>
+  ),
+  play: async ({ canvasElement, userEvent }) => {
+    const chip = () => within(canvasElement).getByRole('button');
+    await expect(chip()).toHaveAccessibleName('상태');
+    await userEvent.click(chip());
+    await userEvent.click(within(await listbox()).getByRole('option', { name: '옵션 2' }));
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(chip()).toHaveTextContent('상태: 옵션 2'));
+    await expect(chip()).toHaveAccessibleName(chip().textContent!.trim());
+  },
+};

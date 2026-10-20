@@ -49,6 +49,23 @@ import { RadioGroup } from './RadioGroup';
 </RadioGroup>`}
 />
 
+## 묶음 오류
+
+<Canvas of={Showcase.GroupMessage} />
+
+- 꼭 골라야 하는 항목을 고르지 않았으면 `invalid`와 `message`로 묶음 아래에 오류 메시지를 보여 줍니다. 라디오 버튼 색은 바뀌지 않습니다.
+- `invalid` 없이 `message`만 넣으면 회색 도움말로 보입니다.
+- 화면 낭독기는 묶음을 오류 상태로 알리고 메시지를 각 라디오 버튼의 설명으로 읽습니다.
+
+<Source
+  language="tsx"
+  code={`<RadioGroup aria-label="구분" value={kind} onChange={setKind} required
+  invalid={submitted && !kind} message={submitted && !kind ? '구분을 고르세요.' : undefined}>
+  <Radio value="normal" label="일반" />
+  <Radio value="urgent" label="긴급" />
+</RadioGroup>`}
+/>
+
 ## 접근성
 
 - `RadioGroup`에는 `aria-label` 또는 `aria-labelledby`로 그룹 이름을 붙입니다.

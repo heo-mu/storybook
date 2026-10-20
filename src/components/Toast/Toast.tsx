@@ -14,7 +14,7 @@ import { STATUS_ICON } from '../Alert/statusIcon';
 import { toastQueue, type ToastContent } from './toastQueue';
 
 export type ToastProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** 종류 — 안내 · 성공 · 오류. @default 'information' */
+  /** 종류 — 안내 · 성공 · 주의 · 오류. @default 'information' */
   status?: AlertStatus;
   /** 메시지. 한 줄로 보이며 길면 말줄임으로 잘립니다. */
   children: ReactNode;
@@ -42,7 +42,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
         <span className="ds-toast__message">{children}</span>
       </div>
       {showClose && (
-        <button type="button" className="ds-toast__close" aria-label={closeLabel} onClick={onClose}>
+        <button type="button" className="ds-toast__close" aria-label={closeLabel} onClick={() => onClose?.()}>
           <XIcon />
         </button>
       )}

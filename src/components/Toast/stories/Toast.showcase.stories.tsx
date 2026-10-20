@@ -19,7 +19,7 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-const NAME: Record<AlertStatus, string> = { information: 'Information', success: 'Success', error: 'Error' };
+const NAME: Record<AlertStatus, string> = { information: 'Information', success: 'Success', warning: 'Warning', error: 'Error' };
 
 export const Overview: Story = {
   name: '개요',
@@ -97,12 +97,14 @@ export const Policy: Story = {
         ['1번', '2번', '3번', '4번'].forEach((m) => showToast(m));
         await waitFor(() => expect(visible()).toHaveLength(3));
       });
-      await step('an error stays until closed (no timeout); information closes after 5 s', async () => {
+      await step('an error or a warning stays until closed (no timeout); information closes after 5 s', async () => {
         toastQueue.visibleToasts.forEach((t) => toastQueue.close(t.key));
         const err = showToast('저장하지 못했습니다', { status: 'error' });
         const info = showToast('새 버전이 있습니다');
-        await waitFor(() => expect(visible().length).toBeGreaterThanOrEqual(2));
+        const warn = showToast('일부 항목만 저장했습니다', { status: 'warning' });
+        await waitFor(() => expect(visible().length).toBe(3));
         await expect(visible().find((t) => t.key === err)?.timeout).toBeUndefined();
+        await expect(visible().find((t) => t.key === warn)?.timeout).toBeUndefined();
         await expect(visible().find((t) => t.key === info)?.timeout).toBe(5000);
       });
     } finally {

@@ -17,7 +17,7 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-const NAME: Record<AlertStatus, string> = { information: 'Information', success: 'Success', error: 'Error' };
+const NAME: Record<AlertStatus, string> = { information: 'Information', success: 'Success', warning: 'Warning', error: 'Error' };
 const figmaButton = (
   <Button variant="tertiary" appearance="outline" size="xs">
     버튼
@@ -70,7 +70,7 @@ export const Interaction: StoryObj<{ onRetry: Mock<() => void> }> = {
         title="업로드 실패"
         description="파일 크기를 확인하세요."
         action={
-          <Button variant="tertiary" appearance="outline" size="xs" onClick={args.onRetry}>
+          <Button variant="tertiary" appearance="outline" size="xs" onClick={() => args.onRetry()}>
             재시도
           </Button>
         }

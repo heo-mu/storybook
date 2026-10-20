@@ -86,7 +86,7 @@ export const DataState = forwardRef<HTMLDivElement, DataStateProps>(function Dat
   }
   const content = CONTENT[state];
   const button = onAction ? (
-    <TextButton variant="primary" size="sm" rightIcon={content.actionIcon} onClick={onAction}>
+    <TextButton variant="primary" size="sm" rightIcon={content.actionIcon} onClick={() => onAction()}>
       {actionLabel ?? content.actionLabel}
     </TextButton>
   ) : null;

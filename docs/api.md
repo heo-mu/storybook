@@ -7,7 +7,7 @@
   react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 컴포넌트의 사용 방법 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
 
-export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 129 · 상수 45 · 함수 3 · 아이콘 35 · 내부 API 13
+export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 129 · 상수 45 · 함수 3 · 아이콘 36 · 내부 API 13
 
 ## 목차
 
@@ -60,7 +60,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-화면 안에 머물며 상태나 안내를 전하는 알림입니다. 오류는 화면 낭독기가 바로 읽고(`role="alert"`), 안내 · 성공은 `role="status"`로 읽힙니다.
+화면 안에 머물며 상태나 안내를 전하는 알림입니다. 오류는 화면 낭독기가 바로 읽고(`role="alert"`), 안내 · 성공 · 주의는 `role="status"`로 읽힙니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -68,7 +68,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `action` | `ReactNode` |  | 오른쪽에 놓는 버튼. 예: `<Button variant="tertiary" appearance="outline" size="xs">` |
 | `description` | `ReactNode` |  | 제목 아래 설명. 길면 줄을 바꿔 모두 보여 줍니다. |
 | `showIcon` | `boolean` | `true` | 상태 아이콘을 표시합니다. |
-| `status` | `"success" \| "error" \| "information"` | `information` | 종류 — 안내 · 성공 · 오류. 종류마다 아이콘과 색이 다릅니다. |
+| `status` | `"success" \| "error" \| "warning" \| "information"` | `information` | 종류 — 안내 · 성공 · 주의 · 오류. 종류마다 아이콘과 색이 다릅니다. |
 
 - 상수: `ALERT_STATUSES`
 - 타입: `AlertProps`, `AlertStatus`
@@ -354,6 +354,8 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | --- | --- | --- | --- |
 | `defaultValue` | `string[]` | `[]` | 처음 선택된 값 목록(비제어). |
 | `disabled` | `boolean` |  | 그룹 안 모든 체크박스를 비활성으로 만듭니다. |
+| `invalid` | `boolean` | `false` | 선택이 올바르지 않음(예: 필수 항목을 고르지 않음) — 항목에 오류 상태를 알리고 `message`를 오류 메시지로 보여 줍니다. |
+| `message` | `ReactNode` |  | 묶음 아래에 보이는 메시지. `invalid`이면 오류 메시지, 아니면 회색 도움말입니다. 화면 낭독기는 각 항목의 설명으로 읽습니다. |
 | `name` | `string` |  | 그룹 안 모든 체크박스에 주는 `name`(폼 전송용). |
 | `onChange` | `((value: string[]) => void)` |  | 새 선택값 목록과 함께 호출됩니다. |
 | `orientation` | `"horizontal" \| "vertical"` | `vertical` | 배치 방향 — 세로(vertical) · 가로(horizontal). 항목 사이 간격은 자동으로 맞춰집니다. |
@@ -535,7 +537,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `label` | `ReactNode` |  | 입력 칸 위 라벨. 라벨이 없으면 `aria-label`을 붙입니다. |
 | `maxValue` | `string` |  | 고를 수 있는 가장 늦은 날짜. |
 | `message` | `ReactNode` |  | 입력 칸 아래 도움말 메시지. |
-| `messageType` | `"info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'info'` | 도움말 메시지 종류. |
+| `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `minValue` | `string` |  | 고를 수 있는 가장 이른 날짜. |
 | `name` | `string` |  | 폼 필드 이름. 폼을 보낼 때 'YYYY-MM-DD' 값이 전송됩니다. |
 | `onChange` | `((value: string \| null) => void)` |  | 날짜가 바뀌면 새 날짜로, 입력 칸을 비우면 `null`로 호출됩니다. |
@@ -726,7 +728,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `invalid` | `boolean` | `false` | 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. |
 | `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
 | `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
-| `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
+| `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `onClear` | `(() => void)` |  | 지우기 버튼으로 값을 비운 뒤 호출됩니다. |
 | `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
 | `revealable` | `boolean` | `true` | `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다. |
@@ -959,6 +961,8 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | --- | --- | --- | --- |
 | `defaultValue` | `string \| null` | `null` | 처음 선택된 값(비제어). |
 | `disabled` | `boolean` |  | 그룹 안 모든 라디오 버튼을 비활성으로 만듭니다. |
+| `invalid` | `boolean` | `false` | 선택이 올바르지 않음(예: 필수 항목을 고르지 않음) — 항목에 오류 상태를 알리고 `message`를 오류 메시지로 보여 줍니다. |
+| `message` | `ReactNode` |  | 묶음 아래에 보이는 메시지. `invalid`이면 오류 메시지, 아니면 회색 도움말입니다. 화면 낭독기는 각 항목의 설명으로 읽습니다. |
 | `name` | `string` | `자동 생성` | 그룹 안 라디오 버튼들의 `name`(폼 전송 · 방향키 이동 묶음). |
 | `onChange` | `((value: string) => void)` |  | 새로 고른 값과 함께 호출됩니다. |
 | `orientation` | `"horizontal" \| "vertical"` | `vertical` | 배치 방향 — 세로(vertical) · 가로(horizontal). 항목 사이 간격은 자동으로 맞춰집니다. |
@@ -1049,7 +1053,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `items` | `Iterable<T>` |  | 옵션을 데이터로 만들 때 쓰는 목록. 이때 `children`은 `(item) => <SelectOption id={…}>…</SelectOption>` 함수입니다. |
 | `label` | `ReactNode` |  | 선택 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
 | `message` | `ReactNode` |  | 선택 칸 아래에 보이는 도움말 메시지. |
-| `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
+| `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `name` | `string` |  | 폼 필드 이름. 주면 폼을 보낼 때 선택값이 함께 전송됩니다. |
 | `onChange` | `((value: Key \| null) => void)` |  | 새로 고른 옵션의 `id`와 함께 호출됩니다. |
 | `onOpenChange` | `((open: boolean) => void)` |  | 목록이 펼쳐지거나 닫힐 때 호출됩니다. |
@@ -1397,7 +1401,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `invalid` | `boolean` | `false` | 오류 — 오류 테두리로 표시합니다. |
 | `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
 | `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
-| `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
+| `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
 | `showCount` | `boolean` | `true` | `maxLength`가 있을 때 `입력한 글자 수/최대 글자 수`를 보여 줍니다. |
 | `size` | `"sm" \| "md"` | `sm` | 크기. |
@@ -1420,7 +1424,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `closeLabel` | `string` | `알림 닫기` | 화면 낭독기가 읽는 닫기 버튼 이름. |
 | `onClose` | `(() => void)` |  | 닫기 버튼을 누르면 호출됩니다. |
 | `showClose` | `boolean` | `true` | 닫기 버튼을 표시합니다. |
-| `status` | `"success" \| "error" \| "information"` | `information` | 종류 — 안내 · 성공 · 오류. |
+| `status` | `"success" \| "error" \| "warning" \| "information"` | `information` | 종류 — 안내 · 성공 · 주의 · 오류. |
 
 ### `ToastRegion`
 
@@ -1468,7 +1472,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 Figma 아이콘 벡터(16 또는 32 그리드). Prop: `size`(기본 viewBox 크기) + SVG 속성. 색은 `currentColor`.
 
-`CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningIcon`
+`CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`
 
 ## 기타
 

@@ -6,6 +6,10 @@ export type RadioGroupContextValue = {
   size?: ChoiceSize;
   disabled?: boolean;
   required?: boolean;
+  /** The group message is an error (`invalid`). */
+  invalid?: boolean;
+  /** ID of the group message, for the radios' aria-describedby. */
+  describedBy?: string;
   selected: string | null;
   select: (value: string) => void;
 };

@@ -7,6 +7,25 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### 검수 준비 (2026-10-20, Figma와 함께 · 배포하지 않음)
+
+디자이너 검수 전 남은 핵심 사항 — 디자인 결정 V-1 – V-5를 기존 Figma 디자인 시스템 기준으로 확정해 Figma에 먼저 만들고 코드에 반영했습니다.
+Figma 기록: [docs/figma-fix-requests.md W절](docs/figma-fix-requests.md#w-검수-준비--v-1--v-5-디자인-정책-확정-2026-10-20-사용자-승인-작업).
+
+- **Added — 도움말(V-1)**: `messageType` `'helper'`(아이콘 없는 회색 글자, 비활성 칸은 흐린 색) — `Input` · `Textarea` · `Select` · `DatePicker`.
+  `FIELD_MESSAGE_TYPES`에 `'helper'` 추가.
+- **화면 변경 — 메시지 기본 종류**: `messageType`을 정하지 않은 메시지는 이제 회색 도움말(`helper`)입니다(전에는 파란 `info`). 파란 안내가 필요하면
+  `messageType="info"`. 오류(`invalid`)는 그대로 `error`.
+- **Added — 주의(V-3)**: `Alert` · `Toast`의 `status="warning"`(주황 삼각형), `ALERT_STATUSES`에 `'warning'`, 아이콘 `WarningFillIcon`,
+  토큰 `--colors-alert-status-icon-warning` · `--colors-toast-border-warning` · `--colors-toast-status-icon-warning`. `showToast(…, { status: 'warning' })`는 오류처럼 닫을 때까지 남습니다.
+- **Added — 묶음 오류(V-5)**: `CheckboxGroup` · `RadioGroup`의 `invalid` · `message` — 묶음 아래 오류 메시지(메시지만 있으면 도움말), 항목에 `aria-invalid` · 설명.
+- **정책 확정(코드 변화 없음)**: 처리 중은 Disabled 버튼 + 옆 `Loading`(sm)(V-2), `Dialog`는 한 가지 크기 420px · 입력이 많으면 화면으로(V-4) — 사용 방법 문서에 반영.
+- **Fixed — 접근성**: `BadgeCount`에 `aria-label`이 있으면 `role="img"`(일반 `<span>`의 이름은 읽히지 않을 수 있었음), `FilterChipSelect` 칩 이름이
+  라벨을 두 번 읽던 문제("상태 상태" → "상태").
+- **Fixed — 콜백**: `DataState onAction` · `FileUploaderItem onRemove` · `onDownload` · `ImageUploadPreview onRemove` · `Toast onClose`에 클릭 이벤트가 넘어가던 문제
+  (타입은 인자 없음 — 선택 인자가 있는 함수를 넘기면 이벤트가 들어갔음).
+- **스토리**: 도움말 · 주의 · 묶음 오류 사용 예와 검사, 입력 화면 예시에 도움말 · 필수 동의 오류(Figma 예시와 같음).
+
 ### v1.0 테스트 후보 rc.1 (2026-10-20, Figma와 함께 · 배포하지 않음)
 
 개발팀 검토용 후보입니다(로컬 태그 `checkpoint/v1.0-candidate`). npm · Storybook 배포와 정식 `1.0.0` 출시는 하지 않았고, `package.json` 버전도 바꾸지 않았습니다(버전 번호는 D2 결정). 후보 범위 · 시험 결과 · 남은 결정: [docs/v1.0-candidate.md](docs/v1.0-candidate.md).

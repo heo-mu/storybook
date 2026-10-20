@@ -35,6 +35,7 @@ import { Button, Dialog } from 'platform-design-system';
 | title | `title` | 대화상자 이름(`aria-labelledby`) |
 | description | `description` | 대화상자 설명(`aria-describedby`) |
 | dialog_footer (버튼 2개, 240px) | `actions` | 같은 너비로 채움. 함수면 `close`를 받음 |
+| (크기) | — | 한 가지 420px(Rules 05 "대화상자 크기", 2026-10-20 V-4): 가운데 정렬 확인용 구조라 큰 크기는 새 컴포넌트(왼쪽 정렬 입력 대화상자) 설계가 필요해 만들지 않음. 입력이 많으면 화면으로 |
 
 ## 정책
 

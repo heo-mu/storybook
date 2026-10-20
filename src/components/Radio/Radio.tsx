@@ -45,6 +45,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
         onChange={handleChange}
         disabled={isDisabled}
         required={required ?? group?.required}
+        aria-invalid={rest['aria-invalid'] ?? (group?.invalid || undefined)}
+        aria-describedby={cx(rest['aria-describedby'], group?.describedBy) || undefined}
       />
       <span className="ds-choice__decoration ds-radio__dot" aria-hidden="true" />
       {label != null && label !== false && <span className="ds-choice__label">{label}</span>}

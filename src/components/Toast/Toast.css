@@ -30,6 +30,11 @@
   --_icon: var(--colors-toast-status-icon-succeess);
 }
 
+.ds-toast[data-status='warning'] {
+  --_bd: var(--colors-toast-border-warning);
+  --_icon: var(--colors-toast-status-icon-warning);
+}
+
 .ds-toast[data-status='error'] {
   --_bd: var(--colors-toast-border-error);
   --_icon: var(--colors-toast-status-icon-error);

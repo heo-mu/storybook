@@ -12,7 +12,7 @@ export type InputProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'class
   required?: boolean;
   /** 입력 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
-  /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
+  /** 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. @default 오류이면 'error', 그 밖에는 'helper' */
   messageType?: FieldMessageType;
   /** 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. */
   invalid?: boolean;
@@ -131,7 +131,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         )}
       </div>
       {hasMessage && (
-        <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'info')}>
+        <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')}>
           {message}
         </FieldMessage>
       )}

@@ -42,7 +42,8 @@ import { DatePicker, Calendar } from 'platform-design-system';
 | day Today · Selected · Outside · Disabled | 오늘 · `value` · 다른 달 · `minValue`/`maxValue`/`isDateUnavailable` | |
 | navigation Disabled | 범위 끝 달에서 이전 / 다음 비활성 | |
 | Label Text | `label` | |
-| date-picker_message Alert Text · Type Info · Success · Error | `message` · `messageType` | |
+| date-picker_message Alert Text · Type Info · Success · Error | `message` · `messageType` | 기본: 오류면 `'error'`, 아니면 `'helper'` |
+| date-picker_message Type Helper · State Default · Disabled · 필드 `Helper` 속성 | `message`(종류를 정하지 않으면 `'helper'`) | 아이콘 없는 회색 글자 `colors/date-picker/trigger/outline/helper/default`, 비활성 칸은 `…/helper/disabled`(Rules 04 "도움말", 2026-10-20 V-1) |
 | date-picker_day Day Text · State Pressed | 날짜 숫자(로캘 형식) · 누르는 동안 | 이름은 "27 2026년 9월 27일 일요일"(정책 `DPCK-05`) |
 | date-picker_navigation Direction Previous · Next · State Pressed | 이전 · 다음 달 버튼(이름 "이전 달" · "다음 달") · 누르는 동안 | |
 

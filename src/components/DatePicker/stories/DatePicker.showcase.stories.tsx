@@ -7,6 +7,7 @@ import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
 import { expectRequiredMark } from '../../../storybook/requiredMark';
+import { expectHelperMessage } from '../../../storybook/helperMessage';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs date-picker` (sets date-picker_trigger, date-picker_message; the calendar
@@ -81,17 +82,32 @@ export const VariantMatrix: Story = {
   },
 };
 
-/** Figma `date-picker_message` (Info · Success · Error). */
+/** Figma `date-picker_message` (Info · Success · Error · Helper; Helper also in a disabled field — State=Disabled). */
 export const MessageMatrix: Story = {
   name: '메시지 모든 변형',
   render: () => (
     <div className="ds-date-picker">
       <FigmaMatrix
         columns={['date-picker_message']}
-        rows={(['info', 'success', 'error'] as const).map((type) => ({
-          label: type,
-          cells: [{ figma: `Type=${type.charAt(0).toUpperCase() + type.slice(1)}`, node: <FieldMessage type={type}>Alert 내용</FieldMessage> }],
-        }))}
+        rows={[
+          ...(['info', 'success', 'error', 'helper'] as const).map((type) => ({
+            label: type,
+            cells: [{ figma: `Type=${type.charAt(0).toUpperCase() + type.slice(1)}, State=Default`, node: <FieldMessage type={type}>Alert 내용</FieldMessage> }],
+          })),
+          {
+            label: 'helper · Disabled',
+            cells: [
+              {
+                figma: 'Type=Helper, State=Disabled',
+                node: (
+                  <div className="ds-date-picker" data-disabled="">
+                    <FieldMessage type="helper">Alert 내용</FieldMessage>
+                  </div>
+                ),
+              },
+            ],
+          },
+        ]}
       />
     </div>
   ),
@@ -220,5 +236,21 @@ export const RequiredMark: Story = {
     }
     await expect(canvas.getByRole('textbox', { name: '종료일' })).not.toBeRequired();
     await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(3);
+  },
+};
+
+/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+export const HelperMessage: Story = {
+  name: '도움말',
+  render: () => (
+    <div style={{ display: 'flex', gap: 24 }}>
+      <DatePicker label="방문일" message="평일만 고를 수 있습니다." />
+      <DatePicker label="방문일" message="평일만 고를 수 있습니다." disabled />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const [field, disabled] = canvasElement.querySelectorAll<HTMLElement>('.ds-date-picker');
+    await expectHelperMessage(field, '--colors-date-picker-trigger-outline-helper-default');
+    await expectHelperMessage(disabled, '--colors-date-picker-trigger-outline-helper-disabled');
   },
 };

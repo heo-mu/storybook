@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
+import { expect, within } from 'storybook/test';
 import { Radio } from '../Radio';
 import { RadioGroup } from '../RadioGroup';
 import { CHOICE_SIZES, type ChoiceSize } from '../../Choice';
@@ -181,5 +181,42 @@ export const Accessibility: Story = {
     await expect(new Set(radios.map((r) => r.getAttribute('name'))).size).toBe(1);
     await expect(canvas.getByRole('radio', { name: '팀 공개' })).toBeChecked();
     await expect(canvas.getByRole('radio', { name: '나만 보기' })).toBeDisabled();
+  },
+};
+
+/** Rules 04 "묶음 오류": input_message Error 6px under the group, the items carry aria-invalid and read the message; a
+ * message without `invalid` is the grey help text. */
+export const GroupMessage: Story = {
+  name: '묶음 메시지',
+  render: () => (
+    <div style={{ display: 'flex', gap: 48 }}>
+      <RadioGroup aria-label="오류 묶음" invalid message="하나 이상 고르세요." orientation="horizontal">
+        <Radio value="v0" label="일반" />
+        <Radio value="v1" label="긴급" />
+      </RadioGroup>
+      <RadioGroup aria-label="도움말 묶음" message="여러 개 고를 수 있습니다." orientation="horizontal">
+        <Radio value="v0" label="일반" />
+        <Radio value="v1" label="긴급" />
+      </RadioGroup>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const color = (token: string) => { const p = document.createElement('span'); p.style.color = `var(${token})`; document.body.append(p); const c = getComputedStyle(p).color; p.remove(); return c; };
+    const [errorField, helpField] = canvasElement.querySelectorAll<HTMLElement>('.ds-choice-field');
+    const group = within(errorField).getByRole('radiogroup', { name: '오류 묶음' });
+    const message = errorField.querySelector<HTMLElement>('.ds-field-message')!;
+    await expect(message).toHaveAttribute('data-type', 'error');
+    await expect(message.querySelector('svg')).toBeTruthy();
+    await expect(getComputedStyle(message).color).toBe(color('--colors-input-outline-helper-error'));
+    await expect(Math.abs(message.getBoundingClientRect().top - group.getBoundingClientRect().bottom - 6)).toBeLessThan(0.5);
+    for (const input of within(errorField).getAllByRole('radio')) {
+      await expect(group).toHaveAttribute('aria-invalid', 'true');
+      await expect(input).toHaveAccessibleDescription('하나 이상 고르세요.');
+    }
+    const help = helpField.querySelector<HTMLElement>('.ds-field-message')!;
+    await expect(help).toHaveAttribute('data-type', 'helper');
+    await expect(help.querySelector('svg')).toBeNull();
+    await expect(getComputedStyle(help).color).toBe(color('--colors-input-outline-helper-default'));
+    for (const input of within(helpField).getAllByRole('radio')) await expect(input).not.toHaveAttribute('aria-invalid');
   },
 };

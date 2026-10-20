@@ -39,6 +39,10 @@ import { Radio, RadioGroup } from 'platform-design-system';
 Figma에는 그룹 컴포넌트가 없습니다. `RadioGroup`은 `role="radiogroup"`, 공통 `name`(생략 시 자동 생성), 선택값 관리만 하는
 시맨틱 래퍼입니다. `aria-label` 또는 `aria-labelledby`로 이름을 붙입니다.
 
+**묶음 오류 · 메시지**(Rules 04 "묶음 오류", 2026-10-20 V-5): `invalid` · `message` — 묶음 아래 Figma `input_message`(Error, 메시지만 있으면 Helper)를
+6px(`p-1_5`) 아래에 둡니다. 색은 Figma 예시가 연결한 `colors/input/outline/helper/*`. `radiogroup`에 `aria-invalid` · `aria-describedby`, 각 라디오 버튼에도 메시지 `aria-describedby`를 붙입니다. 래퍼 `.ds-choice-field`는 메시지가 없으면
+`display: contents`(배치 그대로), 메시지가 생겨도 같은 요소라 묶음이 다시 만들어지지 않고 포커스가 유지됩니다. 상자 · 원의 오류 모양은 Figma에 없어 만들지 않았습니다.
+
 ## 정책
 
 Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.

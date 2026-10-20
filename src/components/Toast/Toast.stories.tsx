@@ -21,7 +21,7 @@ const meta = {
     },
   },
   args: { children: '저장했습니다', status: 'success', showClose: true, onClose: fn() },
-  argTypes: { status: { control: 'inline-radio', options: ALERT_STATUSES, description: '종류 — 안내 · 성공 · 오류', table: { defaultValue: { summary: 'information' } } } },
+  argTypes: { status: { control: 'inline-radio', options: ALERT_STATUSES, description: '종류 — 안내 · 성공 · 주의 · 오류', table: { defaultValue: { summary: 'information' } } } },
 } satisfies Meta<typeof Toast>;
 
 export default meta;
@@ -68,4 +68,10 @@ export const CloseFromCode: Story = {
     await userEvent.click(canvas.getByRole('button', { name: '업로드 완료' }));
     await waitFor(() => expect(body.queryByText('업로드 중입니다')).toBeNull());
   },
+};
+
+/** 주의 토스트는 오류처럼 사용자가 닫을 때까지 남습니다(`showToast`의 기본 시간 없음). */
+export const Warning: Story = {
+  name: '주의',
+  args: { status: 'warning', children: '일부 항목만 저장했습니다' },
 };

@@ -6,6 +6,7 @@ import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
 import { expectRequiredMark } from '../../../storybook/requiredMark';
+import { expectHelperMessage } from '../../../storybook/helperMessage';
 
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs input`.
@@ -173,5 +174,21 @@ export const RequiredMark: Story = {
     await expect(form.checkValidity()).toBe(false);
     for (const size of FIELD_SIZES) await userEvent.type(canvas.getByRole('textbox', { name: `이름 (${size})` }), '홍길동');
     await expect(form.checkValidity()).toBe(true);
+  },
+};
+
+/** Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field. */
+export const HelperMessage: Story = {
+  name: '도움말',
+  render: () => (
+    <div style={{ display: 'flex', gap: 24 }}>
+      <Input label="비밀번호" message="8자 이상, 영문과 숫자를 섞어 입력하세요." />
+      <Input label="비밀번호" message="8자 이상, 영문과 숫자를 섞어 입력하세요." disabled />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const [field, disabled] = canvasElement.querySelectorAll<HTMLElement>('.ds-input');
+    await expectHelperMessage(field, '--colors-input-outline-helper-default');
+    await expectHelperMessage(disabled, '--colors-input-outline-helper-disabled');
   },
 };

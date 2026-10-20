@@ -61,6 +61,7 @@ const [status, setStatus] = useState<Key | null>(null);  // 단일: Key | null
 
 키보드: Tab으로 칩, Enter · Space · ↓로 열기, 방향키 · 글자 입력으로 이동, Space · Enter로 선택(다중은 켜고 끄기), Esc로 닫으면 적용되고 포커스가 칩으로
 돌아갑니다. 칩의 이름은 지금 글자("동: 101동, 103동"), 패널은 `listbox`(다중이면 `aria-multiselectable`)입니다.
+react-aria는 버튼 이름을 "값 + 라벨"로 붙여 "상태 상태" · "상태: 주의 상태"처럼 라벨이 두 번 읽혔습니다 — 2026-10-20부터 칩의 `aria-labelledby`를 `SelectValue`(보이는 글자) 하나로 지정합니다.
 
 ## Figma 속성 → Props
 
