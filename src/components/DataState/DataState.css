@@ -3,7 +3,8 @@
  * color/background/white → colors/surface/page, figma-issues F69).
  *   Loading:  column m-3 apart — skeleton Line · Shape4 · Block centred m-1 apart, label xs/leading-normal/normal
  *             (text/secondary)
- *   others:   an empty-state instance stretched to the full width (icon · title · description · TextButton)
+ *   others:   an empty-state instance stretched to the full width, including its p-3 vertical padding
+ *             (icon · title · description · TextButton). The outer data-state adds no padding.
  */
 
 .ds-data-state {
@@ -11,8 +12,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-margin-m-3);
+  gap: var(--spacing-margin-m-0);
   background-color: var(--colors-surface-page);
+}
+
+.ds-data-state[data-state='loading'] {
+  gap: var(--spacing-margin-m-3);
 }
 
 .ds-data-state .ds-empty-state {

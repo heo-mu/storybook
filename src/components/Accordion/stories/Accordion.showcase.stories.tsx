@@ -68,6 +68,18 @@ export const Matrix: Story = {
       }))}
     />
   ),
+  play: async ({ canvasElement }) => {
+    for (const item of canvasElement.querySelectorAll<HTMLElement>('.ds-accordion__item')) {
+      const trigger = item.querySelector<HTMLElement>('.ds-accordion__trigger')!;
+      const disabled = item.hasAttribute('data-disabled');
+      const small = item.dataset.size === 'sm';
+      const divider = getComputedStyle(trigger, '::after');
+      await expect(divider.opacity).toBe(disabled ? '0' : '1');
+      await expect(divider.height).toBe('1px');
+      await expect(trigger.getBoundingClientRect().height).toBe(small ? 36 : 44);
+      await expect(item.getBoundingClientRect().height).toBe((small ? 36 : 44) + (item.hasAttribute('data-expanded') ? 64 : 0));
+    }
+  },
 };
 
 /** Enter / Space toggle; one item open at a time unless `allowsMultipleExpanded`; disabled items are skipped. */

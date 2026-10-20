@@ -7,7 +7,7 @@
  *   divider: Figma line directly under the trigger, drawn on the trigger's last pixel row (::after) —
  *            colors/accordion/border/default; Hover and Expanded …/border/hover (renamed from …/border/focus; Expanded
  *            uses it since the Figma update of 2026-10-19)
- *   disabled: …/background/disabled (fill/disabled) and …/title/disabled (text/placeholder) since the 2026-10-19 sync
+ *   disabled: …/background/disabled (fill/disabled), …/title/disabled (text/placeholder), divider opacity 0
  *   body:    padding top p-3, sides …/trigger-padding-x, bottom spacing/accordion/body-padding; text sm/leading-normal/normal
  *   divider: thickness border-width/accordion/default
  * State: Default → Hover (divider and trigger background …/background/hover in every size — Figma since 2026-10-19, F50) → Disabled.
@@ -136,6 +136,11 @@
   height: var(--border-width-accordion-default);
   background-color: var(--_divider);
   content: '';
+}
+
+/* Keep the divider out of layout and hide it only for disabled items. */
+.ds-accordion__item[data-disabled] .ds-accordion__trigger[data-divider]::after {
+  opacity: 0;
 }
 
 .ds-accordion__body {

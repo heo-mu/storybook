@@ -29,6 +29,19 @@ export const Figma: Story = {
       <DataState data-figma="State=Partial" state="partial" description="130대 중 128대 수신 · 누락된 2대를 확인하세요." onAction={noop} />
     </div>
   ),
+  play: async ({ canvasElement }) => {
+    for (const state of canvasElement.querySelectorAll<HTMLElement>('[data-figma]')) {
+      const loading = state.dataset.figma === 'State=Loading';
+      await expect(state.getBoundingClientRect().height).toBe(loading ? 66 : 120);
+      const content = state.querySelector<HTMLElement>('.ds-empty-state');
+      if (content) {
+        await expect(getComputedStyle(content).paddingTop).toBe('12px');
+        await expect(getComputedStyle(content).paddingBottom).toBe('12px');
+        const text = content.querySelector<HTMLElement>('.ds-empty-state__text')!;
+        await expect(text.getBoundingClientRect().top - content.getBoundingClientRect().top).toBe(12);
+      }
+    }
+  },
 };
 
 /** A polite live region; the button calls `onAction`. */

@@ -1,5 +1,6 @@
 /*
- * Empty State — Figma `empty-state` (724:14963): column centred, 320px wide, action m-3 below the text block;
+ * Empty State — Figma `empty-state` (724:14963): column centred, 320px wide, vertical padding p-3,
+ * action m-3 below the text block;
  * text block m-1 apart: 16px icon (colors/icon/placeholder), title sm/leading-normal/semibold
  * (colors/empty-state/title/default → text/secondary), description xs/leading-normal/normal
  * (colors/empty-state/description/default → text/tertiary, centred, wraps) — A-1 2026-10-19: both pass 4.5:1, the title
@@ -12,6 +13,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-margin-m-3);
+  padding-block: var(--spacing-padding-p-3);
   width: 320px;
   max-width: 100%;
 }

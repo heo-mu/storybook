@@ -42,7 +42,7 @@ export type AccordionItemProps = {
   description?: ReactNode;
   /** 펼쳤을 때 보이는 내용. */
   children: ReactNode;
-  /** 아래 구분선을 표시합니다. @default true */
+  /** 아래 구분선을 표시합니다. 비활성 상태에서는 표시하지 않습니다. @default true */
   divider?: boolean;
   /** 비활성 — 펼칠 수 없고 키보드 포커스를 받지 않습니다. */
   disabled?: boolean;
