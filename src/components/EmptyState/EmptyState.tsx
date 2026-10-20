@@ -2,19 +2,19 @@ import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react
 import { cx } from '../../utils/cx';
 
 export type EmptyStateProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
-  /** Figma "Title Text". */
+  /** 제목. */
   title: ReactNode;
-  /** Figma "Description Text" ("Description" on). */
+  /** 제목 아래 설명. 가운데 정렬되며 길면 줄을 바꿉니다. */
   description?: ReactNode;
-  /** Figma "Icon" (16px; the Figma placeholder is Database). Decorative. */
+  /** 제목 위 아이콘(16px). 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다. */
   icon?: ReactNode;
-  /** The Figma button below the text, e.g. `<TextButton rightIcon={<CaretRightIcon />}>`. */
+  /** 글 아래 버튼. 할 일이 없으면 넣지 않습니다. 예: `<TextButton rightIcon={<CaretRightIcon />}>` */
   action?: ReactNode;
 };
 
 /**
- * Figma component `empty-state` (724:14963): a centred message for an empty area — icon, title, description
- * (m-1 apart) and an action m-3 below. 320px wide as in Figma, narrower when the parent is.
+ * 보여 줄 내용이 없을 때 그 자리 가운데에 안내를 보여 주는 빈 상태입니다.
+ * 너비는 320px이고, 부모가 더 좁으면 그 너비에 맞춰 줄어듭니다.
  */
 export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState({ title, description, icon, action, className, ...rest }, ref) {
   return (

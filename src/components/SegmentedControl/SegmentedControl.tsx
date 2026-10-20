@@ -5,25 +5,23 @@ import { SegmentedControlContext } from './SegmentedControlContext';
 import type { SegmentedControlSize } from './SegmentedControl.options';
 
 export type SegmentedControlProps = Omit<ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> & {
-  /** Figma "Size". @default 'md' */
+  /** 크기. @default 'md' */
   size?: SegmentedControlSize;
-  /** Selected item value (controlled). */
+  /** 선택한 옵션의 값(제어). */
   value?: string | null;
-  /** Initially selected item value (uncontrolled). @default null */
+  /** 처음 선택된 옵션의 값(비제어). @default null */
   defaultValue?: string | null;
-  /** Called with the newly selected value. */
+  /** 새로 고른 값과 함께 호출됩니다. */
   onChange?: (value: string) => void;
-  /** `name` of the underlying radios (form submission). @default generated */
+  /** 폼 전송에 쓰는 이름. @default 자동 생성 */
   name?: string;
-  /** Disables every item (Figma State "Disabled"). */
+  /** 모든 옵션을 비활성으로 만듭니다. */
   disabled?: boolean;
 };
 
 /**
- * Figma component set `segmented-control` (531:24471) with `segmented-item` (524:24397): one choice out
- * of a few options. Items share the width equally (Figma: items fill the control). Built from native
- * radios (role="radiogroup"): arrow keys move the selection, forms receive the value.
- * Label the control with `aria-label` or `aria-labelledby`.
+ * 몇 개의 옵션을 나란히 보여 주고 그중 하나를 고르는 컨트롤입니다. 옵션들은 너비를 똑같이 나눠 쓰고,
+ * 방향키로 선택이 이동합니다. `aria-label` 또는 `aria-labelledby`로 이름을 붙입니다.
  */
 export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(function SegmentedControl(
   { size = 'md', value, defaultValue = null, onChange, name, disabled, className, children, ...rest },

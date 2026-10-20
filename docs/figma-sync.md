@@ -6,7 +6,7 @@ Figma 파일은 버전별로 따로 관리합니다. 코드와 Figma의 대응�
 
 | Figma | 코드 | 규칙 |
 | --- | --- | --- |
-| 컴포넌트 세트 이름(`button_basic`, `chip-filter` …) | React 컴포넌트 | 표: [component-inventory.md](./component-inventory.md) · [sync-status.md](./sync-status.md) |
+| 컴포넌트 세트 이름(`button_basic`, `chip-filter` …) | React 컴포넌트 | `figma/component-map.json`(이름만 — 버전과 무관). 표: [public-api.md](./public-api.md) · [sync-status.md](./sync-status.md) |
 | Variant 속성(`Size=md` …) | Props(`size="md"`) | 컴포넌트별 표: [components/](./components/) |
 | 변수 경로(`colors/button/primary/solid/background/default`) | CSS 변수(`--colors-button-primary-solid-background-default`) | `/` → `-`, 대괄호 값은 괄호를 뺌(`rounded-[2px]` → `rounded-2px`) — `scripts/build-tokens.mjs` |
 | 텍스트 · 효과 스타일 이름 | `--typography-*` · `--effect-*` | 같은 생성기 |
@@ -21,6 +21,7 @@ Figma 파일은 버전별로 따로 관리합니다. 코드와 Figma의 대응�
 | `figma/metadata/*.xml` | 섹션의 노드 트리(변형 위치) | MCP `get_metadata`(Component · Dashboard components 섹션) |
 | `figma/geometry/<set>.json` | 변형별 레이어 위치 · 크기, `id`는 그 버전의 노드 ID | `figma/scripts/export-geometry.figma.js`를 `SET_NAME`으로 실행 |
 | `figma/reference/<set>.png` | 기준 이미지 | MCP `get_screenshot`(세트) |
+| `figma/component-map.json`의 `nodeIdsNotInSnapshot` | 스냅샷에 없는 세트의 노드 ID | 새 버전에서 직접 갱신 |
 | `docs/components/*.md` · `docs/figma-*.md` | 노드 · 변수 ID가 적힌 기록 | 참고용(검증에는 쓰지 않음) |
 
 검증(`scripts/verify-figma.mjs`)은 메타데이터에서 세트를 노드 ID로 찾고, 없으면 **세트 이름**으로 찾습니다(이름이 겹치면 오류).

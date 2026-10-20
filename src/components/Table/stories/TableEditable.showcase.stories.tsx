@@ -16,7 +16,8 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Value cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs table` (set table_value_editable).
 const meta = {
-  title: 'Components/Table/Editable Showcase',
+  title: '컴포넌트/Table/편집 칸 전체 보기',
+  id: 'components-table-editable-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -154,6 +155,7 @@ const FIELD_CELLS: Array<[State, Content]> = [
 
 /** Figma `table_value_editable` (52) without the open list / calendar (see `EditableOpen`). */
 export const EditableMatrix: Story = {
+  name: '편집 칸 모든 변형',
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 480px)', gap: 40, alignItems: 'start' }}>
       <TypeTable type="Input" cells={[...FIELD_CELLS, ['Editing', 'Filled']]} />
@@ -171,6 +173,7 @@ export const EditableMatrix: Story = {
 
 /** Editing with the list / calendar open (one at a time). */
 export const EditableOpen: StoryObj<{ type: 'Select' | 'Date Picker' | 'Filter' }> = {
+  name: '편집 칸 목록 열림',
   args: { type: 'Select' },
   render: ({ type }) => (
     <div style={{ paddingBottom: 320 }}>
@@ -199,6 +202,7 @@ export const EditableOpen: StoryObj<{ type: 'Select' | 'Date Picker' | 'Filter' 
 
 /** In management mode the values are real fields: labelled, in the Tab order, each with its own keyboard behaviour. */
 export const EditableAccessibility: Story = {
+  name: '편집 칸 접근성',
   render: () => (
     <KeyValueTable style={{ width: 480 }}>
       <KeyValueItem label="설비명" required editable unit="대">

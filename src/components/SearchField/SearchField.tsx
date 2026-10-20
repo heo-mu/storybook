@@ -6,29 +6,27 @@ import { setNativeValue, useFieldValue, useMergedRef, type FieldSize } from '../
 import type { SearchFieldAppearance } from './SearchField.options';
 
 export type SearchFieldProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'type' | 'className' | 'style'> & {
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: FieldSize;
-  /** Figma "Type" (Outline / Solid). @default 'outline' */
+  /** 모양 — 테두리(outline) · 채움(solid). @default 'outline' */
   appearance?: SearchFieldAppearance;
-  /** Figma "Label" + "Label Text". Without a label, pass `aria-label`. */
+  /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** Figma State "Error". */
+  /** 오류 — 오류 테두리로 표시합니다. */
   invalid?: boolean;
-  /** Called with the current value when Enter is pressed. */
+  /** Enter 키를 누르면 현재 검색어와 함께 호출됩니다. */
   onSearch?: (value: string) => void;
-  /** Called after the clear button empties the field. */
+  /** 지우기 버튼으로 값을 비운 뒤 호출됩니다. */
   onClear?: () => void;
-  /** Class name of the root element. */
+  /** 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root element. */
+  /** 바깥 요소의 스타일. */
   style?: CSSProperties;
 };
 
 /**
- * Figma component set `search-field` (216:6570).
- * State: Hover / Focus = :hover / :focus-within, Completed = has a value, Error = `invalid`,
- * Disabled = `disabled`. The clear (X) button appears in Focus and Error as in Figma.
- * Native input props and the ref go to the `<input type="search">`.
+ * 검색어를 입력받는 입력 칸입니다. Enter 키를 누르면 `onSearch`가 호출되고, 키보드로 선택했거나 오류일 때
+ * 지우기 버튼(X)이 나타납니다. 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
  */
 export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(function SearchField(
   { size = 'sm', appearance = 'outline', label, invalid = false, onSearch, onClear, className, style, id, value, defaultValue, onChange, onKeyDown, disabled, ...rest },

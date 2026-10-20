@@ -6,11 +6,13 @@ import { RadioGroup } from '../RadioGroup';
 import { CHOICE_SIZES, type ChoiceSize } from '../../Choice';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs radio`.
 const meta = {
-  title: 'Components/Radio/Showcase',
+  title: '컴포넌트/Radio/전체 보기',
+  id: 'components-radio-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -37,6 +39,7 @@ function figmaVariant(selection: Selection, size: ChoiceSize, state: State, name
 }
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -62,6 +65,7 @@ export const Overview: Story = {
 
 /** All 24 Figma variants: Selection × Size (rows) × State (columns). */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -83,12 +87,13 @@ export const VariantMatrix: Story = {
 
 /** Every state at size md. */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <div>
       {SELECTIONS.map((selection) => (
         <StorySection key={selection} title={selection}>
           {STATES.map((state) => (
-            <Radio key={state} {...figmaVariant(selection, 'md', state, `states-${selection}-${state}`)} label={state} />
+            <Radio key={state} {...figmaVariant(selection, 'md', state, `states-${selection}-${state}`)} label={koLabel(state)} />
           ))}
         </StorySection>
       ))}
@@ -112,6 +117,7 @@ function Controlled() {
 
 /** Click selects; arrow keys move the selection inside the group (native radio behaviour). */
 export const Interaction: Story = {
+  name: '동작',
   render: () => <Controlled />,
   play: async ({ canvas, userEvent, step }) => {
     const normal = canvas.getByRole('radio', { name: '일반 배송' });
@@ -133,6 +139,7 @@ export const Interaction: Story = {
 
 /** Design System Rules 08: items 8px apart when stacked; 16px apart in a row, 8px between wrapped rows (the group's own CSS — no `style`). */
 export const GroupSpacing: Story = {
+  name: '그룹 간격',
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
       <RadioGroup aria-label="세로" name="spacing-v" defaultValue="a">
@@ -159,6 +166,7 @@ export const GroupSpacing: Story = {
 
 /** radiogroup role with an accessible name; radios share one generated name. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <RadioGroup aria-label="공개 범위" defaultValue="team" required>
       <Radio value="all" label="전체 공개" />

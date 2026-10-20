@@ -1,4 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
+import { useRef, type CSSProperties, type ReactNode } from 'react';
+import { koLabel } from './koLabel';
+import { useWholePixelCaptions } from './useWholePixelCaptions';
 
 const caption: CSSProperties = {
   font: '500 11px/16px var(--font-family-basic), sans-serif',
@@ -23,14 +25,16 @@ export function FigmaMatrix({
   rows: Array<{ label: string; cells: Array<{ figma: string; node: ReactNode } | null> }>;
   cellWidth?: number;
 }) {
+  const table = useRef<HTMLTableElement>(null);
+  useWholePixelCaptions(table);
   return (
-    <table style={{ borderCollapse: 'separate', borderSpacing: '0 16px' }}>
+    <table ref={table} style={{ borderCollapse: 'separate', borderSpacing: '0 16px' }}>
       <thead>
         <tr>
           <td style={caption} />
           {columns.map((c) => (
             <th key={c} scope="col" style={caption}>
-              {c}
+              {koLabel(c)}
             </th>
           ))}
         </tr>
@@ -39,7 +43,7 @@ export function FigmaMatrix({
         {rows.map((row) => (
           <tr key={row.label}>
             <th scope="row" style={caption}>
-              {row.label}
+              {koLabel(row.label)}
             </th>
             {row.cells.map((cell, i) => (
               <td key={i} style={{ padding: '0 24px 0 0', verticalAlign: 'top' }}>
@@ -60,7 +64,7 @@ export function FigmaMatrix({
 export function StorySection({ title, children, direction = 'row' }: { title: string; children: ReactNode; direction?: 'row' | 'column' }) {
   return (
     <section style={{ marginBottom: 32 }}>
-      <h3 style={{ ...caption, fontSize: 12, padding: '0 0 12px' }}>{title}</h3>
+      <h3 style={{ ...caption, fontSize: 12, padding: '0 0 12px' }}>{koLabel(title)}</h3>
       <div style={{ display: 'flex', flexDirection: direction, flexWrap: 'wrap', alignItems: 'flex-start', gap: 24 }}>{children}</div>
     </section>
   );

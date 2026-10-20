@@ -3,19 +3,17 @@ import { fn } from 'storybook/test';
 import { Input } from './Input';
 import { FIELD_MESSAGE_TYPES, FIELD_SIZES } from '../Field';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Input.showcase.stories.tsx
+// 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Input.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Input/Input',
+  title: '컴포넌트/Input/Input',
+  id: 'components-input-input',
   component: Input,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component set **input** (76:2945, 21 variants) with **input_message** (83:3009). ' +
-          'Size → `size`, Label → `label`, Alert → `message` / `messageType`, Icon-eye → password reveal toggle (`type="password"`). ' +
-          'State: Hover / Focus are the native :hover / :focus-within, Completed = has a value, Error = `invalid`, ' +
-          'Disabled = `disabled`, Read-only = `readOnly`. Native input props and the ref go to the `<input>`; `className` / `style` go to the root.',
+          '한 줄짜리 글자를 입력받는 입력 칸입니다. 크기는 `size`, 라벨은 `label`, 도움말 메시지는 `message`로 정하고 오류는 `invalid`로 표시합니다.',
       },
     },
   },
@@ -31,14 +29,14 @@ const meta = {
     onClear: fn(),
   },
   argTypes: {
-    size: { control: 'inline-radio', options: FIELD_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'sm' } } },
-    label: { control: 'text', description: 'Figma "Label Text" (omit to hide the label)' },
-    message: { control: 'text', description: 'Figma "Alert Text"' },
-    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: 'Figma input_message "Type"' },
-    invalid: { control: 'boolean', description: 'Figma State "Error"' },
-    disabled: { control: 'boolean', description: 'Figma State "Disabled"' },
-    readOnly: { control: 'boolean', description: 'Figma State "Read-only"' },
-    clearable: { control: 'boolean', description: 'Clear (X) button on hover / focus' },
+    size: { control: 'inline-radio', options: FIELD_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
+    label: { control: 'text', description: '입력 칸 위 라벨 — 없으면 aria-label을 붙임' },
+    message: { control: 'text', description: '입력 칸 아래 도움말 메시지' },
+    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 info' },
+    invalid: { control: 'boolean', description: '오류 — 빨간 테두리로 표시' },
+    disabled: { control: 'boolean', description: '비활성 — 입력할 수 없음' },
+    readOnly: { control: 'boolean', description: '읽기 전용 — 값을 볼 수만 있음' },
+    clearable: { control: 'boolean', description: '마우스를 올리거나 키보드로 선택하면 지우기 버튼(X) 표시' },
     type: { control: 'select', options: ['text', 'password', 'email', 'tel', 'number', 'url'] },
   },
   decorators: [(Story) => <div style={{ width: 320 }}><Story /></div>],
@@ -47,28 +45,34 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const WithMessage: Story = {
+  name: '메시지 있음',
   args: { defaultValue: '내용 입력', message: '안내 문구', messageType: 'info' },
 };
 
 export const Invalid: Story = {
+  name: '오류',
   args: { defaultValue: '내용 입력', invalid: true, message: '올바른 형식이 아닙니다.' },
 };
 
 export const Password: Story = {
+  name: '비밀번호',
   args: { type: 'password', label: '비밀번호', placeholder: '비밀번호 입력', defaultValue: 'secret123' },
 };
 
 export const Sizes: Story = {
+  name: '크기',
   args: { size: 'lg' },
 };
 
 export const Disabled: Story = {
+  name: '비활성',
   args: { disabled: true },
 };
 
 export const ReadOnly: Story = {
+  name: '읽기 전용',
   args: { readOnly: true, defaultValue: '읽기 전용 값' },
 };

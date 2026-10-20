@@ -3,18 +3,17 @@ import { fn } from 'storybook/test';
 import { InputChip } from './InputChip';
 import { CHIP_SIZES } from './Chip.options';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Chip.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Chip.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Chip/InputChip',
+  title: '컴포넌트/Chip/InputChip',
+  id: 'components-chip-inputchip',
   component: InputChip,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component set **chip-input** (558:26017, 12 variants) — an entered value with a remove (X) icon. ' +
-          'The whole chip is the remove button: click, Enter, Space, Delete or Backspace call `onRemove`. ' +
-          'Size → `size`, Label Text → children, State Disabled → `disabled`. The accessible name is the label + `removeLabel` ("삭제").',
+          '입력한 값을 보여 주고 지울 수 있는 칩입니다. 칩 전체가 지우기 버튼이며, 누르거나 Delete · Backspace를 누르면 `onRemove`가 호출됩니다.',
       },
     },
   },
@@ -25,25 +24,28 @@ const meta = {
     onRemove: fn(),
   },
   argTypes: {
-    size: { control: 'inline-radio', options: CHIP_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'xs' } } },
-    disabled: { control: 'boolean', description: 'Figma State "Disabled"' },
-    children: { control: 'text', description: 'Figma "Label Text"' },
+    size: { control: 'inline-radio', options: CHIP_SIZES, description: '크기', table: { defaultValue: { summary: 'xs' } } },
+    disabled: { control: 'boolean', description: '비활성 — 누를 수 없고 키보드로도 선택되지 않음' },
+    children: { control: 'text', description: '칩 글자 — 입력한 값' },
   },
 } satisfies Meta<typeof InputChip>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const Small: Story = {
+  name: '작은 크기',
   args: { size: 'sm' },
 };
 
 export const Medium: Story = {
+  name: '중간 크기',
   args: { size: 'md' },
 };
 
 export const Disabled: Story = {
+  name: '비활성',
   args: { disabled: true },
 };

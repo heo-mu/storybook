@@ -5,22 +5,20 @@ import { useControllableState } from '../../utils/useControllableState';
 import type { ChipSize } from './Chip.options';
 
 export type ChipProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'type'> & {
-  /** Figma "Size". @default 'xs' */
+  /** 크기. @default 'xs' */
   size?: ChipSize;
-  /** Figma "Label Text". */
+  /** 칩 글자. */
   children: ReactNode;
-  /** Figma Variant "Selected" (controlled). */
+  /** 선택됨 여부. 넘기면 선택 상태를 바깥에서 관리합니다. */
   selected?: boolean;
-  /** Initially selected (uncontrolled). @default false */
+  /** 처음 선택됨 여부. `selected` 없이 칩이 스스로 상태를 관리할 때 씁니다. @default false */
   defaultSelected?: boolean;
-  /** Called with the new selection when the chip is toggled. */
+  /** 칩을 눌러 선택이 바뀌면 새 값으로 호출됩니다. */
   onSelectedChange?: (selected: boolean) => void;
 };
 
 /**
- * Figma component set `chip-multi` (201:12711) — a toggle chip for multi-select filters.
- * Variant Selected = `selected` (check icon after the label); State Hover / Pressed are :hover / :active,
- * Disabled = `disabled`. Renders `<button aria-pressed>`.
+ * 여러 개를 켜고 끄는 필터 칩입니다. 선택되면 글자 뒤에 체크 아이콘이 붙고, `disabled`이면 누를 수 없습니다.
  */
 export const Chip = forwardRef<HTMLButtonElement, ChipProps>(function Chip(
   { size = 'xs', children, selected, defaultSelected = false, onSelectedChange, onClick, className, ...rest },

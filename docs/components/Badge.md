@@ -55,3 +55,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### BadgeDot · BadgeCount
+
+## 구현 메모 (Storybook에서 옮김)
+
+- Figma 컴포넌트 세트: `badge_status`(91:6152) · `badge_dot`(95:2681) · `badge_count`(95:2762).
+- 상태 색은 `colors/badge/status/{filled|outline}/*` 변수를 씁니다.
+- `BadgeDot`은 `aria-label`이 없으면 `aria-hidden`, 있으면 `role="img"`로 렌더링됩니다.
+- `BadgeCount`의 Figma Digits Single · Multiple은 숫자에 따라 정해지며, Multiple은 "99+"(`{max}+`)입니다.

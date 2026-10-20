@@ -4,20 +4,18 @@ import { cx } from '../../utils/cx';
 import type { ChipSize } from './Chip.options';
 
 export type InputChipProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'type'> & {
-  /** Figma "Size". @default 'xs' */
+  /** 크기. @default 'xs' */
   size?: ChipSize;
-  /** Figma "Label Text" — an entered value. */
+  /** 칩 글자 — 입력한 값. */
   children: ReactNode;
-  /** Called when the chip is activated (click, Enter, Space) or Delete / Backspace is pressed on it. */
+  /** 칩을 누르거나(클릭 · Enter · Space) Delete · Backspace를 누르면 호출됩니다. */
   onRemove?: () => void;
-  /** Text appended to the label for screen readers. @default '삭제' */
+  /** 화면 낭독기가 라벨 뒤에 읽는 말. @default '삭제' */
   removeLabel?: string;
 };
 
 /**
- * Figma component set `chip-input` (558:26017) — an entered value that can be removed (X icon).
- * The whole chip is the remove button, so the target is the full chip height. State Hover / Pressed are
- * :hover / :active, Disabled = `disabled`.
+ * 입력한 값을 보여 주고 지울 수 있는 칩입니다. 칩 전체가 지우기 버튼이고, `disabled`이면 누를 수 없습니다.
  */
 export const InputChip = forwardRef<HTMLButtonElement, InputChipProps>(function InputChip(
   { size = 'xs', children, onRemove, removeLabel = '삭제', onClick, onKeyDown, className, ...rest },

@@ -1,17 +1,38 @@
 import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/DataState.showcase.stories';
+import * as DataStateStories from './DataState.stories';
 import { DataState } from './DataState';
 
-<Meta title="Components/DataState/Usage" />
+<Meta title="컴포넌트/DataState/사용 방법" id="components-datastate-usage" name="Docs" />
 
-# Data State — 사용 가이드
+# DataState
 
-Figma **data-state**(698:4359, 6개 변형)를 구현했습니다. 데이터 영역이 내용 대신 보여 주는 상태 — 불러오는 중, 비어 있음, 결과 없음, 오류,
-권한 없음, 일부 누락입니다. Loading은 스켈레톤 막대 3개와 문구, 나머지는 EmptyState(아이콘 · 제목 · 설명 · TextButton)입니다.
+데이터 영역에 내용 대신 보여 주는 안내입니다. 불러오는 중, 빈 상태, 결과 없음, 오류, 권한 없음, 일부만 표시를 알립니다.
+
+<Canvas of={DataStateStories.ErrorState} />
+
+## 언제 사용하나요
+
+- 표나 차트 같은 데이터 영역에 보여 줄 내용이 없거나 아직 준비되지 않았을 때, 그 자리에 둡니다.
+
+## 상태
 
 <Canvas of={Showcase.Figma} />
 
-## 사용 예
+| `state` | 뜻 | 기본 버튼 |
+| --- | --- | --- |
+| `loading` | 불러오는 중 | 없음 |
+| `empty` | 빈 상태 — 아직 수집된 데이터가 없음 | 수집 설정 확인 |
+| `no-results` | 결과 없음 — 조회 조건에 맞는 데이터가 없음 | 조건 초기화 |
+| `error` | 오류 — 데이터를 불러오지 못함 | 다시 시도 |
+| `no-access` | 권한 없음 | 권한 안내 |
+| `partial` | 일부만 표시 — 일부 데이터가 누락됨 | 누락 내역 확인 |
+
+- 상태마다 기본 제목 · 설명 · 버튼 글자가 있습니다. `title` · `description` · `actionLabel`로 바꿀 수 있습니다.
+- `description={null}`이면 설명을 숨깁니다.
+- `loading`은 스켈레톤 막대와 문구를 보여 줍니다. 문구는 `loadingLabel`로 바꿉니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -23,38 +44,16 @@ Figma **data-state**(698:4359, 6개 변형)를 구현했습니다. 데이터 영
   : <Table … />}`}
 />
 
-## Figma → Props
+## 접근성
 
-| Figma State | 아이콘 | 기본 제목 · 설명 · 버튼(오른쪽 아이콘) |
-| --- | --- | --- |
-| Loading | 스켈레톤 Line · Shape4 · Block | "데이터를 불러오는 중입니다"(`loadingLabel`) |
-| Empty | Database | 아직 수집된 데이터가 없습니다 · 수집 설정과 데이터 연결을 확인하세요. · 수집 설정 확인 › |
-| No-results | Info | 조회 결과가 없습니다 · 기간이나 조회 대상을 변경해 보세요. · 조건 초기화 ↺ |
-| Error | WarningCircle | 데이터를 불러오지 못했습니다 · 연결 상태를 확인한 뒤 다시 시도하세요. · 다시 시도 ↺ |
-| No-access | Info | 조회 권한이 없습니다 · 관리자에게 데이터 접근 권한을 요청하세요. · 권한 안내 › |
-| Partial | Warning | 일부 데이터가 누락되었습니다 · (설명 기본값 없음) · 누락 내역 확인 › |
-| Empty Title · Empty Description · No-results Title · No-results Description · Error Title · Error Description · No-access Title · No-access Description · Partial Title · Partial Description | `title` · `description` | 상태별 기본 문구(Partial Description은 기본값 없음 — 사용처의 실제 수치) |
+- 상태가 바뀌면 화면 낭독기가 새 문구를 읽어 줍니다.
+- 스켈레톤과 아이콘은 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다.
 
-`title` · `description` · `actionLabel`로 바꿀 수 있고, `description={null}`은 설명을 숨깁니다.
+## 주의사항
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `DSTA-04` **배경 · 너비**: 2026-10-19 Figma 배경이 원격 `color/background/white` 대신 `colors/surface/page`에 연결되어 코드와 같습니다(F69). 폭은 부모를 채웁니다(Figma 460px은 예시, Rules 08).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `DSTA-01` **버튼**: `onAction`(또는 `action`)이 있을 때만 그립니다 — 할 일이 없으면 버튼을 두지 않습니다(Rules 07).
-- `DSTA-02` **Partial 설명**: Figma 기본 문구에 실제 수치("130대 중 128대")가 있어 기본값으로 쓰지 않습니다. 사용처의 실제 수치로 쓰세요(Rules 07).
-- `DSTA-03` **접근성**: 상태가 바뀌면 읽어 주도록 `role="status"`(Loading은 `aria-busy`)입니다. 스켈레톤 · 아이콘은 장식입니다(Rules 03 · 06).
+- 버튼은 `onAction`(또는 `action`)을 넘길 때만 나타납니다. 할 일이 없으면 버튼을 두지 않습니다.
+- `partial`에는 기본 설명이 없습니다. 실제 수치를 `description`으로 넣습니다.
+- 너비는 부모를 채웁니다.
 
 ## Props
 

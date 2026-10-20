@@ -7,11 +7,12 @@
 // script fail, so a new export always gets an explicit decision.
 //
 //   npm run docs:api
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import ts from 'typescript';
 import docgen from 'react-docgen-typescript';
 import { ROOT } from './lib/figma-snapshot.mjs';
+import { findSetByName, loadPage } from './lib/figma-metadata.mjs';
 
 // ── Classification ────────────────────────────────────────────────────────────────────────────────────────────
 /** Public components — placed directly in apps. Value: what it is for (Korean, for the handover list). */
@@ -182,10 +183,27 @@ const typeText = (p) => {
   const t = p.type?.raw && p.type.raw.length < 160 ? p.type.raw : p.type?.name ?? '';
   return t === 'enum' && p.type.value ? p.type.value.map((v) => v.value).join(' | ') : t;
 };
-/** Every "`button_basic` (54:2904)" pair in the description → "`button_basic` 54:2904"; "—" for compositions without their own set. */
+/**
+ * Figma component sets of a component, by name (figma/component-map.json — stays valid across Figma versions), with the
+ * node ID of the current version from figma/geometry/<set>.json when there is one; "—" for compositions without a set.
+ */
+const MAP_FILE = JSON.parse(readFileSync(path.join(ROOT, 'figma', 'component-map.json'), 'utf8'));
+const COMPONENT_MAP = MAP_FILE.components;
+const META = ['section-58-5174.xml', 'section-728-25472.xml'].map((f) => loadPage(f));
+const setId = (set) => {
+  try {
+    return JSON.parse(readFileSync(path.join(ROOT, 'figma', 'geometry', `${set}.json`), 'utf8')).id;
+  } catch {
+    for (const m of META) {
+      const node = findSetByName(m, set);
+      if (node) return node.id;
+    }
+    return MAP_FILE.nodeIdsNotInSnapshot?.[set] ?? null;
+  }
+};
 const figmaRef = (name) => {
-  const pairs = [...(docs.get(name)?.description ?? '').matchAll(/`([a-z][\w-]*)` \((\d+:\d+)\)/g)].map((m) => `\`${m[1]}\` ${m[2]}`);
-  return pairs.length ? [...new Set(pairs)].join(' · ') : '—';
+  const sets = COMPONENT_MAP[name] ?? [];
+  return sets.length ? sets.map((set) => '`' + set + '`' + (setId(set) ? ' ' + setId(set) : '')).join(' · ') : '—';
 };
 const label = {
   public: '**공개 컴포넌트**',
@@ -207,7 +225,7 @@ out.push('# Public API', '');
 out.push('`platform-design-system`이 export 하는 전부입니다. **자동 생성 문서** — `npm run docs:api`로 다시 만듭니다(직접 수정하지 마세요).', '');
 out.push('- 어떤 컴포넌트를 써야 하는지와 사용 금지 목록은 [public-api.md](./public-api.md)에 있습니다. 각 컴포넌트 제목 아래에 분류를 적었습니다.');
 out.push('- Props 표는 각 컴포넌트가 직접 정의한 Prop만 보여 줍니다. 그 밖의 HTML 속성(`className`, `style`, `aria-*`, 이벤트 등)과');
-out.push('  react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 Usage 문서 참고).');
+out.push('  react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 컴포넌트의 사용 방법 문서 참고).');
 out.push('- 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).', '');
 out.push(`export ${exportsList.length}개: 공개 컴포넌트 ${count('public')} · 보조 컴포넌트 ${count('auxiliary')} · 내부 부품 ${count('internal-part')} · 타입 ${count('type')} · 상수 ${count('constant')} · 함수 ${count('function')} · 아이콘 ${count('icon')} · 내부 API ${count('internal')}`, '');
 const componentGroups = [...groups.keys()].filter((k) => !k.startsWith('(')).sort();

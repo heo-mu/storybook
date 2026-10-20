@@ -56,3 +56,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### StepperIndicator · StepperConnector
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `stepper_horizontal`(179:2043) · `stepper_vertical`(203:3949), `stepper_indicator_horizontal`(179:1621) · `stepper_indicator_vertical`(203:3708), `stepper_connector_horizontal`(179:1614) · `stepper_connector_vertical`(203:4253).
+- 표시기는 20px 원(번호, 완료이면 CheckCircle, 오류이면 WarningCircle)과 라벨 · 서브 라벨입니다. 루트는 원과 같은 너비(가로) 또는 높이(세로)이고, 글자는 Figma처럼 가운데 맞춰 넘칩니다.
+- 연결선은 SVG rect로 그려 Figma 기하(1px 선이 띠 가운데 = 반 픽셀 위치)를 그대로 따릅니다.
+- 예전 스토리 설명은 "`StepperIndicator` · `StepperConnector`는 직접 배치용으로 export"라고 했지만, 지금 분류는 내부 부품(사용 금지, `@internal`)입니다.

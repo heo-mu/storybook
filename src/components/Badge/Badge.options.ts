@@ -1,12 +1,12 @@
-/** Figma badge "Status" (badge_status, badge_dot, badge_count). */
+/** 배지 종류(상태 색) — Badge · BadgeDot · BadgeCount 공통 */
 export const BADGE_STATUSES = ['basic', 'gray', 'point', 'success', 'warning', 'danger', 'information'] as const;
 export type BadgeStatus = (typeof BADGE_STATUSES)[number];
-/** Figma badge_status "Appearance". */
+/** Badge 모양 */
 export const BADGE_APPEARANCES = ['filled', 'outline'] as const;
 export type BadgeAppearance = (typeof BADGE_APPEARANCES)[number];
-/** Figma badge_status / badge_dot "Size". */
+/** Badge · BadgeDot 크기 */
 export const BADGE_SIZES = ['sm', 'md', 'lg'] as const;
 export type BadgeSize = (typeof BADGE_SIZES)[number];
-/** Figma badge_status "Shape". */
+/** Badge 모서리 모양 */
 export const BADGE_SHAPES = ['square', 'rounded'] as const;
 export type BadgeShape = (typeof BADGE_SHAPES)[number];

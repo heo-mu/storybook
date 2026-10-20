@@ -1,22 +1,21 @@
 /**
- * Variant property values of the Figma Button frame (58:4971), normalised to lower-case.
- * These arrays are the single source of truth for the TypeScript unions, Storybook controls
- * and the variant matrices — only combinations that exist in Figma are listed.
+ * Button 계열의 속성 값 목록(소문자). TypeScript 타입 · Storybook 컨트롤 · 변형 매트릭스가 모두 이 배열을 씁니다.
+ * Figma에 있는 조합만 담습니다.
  */
 
-/** Figma "Variant" (button_basic, button_icon) */
+/** Button · IconButton 종류 */
 export const BUTTON_VARIANTS = ['primary', 'secondary', 'tertiary'] as const;
-/** Figma "Appearance" (button_basic, button_icon) */
+/** Button · IconButton 모양 */
 export const BUTTON_APPEARANCES = ['solid', 'outline'] as const;
-/** Figma "Shape" (button_basic, button_icon) */
+/** Button · IconButton 모서리 모양 */
 export const BUTTON_SHAPES = ['square', 'rounded'] as const;
-/** Figma "Size" of button_basic */
+/** Button 크기 */
 export const BUTTON_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
-/** Figma "Size" of button_icon (no lg) */
+/** IconButton 크기(lg 없음) */
 export const ICON_BUTTON_SIZES = ['xs', 'sm', 'md'] as const;
-/** Figma "Type" of button_text ("Primary", "SecondarySecondary") */
+/** TextButton 종류 */
 export const TEXT_BUTTON_VARIANTS = ['primary', 'secondary'] as const;
-/** Figma "Size" of button_text */
+/** TextButton 크기 */
 export const TEXT_BUTTON_SIZES = ['sm', 'md'] as const;
 /**
  * Figma "State" — Hover/Pressed are interaction states (:hover/:active), Disabled is the `disabled` prop.
@@ -53,9 +52,9 @@ export type ButtonState = (typeof BUTTON_STATES)[number];
  * @internal Building block of ButtonProps / IconButtonProps — use those.
  */
 export type ButtonToneProps = {
-  /** Figma "Variant". @default 'primary' */
+  /** 종류 — 행동의 중요도. @default 'primary' */
   variant?: ButtonVariant;
-  /** Figma "Appearance". @default 'solid' ('outline' for variant "secondary") */
+  /** 모양 — 채움(solid) · 테두리(outline). @default 'solid' (secondary는 'outline') */
   appearance?: ButtonAppearance;
 };
 
@@ -64,7 +63,7 @@ export type ButtonToneProps = {
  * @internal Building block of the button props types — use ButtonProps / IconButtonProps / TextButtonProps.
  */
 export type ButtonDisabledProp = {
-  /** Figma State "Disabled". */
+  /** 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. */
   disabled?: boolean;
 };
 

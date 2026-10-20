@@ -8,7 +8,8 @@ import { ChartTooltip } from '../ChartTooltip';
 // `node scripts/verify-figma.mjs chart` (sets chart, chart-legend-item, chart-tooltip).
 
 const meta = {
-  title: 'Components/Chart/Showcase',
+  title: '컴포넌트/Chart/전체 보기',
+  id: 'components-chart-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -181,6 +182,7 @@ const FIGMA_CHARTS = FIGMA_BASE.flatMap(({ name, width, hover, props }) => [
 
 /** The 24 Figma variants with the Figma sample data (hover=yes: the active category drawn in Figma). */
 export const Figma: Story = {
+  name: '모든 변형',
   render: () => (
     <div style={{ display: 'grid', gap: 40, justifyItems: 'start' }}>
       {FIGMA_CHARTS.map(({ name, width, props }) => (
@@ -192,6 +194,7 @@ export const Figma: Story = {
 
 /** chart-legend-item (3 variants, Figma sample label "유형" since the 2026-10-19 chart rework) and chart-tooltip on their own. */
 export const FigmaParts: Story = {
+  name: '구성 요소',
   render: () => (
     // Whole-pixel 120px slots: without calc-size (Firefox, WebKit) a label is a fractional width, and a part laid out
     // after it would start between pixels.
@@ -219,6 +222,7 @@ export const FigmaParts: Story = {
 
 /** Pointer and keyboard: the plot takes focus; arrow keys move the tooltip and announce the values. */
 export const Interaction: StoryObj<{ onActiveIndexChange: Mock<(index: number | null) => void> }> = {
+  name: '동작',
   args: { onActiveIndexChange: fn() },
   render: (args) => (
     <Chart
@@ -284,6 +288,7 @@ export const Interaction: StoryObj<{ onActiveIndexChange: Mock<(index: number | 
 
 /** Simple style: the plot takes focus too (Figma hover=yes) — arrow keys show the highlight and the tooltip. */
 export const SimpleInteraction: Story = {
+  name: '간단 스타일 동작',
   render: () => (
     <Chart
       style={{ width: 320 }}
@@ -318,6 +323,7 @@ export const SimpleInteraction: Story = {
 
 /** The values are also a table for screen readers; the drawing is hidden from assistive technology. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <Chart
       style={{ width: 320 }}
@@ -358,6 +364,7 @@ const PLACEMENT_SERIES = [
 
 /** The last category of a chart that runs past the right edge of the screen: the tooltip stays on screen and in the plot. */
 export const TooltipAtViewportEdge: Story = {
+  name: '화면 가장자리의 툴팁',
   render: () => (
     <div style={{ marginLeft: 'calc(100vw - 340px)', width: 600 }}>
       <Chart aria-label="화면 경계" type="bar-vertical" categories={BUILDINGS} series={PLACEMENT_SERIES} activeIndex={4} />
@@ -375,6 +382,7 @@ export const TooltipAtViewportEdge: Story = {
 
 /** At the last point of a line chart the tooltip flips to the left of the point. */
 export const TooltipFlip: Story = {
+  name: '툴팁 뒤집기',
   render: () => (
     <div style={{ width: 360 }}>
       <Chart aria-label="뒤집기" type="line" categories={['10.07', '10.08', '10.09', '10.10']} series={[{ label: '전기', data: [140, 194, 132, 186] }]} activeIndex={3} />
@@ -396,6 +404,7 @@ export const TooltipFlip: Story = {
  * name keeps the 40px column, a longer one wraps, and the values stay in one column.
  */
 export const TooltipLabelWidth: Story = {
+  name: '툴팁 계열 이름 너비',
   render: () => (
     <ChartTooltip
       title="10월 1일"
@@ -420,6 +429,7 @@ export const TooltipLabelWidth: Story = {
  * belongs to its chart (no portal) and is placed inside the visible part of the plot (Design System Rules 05).
  */
 export const TooltipInClippingContainer: Story = {
+  name: '잘리는 영역 안의 툴팁',
   render: () => (
     <div data-clip="" style={{ width: 600, height: 150, overflow: 'hidden' }}>
       <Chart aria-label="잘림" type="bar-horizontal" categories={BUILDINGS} series={PLACEMENT_SERIES} activeIndex={0} />
@@ -476,6 +486,7 @@ const tooltipsStayHome = (root: ParentNode) => {
  * keyboard focus works per chart, and scrolling the page or a scroll container keeps every tooltip with its chart.
  */
 export const MultipleCharts: Story = {
+  name: '여러 차트',
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 600px)', gap: 24 }}>

@@ -9,7 +9,8 @@ import { figmaCase } from './story-helpers';
 
 // Visual showcase — excluded from the MCP components manifest (uses story-only helpers).
 const meta = {
-  title: 'Components/Button/Overview',
+  title: '컴포넌트/Button/개요',
+  id: 'components-button-overview',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -19,30 +20,31 @@ type Story = StoryObj;
 
 /** The whole Button family (Figma frame "Button", 58:4971) at a glance. */
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
-      <Section title="Button — Variant × Appearance (md)">
+      <Section title="Button — 종류 × 모양 (md)">
         {BUTTON_TONES.map((tone) => (
           <Button key={`${tone.variant}-${tone.appearance}`} {...tone} size="md" leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
             {figmaCase(tone.variant)} {figmaCase(tone.appearance)}
           </Button>
         ))}
       </Section>
-      <Section title="Button — Size (xs · sm · md · lg)">
+      <Section title="Button — 크기 (xs · sm · md · lg)">
         {BUTTON_SIZES.map((size) => (
           <Button key={size} size={size} leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
             라벨명
           </Button>
         ))}
       </Section>
-      <Section title="Button — Shape (Square · Rounded)">
+      <Section title="Button — 모서리 모양 (square · rounded)">
         {BUTTON_SHAPES.map((shape) => (
           <Button key={shape} size="md" shape={shape} variant="tertiary" appearance="outline">
             {figmaCase(shape)}
           </Button>
         ))}
       </Section>
-      <Section title="IconButton — Variant × Appearance (md) · Size (xs · sm · md)">
+      <Section title="IconButton — 종류 × 모양 (md) · 크기 (xs · sm · md)">
         {BUTTON_TONES.map((tone) => (
           <IconButton key={`${tone.variant}-${tone.appearance}`} {...tone} size="md" icon={<PlusIcon />} aria-label={`${tone.variant} ${tone.appearance}`} />
         ))}
@@ -50,7 +52,7 @@ export const Overview: Story = {
           <IconButton key={size} size={size} variant="tertiary" appearance="outline" icon={<PlusIcon />} aria-label={size} />
         ))}
       </Section>
-      <Section title="TextButton — Size (sm · md)">
+      <Section title="TextButton — 크기 (sm · md)">
         {TEXT_BUTTON_SIZES.map((size) => (
           <TextButton key={size} size={size} leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
             라벨명

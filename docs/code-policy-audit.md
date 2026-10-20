@@ -5,7 +5,7 @@ Storybook · 문서 · 코드에 "코드 정책(Figma에 정의되지 않은 부
 Storybook 각 Usage 문서의 **정책** 절은 이 표의 ID를 그대로 씁니다.
 
 
-> **2026-10-20**: Figma Rules 표는 짧은 사용 규칙만 남기고(10장 삭제), Dev Mode 주석은 모두 지웠습니다. 아래 "Figma 위치" 열의 주석 · 10장 ID는 그 이전 버전의 기록이며, 세부 기준은 [policy-details.md](./policy-details.md)에 있습니다.
+> **2026-10-20**: Figma Rules 표는 짧은 사용 규칙만 남기고(10장 삭제), Dev Mode 주석은 모두 지웠습니다. 아래 "Figma 위치" 열의 주석 · 10장 ID는 그 이전 버전의 기록이며, 세부 기준은 [policy-details.md](./policy-details.md)에 있습니다. Storybook 사용 방법 문서의 "정책" 절(항목 ID 포함)은 컴포넌트별 개발 노트 [components/](./components/)로 옮겼고, Storybook에는 쉬운 설명만 남겼습니다. 아래 `문서:` 줄의 ID는 그대로 유효합니다.
 
 ## 조사 범위
 

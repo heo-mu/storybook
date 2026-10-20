@@ -2,15 +2,20 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Progress.showcase.stories';
 import { Progress } from './Progress';
 
-<Meta title="Components/Progress/Usage" />
+<Meta title="컴포넌트/Progress/사용 방법" id="components-progress-usage" name="Docs" />
 
-# Progress — 사용 가이드
+# Progress
 
-Figma **Progress** 프레임(185:6435)의 `progress`(185:6518)를 구현했습니다. 6px 트랙과 그 안에서 잘리는 막대입니다.
+진행 막대는 작업이 얼마나 진행되었는지 막대 길이로 보여 줍니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 업로드처럼 진행률을 알 수 있는 작업에 씁니다.
+- 진행률을 알 수 없으면 진행 막대 대신 Loading을 씁니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -20,25 +25,13 @@ Figma **Progress** 프레임(185:6435)의 `progress`(185:6518)를 구현했습�
 <Progress aria-labelledby="job-title" value={done} maxValue={total} valueLabel={\`\${total}개 중 \${done}개\`} />`}
 />
 
-## Figma → Props
+- `value`는 `minValue`와 `maxValue` 사이의 값입니다. 기본 범위는 0 – 100입니다.
+- 막대는 부모 너비를 채웁니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Progressbar 너비 | `value` · `minValue` · `maxValue` | 백분율로 계산 |
-| 트랙 너비 430px | 레이아웃 | 부모 너비를 채움 |
+## 접근성
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `PROG-01` **값을 모르는 진행(indeterminate)**: 제공하지 않습니다 — 진행률을 모르면 Loading을 씁니다(Rules 06).
-- `PROG-02` **라벨 · 수치 표시**: 시각 요소는 없고, `aria-label` · `valueLabel`로 스크린 리더에 전달합니다(Rules 03).
-- `PROG-03` **애니메이션**: 막대 너비는 즉시 바뀝니다(Rules 09).
+- `aria-label` 또는 `aria-labelledby`로 이름을 꼭 붙입니다.
+- 막대에는 라벨이나 수치가 보이지 않습니다. 화면 낭독기가 읽을 수치 설명은 `valueLabel`로 전합니다.
 
 ## Props
 

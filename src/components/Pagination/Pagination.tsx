@@ -8,14 +8,14 @@ type Look = { size?: PaginationSize; shape?: PaginationShape };
 
 export type PaginationItemProps = Omit<ComponentPropsWithoutRef<'button'>, 'children'> &
   Look & {
-    /** Figma "Number". */
+    /** 페이지 번호. */
     page: number;
-    /** Figma State "Current". */
+    /** 지금 페이지인지 여부. */
     current?: boolean;
   };
 
 /**
- * Figma component set `pagination_item` (132:520): one page number button.
+ * 페이지 번호 버튼 하나입니다. `Pagination`이 안에서 그립니다.
  * @internal Rendered by `Pagination` — use that (docs/public-api.md).
  */
 export const PaginationItem = forwardRef<HTMLButtonElement, PaginationItemProps>(function PaginationItem(
@@ -41,12 +41,12 @@ export const PaginationItem = forwardRef<HTMLButtonElement, PaginationItemProps>
 
 export type PaginationControlProps = Omit<ComponentPropsWithoutRef<'button'>, 'children'> &
   Look & {
-    /** Figma "Direction". */
+    /** 방향 — 이전(`previous`) · 다음(`next`). */
     direction: 'previous' | 'next';
   };
 
 /**
- * Figma component set `pagination_control` (132:604): previous / next page button.
+ * 이전 · 다음 페이지 버튼입니다. `Pagination`이 안에서 그립니다.
  * @internal Rendered by `Pagination` — use that (docs/public-api.md).
  */
 export const PaginationControl = forwardRef<HTMLButtonElement, PaginationControlProps>(function PaginationControl(
@@ -71,15 +71,15 @@ export const PaginationControl = forwardRef<HTMLButtonElement, PaginationControl
 
 export type PaginationProps = Omit<ComponentPropsWithoutRef<'nav'>, 'onChange'> &
   Look & {
-    /** Number of pages. */
+    /** 전체 페이지 수. */
     totalPages: number;
-    /** Current page, 1-based (controlled). */
+    /** 지금 페이지(1부터 셈). 넘기면 바깥에서 관리합니다. */
     page?: number;
-    /** Initial page (uncontrolled). @default 1 */
+    /** 처음 페이지. `page` 없이 스스로 관리할 때 씁니다. @default 1 */
     defaultPage?: number;
-    /** Called with the new page. */
+    /** 페이지가 바뀌면 새 페이지 번호로 호출됩니다. */
     onPageChange?: (page: number) => void;
-    /** How many page numbers are shown at once (a window around the current page). @default 5 */
+    /** 한 번에 보이는 페이지 번호 수. 지금 페이지를 가운데 두고 보여 줍니다. @default 5 */
     visiblePages?: number;
   };
 
@@ -90,9 +90,8 @@ function windowStart(page: number, total: number, count: number) {
 }
 
 /**
- * Figma component set `pagination` (132:871) built from `pagination_control` and `pagination_item`:
- * previous, a window of page numbers (Figma shows five, the first current), next. Renders
- * `<nav aria-label="페이지 이동">` with buttons; the current page has `aria-current="page"`.
+ * 여러 페이지로 나뉜 내용에서 페이지를 옮겨 가는 페이지 이동 막대입니다. 이전 버튼, 페이지 번호, 다음 버튼으로 이루어지며,
+ * 첫 페이지와 마지막 페이지에서는 이전 · 다음 버튼이 비활성입니다.
  */
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination(
   { totalPages, page, defaultPage = 1, onPageChange, visiblePages = 5, size = 'sm', shape = 'square', className, 'aria-label': ariaLabel, ...rest },

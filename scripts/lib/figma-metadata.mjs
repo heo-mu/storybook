@@ -38,7 +38,9 @@ export function findById(node, id) {
  */
 export function findSetByName(node, name) {
   const hits = [];
-  walk(node, (x) => { if (x.name === name && x.children.length) hits.push(x); });
+  // A set is a frame whose children are the variants (`symbol`); a single component is a `symbol` itself. Other frames
+  // and instances may carry the same name (e.g. an instance renamed "button_basic" inside an example).
+  walk(node, (x) => { if (x.name === name && (x.tag === 'symbol' || x.children.some((c) => c.tag === 'symbol'))) hits.push(x); });
   if (hits.length > 1) throw new Error(`set name "${name}" is not unique in the metadata (${hits.map((h) => h.id).join(', ')})`);
   return hits[0] ?? null;
 }

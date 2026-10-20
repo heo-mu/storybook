@@ -7,21 +7,20 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuSection } from '../Dropdown
 import type { BreadcrumbLayout, BreadcrumbSize } from './Breadcrumb.options';
 
 export type BreadcrumbItemProps = Omit<AnchorHTMLAttributes<HTMLElement>, 'children'> & {
-  /** Figma "Label Text" ("Show Label" on). Without it the item is icon-only and needs `aria-label`. */
+  /** 항목 글자. 없으면 아이콘만 보이므로 `aria-label`을 붙입니다. */
   children?: ReactNode;
-  /** Figma "Show Icon" + icon instance (House for home, DotsThree for the overflow trigger). */
+  /** 글자 앞 아이콘(홈 아이콘, … 아이콘 등). */
   icon?: ReactNode;
-  /** Figma "Size". @default 'md' */
+  /** 크기. @default 'md' */
   size?: BreadcrumbSize;
-  /** Figma Role "Current": the current page — rendered as text with `aria-current="page"`. */
+  /** 지금 페이지 — 링크가 아닌 글자로 보이고, 화면 낭독기에 현재 페이지로 알려집니다. */
   current?: boolean;
-  /** Figma Role "Open": the item whose menu is open (brand label). */
+  /** 메뉴가 열린 항목 — 강조된 글자로 보입니다. */
   open?: boolean;
 };
 
 /**
- * Figma component set `breadcrumb-item` (710:4794). Role Link = `href` (an `<a>`; without `href` a `<button>`),
- * Current = `current`, Open = `open`. State Hover / Pressed = :hover / :active.
+ * 경로의 한 단계입니다. `href`가 있으면 링크, 없으면 버튼이 됩니다. `Breadcrumb`이 안에서 그립니다.
  * @internal Rendered by `Breadcrumb` — use that (docs/public-api.md).
  */
 export const BreadcrumbItem = forwardRef<HTMLElement, BreadcrumbItemProps>(function BreadcrumbItem(
@@ -66,7 +65,7 @@ export const BreadcrumbItem = forwardRef<HTMLElement, BreadcrumbItemProps>(funct
 });
 
 /**
- * Figma `breadcrumb-modern-separator` (710:4795): CaretRight 12px between items.
+ * 경로 단계 사이의 오른쪽 화살표입니다. `Breadcrumb`이 안에서 그립니다.
  * @internal Rendered by `Breadcrumb` — use that (docs/public-api.md).
  */
 export function BreadcrumbSeparator() {
@@ -78,49 +77,48 @@ export function BreadcrumbSeparator() {
 }
 
 export type BreadcrumbEntry = {
-  /** Key passed to `onAction`. @default the index in `items` */
+  /** `onAction`에 넘겨지는 값. @default `items`에서의 순서(0부터) */
   id?: Key;
-  /** Page name. */
+  /** 페이지 이름. */
   label: string;
-  /** Link to the page. Without it the item is a button that calls `onAction`. */
+  /** 페이지 주소. 없으면 버튼이 되고, 누르면 `onAction`이 호출됩니다. */
   href?: string;
 };
 
 export type BreadcrumbProps = Omit<ComponentPropsWithoutRef<'nav'>, 'children'> & {
-  /** Pages from the top level down to the parent of the current page (Figma ancestors · parent). */
+  /** 맨 위 단계부터 지금 페이지의 바로 위 페이지까지의 경로. */
   items: BreadcrumbEntry[];
-  /** Current page name (Figma Role "Current"). */
+  /** 지금 페이지 이름. */
   current: ReactNode;
-  /** Link of the home item (Figma "Home": House icon). @default '/' */
+  /** 홈 아이콘의 링크 주소. @default '/' */
   homeHref?: string;
-  /** Accessible name of the home item. @default '홈' */
+  /** 화면 낭독기가 읽는 홈 이름. @default '홈' */
   homeLabel?: string;
-  /** Figma "Size". @default 'md' */
+  /** 크기. @default 'md' */
   size?: BreadcrumbSize;
   /**
-   * Figma "Layout". `collapsed` keeps home, the parent and the current page and moves the other ancestors into a
-   * menu behind the overflow trigger (DotsThree). @default 'full'
+   * 배치. `collapsed`는 홈 · 상위 페이지 · 지금 페이지만 보여 주고 나머지 경로를 … 메뉴에 넣습니다. @default 'full'
    */
   layout?: BreadcrumbLayout;
-  /** Figma "Show Parent": in the collapsed layout keep the parent page next to the current page. @default true */
+  /** `collapsed`에서 상위 페이지를 지금 페이지 옆에 보여 줄지 여부. @default true */
   showParent?: boolean;
-  /** Figma "Expanded": overflow menu open (controlled). */
+  /** … 메뉴가 열렸는지 여부. 넘기면 바깥에서 관리합니다. */
   expanded?: boolean;
-  /** Initial overflow menu state (uncontrolled). @default false */
+  /** 처음에 … 메뉴를 열어 둘지 여부. `expanded` 없이 스스로 관리할 때 씁니다. @default false */
   defaultExpanded?: boolean;
-  /** Called when the overflow menu opens or closes. */
+  /** … 메뉴가 열리거나 닫히면 호출됩니다. */
   onExpandedChange?: (expanded: boolean) => void;
-  /** Called with the entry's `id` when an entry without `href` is chosen (in the trail or the menu). */
+  /** `href`가 없는 경로를 누르면(경로나 … 메뉴에서) 그 경로의 `id`로 호출됩니다. */
   onAction?: (id: Key) => void;
-  /** Accessible name of the overflow trigger (Figma Label Text). @default '중간 경로 보기' */
+  /** 화면 낭독기가 읽는 … 버튼 이름. @default '중간 경로 보기' */
   moreLabel?: string;
-  /** Title of the overflow menu (Figma dropdownmenu_item Type Title). @default '상위 경로' */
+  /** … 메뉴의 제목. @default '상위 경로' */
   menuTitle?: string;
 };
 
 /**
- * Figma component set `breadcrumb` (712:5106): `<nav>` > `<ol>` of breadcrumb-item + separator groups.
- * Collapsed layout: home · overflow trigger (menu of the hidden ancestors) · parent · current page.
+ * 지금 페이지의 위치를 홈부터 이어지는 경로로 보여 줍니다.
+ * `collapsed` 배치에서는 홈 · … 메뉴(가려진 경로) · 상위 페이지 · 지금 페이지 순으로 보입니다.
  */
 export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb(
   {

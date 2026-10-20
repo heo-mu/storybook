@@ -23,7 +23,7 @@ npm install ../platform-design-system/platform-design-system-0.1.0.tgz
 ```
 
 `pretendard`(폰트), `react-aria-components`(Select · Slider · FilterChip 등의 키보드 · 포커스 · ARIA 동작, 스타일 없음),
-`@internationalized/date`(날짜)는 패키지 의존성으로 함께 설치됩니다. 컴포넌트별 사용법은 Storybook의 각 "Usage" 문서를 참고하세요.
+`@internationalized/date`(날짜)는 패키지 의존성으로 함께 설치됩니다. 컴포넌트별 사용법은 Storybook의 각 "사용 방법" 문서를 참고하세요.
 저장소 폴더를 `file:` 링크로 직접 연결하는 방식은 검증하지 않았습니다(React가 두 벌 로드될 수 있음).
 
 ## 1. 스타일 불러오기 (앱 진입점에서 한 번)
@@ -162,7 +162,7 @@ BUTTON_VARIANTS.map((variant) => <Button key={variant} variant={variant}>{varian
 | 데이터 | `Table` · `KeyValueTable` · `Card` · `Chart` |
 | 대시보드 | `MetricCard` · `MetricTrend` · `DataFreshness` · `DataState` · `Skeleton` · `DashboardFilterBar` |
 
-Props · Figma 대응 · 접근성 메모는 Storybook의 각 **Usage** 문서에 있습니다. 보이는 라벨이 없는 컨트롤(Select · SegmentedControl ·
+Props · 접근성 메모는 Storybook의 각 **사용 방법** 문서에, Figma 대응은 [components/](./components/) 개발 노트에 있습니다. 보이는 라벨이 없는 컨트롤(Select · SegmentedControl ·
 DatePicker를 필터 바에 넣을 때 등)에는 `aria-label`을 주세요.
 
 ## 7. 토큰 사용하기
@@ -185,14 +185,14 @@ Text Style은 클래스 또는 변수로 씁니다.
 <p className="ds-typography-sm-leading-normal-medium">본문</p>
 ```
 
-전체 목록은 Storybook의 **Foundations / Design Tokens** 페이지에서 볼 수 있습니다.
+전체 목록은 Storybook의 **기초 / 디자인 토큰** 페이지에서 볼 수 있습니다.
 
 ## 8. 상태와 접근성
 
 - **Hover / Pressed**: 실제 포인터 상태(`:hover`, `:active`)로 표현됩니다. 별도 Prop은 없습니다.
 - **Disabled**: `disabled` Prop. 클릭 이벤트가 발생하지 않습니다.
 - **Focus**: 키보드 포커스일 때 2px `colors/border/focus` 링(Figma 속성 `Focus`, Design System Rules 02). 전역 CSS에서 `outline: none`으로 지우지 마세요.
-- **정책**: 각 컴포넌트 Usage 문서의 "정책" 절(Figma 정의 · Figma 문서화 · 개발 구현 · Figma 반영 대기)과 [code-policy-audit.md](./code-policy-audit.md).
+- **정책**: 상세 기준은 [policy-details.md](./policy-details.md), 항목별 출처 · 상태는 [code-policy-audit.md](./code-policy-audit.md).
 
 ## 9. 문제 해결
 

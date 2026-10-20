@@ -3,23 +3,21 @@ import { fn } from 'storybook/test';
 import { Chart } from './Chart';
 import { CHART_TYPES, CHART_VARIANTS } from './Chart.options';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Chart.showcase.stories.tsx
+// 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Chart.showcase.stories.tsx에 있습니다.
 const BUILDINGS = ['101동', '102동', '103동', '104동', '105동'];
 const MONTHS = ['6월', '7월', '8월', '9월', '10월'];
 
 const meta = {
-  title: 'Components/Chart/Chart',
+  title: '컴포넌트/Chart/Chart',
+  id: 'components-chart-chart',
   component: Chart,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component set **chart** (698:4399, 24 variants) with chart-legend-item (697:4514) and chart-tooltip (693:9776). ' +
-          'Type → `type` (line · bar-vertical · bar-horizontal), Style → `variant` (default · simple), Group → the number of ' +
-          '`series` (one = no, two = yes: the second is the comparison). Default style: Y / X axis labels → `yAxisLabel` / ' +
-          '`xAxisLabel`, value grid → `ticks`, legend from the series labels. hover=yes → the active category (`activeIndex`: pointer, tap or keyboard, both styles). ' +
-          'Simple style: 160px, the last category is the current period. Width follows the container.',
+          '항목별 수치를 선이나 막대로 그려 보여 주는 차트입니다. 모양은 `type`, 스타일은 `variant`(기본 · 간단)로 고르고, ' +
+          '계열은 `series`에 1개 또는 2개(두 번째는 비교 계열) 넣습니다.',
       },
     },
   },
@@ -37,8 +35,8 @@ const meta = {
     onActiveIndexChange: fn(),
   },
   argTypes: {
-    type: { control: 'inline-radio', options: CHART_TYPES, description: 'Figma "Type"', table: { defaultValue: { summary: 'bar-vertical' } } },
-    variant: { control: 'inline-radio', options: CHART_VARIANTS, description: 'Figma "Style"', table: { defaultValue: { summary: 'default' } } },
+    type: { control: 'inline-radio', options: CHART_TYPES, description: '종류 — 선(line) · 세로 막대(bar-vertical) · 가로 막대(bar-horizontal)', table: { defaultValue: { summary: 'bar-vertical' } } },
+    variant: { control: 'inline-radio', options: CHART_VARIANTS, description: '스타일 — 기본(default) · 간단(simple)', table: { defaultValue: { summary: 'default' } } },
   },
   render: (args) => (
     <div style={{ width: args.variant === 'simple' ? 320 : 600, maxWidth: '100%' }}>
@@ -50,19 +48,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** 두 계열을 비교하는 세로 막대 차트입니다. 종류와 스타일을 바꿔 볼 수 있습니다. */
+export const Playground: Story = { name: '직접 체험' };
 
-/** Group=no: one series. */
+/** 계열이 하나인 차트입니다. */
 export const SingleSeries: Story = {
+  name: '계열 하나',
   args: { series: [{ label: '조회 기간', data: [320, 265, 301, 305, 384] }] },
 };
 
+/** 가로 막대 차트입니다. */
 export const BarHorizontal: Story = {
+  name: '가로 막대 차트',
   args: { type: 'bar-horizontal', yAxisLabel: 'Y축: 동별 구분', xAxisLabel: 'X축: 전력 사용량 (kWh)' },
 };
 
-/** Line chart over dates; one series also draws an area, and the highest point gets the "최고" badge (`maxLabel`). */
+/** 날짜별 선 차트입니다. 첫 계열의 가장 큰 값에 "최고" 배지(`maxLabel`)가 붙고, 계열이 하나면 선 아래 면도 채워집니다. */
 export const Line: Story = {
+  name: '선 차트',
   args: {
     type: 'line',
     'aria-label': '일별 전력 사용량',
@@ -81,8 +84,9 @@ export const Line: Story = {
   ),
 };
 
-/** Simple style: compact, no axes or legend; the last category is the current period (brand colour). Hover / keyboard show the tooltip as in the default style. */
+/** 축과 범례가 없는 간단 스타일입니다. 마지막 항목이 현재 기간이며, 마우스를 올리거나 키보드로 선택하면 기본 스타일처럼 툴팁이 보입니다. */
 export const Simple: Story = {
+  name: '간단 스타일',
   args: {
     variant: 'simple',
     'aria-label': '월별 사용량',
@@ -94,7 +98,8 @@ export const Simple: Story = {
   },
 };
 
-/** The tooltip category can be controlled; `null` hides it. */
+/** 툴팁을 표시할 항목을 `activeIndex`로 직접 정합니다. `null`이면 숨깁니다. */
 export const ControlledTooltip: Story = {
+  name: '툴팁 직접 제어',
   args: { activeIndex: 3 },
 };

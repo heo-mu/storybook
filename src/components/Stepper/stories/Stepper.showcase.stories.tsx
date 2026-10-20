@@ -9,7 +9,8 @@ import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs stepper` (6 sets: steppers, indicators, connectors).
 const meta = {
-  title: 'Components/Stepper/Showcase',
+  title: '컴포넌트/Stepper/전체 보기',
+  id: 'components-stepper-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -24,6 +25,7 @@ const steps = (n: number): StepperStep[] => Array.from({ length: n }, () => ({ l
 const capital = (o: StepperOrientation) => (o === 'horizontal' ? 'Horizontal' : 'Vertical');
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ display: 'grid', gap: 40, padding: '0 24px' }}>
       <Stepper
@@ -53,6 +55,7 @@ export const Overview: Story = {
 
 /** Figma `stepper_indicator_horizontal` and `stepper_indicator_vertical` (5 each). */
 export const IndicatorMatrix: Story = {
+  name: '단계 아이콘 모든 변형',
   render: () => (
     <div style={{ padding: '0 24px' }}>
       <FigmaMatrix
@@ -71,6 +74,7 @@ export const IndicatorMatrix: Story = {
 
 /** Figma `stepper_connector_horizontal` and `stepper_connector_vertical` (Default / Completed). */
 export const ConnectorMatrix: Story = {
+  name: '연결선 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={['Default', 'Completed']}
@@ -87,6 +91,7 @@ export const ConnectorMatrix: Story = {
 
 /** Figma `stepper_horizontal` and `stepper_vertical`: Steps 3 · 4 · 5 (current step 2; vertical 5 steps: step 4). */
 export const StepperMatrix: Story = {
+  name: '단계 표시 모든 변형',
   render: () => (
     <div style={{ padding: '12px 24px' }}>
       <FigmaMatrix
@@ -105,6 +110,7 @@ export const StepperMatrix: Story = {
 
 /** The current step moves with `currentStep`: earlier steps become completed, connectors follow. */
 export const Interaction: Story = {
+  name: '동작',
   render: function Render() {
     const [current, setCurrent] = useState(0);
     const items = [{ label: '약관 동의' }, { label: '정보 입력' }, { label: '완료' }];
@@ -140,6 +146,7 @@ export const Interaction: Story = {
 
 /** Ordered list, aria-current="step", status text for icon-only states. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ padding: '0 24px' }}>
       <Stepper

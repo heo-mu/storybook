@@ -10,7 +10,8 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs segmented-control` (sets segmented-control, segmented-item).
 const meta = {
-  title: 'Components/SegmentedControl/Showcase',
+  title: '컴포넌트/SegmentedControl/전체 보기',
+  id: 'components-segmentedcontrol-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -21,6 +22,7 @@ type Story = StoryObj;
 const ITEMS = ['a', 'b', 'c', 'd'];
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       <StorySection title="Size (md · sm · xs)" direction="column">
@@ -51,6 +53,7 @@ export const Overview: Story = {
 
 /** Figma `segmented-control` (md · sm · xs): 316px wide, four items, the first selected. */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={316}
@@ -93,6 +96,7 @@ const ITEM_VARIANTS = [
  * in this story so the item is compared as in the Figma set).
  */
 export const ItemMatrix: Story = {
+  name: '항목 모든 변형',
   render: () => (
     <div className="segmented-item-matrix">
       <style>{'.segmented-item-matrix .ds-segmented { padding: 0; background: none; }'}</style>
@@ -122,6 +126,7 @@ export const ItemMatrix: Story = {
 
 /** Unselected Hover / Pressed, Selected and Disabled at size md. */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <StorySection title="State" direction="column">
       <SegmentedControl aria-label="상태" defaultValue="selected">
@@ -154,6 +159,7 @@ function Controlled() {
 
 /** Click selects; arrow keys move the selection and skip disabled items. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => <Controlled />,
   play: async ({ canvas, userEvent, step }) => {
     await step('click selects', async () => {
@@ -174,6 +180,7 @@ export const Interaction: Story = {
 
 /** role="radiogroup" with a name; each segment is a radio named by its label. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <SegmentedControl aria-label="정렬" defaultValue="new">
       <SegmentedControlItem value="new">최신순</SegmentedControlItem>
@@ -192,6 +199,7 @@ export const Accessibility: Story = {
  * segment's padding like in Figma; only a label wider than the whole segment is truncated.
  */
 export const LabelOverflow: Story = {
+  name: '긴 라벨',
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <SegmentedControl data-testid="fits" size="sm" aria-label="조회 기간" defaultValue="7d" style={{ width: 220 }}>

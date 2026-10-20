@@ -8,11 +8,13 @@ import { SelectSizeContext } from '../SelectContext';
 import { FieldMessage, FIELD_SIZES, type FieldSize } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs select` (sets select, listbox, option, select_message).
 const meta = {
-  title: 'Components/Select/Showcase',
+  title: '컴포넌트/Select/전체 보기',
+  id: 'components-select-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -67,6 +69,7 @@ function SelectVariant({ size, state }: { size: FieldSize; state: State }) {
 const FRUITS = ['사과', '바나나', '체리', '포도', '키위', '망고', '복숭아', '자두', '수박', '참외', '딸기', '레몬'];
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -109,6 +112,7 @@ export const Overview: Story = {
 
 /** 21 Figma select variants: Size (rows) × State (columns). "Open" needs an open list → see `Open`. */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -129,6 +133,7 @@ export const VariantMatrix: Story = {
 
 /** Figma State "Open" for one size (`size` arg): the field with its list open below it. */
 export const Open: StoryObj<{ size: FieldSize }> = {
+  name: '열림',
   args: { size: 'sm' },
   argTypes: { size: { control: 'inline-radio', options: FIELD_SIZES } },
   parameters: { controls: { disable: false } },
@@ -156,6 +161,7 @@ const SELECTED_ROW = 2;
 
 /** Figma `listbox` (3 sizes): five options, the third selected. */
 export const ListboxMatrix: Story = {
+  name: '목록 모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={332}
@@ -185,6 +191,7 @@ const OPTION_STATES = ['Default', 'Hover', 'Pressed', 'Selected', 'Disabled'] as
 
 /** Figma `option` (15): Size (rows) × State (columns). */
 export const OptionMatrix: Story = {
+  name: '옵션 모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -214,6 +221,7 @@ export const OptionMatrix: Story = {
 
 /** Figma `select_message` (Info · Success · Error). */
 export const MessageMatrix: Story = {
+  name: '메시지 모든 변형',
   render: () => (
     <div className="ds-select">
       <FigmaMatrix
@@ -229,11 +237,12 @@ export const MessageMatrix: Story = {
 
 /** Every state at size sm (Open: see `Open`). */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <StorySection title="State">
       {STATES.map((state) => (
         <div key={state} style={{ width: 320 }}>
-          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{state}</div>
+          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{koLabel(state)}</div>
           <SelectVariant size="sm" state={state} />
         </div>
       ))}
@@ -243,6 +252,7 @@ export const States: Story = {
 
 /** A long list scrolls inside the popover (Figma "scroll" indicator = the styled scrollbar). */
 export const LongList: Story = {
+  name: '긴 목록',
   render: () => (
     <div style={{ width: 320, paddingBottom: 240 }}>
       <Select label="과일" defaultOpen>
@@ -270,6 +280,7 @@ function Controlled() {
 
 /** Mouse and keyboard: open, move, select, close; focus returns to the field. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => <Controlled />,
   play: async ({ canvas, canvasElement, userEvent, step }) => {
     const body = within(canvasElement.ownerDocument.body);
@@ -307,6 +318,7 @@ export const Interaction: Story = {
 
 /** Label, description and invalid state reach the trigger; the hidden native select carries the form value. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <form style={{ width: 320 }} aria-label="주문">
       <Select label="배송지" name="region" defaultValue="seoul" invalid message="배송할 수 없는 지역입니다.">

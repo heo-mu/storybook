@@ -2,16 +2,33 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Badge.showcase.stories';
 import { Badge, BadgeDot, BadgeCount } from './Badge';
 
-<Meta title="Components/Badge/Usage" />
+<Meta title="컴포넌트/Badge/사용 방법" id="components-badge-usage" name="Docs" />
 
-# Badge — 사용 가이드
+# Badge
 
-Figma **Badge** 프레임(91:5943)의 `badge_status`(84개) · `badge_dot`(21개) · `badge_count`(14개)를 구현했습니다.
-상태를 짧게 알리는 표시이며 클릭할 수 없습니다.
+배지는 상태나 개수를 짧게 알려 주는 표시입니다. 보여 주기만 하며 누를 수 없습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+| 컴포넌트 | 쓰임 |
+| --- | --- |
+| `Badge` | 완료 · 점검 필요처럼 상태를 글자로 알릴 때 |
+| `BadgeDot` | 새 글처럼 글자 없이 점 하나로 알릴 때 |
+| `BadgeCount` | 읽지 않은 알림처럼 개수를 알릴 때 |
+
+## 종류
+
+<Canvas of={Showcase.StatusMatrix} />
+
+- 색은 `status`로 고릅니다: `basic` · `gray` · `point` · `success` · `warning` · `danger` · `information`. 세 컴포넌트가 같은 값을 씁니다.
+- `appearance`로 채운 모양(`filled`)과 테두리 모양(`outline`)을 고릅니다. 테두리 모양은 배경이 없습니다.
+- 크기는 `size`(`sm` · `md` · `lg`), 모서리는 `shape`(`square` · `rounded`)로 고릅니다.
+- `Badge` 앞의 점은 `dot={false}`로 숨길 수 있습니다.
+- `BadgeCount`는 `max`(기본 99)보다 큰 수를 "99+"처럼 줄여 보여 줍니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -25,46 +42,20 @@ Figma **Badge** 프레임(91:5943)의 `badge_status`(84개) · `badge_dot`(21개
 <BadgeCount count={unread} status="point" aria-label={\`읽지 않은 알림 \${unread}개\`} />`}
 />
 
-## Figma 속성 → Props
+## 접근성
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Status Basic · Gray · Point · Success · Warning · Danger · Information | `status` | 세 컴포넌트 공통 |
-| Appearance Filled · Outline | `appearance` | Outline은 1px 테두리, 배경 없음 |
-| Size sm · md · lg | `size` | 높이 20 · 24 · 28px, `BadgeDot`은 4 · 6 · 8px |
-| Shape Square · Rounded | `shape` | |
-| Dot | `dot` | |
-| Label Text | `children` | |
-| badge_count Digits Single · Multiple | `count` · `max` | `max`(기본 99)보다 크면 "99+" |
-
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `BADG-01` **Outline 배경**: 투명. 2026-10-19 Figma에서 변수 없는 흰 채움(12개 변형)을 지워 모든 Outline이 배경 없음으로 같습니다(F42 해소).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `BADG-02` **접근성**: Badge는 글자가 그대로 읽힙니다. `BadgeDot`은 장식이며 의미가 있으면 `aria-label`을 주세요(`role="img"`). `BadgeCount`의 숫자만으로 뜻이 부족하면 `aria-label`로 설명하세요(Rules 03 — 색만으로 전하지 않기).
-- `BADG-03` **최대값 표시**: 99를 넘으면 "99+"(Rules 08). 기준은 `max`로 바꿀 수 있습니다.
-
-## 상태
-
-<Canvas of={Showcase.StatusMatrix} />
+- `Badge`의 글자는 화면 낭독기가 그대로 읽습니다.
+- `BadgeDot`은 꾸밈으로 처리되어 읽히지 않습니다. 뜻이 있는 점이면 `aria-label`을 붙입니다.
+- `BadgeCount`의 숫자만으로 뜻이 부족하면 `aria-label`로 설명합니다(예: "읽지 않은 알림 7개").
+- 색만으로 뜻을 전하지 않도록 글자나 `aria-label`을 함께 씁니다.
 
 ## Props
 
+### Badge
 <ArgTypes of={Badge} />
 
-### BadgeDot · BadgeCount
-
+### BadgeDot
 <ArgTypes of={BadgeDot} />
 
+### BadgeCount
 <ArgTypes of={BadgeCount} />

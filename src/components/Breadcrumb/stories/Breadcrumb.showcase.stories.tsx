@@ -8,7 +8,8 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs breadcrumb` (sets breadcrumb-item, breadcrumb).
 const meta = {
-  title: 'Components/Breadcrumb/Showcase',
+  title: '컴포넌트/Breadcrumb/전체 보기',
+  id: 'components-breadcrumb-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -25,6 +26,7 @@ const ITEMS: BreadcrumbEntry[] = [
 const CURRENT = '프로그램 등록';
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <Breadcrumb items={ITEMS} current={CURRENT} aria-label="이동 경로 — Full" />
@@ -45,6 +47,7 @@ const ITEM_CELLS = [
 
 /** Figma `breadcrumb-item` (12): Role Link / Current / Open × State × Size ("Show Icon" off as in the set). */
 export const ItemMatrix: Story = {
+  name: '항목 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={ITEM_CELLS.map((c) => `${c.role} · ${c.state}`)}
@@ -68,6 +71,7 @@ export const ItemMatrix: Story = {
 
 /** Figma `breadcrumb` Layout Full / Collapsed (Expanded False). Expanded True: `BreadcrumbExpanded`. */
 export const BreadcrumbMatrix: Story = {
+  name: '경로 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={['Full', 'Collapsed']}
@@ -87,6 +91,7 @@ export const BreadcrumbMatrix: Story = {
  * The menu panel is 200 × 110 like the Figma `dropdownmenu` frame.
  */
 export const BreadcrumbExpanded: StoryObj<{ size: BreadcrumbSize }> = {
+  name: '경로 펼침',
   args: { size: 'md' },
   render: ({ size }) => (
     <div style={{ paddingBottom: 160 }}>
@@ -118,6 +123,7 @@ export const BreadcrumbExpanded: StoryObj<{ size: BreadcrumbSize }> = {
 
 /** Overflow menu: click / Enter opens, arrows move, Enter chooses, Escape closes and focus returns to the trigger. */
 export const Interaction: StoryObj<{ onAction: Mock<(id: unknown) => void> }> = {
+  name: '동작',
   args: { onAction: fn() },
   render: (args) => (
     <div style={{ paddingBottom: 160 }}>
@@ -157,6 +163,7 @@ export const Interaction: StoryObj<{ onAction: Mock<(id: unknown) => void> }> = 
 
 /** nav landmark, ordered list, current page, home and overflow names. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => <Breadcrumb items={ITEMS} current={CURRENT} layout="collapsed" />,
   play: async ({ canvas }) => {
     const nav = canvas.getByRole('navigation', { name: '이동 경로' });

@@ -4,20 +4,17 @@ import { Select } from './Select';
 import { SelectOption } from './SelectOption';
 import { FIELD_MESSAGE_TYPES, FIELD_SIZES } from '../Field';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Select.showcase.stories.tsx
+// 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Select.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Select/Select',
+  title: '컴포넌트/Select/Select',
+  id: 'components-select-select',
   component: Select,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component set **select** (95:4740, 24 variants — State=Focus is keyboard focus) with **listbox** (97:2665), **option** (97:2286) and ' +
-          '**select_message** (95:2960). Size → `size`, Label → `label`, Display Text → selected option / `placeholder`, ' +
-          'Alert → `message` / `messageType`. State: Hover = :hover, Open = list open (`open` / `defaultOpen`), Completed = has ' +
-          'a value, Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`. Options are `SelectOption` children ' +
-          '(`id`, `disabled`, `checkIcon` = Figma option "Check Icon"). Value: `value` / `defaultValue` / `onChange` (option id). Built on react-aria-components.',
+          '목록을 펼쳐 옵션 하나를 고르는 선택 칸입니다. 옵션은 `SelectOption`으로 넣고, 값은 선택한 옵션의 `id`로 `value` · `defaultValue` · `onChange`에서 다룹니다.',
       },
     },
   },
@@ -33,14 +30,14 @@ const meta = {
     children: null,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: FIELD_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'sm' } } },
-    label: { control: 'text', description: 'Figma "Label Text"' },
-    placeholder: { control: 'text', description: 'Figma "Display Text" while empty' },
-    message: { control: 'text', description: 'Figma select_message text' },
-    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: 'Figma select_message "Type"' },
-    invalid: { control: 'boolean', description: 'Figma State "Error"' },
-    disabled: { control: 'boolean', description: 'Figma State "Disabled"' },
-    readOnly: { control: 'boolean', description: 'Figma State "Read-only"' },
+    size: { control: 'inline-radio', options: FIELD_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
+    label: { control: 'text', description: '선택 칸 위 라벨' },
+    placeholder: { control: 'text', description: '아무것도 고르지 않았을 때 보이는 글자' },
+    message: { control: 'text', description: '선택 칸 아래 도움말 메시지' },
+    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류' },
+    invalid: { control: 'boolean', description: '오류 — 오류 테두리로 표시' },
+    disabled: { control: 'boolean', description: '비활성 — 고를 수 없음' },
+    readOnly: { control: 'boolean', description: '읽기 전용 — 값만 보이고 목록이 펼쳐지지 않음' },
     children: { control: false },
   },
   render: (args) => (
@@ -59,34 +56,41 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const WithValue: Story = {
+  name: '값 있음',
   args: { defaultValue: 'banana' },
 };
 
 export const WithMessage: Story = {
+  name: '메시지 있음',
   args: { defaultValue: 'apple', message: '하나를 선택하세요.', messageType: 'info' },
 };
 
 export const Invalid: Story = {
+  name: '오류',
   args: { invalid: true, message: '필수 항목입니다.' },
 };
 
 export const Sizes: Story = {
+  name: '크기',
   args: { size: 'lg' },
 };
 
 export const Disabled: Story = {
+  name: '비활성',
   args: { disabled: true },
 };
 
 export const ReadOnly: Story = {
+  name: '읽기 전용',
   args: { readOnly: true, defaultValue: 'grape' },
 };
 
-/** Dynamic options from data: `items` + a render function. */
+/** 데이터 목록(`items`)과 렌더 함수로 옵션을 만듭니다. */
 export const DynamicItems: Story = {
+  name: '항목 목록으로',
   render: (args) => (
     <Select
       {...args}
@@ -101,8 +105,9 @@ export const DynamicItems: Story = {
   ),
 };
 
-/** Figma option "Check Icon" off: the selected option is marked by its semibold brand text only. */
+/** 체크 아이콘을 끄면 선택된 옵션은 굵은 글자로만 표시됩니다. */
 export const WithoutCheckIcon: Story = {
+  name: '체크 아이콘 없음',
   args: { defaultValue: 'banana' },
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole('button'));

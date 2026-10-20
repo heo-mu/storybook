@@ -3,7 +3,7 @@ import { fn } from 'storybook/test';
 import { FilterChipSelect } from './FilterChipSelect';
 import { CHIP_SIZES } from './Chip.options';
 
-// Usage stories (Storybook MCP manifest). Interaction and real filter examples: ./stories/FilterChipSelect.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 동작 확인과 실제 필터 예시는 ./stories/FilterChipSelect.showcase.stories.tsx에 있습니다.
 const AGES = [
   { id: '10', label: '10대' },
   { id: '20', label: '20대' },
@@ -13,17 +13,15 @@ const AGES = [
 ];
 
 const meta = {
-  title: 'Components/Chip/FilterChipSelect',
+  title: '컴포넌트/Chip/FilterChipSelect',
+  id: 'components-chip-filterchipselect',
   component: FilterChipSelect,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma **chip-filter** (558:25704) with its option panel (`listbox` / `option` Size=sm) — the Figma "chip-filter 선택 예시". ' +
-          '`selectionMode="multiple"`(default): options toggle while the panel stays open, the choice is applied when it closes; ' +
-          '`selectionMode="single"`: choosing applies and closes, the first option (`clearLabel`, "전체") removes the filter. ' +
-          'The chip shows "name: value, value" and the Selected look while a value is applied.',
+          '필터 칩과 옵션 목록이 함께 있는 필터입니다. 여러 값을 고르면 `selectionMode="multiple"`(기본, 목록을 닫을 때 적용), 하나만 고르면 `selectionMode="single"`(고르면 바로 적용)을 씁니다.',
       },
     },
   },
@@ -35,9 +33,9 @@ const meta = {
     onChange: fn(),
   },
   argTypes: {
-    label: { control: 'text', description: 'Filter name' },
-    size: { control: 'inline-radio', options: CHIP_SIZES, description: 'Figma chip "Size"', table: { defaultValue: { summary: 'md' } } },
-    disabled: { control: 'boolean', description: 'Figma State "Disabled"' },
+    label: { control: 'text', description: '필터 이름' },
+    size: { control: 'inline-radio', options: CHIP_SIZES, description: '크기', table: { defaultValue: { summary: 'md' } } },
+    disabled: { control: 'boolean', description: '비활성 — 누를 수 없고 키보드로도 선택되지 않음' },
     maxDisplayed: { control: { type: 'number', min: 1, max: 5 } },
     options: { control: 'object' },
   },
@@ -46,16 +44,18 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Multiple selection (default). */
-export const Playground: Story = {};
+/** 여러 개 고르기(기본)입니다. 목록을 닫을 때 고른 값이 적용됩니다. */
+export const Playground: Story = { name: '직접 체험' };
 
-/** Values applied from the start: Selected look, "나이대: 20대, 30대". */
+/** 처음부터 값이 적용된 필터입니다. 선택됨 모양으로 "나이대: 20대, 30대"가 보입니다. */
 export const WithValue: Story = {
+  name: '값 있음',
   args: { defaultValue: ['20', '30'] },
 };
 
-/** Single selection with a "전체" option that removes the filter. */
+/** 하나 고르기입니다. 첫 옵션 "전체"를 고르면 필터가 풀립니다. */
 export const Single: Story = {
+  name: '하나 선택',
   args: {
     label: '기간',
     selectionMode: 'single',
@@ -69,5 +69,6 @@ export const Single: Story = {
 };
 
 export const Disabled: Story = {
+  name: '비활성',
   args: { disabled: true, defaultValue: ['20'] },
 };

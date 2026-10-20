@@ -3,16 +3,37 @@ import * as Showcase from './stories/SegmentedControl.showcase.stories';
 import { SegmentedControl } from './SegmentedControl';
 import { SegmentedControlItem } from './SegmentedControlItem';
 
-<Meta title="Components/SegmentedControl/Usage" />
+<Meta title="컴포넌트/SegmentedControl/사용 방법" id="components-segmentedcontrol-usage" name="Docs" />
 
-# SegmentedControl — 사용 가이드
+# SegmentedControl
 
-Figma **Segmented Control** 프레임(476:21053)의 `segmented-control`(3개)와 `segmented-item`(18개)을 구현한 단일 선택 컨트롤입니다.
-항목은 숨겨진 네이티브 라디오이므로 방향키 이동, 폼 전송, 스크린리더의 "라디오 버튼 n개 중 n번째"가 브라우저 기본 동작입니다.
+몇 개의 옵션을 한 줄로 나란히 보여 주고 그중 하나를 고르게 하는 컨트롤입니다. 각 옵션은 `SegmentedControlItem`으로 넣습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+| 컴포넌트 | 쓰임 |
+| --- | --- |
+| `SegmentedControl` | 일간 · 주간 · 월간처럼 몇 개 안 되는 옵션 중 하나를 고를 때 |
+| `SegmentedControlItem` | `SegmentedControl` 안의 옵션 하나 |
+
+## 종류
+
+- 크기는 `size`(`md` · `sm` · `xs`)로 고릅니다. 기본은 `md`입니다.
+- 너비를 정하지 않으면 가장 긴 옵션에 맞춰 모든 옵션이 같은 너비가 됩니다.
+- `style` · `className`으로 너비를 정하면 옵션들이 그 너비를 똑같이 나눠 씁니다.
+- 옵션 글자는 한 줄로 보입니다. 옵션 너비보다 길면 말줄임표로 줄입니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+- 마우스를 올리거나 누르면 모양이 바뀝니다. 선택된 옵션은 모양이 그대로 유지됩니다.
+- 옵션 하나만 막으려면 `SegmentedControlItem`에, 전체를 막으려면 `SegmentedControl`에 `disabled`를 줍니다.
+- 키보드로 선택하면 선택된 옵션 둘레에 포커스 테두리가 보입니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -24,43 +45,20 @@ Figma **Segmented Control** 프레임(476:21053)의 `segmented-control`(3개)와
   <SegmentedControlItem value="month" disabled>월간</SegmentedControlItem>
 </SegmentedControl>
 
-// 너비 지정 — 항목이 너비를 똑같이 나눔
+// 너비 지정 — 옵션이 너비를 똑같이 나눔
 <SegmentedControl aria-label="보기" defaultValue="list" style={{ width: 316 }}>…</SegmentedControl>`}
 />
 
-## Figma 속성 → Props
+## 접근성
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Size md · sm · xs | `size` | 높이 44 · 36 · 28px. 기본 `'md'` |
-| segmented-item Label | `SegmentedControlItem` children | 한 줄. 내용 상자보다 넓으면 좌우 padding까지 쓰고(Figma와 같음), 항목 전체보다 넓을 때만 말줄임 |
-| Variant Selected · Unselected | `value` / `defaultValue` / `onChange` | 항목 `value`로 식별 |
-| State Hover · Pressed | 브라우저 `:hover` · `:active` | |
-| State Disabled | 항목 `disabled` 또는 컨트롤 `disabled` | 방향키 이동에서 건너뜀 |
+- `aria-label` 또는 `aria-labelledby`로 이름을 꼭 붙입니다.
+- 방향키로 선택이 이동하고, 비활성 옵션은 건너뜁니다.
+- 화면 낭독기는 각 옵션을 "전체 n개 중 n번째"로 읽습니다.
 
-컨트롤 너비를 지정하지 않으면 가장 긴 항목에 맞춰 모든 항목이 같은 너비가 됩니다(Figma: 항목 Fill).
+## 주의사항
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `SEGM-01` **포커스**: 키보드 포커스일 때 선택된 항목 바깥 2px에 2px `colors/border/focus` 링(Figma 속성 `Focus` — segmented-item).
-- `SEGM-02` **선택된 항목의 Hover · Pressed**: Variant는 없지만 같은 값의 Component 변수(`…/selected/background/hover` 등)가 Figma에 있어 그대로 사용합니다(시각 변화 없음).
-
-### Figma 반영 대기
-
-Figma 정리를 기다리는 항목입니다. 정리될 때까지 아래처럼 구현합니다.
-
-- `SEGM-03` **선택 항목 그림자**: Figma에서 변수 · 효과 스타일에 연결되지 않은 값(`0 1px 2px #00000017`)을 그대로 씁니다. 같은 값의 효과 스타일이 없어 등록(디자인 결정)을 기다립니다(F18).
-
-## 상태
-
-<Canvas of={Showcase.States} />
+- 값은 선택된 옵션의 `value`입니다. `value` · `onChange`로 직접 관리하거나, `defaultValue`로 처음 값만 정합니다.
+- 폼을 보낼 때 선택값이 함께 전송됩니다. 이름은 `name`으로 정하고, 생략하면 자동으로 만들어집니다.
 
 ## Props
 

@@ -5,15 +5,15 @@ import type { BadgeStatus } from '../Badge';
 import type { DataFreshnessState } from './DataFreshness.options';
 
 export type DataFreshnessProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** Figma "State": Fresh (Success badge), Stale (Warning), Offline (Gray). @default 'fresh' */
+  /** 상태 — 최근 수신(`fresh`, 성공 배지) · 수신 지연(`stale`, 경고 배지) · 연결 끊김(`offline`, 회색 배지). @default 'fresh' */
   state?: DataFreshnessState;
-  /** Badge text. @default '최근 수신' · '수신 지연' · '연결 끊김' */
+  /** 배지 글자. @default '최근 수신' · '수신 지연' · '연결 끊김' */
   label?: ReactNode;
-  /** Figma "Timestamp Text" — when the data was last received. */
+  /** 마지막으로 데이터를 받은 시각. */
   timestamp: ReactNode;
-  /** Machine-readable `timestamp` (renders a `<time datetime>`). */
+  /** `timestamp`의 표준 형식 시각. 넘기면 `<time>` 요소로 표시합니다. */
   dateTime?: string;
-  /** Figma "Interval Text" — after a "·", e.g. "자동 갱신 1분". */
+  /** 갱신 주기. "·" 뒤에 표시합니다(예: "자동 갱신 1분"). */
   interval?: ReactNode;
 };
 
@@ -21,9 +21,7 @@ const STATUS: Record<DataFreshnessState, BadgeStatus> = { fresh: 'success', stal
 const LABELS: Record<DataFreshnessState, string> = { fresh: '최근 수신', stale: '수신 지연', offline: '연결 끊김' };
 
 /**
- * Figma component set `data-freshness` (697:4543): how current the data is — a status badge (Outline · sm · Rounded,
- * with dot) and the last-received time with the refresh interval (xs/leading-normal/normal; time text/secondary,
- * "·" and interval text/tertiary, m-0_5 apart), p-2 after the badge.
+ * 데이터가 얼마나 최신인지 상태 배지, 마지막 수신 시각, 갱신 주기로 보여 줍니다.
  */
 export const DataFreshness = forwardRef<HTMLDivElement, DataFreshnessProps>(function DataFreshness(
   { state = 'fresh', label = LABELS[state], timestamp, dateTime, interval, className, ...rest },

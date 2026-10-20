@@ -52,3 +52,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DSTA-03` **접근성**: 상태가 바뀌면 읽어 주도록 `role="status"`(Loading은 `aria-busy`)입니다. 스켈레톤 · 아이콘은 장식입니다(Rules 03 · 06).
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
+
+- 버튼은 `TextButton` Primary · sm이며, 상태별 오른쪽 아이콘(위 표의 › · ↺)이 붙습니다.
+- `title` · `description` · `actionLabel`의 기본값은 Figma의 상태별 텍스트 속성("Empty Title" · "Error Description" …) 값입니다.

@@ -1,4 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
+import { useRef, type CSSProperties, type ReactNode } from 'react';
+import { koLabel } from '../../../storybook/koLabel';
+import { useWholePixelCaptions } from '../../../storybook/useWholePixelCaptions';
 
 const caption: CSSProperties = {
   font: '500 11px/16px var(--font-family-basic), sans-serif',
@@ -11,14 +13,16 @@ const caption: CSSProperties = {
 
 /** Plain table used by the matrix / state stories. */
 export function MatrixTable({ columns, rows }: { columns: string[]; rows: Array<{ label: string; cells: ReactNode[] }> }) {
+  const table = useRef<HTMLTableElement>(null);
+  useWholePixelCaptions(table);
   return (
-    <table style={{ borderCollapse: 'separate', borderSpacing: '0 8px' }}>
+    <table ref={table} style={{ borderCollapse: 'separate', borderSpacing: '0 8px' }}>
       <thead>
         <tr>
           <td style={caption} />
           {columns.map((c) => (
             <th key={c} style={caption} scope="col">
-              {c}
+              {koLabel(c)}
             </th>
           ))}
         </tr>
@@ -27,7 +31,7 @@ export function MatrixTable({ columns, rows }: { columns: string[]; rows: Array<
         {rows.map((row) => (
           <tr key={row.label}>
             <th style={caption} scope="row">
-              {row.label}
+              {koLabel(row.label)}
             </th>
             {row.cells.map((cell, i) => (
               <td key={i} style={{ padding: '0 16px 0 0', verticalAlign: 'middle' }}>

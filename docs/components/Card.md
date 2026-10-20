@@ -55,3 +55,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### CardHeader
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
+
+- `Card`: 위아래 padding `p-5`, 부분 사이 `m-4`, `border-radius/rounded-lg`, 배경 `colors/card/background`, 1px 안쪽 테두리 `colors/card/border`, 그림자(figma-issues F60, `CARD-01`).
+- `CardHeader`: Figma card_header(218:7173) — 제목 · 설명 · 버튼 아래에 구분선. 제목은 Figma "Card Text", 설명은 "Sub" · "Sub Text", 버튼은 "Button"(Figma에서 Button Tertiary · Outline · sm).
+- `CardContent`: Figma card_content — 좌우 padding `p-5`.
+- `CardFooter`: Figma card_footer(218:7174) — 너비를 채우는 버튼 `m-2` 간격(Figma: Primary · Solid · md와 Tertiary · Outline · md).

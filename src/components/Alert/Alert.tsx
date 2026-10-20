@@ -4,21 +4,21 @@ import type { AlertStatus } from './Alert.options';
 import { STATUS_ICON } from './statusIcon';
 
 export type AlertProps = Omit<ComponentPropsWithoutRef<'div'>, 'title' | 'children'> & {
-  /** Figma "Status". @default 'information' */
+  /** 종류 — 안내 · 성공 · 오류. 종류마다 아이콘과 색이 다릅니다. @default 'information' */
   status?: AlertStatus;
-  /** Figma "Alert Text". */
+  /** 제목. */
   title: ReactNode;
-  /** Figma "Sub Text" ("Sub" on). */
+  /** 제목 아래 설명. 길면 줄을 바꿔 모두 보여 줍니다. */
   description?: ReactNode;
-  /** Figma "Icon". @default true */
+  /** 상태 아이콘을 표시합니다. @default true */
   showIcon?: boolean;
-  /** Figma "Button": e.g. `<Button variant="tertiary" appearance="outline" size="xs">`. */
+  /** 오른쪽에 놓는 버튼. 예: `<Button variant="tertiary" appearance="outline" size="xs">` */
   action?: ReactNode;
 };
 
 /**
- * Figma component set `alert` (179:6087): an inline message with a status icon, title, description and an
- * optional action. Error alerts use role="alert" (announced at once), the others role="status".
+ * 화면 안에 머물며 상태나 안내를 전하는 알림입니다.
+ * 오류는 화면 낭독기가 바로 읽고(`role="alert"`), 안내 · 성공은 `role="status"`로 읽힙니다.
  */
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   { status = 'information', title, description, showIcon = true, action, className, role, ...rest },

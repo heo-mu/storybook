@@ -16,25 +16,25 @@ import { useControllableState } from '../../utils/useControllableState';
 import { toCalendarDate, toISODate, type ISODate } from './dates';
 
 export type CalendarProps = {
-  /** Selected date, 'YYYY-MM-DD' (controlled); `null` = none. */
+  /** 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 선택이 없습니다. */
   value?: ISODate | null;
-  /** Initially selected date (uncontrolled). @default null */
+  /** 처음 선택된 날짜. `value` 없이 달력이 스스로 값을 관리할 때 씁니다. @default null */
   defaultValue?: ISODate | null;
-  /** Called with the selected date ('YYYY-MM-DD'). */
+  /** 날짜를 고르면 'YYYY-MM-DD' 값으로 호출됩니다. */
   onChange?: (value: ISODate) => void;
-  /** Earliest selectable date; earlier days use the Disabled look. */
+  /** 고를 수 있는 가장 이른 날짜. 이전 날짜는 비활성으로 보입니다. */
   minValue?: ISODate;
-  /** Latest selectable date. */
+  /** 고를 수 있는 가장 늦은 날짜. */
   maxValue?: ISODate;
-  /** Marks individual days as unavailable (Disabled look). */
+  /** 날짜별로 고를 수 없는 날을 정합니다. 고를 수 없는 날은 비활성으로 보입니다. */
   isDateUnavailable?: (date: ISODate) => boolean;
-  /** Month shown initially when there is no value (any day of that month). @default today */
+  /** 값이 없을 때 처음 보여 줄 달(그 달의 아무 날짜). @default 오늘 */
   defaultFocusedValue?: ISODate;
-  /** Disables the whole calendar. */
+  /** 비활성 — 달력 전체를 고를 수 없게 합니다. */
   disabled?: boolean;
-  /** Moves focus into the grid on mount (used by DatePicker). */
+  /** 처음 그려질 때 키보드 위치를 날짜 칸으로 옮깁니다. */
   autoFocus?: boolean;
-  /** Accessible name. @default the month heading */
+  /** 화면 낭독기가 읽는 달력 이름. @default 월 제목 */
   'aria-label'?: string;
   className?: string;
   style?: CSSProperties;
@@ -65,10 +65,8 @@ function DayLabel({ children }: { children: ReactNode }) {
 }
 
 /**
- * Figma `date-picker_calendar` (144:1644) with `date-picker_header` (144:1377), `date-picker_navigation`
- * (144:1328) and `date-picker_day` (144:1033). Month grid with keyboard navigation (arrows, Page Up / Down,
- * Home / End), from react-aria-components. Weekday and month names follow the locale (react-aria I18nProvider,
- * otherwise the browser).
+ * 한 달 단위로 날짜를 보여 주고 고르는 달력입니다. `DatePicker` 안에서 쓰이며, 화면에 펼쳐 두고 따로 쓸 수도 있습니다.
+ * 방향키 · Page Up · Page Down · Home · End로 날짜를 옮기고, 월 · 요일 이름은 언어 설정을 따릅니다.
  */
 export function Calendar({
   value,

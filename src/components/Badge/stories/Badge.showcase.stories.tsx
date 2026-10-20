@@ -7,7 +7,8 @@ import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs badge` (sets badge_status, badge_dot, badge_count).
 const meta = {
-  title: 'Components/Badge/Showcase',
+  title: '컴포넌트/Badge/전체 보기',
+  id: 'components-badge-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -19,6 +20,7 @@ const NAME: Record<BadgeStatus, string> = { basic: 'Basic', gray: 'Gray', point:
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -46,6 +48,7 @@ export const Overview: Story = {
 
 /** Figma `badge_status` (84): Status × Appearance × Size × Shape. */
 export const StatusMatrix: Story = {
+  name: '상태 배지 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={BADGE_STATUSES.map((s) => NAME[s])}
@@ -70,6 +73,7 @@ export const StatusMatrix: Story = {
 
 /** Figma `badge_dot` (21): Status × Size. */
 export const DotMatrix: Story = {
+  name: '점 배지 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={BADGE_STATUSES.map((s) => NAME[s])}
@@ -83,6 +87,7 @@ export const DotMatrix: Story = {
 
 /** Figma `badge_count` (14): Status × Digits (Single "1", Multiple "99+"). */
 export const CountMatrix: Story = {
+  name: '숫자 배지 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={BADGE_STATUSES.map((s) => NAME[s])}
@@ -99,6 +104,7 @@ export const CountMatrix: Story = {
 
 /** Text is the accessible content; dots are decorative unless named; counts above `max` show "max+". */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
       <Badge status="success">완료</Badge>

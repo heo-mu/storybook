@@ -63,3 +63,9 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### AccordionItem
+
+## 구현 메모 (Storybook에서 옮김)
+
+- Figma 컴포넌트 세트: `accordion-item`(1035:15648).
+- react-aria-components 기반입니다. `Accordion`은 `DisclosureGroup`, `AccordionItem`은 `Disclosure`이며 제목 버튼에 `aria-expanded` · `aria-controls`가 붙습니다.
+- Figma State Hover는 CSS `:hover`, Expanded는 펼침, Disabled는 `disabled` prop입니다.

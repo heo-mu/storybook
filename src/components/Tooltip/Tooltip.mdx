@@ -2,15 +2,30 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Tooltip.showcase.stories';
 import { Tooltip } from './Tooltip';
 
-<Meta title="Components/Tooltip/Usage" />
+<Meta title="컴포넌트/Tooltip/사용 방법" id="components-tooltip-usage" name="Docs" />
 
-# Tooltip — 사용 가이드
+# Tooltip
 
-Figma **Tooltip** 프레임(149:780)의 `tooltip`(4개)을 구현했습니다. 마우스를 올리거나 키보드로 포커스하면 짧은 설명을 보여 줍니다.
+툴팁은 요소에 마우스를 올리거나 키보드로 선택하면 짧은 설명을 보여 줍니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 버튼이나 아이콘이 무엇을 하는지 짧게 설명할 때 씁니다.
+
+## 종류
+
+- `placement`로 툴팁이 나타날 쪽을 고릅니다: `top` · `right` · `bottom` · `left`. 공간이 없으면 반대쪽에 나타납니다.
+- 화살표는 `showArrow={false}`로 숨길 수 있습니다.
+
+## 상태
+
+- 마우스를 올리면 0.5초 뒤에 나타납니다. 시간은 `delay`로 바꿀 수 있습니다.
+- 키보드로 선택하면 바로 나타납니다.
+- 마우스나 포커스가 떠나거나 Esc를 누르면 닫힙니다. 닫히기까지의 시간은 `closeDelay`로 바꿀 수 있습니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -25,39 +40,16 @@ Figma **Tooltip** 프레임(149:780)의 `tooltip`(4개)을 구현했습니다. �
 </Tooltip>`}
 />
 
-## Figma 속성 → Props
+- 툴팁을 띄울 요소를 `Tooltip`으로 감싸고, 설명은 `content`에 넣습니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Placement Top · Right · Bottom · Left | `placement` | 공간이 없으면 반대쪽으로 |
-| Arrow | `showArrow` | 10 × 8 삼각형 |
-| Message Text | `content` | |
+## 접근성
 
-## 정책
+- 툴팁 글자는 감싼 요소의 설명으로 화면 낭독기가 읽습니다.
+- Tab으로 요소를 선택하면 툴팁이 나타나고, Esc로 닫습니다.
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+## 주의사항
 
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `TOOL-01` **트리거와의 거리**: 화살표 길이(8px)만큼 띄워 화살표 끝이 트리거에 닿습니다(Rules 05).
-- `TOOL-02` **나타나는 지연**: 마우스는 0.5초(`delay` 기본 500), 키보드 포커스는 즉시. 포인터 · 포커스가 떠나거나 Esc로 닫힙니다. `delay` · `closeDelay`로 조정할 수 있습니다(Rules 05 · tooltip 주석).
-
-### 개발 구현 세부 사항
-
-디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
-
-- `TOOL-03` **그림자**: Figma는 말풍선과 화살표에 함께 그림자(elevation-3)를 줍니다. CSS 토큰(box-shadow)은 화살표 모양을 따를 수 없어 말풍선에만 적용합니다(화살표 그림자 생략 — F47).
-- `TOOL-04` **트리거 요소**: ref와 props를 전달하는 요소여야 합니다(`Button`, `IconButton`, `TextButton`, `Link` 등).
-
-## 키보드
-
-| 키 | 동작 |
-| --- | --- |
-| Tab (트리거로 포커스) | 툴팁 표시 |
-| Esc | 툴팁 닫기 |
+- 감싸는 요소는 ref와 props를 전달하는 컴포넌트여야 합니다. `Button` · `IconButton` · `TextButton` · `Link`를 쓸 수 있습니다.
 
 ## Props
 

@@ -4,26 +4,26 @@ import { cx } from '../../utils/cx';
 import { useMergedRef } from '../Field';
 
 export type FileUploaderProps = {
-  /** Figma "Title Text". @default '파일을 끌어다 놓거나 선택하세요' */
+  /** 제목. @default '파일을 끌어다 놓거나 선택하세요' */
   title?: ReactNode;
-  /** Figma "Helper Text" (allowed types, size limits …). */
+  /** 제목 아래 안내 문구(허용 형식 · 크기 제한 등). */
   helperText?: ReactNode;
-  /** Figma "Show Icon". @default true */
+  /** 업로드 아이콘 표시 여부. @default true */
   showIcon?: boolean;
-  /** Accepted file types, as for `<input type="file" accept>` (e.g. '.pdf,image/*'). Dropped files are filtered too. */
+  /** 받을 파일 형식(예: '.pdf,image/*'). 끌어다 놓은 파일에도 똑같이 적용됩니다. */
   accept?: string;
-  /** Allows several files. @default false */
+  /** 여러 파일을 한 번에 받을지 여부. @default false */
   multiple?: boolean;
-  /** Figma State "Disabled". */
+  /** 비활성 — 누를 수 없고 파일을 놓아도 받지 않습니다. */
   disabled?: boolean;
-  /** Called with the files chosen in the dialog or dropped on the area. */
+  /** 선택 창에서 고르거나 끌어다 놓은 파일로 호출됩니다. */
   onFilesSelected?: (files: File[]) => void;
-  /** Form field name of the underlying file input. */
+  /** 폼으로 파일을 보낼 때 쓰는 필드 이름. */
   name?: string;
   id?: string;
-  /** Class name of the drop area. */
+  /** 업로드 영역의 클래스 이름. */
   className?: string;
-  /** Style of the drop area (e.g. its width — Figma 353px). */
+  /** 업로드 영역의 스타일(예: 너비). */
   style?: CSSProperties;
 };
 
@@ -40,10 +40,8 @@ function matchesAccept(file: File, accept: string | undefined) {
 }
 
 /**
- * Figma component set `file-uploader` (651:3945): a drop area that also opens the file dialog.
- * State: Hover / Pressed = :hover / :active, Drag-over = files dragged over it, Disabled = `disabled`.
- * The area is a `<button>` (Enter / Space open the dialog); a hidden `<input type="file">` holds the
- * selection for forms.
+ * 파일을 끌어다 놓거나 눌러서 고르는 업로드 영역입니다. 영역은 버튼이라 Enter · Space로도 파일 선택 창이 열리고,
+ * 파일을 위로 끌어오면 모양이 바뀝니다.
  */
 export const FileUploader = forwardRef<HTMLInputElement, FileUploaderProps>(function FileUploader(
   { title = '파일을 끌어다 놓거나 선택하세요', helperText, showIcon = true, accept, multiple = false, disabled = false, onFilesSelected, name, id, className, style },

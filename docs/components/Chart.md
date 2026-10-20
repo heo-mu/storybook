@@ -114,3 +114,15 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ### ChartLegendItem
 
 ### ChartTooltip
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
+
+- `ChartLegendItem`(chart-legend-item 697:4514): 표시와 글자 사이 `m-1_5`, 글자 `xs/leading-normal/normal` · `colors/chart/legend/label/default`.
+  표시는 `line` 선, `dash-line` 점선(5 / 3), `bar` 12px 네모이며 색은 `bar`가 `colors/chart/bar/*`, 선이 `colors/chart/line/*`입니다.
+  `color` 기본값은 `dash-line`이 `02`(Figma: `colors/chart/line/compare`), 나머지가 `brand`입니다. 글자는 Figma "Label"입니다.
+- `ChartTooltip`(chart-tooltip 693:9776): 제목(xs) 아래 표시 · 계열 이름 · 값 행. padding `p-2_5`, 제목과 행 사이 `m-1_5`, 행 사이 `m-1`,
+  배경 `alpha/white/800`, `rounded-sm`, `elevation-3`. `title`은 Figma "Time", 행의 `label`은 "Pressure label", `color`는 "Indicator"입니다.
+- `CHART_COLORS`는 Figma 차트 부품이 쓰는 계열 색 `colors/chart/series/{brand, compare, 02}`와 `colors/chart/simple/{history, history-compare}`에 대응합니다.
+- `CHART_TYPES` · `CHART_VARIANTS` · `CHART_LEGEND_TYPES`는 Figma chart "Type" · "Style", chart-legend-item "Type" 값입니다.

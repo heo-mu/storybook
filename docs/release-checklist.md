@@ -53,7 +53,7 @@ npm 배포 · Storybook 배포 전에 위에서부터 차례로 확인합니다.
 | --- | --- | --- |
 | 5-1 | `CHANGELOG.md` `[Unreleased]` → `[버전] — 날짜`, 호환성 변경 · 화면 변경 구분 | ⏳ 버전 결정 후 |
 | 5-2 | [public-api.md](./public-api.md) — 공개 49 · 보조 32 · 사용 금지 목록을 개발팀과 공유 | ✅ |
-| 5-3 | [developer-guide.md](./developer-guide.md) · [usage.md](./usage.md) · 각 컴포넌트 Usage 문서가 현재 API와 일치 | ✅ |
+| 5-3 | [developer-guide.md](./developer-guide.md) · [usage.md](./usage.md) · 각 컴포넌트 사용 방법 문서가 현재 API와 일치 | ✅ |
 | 5-4 | 문서 안 상대 링크 · 앵커 확인 | ✅ |
 
 ## 6. 배포 실행 (승인 후)

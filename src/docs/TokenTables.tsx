@@ -22,10 +22,10 @@ export function VariableTable({ collection, prefix }: { collection: string; pref
       <thead>
         <tr>
           <th style={cell} />
-          <th style={cell}>Figma variable</th>
-          <th style={cell}>CSS custom property</th>
-          <th style={cell}>Value</th>
-          <th style={cell}>Resolved</th>
+          <th style={cell}>Figma 변수</th>
+          <th style={cell}>CSS 변수</th>
+          <th style={cell}>값</th>
+          <th style={cell}>실제 값</th>
         </tr>
       </thead>
       <tbody>

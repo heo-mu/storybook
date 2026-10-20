@@ -3,25 +3,23 @@ import { cx } from '../../utils/cx';
 import type { ChartColor } from './Chart.options';
 
 export type ChartTooltipItem = {
-  /** Figma "Pressure label" (series name). */
+  /** 계열 이름. 길면 줄바꿈됩니다. */
   label: ReactNode;
-  /** The value shown in the second column. */
+  /** 오른쪽에 표시할 값. */
   value: ReactNode;
-  /** Figma "Indicator" colour. @default 'brand' */
+  /** 계열 표시 색. @default 'brand' */
   color?: ChartColor;
 };
 
 export type ChartTooltipProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
-  /** Figma "Time" (the category or date). */
+  /** 툴팁 제목(항목 이름이나 날짜). */
   title?: ReactNode;
-  /** One row per series: indicator, label and value. */
+  /** 계열마다 한 줄씩 표시할 색 · 이름 · 값. */
   items: ChartTooltipItem[];
 };
 
 /**
- * Figma component `chart-tooltip` (693:9776): the values of one category — title (xs) above rows of an indicator,
- * the series label and its value. Padding p-2_5, m-1_5 between the title and the rows, rows m-1 apart,
- * alpha/white/800 background, rounded-sm, elevation-3. `Chart` shows it on hover / keyboard navigation.
+ * 한 항목의 계열별 값을 보여 주는 툴팁입니다. `Chart`는 툴팁을 직접 표시하므로, 툴팁 모양을 따로 쓸 때만 씁니다.
  */
 export const ChartTooltip = forwardRef<HTMLDivElement, ChartTooltipProps>(function ChartTooltip({ title, items, className, ...rest }, ref) {
   return (

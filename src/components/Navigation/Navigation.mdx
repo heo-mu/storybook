@@ -2,16 +2,32 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Navigation.showcase.stories';
 import { Navigation, NavLink, NavGroup, NavChild } from './Navigation';
 
-<Meta title="Components/Navigation/Usage" />
+<Meta title="컴포넌트/Navigation/사용 방법" id="components-navigation-usage" name="Docs" />
 
-# Navigation — 사용 가이드
+# Navigation
 
-Figma **Navigation** 프레임(180:2023)의 `item_parent` · `item_link` · `item_child`(각 4개)와 LNB 예시 구성을 구현했습니다.
-parent는 펼침(Expanded), link와 child는 현재 위치(Selected)를 표시합니다.
+Navigation은 화면 왼쪽에 두는 메뉴(LNB)입니다. 바로 이동하는 메뉴와, 펼쳐서 하위 메뉴를 보여 주는 메뉴 그룹으로 이루어집니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+| 컴포넌트 | 쓰임 |
+| --- | --- |
+| `Navigation` | 메뉴 전체를 감싸는 틀. 메뉴 위에 로고 등을 `header`로 둘 수 있습니다 |
+| `NavLink` | 누르면 바로 페이지로 이동하는 첫 단계 메뉴 |
+| `NavGroup` | 눌러서 펼치고 접는 메뉴 그룹 |
+| `NavChild` | `NavGroup` 안의 하위 메뉴 |
+
+## 상태
+
+- 마우스를 올리면 모양이 바뀝니다. 누를 때의 모양은 마우스를 올렸을 때와 같습니다.
+- `NavLink` · `NavChild`에 `selected`를 주면 지금 페이지로 강조됩니다.
+- `NavGroup`을 펼치면 화살표가 위쪽으로 바뀌고 하위 메뉴가 보입니다.
+- 키보드로 선택하면 항목 안쪽에 포커스 테두리가 보입니다.
+- 긴 메뉴 이름은 줄을 바꿔 보여 줍니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -26,53 +42,25 @@ parent는 펼침(Expanded), link와 child는 현재 위치(Selected)를 표시�
 </Navigation>`}
 />
 
-## Figma 속성 → Props
+- 메뉴 항목은 `Navigation`의 너비를 꽉 채웁니다. 너비는 화면 배치에서 정합니다(예시는 240px).
+- 메뉴 앞 아이콘은 `icon`으로 넘깁니다.
+- 그룹을 처음부터 펼쳐 두려면 `defaultExpanded`를 씁니다. 펼침을 바깥에서 관리하려면 `expanded`와 `onExpandedChange`를 씁니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| item_link Variant Selected | `NavLink selected` | `aria-current="page"`, 굵게 · 브랜드 색 |
-| item_parent Expanded | `NavGroup expanded` / `defaultExpanded` / `onExpandedChange` | 버튼 `aria-expanded`, 화살표 위 · 아래 |
-| item_child Variant Selected | `NavChild selected` | `aria-current="page"` |
-| State Hover | 브라우저 `:hover` | |
-| Icon (Boolean) · 아이콘 | `icon` | 20px, Figma 자리표시 아이콘은 List |
-| Menu Text | `children` / `label` | 긴 이름은 줄바꿈 |
-| LNB 예시 로고 영역 | `Navigation header` | 메뉴 위 m-4 |
-| item_parent Expanded True · False | `NavGroup expanded` / `defaultExpanded` / `onExpandedChange` | 하위 목록 펼침 |
+## 접근성
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `NAVI-04` **포커스**: 키보드 포커스일 때 항목 안쪽 가장자리에 2px `colors/border/focus` 링(Figma 속성 `Focus`, 안쪽형 — item_parent · item_link · item_child).
-- `NAVI-05` **link Hover 아이콘 색**: Figma 바인딩대로 Unselected Hover에서도 `…/icon/default`를 씁니다(`…/icon/hover` 미사용 — F36).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `NAVI-01` **너비**: 항목은 컨테이너 너비를 채웁니다. Figma 예시의 LNB 240px(항목 200px + 좌우 p-5)은 레이아웃에서 지정합니다(Rules 08).
-- `NAVI-03` **Pressed**: Pressed 상태가 없어 Hover와 같은 모양입니다(Rules 02).
-
-### 개발 구현 세부 사항
-
-디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
-
-- `NAVI-02` **하위 목록 선**: Figma는 1px 선을 반 픽셀 위치(x 15.5–16.5)에 그려 두 열에 흐리게 나뉩니다. 코드도 같은 기하(SVG rect)로 그려 같은 모양입니다(F37).
-
-## 키보드
+- `Navigation`에 `aria-label`로 메뉴 이름(예: "주 메뉴")을 붙이면 화면 낭독기가 메뉴를 구분할 수 있습니다.
+- `selected` 항목은 화면 낭독기에 현재 페이지로 알려집니다.
+- 메뉴 그룹은 버튼이며, 펼침 여부가 화면 낭독기에 알려집니다.
 
 | 키 | 동작 |
 | --- | --- |
-| Tab · Shift+Tab | 메뉴 항목 사이 이동 (접힌 그룹의 하위 항목은 건너뜀) |
+| Tab · Shift+Tab | 메뉴 항목 사이 이동(접힌 그룹의 하위 메뉴는 건너뜀) |
 | Enter · Space (그룹) | 펼치기 · 접기 |
 | Enter (링크) | 페이지 이동 |
 
 ## Props
+
+### Navigation
 
 <ArgTypes of={Navigation} />
 

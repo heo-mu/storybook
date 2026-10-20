@@ -2,15 +2,35 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Accordion.showcase.stories';
 import { Accordion, AccordionItem } from './Accordion';
 
-<Meta title="Components/Accordion/Usage" />
+<Meta title="컴포넌트/Accordion/사용 방법" id="components-accordion-usage" name="Docs" />
 
-# Accordion — 사용 가이드
+# Accordion
 
-Figma **Accordion** 프레임(1035:15645)의 `accordion-item`(10개)을 구현했습니다. 제목 버튼으로 내용을 펼치고 접습니다.
+아코디언은 제목을 눌러 내용을 펼치거나 접습니다. 여러 내용을 묶어 두고 필요한 항목만 펼쳐 볼 때 씁니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+| 컴포넌트 | 쓰임 |
+| --- | --- |
+| `Accordion` | 항목을 묶고 크기와 펼침을 함께 관리합니다. |
+| `AccordionItem` | 제목과 내용으로 된 항목 하나. 단독으로도 쓸 수 있습니다. |
+
+## 종류
+
+- 크기는 `Accordion`의 `size`(`md` · `sm`)로 고릅니다. 모든 항목에 같이 적용됩니다.
+- 항목에 `description`을 넣으면 제목 아래에 설명이 보입니다.
+- 항목 아래 구분선은 기본으로 보이며 `divider={false}`로 숨깁니다.
+
+## 상태
+
+- 마우스를 올리면 배경과 구분선 색이 바뀝니다.
+- 펼친 항목은 화살표가 위를 향하고, 제목이 굵어지며 구분선이 진해집니다.
+- `disabled`이면 펼칠 수 없고 키보드로도 선택되지 않습니다.
+- 키보드로 선택하면 제목 안쪽에 포커스 테두리가 보입니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -23,52 +43,25 @@ Figma **Accordion** 프레임(1035:15645)의 `accordion-item`(10개)을 구현�
 </Accordion>`}
 />
 
-## Figma 속성 → Props
+- 처음에 펼칠 항목은 `defaultExpandedKeys`에 항목의 `id`로 넘깁니다.
+- 아코디언은 부모 너비를 채웁니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Size md · sm | `Accordion size` | 제목 16 · 14px, 높이 44 · 36px |
-| Expanded | `expandedKeys` · `defaultExpandedKeys` / 단독 항목 `expanded` · `defaultExpanded` | 화살표 위 · 아래, 제목 semibold |
-| State Hover | 브라우저 `:hover` | |
-| State Disabled | `disabled` | |
-| Title Text | `title` | |
-| Show Description · Description Text | `description` | |
-| Show Divider | `divider` | 기본 켜짐 |
-| Body (accordion-content) | `children` | |
-| Expanded True · False | 펼침 — `Accordion expandedKeys` / `defaultExpandedKeys` | |
+## 접근성
 
-## 정책
+- 제목은 버튼이라 Tab으로 이동하고, Enter 또는 Space로 펼치거나 접습니다. 비활성 항목은 건너뜁니다.
+- 제목은 기본으로 `h3` 제목 요소이며, 페이지 구조에 맞게 `headingLevel`로 바꿀 수 있습니다.
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
+## 주의사항
 
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `ACCO-01` **Hover · Expanded**: Hover는 모든 크기에서 배경 `background/hover`와 진한 구분선 `border/hover`, 펼친 항목은 진한 구분선(Figma State=Hover · Expanded).
-- `ACCO-02` **Disabled**: 배경 `background/disabled`(fill/disabled), 제목 `title/disabled`(text/inactive — 비활성 라벨).
-- `ACCO-06` **포커스**: 키보드 포커스일 때 트리거 안쪽 가장자리에 2px `colors/border/focus` 링(Figma 속성 `Focus`, 안쪽형) — 폭을 채우는 행이라 이웃 항목에 가려지지 않도록 안쪽에 그립니다.
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `ACCO-03` **여러 개 열기**: 기본은 한 항목만 펼칩니다(다른 항목을 열면 이전 항목이 닫힘). 비교가 필요한 화면만 `allowsMultipleExpanded`로 여러 개(Rules 07 · accordion-item 주석).
-- `ACCO-04` **애니메이션**: 펼침 · 접힘은 즉시 바뀝니다(Rules 09).
-- `ACCO-05` **너비**: 부모 너비를 채웁니다. Figma의 320px은 예시 폭입니다(Rules 08).
-
-## 키보드
-
-| 키 | 동작 |
-| --- | --- |
-| Tab | 제목 버튼 사이 이동(비활성 제외) |
-| Enter · Space | 펼치기 · 접기 |
+- 기본은 한 번에 한 항목만 펼칩니다. 다른 항목을 펼치면 앞의 항목이 접힙니다.
+- 여러 항목을 비교해야 하는 화면에서만 `allowsMultipleExpanded`로 여러 개를 펼칩니다.
+- 펼친 항목을 직접 관리하려면 `expandedKeys`와 `onExpandedChange`를 함께 씁니다. 처음 상태만 정하려면 `defaultExpandedKeys`를 씁니다.
+- `AccordionItem`을 단독으로 쓸 때는 `expanded` · `defaultExpanded`로 펼침을 정합니다.
 
 ## Props
 
+### Accordion
 <ArgTypes of={Accordion} />
 
 ### AccordionItem
-
 <ArgTypes of={AccordionItem} />

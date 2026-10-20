@@ -2,6 +2,15 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
+## Figma · Storybook 문서 · 정책 간소화 (2026-10-20, 완료)
+
+체크포인트 `checkpoint/pre-docs-simplify`(df820dc). 기준: 처음 보는 사람이 용도 · 사용법을 빠르게 이해하고, 개발자는 기술 정보를 쉽게 찾는가.
+- 개발 문서 먼저(5540bad): 이전 사용 방법 문서 전체 → `docs/components/<Name>.md`, Figma Rules 상세 · 주석 · 설명 메모 → `docs/policy-details.md`,
+  `docs/figma-sync.md`(재매핑) · `docs/README.md`(문서 안내). 검증은 노드 ID가 없으면 세트 이름으로 찾음, Figma 내보내기 스크립트 `SET_NAME`.
+- Figma(b791605): Rules 02–09 쉬운 3열 규칙, 10장 · 주석 17개 삭제, 설명 34개 정리, 단어 단위 줄바꿈 — 재조회 · 스크린숏 · 체크섬 확인.
+- Storybook: 한국어 사이드바 · 스토리 이름(ID 고정), 사용 방법 37쪽 · 토큰 페이지 · JSDoc · argTypes 한국어 재작성(병렬 4그룹 + Button 기준 예시),
+  매트릭스 캡션 한국어(`koLabel` + 정수 px 폭), `figma/component-map.json`으로 API 문서의 Figma 열 유지. 결과 · 검증: [final-report.md 14절](./final-report.md#14-figma--storybook-문서--정책-간소화-2026-10-20-figma-수정-허용-작업).
+
 ## Figma × Storybook 전체 동기화 · 완성도 개선 (2026-10-19 밤, 완료)
 
 체크포인트 `checkpoint/pre-full-sync`(4ebef48). 순서: ① Chart 툴팁 버그 → ② Chip Filter 예시 → ③ Storybook 접근성 경고 → ④ 누락 상태 · 동작 · 사용 예

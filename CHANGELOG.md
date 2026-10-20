@@ -7,6 +7,18 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### 문서 · 정책 간소화 (2026-10-20, Figma와 함께)
+처음 보는 사람도 바로 이해할 수 있게 Figma · Storybook의 설명을 정리하고, 기술 정보는 개발 문서로 옮겼습니다([docs/README.md](docs/README.md)).
+컴포넌트 · Props · 타입 · 토큰은 바뀌지 않았습니다.
+- **Storybook**: 사이드바 · 스토리 이름 한국어(`컴포넌트/<Name>/사용 방법` · `전체 보기` · `직접 체험` · `비활성` …). 스토리 ID는 그대로(`id` 고정) —
+  자동 생성 컴포넌트 문서 페이지만 `…--docs` → `…--문서`. 사용 방법 37쪽 · 디자인 토큰 페이지를 쉬운 한국어로 다시 썼고 Figma 노드 · 변수 ID,
+  버전명, 변형 수, 작업 이력, 정책 항목 ID, 내부 파일 경로를 뺐습니다. Props 설명 · 컴포넌트 설명(JSDoc)도 한국어.
+- **개발 문서**: 컴포넌트별 개발 노트 [docs/components/](docs/components/)(Figma ↔ Props, 토큰, 정책 항목, 구현 세부), 정책 상세 기준
+  [docs/policy-details.md](docs/policy-details.md), Figma 동기화 · 재매핑 절차 [docs/figma-sync.md](docs/figma-sync.md).
+- **Figma**: Design System Rules 02–09장을 짧은 규칙(정책 · 적용 대상 / 사용 규칙 / 디자인 기준)으로, 10장(개발 구현 세부) 삭제, 기술 주석 17개 삭제,
+  컴포넌트 설명 정리 — [docs/figma-fix-requests.md T절](docs/figma-fix-requests.md#t-정책--설명-간소화-2026-10-20-사용자-승인-작업).
+- **검증 도구**: Figma 세트를 노드 ID가 없으면 이름으로 찾음(복제 · 새 버전 파일), `figma/component-map.json`(컴포넌트 ↔ 세트 이름), Figma 내보내기 스크립트 `SET_NAME`.
+
 ### Figma × Storybook 전체 동기화 (2026-10-19 밤, Figma와 함께)
 Figma 변경 기록: [docs/figma-fix-requests.md S절](docs/figma-fix-requests.md#s-figma--storybook-전체-동기화-2026-10-19-밤-사용자-승인-작업),
 호환성: [docs/breaking-changes.md](docs/breaking-changes.md), 컴포넌트별 상태: [docs/sync-status.md](docs/sync-status.md).

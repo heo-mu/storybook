@@ -5,50 +5,49 @@ import { useControllableState } from '../../utils/useControllableState';
 import { Input } from '../Input';
 
 export type SliderProps = {
-  /** Current value (controlled). */
+  /** 현재 값(제어). */
   value?: number;
-  /** Initial value (uncontrolled). @default minValue */
+  /** 처음 값(비제어). @default minValue */
   defaultValue?: number;
-  /** Called continuously while the value changes. */
+  /** 값이 바뀌는 동안 계속 호출됩니다. */
   onChange?: (value: number) => void;
-  /** Called when the user finishes a change (pointer up, key press, input committed). */
+  /** 드래그를 마치거나, 키를 누르거나, 숫자 입력 칸의 값을 확정하면 호출됩니다. */
   onChangeEnd?: (value: number) => void;
-  /** Smallest value, shown at the left end of the range row. @default 0 */
+  /** 가장 작은 값. 슬라이더 아래 왼쪽 끝에 보입니다. @default 0 */
   minValue?: number;
-  /** Largest value, shown at the right end of the range row. @default 100 */
+  /** 가장 큰 값. 슬라이더 아래 오른쪽 끝에 보입니다. @default 100 */
   maxValue?: number;
-  /** Step between values. @default 1 */
+  /** 값 사이 간격. @default 1 */
   step?: number;
-  /** Figma "Show Input": number field next to the slider. @default true */
+  /** 슬라이더 오른쪽에 숫자 입력 칸을 보여 줍니다. @default true */
   showInput?: boolean;
-  /** Unit after the number field and in the value label (Figma "명"). */
+  /** 숫자 입력 칸 뒤와 값 라벨에 붙는 단위(예: 명). */
   unit?: ReactNode;
-  /** Figma handle "Value Label": value tag above the handle on hover, drag and keyboard focus. @default true */
+  /** 마우스를 올리거나 드래그하거나 키보드로 선택하면 손잡이 위에 값을 보여 줍니다. @default true */
   valueLabel?: boolean;
-  /** Number formatting of the range labels, value label and field. */
+  /** 범위 · 값 라벨 · 숫자 입력 칸의 숫자 형식. */
   formatOptions?: Intl.NumberFormatOptions;
-  /** Figma State "Disabled". */
+  /** 비활성 — 값을 바꿀 수 없습니다. */
   disabled?: boolean;
-  /** Form field name (the slider's range input). */
+  /** 폼 필드 이름. */
   name?: string;
-  /** Accessible name — Figma shows no label, so one of `aria-label` / `aria-labelledby` is required. */
+  /** 화면 낭독기가 읽는 이름. 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby`가 꼭 필요합니다. */
   'aria-label'?: string;
   'aria-labelledby'?: string;
-  /** Accessible name of the number field. @default '값 입력' */
+  /** 숫자 입력 칸의 이름(화면 낭독기용). @default '값 입력' */
   inputLabel?: string;
   id?: string;
-  /** Class name of the root element. */
+  /** 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root element (e.g. its width). */
+  /** 바깥 요소의 스타일(예: 너비). */
   style?: CSSProperties;
 };
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
 /**
- * Figma component set `slider` (391:1988) with `handle` (391:2013). Pointer, touch and keyboard
- * (arrows, Page Up / Down, Home / End) come from react-aria-components; the optional number field
- * (Figma "Show Input") is the Input component and commits on Enter or blur.
+ * 정해진 범위 안에서 숫자 값을 고르는 슬라이더입니다. 마우스 · 터치 · 키보드로 조작하고, 옆의 숫자 입력 칸에
+ * 값을 직접 입력할 수도 있습니다. 입력 칸 값은 Enter를 누르거나 다른 곳을 선택하면 확정됩니다.
  */
 export function Slider({
   value,

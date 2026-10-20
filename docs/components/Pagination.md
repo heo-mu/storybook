@@ -53,3 +53,11 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### PaginationItem · PaginationControl
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `pagination`(132:871) · `pagination_item`(132:520) · `pagination_control`(132:604).
+- `Pagination`은 `<nav aria-label="페이지 이동">` 안에 이전 버튼 · 페이지 번호 창 · 다음 버튼을 그립니다. Figma 예시는 번호 5개, 첫 번호가 Current입니다.
+- 예전 스토리 설명은 "`PaginationItem` · `PaginationControl`은 직접 배치용으로 export"라고 했지만, 지금 분류는 내부 부품(사용 금지, `@internal`)이라 사용자 문서는 `Pagination`만 안내합니다.

@@ -6,24 +6,23 @@ import { useMergedRef } from '../Field';
 import { useCheckboxGroup } from './CheckboxGroupContext';
 
 export type CheckboxProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'type' | 'className' | 'style' | 'children' | 'value'> & {
-  /** Figma "Size". Inside a `CheckboxGroup` the group size is the default. @default 'sm' */
+  /** 크기. `CheckboxGroup` 안에서는 그룹 크기를 따릅니다. @default 'sm' */
   size?: ChoiceSize;
-  /** Figma "Label" + "Label Text". Without a label, give the checkbox an `aria-label`. */
+  /** 상자 옆에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** Figma Selection "Indeterminate" (mixed). Shown instead of the checked mark while true. @default false */
+  /** 일부 선택 — 켜져 있는 동안 체크 표시 대신 가로줄을 보여 줍니다. @default false */
   indeterminate?: boolean;
-  /** Form value; inside a `CheckboxGroup` it identifies the checkbox in the group value. */
+  /** 폼 값. `CheckboxGroup` 안에서는 그룹 값에서 이 체크박스를 구분합니다. */
   value?: string;
-  /** Class name of the root `<label>`. */
+  /** 라벨을 포함한 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root `<label>`. */
+  /** 라벨을 포함한 바깥 요소의 스타일. */
   style?: CSSProperties;
 };
 
 /**
- * Figma component set `checkbox` (99:2389). Selection: Checked = `checked` / `defaultChecked`,
- * Indeterminate = `indeterminate`. State: Hover / Pressed are the native :hover / :active, Disabled = `disabled`.
- * Renders a native `<input type="checkbox">`; its props (name, value, checked, onChange, …) and the ref go to it.
+ * 항목을 켜고 끄거나 여러 개를 고르는 체크박스입니다. 선택은 `checked` · `defaultChecked`, 일부 선택은
+ * `indeterminate`로 정하고, 나머지 `<input>` 속성과 `ref`는 체크박스에 그대로 전달됩니다.
  */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
   { size, label, indeterminate = false, className, style, disabled, value, name, checked, onChange, ...rest },

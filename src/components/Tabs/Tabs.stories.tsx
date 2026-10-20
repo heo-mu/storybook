@@ -3,19 +3,17 @@ import { fn } from 'storybook/test';
 import { Tab, TabList, TabPanel, Tabs } from './Tabs';
 import { TABS_APPEARANCES, TABS_SHAPES, TABS_SIZES, TABS_VARIANTS } from './Tabs.options';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Tabs.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Tabs.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Tabs/Tabs',
+  title: '컴포넌트/Tabs/Tabs',
+  id: 'components-tabs-tabs',
   component: Tabs,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component sets **tab_filled** (91:5000, 60 variants) and **tab_line** (91:5241, 30 variants). Compose `Tabs` > `TabList` > `Tab` ' +
-          'plus `TabPanel`s (matching `id`s). appearance → set, Variant → `variant`, Size → `size`, Shape → `shape` (filled), ' +
-          'State Selected → `selectedKey` / `defaultSelectedKey`, Disabled → `Tab disabled`. Arrow keys / Home / End move between tabs ' +
-          '(react-aria-components tablist).',
+          '한 화면의 내용을 탭으로 나눠 보여 줍니다. 모양은 `appearance`(밑줄 · 채움), 선택 색은 `variant`, 크기는 `size`로 고르고, `Tab`과 `TabPanel`은 같은 `id`로 잇습니다.',
       },
     },
   },
@@ -29,10 +27,10 @@ const meta = {
     children: null,
   },
   argTypes: {
-    appearance: { control: 'inline-radio', options: TABS_APPEARANCES, description: 'Figma set (tab_line / tab_filled)' },
-    variant: { control: 'inline-radio', options: TABS_VARIANTS, description: 'Figma "Variant"' },
-    size: { control: 'inline-radio', options: TABS_SIZES, description: 'Figma "Size"' },
-    shape: { control: 'inline-radio', options: TABS_SHAPES, description: 'Figma "Shape" (filled)' },
+    appearance: { control: 'inline-radio', options: TABS_APPEARANCES, description: '모양 — 밑줄(line) · 채움(filled)' },
+    variant: { control: 'inline-radio', options: TABS_VARIANTS, description: '종류 — 선택된 탭의 색' },
+    size: { control: 'inline-radio', options: TABS_SIZES, description: '크기' },
+    shape: { control: 'inline-radio', options: TABS_SHAPES, description: '모서리 모양(filled에만 적용)' },
     children: { control: false },
   },
   render: (args) => (
@@ -56,16 +54,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const Filled: Story = {
+  name: 'Filled',
   args: { appearance: 'filled' },
 };
 
 export const FilledRounded: Story = {
+  name: 'Filled · 둥근 모양',
   args: { appearance: 'filled', shape: 'rounded', variant: 'secondary', size: 'md' },
 };
 
 export const Large: Story = {
+  name: '큰 크기',
   args: { size: 'lg' },
 };

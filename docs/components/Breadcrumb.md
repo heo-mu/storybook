@@ -5,7 +5,7 @@
 > 정책 항목 ID(`XXXX-00`)의 출처 · 상태는 [code-policy-audit.md](../code-policy-audit.md).
 
 Figma **Breadcrumb** 프레임(721:13374)의 `breadcrumb`(6개) · `breadcrumb-item`(12개) · `breadcrumb-modern-separator`를 구현했습니다.
-접힌 경로의 메뉴는 [Dropdown Menu](?path=/docs/components-dropdownmenu-usage--docs)를 사용합니다.
+접힌 경로의 메뉴는 [Dropdown Menu](./DropdownMenu.md)를 사용합니다.
 
 ## 사용 예
 
@@ -66,3 +66,14 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### BreadcrumbItem
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `breadcrumb`(712:5106, 6개) · `breadcrumb-item`(710:4794, 12개) · `breadcrumb-modern-separator`(710:4795 — CaretRight 12px).
+- 구조는 `<nav>` > `<ol>`이며, 각 `<li>`에 항목과 구분선이 함께 들어갑니다.
+- `BreadcrumbItem`: Role Link = `href`(`<a>`, `href`가 없으면 `<button>`), Current = `current`(`<span aria-current="page">`), Open = `open`. State Hover · Pressed = `:hover` · `:active`.
+- `BreadcrumbEntry.id`를 주지 않으면 `items` 안의 순서(index)가 `onAction` 값입니다.
+- `moreLabel`은 Figma … 트리거의 Label Text, `menuTitle`은 `dropdownmenu_item` Type Title에 해당합니다.
+- 예전 스토리 설명은 "`BreadcrumbItem`은 직접 배치용으로 export"라고 했지만, 지금 분류는 내부 부품(사용 금지, `@internal`)입니다.

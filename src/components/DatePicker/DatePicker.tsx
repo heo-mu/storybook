@@ -8,58 +8,55 @@ import { FieldMessage, type FieldMessageType, type FieldSize } from '../Field';
 import { formatDateText, parseDateText } from './dateText';
 
 export type DatePickerProps = {
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: FieldSize;
-  /** Figma "Label" + "Label Text". Without a label, set `aria-label`. */
+  /** 입력 칸 위 라벨. 라벨이 없으면 `aria-label`을 붙입니다. */
   label?: ReactNode;
-  /** Figma "Display Text" while empty. @default 'YYYY.MM.DD' */
+  /** 비어 있을 때 보이는 안내 글자. @default 'YYYY.MM.DD' */
   placeholder?: string;
-  /** Figma "Alert" + date-picker_message text. */
+  /** 입력 칸 아래 도움말 메시지. */
   message?: ReactNode;
-  /** Figma date-picker_message "Type". @default 'error' when invalid, otherwise 'info' */
+  /** 도움말 메시지 종류. @default 오류이면 'error', 그 밖에는 'info' */
   messageType?: FieldMessageType;
-  /** Figma State "Error". Text that is not a valid, selectable date also shows the Error state. */
+  /** 오류 상태. 없는 날짜나 고를 수 없는 날짜를 입력해도 오류 상태가 됩니다. */
   invalid?: boolean;
-  /** Figma State "Disabled". */
+  /** 비활성 — 입력할 수 없습니다. */
   disabled?: boolean;
-  /** Figma State "Read-only": shows the date without the calendar button. */
+  /** 읽기 전용 — 날짜만 보여 주고 달력 버튼이 없습니다. */
   readOnly?: boolean;
   required?: boolean;
-  /** Selected date 'YYYY-MM-DD' (controlled); `null` = empty. */
+  /** 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 비어 있습니다. */
   value?: ISODate | null;
-  /** Initial date (uncontrolled). @default null */
+  /** 처음 날짜. `value` 없이 입력 칸이 스스로 값을 관리할 때 씁니다. @default null */
   defaultValue?: ISODate | null;
-  /** Called with the new date, or null when the field is cleared. */
+  /** 날짜가 바뀌면 새 날짜로, 입력 칸을 비우면 `null`로 호출됩니다. */
   onChange?: (value: ISODate | null) => void;
-  /** Earliest selectable date. */
+  /** 고를 수 있는 가장 이른 날짜. */
   minValue?: ISODate;
-  /** Latest selectable date. */
+  /** 고를 수 있는 가장 늦은 날짜. */
   maxValue?: ISODate;
-  /** Marks individual days as unavailable. */
+  /** 날짜별로 고를 수 없는 날을 정합니다. `true`를 돌려주면 고를 수 없습니다. */
   isDateUnavailable?: (date: ISODate) => boolean;
-  /** Calendar popover open (controlled). */
+  /** 달력이 열렸는지 여부. 넘기면 바깥에서 관리합니다. */
   open?: boolean;
-  /** Called when the calendar opens or closes. */
+  /** 달력이 열리거나 닫히면 호출됩니다. */
   onOpenChange?: (open: boolean) => void;
-  /** Form field name — submitted as 'YYYY-MM-DD' through a hidden input. */
+  /** 폼 필드 이름. 폼을 보낼 때 'YYYY-MM-DD' 값이 전송됩니다. */
   name?: string;
   id?: string;
   'aria-label'?: string;
   'aria-describedby'?: string;
-  /** Accessible name of the calendar button. @default '달력 열기' */
+  /** 화면 낭독기가 읽는 달력 버튼 이름. @default '달력 열기' */
   calendarButtonLabel?: string;
-  /** Class name of the root element. */
+  /** 가장 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root element. */
+  /** 가장 바깥 요소의 스타일. */
   style?: CSSProperties;
 };
 
 /**
- * Figma component sets `date-picker_trigger` (144:723) and `date-picker_message` (144:888) with the
- * `Calendar` (date-picker_calendar) in a popover. The field accepts typed dates (YYYY.MM.DD, YYYY-MM-DD,
- * YYYYMMDD …, committed on Enter or blur); the calendar button (or Alt + ↓) opens the calendar.
- * State: Hover / Focus = :hover / :focus-within, Completed = has a date, Error = `invalid` or an unusable
- * typed date, Disabled = `disabled`, Read-only = `readOnly`.
+ * 날짜를 직접 입력하거나 달력에서 고르는 입력 칸입니다. 입력한 날짜는 Enter를 누르거나 입력 칸을 벗어나면 확정되고,
+ * 달력 버튼이나 Alt + ↓로 달력을 엽니다.
  */
 export function DatePicker({
   size = 'sm',

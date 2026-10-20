@@ -5,10 +5,12 @@ import { SEARCH_FIELD_APPEARANCES, type SearchFieldAppearance } from '../SearchF
 import { FIELD_SIZES, type FieldSize } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS, figmaCase } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest): `node scripts/verify-figma.mjs search-field`.
 const meta = {
-  title: 'Components/SearchField/Showcase',
+  title: '컴포넌트/SearchField/전체 보기',
+  id: 'components-searchfield-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -34,6 +36,7 @@ function figmaVariant(size: FieldSize, appearance: SearchFieldAppearance, state:
 }
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       {SEARCH_FIELD_APPEARANCES.map((appearance) => (
@@ -51,6 +54,7 @@ export const Overview: Story = {
 
 /** All 36 Figma variants: Type × Size (rows) × State (columns). */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -69,13 +73,14 @@ export const VariantMatrix: Story = {
 };
 
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <div>
       {SEARCH_FIELD_APPEARANCES.map((appearance) => (
         <StorySection key={appearance} title={`Type ${figmaCase(appearance)} (sm)`}>
           {STATES.map((state) => (
             <div key={state} style={{ width: 320 }}>
-              <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{state}</div>
+              <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{koLabel(state)}</div>
               <SearchField {...figmaVariant('sm', appearance, state)} />
             </div>
           ))}
@@ -88,6 +93,7 @@ export const States: Story = {
 const onSearch = fn();
 /** Enter submits the query; the clear button empties the field and keeps focus. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => (
     <div style={{ width: 320 }}>
       <SearchField label="검색" placeholder="검색어 입력" onSearch={onSearch} />
@@ -105,6 +111,7 @@ export const Interaction: Story = {
 };
 
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ width: 320, display: 'grid', gap: 16 }}>
       <SearchField label="주소 검색" />

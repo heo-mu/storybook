@@ -83,3 +83,14 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ### FileUploaderItem
 
 ### Loading
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `file-uploader`(651:3945, 5개 상태) → `FileUploader`, `file-uploader-item`(651:3999) → `FileUploaderItem`, `loading`(675:5644) → `Loading`.
+- `FileUploader` State: Hover · Pressed = `:hover` · `:active`, Drag-over = 파일을 영역 위로 끌 때, Disabled = `disabled`.
+- `FileUploader` 영역은 `<button>`이고, 숨겨진 `<input type="file">`이 폼용 선택을 가집니다(`ref`는 이 input을 가리킵니다). Figma 영역 너비는 353px이며 `style`로 지정합니다.
+- `FileUploaderItem`의 버튼은 `TextButton`(button_text Primary sm)입니다.
+- `Loading`은 `colors/border/transparency` → `colors/border/brand` 그라데이션 호이며, `role="status"`라 라벨(또는 `aria-label`, 기본 "로딩 중")이 정중하게(polite) 읽힙니다.
+- `ImageUploadPreview`는 Figma key-value File Upload 셀(`table_value_editable`, 503:23264)의 업로드 이미지입니다: 100px 정사각형, 오른쪽 위 모서리 중앙에 둥근 삭제 버튼(18px, padding p-0_5, `colors/fill/secondary/subtle/default`, 1px `colors/border/gray-subtler`, X 12px `colors/icon/secondary`).

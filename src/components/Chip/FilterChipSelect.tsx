@@ -9,55 +9,55 @@ import { FilterChip } from './FilterChip';
 import { filterChipText } from './filterChipText';
 
 export type FilterChipSelectOption = {
-  /** Value of the option. */
+  /** 옵션 값. */
   id: Key;
-  /** Option text — also shown in the chip once applied. */
+  /** 옵션 글자. 적용되면 칩 글자에도 보입니다. */
   label: string;
-  /** Figma option State "Disabled". */
+  /** 비활성 — 고를 수 없는 옵션입니다. */
   disabled?: boolean;
 };
 
 type FilterChipSelectBase = {
-  /** Filter name: the chip text while nothing is applied, then "name: value, value". */
+  /** 필터 이름. 적용된 값이 없을 때 칩 글자이고, 값이 있으면 "필터명: 값, 값"이 됩니다. */
   label: string;
-  /** The choices, in order. */
+  /** 고를 수 있는 옵션 목록(보이는 순서대로). */
   options: FilterChipSelectOption[];
-  /** Figma chip "Size". @default 'md' */
+  /** 크기. @default 'md' */
   size?: ChipSize;
-  /** Figma chip State "Disabled". */
+  /** 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. */
   disabled?: boolean;
-  /** How many applied values the chip names before "외 N". @default 3 */
+  /** 칩에 이름을 보여 줄 값의 수. 넘치면 "외 N"으로 줄입니다. @default 3 */
   maxDisplayed?: number;
-  /** Form field name (a hidden native select carries the value). */
+  /** 폼으로 값을 보낼 때 쓰는 필드 이름. */
   name?: string;
-  /** Called when the panel opens or closes. */
+  /** 목록이 열리거나 닫히면 호출됩니다. */
   onOpenChange?: (isOpen: boolean) => void;
-  /** Open the panel on first render (e.g. the Figma Expanded state of a table filter being edited). @default false */
+  /** 처음부터 목록을 연 채로 보여 줄지 여부. @default false */
   defaultOpen?: boolean;
   className?: string;
 };
 
 export type FilterChipSelectMultipleProps = FilterChipSelectBase & {
-  /** Several values (default): the panel stays open while choosing and the choice is applied when it closes. */
+  /** 여러 개 고르기(기본). 목록이 열린 채로 고르고, 닫을 때 적용됩니다. */
   selectionMode?: 'multiple';
-  /** Applied values (controlled). */
+  /** 적용된 값. 넘기면 바깥에서 값을 관리합니다. */
   value?: Key[];
-  /** Initially applied values (uncontrolled). @default [] */
+  /** 처음 적용된 값. `value` 없이 필터가 스스로 값을 관리할 때 씁니다. @default [] */
   defaultValue?: Key[];
-  /** Called with the applied values when the panel closes with a changed choice. */
+  /** 고른 값이 바뀐 채로 목록이 닫히면 적용된 값으로 호출됩니다. */
   onChange?: (value: Key[]) => void;
 };
 
 export type FilterChipSelectSingleProps = FilterChipSelectBase & {
-  /** One value: choosing an option applies it and closes the panel. */
+  /** 하나 고르기. 옵션을 고르면 바로 적용되고 목록이 닫힙니다. */
   selectionMode: 'single';
-  /** Applied value (controlled); `null` = no filter. */
+  /** 적용된 값. 넘기면 바깥에서 값을 관리합니다. `null`이면 필터가 없습니다. */
   value?: Key | null;
-  /** Initially applied value (uncontrolled). @default null */
+  /** 처음 적용된 값. `value` 없이 필터가 스스로 값을 관리할 때 씁니다. @default null */
   defaultValue?: Key | null;
-  /** Called with the applied value (`null` when cleared). */
+  /** 적용된 값으로 호출됩니다. 필터를 풀면 `null`입니다. */
   onChange?: (value: Key | null) => void;
-  /** First option that clears the filter (`null` value). @default '전체' */
+  /** 필터를 푸는 첫 옵션의 글자. @default '전체' */
   clearLabel?: string;
 };
 
@@ -67,14 +67,9 @@ export type FilterChipSelectProps = FilterChipSelectMultipleProps | FilterChipSe
 const CLEAR = '__ds-filter-clear__';
 
 /**
- * A filter chip with its option panel — Figma `chip-filter` (558:25704) + `listbox` / `option` Size=sm, as in the
- * Figma "chip-filter 선택 예시" (Design System Rules 04 · 07).
- * - Multiple (default): options toggle with a check while the panel stays open; the chip text follows the choice and
- *   the choice is applied (`onChange`, Selected look) when the panel closes — Esc, a press outside or the chip.
- *   Turning every option off and closing removes the filter.
- * - Single: choosing an option applies it and closes the panel; the first option (`clearLabel`, "전체") removes it.
- * The chip is Selected while a value is applied. Keyboard and screen readers follow the react-aria Select
- * (button + listbox: Enter · Space · ↓ open, arrows · type-ahead move, Space · Enter choose, Esc close).
+ * 필터 칩과 옵션 목록이 함께 있는 필터입니다. 값이 적용되면 칩이 선택됨 모양이 됩니다.
+ * - 여러 개 고르기(기본): 목록이 열린 채로 옵션을 켜고 끄고, 목록을 닫을 때 적용됩니다. 모두 끄고 닫으면 필터가 풀립니다.
+ * - 하나 고르기: 고르면 바로 적용되고 닫힙니다. 첫 옵션 "전체"(`clearLabel`)를 고르면 필터가 풀립니다.
  */
 export const FilterChipSelect = forwardRef(function FilterChipSelect(props: FilterChipSelectProps, ref: ForwardedRef<HTMLButtonElement>) {
   const { label, options, size = 'md', disabled, maxDisplayed = 3, name, onOpenChange, defaultOpen = false, className } = props;

@@ -8,11 +8,13 @@ import { FilterChip } from '../FilterChip';
 import { CHIP_SIZES } from '../Chip.options';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs chip` (sets chip-multi, chip-input, chip-filter).
 const meta = {
-  title: 'Components/Chip/Showcase',
+  title: '컴포넌트/Chip/전체 보기',
+  id: 'components-chip-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -28,6 +30,7 @@ const stateProps = (state: State) => ({
 });
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       <StorySection title="Chip (chip-multi) — toggle">
@@ -65,6 +68,7 @@ export const Overview: Story = {
 
 /** Figma `chip-multi` (24): Variant × Size (rows) × State (columns). */
 export const MultiMatrix: Story = {
+  name: '선택 칩 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -90,6 +94,7 @@ export const MultiMatrix: Story = {
 
 /** Figma `chip-input` (12): Size (rows) × State (columns). */
 export const InputMatrix: Story = {
+  name: '입력 칩 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -110,6 +115,7 @@ export const InputMatrix: Story = {
 
 /** Figma `chip-filter` (48): Variant × Expanded × Size (rows) × State (columns). */
 export const FilterMatrix: Story = {
+  name: '필터 칩 모든 변형',
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -134,13 +140,14 @@ export const FilterMatrix: Story = {
 
 /** Every state of each kind at size sm. */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <div>
       {(['Unselected', 'Selected'] as const).map((variant) => (
         <StorySection key={variant} title={`Chip · ${variant}`}>
           {STATES.map((state) => (
             <Chip key={state} size="sm" defaultSelected={variant === 'Selected'} {...stateProps(state)}>
-              {state}
+              {koLabel(state)}
             </Chip>
           ))}
         </StorySection>
@@ -148,14 +155,14 @@ export const States: Story = {
       <StorySection title="InputChip">
         {STATES.map((state) => (
           <InputChip key={state} size="sm" {...stateProps(state)}>
-            {state}
+            {koLabel(state)}
           </InputChip>
         ))}
       </StorySection>
       <StorySection title="FilterChip · Selected">
         {STATES.map((state) => (
           <FilterChip key={state} size="sm" selected {...stateProps(state)}>
-            {state}
+            {koLabel(state)}
           </FilterChip>
         ))}
       </StorySection>
@@ -187,6 +194,7 @@ function Tags() {
 
 /** Toggle, remove (click or Delete), filter chip expanded state. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => <Tags />,
   play: async ({ canvas, userEvent, step }) => {
     await step('Chip toggles aria-pressed', async () => {
@@ -214,6 +222,7 @@ export const Interaction: Story = {
 
 /** Buttons with state: aria-pressed (Chip), "삭제" in the name (InputChip), aria-expanded (FilterChip). */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--spacing-margin-m-1)' }}>
       <Chip defaultSelected>선택됨</Chip>
@@ -233,6 +242,7 @@ export const Accessibility: Story = {
  * DropdownMenu): the trigger sets aria-expanded, which also flips the caret.
  */
 export const InMenuTrigger: Story = {
+  name: '메뉴 열기 버튼으로',
   render: () => (
     <MenuTrigger>
       <FilterChip size="sm">기간</FilterChip>

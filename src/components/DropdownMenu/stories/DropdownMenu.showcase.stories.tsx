@@ -10,7 +10,8 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs dropdown-menu` (sets dropdownmenu_item, dropdownmenu_line).
 const meta = {
-  title: 'Components/DropdownMenu/Showcase',
+  title: '컴포넌트/DropdownMenu/전체 보기',
+  id: 'components-dropdownmenu-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -19,6 +20,7 @@ export default meta;
 type Story = StoryObj;
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ paddingBottom: 320 }}>
       <DropdownMenu
@@ -54,6 +56,7 @@ const ITEM_STATES = ['Default', 'Hover', 'Disabled', 'Alert'] as const;
 
 /** Figma `dropdownmenu_item` (5): Content in four states and the group Title, 216px wide. */
 export const ItemMatrix: Story = {
+  name: '항목 모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={216}
@@ -105,6 +108,7 @@ export const ItemMatrix: Story = {
 
 /** Figma `dropdownmenu_line`, 224px wide. */
 export const LineMatrix: Story = {
+  name: '구분선',
   render: () => (
     <FigmaMatrix
       cellWidth={224}
@@ -130,6 +134,7 @@ export const LineMatrix: Story = {
 
 /** Keyboard: Enter / ArrowDown opens, arrows move (disabled skipped), Enter activates, Escape closes. */
 export const Interaction: StoryObj<{ onAction: Mock<(key: unknown) => void> }> = {
+  name: '동작',
   args: { onAction: fn() },
   render: (args) => (
     <div style={{ paddingBottom: 240 }}>
@@ -178,6 +183,7 @@ export const Interaction: StoryObj<{ onAction: Mock<(key: unknown) => void> }> =
 
 /** menu / menuitem roles, group label from the section title, separators. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <Menu aria-label="작업" className="ds-dropdown">
       <DropdownMenuSection title="편집">

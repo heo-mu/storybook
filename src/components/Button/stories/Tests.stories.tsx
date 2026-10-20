@@ -10,7 +10,8 @@ import { CaretLeftIcon, CaretRightIcon, PlusIcon } from './figma-icons';
 // Interaction / style tests run by `npm test` (Vitest + Playwright). Expected values are the
 // Figma values of the Button frame (see figma/button-spec.json).
 const meta = {
-  title: 'Components/Button/Tests',
+  title: '컴포넌트/Button/동작 확인',
+  id: 'components-button-tests',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -20,6 +21,7 @@ type Story = StoryObj;
 
 /** The token stylesheet is loaded: computed styles equal Figma Primary/Solid/xs/Square/Default. */
 export const CssCheck: Story = {
+  name: 'CSS 확인',
   render: () => (
     <Button leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
       라벨명
@@ -69,6 +71,7 @@ function PropTransitionsHarness() {
 
 /** Changing props re-renders the button into the matching Figma variant. */
 export const PropTransitions: Story = {
+  name: 'Props 변경',
   render: () => <PropTransitionsHarness />,
   play: async ({ canvas, userEvent, step }) => {
     const button = canvas.getByRole('button', { name: '라벨명' });
@@ -109,6 +112,7 @@ export const PropTransitions: Story = {
 
 /** The hidden Figma label becomes the accessible name; the icon itself is aria-hidden. */
 export const IconButtonAccessibleName: Story = {
+  name: 'IconButton 이름',
   render: () => <IconButton icon={<PlusIcon />} aria-label="추가" />,
   play: async ({ canvas }) => {
     const button = canvas.getByRole('button', { name: '추가' });
@@ -120,6 +124,7 @@ export const IconButtonAccessibleName: Story = {
 
 /** TextButton Default: transparent background, label #404b5d, icon #778191 (colors/button_text/*). */
 export const TextButtonDefaultColors: Story = {
+  name: 'TextButton 기본 색',
   render: () => (
     <TextButton leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
       라벨명

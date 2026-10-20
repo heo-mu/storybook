@@ -2,18 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Link } from './Link';
 import { LINK_SIZES } from './Link.options';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Link.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Link.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Link/Link',
+  title: '컴포넌트/Link/Link',
+  id: 'components-link-link',
   component: Link,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component set **link** (111:1509, 15 variants): underlined text link. Size → `size` (sm · md · lg), Label Text → children, ' +
-          'Icon (arrow-square-out) → `showIcon` (default: `external`). `external` opens a new tab and announces "(새 창)". ' +
-          'State: Hover / Pressed / Visited = :hover / :active / :visited, Disabled = `disabled` (no href, aria-disabled). Native `<a>`.',
+          '다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다. 크기는 `size`로 고르고, 새 창으로 열 때는 `external`을 켭니다.',
       },
     },
   },
@@ -25,27 +24,30 @@ const meta = {
     disabled: false,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: LINK_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'sm' } } },
-    showIcon: { control: 'boolean', description: 'Figma "Icon"' },
+    size: { control: 'inline-radio', options: LINK_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
+    showIcon: { control: 'boolean', description: '새 창 아이콘 표시 여부' },
     external: { control: 'boolean' },
-    disabled: { control: 'boolean', description: 'Figma State "Disabled"' },
-    children: { control: 'text', description: 'Figma "Label Text"' },
+    disabled: { control: 'boolean', description: '비활성 — 누를 수 없고 키보드로도 선택되지 않음' },
+    children: { control: 'text', description: '링크 글자' },
   },
 } satisfies Meta<typeof Link>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const External: Story = {
+  name: '새 창 링크',
   args: { href: 'https://www.figma.com', external: true, children: 'Figma 열기' },
 };
 
 export const Large: Story = {
+  name: '큰 크기',
   args: { size: 'lg' },
 };
 
 export const Disabled: Story = {
+  name: '비활성',
   args: { disabled: true },
 };

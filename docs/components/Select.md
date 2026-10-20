@@ -95,3 +95,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### SelectOption
+
+## 구현 메모 (Storybook에서 옮김)
+
+Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
+
+- Figma 컴포넌트 세트: `select`(95:4740), `listbox`(97:2665), `option`(97:2286), `select_message`(95:2960).
+- react-aria-components 구성: 필드는 `Button`, 목록은 `Popover` 안의 `ListBox`, 옵션은 `ListBoxItem`입니다.

@@ -1,3 +1,3 @@
 export const TEXTAREA_SIZES = ['sm', 'md'] as const;
-/** Figma "Size" of `textarea`. */
+/** Textarea 크기. */
 export type TextareaSize = (typeof TEXTAREA_SIZES)[number];

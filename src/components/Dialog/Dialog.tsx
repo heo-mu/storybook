@@ -3,40 +3,40 @@ import { Dialog as RACDialog, DialogTrigger, Heading, Modal, ModalOverlay, Press
 import { cx } from '../../utils/cx';
 
 export type DialogProps = {
-  /** Figma "title". */
+  /** 제목. 화면 낭독기가 대화상자의 이름으로 읽습니다. */
   title: ReactNode;
-  /** Figma "description" — read as the dialog description. */
+  /** 제목 아래 설명. 화면 낭독기가 대화상자의 설명으로 읽습니다. */
   description?: ReactNode;
-  /** Content between the header and the buttons (not in the Figma component — see Dialog.mdx). */
+  /** 제목과 버튼 사이에 넣는 내용. */
   children?: ReactNode;
   /**
-   * Figma "dialog_footer": the buttons (Figma: Button Tertiary · Solid · lg and Primary · Solid · lg, equal width).
-   * A function receives `close`.
+   * 아래쪽 버튼들. 같은 너비로 나란히 놓입니다(예: 취소는 Tertiary · Solid · lg, 주 행동은 Primary · Solid · lg).
+   * 함수로 넘기면 대화상자를 닫는 `close`를 받습니다.
    */
   actions?: ReactNode | ((close: () => void) => ReactNode);
-  /** Element that opens the dialog (forwards its ref and props, e.g. `Button`). Without it use `open`. */
+  /** 누르면 대화상자를 여는 요소. ref와 props를 전달하는 컴포넌트여야 합니다(예: `Button`). 없으면 `open`으로 엽니다. */
   trigger?: ReactElement;
-  /** Open state (controlled). */
+  /** 열림 여부. 직접 제어할 때 씁니다. */
   open?: boolean;
-  /** Initial open state (uncontrolled). */
+  /** 처음 열림 여부. 직접 제어하지 않을 때 씁니다. */
   defaultOpen?: boolean;
-  /** Called when the dialog opens or closes. */
+  /** 대화상자가 열리거나 닫힐 때 호출됩니다. */
   onOpenChange?: (open: boolean) => void;
-  /** Close by clicking outside. Escape always closes unless `keyboardDismissDisabled`. @default false */
+  /** 바깥을 누르면 닫힙니다. Esc는 `keyboardDismissDisabled`가 아니면 항상 닫습니다. @default false */
   dismissable?: boolean;
-  /** Keep the dialog open on Escape. @default false */
+  /** Esc를 눌러도 닫히지 않게 합니다. @default false */
   keyboardDismissDisabled?: boolean;
-  /** `alertdialog` for confirmations that interrupt the user. @default 'dialog' */
+  /** 삭제 확인처럼 사용자의 흐름을 멈추는 확인에는 `alertdialog`를 씁니다. @default 'dialog' */
   role?: 'dialog' | 'alertdialog';
-  /** Class of the dialog panel. */
+  /** 대화상자 패널의 클래스. */
   className?: string;
-  /** Data attributes for the dialog panel (e.g. test ids). */
+  /** 대화상자 패널에 붙일 data 속성(예: 테스트 id). */
   [dataAttribute: `data-${string}`]: string | undefined;
 };
 
 /**
- * Figma component `dialog` (149:2838): a modal panel with title, description and buttons
- * (react-aria-components Modal + Dialog: focus moves in and is trapped, Escape closes, focus returns).
+ * 화면 위에 떠서 사용자의 응답을 받는 대화상자입니다.
+ * 열리면 포커스가 안으로 옮겨져 머물고, Esc로 닫으면 연 요소로 돌아갑니다.
  */
 export function Dialog({
   title,

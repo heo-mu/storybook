@@ -8,7 +8,8 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs slider` (sets slider, handle).
 const meta = {
-  title: 'Components/Slider/Showcase',
+  title: '컴포넌트/Slider/전체 보기',
+  id: 'components-slider-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -25,6 +26,7 @@ const FIGMA_UNIT = <span style={{ display: 'inline-block', width: 24 }}>명</spa
 const figmaSlider = { minValue: 1, maxValue: 200, defaultValue: 100, unit: FIGMA_UNIT, 'aria-label': '인원' } as const;
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ display: 'grid', gap: 32, width: 360 }}>
       <Slider aria-label="인원" minValue={1} maxValue={200} defaultValue={100} unit="명" />
@@ -41,6 +43,7 @@ export const Overview: Story = {
  * the field to the Figma width to compare the rest of the layout exactly.
  */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <div className="figma-slider">
       <style>{'.figma-slider .ds-slider__input .ds-field__input { width: 23px; }'}</style>
@@ -72,6 +75,7 @@ const HANDLES = [
  * rail and range row are hidden so the handle is compared on its own, as in the Figma set.
  */
 export const HandleMatrix: Story = {
+  name: '손잡이 모든 변형',
   render: () => (
     <div className="handle-matrix" style={{ paddingTop: 32 }}>
       <style>{'.handle-matrix .ds-slider__rail, .handle-matrix .ds-slider__range { visibility: hidden; }'}</style>
@@ -108,6 +112,7 @@ export const HandleMatrix: Story = {
 
 /** Default and Disabled with the value label shown (hover). */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <div style={{ width: 320 }}>
       <StorySection title="Default · Hover (value label) · Disabled" direction="column">
@@ -133,6 +138,7 @@ function Controlled() {
 
 /** Keyboard on the handle, typing in the field (committed on Enter, clamped and snapped to the step). */
 export const Interaction: Story = {
+  name: '동작',
   render: () => <Controlled />,
   play: async ({ canvas, userEvent, step }) => {
     const slider = canvas.getByRole('slider', { name: '인원' });
@@ -168,6 +174,7 @@ export const Interaction: Story = {
 
 /** Native range input (role slider) with min, max and value; the number field has its own name. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ width: 320 }}>
       <Slider aria-label="인원" inputLabel="인원 입력" minValue={1} maxValue={200} defaultValue={100} unit="명" />

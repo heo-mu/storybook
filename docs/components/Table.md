@@ -83,7 +83,7 @@ import { Table, TableHeader, TableColumn, TableSelectionColumn, TableBody, Table
 | Input · Phone Number · Textarea | `Input size="sm"` (+ `editable`, Input은 `unit`) |
 | Select | `Select size="sm"` |
 | Date Picker · Date Range Picker | `DatePicker size="sm"` 1개 · 2개(사이 `~`) |
-| Filter | `FilterChip size="md"` 1개 — 비어 있으면 "텍스트 선택", 선택하면 `selected` + 요약 라벨, 편집 중 `expanded`; 값이 있을 때 `TextButton`(초기화, ArrowCounterClockwise) in `KeyValueGroup` (Figma 2026-10-19). 열린 다중 선택 목록은 라이브러리에 없음 — 결정 대기 |
+| Filter | `FilterChip size="md"` 1개 — 비어 있으면 "텍스트 선택", 선택하면 `selected` + 요약 라벨, 편집 중 `expanded`; 값이 있을 때 `TextButton`(초기화, ArrowCounterClockwise) in `KeyValueGroup` (Figma 2026-10-19). 편집 중에는 칩 아래 다중 선택 목록을 `FilterChipSelect`로 엽니다(F76 해결, `TABL-10`) |
 | Switch | `Switch size="md"` + `.ds-kv__hint` |
 | File Upload | `stack` + 버튼(최소 너비 80px) · 안내 + `ImageUploadPreview` |
 
@@ -120,3 +120,15 @@ Figma 정리를 기다리는 항목입니다. 정리될 때까지 아래처럼 �
 ## Props
 
 ### TableColumn · TableCell · KeyValueItem
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
+
+- `Table`은 Figma `table_header`(351:3452) · `table_body`(355:3739) 칸을 Figma table_data 예시처럼 조합한 것입니다.
+- `TableColumn`의 정렬 아이콘은 CaretUpDown 하나이며, 정렬 중에는 `…/icon/active` 색입니다(TABL-06).
+- `TableEmptyColumn`의 `aria-label`을 머리글 칸 안에 화면 낭독기용 글자로도 넣는 이유: 보조 기술에서 머리글이 비지 않게 하려는 것(axe `empty-table-header`)이며, 화면에는 Figma처럼 비어 있습니다.
+- `TableDragHandle`은 List 아이콘을 씁니다(Figma `table_body` Type Reorder).
+- `KeyValueTable`은 Figma table_key-value 예시(855:9118)이며 `<dl>` 두 열 목록입니다. 키 열은 하나의 열을 공유(최소 160px)하고 값이 나머지를 채우며, 첫 행만 위 테두리가 있습니다.
+- `KeyValueItem`은 Figma `table_key`(355:4193) + `table_value`(355:4460) 한 행입니다. `stack`은 값 내용을 `m-2` 간격으로 세로로 쌓고(Figma File Upload 칸), `KeyValueGroup`은 내용을 `m-2` 간격으로 가로로 둡니다.
+- Filter 편집 칸: 편집 칸 Showcase는 비어 있으면 `FilterChip`("텍스트 선택"), 값이 있으면 `FilterChipSelect`와 초기화 `TextButton`(`KeyValueGroup`)을 씁니다. 목록은 `FilterChipSelect`로 엽니다(`TABL-10`).

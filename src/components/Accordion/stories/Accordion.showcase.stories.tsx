@@ -8,7 +8,8 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs accordion` (set accordion-item).
 const meta = {
-  title: 'Components/Accordion/Showcase',
+  title: '컴포넌트/Accordion/전체 보기',
+  id: 'components-accordion-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -19,6 +20,7 @@ type Story = StoryObj;
 const BODY = '조건을 변경하면 다음 수집 주기부터 적용됩니다. 현재 화면의 조회 결과는 변경되지 않습니다.';
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ width: 360 }}>
       <Accordion defaultExpandedKeys={['advanced']}>
@@ -46,6 +48,7 @@ const CELLS = [
 
 /** Figma `accordion-item` (10): Size × State × Expanded, 320px wide. */
 export const Matrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -69,6 +72,7 @@ export const Matrix: Story = {
 
 /** Enter / Space toggle; one item open at a time unless `allowsMultipleExpanded`; disabled items are skipped. */
 export const Interaction: StoryObj<{ onExpandedChange: Mock<(keys: Set<unknown>) => void> }> = {
+  name: '동작',
   args: { onExpandedChange: fn() },
   render: (args) => (
     <div style={{ width: 360 }}>
@@ -112,6 +116,7 @@ export const Interaction: StoryObj<{ onExpandedChange: Mock<(keys: Set<unknown>)
 
 /** Heading + button with aria-expanded / aria-controls; the panel is a region named by the button. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ width: 360 }}>
       <AccordionItem title="고급 설정" defaultExpanded>

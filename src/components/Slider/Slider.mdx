@@ -2,17 +2,37 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Slider.showcase.stories';
 import { Slider } from './Slider';
 
-<Meta title="Components/Slider/Usage" />
+<Meta title="컴포넌트/Slider/사용 방법" id="components-slider-usage" name="Docs" />
 
-# Slider — 사용 가이드
+# Slider
 
-Figma **Slider** 프레임(379:1562)의 `slider`(Default · Disabled)와 `handle`(5개)을 구현한 범위 입력입니다.
-드래그 · 터치 · 키보드는 [react-aria-components](https://react-spectrum.adobe.com/react-aria/Slider.html)가 처리하고,
-오른쪽 숫자 필드(Figma "Show Input")는 `Input` 컴포넌트를 그대로 사용합니다.
+정해진 범위 안에서 숫자 값을 고르는 슬라이더입니다. 옆의 숫자 입력 칸에 값을 직접 입력할 수도 있습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 인원 · 투명도처럼 최솟값과 최댓값이 정해진 숫자를 고를 때 사용합니다.
+
+## 종류
+
+- 범위는 `minValue` · `maxValue`로 정합니다. 기본은 0부터 100까지입니다.
+- 값 사이 간격은 `step`으로 정합니다. 기본은 1입니다.
+- `showInput`을 켜면 오른쪽에 숫자 입력 칸이 보입니다. 기본은 켜짐입니다.
+- `unit`을 주면 숫자 입력 칸 오른쪽과 값 라벨에 단위가 붙습니다.
+- `valueLabel`을 켜면 손잡이 위에 현재 값이 보입니다. 기본은 켜짐입니다.
+- 숫자 형식은 `formatOptions`로 바꿉니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+- 마우스를 올리거나 드래그하거나 키보드로 선택하면 손잡이 위에 값 라벨이 보입니다.
+- 드래그하는 동안 손잡이 주위에 반투명한 원이 보입니다.
+- 키보드로 선택하면 손잡이에 포커스 테두리가 보입니다.
+- `disabled`이면 값을 바꿀 수 없습니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -23,61 +43,28 @@ Figma **Slider** 프레임(379:1562)의 `slider`(Default · Disabled)와 `handle
 // 제어 컴포넌트 + 변경 완료 시점에만 저장
 <Slider aria-label="투명도" value={opacity} onChange={setOpacity} onChangeEnd={save} step={10} unit="%" />
 
-// 숫자 필드 없이
+// 숫자 입력 칸 없이
 <Slider aria-label="볼륨" defaultValue={70} showInput={false} />`}
 />
 
-## Figma 속성 → Props
+## 접근성
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| 범위 라벨 "1" · "200" | `minValue` · `maxValue` | 기본 0 · 100, `formatOptions`로 숫자 형식 |
-| 채움 · 핸들 위치 | `value` / `defaultValue` / `onChange` | `onChangeEnd`는 드래그 종료 · 키 입력 · 필드 확정 시 |
-| Show Input | `showInput` | 기본 `true`. Enter 또는 포커스 이동 시 확정, 범위 밖 값은 잘라내고 `step`에 맞춤 |
-| 단위 텍스트 "명" | `unit` | 필드 오른쪽과 값 라벨에 표시 |
-| handle Value Label | `valueLabel` | 기본 `true`. Hover · 드래그 중 핸들 위 값 표시 |
-| handle Pressed | 드래그 중 | 핸들 주위 반투명 원 |
-| State Disabled | `disabled` | |
-| handle Value Label yes · no | 값 라벨 — Hover · 드래그 · 키보드 포커스 중 표시 | |
-
-Figma에는 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby`가 필요합니다. 숫자 필드 이름은 `inputLabel`(기본 "값 입력").
-
-## 키보드
+- 화면에 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby`로 이름을 꼭 붙입니다.
+- 숫자 입력 칸의 이름은 `inputLabel`로 정합니다. 기본은 `값 입력`입니다.
+- 키보드로 이렇게 조작합니다.
 
 | 키 | 동작 |
 | --- | --- |
-| ← · → · ↑ · ↓ | 한 `step` 이동 |
-| Page Up · Page Down | 큰 단위 이동 |
-| Home · End | 최솟값 · 최댓값 |
-| 숫자 필드에서 ↑ · ↓ | 한 `step` 이동 |
+| ← · → · ↑ · ↓ | 한 `step`만큼 이동 |
+| Page Up · Page Down | 크게 이동 |
+| Home · End | 최솟값 · 최댓값으로 이동 |
+| 숫자 입력 칸에서 ↑ · ↓ | 한 `step`만큼 이동 |
 
-## 정책
+## 주의사항
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `SLID-04` **포커스**: 핸들은 키보드 포커스일 때 2px `colors/border/focus` 링(Figma 속성 `Focus` — handle)이고, 값 라벨도 함께 보입니다.
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `SLID-01` **값 라벨**: Hover · 드래그 · 키보드 포커스 중 표시합니다(Rules 04 · slider 주석).
-- `SLID-03` **숫자 필드 너비**: 가장 긴 값(최솟값 · 최댓값의 자릿수)이 들어가는 고정 너비 — 값이 바뀌어도 트랙 길이가 변하지 않습니다(Figma 예시는 "100"에 맞춘 너비, Rules 08).
-
-### 개발 구현 세부 사항
-
-디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
-
-- `SLID-02` **핸들 위치**: 값 위치에 핸들 중심을 맞춥니다(Figma 예시는 손으로 배치되어 채움 끝보다 2px 오른쪽).
-
-## 상태
-
-<Canvas of={Showcase.States} />
+- `onChange`는 값이 바뀌는 동안 계속 호출됩니다. 저장처럼 한 번만 할 일은 `onChangeEnd`에서 처리합니다.
+- `onChangeEnd`는 드래그를 마치거나, 키를 누르거나, 숫자 입력 칸의 값을 확정할 때 호출됩니다.
+- 숫자 입력 칸의 값은 Enter를 누르거나 다른 곳을 선택하면 확정됩니다. 범위를 벗어난 값은 범위 안으로, `step`에 맞게 바뀝니다.
 
 ## Props
 

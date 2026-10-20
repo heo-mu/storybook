@@ -4,20 +4,17 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuSection, DropdownMenuSepara
 import { Button } from '../Button';
 import { FolderSimpleDashedIcon } from '../../icons';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/DropdownMenu.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/DropdownMenu.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/DropdownMenu/DropdownMenu',
+  title: '컴포넌트/DropdownMenu/DropdownMenu',
+  id: 'components-dropdownmenu-dropdownmenu',
   component: DropdownMenu,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma components **dropdownmenu_item** (179:4819, Type Content / Title × State) and **dropdownmenu_line** (179:5082) in the ' +
-          'menu panel of the Figma examples. Compose `DropdownMenu` (trigger + panel) > `DropdownMenuItem` / `DropdownMenuSection` ' +
-          '(Type Title) / `DropdownMenuSeparator`. State Hover → pointer hover or keyboard focus, Alert → `danger`, Disabled → ' +
-          '`disabled`; Left / Right Icon → `icon` / `chevron`. Keyboard, focus return and menu / menuitem roles come from ' +
-          'react-aria-components.',
+          '버튼을 누르면 펼쳐지는 동작 메뉴입니다. 여는 버튼은 `trigger`로 넘기고, 안에 `DropdownMenuItem` · `DropdownMenuSection` · `DropdownMenuSeparator`를 넣습니다.',
       },
     },
   },
@@ -58,14 +55,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const Open: Story = {
+  name: '열림',
   args: { open: true },
 };
 
-/** Text-only items (Left / Right Icon off) — e.g. a sort menu. */
+/** 아이콘 없이 글자만 있는 메뉴입니다(예: 정렬 메뉴). */
 export const TextOnly: Story = {
+  name: '글자만',
   args: { 'aria-label': '정렬', trigger: <Button variant="secondary" appearance="outline">정렬</Button> },
   render: (args) => (
     <DropdownMenu {...args}>
@@ -76,8 +75,9 @@ export const TextOnly: Story = {
   ),
 };
 
-/** Items with sub text (`description`). */
+/** 이름 아래에 설명(`description`)이 있는 항목입니다. */
 export const WithDescription: Story = {
+  name: '설명 있음',
   args: { open: true },
   render: (args) => (
     <DropdownMenu {...args}>

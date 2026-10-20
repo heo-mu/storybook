@@ -2,19 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { Calendar } from './Calendar';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Calendar.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Calendar.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Calendar/Calendar',
+  title: '컴포넌트/Calendar/Calendar',
+  id: 'components-calendar-calendar',
   component: Calendar,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma `date-picker_calendar` (144:1644) with header, navigation and day cells — a month grid used by `DatePicker`, ' +
-          'also usable on its own. Values are ISO dates (`"2026-07-30"`). Day states: Today (current date), Selected (`value`), ' +
-          'Outside (other month), Disabled (`minValue` / `maxValue` / `isDateUnavailable`), Hover / Pressed. Keyboard: arrows, ' +
-          'Page Up / Down (month), Home / End (week), Enter / Space selects. Month and weekday names follow the react-aria locale.',
+          '한 달 단위로 날짜를 보여 주고 고르는 달력입니다. 값은 `YYYY-MM-DD` 문자열이고, 고를 수 있는 날짜는 `minValue` · `maxValue` · `isDateUnavailable`로 정합니다.',
       },
     },
   },
@@ -23,7 +21,7 @@ const meta = {
     onChange: fn(),
   },
   argTypes: {
-    defaultValue: { control: 'text', description: "Initial date 'YYYY-MM-DD'" },
+    defaultValue: { control: 'text', description: "처음 선택된 날짜 'YYYY-MM-DD'" },
     minValue: { control: 'text' },
     maxValue: { control: 'text' },
     disabled: { control: 'boolean' },
@@ -33,12 +31,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const WithValue: Story = {
+  name: '값 있음',
   args: { defaultValue: '2026-07-30' },
 };
 
 export const Range: Story = {
+  name: '기간 선택',
   args: { defaultFocusedValue: '2026-07-15', minValue: '2026-07-06', maxValue: '2026-07-24' },
 };

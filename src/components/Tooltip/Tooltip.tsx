@@ -4,29 +4,29 @@ import { cx } from '../../utils/cx';
 import type { TooltipPlacement } from './Tooltip.options';
 
 export type TooltipProps = {
-  /** Figma "Message Text". */
+  /** 툴팁에 보여 줄 설명. */
   content: ReactNode;
-  /** The element that shows the tooltip on hover and keyboard focus (must forward its ref and props, e.g. `Button`). */
+  /** 툴팁을 띄울 요소. ref와 props를 전달하는 컴포넌트여야 합니다(예: `Button`). */
   children: ReactElement;
-  /** Figma "Placement": side of the trigger. Flips when there is no room. @default 'top' */
+  /** 나타날 쪽. 공간이 없으면 반대쪽에 나타납니다. @default 'top' */
   placement?: TooltipPlacement;
-  /** Figma "Arrow". @default true */
+  /** 화살표를 표시합니다. @default true */
   showArrow?: boolean;
-  /** Hover delay before showing, in ms (keyboard focus shows it at once) — Design System Rules 05. @default 500 */
+  /** 마우스를 올린 뒤 나타나기까지의 시간(ms). 키보드로 선택하면 바로 나타납니다. @default 500 */
   delay?: number;
-  /** Delay before hiding, in ms. @default 500 */
+  /** 마우스나 포커스가 떠난 뒤 닫히기까지의 시간(ms). @default 500 */
   closeDelay?: number;
-  /** Open state (controlled). */
+  /** 열림 여부. 직접 제어할 때 씁니다. */
   open?: boolean;
-  /** Initial open state (uncontrolled). */
+  /** 처음 열림 여부. 직접 제어하지 않을 때 씁니다. */
   defaultOpen?: boolean;
-  /** Called when the tooltip opens or closes. */
+  /** 툴팁이 열리거나 닫힐 때 호출됩니다. */
   onOpenChange?: (open: boolean) => void;
-  /** Disables the tooltip. */
+  /** 툴팁을 끕니다. */
   disabled?: boolean;
-  /** Class of the tooltip bubble. */
+  /** 툴팁 말풍선의 클래스. */
   className?: string;
-  /** Data attributes for the tooltip bubble (e.g. test ids). */
+  /** 툴팁 말풍선에 붙일 data 속성(예: 테스트 id). */
   [dataAttribute: `data-${string}`]: string | undefined;
 };
 
@@ -39,8 +39,7 @@ const ARROW: Record<TooltipPlacement, { w: number; h: number; d: string }> = {
 };
 
 /**
- * Figma component set `tooltip` (149:1111): a short label shown on hover and keyboard focus
- * (react-aria-components TooltipTrigger: role="tooltip", aria-describedby on the trigger, Escape closes).
+ * 마우스를 올리거나 키보드로 선택하면 짧은 설명을 보여 주는 툴팁입니다. Esc를 누르면 닫힙니다.
  */
 export function Tooltip({
   content,

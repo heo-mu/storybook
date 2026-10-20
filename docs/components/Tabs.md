@@ -70,3 +70,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### Tab
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `tab_filled`(91:5000, 60개) → `appearance="filled"`, `tab_line`(91:5241, 30개) → `appearance="line"`.
+- 키보드는 react-aria-components tablist 패턴입니다(방향키 · Home · End). State: Hover · Pressed = `:hover` · press, Selected = 선택된 탭, Disabled = `disabledKeys` 또는 `Tab disabled`.

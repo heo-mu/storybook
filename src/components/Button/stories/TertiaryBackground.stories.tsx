@@ -12,7 +12,8 @@ import { PSEUDO_PARAMETERS, figmaCase, stateProps } from './story-helpers';
 // tokens the Component variables used before (surface/container-subtle · container · overlay, still in Figma),
 // the new one is colors/fill/tertiary/*. Story-only comparison — the component itself always uses the new tokens.
 const meta = {
-  title: 'Components/Button/Tertiary Background',
+  title: '컴포넌트/Button/Tertiary 배경 비교',
+  id: 'components-button-tertiary-background',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -61,7 +62,7 @@ function Row({ label, style, id }: { label: string; style?: CSSProperties; id: s
 
 /** Tertiary / Solid on the page surface (#fdfdfd): before and after the Figma change, with the token values and their contrast to the page. */
 export const BeforeAfter: Story = {
-  name: 'Before / After',
+  name: '이전 · 이후',
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
       <Row label="이전" style={BEFORE} id="before" />

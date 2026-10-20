@@ -3,16 +3,15 @@ import { cx } from '../../utils/cx';
 import type { LoadingSize } from './Loading.options';
 
 export type LoadingProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** Figma "size". @default 'md' */
+  /** 크기. @default 'md' */
   size?: LoadingSize;
-  /** Figma "text" (Loading text under the spinner). Without it, `aria-label` names the status. */
+  /** 회전 표시 아래 글자. 없으면 `aria-label`이 이름이 됩니다. */
   label?: ReactNode;
 };
 
 /**
- * Figma component set `loading` (675:5644): a spinning arc (gradient from colors/border/transparency to
- * colors/border/brand) with an optional label. Renders `role="status"`, so the label (or `aria-label`,
- * default '로딩 중') is announced politely.
+ * 불러오거나 처리하는 중임을 알리는 회전 표시입니다. 화면 낭독기가 `label`(없으면 `aria-label`, 기본 '로딩 중')을
+ * 다른 안내를 끊지 않고 읽어 줍니다.
  */
 export const Loading = forwardRef<HTMLDivElement, LoadingProps>(function Loading(
   { size = 'md', label, className, 'aria-label': ariaLabel, ...rest },

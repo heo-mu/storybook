@@ -19,40 +19,41 @@ import { ChartTooltip } from './ChartTooltip';
 import { areaPath, bands, barPath, extendToEdges, intersect, niceTicks, placeTooltip, polyline, roundedPolyline, scale, type Point, type Rect } from './chartGeometry';
 
 export type ChartSeries = {
-  /** Series name — legend, tooltip and the data table for screen readers. */
+  /** 계열 이름. 범례 · 툴팁 · 화면 낭독기용 표에 쓰입니다. */
   label: string;
-  /** One value per category, in the order of `categories`. */
+  /** 값. 항목마다 하나씩 `categories` 순서대로 넣습니다. */
   data: number[];
 };
 
 export type ChartProps = Omit<ComponentPropsWithoutRef<'figure'>, 'children'> & {
-  /** Figma "Type". @default 'bar-vertical' */
+  /** 종류 — 선 · 세로 막대 · 가로 막대. @default 'bar-vertical' */
   type?: ChartType;
   /**
-   * Figma "Style": `default` has axes, a legend and a tooltip; `simple` is the compact 160px chart whose last category
-   * is the current period. @default 'default'
+   * 스타일. `default`는 축 이름 · 값 눈금 · 범례가 있고, `simple`은 마지막 항목이 현재 기간인 160px 높이의 간단한 차트입니다.
+   * @default 'default'
    */
   variant?: ChartVariant;
-  /** Category (x axis; y axis for `bar-horizontal`) labels. */
+  /** 항목 이름. 가로 막대 차트는 세로축, 나머지는 가로축에 표시됩니다. */
   categories: string[];
-  /** One series (Figma Group=no) or two (Group=yes: the second is the comparison). Further series are ignored. */
+  /** 계열 1개 또는 2개. 두 번째는 비교 계열이며, 세 번째부터는 표시하지 않습니다. */
   series: ChartSeries[];
-  /** Figma "Y Axis Label" (default style). */
+  /** 세로축 이름(기본 스타일). */
   yAxisLabel?: ReactNode;
-  /** Figma "X Axis Label" (default style). */
+  /** 가로축 이름(기본 스타일). */
   xAxisLabel?: ReactNode;
-  /** Value-axis ticks of the default style, lowest first; the axis spans the first to the last. Default: 4 steps from 0. */
+  /** 기본 스타일의 값 눈금(작은 값부터). 첫 값부터 끝 값까지가 축 범위입니다. 없으면 0부터 4칸으로 나눕니다. */
   ticks?: number[];
-  /** Formats values (ticks, tooltip, data table). @default value.toLocaleString('ko-KR') */
+  /** 값 표시 형식(눈금 · 툴팁 · 화면 낭독기용 표). @default value.toLocaleString('ko-KR') */
   formatValue?: (value: number) => string;
-  /** Badge over the highest value of the first series (line, default style); `false` hides it. @default '최고' */
+  /** 첫 계열의 가장 큰 값 위에 붙는 배지(선 차트, 기본 스타일). `false`면 숨깁니다. @default '최고' */
   maxLabel?: ReactNode;
-  /** Category whose tooltip is shown (hover / keyboard / tap), or `null` (controlled). */
+  /** 툴팁을 표시할 항목 번호. 넘기면 직접 제어하며, `null`이면 툴팁을 숨깁니다. */
   activeIndex?: number | null;
-  /** Initial `activeIndex` (uncontrolled). @default null */
+  /** 처음 툴팁을 표시할 항목 번호(직접 제어하지 않을 때). @default null */
   defaultActiveIndex?: number | null;
+  /** 마우스 · 탭 · 키보드로 툴팁 항목이 바뀔 때 호출됩니다. 닫히면 `null`을 받습니다. */
   onActiveIndexChange?: (index: number | null) => void;
-  /** Accessible name of the plot, which takes keyboard focus. @default '차트 항목: 화살표 키로 값 확인' */
+  /** 키보드로 선택하는 그림 영역의 이름(화면 낭독기용). @default '차트 항목: 화살표 키로 값 확인' */
   plotLabel?: string;
 };
 
@@ -448,11 +449,8 @@ function visibleArea(plotEl: HTMLElement, plot: Rect, margin: number): Rect {
 }
 
 /**
- * Figma component set `chart` (698:4399): line, vertical bar and horizontal bar charts in the default style (axis labels,
- * value grid, legend) or the simple style (160px, the last category is the current period). One series is Figma
- * Group=no, two are Group=yes. Both styles show the Figma hover=yes state for the active category — guide line and
- * rings (line) or highlight band (bars) and the tooltip — on pointer hover, tap or keyboard (arrow keys, Home / End,
- * Escape). The drawing is SVG sized to the container width; the values are also given to screen readers as a table.
+ * 항목별 수치를 선 · 세로 막대 · 가로 막대 차트로 보여 줍니다. 마우스를 올리거나 탭하거나 키보드(화살표 · Home · End · Esc)로
+ * 항목을 고르면 그 항목이 강조되고 툴팁에 값이 보입니다. 너비는 감싼 영역에 맞춰지고, 모든 값은 화면 낭독기용 표로도 제공합니다.
  */
 export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   {

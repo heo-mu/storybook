@@ -47,3 +47,9 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DFRE-01` **마크업**: `dateTime`을 주면 시각을 `<time datetime>`으로 표시합니다. "·"는 장식으로 숨깁니다.
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
+
+- 시각 · "·" · 갱신 주기는 `xs/leading-normal/normal`, 서로 `m-0_5` 간격이며 배지 뒤 간격은 `p-2`입니다.

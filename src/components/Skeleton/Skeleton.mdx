@@ -1,16 +1,36 @@
 import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Skeleton.showcase.stories';
+import * as SkeletonStories from './Skeleton.stories';
 import { Skeleton } from './Skeleton';
 
-<Meta title="Components/Skeleton/Usage" />
+<Meta title="컴포넌트/Skeleton/사용 방법" id="components-skeleton-usage" name="Docs" />
 
-# Skeleton — 사용 가이드
+# Skeleton
 
-Figma **skeleton**(697:4486, 4개 변형)을 구현했습니다. 내용을 불러오는 동안 자리를 표시하는 정적인 도형입니다.
+스켈레톤은 내용을 불러오는 동안 그 자리를 표시하는 도형입니다.
+
+<Canvas of={SkeletonStories.ListRow} />
+
+## 언제 사용하나요
+
+- 내용을 불러오는 동안 내용이 들어갈 자리에 둡니다. 여러 도형을 조합해 목록 행 같은 모양을 만들 수 있습니다.
+- 데이터 영역의 불러오는 중 상태를 문구와 함께 보여 주려면 `DataState state="loading"`을 씁니다.
+
+## 종류
 
 <Canvas of={Showcase.Figma} />
 
-## 사용 예
+| `shape` | 기본 크기 |
+| --- | --- |
+| `line` | 60 × 8 |
+| `shape4` | 100 × 10 |
+| `block` | 140 × 12 |
+| `circle` | 24 × 24 |
+
+- 크기는 `style`의 `width` · `height`로 바꿀 수 있습니다. 색과 모서리는 그대로입니다.
+- 움직임 없이 정지된 모양으로 표시됩니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -23,34 +43,10 @@ Figma **skeleton**(697:4486, 4개 변형)을 구현했습니다. 내용을 불�
 </div>`}
 />
 
-## Figma → Props
+## 접근성
 
-| Figma Shape | `shape` | 크기 |
-| --- | --- | --- |
-| Line | `line` | 60 × 8 |
-| Shape4 | `shape4` | 100 × 10 (Figma 값 이름 그대로 — figma-issues F70) |
-| Block | `block` | 140 × 12 |
-| Circle | `circle` | 24 × 24 |
-
-색 `colors/skeleton/background`, 모서리 `border-radius/rounded`(Circle `rounded-xl`).
-
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `SKEL-01` **애니메이션 없음**: 정적으로 둡니다(Rules 09).
-- `SKEL-03` **접근성**: 장식(`aria-hidden`)입니다. 불러오는 중이라는 사실은 감싸는 영역에서 알리세요(`DataState state="loading"`은 `role="status"`, Rules 06).
-
-### 개발 구현 세부 사항
-
-디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
-
-- `SKEL-02` **크기 조절**: `style`의 width / height로 바꿀 수 있습니다(색 · 모서리는 그대로).
+- 스켈레톤은 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다.
+- 불러오는 중이라는 사실은 감싸는 영역에서 알립니다. 위 예처럼 `role="status"`와 `aria-label`을 주거나 `DataState state="loading"`을 씁니다.
 
 ## Props
 

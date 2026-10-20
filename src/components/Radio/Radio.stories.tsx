@@ -4,19 +4,17 @@ import { Radio } from './Radio';
 import { RadioGroup } from './RadioGroup';
 import { CHOICE_SIZES } from '../Choice';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Radio.showcase.stories.tsx
+// 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Radio.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Radio/Radio',
+  title: '컴포넌트/Radio/Radio',
+  id: 'components-radio-radio',
   component: Radio,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component set **radio** (102:2677, 24 variants). Selection Selected → checked (the `RadioGroup` value, or ' +
-          '`checked` / `defaultChecked` standalone), Size → `size`, Label / Label Text → `label`. State: Hover / Pressed are the ' +
-          'native :hover / :active, Disabled = `disabled`. Renders a native `<input type="radio">`; use inside `RadioGroup` ' +
-          '(value / defaultValue / onChange, arrow-key navigation).',
+          '여러 옵션 중 하나만 고르는 라디오 버튼입니다. 보통 `RadioGroup`으로 묶어 그룹의 `value` · `onChange`로 선택을 관리하고, 크기는 `size`로 고릅니다.',
       },
     },
   },
@@ -29,32 +27,36 @@ const meta = {
     onChange: fn(),
   },
   argTypes: {
-    size: { control: 'inline-radio', options: CHOICE_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'sm' } } },
-    label: { control: 'text', description: 'Figma "Label Text" (omit to hide the label, then set aria-label)' },
-    defaultChecked: { control: 'boolean', description: 'Figma Selection "Selected" (standalone, uncontrolled)' },
-    disabled: { control: 'boolean', description: 'Figma State "Disabled"' },
+    size: { control: 'inline-radio', options: CHOICE_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
+    label: { control: 'text', description: '원 옆 라벨 — 없으면 aria-label을 붙임' },
+    defaultChecked: { control: 'boolean', description: '처음 선택 여부(그룹 없이 쓸 때, 비제어)' },
+    disabled: { control: 'boolean', description: '비활성 — 누를 수 없음' },
   },
 } satisfies Meta<typeof Radio>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const Selected: Story = {
+  name: '선택됨',
   args: { defaultChecked: true },
 };
 
 export const Sizes: Story = {
+  name: '크기',
   args: { size: 'lg', defaultChecked: true },
 };
 
 export const Disabled: Story = {
+  name: '비활성',
   args: { disabled: true, defaultChecked: true },
 };
 
-/** `RadioGroup` manages the value; items are 8px apart, 16px in a row (Design System Rules 08). */
+/** `RadioGroup`이 선택한 값을 관리합니다. */
 export const Group: Story = {
+  name: '그룹',
   render: (args) => (
     <RadioGroup aria-label="정렬" defaultValue="recent" size={args.size}>
       <Radio value="recent" label="최신순" />
@@ -65,6 +67,7 @@ export const Group: Story = {
 };
 
 export const HorizontalGroup: Story = {
+  name: '가로 그룹',
   render: (args) => (
     <RadioGroup aria-label="기간" defaultValue="7d" orientation="horizontal" size={args.size}>
       <Radio value="7d" label="7일" />

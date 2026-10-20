@@ -87,3 +87,13 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ### DatePicker
 
 ### Calendar
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `date-picker_trigger`(144:723, 21개) · `date-picker_message`(144:888) → `DatePicker`, `date-picker_calendar`(144:1644) · `date-picker_header`(144:1377) · `date-picker_navigation`(144:1328) · `date-picker_day`(144:1033) → `Calendar`.
+- `DatePicker` State: Hover · Focus = `:hover` · `:focus-within`, Completed = 날짜가 있을 때, Error = `invalid` 또는 쓸 수 없는 날짜 입력, Disabled = `disabled`, Read-only = `readOnly`.
+- `Calendar` 키보드는 react-aria-components 달력 패턴입니다: 방향키, Page Up · Page Down(달), Home · End(주의 처음 · 끝), Enter · Space(선택). 월 · 요일 이름은 react-aria 로캘(`I18nProvider`, 없으면 브라우저)을 따릅니다.
+- `Calendar`의 `autoFocus`는 `DatePicker`가 달력을 열 때 날짜 칸으로 포커스를 옮기는 데 씁니다.
+- `Calendar`의 day 상태: Today(오늘) · Selected(`value`) · Outside(다른 달) · Disabled(`minValue` · `maxValue` · `isDateUnavailable`) · Hover · Pressed.

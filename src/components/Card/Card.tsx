@@ -4,25 +4,24 @@ import { cx } from '../../utils/cx';
 export type CardProps = ComponentPropsWithoutRef<'div'>;
 
 /**
- * Figma Card (185:6512): header, content and footer in a container — padding p-5 top / bottom, m-4 between the parts,
- * border-radius/rounded-lg, colors/card/background, 1px INSIDE colors/card/border, shadow (figma-issues F60).
+ * 관련된 내용을 한 상자로 묶는 카드입니다. 안에 `CardHeader` · `CardContent` · `CardFooter`를 넣고, 너비는 부모를 채웁니다.
  */
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ className, ...rest }, ref) {
   return <div {...rest} ref={ref} className={cx('ds-card', className)} />;
 });
 
 export type CardHeaderProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
-  /** Figma "Card Text". */
+  /** 카드 제목. 제목 요소(기본 `<h3>`)로 표시됩니다. */
   title: ReactNode;
-  /** Figma "Sub" · "Sub Text". */
+  /** 제목 아래 설명. 길면 줄바꿈됩니다. */
   description?: ReactNode;
-  /** Figma "Button" (Button Tertiary · Outline · sm in Figma). */
+  /** 제목 오른쪽 버튼. 디자인 예시는 `Button variant="tertiary" appearance="outline" size="sm"`입니다. */
   action?: ReactNode;
-  /** Heading level of the title. @default 3 */
+  /** 제목의 단계(h2–h6). @default 3 */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
 };
 
-/** Figma card_header (218:7173): title, description and an action above a divider. */
+/** 카드 머리글입니다. 제목 · 설명 · 버튼을 두고, 아래에 구분선이 있습니다. */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function CardHeader(
   { title, description, action, headingLevel = 3, className, ...rest },
   ref,
@@ -39,12 +38,12 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
   );
 });
 
-/** Figma card_content: the body, padded p-5 left and right. */
+/** 카드 본문입니다. */
 export const CardContent = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(function CardContent({ className, ...rest }, ref) {
   return <div {...rest} ref={ref} className={cx('ds-card__content', className)} />;
 });
 
-/** Figma card_footer (218:7174): full-width buttons m-2 apart (Figma: Primary · Solid · md and Tertiary · Outline · md). */
+/** 카드 아래쪽 버튼 영역입니다. 버튼이 너비를 나눠 채웁니다. */
 export const CardFooter = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(function CardFooter({ className, ...rest }, ref) {
   return <div {...rest} ref={ref} className={cx('ds-card__footer', className)} />;
 });

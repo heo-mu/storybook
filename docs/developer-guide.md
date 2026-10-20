@@ -46,7 +46,7 @@ platform-design-system/
 │     ├─ <Name>.css                # 스타일 (토큰만 사용, 머리 주석에 Figma 값 기록)
 │     ├─ <Name>.options.ts         # Figma Variant 값 배열 · 유니온 타입 (예: BUTTON_SIZES)
 │     ├─ <Name>.stories.tsx        # 사용 예 스토리 — Storybook MCP 매니페스트에 포함
-│     ├─ <Name>.mdx                # Usage 문서 (Figma → Props 표, 정책, 접근성)
+│     ├─ <Name>.mdx                # 사용 방법 문서 (목적 · 종류 · 상태 · 코드 · 접근성 — 쉬운 한국어)
 │     ├─ stories/<Name>.showcase.stories.tsx   # Figma 검증 · 테스트 스토리 (`!manifest`)
 │     └─ index.ts
 ├─ figma-pending/                  # Figma 등록 대기 토큰(결정된 값, 스냅샷 · 체크섬 밖) — 5절
@@ -150,10 +150,12 @@ npm run build-storybook    # storybook-static/ — 정적 사이트 (서버 배�
 
 | 사이드바 | 내용 |
 | --- | --- |
-| `Foundations/Design Tokens` | 전체 토큰 목록 |
-| `Components/<Name>/Usage` | 사용 가이드: 예제 코드, Figma → Props 표, 정책(Figma 정의 · Figma 문서화 · 개발 구현 세부 · Figma 반영 대기 — [code-policy-audit.md](./code-policy-audit.md)), 접근성 |
-| `Components/<Name>/<Component>` | Props 표(Docs), Playground, 사용 예 스토리 |
-| `Components/<Name>/Showcase` | Figma 변형 매트릭스 · 상태 · 상호작용 · 접근성 테스트 스토리(검증용, MCP 매니페스트 제외) |
+| `기초/디자인 토큰` · `기초/포커스` | 전체 토큰 목록 · 포커스 표시 |
+| `컴포넌트/<Name>/사용 방법` | 목적 · 언제 쓰는지 · 종류 · 상태 · 코드 예제 · 접근성 · Props. Figma 매핑 · 정책 ID · 구현 세부는 [components/](./components/) 개발 노트 |
+| `컴포넌트/<Name>/<Component>` | 문서(Props 표) · 직접 체험 · 사용 예 스토리 |
+| `컴포넌트/<Name>/전체 보기` | 모든 변형 · 상태 · 동작 · 접근성 테스트 스토리(검증용, MCP 매니페스트 제외) |
+
+사이드바 이름은 한국어지만 스토리 ID는 영어 그대로입니다(메타의 `id`, MDX `<Meta id>`로 고정 — 예: `components-button-usage--docs`, `components-chart-showcase--figma`). 컴포넌트 문서 페이지만 `--문서`로 끝납니다(`docs.defaultName`). 검증 설정 · 테스트는 ID를 씁니다.
 
 - Playground의 Controls로 Prop을 바꿔 볼 수 있고, Accessibility 패널(axe)에서 위반을 확인할 수 있습니다.
 - 스토리의 `play` 함수가 곧 테스트입니다(`npm test`가 같은 스토리를 실행).
@@ -271,7 +273,7 @@ Storybook의 `@storybook/addon-mcp`가 컴포넌트 문서 · 스토리를 MCP �
 
 | 도구 | 용도 |
 | --- | --- |
-| `docs-list` | 컴포넌트 · 문서 목록(컴포넌트 매니페스트 44, Usage 문서 37) |
+| `docs-list` | 컴포넌트 · 문서 목록(컴포넌트 매니페스트 44, 사용 방법 문서 37) |
 | `docs-show` · `docs-show-story` | 컴포넌트의 설명 · Props · 스토리 코드 / 특정 스토리 |
 | `stories-find-by-component` | 컴포넌트의 스토리 찾기 |
 | `get-storybook-story-instructions` | 이 저장소의 스토리 작성 규칙 |
@@ -284,4 +286,26 @@ Storybook의 `@storybook/addon-mcp`가 컴포넌트 문서 · 스토리를 MCP �
 - "Select와 DatePicker를 DashboardFilterBar에 넣은 조회 영역을 만들어 줘. 문서에 없는 Prop은 쓰지 마."
 - "방금 만든 화면의 스토리를 추가하고 test-run으로 확인해 줘."
 
-규칙: 문서에 없는 Prop · Variant를 만들어 쓰지 않습니다. 필요하면 디자인 시스템 쪽에 요청합니다(검증용 Showcase 스토리는 매니페스트에서 제외되어 있어 예시로 섞이지 않습니다).
+규칙: 문서에 없는 Prop · Variant를 만들어 쓰지 않습니다. 필요하면 디자인 시스템 쪽에 요청합니다(검증용 "전체 보기" 스토리는 매니페스트에서 제외되어 있어 예시로 섞이지 않습니다).
+
+## 디자인 토큰 메모 (Storybook에서 옮김)
+
+Storybook **기초/디자인 토큰** 페이지를 사용자용 설명으로 줄이면서 옮긴 기술 정보입니다(나머지는 5절에 이미 있음).
+
+- 원본 스냅샷 `figma/variables/*.txt` · `figma/styles/*.txt`는 Figma MCP로 읽기 전용 추출했고, 체크섬으로 원본과 일치를 확인합니다.
+- `npm run tokens`가 `src/tokens/*.css`와 `src/tokens/tokens.json`을 만듭니다.
+- Storybook 페이지에 있던 계층별 수 · 파일 표(작성 당시 값):
+
+| 레이어 | Figma 컬렉션 | 변수 수 | 파일 |
+| --- | --- | --- | --- |
+| Primitive | Primitive | 615 | `primitive.css` |
+| Theme | Theme | 44 | `theme.css` |
+| Semantic | Semantic | 68 | `semantic.css` |
+| Component | Component (Button 그룹만: `colors/button/*`, `colors/button_text/*`) | 73 / 825 | `components/button.css` |
+| Typography | Text Styles | 46 | `typography.css` |
+| Shadows | Effect Styles | 4 | `effects.css` |
+
+  이 표와 "Component 컬렉션은 이번 범위인 Button 그룹만 포함했습니다. 다른 컴포넌트 토큰은 해당 컴포넌트 구현 시 추가합니다."라는 문구는
+  현재와 맞지 않습니다. 2026-10-20 `tokens.json` 기준 Primitive 623 · Theme 44 · Semantic 69 · Component 800(모든 구현 컴포넌트, `src/tokens/components/*.css`) ·
+  Text Style 46 · Effect Style 4입니다. Storybook의 "Component — Button" 표도 실제로는 Component 컬렉션 전체를 보여 주므로 제목을 "Component"로 바꿨습니다.
+- Primitive 그림자 스케일 변수(`shadows/scale/*`, `shadows/color/*`)는 Figma에서 어떤 색과 조합되는지 정의되어 있지 않아 합성 값은 만들지 않았습니다(figma-issues C6).

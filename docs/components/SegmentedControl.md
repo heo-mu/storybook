@@ -57,3 +57,9 @@ Figma 정리를 기다리는 항목입니다. 정리될 때까지 아래처럼 �
 ## Props
 
 ### SegmentedControlItem
+
+## 구현 메모 (Storybook에서 옮김)
+
+Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
+
+- Figma 컴포넌트 세트: `segmented-control`(531:24471), `segmented-item`(524:24397).

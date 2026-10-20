@@ -4,15 +4,14 @@ import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
 
 export type NavigationProps = ComponentPropsWithoutRef<'nav'> & {
-  /** Area above the menu (the Figma example's logo area), m-4 above the items. */
+  /** 메뉴 위 영역(로고 등). */
   header?: ReactNode;
-  /** `NavLink` and `NavGroup` elements; each is placed in a list item. */
+  /** `NavLink`와 `NavGroup`들. 각각 목록 항목으로 들어갑니다. */
   children: ReactNode;
 };
 
 /**
- * LNB container from the Figma Navigation example (180:2023): padding p-5, colors/navigation/lnb/background,
- * items m-1_5 apart. Width comes from the layout (240px in the Figma example).
+ * 화면 왼쪽에 두는 메뉴(LNB)의 틀입니다. 너비는 화면 배치에서 정하고, 메뉴 항목은 그 너비를 꽉 채웁니다.
  */
 export const Navigation = forwardRef<HTMLElement, NavigationProps>(function Navigation({ header, children, className, ...rest }, ref) {
   return (
@@ -26,19 +25,19 @@ export const Navigation = forwardRef<HTMLElement, NavigationProps>(function Navi
 });
 
 type ItemBase = {
-  /** Figma "Menu Text". */
+  /** 메뉴 이름. */
   children: ReactNode;
-  /** Figma "Icon" (20px; the Figma placeholder is List). */
+  /** 메뉴 이름 앞 아이콘. */
   icon?: ReactNode;
 };
 
 export type NavLinkProps = ComponentPropsWithoutRef<'a'> &
   ItemBase & {
-    /** Figma Variant "Selected": the current page (`aria-current="page"`). */
+    /** 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. */
     selected?: boolean;
   };
 
-/** Figma component set `item_link` (180:6174): a top-level page link. State Hover = :hover. */
+/** 누르면 바로 페이지로 이동하는 첫 단계 메뉴입니다. 마우스를 올리면 모양이 바뀝니다. */
 export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavLink({ children, icon, selected = false, className, ...rest }, ref) {
   return (
     <a {...rest} ref={ref} className={cx('ds-nav-item', className)} data-kind="link" data-selected={selected || undefined} aria-current={selected ? 'page' : undefined}>
@@ -54,12 +53,12 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavL
 
 export type NavParentItemProps = Omit<ComponentPropsWithoutRef<'button'>, 'children'> &
   ItemBase & {
-    /** Figma "Expanded". */
+    /** 펼침 — 하위 메뉴가 열린 상태입니다. */
     expanded?: boolean;
   };
 
 /**
- * Figma component set `item_parent` (180:5246): the button of a menu group. State Hover = :hover.
+ * 메뉴 그룹을 펼치고 접는 버튼입니다. `NavGroup`이 안에서 그립니다.
  * @internal Rendered by `NavGroup` — use that (docs/public-api.md).
  */
 export const NavParentItem = forwardRef<HTMLButtonElement, NavParentItemProps>(function NavParentItem(
@@ -81,22 +80,21 @@ export const NavParentItem = forwardRef<HTMLButtonElement, NavParentItemProps>(f
 });
 
 export type NavGroupProps = ItemBase & {
-  /** Group label (Figma "Menu Text" of item_parent). */
+  /** 그룹 이름. */
   label: ReactNode;
-  /** `NavChild` elements shown when expanded. */
+  /** 펼쳤을 때 보이는 `NavChild`들. */
   children?: ReactNode;
-  /** Expanded (controlled). */
+  /** 펼침 여부. 넘기면 바깥에서 관리합니다. */
   expanded?: boolean;
-  /** Initial state (uncontrolled). @default false */
+  /** 처음에 펼쳐 둘지 여부. `expanded` 없이 스스로 관리할 때 씁니다. @default false */
   defaultExpanded?: boolean;
-  /** Called when the group opens or closes. */
+  /** 그룹이 펼쳐지거나 접히면 호출됩니다. */
   onExpandedChange?: (expanded: boolean) => void;
   className?: string;
 };
 
 /**
- * Menu group: `item_parent` and, when expanded, its `item_child` list — indented p-4 with a 1px line
- * (…/child/selected/indicator/selected) and m-2_5 to the items, as in the Figma LNB example.
+ * 눌러서 펼치고 접는 메뉴 그룹입니다. 펼치면 하위 메뉴(`NavChild`)가 왼쪽 선과 함께 안쪽으로 들여 보입니다.
  */
 export function NavGroup({ label, icon, children, expanded, defaultExpanded = false, onExpandedChange, className }: NavGroupProps) {
   const [isExpanded, setExpanded] = useControllableState(expanded, defaultExpanded, onExpandedChange);
@@ -126,13 +124,13 @@ export function NavGroup({ label, icon, children, expanded, defaultExpanded = fa
 }
 
 export type NavChildProps = ComponentPropsWithoutRef<'a'> & {
-  /** Figma "Menu Text". */
+  /** 메뉴 이름. */
   children: ReactNode;
-  /** Figma Variant "Selected": the current page (`aria-current="page"`). */
+  /** 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. */
   selected?: boolean;
 };
 
-/** Figma component set `item_child` (180:6249): a second-level page link. State Hover = :hover. */
+/** `NavGroup` 안의 하위 메뉴 링크입니다. 마우스를 올리면 모양이 바뀝니다. */
 export const NavChild = forwardRef<HTMLAnchorElement, NavChildProps>(function NavChild({ children, selected = false, className, ...rest }, ref) {
   return (
     <a {...rest} ref={ref} className={cx('ds-nav-child', className)} data-selected={selected || undefined} aria-current={selected ? 'page' : undefined}>

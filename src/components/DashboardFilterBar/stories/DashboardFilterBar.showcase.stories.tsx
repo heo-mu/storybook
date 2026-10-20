@@ -5,7 +5,8 @@ import { FilterBarSample } from './FilterBarSample';
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs dashboard-filter-bar`.
 const meta = {
-  title: 'Components/DashboardFilterBar/Showcase',
+  title: '컴포넌트/DashboardFilterBar/전체 보기',
+  id: 'components-dashboardfilterbar-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -15,11 +16,13 @@ type Story = StoryObj;
 
 /** The Figma filter bar (1616px) with the Figma sample controls. */
 export const Figma: Story = {
+  name: '모든 변형',
   render: () => <FilterBarSample data-figma="dashboard-filter-bar" style={{ width: 1616 }} />,
 };
 
 /** A search landmark of named groups; the "|" dividers are hidden. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => <FilterBarSample style={{ width: 1616 }} />,
   play: async ({ canvas, canvasElement }) => {
     const bar = canvas.getByRole('search', { name: '조회 조건' });

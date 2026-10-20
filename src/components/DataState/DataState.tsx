@@ -7,19 +7,19 @@ import { ArrowCounterClockwiseIcon, CaretRightIcon, DatabaseIcon, InfoIcon, Warn
 import type { DataStateValue } from './DataState.options';
 
 export type DataStateProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
-  /** Figma "State". */
+  /** 상태 — 불러오는 중 · 빈 상태 · 결과 없음 · 오류 · 권한 없음 · 일부만 표시. */
   state: DataStateValue;
-  /** Figma "Empty Title", "Error Title" … of the state. Defaults to the Figma text of the state. */
+  /** 제목. 지정하지 않으면 상태별 기본 문구를 씁니다. */
   title?: ReactNode;
-  /** Figma "Empty Description", "Error Description" … of the state. Defaults to the Figma text of the state (Partial: none — pass the counts); `null` hides it. */
+  /** 설명. 지정하지 않으면 상태별 기본 문구를 쓰고(`partial`은 없음 — 실제 수치를 넣습니다), `null`이면 숨깁니다. */
   description?: ReactNode;
-  /** Loading text. @default '데이터를 불러오는 중입니다' */
+  /** 불러오는 중 문구. @default '데이터를 불러오는 중입니다' */
   loadingLabel?: ReactNode;
-  /** Text of the button below the message (TextButton Primary · sm). Defaults to the Figma text of the state. */
+  /** 문구 아래 버튼의 글자. 지정하지 않으면 상태별 기본 문구를 씁니다. */
   actionLabel?: ReactNode;
-  /** Shows the button and is called when it is pressed. */
+  /** 넘기면 버튼이 나타나고, 버튼을 누를 때 호출됩니다. */
   onAction?: () => void;
-  /** A custom element instead of the button. */
+  /** 버튼 대신 넣을 요소. */
   action?: ReactNode;
 };
 
@@ -65,9 +65,8 @@ const CONTENT: Record<Exclude<DataStateValue, 'loading'>, Content> = {
 };
 
 /**
- * Figma component set `data-state` (698:4359): what a data area shows instead of its content — Loading (three
- * skeleton bars and a label) or an empty-state message (Empty · No-results · Error · No-access · Partial) with an
- * icon, title, description and a TextButton. The region is a polite live region (`role="status"`).
+ * 데이터 영역에 내용 대신 보여 주는 안내입니다. 불러오는 중에는 스켈레톤과 문구를, 나머지 상태에는 아이콘 · 제목 · 설명 · 버튼을 보여 줍니다.
+ * 상태가 바뀌면 화면 낭독기가 읽어 줍니다.
  */
 export const DataState = forwardRef<HTMLDivElement, DataStateProps>(function DataState(
   { state, title, description, loadingLabel = '데이터를 불러오는 중입니다', actionLabel, onAction, action, className, ...rest },

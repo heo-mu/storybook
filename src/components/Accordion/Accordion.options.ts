@@ -1,3 +1,3 @@
-/** Figma accordion-item "Size". */
+/** Accordion 크기 */
 export const ACCORDION_SIZES = ['md', 'sm'] as const;
 export type AccordionSize = (typeof ACCORDION_SIZES)[number];

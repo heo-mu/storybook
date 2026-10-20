@@ -7,22 +7,22 @@ import type { AccordionSize } from './Accordion.options';
 const SizeContext = createContext<AccordionSize>('md');
 
 export type AccordionProps = {
-  /** `AccordionItem` elements. */
+  /** 안에 넣을 `AccordionItem` 항목들. */
   children: ReactNode;
-  /** Figma "Size" for every item. @default 'md' */
+  /** 크기. 모든 항목에 적용됩니다. @default 'md' */
   size?: AccordionSize;
-  /** Several items may be open at once. @default false */
+  /** 여러 항목을 동시에 펼칠 수 있습니다. 끄면 한 번에 한 항목만 펼칩니다. @default false */
   allowsMultipleExpanded?: boolean;
-  /** Ids of the open items (controlled). */
+  /** 펼친 항목의 `id` 목록. 직접 제어할 때 씁니다. */
   expandedKeys?: Iterable<Key>;
-  /** Ids of the items open at first (uncontrolled). */
+  /** 처음 펼칠 항목의 `id` 목록. 직접 제어하지 않을 때 씁니다. */
   defaultExpandedKeys?: Iterable<Key>;
-  /** Called with the ids of the open items. */
+  /** 펼친 항목이 바뀌면 펼친 항목의 `id` 목록과 함께 호출됩니다. */
   onExpandedChange?: (keys: Set<Key>) => void;
   className?: string;
 };
 
-/** A group of `AccordionItem`s (react-aria-components DisclosureGroup). */
+/** `AccordionItem`을 묶는 아코디언입니다. 기본은 한 번에 한 항목만 펼칩니다. */
 export function Accordion({ children, size = 'md', className, ...rest }: AccordionProps) {
   return (
     <SizeContext.Provider value={size}>
@@ -34,33 +34,32 @@ export function Accordion({ children, size = 'md', className, ...rest }: Accordi
 }
 
 export type AccordionItemProps = {
-  /** Item id (for `expandedKeys`). */
+  /** 항목 id. `expandedKeys` · `defaultExpandedKeys`에서 이 값을 씁니다. */
   id?: Key;
-  /** Figma "Title Text". */
+  /** 제목. */
   title: ReactNode;
-  /** Figma "Description Text" ("Show Description" on). */
+  /** 제목 아래 설명. */
   description?: ReactNode;
-  /** Figma "Body" (accordion-content): the panel content. */
+  /** 펼쳤을 때 보이는 내용. */
   children: ReactNode;
-  /** Figma "Show Divider". @default true */
+  /** 아래 구분선을 표시합니다. @default true */
   divider?: boolean;
-  /** Figma State "Disabled". */
+  /** 비활성 — 펼칠 수 없고 키보드로도 선택되지 않습니다. */
   disabled?: boolean;
-  /** Open state of a single item outside an `Accordion` (controlled). */
+  /** 펼침 여부. `Accordion` 밖에서 단독으로 쓰며 직접 제어할 때 씁니다. */
   expanded?: boolean;
-  /** Initial open state of a single item (uncontrolled). */
+  /** 처음 펼침 여부. 단독으로 쓰며 직접 제어하지 않을 때 씁니다. */
   defaultExpanded?: boolean;
-  /** Called when the item opens or closes. */
+  /** 항목을 펼치거나 접을 때 호출됩니다. */
   onExpandedChange?: (expanded: boolean) => void;
-  /** Heading level of the title. @default 3 */
+  /** 제목의 제목 요소 수준(`h2` – `h6`). @default 3 */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   className?: string;
 };
 
 /**
- * Figma component set `accordion-item` (1035:15648): a heading button that shows or hides its panel
- * (react-aria-components Disclosure: aria-expanded / aria-controls, Enter / Space). State Hover = :hover,
- * Expanded = open, Disabled = `disabled`.
+ * 제목을 눌러 내용을 펼치거나 접는 아코디언 항목입니다. 마우스를 올리면 모양이 바뀌고, `disabled`이면 펼칠 수 없습니다.
+ * 보통 `Accordion` 안에 넣으며 단독으로도 쓸 수 있습니다.
  */
 export function AccordionItem({
   id,

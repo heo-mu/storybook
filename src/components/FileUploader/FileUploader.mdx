@@ -4,16 +4,47 @@ import { FileUploader } from './FileUploader';
 import { FileUploaderItem } from './FileUploaderItem';
 import { Loading } from '../Loading';
 
-<Meta title="Components/FileUploader/Usage" />
+<Meta title="컴포넌트/FileUploader/사용 방법" id="components-fileuploader-usage" name="Docs" />
 
-# FileUploader · FileUploaderItem · Loading — 사용 가이드
+# FileUploader
 
-Figma **File Uploader** 프레임(675:4910)의 `file-uploader`(5개) · `file-uploader-item`(3개)와, 업로드 중 표시에 쓰이는
-**Loading**(149:3000)의 `loading`(md · sm)을 구현했습니다.
+FileUploader는 파일을 끌어다 놓거나 눌러서 고르는 업로드 영역입니다. 고른 파일은 `FileUploaderItem` 목록으로 보여 주고, 업로드 중에는 `Loading`을 표시합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+| 컴포넌트 | 쓰임 |
+| --- | --- |
+| `FileUploader` | 파일을 끌어다 놓거나 파일 선택 창에서 고르는 영역 |
+| `FileUploaderItem` | 고른 파일 하나를 목록에 보여 주는 줄. 삭제 · 다운로드 버튼이나 업로드 중 표시가 붙습니다 |
+| `Loading` | 불러오거나 처리하는 중임을 알리는 회전 표시 |
+
+## 종류
+
+- `FileUploader`는 제목 `title`과 안내 문구 `helperText`(허용 형식 · 크기 제한 등)를 보여 줍니다.
+- 제목을 지정하지 않으면 "파일을 끌어다 놓거나 선택하세요"가 보입니다. 업로드 아이콘은 `showIcon`으로 숨길 수 있습니다.
+- `Loading`은 `size`(`md` · `sm`)로 크기를 고르고, `label`로 아래에 글자를 붙입니다.
+
+`FileUploaderItem`은 `status`에 따라 오른쪽 끝이 바뀝니다.
+
+| `status` | 모양 |
+| --- | --- |
+| `completed` (기본) | "삭제" 버튼 — 누르면 `onRemove` |
+| `uploading` | 회전하는 로딩 표시 |
+| `download` | "다운로드" 버튼 — 누르면 `onDownload` |
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+- 마우스를 올리거나 누르면 업로드 영역의 모양이 바뀝니다.
+- 파일을 영역 위로 끌어오면 놓을 수 있다는 모양으로 바뀝니다.
+- `disabled`이면 누를 수 없고, 파일을 놓아도 받지 않습니다.
+- 키보드로 선택하면 포커스 테두리가 보입니다.
+- 긴 파일 이름은 말줄임표(…)로 줄여 보여 줍니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -39,53 +70,17 @@ const [files, setFiles] = useState<Upload[]>([]);
 ))}`}
 />
 
-크기 · 개수 제한 검사와 업로드 자체는 사용처에서 처리합니다(컴포넌트는 `accept`에 맞는 파일만 전달).
+- 선택 창에서 고른 파일과 끌어다 놓은 파일 모두 `accept`에 맞는 것만 `onFilesSelected`로 전달됩니다.
+- `multiple`이 아니면 첫 파일 하나만 전달됩니다.
+- 파일 크기 · 개수 검사와 실제 업로드는 사용하는 화면에서 처리합니다.
 
-## Figma 속성 → Props
+## 접근성
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| file-uploader Title / Helper Text | `title` · `helperText` | 기본 제목 "파일을 끌어다 놓거나 선택하세요" |
-| Show Icon | `showIcon` | 기본 `true` |
-| State Hover · Pressed | 브라우저 `:hover` · `:active` | |
-| State Drag-over | 파일을 영역 위로 끌 때 자동 | |
-| State Disabled | `disabled` | |
-| file-uploader-item State Completed · uploading · download | `status` | `onRemove` · `onDownload` |
-| File Name · File Info | `fileName` · `fileInfo` | 긴 이름은 말줄임 |
-| loading size · text | `Loading` `size` · `label` | |
-| Title Text · Helper Text | `title` · `helperText` | |
-
-Figma의 "Show Button" 속성은 어떤 레이어에도 연결되어 있지 않아 구현하지 않았습니다(figma-issues F26).
-
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `FILE-06` **포커스**: 드롭 영역은 키보드 포커스일 때 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — file-uploader).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `FILE-01` **드롭 영역 = 버튼**: 클릭 · Enter · Space로 파일 선택 창을 엽니다. 도움말 텍스트가 버튼 설명(`aria-describedby`)입니다(Rules 04).
-- `FILE-02` **드롭 필터**: 드롭한 파일도 `accept`(확장자 · MIME · `image/*`)로 거르고, `multiple`이 아니면 첫 파일만 전달합니다(Rules 07).
-- `FILE-03` **항목 버튼 설명**: "삭제" · "다운로드" 버튼은 파일 이름을 설명으로 가집니다(목록에서 구분, Rules 03).
-- `FILE-04` **스피너 회전**: 1초에 한 바퀴, `prefers-reduced-motion`에서는 3초에 한 바퀴(Rules 09).
-
-### 개발 구현 세부 사항
-
-디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
-
-- `FILE-05` **점선 테두리**: SVG로 6 / 4 대시를 그립니다. Figma는 대시를 변마다 맞춰 그려 모서리 근처 대시 위치가 최대 3px 다릅니다(수동 검토).
-
-## 상태
-
-<Canvas of={Showcase.States} />
+- 업로드 영역은 버튼입니다. Enter · Space로도 파일 선택 창을 엽니다.
+- 화면 낭독기는 `helperText`를 업로드 영역의 설명으로 함께 읽습니다.
+- "삭제" · "다운로드" 버튼은 파일 이름을 설명으로 함께 읽어, 어느 파일의 버튼인지 구분됩니다.
+- `Loading`은 화면 낭독기가 `label`을 읽습니다. `label`이 없으면 `aria-label`로 이름을 붙이고, 그것도 없으면 "로딩 중"으로 읽습니다.
+- 기기에서 움직임 줄이기를 켜면 로딩 표시가 더 천천히 돕니다.
 
 ## Props
 

@@ -51,3 +51,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## 상태
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `link`(111:1509, 15개). 네이티브 `<a>`를 그립니다.
+- State: Hover · Pressed · Visited = `:hover` · `:active` · `:visited`, Disabled = `disabled`(`href` 없음, `aria-disabled`, `role="link"`, 포커스되지 않음).

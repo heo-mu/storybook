@@ -1,7 +1,7 @@
 import { CalendarDate } from '@internationalized/date';
 import type { ISODate } from '../Calendar';
 
-/** Figma "Display Text" format: 2026-07-30 → '2026.07.30'. */
+/** 'YYYY-MM-DD' 값을 화면에 보이는 'YYYY.MM.DD' 형식으로 바꿉니다. */
 export function formatDateText(value: ISODate | null | undefined): string {
   if (!value) return '';
   const [y, m, d] = value.split('-');

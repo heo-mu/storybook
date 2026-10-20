@@ -2,16 +2,37 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/DropdownMenu.showcase.stories';
 import { DropdownMenu, DropdownMenuItem, DropdownMenuSection } from './DropdownMenu';
 
-<Meta title="Components/DropdownMenu/Usage" />
+<Meta title="컴포넌트/DropdownMenu/사용 방법" id="components-dropdownmenu-usage" name="Docs" />
 
-# Dropdown Menu — 사용 가이드
+# DropdownMenu
 
-Figma **Dropdown Menu** 프레임(179:2465)의 `dropdownmenu_item`(5개) · `dropdownmenu_line`과 예시의 메뉴 패널을 구현했습니다.
-키보드 · 포커스 복귀 · ARIA(menu / menuitem / group / separator)는 react-aria-components가 담당합니다.
+DropdownMenu는 버튼을 누르면 펼쳐지는 동작 메뉴입니다. 새 폴더 · 이동 · 삭제처럼 고를 수 있는 작업을 모아 보여 줍니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+| 컴포넌트 | 쓰임 |
+| --- | --- |
+| `DropdownMenu` | 메뉴를 여는 버튼(`trigger`)과 메뉴 |
+| `DropdownMenuItem` | 메뉴 항목 하나 |
+| `DropdownMenuSection` | 제목을 붙인 항목 묶음 |
+| `DropdownMenuSeparator` | 묶음 사이의 구분선 |
+
+## 종류
+
+- `icon`으로 항목 앞에 아이콘을 붙입니다.
+- `description`으로 항목 이름 아래에 설명을 붙입니다.
+- `chevron`을 켜면 오른쪽 화살표가 붙습니다. 다른 화면으로 이동하는 항목이라는 표시이며, 하위 메뉴는 지원하지 않습니다.
+- `danger`는 삭제처럼 위험한 작업에 씁니다.
+
+## 상태
+
+- 마우스를 올리거나 키보드로 선택하면 항목의 모양이 바뀝니다. 두 경우의 모양은 같습니다.
+- `disabled`이면 고를 수 없고, 방향키로 옮길 때도 건너뜁니다.
+- 메뉴가 열려도 트리거 버튼의 모양은 바뀌지 않습니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -28,49 +49,30 @@ Figma **Dropdown Menu** 프레임(179:2465)의 `dropdownmenu_item`(5개) · `dro
 </DropdownMenu>`}
 />
 
-## Figma 속성 → Props
+- 항목을 고르면 `onAction`이 그 항목의 `id`로 호출되고 메뉴가 닫힙니다.
+- `trigger`에는 `Button`이나 `FilterChip`처럼 누를 수 있는 요소를 넘깁니다.
+- 메뉴는 트리거 아래에 열리고, 화면 밖으로 나가면 반대쪽으로 열립니다. 위치는 `placement`, 트리거와의 간격은 `offset`으로 바꿉니다.
+- 메뉴 너비는 내용에 맞춰집니다. 너비를 정하려면 `className`을 씁니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Type Content | `DropdownMenuItem` | |
-| Type Title | `DropdownMenuSection title` | 그룹 제목 (`group` 이름) |
-| State Hover | 포인터 hover · 키보드 포커스 | |
-| State Alert | `danger` | 삭제 등 위험한 작업 |
-| State Disabled | `disabled` | 화살표 키 이동에서 제외 |
-| Item · Sub · Sub Text | `children` · `description` | `description`이 있으면 서브 텍스트 표시 |
-| Left Icon · Instance | `icon` | 16px 아이콘 |
-| Right Icon | `chevron` | CaretRight |
-| `dropdownmenu_line` | `DropdownMenuSeparator` | |
-| State None | Type=Title 행(상태 없음) — `DropdownMenuSection title` | |
+## 접근성
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `DROP-01` **트리거**: 열려도 트리거 모양은 바뀌지 않고(트리거 컴포넌트 그대로) 열림 여부는 `aria-expanded`로 전달됩니다(Rules 05).
-- `DROP-02` **키보드 포커스**: 포커스된 항목은 Hover와 같은 모양입니다(Rules 02 — 목록 항목 포커스).
-- `DROP-03` **패널 위치**: 트리거 아래 4px(`offset`, Select · Date Picker와 같음 — Breadcrumb은 2px), 시작 정렬. 화면 밖으로 나가면 위치를 뒤집습니다(Rules 05).
-- `DROP-04` **패널 너비**: 내용에 맞춥니다(Figma의 200 · 140px은 예시 폭). 필요하면 `className`으로 지정합니다(Rules 05).
-- `DROP-05` **하위 메뉴**: 지원하지 않습니다. `chevron`은 다른 화면으로 이동한다는 표시입니다(Rules 05).
-- `DROP-06` **설명이 있는 항목의 이름**: 라벨과 설명(`description`) 전체가 항목 이름입니다 — 보이는 글자가 모두 이름에 들어갑니다(WCAG 2.5.3, Rules 03).
-
-## 키보드
+- `aria-label`로 메뉴 이름을 붙입니다.
+- 제목이 없는 `DropdownMenuSection`에는 `aria-label`로 이름을 붙입니다.
+- 화면 낭독기는 항목 이름과 설명을 함께 읽습니다.
+- 트리거는 메뉴가 열렸는지를 화면 낭독기에 알립니다.
 
 | 키 | 동작 |
 | --- | --- |
-| Enter · Space · ↓ (트리거) | 메뉴 열기, 첫 항목에 포커스 (↑는 마지막 항목) |
-| ↑ · ↓ · Home · End | 항목 이동 (Disabled 건너뜀) |
-| 문자 입력 | 해당 글자로 시작하는 항목으로 이동 |
-| Enter · Space | 항목 실행 후 닫기 |
-| Esc | 닫고 트리거로 포커스 복귀 |
-| 바깥 클릭 | 닫기 |
+| Enter · Space · ↓ (트리거) | 메뉴를 열고 첫 항목으로 이동(↑는 마지막 항목) |
+| ↑ · ↓ · Home · End | 항목 이동(비활성 항목은 건너뜀) |
+| 글자 입력 | 그 글자로 시작하는 항목으로 이동 |
+| Enter · Space | 항목을 실행하고 닫기 |
+| Esc | 닫고 트리거로 돌아가기 |
+| 바깥 누르기 | 닫기 |
 
 ## Props
+
+### DropdownMenu
 
 <ArgTypes of={DropdownMenu} />
 

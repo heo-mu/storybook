@@ -68,3 +68,13 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### DropdownMenuItem · DropdownMenuSection
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트: `dropdownmenu_item`(179:4819, Type Content / Title × State) · `dropdownmenu_line`(179:5082).
+- 메뉴 패널은 Figma 예시의 Menu Container입니다: padding p-1, 1px 테두리, `border-radius/rounded`, effect `elevation-3`.
+- `trigger`는 react-aria `Button` · `FilterChip`, 또는 ref와 props를 전달하는 요소(디자인 시스템 `Button` 등)입니다(`Pressable`로 감쌉니다).
+- `DropdownMenuItem` State: Hover = 포인터 hover 또는 키보드 포커스, Alert = `danger`, Disabled = `disabled`.
+- `chevron` JSDoc은 예전에 "하위 메뉴나 다음 단계를 여는 항목"이라고 했지만, `DROP-05`(하위 메뉴 미지원, 다른 화면으로 이동 표시)에 맞춰 고쳤습니다.

@@ -5,20 +5,18 @@ import { cx } from '../../utils/cx';
 import { useSelectSize } from './SelectContext';
 
 export type SelectOptionProps<T extends object = object> = Omit<ListBoxItemProps<T>, 'className' | 'style' | 'children' | 'isDisabled'> & {
-  /** Figma "Option Text". */
+  /** 옵션 글자. */
   children: ReactNode;
-  /** Figma State "Disabled". */
+  /** 비활성 — 고를 수 없고 키보드로 이동할 때 건너뜁니다. */
   disabled?: boolean;
-  /** Figma "Check Icon": the check after the text of the selected option. Off: the semibold brand text alone marks it. @default true */
+  /** 선택된 옵션 글자 뒤에 체크 아이콘을 보여 줍니다. 끄면 굵은 글자로만 선택을 표시합니다. @default true */
   checkIcon?: boolean;
   className?: string;
   style?: CSSProperties;
 };
 
 /**
- * Figma component set `option` (97:2286) — one choice of a `Select`; `id` identifies it in the Select value.
- * State: Hover / Pressed = pointer hover / press (keyboard focus uses the Hover look), Selected = the Select
- * value (semibold brand text + check icon), Disabled = `disabled`.
+ * `Select` 목록 안의 옵션 하나입니다. `id`로 옵션을 구분하고, 선택되면 굵은 글자와 체크 아이콘으로 표시됩니다.
  */
 export function SelectOption<T extends object = object>({ children, disabled, checkIcon = true, className, style, textValue, ...rest }: SelectOptionProps<T>) {
   const size = useSelectSize();

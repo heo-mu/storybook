@@ -4,7 +4,7 @@
 
 - 어떤 컴포넌트를 써야 하는지와 사용 금지 목록은 [public-api.md](./public-api.md)에 있습니다. 각 컴포넌트 제목 아래에 분류를 적었습니다.
 - Props 표는 각 컴포넌트가 직접 정의한 Prop만 보여 줍니다. 그 밖의 HTML 속성(`className`, `style`, `aria-*`, 이벤트 등)과
-  react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 Usage 문서 참고).
+  react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 컴포넌트의 사용 방법 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
 
 export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 129 · 상수 45 · 함수 3 · 아이콘 35 · 내부 API 13
@@ -19,37 +19,37 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-A group of `AccordionItem`s (react-aria-components DisclosureGroup).
+`AccordionItem`을 묶는 아코디언입니다. 기본은 한 번에 한 항목만 펼칩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | `AccordionItem` elements. |
-| `allowsMultipleExpanded` | `boolean` | `false` | Several items may be open at once. |
+| `children` *(필수)* | `ReactNode` |  | 안에 넣을 `AccordionItem` 항목들. |
+| `allowsMultipleExpanded` | `boolean` | `false` | 여러 항목을 동시에 펼칠 수 있습니다. 끄면 한 번에 한 항목만 펼칩니다. |
 | `className` | `string` |  |  |
-| `defaultExpandedKeys` | `Iterable<Key>` |  | Ids of the items open at first (uncontrolled). |
-| `expandedKeys` | `Iterable<Key>` |  | Ids of the open items (controlled). |
-| `onExpandedChange` | `((keys: Set<Key>) => void)` |  | Called with the ids of the open items. |
-| `size` | `"sm" \| "md"` | `md` | Figma "Size" for every item. |
+| `defaultExpandedKeys` | `Iterable<Key>` |  | 처음 펼칠 항목의 `id` 목록. 직접 제어하지 않을 때 씁니다. |
+| `expandedKeys` | `Iterable<Key>` |  | 펼친 항목의 `id` 목록. 직접 제어할 때 씁니다. |
+| `onExpandedChange` | `((keys: Set<Key>) => void)` |  | 펼친 항목이 바뀌면 펼친 항목의 `id` 목록과 함께 호출됩니다. |
+| `size` | `"sm" \| "md"` | `md` | 크기. 모든 항목에 적용됩니다. |
 
 ### `AccordionItem`
 
 **공개 컴포넌트**
 
-Figma component set `accordion-item` (1035:15648): a heading button that shows or hides its panel (react-aria-components Disclosure: aria-expanded / aria-controls, Enter / Space). State Hover = :hover, Expanded = open, Disabled = `disabled`.
+제목을 눌러 내용을 펼치거나 접는 아코디언 항목입니다. 마우스를 올리면 모양이 바뀌고, `disabled`이면 펼칠 수 없습니다. 보통 `Accordion` 안에 넣으며 단독으로도 쓸 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Body" (accordion-content): the panel content. |
-| `title` *(필수)* | `ReactNode` |  | Figma "Title Text". |
+| `children` *(필수)* | `ReactNode` |  | 펼쳤을 때 보이는 내용. |
+| `title` *(필수)* | `ReactNode` |  | 제목. |
 | `className` | `string` |  |  |
-| `defaultExpanded` | `boolean` |  | Initial open state of a single item (uncontrolled). |
-| `description` | `ReactNode` |  | Figma "Description Text" ("Show Description" on). |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
-| `divider` | `boolean` | `true` | Figma "Show Divider". |
-| `expanded` | `boolean` |  | Open state of a single item outside an `Accordion` (controlled). |
-| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | Heading level of the title. |
-| `id` | `Key` |  | Item id (for `expandedKeys`). |
-| `onExpandedChange` | `((expanded: boolean) => void)` |  | Called when the item opens or closes. |
+| `defaultExpanded` | `boolean` |  | 처음 펼침 여부. 단독으로 쓰며 직접 제어하지 않을 때 씁니다. |
+| `description` | `ReactNode` |  | 제목 아래 설명. |
+| `disabled` | `boolean` |  | 비활성 — 펼칠 수 없고 키보드로도 선택되지 않습니다. |
+| `divider` | `boolean` | `true` | 아래 구분선을 표시합니다. |
+| `expanded` | `boolean` |  | 펼침 여부. `Accordion` 밖에서 단독으로 쓰며 직접 제어할 때 씁니다. |
+| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | 제목의 제목 요소 수준(`h2` – `h6`). |
+| `id` | `Key` |  | 항목 id. `expandedKeys` · `defaultExpandedKeys`에서 이 값을 씁니다. |
+| `onExpandedChange` | `((expanded: boolean) => void)` |  | 항목을 펼치거나 접을 때 호출됩니다. |
 
 - 상수: `ACCORDION_SIZES`
 - 타입: `AccordionProps`, `AccordionItemProps`, `AccordionSize`
@@ -60,15 +60,15 @@ Figma component set `accordion-item` (1035:15648): a heading button that shows o
 
 **공개 컴포넌트**
 
-Figma component set `alert` (179:6087): an inline message with a status icon, title, description and an optional action. Error alerts use role="alert" (announced at once), the others role="status".
+화면 안에 머물며 상태나 안내를 전하는 알림입니다. 오류는 화면 낭독기가 바로 읽고(`role="alert"`), 안내 · 성공은 `role="status"`로 읽힙니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `title` *(필수)* | `ReactNode` |  | Figma "Alert Text". |
-| `action` | `ReactNode` |  | Figma "Button": e.g. `<Button variant="tertiary" appearance="outline" size="xs">`. |
-| `description` | `ReactNode` |  | Figma "Sub Text" ("Sub" on). |
-| `showIcon` | `boolean` | `true` | Figma "Icon". |
-| `status` | `"success" \| "error" \| "information"` | `information` | Figma "Status". |
+| `title` *(필수)* | `ReactNode` |  | 제목. |
+| `action` | `ReactNode` |  | 오른쪽에 놓는 버튼. 예: `<Button variant="tertiary" appearance="outline" size="xs">` |
+| `description` | `ReactNode` |  | 제목 아래 설명. 길면 줄을 바꿔 모두 보여 줍니다. |
+| `showIcon` | `boolean` | `true` | 상태 아이콘을 표시합니다. |
+| `status` | `"success" \| "error" \| "information"` | `information` | 종류 — 안내 · 성공 · 오류. 종류마다 아이콘과 색이 다릅니다. |
 
 - 상수: `ALERT_STATUSES`
 - 타입: `AlertProps`, `AlertStatus`
@@ -79,39 +79,39 @@ Figma component set `alert` (179:6087): an inline message with a status icon, ti
 
 **공개 컴포넌트**
 
-Figma component set `badge_status` (91:6152): a status label with an optional dot. Status colours come from colors/badge/status/{filled\|outline}/*.
+상태를 짧은 글자로 알려 주는 배지입니다. 보여 주기만 하며 누를 수 없습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text". |
-| `appearance` | `"outline" \| "filled"` | `filled` | Figma "Appearance". |
-| `dot` | `boolean` | `true` | Figma "Dot". |
-| `shape` | `"square" \| "rounded"` | `square` | Figma "Shape". |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size". |
-| `status` | `"success" \| "danger" \| "basic" \| "gray" \| "point" \| "warning" \| "information"` | `basic` | Figma "Status". |
+| `children` *(필수)* | `ReactNode` |  | 배지 글자. |
+| `appearance` | `"outline" \| "filled"` | `filled` | 모양 — 채움(filled) · 테두리(outline). 테두리 모양은 배경이 없습니다. |
+| `dot` | `boolean` | `true` | 글자 앞에 점을 표시합니다. |
+| `shape` | `"square" \| "rounded"` | `square` | 모서리 모양. |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
+| `status` | `"success" \| "danger" \| "basic" \| "gray" \| "point" \| "warning" \| "information"` | `basic` | 종류 — 상태를 나타내는 색. |
 
 ### `BadgeDot`
 
 **공개 컴포넌트**
 
-Figma component set `badge_dot` (95:2681): a status dot (e.g. a new-item marker).
+글자 없이 점 하나로 상태를 알리는 배지입니다(예: 새 글 표시).
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size": 4 · 6 · 8px. |
-| `status` | `"success" \| "danger" \| "basic" \| "gray" \| "point" \| "warning" \| "information"` | `basic` | Figma "Status". |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기 — 점 지름 4 · 6 · 8px. |
+| `status` | `"success" \| "danger" \| "basic" \| "gray" \| "point" \| "warning" \| "information"` | `basic` | 종류 — 상태를 나타내는 색. |
 
 ### `BadgeCount`
 
 **공개 컴포넌트**
 
-Figma component set `badge_count` (95:2762): a count pill (Digits Single / Multiple follow the number).
+개수를 숫자로 알려 주는 배지입니다. `max`보다 큰 수는 "99+"처럼 줄여 보여 줍니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `count` *(필수)* | `number` |  | The number shown. |
-| `max` | `number` | `99` | Larger counts show "{max}+" (Figma Digits Multiple: "99+"). |
-| `status` | `"success" \| "danger" \| "basic" \| "gray" \| "point" \| "warning" \| "information"` | `basic` | Figma "Status". |
+| `count` *(필수)* | `number` |  | 표시할 숫자. |
+| `max` | `number` | `99` | 이 값보다 큰 수는 "99+"처럼 줄여 표시합니다. |
+| `status` | `"success" \| "danger" \| "basic" \| "gray" \| "point" \| "warning" \| "information"` | `basic` | 종류 — 상태를 나타내는 색. |
 
 - 상수: `BADGE_STATUSES`, `BADGE_APPEARANCES`, `BADGE_SIZES`, `BADGE_SHAPES`
 - 타입: `BadgeProps`, `BadgeDotProps`, `BadgeCountProps`, `BadgeStatus`, `BadgeAppearance`, `BadgeSize`, `BadgeShape`
@@ -122,43 +122,43 @@ Figma component set `badge_count` (95:2762): a count pill (Digits Single / Multi
 
 **공개 컴포넌트**
 
-Figma component set `breadcrumb` (712:5106): `<nav>` > `<ol>` of breadcrumb-item + separator groups. Collapsed layout: home · overflow trigger (menu of the hidden ancestors) · parent · current page.
+지금 페이지의 위치를 홈부터 이어지는 경로로 보여 줍니다. `collapsed` 배치에서는 홈 · … 메뉴(가려진 경로) · 상위 페이지 · 지금 페이지 순으로 보입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `items` *(필수)* | `BreadcrumbEntry[]` |  | Pages from the top level down to the parent of the current page (Figma ancestors · parent). |
-| `current` | `ReactNode` | `false` | Current page name (Figma Role "Current"). |
-| `defaultExpanded` | `boolean` | `false` | Initial overflow menu state (uncontrolled). |
-| `expanded` | `boolean` |  | Figma "Expanded": overflow menu open (controlled). |
-| `homeHref` | `string` | `/` | Link of the home item (Figma "Home": House icon). |
-| `homeLabel` | `string` | `홈` | Accessible name of the home item. |
-| `layout` | `"full" \| "collapsed"` | `full` | Figma "Layout". `collapsed` keeps home, the parent and the current page and moves the other ancestors into a menu behind the overflow trigger (DotsThree). |
-| `menuTitle` | `string` | `상위 경로` | Title of the overflow menu (Figma dropdownmenu_item Type Title). |
-| `moreLabel` | `string` | `중간 경로 보기` | Accessible name of the overflow trigger (Figma Label Text). |
-| `onAction` | `((id: Key) => void)` |  | Called with the entry's `id` when an entry without `href` is chosen (in the trail or the menu). |
-| `onExpandedChange` | `((expanded: boolean) => void)` |  | Called when the overflow menu opens or closes. |
-| `showParent` | `boolean` | `true` | Figma "Show Parent": in the collapsed layout keep the parent page next to the current page. |
-| `size` | `"sm" \| "md"` | `md` | Figma "Size". |
+| `items` *(필수)* | `BreadcrumbEntry[]` |  | 맨 위 단계부터 지금 페이지의 바로 위 페이지까지의 경로. |
+| `current` | `ReactNode` | `false` | 지금 페이지 이름. |
+| `defaultExpanded` | `boolean` | `false` | 처음에 … 메뉴를 열어 둘지 여부. `expanded` 없이 스스로 관리할 때 씁니다. |
+| `expanded` | `boolean` |  | … 메뉴가 열렸는지 여부. 넘기면 바깥에서 관리합니다. |
+| `homeHref` | `string` | `/` | 홈 아이콘의 링크 주소. |
+| `homeLabel` | `string` | `홈` | 화면 낭독기가 읽는 홈 이름. |
+| `layout` | `"full" \| "collapsed"` | `full` | 배치. `collapsed`는 홈 · 상위 페이지 · 지금 페이지만 보여 주고 나머지 경로를 … 메뉴에 넣습니다. |
+| `menuTitle` | `string` | `상위 경로` | … 메뉴의 제목. |
+| `moreLabel` | `string` | `중간 경로 보기` | 화면 낭독기가 읽는 … 버튼 이름. |
+| `onAction` | `((id: Key) => void)` |  | `href`가 없는 경로를 누르면(경로나 … 메뉴에서) 그 경로의 `id`로 호출됩니다. |
+| `onExpandedChange` | `((expanded: boolean) => void)` |  | … 메뉴가 열리거나 닫히면 호출됩니다. |
+| `showParent` | `boolean` | `true` | `collapsed`에서 상위 페이지를 지금 페이지 옆에 보여 줄지 여부. |
+| `size` | `"sm" \| "md"` | `md` | 크기. |
 
 ### `BreadcrumbItem`
 
 ⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Breadcrumb` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
-Figma component set `breadcrumb-item` (710:4794). Role Link = `href` (an `<a>`; without `href` a `<button>`), Current = `current`, Open = `open`. State Hover / Pressed = :hover / :active.
+경로의 한 단계입니다. `href`가 있으면 링크, 없으면 버튼이 됩니다. `Breadcrumb`이 안에서 그립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` | `ReactNode` |  | Figma "Label Text" ("Show Label" on). Without it the item is icon-only and needs `aria-label`. |
-| `current` | `boolean` | `false` | Figma Role "Current": the current page — rendered as text with `aria-current="page"`. |
-| `icon` | `ReactNode` |  | Figma "Show Icon" + icon instance (House for home, DotsThree for the overflow trigger). |
-| `open` | `boolean` | `false` | Figma Role "Open": the item whose menu is open (brand label). |
-| `size` | `"sm" \| "md"` | `md` | Figma "Size". |
+| `children` | `ReactNode` |  | 항목 글자. 없으면 아이콘만 보이므로 `aria-label`을 붙입니다. |
+| `current` | `boolean` | `false` | 지금 페이지 — 링크가 아닌 글자로 보이고, 화면 낭독기에 현재 페이지로 알려집니다. |
+| `icon` | `ReactNode` |  | 글자 앞 아이콘(홈 아이콘, … 아이콘 등). |
+| `open` | `boolean` | `false` | 메뉴가 열린 항목 — 강조된 글자로 보입니다. |
+| `size` | `"sm" \| "md"` | `md` | 크기. |
 
 ### `BreadcrumbSeparator`
 
 ⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Breadcrumb` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
-Figma `breadcrumb-modern-separator` (710:4795): CaretRight 12px between items.
+경로 단계 사이의 오른쪽 화살표입니다. `Breadcrumb`이 안에서 그립니다.
 
 - 상수: `BREADCRUMB_SIZES`, `BREADCRUMB_LAYOUTS`
 - 타입: `BreadcrumbProps`, `BreadcrumbItemProps` *(내부 — 사용 금지)*, `BreadcrumbEntry`, `BreadcrumbSize`, `BreadcrumbLayout`
@@ -169,49 +169,49 @@ Figma `breadcrumb-modern-separator` (710:4795): CaretRight 12px between items.
 
 **공개 컴포넌트**
 
-Figma component set `button_basic` (54:2904). State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
+사용자가 행동을 실행하는 버튼입니다. 마우스를 올리거나 누르면 모양이 바뀌고, `disabled`이면 누를 수 없습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text". |
-| `appearance` | `"solid" \| "outline"` | `'solid' ('outline' for variant "secondary")` | Figma "Appearance". |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
-| `leftIcon` | `ReactNode` |  | Figma "Left Icon" (boolean + icon instance): rendered when provided. Sized to 16px (20px at lg). |
-| `rightIcon` | `ReactNode` |  | Figma "Right Icon" (boolean + icon instance): rendered when provided. Sized to 16px (20px at lg). |
-| `shape` | `"square" \| "rounded"` | `square` | Figma "Shape". |
-| `size` | `"xs" \| "sm" \| "md" \| "lg"` | `xs` | Figma "Size". |
-| `variant` | `"primary" \| "secondary" \| "tertiary"` | `primary` | Figma "Variant". |
+| `children` *(필수)* | `ReactNode` |  | 버튼 글자. |
+| `appearance` | `"solid" \| "outline"` | `'solid' (secondary는 'outline')` | 모양 — 채움(solid) · 테두리(outline). |
+| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `leftIcon` | `ReactNode` |  | 글자 왼쪽 아이콘. 넘기면 표시되며 버튼 크기에 맞춰집니다. |
+| `rightIcon` | `ReactNode` |  | 글자 오른쪽 아이콘. 넘기면 표시되며 버튼 크기에 맞춰집니다. |
+| `shape` | `"square" \| "rounded"` | `square` | 모서리 모양. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg"` | `xs` | 크기. |
+| `variant` | `"primary" \| "secondary" \| "tertiary"` | `primary` | 종류 — 행동의 중요도. |
 
 ### `IconButton`
 
 **공개 컴포넌트**
 
-Figma component set `button_icon` (67:2368). State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
+아이콘만 있는 버튼입니다. 종류 · 모양 · 상태는 Button과 같고, `aria-label`로 이름을 꼭 붙입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `aria-label` *(필수)* | `string` |  | Accessible name — the Figma component keeps its "Label" text layer hidden. |
-| `icon` *(필수)* | `ReactNode` |  | The icon instance. Sized to 16px (20px at md). |
-| `appearance` | `"solid" \| "outline"` | `'solid' ('outline' for variant "secondary")` | Figma "Appearance". |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
-| `shape` | `"square" \| "rounded"` | `square` | Figma "Shape". |
-| `size` | `"xs" \| "sm" \| "md"` | `xs` | Figma "Size". |
-| `variant` | `"primary" \| "secondary" \| "tertiary"` | `primary` | Figma "Variant". |
+| `aria-label` *(필수)* | `string` |  | 화면 낭독기가 읽는 버튼 이름(필수). |
+| `icon` *(필수)* | `ReactNode` |  | 표시할 아이콘. 버튼 크기에 맞춰집니다. |
+| `appearance` | `"solid" \| "outline"` | `'solid' (secondary는 'outline')` | 모양 — 채움(solid) · 테두리(outline). |
+| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `shape` | `"square" \| "rounded"` | `square` | 모서리 모양. |
+| `size` | `"xs" \| "sm" \| "md"` | `xs` | 크기. |
+| `variant` | `"primary" \| "secondary" \| "tertiary"` | `primary` | 종류 — 행동의 중요도. |
 
 ### `TextButton`
 
 **공개 컴포넌트**
 
-Figma component set `button_text` (432:8395). State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
+배경 없이 글자로만 보이는 가벼운 버튼입니다. 더보기처럼 덜 강조할 행동에 씁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text". |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
-| `leftIcon` | `ReactNode` |  | Figma "Left Icon" (boolean + icon instance): rendered when provided. Sized to 16px. |
-| `rightIcon` | `ReactNode` |  | Figma "Right Icon" (boolean + icon instance): rendered when provided. Sized to 16px. |
-| `size` | `"sm" \| "md"` | `sm` | Figma "Size". |
-| `variant` | `"primary" \| "secondary"` | `primary` | Figma "Type" ("Primary" / "SecondarySecondary"). Both are bound to the same variables in Ver 0.4. |
+| `children` *(필수)* | `ReactNode` |  | 버튼 글자. |
+| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `leftIcon` | `ReactNode` |  | 글자 왼쪽 아이콘. |
+| `rightIcon` | `ReactNode` |  | 글자 오른쪽 아이콘. |
+| `size` | `"sm" \| "md"` | `sm` | 크기. |
+| `variant` | `"primary" \| "secondary"` | `primary` | 종류. |
 
 - 상수: `BUTTON_VARIANTS`, `BUTTON_APPEARANCES`, `BUTTON_SHAPES`, `BUTTON_SIZES`, `ICON_BUTTON_SIZES`, `TEXT_BUTTON_VARIANTS`, `TEXT_BUTTON_SIZES`, `BUTTON_STATES` *(내부 — 사용 금지)*, `BUTTON_TONES` *(내부 — 사용 금지)*
 - 함수: `resolveAppearance` *(내부 — 사용 금지)*
@@ -223,22 +223,22 @@ Figma component set `button_text` (432:8395). State "Hover"/"Pressed" are the na
 
 **공개 컴포넌트**
 
-Figma `date-picker_calendar` (144:1644) with `date-picker_header` (144:1377), `date-picker_navigation` (144:1328) and `date-picker_day` (144:1033). Month grid with keyboard navigation (arrows, Page Up / Down, Home / End), from react-aria-components. Weekday and month names follow the locale (react-aria I18nProvider, otherwise the browser).
+한 달 단위로 날짜를 보여 주고 고르는 달력입니다. `DatePicker` 안에서 쓰이며, 화면에 펼쳐 두고 따로 쓸 수도 있습니다. 방향키 · Page Up · Page Down · Home · End로 날짜를 옮기고, 월 · 요일 이름은 언어 설정을 따릅니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `aria-label` | `string` | `the month heading` | Accessible name. |
-| `autoFocus` | `boolean` |  | Moves focus into the grid on mount (used by DatePicker). |
+| `aria-label` | `string` | `월 제목` | 화면 낭독기가 읽는 달력 이름. |
+| `autoFocus` | `boolean` |  | 처음 그려질 때 키보드 위치를 날짜 칸으로 옮깁니다. |
 | `className` | `string` |  |  |
-| `defaultFocusedValue` | `string` | `today` | Month shown initially when there is no value (any day of that month). |
-| `defaultValue` | `string \| null` | `null` | Initially selected date (uncontrolled). |
-| `disabled` | `boolean` |  | Disables the whole calendar. |
-| `isDateUnavailable` | `((date: string) => boolean)` |  | Marks individual days as unavailable (Disabled look). |
-| `maxValue` | `string` |  | Latest selectable date. |
-| `minValue` | `string` |  | Earliest selectable date; earlier days use the Disabled look. |
-| `onChange` | `((value: string) => void)` |  | Called with the selected date ('YYYY-MM-DD'). |
+| `defaultFocusedValue` | `string` | `오늘` | 값이 없을 때 처음 보여 줄 달(그 달의 아무 날짜). |
+| `defaultValue` | `string \| null` | `null` | 처음 선택된 날짜. `value` 없이 달력이 스스로 값을 관리할 때 씁니다. |
+| `disabled` | `boolean` |  | 비활성 — 달력 전체를 고를 수 없게 합니다. |
+| `isDateUnavailable` | `((date: string) => boolean)` |  | 날짜별로 고를 수 없는 날을 정합니다. 고를 수 없는 날은 비활성으로 보입니다. |
+| `maxValue` | `string` |  | 고를 수 있는 가장 늦은 날짜. |
+| `minValue` | `string` |  | 고를 수 있는 가장 이른 날짜. 이전 날짜는 비활성으로 보입니다. |
+| `onChange` | `((value: string) => void)` |  | 날짜를 고르면 'YYYY-MM-DD' 값으로 호출됩니다. |
 | `style` | `CSSProperties` |  |  |
-| `value` | `string \| null` |  | Selected date, 'YYYY-MM-DD' (controlled); `null` = none. |
+| `value` | `string \| null` |  | 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 선택이 없습니다. |
 
 - 타입: `CalendarProps`, `ISODate`
 
@@ -248,32 +248,32 @@ Figma `date-picker_calendar` (144:1644) with `date-picker_header` (144:1377), `d
 
 **공개 컴포넌트**
 
-Figma Card (185:6512): header, content and footer in a container — padding p-5 top / bottom, m-4 between the parts, border-radius/rounded-lg, colors/card/background, 1px INSIDE colors/card/border, shadow (figma-issues F60).
+관련된 내용을 한 상자로 묶는 카드입니다. 안에 `CardHeader` · `CardContent` · `CardFooter`를 넣고, 너비는 부모를 채웁니다.
 
 ### `CardHeader`
 
 **보조 컴포넌트** — `Card` 안
 
-Figma card_header (218:7173): title, description and an action above a divider.
+카드 머리글입니다. 제목 · 설명 · 버튼을 두고, 아래에 구분선이 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `title` *(필수)* | `ReactNode` |  | Figma "Card Text". |
-| `action` | `ReactNode` |  | Figma "Button" (Button Tertiary · Outline · sm in Figma). |
-| `description` | `ReactNode` |  | Figma "Sub" · "Sub Text". |
-| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | Heading level of the title. |
+| `title` *(필수)* | `ReactNode` |  | 카드 제목. 제목 요소(기본 `<h3>`)로 표시됩니다. |
+| `action` | `ReactNode` |  | 제목 오른쪽 버튼. 디자인 예시는 `Button variant="tertiary" appearance="outline" size="sm"`입니다. |
+| `description` | `ReactNode` |  | 제목 아래 설명. 길면 줄바꿈됩니다. |
+| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | 제목의 단계(h2–h6). |
 
 ### `CardContent`
 
 **보조 컴포넌트** — `Card` 안
 
-Figma card_content: the body, padded p-5 left and right.
+카드 본문입니다.
 
 ### `CardFooter`
 
 **보조 컴포넌트** — `Card` 안
 
-Figma card_footer (218:7174): full-width buttons m-2 apart (Figma: Primary · Solid · md and Tertiary · Outline · md).
+카드 아래쪽 버튼 영역입니다. 버튼이 너비를 나눠 채웁니다.
 
 - 타입: `CardProps`, `CardHeaderProps`
 
@@ -283,46 +283,46 @@ Figma card_footer (218:7174): full-width buttons m-2 apart (Figma: Primary · So
 
 **공개 컴포넌트**
 
-Figma component set `chart` (698:4399): line, vertical bar and horizontal bar charts in the default style (axis labels, value grid, legend) or the simple style (160px, the last category is the current period). One series is Figma Group=no, two are Group=yes. Both styles show the Figma hover=yes state for the active category — guide line and rings (line) or highlight band (bars) and the tooltip — on pointer hover, tap or keyboard (arrow keys, Home / End, Escape). The drawing is SVG sized to the container width; the values are also given to screen readers as a table.
+항목별 수치를 선 · 세로 막대 · 가로 막대 차트로 보여 줍니다. 마우스를 올리거나 탭하거나 키보드(화살표 · Home · End · Esc)로 항목을 고르면 그 항목이 강조되고 툴팁에 값이 보입니다. 너비는 감싼 영역에 맞춰지고, 모든 값은 화면 낭독기용 표로도 제공합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `categories` *(필수)* | `string[]` |  | Category (x axis; y axis for `bar-horizontal`) labels. |
-| `series` *(필수)* | `ChartSeries[]` |  | One series (Figma Group=no) or two (Group=yes: the second is the comparison). Further series are ignored. |
-| `activeIndex` | `number \| null` |  | Category whose tooltip is shown (hover / keyboard / tap), or `null` (controlled). |
-| `defaultActiveIndex` | `number \| null` | `null` | Initial `activeIndex` (uncontrolled). |
-| `formatValue` | `((value: number) => string)` | `(value: number) => value.toLocaleString('ko-KR')` | Formats values (ticks, tooltip, data table). |
-| `maxLabel` | `ReactNode` | `최고` | Badge over the highest value of the first series (line, default style); `false` hides it. |
-| `onActiveIndexChange` | `((index: number \| null) => void)` |  |  |
-| `plotLabel` | `string` | `차트 항목: 화살표 키로 값 확인` | Accessible name of the plot, which takes keyboard focus. |
-| `ticks` | `number[]` |  | Value-axis ticks of the default style, lowest first; the axis spans the first to the last. Default: 4 steps from 0. |
-| `type` | `"line" \| "bar-vertical" \| "bar-horizontal"` | `bar-vertical` | Figma "Type". |
-| `variant` | `"default" \| "simple"` | `default` | Figma "Style": `default` has axes, a legend and a tooltip; `simple` is the compact 160px chart whose last category is the current period. |
-| `xAxisLabel` | `ReactNode` |  | Figma "X Axis Label" (default style). |
-| `yAxisLabel` | `ReactNode` |  | Figma "Y Axis Label" (default style). |
+| `categories` *(필수)* | `string[]` |  | 항목 이름. 가로 막대 차트는 세로축, 나머지는 가로축에 표시됩니다. |
+| `series` *(필수)* | `ChartSeries[]` |  | 계열 1개 또는 2개. 두 번째는 비교 계열이며, 세 번째부터는 표시하지 않습니다. |
+| `activeIndex` | `number \| null` |  | 툴팁을 표시할 항목 번호. 넘기면 직접 제어하며, `null`이면 툴팁을 숨깁니다. |
+| `defaultActiveIndex` | `number \| null` | `null` | 처음 툴팁을 표시할 항목 번호(직접 제어하지 않을 때). |
+| `formatValue` | `((value: number) => string)` | `(value: number) => value.toLocaleString('ko-KR')` | 값 표시 형식(눈금 · 툴팁 · 화면 낭독기용 표). |
+| `maxLabel` | `ReactNode` | `최고` | 첫 계열의 가장 큰 값 위에 붙는 배지(선 차트, 기본 스타일). `false`면 숨깁니다. |
+| `onActiveIndexChange` | `((index: number \| null) => void)` |  | 마우스 · 탭 · 키보드로 툴팁 항목이 바뀔 때 호출됩니다. 닫히면 `null`을 받습니다. |
+| `plotLabel` | `string` | `차트 항목: 화살표 키로 값 확인` | 키보드로 선택하는 그림 영역의 이름(화면 낭독기용). |
+| `ticks` | `number[]` |  | 기본 스타일의 값 눈금(작은 값부터). 첫 값부터 끝 값까지가 축 범위입니다. 없으면 0부터 4칸으로 나눕니다. |
+| `type` | `"line" \| "bar-vertical" \| "bar-horizontal"` | `bar-vertical` | 종류 — 선 · 세로 막대 · 가로 막대. |
+| `variant` | `"default" \| "simple"` | `default` | 스타일. `default`는 축 이름 · 값 눈금 · 범례가 있고, `simple`은 마지막 항목이 현재 기간인 160px 높이의 간단한 차트입니다. |
+| `xAxisLabel` | `ReactNode` |  | 가로축 이름(기본 스타일). |
+| `yAxisLabel` | `ReactNode` |  | 세로축 이름(기본 스타일). |
 
 ### `ChartLegendItem`
 
 **보조 컴포넌트** — 직접 만드는 범례(`Chart`는 범례를 스스로 그림)
 
-Figma component set `chart-legend-item` (697:4514): a series marker and its label, m-1_5 apart (label xs/leading-normal/normal, colors/chart/legend/label/default; marker colors/chart/bar/* for `bar`, colors/chart/line/* for the lines). `Chart` renders its own legend; use this for custom legends.
+범례 항목 하나(표시 모양과 계열 이름)입니다. `Chart`는 범례를 직접 그리므로, 범례를 따로 만들 때만 씁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label". |
-| `color` | `"brand" \| "compare" \| "02" \| "history" \| "history-compare"` | `type === 'dash-line' ? '02' : 'brand'` | Series colour of the marker. |
-| `type` | `"line" \| "dash-line" \| "bar"` | `bar` | Figma "Type": a line, a dashed line (5 / 3) or a 12px square. |
+| `children` *(필수)* | `ReactNode` |  | 범례 글자(계열 이름). |
+| `color` | `"brand" \| "compare" \| "02" \| "history" \| "history-compare"` | `type === 'dash-line' ? '02' : 'brand'` | 표시 색. |
+| `type` | `"line" \| "dash-line" \| "bar"` | `bar` | 표시 모양 — 선(`line`) · 점선(`dash-line`) · 네모(`bar`). |
 
 ### `ChartTooltip`
 
 **보조 컴포넌트** — 직접 만드는 차트의 값 표시(`Chart`는 툴팁을 스스로 그림)
 
-Figma component `chart-tooltip` (693:9776): the values of one category — title (xs) above rows of an indicator, the series label and its value. Padding p-2_5, m-1_5 between the title and the rows, rows m-1 apart, alpha/white/800 background, rounded-sm, elevation-3. `Chart` shows it on hover / keyboard navigation.
+한 항목의 계열별 값을 보여 주는 툴팁입니다. `Chart`는 툴팁을 직접 표시하므로, 툴팁 모양을 따로 쓸 때만 씁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `items` *(필수)* | `ChartTooltipItem[]` |  | One row per series: indicator, label and value. |
-| `title` | `ReactNode` |  | Figma "Time" (the category or date). |
+| `items` *(필수)* | `ChartTooltipItem[]` |  | 계열마다 한 줄씩 표시할 색 · 이름 · 값. |
+| `title` | `ReactNode` |  | 툴팁 제목(항목 이름이나 날짜). |
 
 - 상수: `CHART_TYPES`, `CHART_VARIANTS`, `CHART_LEGEND_TYPES`, `CHART_COLORS`
 - 타입: `ChartProps`, `ChartSeries`, `ChartLegendItemProps`, `ChartTooltipProps`, `ChartTooltipItem`, `ChartType`, `ChartVariant`, `ChartLegendType`, `ChartColor`
@@ -333,32 +333,32 @@ Figma component `chart-tooltip` (693:9776): the values of one category — title
 
 **공개 컴포넌트**
 
-Figma component set `checkbox` (99:2389). Selection: Checked = `checked` / `defaultChecked`, Indeterminate = `indeterminate`. State: Hover / Pressed are the native :hover / :active, Disabled = `disabled`. Renders a native `<input type="checkbox">`; its props (name, value, checked, onChange, …) and the ref go to it.
+항목을 켜고 끄거나 여러 개를 고르는 체크박스입니다. 선택은 `checked` · `defaultChecked`, 일부 선택은 `indeterminate`로 정하고, 나머지 `<input>` 속성과 `ref`는 체크박스에 그대로 전달됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `className` | `string` |  | Class name of the root `<label>`. |
-| `indeterminate` | `boolean` | `false` | Figma Selection "Indeterminate" (mixed). Shown instead of the checked mark while true. |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". Without a label, give the checkbox an `aria-label`. |
-| `size` | `"sm" \| "md" \| "lg"` | `'sm'` | Figma "Size". Inside a `CheckboxGroup` the group size is the default. |
-| `style` | `CSSProperties` |  | Style of the root `<label>`. |
-| `value` | `string` |  | Form value; inside a `CheckboxGroup` it identifies the checkbox in the group value. |
+| `className` | `string` |  | 라벨을 포함한 바깥 요소의 클래스 이름. |
+| `indeterminate` | `boolean` | `false` | 일부 선택 — 켜져 있는 동안 체크 표시 대신 가로줄을 보여 줍니다. |
+| `label` | `ReactNode` |  | 상자 옆에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `size` | `"sm" \| "md" \| "lg"` | `'sm'` | 크기. `CheckboxGroup` 안에서는 그룹 크기를 따릅니다. |
+| `style` | `CSSProperties` |  | 라벨을 포함한 바깥 요소의 스타일. |
+| `value` | `string` |  | 폼 값. `CheckboxGroup` 안에서는 그룹 값에서 이 체크박스를 구분합니다. |
 
 ### `CheckboxGroup`
 
 **공개 컴포넌트**
 
-Groups `Checkbox`es that have a `value` (role="group") and manages the selected values. Not a Figma component — semantic wrapper only; label it with `aria-label` or `aria-labelledby`.
+`value`가 있는 체크박스들을 묶어 선택한 값 목록을 관리합니다. `aria-label` 또는 `aria-labelledby`로 그룹 이름을 붙입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `defaultValue` | `string[]` | `[]` | Initially selected values (uncontrolled). |
-| `disabled` | `boolean` |  | Disables every checkbox in the group. |
-| `name` | `string` |  | `name` given to every checkbox in the group (form submission). |
-| `onChange` | `((value: string[]) => void)` |  | Called with the new list of selected values. |
-| `orientation` | `"horizontal" \| "vertical"` | `vertical` | Stacking direction — items are 8px apart (16px in a row), Design System Rules 08. |
-| `size` | `"sm" \| "md" \| "lg"` |  | Size applied to every checkbox that does not set its own. |
-| `value` | `string[]` |  | Selected values (controlled). |
+| `defaultValue` | `string[]` | `[]` | 처음 선택된 값 목록(비제어). |
+| `disabled` | `boolean` |  | 그룹 안 모든 체크박스를 비활성으로 만듭니다. |
+| `name` | `string` |  | 그룹 안 모든 체크박스에 주는 `name`(폼 전송용). |
+| `onChange` | `((value: string[]) => void)` |  | 새 선택값 목록과 함께 호출됩니다. |
+| `orientation` | `"horizontal" \| "vertical"` | `vertical` | 배치 방향 — 세로(vertical) · 가로(horizontal). 항목 사이 간격은 자동으로 맞춰집니다. |
+| `size` | `"sm" \| "md" \| "lg"` |  | 크기를 따로 정하지 않은 체크박스에 적용할 크기. |
+| `value` | `string[]` |  | 선택한 값 목록(제어). |
 
 - 타입: `CheckboxProps`, `CheckboxGroupProps`
 
@@ -368,66 +368,66 @@ Groups `Checkbox`es that have a `value` (role="group") and manages the selected 
 
 **공개 컴포넌트**
 
-Figma component set `chip-multi` (201:12711) — a toggle chip for multi-select filters. Variant Selected = `selected` (check icon after the label); State Hover / Pressed are :hover / :active, Disabled = `disabled`. Renders `<button aria-pressed>`.
+여러 개를 켜고 끄는 필터 칩입니다. 선택되면 글자 뒤에 체크 아이콘이 붙고, `disabled`이면 누를 수 없습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text". |
-| `defaultSelected` | `boolean` | `false` | Initially selected (uncontrolled). |
-| `onSelectedChange` | `((selected: boolean) => void)` |  | Called with the new selection when the chip is toggled. |
-| `selected` | `boolean` |  | Figma Variant "Selected" (controlled). |
-| `size` | `"xs" \| "sm" \| "md"` | `xs` | Figma "Size". |
+| `children` *(필수)* | `ReactNode` |  | 칩 글자. |
+| `defaultSelected` | `boolean` | `false` | 처음 선택됨 여부. `selected` 없이 칩이 스스로 상태를 관리할 때 씁니다. |
+| `onSelectedChange` | `((selected: boolean) => void)` |  | 칩을 눌러 선택이 바뀌면 새 값으로 호출됩니다. |
+| `selected` | `boolean` |  | 선택됨 여부. 넘기면 선택 상태를 바깥에서 관리합니다. |
+| `size` | `"xs" \| "sm" \| "md"` | `xs` | 크기. |
 
 ### `InputChip`
 
 **공개 컴포넌트**
 
-Figma component set `chip-input` (558:26017) — an entered value that can be removed (X icon). The whole chip is the remove button, so the target is the full chip height. State Hover / Pressed are :hover / :active, Disabled = `disabled`.
+입력한 값을 보여 주고 지울 수 있는 칩입니다. 칩 전체가 지우기 버튼이고, `disabled`이면 누를 수 없습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text" — an entered value. |
-| `onRemove` | `(() => void)` |  | Called when the chip is activated (click, Enter, Space) or Delete / Backspace is pressed on it. |
-| `removeLabel` | `string` | `삭제` | Text appended to the label for screen readers. |
-| `size` | `"xs" \| "sm" \| "md"` | `xs` | Figma "Size". |
+| `children` *(필수)* | `ReactNode` |  | 칩 글자 — 입력한 값. |
+| `onRemove` | `(() => void)` |  | 칩을 누르거나(클릭 · Enter · Space) Delete · Backspace를 누르면 호출됩니다. |
+| `removeLabel` | `string` | `삭제` | 화면 낭독기가 라벨 뒤에 읽는 말. |
+| `size` | `"xs" \| "sm" \| "md"` | `xs` | 크기. |
 
 ### `FilterChip`
 
 **공개 컴포넌트**
 
-Figma component set `chip-filter` (558:25704) — a chip that opens a filter menu or panel. State Hover / Pressed are :hover / pressed, Disabled = `disabled`. Built on the react-aria `Button`, so it can be the trigger of react-aria overlays; `onPress` (or `onClick`) handles activation.
+필터 메뉴나 패널을 여는 칩입니다. `MenuTrigger` · `DialogTrigger`의 트리거로 쓸 수 있고, 누르면 `onPress`(또는 `onClick`)가 호출됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text" — the filter name or its current value. |
+| `children` *(필수)* | `ReactNode` |  | 칩 글자 — 필터 이름이나 지금 적용된 값. |
 | `className` | `string` |  |  |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
-| `expanded` | `boolean` |  | Figma "Expanded": its menu or panel is open (caret up, `aria-expanded`). Inside a react-aria trigger (e.g. `MenuTrigger`, `DialogTrigger`) this is set automatically. |
-| `selected` | `boolean` | `false` | Figma Variant "Selected": the filter has a value applied. |
-| `size` | `"xs" \| "sm" \| "md"` | `xs` | Figma "Size". |
+| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `expanded` | `boolean` |  | 펼침 — 메뉴나 패널이 열린 상태로, 위쪽 화살표가 보입니다. `MenuTrigger` · `DialogTrigger` 안에서는 자동으로 정해집니다. |
+| `selected` | `boolean` | `false` | 선택됨 — 필터 값이 적용된 상태입니다. |
+| `size` | `"xs" \| "sm" \| "md"` | `xs` | 크기. |
 
 ### `FilterChipSelect`
 
 **공개 컴포넌트**
 
-A filter chip with its option panel — Figma `chip-filter` (558:25704) + `listbox` / `option` Size=sm, as in the Figma "chip-filter 선택 예시" (Design System Rules 04 · 07). - Multiple (default): options toggle with a check while the panel stays open; the chip text follows the choice and   the choice is applied (`onChange`, Selected look) when the panel closes — Esc, a press outside or the chip.   Turning every option off and closing removes the filter. - Single: choosing an option applies it and closes the panel; the first option (`clearLabel`, "전체") removes it. The chip is Selected while a value is applied. Keyboard and screen readers follow the react-aria Select (button + listbox: Enter · Space · ↓ open, arrows · type-ahead move, Space · Enter choose, Esc close).
+필터 칩과 옵션 목록이 함께 있는 필터입니다. 값이 적용되면 칩이 선택됨 모양이 됩니다. - 여러 개 고르기(기본): 목록이 열린 채로 옵션을 켜고 끄고, 목록을 닫을 때 적용됩니다. 모두 끄고 닫으면 필터가 풀립니다. - 하나 고르기: 고르면 바로 적용되고 닫힙니다. 첫 옵션 "전체"(`clearLabel`)를 고르면 필터가 풀립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `label` *(필수)* | `string` |  | Filter name: the chip text while nothing is applied, then "name: value, value". |
-| `options` *(필수)* | `FilterChipSelectOption[]` |  | The choices, in order. |
+| `label` *(필수)* | `string` |  | 필터 이름. 적용된 값이 없을 때 칩 글자이고, 값이 있으면 "필터명: 값, 값"이 됩니다. |
+| `options` *(필수)* | `FilterChipSelectOption[]` |  | 고를 수 있는 옵션 목록(보이는 순서대로). |
 | `className` | `string` |  |  |
-| `clearLabel` | `string` | `'전체'` | First option that clears the filter (`null` value). |
-| `defaultOpen` | `boolean` | `false` | Open the panel on first render (e.g. the Figma Expanded state of a table filter being edited). |
-| `defaultValue` | `Key \| Key[] \| null` | `[] null` | Initially applied values (uncontrolled). Initially applied value (uncontrolled). |
-| `disabled` | `boolean` |  | Figma chip State "Disabled". |
-| `maxDisplayed` | `number` | `3` | How many applied values the chip names before "외 N". |
-| `name` | `string` |  | Form field name (a hidden native select carries the value). |
-| `onChange` | `((value: Key[]) => void) \| ((value: Key \| null) => void)` |  | Called with the applied values when the panel closes with a changed choice. Called with the applied value (`null` when cleared). |
-| `onOpenChange` | `((isOpen: boolean) => void)` |  | Called when the panel opens or closes. |
-| `selectionMode` | `"multiple" \| "single"` |  | Several values (default): the panel stays open while choosing and the choice is applied when it closes. One value: choosing an option applies it and closes the panel. |
-| `size` | `"xs" \| "sm" \| "md"` | `'md'` | Figma chip "Size". |
-| `value` | `Key \| Key[] \| null` |  | Applied values (controlled). Applied value (controlled); `null` = no filter. |
+| `clearLabel` | `string` | `'전체'` | 필터를 푸는 첫 옵션의 글자. |
+| `defaultOpen` | `boolean` | `false` | 처음부터 목록을 연 채로 보여 줄지 여부. |
+| `defaultValue` | `Key \| Key[] \| null` | `[] null` | 처음 적용된 값. `value` 없이 필터가 스스로 값을 관리할 때 씁니다. |
+| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `maxDisplayed` | `number` | `3` | 칩에 이름을 보여 줄 값의 수. 넘치면 "외 N"으로 줄입니다. |
+| `name` | `string` |  | 폼으로 값을 보낼 때 쓰는 필드 이름. |
+| `onChange` | `((value: Key[]) => void) \| ((value: Key \| null) => void)` |  | 고른 값이 바뀐 채로 목록이 닫히면 적용된 값으로 호출됩니다. 적용된 값으로 호출됩니다. 필터를 풀면 `null`입니다. |
+| `onOpenChange` | `((isOpen: boolean) => void)` |  | 목록이 열리거나 닫히면 호출됩니다. |
+| `selectionMode` | `"multiple" \| "single"` |  | 여러 개 고르기(기본). 목록이 열린 채로 고르고, 닫을 때 적용됩니다. 하나 고르기. 옵션을 고르면 바로 적용되고 목록이 닫힙니다. |
+| `size` | `"xs" \| "sm" \| "md"` | `'md'` | 크기. |
+| `value` | `Key \| Key[] \| null` |  | 적용된 값. 넘기면 바깥에서 값을 관리합니다. 적용된 값. 넘기면 바깥에서 값을 관리합니다. `null`이면 필터가 없습니다. |
 
 - 상수: `CHIP_SIZES`
 - 함수: `filterChipText`
@@ -444,32 +444,32 @@ A filter chip with its option panel — Figma `chip-filter` (558:25704) + `listb
 
 **공개 컴포넌트**
 
-Figma component `dashboard-filter-bar` (698:4163): the query conditions of a dashboard — filter groups m-6 apart with "\|" dividers, and actions p-3 apart at the right, m-4 from the filters, in a white card (padding 16, radius 12, elevation-3 shadow). A `search` landmark.
+대시보드의 조회 조건을 한곳에 모아 보여 주는 막대입니다. 조건 묶음 사이에 구분선이 들어가고, 오른쪽 끝에 버튼을 둡니다. 화면이 좁으면 묶음 단위로 다음 줄로 넘어갑니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `actions` | `ReactNode` |  | Buttons at the right end (Figma: reset icon button and "조회"). |
+| `actions` | `ReactNode` |  | 오른쪽 끝 버튼(예: 초기화 아이콘 버튼과 "조회"). |
 
 ### `DashboardFilterGroup`
 
 **보조 컴포넌트** — `DashboardFilterBar` 안
 
-A labelled group of controls in a `DashboardFilterBar` (`role="group"`, named by its label).
+`DashboardFilterBar` 안의 라벨이 붙은 컨트롤 묶음입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` |  | Figma group label ("조회 대상", "조회 기간" …, sm/leading-normal/medium, text/tertiary); names the group. |
+| `label` | `ReactNode` |  | 묶음 라벨(예: "조회 대상", "조회 기간"). 화면 낭독기도 이 라벨을 묶음 이름으로 읽습니다. |
 
 ### `DashboardFilterRange`
 
 **보조 컴포넌트** — `DashboardFilterGroup` 안(기간 등 두 값)
 
-Two controls joined by "~" (text/tertiary), m-2 apart — the Figma date range.
+두 컨트롤을 "~"로 이어 기간을 나타냅니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `from` *(필수)* | `ReactNode` |  | Start control (e.g. a DatePicker with `aria-label="시작일"`). |
-| `to` *(필수)* | `ReactNode` |  | End control. |
+| `from` *(필수)* | `ReactNode` |  | 시작 컨트롤(예: `aria-label="시작일"`인 DatePicker). |
+| `to` *(필수)* | `ReactNode` |  | 끝 컨트롤. |
 
 - 타입: `DashboardFilterBarProps`, `DashboardFilterGroupProps`, `DashboardFilterRangeProps`
 
@@ -479,15 +479,15 @@ Two controls joined by "~" (text/tertiary), m-2 apart — the Figma date range.
 
 **공개 컴포넌트**
 
-Figma component set `data-freshness` (697:4543): how current the data is — a status badge (Outline · sm · Rounded, with dot) and the last-received time with the refresh interval (xs/leading-normal/normal; time text/secondary, "·" and interval text/tertiary, m-0_5 apart), p-2 after the badge.
+데이터가 얼마나 최신인지 상태 배지, 마지막 수신 시각, 갱신 주기로 보여 줍니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `timestamp` *(필수)* | `ReactNode` |  | Figma "Timestamp Text" — when the data was last received. |
-| `dateTime` | `string` |  | Machine-readable `timestamp` (renders a `<time datetime>`). |
-| `interval` | `ReactNode` |  | Figma "Interval Text" — after a "·", e.g. "자동 갱신 1분". |
-| `label` | `ReactNode` | `LABELS[state]` | Badge text. |
-| `state` | `"fresh" \| "stale" \| "offline"` | `fresh` | Figma "State": Fresh (Success badge), Stale (Warning), Offline (Gray). |
+| `timestamp` *(필수)* | `ReactNode` |  | 마지막으로 데이터를 받은 시각. |
+| `dateTime` | `string` |  | `timestamp`의 표준 형식 시각. 넘기면 `<time>` 요소로 표시합니다. |
+| `interval` | `ReactNode` |  | 갱신 주기. "·" 뒤에 표시합니다(예: "자동 갱신 1분"). |
+| `label` | `ReactNode` | `LABELS[state]` | 배지 글자. |
+| `state` | `"fresh" \| "stale" \| "offline"` | `fresh` | 상태 — 최근 수신(`fresh`, 성공 배지) · 수신 지연(`stale`, 경고 배지) · 연결 끊김(`offline`, 회색 배지). |
 
 - 상수: `DATA_FRESHNESS_STATES`
 - 타입: `DataFreshnessProps`, `DataFreshnessState`
@@ -498,17 +498,17 @@ Figma component set `data-freshness` (697:4543): how current the data is — a s
 
 **공개 컴포넌트**
 
-Figma component set `data-state` (698:4359): what a data area shows instead of its content — Loading (three skeleton bars and a label) or an empty-state message (Empty · No-results · Error · No-access · Partial) with an icon, title, description and a TextButton. The region is a polite live region (`role="status"`).
+데이터 영역에 내용 대신 보여 주는 안내입니다. 불러오는 중에는 스켈레톤과 문구를, 나머지 상태에는 아이콘 · 제목 · 설명 · 버튼을 보여 줍니다. 상태가 바뀌면 화면 낭독기가 읽어 줍니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `state` *(필수)* | `"error" \| "loading" \| "empty" \| "no-results" \| "no-access" \| "partial"` |  | Figma "State". |
-| `action` | `ReactNode` |  | A custom element instead of the button. |
-| `actionLabel` | `ReactNode` |  | Text of the button below the message (TextButton Primary · sm). Defaults to the Figma text of the state. |
-| `description` | `ReactNode` |  | Figma "Empty Description", "Error Description" … of the state. Defaults to the Figma text of the state (Partial: none — pass the counts); `null` hides it. |
-| `loadingLabel` | `ReactNode` | `데이터를 불러오는 중입니다` | Loading text. |
-| `onAction` | `(() => void)` |  | Shows the button and is called when it is pressed. |
-| `title` | `ReactNode` |  | Figma "Empty Title", "Error Title" … of the state. Defaults to the Figma text of the state. |
+| `state` *(필수)* | `"error" \| "loading" \| "empty" \| "no-results" \| "no-access" \| "partial"` |  | 상태 — 불러오는 중 · 빈 상태 · 결과 없음 · 오류 · 권한 없음 · 일부만 표시. |
+| `action` | `ReactNode` |  | 버튼 대신 넣을 요소. |
+| `actionLabel` | `ReactNode` |  | 문구 아래 버튼의 글자. 지정하지 않으면 상태별 기본 문구를 씁니다. |
+| `description` | `ReactNode` |  | 설명. 지정하지 않으면 상태별 기본 문구를 쓰고(`partial`은 없음 — 실제 수치를 넣습니다), `null`이면 숨깁니다. |
+| `loadingLabel` | `ReactNode` | `데이터를 불러오는 중입니다` | 불러오는 중 문구. |
+| `onAction` | `(() => void)` |  | 넘기면 버튼이 나타나고, 버튼을 누를 때 호출됩니다. |
+| `title` | `ReactNode` |  | 제목. 지정하지 않으면 상태별 기본 문구를 씁니다. |
 
 - 상수: `DATA_STATES`
 - 타입: `DataStateProps`, `DataStateValue`
@@ -519,34 +519,34 @@ Figma component set `data-state` (698:4359): what a data area shows instead of i
 
 **공개 컴포넌트**
 
-Figma component sets `date-picker_trigger` (144:723) and `date-picker_message` (144:888) with the `Calendar` (date-picker_calendar) in a popover. The field accepts typed dates (YYYY.MM.DD, YYYY-MM-DD, YYYYMMDD …, committed on Enter or blur); the calendar button (or Alt + ↓) opens the calendar. State: Hover / Focus = :hover / :focus-within, Completed = has a date, Error = `invalid` or an unusable typed date, Disabled = `disabled`, Read-only = `readOnly`.
+날짜를 직접 입력하거나 달력에서 고르는 입력 칸입니다. 입력한 날짜는 Enter를 누르거나 입력 칸을 벗어나면 확정되고, 달력 버튼이나 Alt + ↓로 달력을 엽니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `aria-describedby` | `string` |  |  |
 | `aria-label` | `string` |  |  |
-| `calendarButtonLabel` | `string` | `달력 열기` | Accessible name of the calendar button. |
-| `className` | `string` |  | Class name of the root element. |
-| `defaultValue` | `string \| null` | `null` | Initial date (uncontrolled). |
-| `disabled` | `boolean` | `false` | Figma State "Disabled". |
+| `calendarButtonLabel` | `string` | `달력 열기` | 화면 낭독기가 읽는 달력 버튼 이름. |
+| `className` | `string` |  | 가장 바깥 요소의 클래스 이름. |
+| `defaultValue` | `string \| null` | `null` | 처음 날짜. `value` 없이 입력 칸이 스스로 값을 관리할 때 씁니다. |
+| `disabled` | `boolean` | `false` | 비활성 — 입력할 수 없습니다. |
 | `id` | `string` |  |  |
-| `invalid` | `boolean` | `false` | Figma State "Error". Text that is not a valid, selectable date also shows the Error state. |
-| `isDateUnavailable` | `((date: string) => boolean)` |  | Marks individual days as unavailable. |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". Without a label, set `aria-label`. |
-| `maxValue` | `string` |  | Latest selectable date. |
-| `message` | `ReactNode` |  | Figma "Alert" + date-picker_message text. |
-| `messageType` | `"info" \| "success" \| "error"` | `'error' when invalid, otherwise 'info'` | Figma date-picker_message "Type". |
-| `minValue` | `string` |  | Earliest selectable date. |
-| `name` | `string` |  | Form field name — submitted as 'YYYY-MM-DD' through a hidden input. |
-| `onChange` | `((value: string \| null) => void)` |  | Called with the new date, or null when the field is cleared. |
-| `onOpenChange` | `((open: boolean) => void)` |  | Called when the calendar opens or closes. |
-| `open` | `boolean` |  | Calendar popover open (controlled). |
-| `placeholder` | `string` | `YYYY.MM.DD` | Figma "Display Text" while empty. |
-| `readOnly` | `boolean` | `false` | Figma State "Read-only": shows the date without the calendar button. |
+| `invalid` | `boolean` | `false` | 오류 상태. 없는 날짜나 고를 수 없는 날짜를 입력해도 오류 상태가 됩니다. |
+| `isDateUnavailable` | `((date: string) => boolean)` |  | 날짜별로 고를 수 없는 날을 정합니다. `true`를 돌려주면 고를 수 없습니다. |
+| `label` | `ReactNode` |  | 입력 칸 위 라벨. 라벨이 없으면 `aria-label`을 붙입니다. |
+| `maxValue` | `string` |  | 고를 수 있는 가장 늦은 날짜. |
+| `message` | `ReactNode` |  | 입력 칸 아래 도움말 메시지. |
+| `messageType` | `"info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'info'` | 도움말 메시지 종류. |
+| `minValue` | `string` |  | 고를 수 있는 가장 이른 날짜. |
+| `name` | `string` |  | 폼 필드 이름. 폼을 보낼 때 'YYYY-MM-DD' 값이 전송됩니다. |
+| `onChange` | `((value: string \| null) => void)` |  | 날짜가 바뀌면 새 날짜로, 입력 칸을 비우면 `null`로 호출됩니다. |
+| `onOpenChange` | `((open: boolean) => void)` |  | 달력이 열리거나 닫히면 호출됩니다. |
+| `open` | `boolean` |  | 달력이 열렸는지 여부. 넘기면 바깥에서 관리합니다. |
+| `placeholder` | `string` | `YYYY.MM.DD` | 비어 있을 때 보이는 안내 글자. |
+| `readOnly` | `boolean` | `false` | 읽기 전용 — 날짜만 보여 주고 달력 버튼이 없습니다. |
 | `required` | `boolean` |  |  |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size". |
-| `style` | `CSSProperties` |  | Style of the root element. |
-| `value` | `string \| null` |  | Selected date 'YYYY-MM-DD' (controlled); `null` = empty. |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
+| `style` | `CSSProperties` |  | 가장 바깥 요소의 스타일. |
+| `value` | `string \| null` |  | 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 비어 있습니다. |
 
 - 타입: `DatePickerProps`
 
@@ -556,22 +556,22 @@ Figma component sets `date-picker_trigger` (144:723) and `date-picker_message` (
 
 **공개 컴포넌트**
 
-Figma component `dialog` (149:2838): a modal panel with title, description and buttons (react-aria-components Modal + Dialog: focus moves in and is trapped, Escape closes, focus returns).
+화면 위에 떠서 사용자의 응답을 받는 대화상자입니다. 열리면 포커스가 안으로 옮겨져 머물고, Esc로 닫으면 연 요소로 돌아갑니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `title` *(필수)* | `ReactNode` |  | Figma "title". |
-| `actions` | `ReactNode \| ((close: () => void) => ReactNode)` |  | Figma "dialog_footer": the buttons (Figma: Button Tertiary · Solid · lg and Primary · Solid · lg, equal width). A function receives `close`. |
-| `children` | `ReactNode` |  | Content between the header and the buttons (not in the Figma component — see Dialog.mdx). |
-| `className` | `string` |  | Class of the dialog panel. |
-| `defaultOpen` | `boolean` |  | Initial open state (uncontrolled). |
-| `description` | `ReactNode` |  | Figma "description" — read as the dialog description. |
-| `dismissable` | `boolean` | `false` | Close by clicking outside. Escape always closes unless `keyboardDismissDisabled`. |
-| `keyboardDismissDisabled` | `boolean` | `false` | Keep the dialog open on Escape. |
-| `onOpenChange` | `((open: boolean) => void)` |  | Called when the dialog opens or closes. |
-| `open` | `boolean` |  | Open state (controlled). |
-| `role` | `"dialog" \| "alertdialog"` | `dialog` | `alertdialog` for confirmations that interrupt the user. |
-| `trigger` | `ReactElement<unknown, string \| JSXElementConstructor<any>>` |  | Element that opens the dialog (forwards its ref and props, e.g. `Button`). Without it use `open`. |
+| `title` *(필수)* | `ReactNode` |  | 제목. 화면 낭독기가 대화상자의 이름으로 읽습니다. |
+| `actions` | `ReactNode \| ((close: () => void) => ReactNode)` |  | 아래쪽 버튼들. 같은 너비로 나란히 놓입니다(예: 취소는 Tertiary · Solid · lg, 주 행동은 Primary · Solid · lg). 함수로 넘기면 대화상자를 닫는 `close`를 받습니다. |
+| `children` | `ReactNode` |  | 제목과 버튼 사이에 넣는 내용. |
+| `className` | `string` |  | 대화상자 패널의 클래스. |
+| `defaultOpen` | `boolean` |  | 처음 열림 여부. 직접 제어하지 않을 때 씁니다. |
+| `description` | `ReactNode` |  | 제목 아래 설명. 화면 낭독기가 대화상자의 설명으로 읽습니다. |
+| `dismissable` | `boolean` | `false` | 바깥을 누르면 닫힙니다. Esc는 `keyboardDismissDisabled`가 아니면 항상 닫습니다. |
+| `keyboardDismissDisabled` | `boolean` | `false` | Esc를 눌러도 닫히지 않게 합니다. |
+| `onOpenChange` | `((open: boolean) => void)` |  | 대화상자가 열리거나 닫힐 때 호출됩니다. |
+| `open` | `boolean` |  | 열림 여부. 직접 제어할 때 씁니다. |
+| `role` | `"dialog" \| "alertdialog"` | `dialog` | 삭제 확인처럼 사용자의 흐름을 멈추는 확인에는 `alertdialog`를 씁니다. |
+| `trigger` | `ReactElement<unknown, string \| JSXElementConstructor<any>>` |  | 누르면 대화상자를 여는 요소. ref와 props를 전달하는 컴포넌트여야 합니다(예: `Button`). 없으면 `open`으로 엽니다. |
 
 - 타입: `DialogProps`
 
@@ -581,55 +581,55 @@ Figma component `dialog` (149:2838): a modal panel with title, description and b
 
 **공개 컴포넌트**
 
-Dropdown menu built from the Figma `dropdownmenu_item` (179:4819) and `dropdownmenu_line` (179:5082) components and the menu panel of the Figma examples (Menu Container): padding p-1, 1px border, border-radius/rounded, effect elevation-3. Keyboard, focus and ARIA (menu / menuitem) come from react-aria-components; Escape closes and focus returns to the trigger.
+버튼을 누르면 펼쳐지는 동작 메뉴입니다. 방향키로 항목을 옮기고, Esc로 닫으면 키보드 위치가 트리거로 돌아갑니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | `DropdownMenuItem`, `DropdownMenuSection` and `DropdownMenuSeparator` elements. |
-| `trigger` *(필수)* | `ReactElement<unknown, string \| JSXElementConstructor<any>> \| ReactElement<DOMAttributes<HTMLElement>, string>` |  | The element that opens the menu: a react-aria Button / FilterChip, or any element that forwards its ref and props (e.g. the design-system `Button`). |
-| `aria-label` | `string` |  | Accessible name of the menu. |
+| `children` *(필수)* | `ReactNode` |  | `DropdownMenuItem` · `DropdownMenuSection` · `DropdownMenuSeparator`들. |
+| `trigger` *(필수)* | `ReactElement<unknown, string \| JSXElementConstructor<any>> \| ReactElement<DOMAttributes<HTMLElement>, string>` |  | 메뉴를 여는 요소. `Button`이나 `FilterChip`처럼 ref와 props를 그대로 전달하는 요소를 넘깁니다. |
+| `aria-label` | `string` |  | 화면 낭독기가 읽는 메뉴 이름. |
 | `className` | `string` |  |  |
-| `disabledKeys` | `Iterable<Key>` |  | Item ids that cannot be activated (Figma State "Disabled"). |
-| `offset` | `number` | `4` | Gap between the trigger and the panel in px (4 as Select / Date Picker; the Figma breadcrumb menu uses 2). |
-| `onAction` | `((key: Key) => void)` |  | Called with the id of the activated item. |
-| `onOpenChange` | `((open: boolean) => void)` |  | Called when the menu opens or closes. |
-| `open` | `boolean` |  | Open state (controlled). |
-| `placement` | `Placement` | `bottom start` | Position relative to the trigger. |
+| `disabledKeys` | `Iterable<Key>` |  | 고를 수 없는 항목의 `id` 목록(비활성). |
+| `offset` | `number` | `4` | 트리거와 메뉴 사이 간격(px). |
+| `onAction` | `((key: Key) => void)` |  | 항목을 고르면 그 항목의 `id`로 호출됩니다. |
+| `onOpenChange` | `((open: boolean) => void)` |  | 메뉴가 열리거나 닫히면 호출됩니다. |
+| `open` | `boolean` |  | 메뉴가 열렸는지 여부. 넘기면 바깥에서 관리합니다. |
+| `placement` | `Placement` | `bottom start` | 트리거를 기준으로 한 메뉴 위치. |
 
 ### `DropdownMenuItem`
 
 **보조 컴포넌트** — `DropdownMenu` 안
 
-Figma `dropdownmenu_item` Type Content. State: Hover = pointer hover or keyboard focus, Alert = `danger`, Disabled = `disabled`.
+메뉴 항목 하나입니다. 마우스를 올리거나 키보드로 선택하면 같은 모양으로 바뀝니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Item" (label). |
-| `chevron` | `boolean` | `false` | Figma "Right Icon" — the caret, for items that open a submenu or a next step. |
+| `children` *(필수)* | `ReactNode` |  | 항목 이름. |
+| `chevron` | `boolean` | `false` | 오른쪽 화살표 — 다른 화면으로 이동하는 항목이라는 표시입니다. |
 | `className` | `string` |  |  |
-| `danger` | `boolean` | `false` | Figma State "Alert": a destructive action (danger colours). |
-| `description` | `ReactNode` |  | Figma "Sub" text under the label ("Sub Text" on). |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
-| `icon` | `ReactNode` |  | Figma "Left Icon". |
+| `danger` | `boolean` | `false` | 삭제처럼 위험한 작업 — 경고 색으로 보입니다. |
+| `description` | `ReactNode` |  | 이름 아래 설명. |
+| `disabled` | `boolean` |  | 비활성 — 고를 수 없고, 방향키로 옮길 때도 건너뜁니다. |
+| `icon` | `ReactNode` |  | 이름 앞 아이콘. |
 
 ### `DropdownMenuSection`
 
 **보조 컴포넌트** — `DropdownMenu` 안
 
-A group of items with an optional title (Figma Type Title).
+메뉴 항목 묶음입니다. 위에 제목을 붙일 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Items of the group. |
-| `aria-label` | `string` |  | Accessible name when there is no visible title. |
-| `id` | `Key` |  | Section id. |
-| `title` | `ReactNode` |  | Figma `dropdownmenu_item` Type Title (group title). |
+| `children` *(필수)* | `ReactNode` |  | 묶음 안의 항목들. |
+| `aria-label` | `string` |  | 보이는 제목이 없을 때 화면 낭독기가 읽는 묶음 이름. |
+| `id` | `Key` |  | 묶음 `id`. |
+| `title` | `ReactNode` |  | 묶음 제목. |
 
 ### `DropdownMenuSeparator`
 
 **보조 컴포넌트** — `DropdownMenu` 안
 
-Figma `dropdownmenu_line`: divider between groups.
+메뉴 항목 묶음 사이의 구분선입니다.
 
 - 타입: `DropdownMenuProps`, `DropdownMenuItemProps`, `DropdownMenuSectionProps`
 
@@ -639,14 +639,14 @@ Figma `dropdownmenu_line`: divider between groups.
 
 **공개 컴포넌트**
 
-Figma component `empty-state` (724:14963): a centred message for an empty area — icon, title, description (m-1 apart) and an action m-3 below. 320px wide as in Figma, narrower when the parent is.
+보여 줄 내용이 없을 때 그 자리 가운데에 안내를 보여 주는 빈 상태입니다. 너비는 320px이고, 부모가 더 좁으면 그 너비에 맞춰 줄어듭니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `title` *(필수)* | `ReactNode` |  | Figma "Title Text". |
-| `action` | `ReactNode` |  | The Figma button below the text, e.g. `<TextButton rightIcon={<CaretRightIcon />}>`. |
-| `description` | `ReactNode` |  | Figma "Description Text" ("Description" on). |
-| `icon` | `ReactNode` |  | Figma "Icon" (16px; the Figma placeholder is Database). Decorative. |
+| `title` *(필수)* | `ReactNode` |  | 제목. |
+| `action` | `ReactNode` |  | 글 아래 버튼. 할 일이 없으면 넣지 않습니다. 예: `<TextButton rightIcon={<CaretRightIcon />}>` |
+| `description` | `ReactNode` |  | 제목 아래 설명. 가운데 정렬되며 길면 줄을 바꿉니다. |
+| `icon` | `ReactNode` |  | 제목 위 아이콘(16px). 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다. |
 
 - 타입: `EmptyStateProps`
 
@@ -661,51 +661,51 @@ Figma component `empty-state` (724:14963): a centred message for an empty area �
 
 **공개 컴포넌트**
 
-Figma component set `file-uploader` (651:3945): a drop area that also opens the file dialog. State: Hover / Pressed = :hover / :active, Drag-over = files dragged over it, Disabled = `disabled`. The area is a `<button>` (Enter / Space open the dialog); a hidden `<input type="file">` holds the selection for forms.
+파일을 끌어다 놓거나 눌러서 고르는 업로드 영역입니다. 영역은 버튼이라 Enter · Space로도 파일 선택 창이 열리고, 파일을 위로 끌어오면 모양이 바뀝니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `accept` | `string` |  | Accepted file types, as for `<input type="file" accept>` (e.g. '.pdf,image/*'). Dropped files are filtered too. |
-| `className` | `string` |  | Class name of the drop area. |
-| `disabled` | `boolean` | `false` | Figma State "Disabled". |
-| `helperText` | `ReactNode` |  | Figma "Helper Text" (allowed types, size limits …). |
+| `accept` | `string` |  | 받을 파일 형식(예: '.pdf,image/*'). 끌어다 놓은 파일에도 똑같이 적용됩니다. |
+| `className` | `string` |  | 업로드 영역의 클래스 이름. |
+| `disabled` | `boolean` | `false` | 비활성 — 누를 수 없고 파일을 놓아도 받지 않습니다. |
+| `helperText` | `ReactNode` |  | 제목 아래 안내 문구(허용 형식 · 크기 제한 등). |
 | `id` | `string` |  |  |
-| `multiple` | `boolean` | `false` | Allows several files. |
-| `name` | `string` |  | Form field name of the underlying file input. |
-| `onFilesSelected` | `((files: File[]) => void)` |  | Called with the files chosen in the dialog or dropped on the area. |
-| `showIcon` | `boolean` | `true` | Figma "Show Icon". |
-| `style` | `CSSProperties` |  | Style of the drop area (e.g. its width — Figma 353px). |
-| `title` | `ReactNode` | `파일을 끌어다 놓거나 선택하세요` | Figma "Title Text". |
+| `multiple` | `boolean` | `false` | 여러 파일을 한 번에 받을지 여부. |
+| `name` | `string` |  | 폼으로 파일을 보낼 때 쓰는 필드 이름. |
+| `onFilesSelected` | `((files: File[]) => void)` |  | 선택 창에서 고르거나 끌어다 놓은 파일로 호출됩니다. |
+| `showIcon` | `boolean` | `true` | 업로드 아이콘 표시 여부. |
+| `style` | `CSSProperties` |  | 업로드 영역의 스타일(예: 너비). |
+| `title` | `ReactNode` | `파일을 끌어다 놓거나 선택하세요` | 제목. |
 
 ### `FileUploaderItem`
 
 **보조 컴포넌트** — `FileUploader` 아래 파일 목록
 
-Figma component set `file-uploader-item` (651:3999): one file in an upload list. The actions are the TextButton (button_text Primary sm) with the file name as their description.
+업로드 목록에서 파일 하나를 보여 주는 줄입니다. 버튼은 파일 이름을 설명으로 함께 읽어 어느 파일의 버튼인지 구분됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `fileName` *(필수)* | `ReactNode` |  | Figma "File Name". |
-| `downloadLabel` | `string` | `다운로드` |  |
-| `fileInfo` | `ReactNode` |  | Figma "File Info" (size, status text …). |
-| `onDownload` | `(() => void)` |  | Called by the "다운로드" button (status 'download'). |
-| `onRemove` | `(() => void)` |  | Called by the "삭제" button (status 'completed'). |
-| `removeLabel` | `string` | `삭제` |  |
-| `status` | `"download" \| "completed" \| "uploading"` | `completed` | Figma State: Completed (remove button), uploading (spinner), download (download button). |
-| `uploadingLabel` | `string` | `업로드 중` | Accessible name of the spinner. |
+| `fileName` *(필수)* | `ReactNode` |  | 파일 이름. 길면 말줄임표로 줄입니다. |
+| `downloadLabel` | `string` | `다운로드` | 다운로드 버튼 글자. |
+| `fileInfo` | `ReactNode` |  | 파일 정보(크기, 진행 상태 글자 등). |
+| `onDownload` | `(() => void)` |  | "다운로드" 버튼을 누르면 호출됩니다(`download`일 때). |
+| `onRemove` | `(() => void)` |  | "삭제" 버튼을 누르면 호출됩니다(`completed`일 때). |
+| `removeLabel` | `string` | `삭제` | 삭제 버튼 글자. |
+| `status` | `"download" \| "completed" \| "uploading"` | `completed` | 상태 — 삭제 버튼(`completed`), 업로드 중 표시(`uploading`), 다운로드 버튼(`download`). |
+| `uploadingLabel` | `string` | `업로드 중` | 화면 낭독기가 읽는 업로드 중 표시의 이름. |
 
 ### `ImageUploadPreview`
 
 **보조 컴포넌트** — `KeyValueItem`의 이미지 업로드 칸
 
-The uploaded image of the Figma key-value File Upload cell (`table_value_editable`, 503:23264): a 100px square with a round remove button (18px, padding p-0_5, colors/fill/secondary/subtle/default, 1px colors/border/gray-subtler, X 12px colors/icon/secondary) centred on its top-right corner.
+업로드한 이미지를 정사각형 미리보기로 보여 줍니다. 오른쪽 위 모서리에 둥근 삭제 버튼이 붙습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `alt` *(필수)* | `string` |  | Text alternative of the image. |
-| `src` *(필수)* | `string` |  | Image to show (e.g. an object URL of the chosen file). |
-| `onRemove` | `(() => void)` |  | Called by the remove button; without it there is no button. |
-| `removeLabel` | `string` | `이미지 삭제` | Accessible name of the remove button. |
+| `alt` *(필수)* | `string` |  | 이미지 대체 글자. |
+| `src` *(필수)* | `string` |  | 보여 줄 이미지 주소(예: 고른 파일의 object URL). |
+| `onRemove` | `(() => void)` |  | 삭제 버튼을 누르면 호출됩니다. 넘기지 않으면 삭제 버튼이 없습니다. |
+| `removeLabel` | `string` | `이미지 삭제` | 화면 낭독기가 읽는 삭제 버튼 이름. |
 
 - 상수: `FILE_UPLOADER_ITEM_STATUSES`
 - 타입: `FileUploaderProps`, `FileUploaderItemProps`, `FileUploaderItemStatus`, `ImageUploadPreviewProps`
@@ -716,21 +716,21 @@ The uploaded image of the Figma key-value File Upload cell (`table_value_editabl
 
 **공개 컴포넌트**
 
-Figma component set `input` (76:2945) with `input_message` (83:3009). State: Hover / Focus are the native :hover / :focus-within, Completed = the field has a value, Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`. Native input props (value, onChange, name, …) and the ref go to the `<input>`.
+한 줄짜리 글자를 입력받는 입력 칸입니다. 라벨 · 도움말 메시지 · 비밀번호 보기 버튼을 붙일 수 있고, 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `className` | `string` |  | Class name of the root element. |
-| `clearable` | `boolean` | `true` | Clear button (Figma icon/X, shown on hover and focus). |
-| `defaultRevealed` | `boolean` | `false` | Initial visibility of a password value. |
-| `invalid` | `boolean` | `false` | Figma State "Error": red 2px border, `aria-invalid`. |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". |
-| `message` | `ReactNode` |  | Figma "Alert" + "Alert Text" (input_message). |
-| `messageType` | `"info" \| "success" \| "error"` | `'error' when invalid, otherwise 'info'` | Figma input_message "Type". |
-| `onClear` | `(() => void)` |  | Called after the clear button empties the field. |
-| `revealable` | `boolean` | `true` | For `type="password"`: show/hide toggle (Figma "Icon-eye"). |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size". |
-| `style` | `CSSProperties` |  | Style of the root element. |
+| `className` | `string` |  | 바깥 요소의 클래스 이름. |
+| `clearable` | `boolean` | `true` | 마우스를 올리거나 키보드로 선택하면 지우기 버튼(X)을 보여 줍니다. |
+| `defaultRevealed` | `boolean` | `false` | 비밀번호를 처음부터 보이게 할지 정합니다. |
+| `invalid` | `boolean` | `false` | 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. |
+| `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
+| `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
+| `onClear` | `(() => void)` |  | 지우기 버튼으로 값을 비운 뒤 호출됩니다. |
+| `revealable` | `boolean` | `true` | `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다. |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
+| `style` | `CSSProperties` |  | 바깥 요소의 스타일. |
 
 - 타입: `InputProps`
 
@@ -740,16 +740,16 @@ Figma component set `input` (76:2945) with `input_message` (83:3009). State: Hov
 
 **공개 컴포넌트**
 
-Figma component set `link` (111:1509). State: Hover / Pressed / Visited are :hover / :active / :visited, Disabled = `disabled`. Renders a native `<a>`.
+다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다. 마우스를 올리거나 누르면 모양이 바뀌고, 방문한 링크는 방문한 모양으로 보입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text". |
-| `disabled` | `boolean` | `false` | Figma State "Disabled": rendered without `href`, `aria-disabled`, not focusable. |
-| `external` | `boolean` | `false` | Opens in a new tab (`target="_blank"`, `rel="noopener noreferrer"`) and announces it. |
-| `newTabLabel` | `string` | `(새 창)` | Text read after the label for external links. |
-| `showIcon` | `boolean` | ``external`` | Figma "Icon" (arrow-square-out). |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size". |
+| `children` *(필수)* | `ReactNode` |  | 링크 글자. |
+| `disabled` | `boolean` | `false` | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `external` | `boolean` | `false` | 새 창으로 엽니다. 화면 낭독기는 글자 뒤에 `newTabLabel`을 함께 읽습니다. |
+| `newTabLabel` | `string` | `(새 창)` | 새 창 링크에서 화면 낭독기가 글자 뒤에 읽는 말. |
+| `showIcon` | `boolean` | ``external`` | 새 창 아이콘 표시 여부. |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
 
 - 상수: `LINK_SIZES`
 - 타입: `LinkProps`, `LinkSize`
@@ -760,12 +760,12 @@ Figma component set `link` (111:1509). State: Hover / Pressed / Visited are :hov
 
 **공개 컴포넌트**
 
-Figma component set `loading` (675:5644): a spinning arc (gradient from colors/border/transparency to colors/border/brand) with an optional label. Renders `role="status"`, so the label (or `aria-label`, default '로딩 중') is announced politely.
+불러오거나 처리하는 중임을 알리는 회전 표시입니다. 화면 낭독기가 `label`(없으면 `aria-label`, 기본 '로딩 중')을 다른 안내를 끊지 않고 읽어 줍니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `label` | `ReactNode` |  | Figma "text" (Loading text under the spinner). Without it, `aria-label` names the status. |
-| `size` | `"sm" \| "md"` | `md` | Figma "size". |
+| `label` | `ReactNode` |  | 회전 표시 아래 글자. 없으면 `aria-label`이 이름이 됩니다. |
+| `size` | `"sm" \| "md"` | `md` | 크기. |
 
 - 상수: `LOADING_SIZES`
 - 타입: `LoadingProps`, `LoadingSize`
@@ -776,17 +776,17 @@ Figma component set `loading` (675:5644): a spinning arc (gradient from colors/b
 
 **공개 컴포넌트**
 
-Figma component `metric-card` (697:4487): a key figure — header (icon + title), value with unit, and a comparison row (trend + text), m-3 apart inside a white card (padding 16, radius 12, elevation-3 shadow).
+대시보드의 핵심 지표 하나를 제목, 값과 단위, 비교로 보여 주는 카드입니다. 너비는 부모를 채웁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `title` *(필수)* | `ReactNode` |  | Figma "Title" — what the metric is. Rendered as a heading. |
-| `value` *(필수)* | `ReactNode` |  | Figma "Value" (3xl/leading-normal/semibold). |
-| `comparison` | `ReactNode` |  | Figma "Comparison" text after the trend, e.g. "이전 7일 대비". |
-| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | Heading level of the title. |
-| `icon` | `ReactNode` |  | Figma header icon (20px, icon/tertiary; Lightning in Figma). Decorative. |
-| `trend` | `ReactNode` |  | Figma comparison row: the change, usually a `MetricTrend`. |
-| `unit` | `ReactNode` |  | Figma "Unit", baseline-aligned after the value. |
+| `title` *(필수)* | `ReactNode` |  | 지표 이름. 카드 제목 요소로 표시됩니다. |
+| `value` *(필수)* | `ReactNode` |  | 값. |
+| `comparison` | `ReactNode` |  | 증감 뒤에 붙는 비교 기준 문구(예: "이전 7일 대비"). |
+| `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | 제목의 단계(h2–h6). |
+| `icon` | `ReactNode` |  | 제목 앞 아이콘. 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다. |
+| `trend` | `ReactNode` |  | 증감. 보통 `MetricTrend`를 넣습니다. |
+| `unit` | `ReactNode` |  | 값 뒤에 붙는 단위. |
 
 - 타입: `MetricCardProps`
 
@@ -796,14 +796,14 @@ Figma component `metric-card` (697:4487): a key figure — header (icon + title)
 
 **공개 컴포넌트**
 
-Figma component set `metric-trend` (697:4482): the change of a metric — a 12px direction icon and the change text (xs/leading-normal/medium) on dashboard/background, p-1 padding and gap, rounded-sm.
+지표의 증감을 방향 아이콘과 함께 보여 줍니다. 방향은 `direction`, 그 변화가 좋은지 나쁜지는 `tone`으로 고릅니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Change Text", e.g. "4.8%p". |
-| `direction` | `"disabled" \| "flat" \| "up" \| "down"` | `up` | Figma "Direction" — the icon (TrendUp · TrendDown · Minus); Disabled is greyed out. |
-| `directionLabel` | `string` | `LABELS[direction]` | Text read before the change for screen readers, since the direction is only an icon. |
-| `tone` | `"positive" \| "negative" \| "neutral"` | `positive` | Figma "Tone" — the colour: positive (text/brand), negative (status/danger/strong), neutral. |
+| `children` *(필수)* | `ReactNode` |  | 증감 글자(예: "4.8%p"). |
+| `direction` | `"disabled" \| "flat" \| "up" \| "down"` | `up` | 방향 — 아이콘이 바뀝니다. `disabled`(비교할 값이 없음)는 회색으로 표시합니다. |
+| `directionLabel` | `string` | `LABELS[direction]` | 방향이 아이콘으로만 보이므로 화면 낭독기가 증감 앞에 읽는 글자. |
+| `tone` | `"positive" \| "negative" \| "neutral"` | `positive` | 좋고 나쁨 — 색이 바뀝니다. 좋음(`positive`) · 나쁨(`negative`) · 중립(`neutral`). |
 
 - 상수: `METRIC_TREND_DIRECTIONS`, `METRIC_TREND_TONES`
 - 타입: `MetricTrendProps`, `MetricTrendDirection`, `MetricTrendTone`
@@ -814,60 +814,60 @@ Figma component set `metric-trend` (697:4482): the change of a metric — a 12px
 
 **공개 컴포넌트**
 
-LNB container from the Figma Navigation example (180:2023): padding p-5, colors/navigation/lnb/background, items m-1_5 apart. Width comes from the layout (240px in the Figma example).
+화면 왼쪽에 두는 메뉴(LNB)의 틀입니다. 너비는 화면 배치에서 정하고, 메뉴 항목은 그 너비를 꽉 채웁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `header` | `ReactNode` |  | Area above the menu (the Figma example's logo area), m-4 above the items. |
+| `header` | `ReactNode` |  | 메뉴 위 영역(로고 등). |
 
 ### `NavLink`
 
 **보조 컴포넌트** — `Navigation` 안
 
-Figma component set `item_link` (180:6174): a top-level page link. State Hover = :hover.
+누르면 바로 페이지로 이동하는 첫 단계 메뉴입니다. 마우스를 올리면 모양이 바뀝니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `icon` | `ReactNode` |  | Figma "Icon" (20px; the Figma placeholder is List). |
-| `selected` | `boolean` | `false` | Figma Variant "Selected": the current page (`aria-current="page"`). |
+| `icon` | `ReactNode` |  | 메뉴 이름 앞 아이콘. |
+| `selected` | `boolean` | `false` | 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. |
 
 ### `NavGroup`
 
 **보조 컴포넌트** — `Navigation` 안
 
-Menu group: `item_parent` and, when expanded, its `item_child` list — indented p-4 with a 1px line (…/child/selected/indicator/selected) and m-2_5 to the items, as in the Figma LNB example.
+눌러서 펼치고 접는 메뉴 그룹입니다. 펼치면 하위 메뉴(`NavChild`)가 왼쪽 선과 함께 안쪽으로 들여 보입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `label` *(필수)* | `ReactNode` |  | Group label (Figma "Menu Text" of item_parent). |
-| `children` | `ReactNode` |  | Figma "Menu Text". `NavChild` elements shown when expanded. |
+| `label` *(필수)* | `ReactNode` |  | 그룹 이름. |
+| `children` | `ReactNode` |  | 메뉴 이름. 펼쳤을 때 보이는 `NavChild`들. |
 | `className` | `string` |  |  |
-| `defaultExpanded` | `boolean` | `false` | Initial state (uncontrolled). |
-| `expanded` | `boolean` | `false` | Expanded (controlled). |
-| `icon` | `ReactNode` |  | Figma "Icon" (20px; the Figma placeholder is List). |
-| `onExpandedChange` | `((expanded: boolean) => void)` |  | Called when the group opens or closes. |
+| `defaultExpanded` | `boolean` | `false` | 처음에 펼쳐 둘지 여부. `expanded` 없이 스스로 관리할 때 씁니다. |
+| `expanded` | `boolean` | `false` | 펼침 여부. 넘기면 바깥에서 관리합니다. |
+| `icon` | `ReactNode` |  | 메뉴 이름 앞 아이콘. |
+| `onExpandedChange` | `((expanded: boolean) => void)` |  | 그룹이 펼쳐지거나 접히면 호출됩니다. |
 
 ### `NavChild`
 
 **보조 컴포넌트** — `NavGroup` 안
 
-Figma component set `item_child` (180:6249): a second-level page link. State Hover = :hover.
+`NavGroup` 안의 하위 메뉴 링크입니다. 마우스를 올리면 모양이 바뀝니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `selected` | `boolean` | `false` | Figma Variant "Selected": the current page (`aria-current="page"`). |
+| `selected` | `boolean` | `false` | 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. |
 
 ### `NavParentItem`
 
 ⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `NavGroup` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
-Figma component set `item_parent` (180:5246): the button of a menu group. State Hover = :hover.
+메뉴 그룹을 펼치고 접는 버튼입니다. `NavGroup`이 안에서 그립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Menu Text". |
-| `expanded` | `boolean` | `false` | Figma "Expanded". |
-| `icon` | `ReactNode` |  | Figma "Icon" (20px; the Figma placeholder is List). |
+| `children` *(필수)* | `ReactNode` |  | 메뉴 이름. |
+| `expanded` | `boolean` | `false` | 펼침 — 하위 메뉴가 열린 상태입니다. |
+| `icon` | `ReactNode` |  | 메뉴 이름 앞 아이콘. |
 
 - 타입: `NavigationProps`, `NavLinkProps`, `NavGroupProps`, `NavChildProps`, `NavParentItemProps` *(내부 — 사용 금지)*
 
@@ -877,28 +877,28 @@ Figma component set `item_parent` (180:5246): the button of a menu group. State 
 
 **공개 컴포넌트**
 
-Figma component set `pagination` (132:871) built from `pagination_control` and `pagination_item`: previous, a window of page numbers (Figma shows five, the first current), next. Renders `<nav aria-label="페이지 이동">` with buttons; the current page has `aria-current="page"`.
+여러 페이지로 나뉜 내용에서 페이지를 옮겨 가는 페이지 이동 막대입니다. 이전 버튼, 페이지 번호, 다음 버튼으로 이루어지며, 첫 페이지와 마지막 페이지에서는 이전 · 다음 버튼이 비활성입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `totalPages` *(필수)* | `number` |  | Number of pages. |
-| `defaultPage` | `number` | `1` | Initial page (uncontrolled). |
-| `onPageChange` | `((page: number) => void)` |  | Called with the new page. |
-| `page` | `number` |  | Current page, 1-based (controlled). |
+| `totalPages` *(필수)* | `number` |  | 전체 페이지 수. |
+| `defaultPage` | `number` | `1` | 처음 페이지. `page` 없이 스스로 관리할 때 씁니다. |
+| `onPageChange` | `((page: number) => void)` |  | 페이지가 바뀌면 새 페이지 번호로 호출됩니다. |
+| `page` | `number` |  | 지금 페이지(1부터 셈). 넘기면 바깥에서 관리합니다. |
 | `shape` | `"square" \| "rounded"` | `square` |  |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` |  |
-| `visiblePages` | `number` | `5` | How many page numbers are shown at once (a window around the current page). |
+| `visiblePages` | `number` | `5` | 한 번에 보이는 페이지 번호 수. 지금 페이지를 가운데 두고 보여 줍니다. |
 
 ### `PaginationItem`
 
 ⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Pagination` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
-Figma component set `pagination_item` (132:520): one page number button.
+페이지 번호 버튼 하나입니다. `Pagination`이 안에서 그립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `page` *(필수)* | `number` |  | Figma "Number". |
-| `current` | `boolean` | `false` | Figma State "Current". |
+| `page` *(필수)* | `number` |  | 페이지 번호. |
+| `current` | `boolean` | `false` | 지금 페이지인지 여부. |
 | `shape` | `"square" \| "rounded"` | `square` |  |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` |  |
 
@@ -906,11 +906,11 @@ Figma component set `pagination_item` (132:520): one page number button.
 
 ⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Pagination` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
-Figma component set `pagination_control` (132:604): previous / next page button.
+이전 · 다음 페이지 버튼입니다. `Pagination`이 안에서 그립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `direction` *(필수)* | `"next" \| "previous"` |  | Figma "Direction". |
+| `direction` *(필수)* | `"next" \| "previous"` |  | 방향 — 이전(`previous`) · 다음(`next`). |
 | `shape` | `"square" \| "rounded"` | `square` |  |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` |  |
 
@@ -923,7 +923,7 @@ Figma component set `pagination_control` (132:604): previous / next page button.
 
 **공개 컴포넌트**
 
-Figma component `progress` (185:6518): a 6px track (border-radius/rounded-full, colors/progress/border/surface) with the bar (…/indicator) clipped by it. `value` between `minValue` and `maxValue` (0 – 100 by default); role="progressbar" and its values come from react-aria-components. Name it with `aria-label` or `aria-labelledby`.
+작업이 얼마나 진행되었는지 보여 주는 진행 막대입니다. `value`는 `minValue`와 `maxValue` 사이 값이며 기본 범위는 0 – 100입니다. 이름은 `aria-label` 또는 `aria-labelledby`로 꼭 붙입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -938,32 +938,32 @@ Figma component `progress` (185:6518): a 6px track (border-radius/rounded-full, 
 
 **보조 컴포넌트** — `RadioGroup` 안
 
-Figma component set `radio` (102:2677). Selection "Selected" = checked; State: Hover / Pressed are the native :hover / :active, Disabled = `disabled`. Renders a native `<input type="radio">` (arrow keys move between radios of the same name). Use inside `RadioGroup`, or standalone with `name` / `checked`.
+여러 옵션 중 하나만 고르는 라디오 버튼입니다. 보통 `RadioGroup` 안에서 쓰고, 단독으로 쓸 때는 `name` · `checked`를 직접 지정합니다. 같은 그룹 안에서는 방향키로 선택이 이동합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `value` *(필수)* | `string` |  | Value of this option (required inside a `RadioGroup`). |
-| `className` | `string` |  | Class name of the root `<label>`. |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". Without a label, give the radio an `aria-label`. |
-| `size` | `"sm" \| "md" \| "lg"` | `'sm'` | Figma "Size". Inside a `RadioGroup` the group size is the default. |
-| `style` | `CSSProperties` |  | Style of the root `<label>`. |
+| `value` *(필수)* | `string` |  | 이 옵션의 값. `RadioGroup` 안에서는 그룹 값에서 이 옵션을 구분합니다. |
+| `className` | `string` |  | 라벨을 포함한 바깥 요소의 클래스 이름. |
+| `label` | `ReactNode` |  | 원 옆에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `size` | `"sm" \| "md" \| "lg"` | `'sm'` | 크기. `RadioGroup` 안에서는 그룹 크기를 따릅니다. |
+| `style` | `CSSProperties` |  | 라벨을 포함한 바깥 요소의 스타일. |
 
 ### `RadioGroup`
 
 **공개 컴포넌트**
 
-Groups `Radio`s (role="radiogroup") and manages the selected value. Not a Figma component — semantic wrapper only; label it with `aria-label` or `aria-labelledby`.
+라디오 버튼들을 묶어 선택한 값 하나를 관리합니다. `aria-label` 또는 `aria-labelledby`로 그룹 이름을 붙입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `defaultValue` | `string \| null` | `null` | Initially selected value (uncontrolled). |
-| `disabled` | `boolean` |  | Disables every radio in the group. |
-| `name` | `string` | `generated` | `name` of the radios (form submission and arrow-key grouping). |
-| `onChange` | `((value: string) => void)` |  | Called with the newly selected value. |
-| `orientation` | `"horizontal" \| "vertical"` | `vertical` | Stacking direction — items are 8px apart (16px in a row), Design System Rules 08. |
-| `required` | `boolean` |  | Marks the choice as required (native validation). |
-| `size` | `"sm" \| "md" \| "lg"` |  | Size applied to every radio that does not set its own. |
-| `value` | `string \| null` |  | Selected value (controlled); `null` = nothing selected. |
+| `defaultValue` | `string \| null` | `null` | 처음 선택된 값(비제어). |
+| `disabled` | `boolean` |  | 그룹 안 모든 라디오 버튼을 비활성으로 만듭니다. |
+| `name` | `string` | `자동 생성` | 그룹 안 라디오 버튼들의 `name`(폼 전송 · 방향키 이동 묶음). |
+| `onChange` | `((value: string) => void)` |  | 새로 고른 값과 함께 호출됩니다. |
+| `orientation` | `"horizontal" \| "vertical"` | `vertical` | 배치 방향 — 세로(vertical) · 가로(horizontal). 항목 사이 간격은 자동으로 맞춰집니다. |
+| `required` | `boolean` |  | 꼭 골라야 하는 항목으로 표시합니다(폼을 보낼 때 검사). |
+| `size` | `"sm" \| "md" \| "lg"` |  | 크기를 따로 정하지 않은 라디오 버튼에 적용할 크기. |
+| `value` | `string \| null` |  | 선택한 값(제어). `null`이면 선택 없음입니다. |
 
 - 타입: `RadioProps`, `RadioGroupProps`
 
@@ -973,18 +973,18 @@ Groups `Radio`s (role="radiogroup") and manages the selected value. Not a Figma 
 
 **공개 컴포넌트**
 
-Figma component set `search-field` (216:6570). State: Hover / Focus = :hover / :focus-within, Completed = has a value, Error = `invalid`, Disabled = `disabled`. The clear (X) button appears in Focus and Error as in Figma. Native input props and the ref go to the `<input type="search">`.
+검색어를 입력받는 입력 칸입니다. Enter 키를 누르면 `onSearch`가 호출되고, 키보드로 선택했거나 오류일 때 지우기 버튼(X)이 나타납니다. 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `appearance` | `"solid" \| "outline"` | `outline` | Figma "Type" (Outline / Solid). |
-| `className` | `string` |  | Class name of the root element. |
-| `invalid` | `boolean` | `false` | Figma State "Error". |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". Without a label, pass `aria-label`. |
-| `onClear` | `(() => void)` |  | Called after the clear button empties the field. |
-| `onSearch` | `((value: string) => void)` |  | Called with the current value when Enter is pressed. |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size". |
-| `style` | `CSSProperties` |  | Style of the root element. |
+| `appearance` | `"solid" \| "outline"` | `outline` | 모양 — 테두리(outline) · 채움(solid). |
+| `className` | `string` |  | 바깥 요소의 클래스 이름. |
+| `invalid` | `boolean` | `false` | 오류 — 오류 테두리로 표시합니다. |
+| `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `onClear` | `(() => void)` |  | 지우기 버튼으로 값을 비운 뒤 호출됩니다. |
+| `onSearch` | `((value: string) => void)` |  | Enter 키를 누르면 현재 검색어와 함께 호출됩니다. |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
+| `style` | `CSSProperties` |  | 바깥 요소의 스타일. |
 
 - 상수: `SEARCH_FIELD_APPEARANCES`
 - 타입: `SearchFieldProps`, `SearchFieldAppearance`
@@ -995,29 +995,29 @@ Figma component set `search-field` (216:6570). State: Hover / Focus = :hover / :
 
 **공개 컴포넌트**
 
-Figma component set `segmented-control` (531:24471) with `segmented-item` (524:24397): one choice out of a few options. Items share the width equally (Figma: items fill the control). Built from native radios (role="radiogroup"): arrow keys move the selection, forms receive the value. Label the control with `aria-label` or `aria-labelledby`.
+몇 개의 옵션을 나란히 보여 주고 그중 하나를 고르는 컨트롤입니다. 옵션들은 너비를 똑같이 나눠 쓰고, 방향키로 선택이 이동합니다. `aria-label` 또는 `aria-labelledby`로 이름을 붙입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `defaultValue` | `string \| null` | `null` | Initially selected item value (uncontrolled). |
-| `disabled` | `boolean` |  | Disables every item (Figma State "Disabled"). |
-| `name` | `string` | `generated` | `name` of the underlying radios (form submission). |
-| `onChange` | `((value: string) => void)` |  | Called with the newly selected value. |
-| `size` | `"xs" \| "sm" \| "md"` | `md` | Figma "Size". |
-| `value` | `string \| null` |  | Selected item value (controlled). |
+| `defaultValue` | `string \| null` | `null` | 처음 선택된 옵션의 값(비제어). |
+| `disabled` | `boolean` |  | 모든 옵션을 비활성으로 만듭니다. |
+| `name` | `string` | `자동 생성` | 폼 전송에 쓰는 이름. |
+| `onChange` | `((value: string) => void)` |  | 새로 고른 값과 함께 호출됩니다. |
+| `size` | `"xs" \| "sm" \| "md"` | `md` | 크기. |
+| `value` | `string \| null` |  | 선택한 옵션의 값(제어). |
 
 ### `SegmentedControlItem`
 
 **보조 컴포넌트** — `SegmentedControl` 안
 
-One segment (Figma `segmented-item`). Variant Selected = the control's value; State Hover / Pressed are :hover / :active, Disabled = `disabled` here or on the control. Renders a visually hidden native radio.
+`SegmentedControl` 안의 옵션 하나입니다. 컨트롤의 값이 이 옵션의 `value`와 같으면 선택됨으로 표시됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label". |
-| `value` *(필수)* | `string` |  | Value of this item in the SegmentedControl. |
-| `className` | `string` |  | Class name of the item `<label>`. |
-| `style` | `CSSProperties` |  | Style of the item `<label>`. |
+| `children` *(필수)* | `ReactNode` |  | 옵션 글자. |
+| `value` *(필수)* | `string` |  | `SegmentedControl` 안에서 이 옵션을 구분하는 값. |
+| `className` | `string` |  | 옵션 요소의 클래스 이름. |
+| `style` | `CSSProperties` |  | 옵션 요소의 스타일. |
 
 - 상수: `SEGMENTED_CONTROL_SIZES`
 - 타입: `SegmentedControlProps`, `SegmentedControlItemProps`, `SegmentedControlSize`
@@ -1028,50 +1028,50 @@ One segment (Figma `segmented-item`). Variant Selected = the control's value; St
 
 **공개 컴포넌트**
 
-Figma component set `select` (95:4740) with `listbox` (97:2665), `option` (97:2286) and `select_message` (95:2960). Keyboard, focus, typeahead and ARIA come from react-aria-components (button + listbox popover); all styles are the Figma variables. State: Hover = :hover, Open = list open, Completed = has a value, Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`.
+목록을 펼쳐 옵션 하나를 고르는 선택 칸입니다. 옵션은 `SelectOption`으로 넣고, 값은 선택한 옵션의 `id`입니다. 마우스와 키보드(방향키 · Enter · Esc · 글자 입력)로 모두 조작할 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode \| ((item: T) => ReactNode)` |  | `SelectOption` elements, or a render function when `items` is given. |
+| `children` *(필수)* | `ReactNode \| ((item: T) => ReactNode)` |  | `SelectOption` 요소들. `items`를 쓰면 옵션을 만드는 함수입니다. |
 | `aria-describedby` | `string` |  |  |
 | `aria-label` | `string` |  |  |
 | `aria-labelledby` | `string` |  |  |
 | `autoFocus` | `boolean` |  |  |
-| `className` | `string` |  | Class name of the root element. |
-| `defaultOpen` | `boolean` |  | Initially open (uncontrolled). |
-| `defaultValue` | `Key \| null` | `null` | Initially selected option id (uncontrolled). |
-| `disabled` | `boolean` | `false` | Figma State "Disabled". |
-| `disabledKeys` | `Iterable<Key>` |  | Option ids that cannot be selected. |
-| `form` | `string` |  | Id of the form the hidden `<select>` belongs to. |
+| `className` | `string` |  | 바깥 요소의 클래스 이름. |
+| `defaultOpen` | `boolean` |  | 처음에 목록을 펼쳐 둘지 정합니다(비제어). |
+| `defaultValue` | `Key \| null` | `null` | 처음 선택된 옵션의 `id`(비제어). |
+| `disabled` | `boolean` | `false` | 비활성 — 고를 수 없고 키보드로도 선택되지 않습니다. |
+| `disabledKeys` | `Iterable<Key>` |  | 고를 수 없는 옵션의 `id` 목록. |
+| `form` | `string` |  | 선택값을 보낼 폼의 `id`. |
 | `id` | `string` |  |  |
-| `invalid` | `boolean` | `false` | Figma State "Error". |
-| `items` | `Iterable<T>` |  | Data for dynamic options; `children` is then a function `(item) => <SelectOption id={…}>…</SelectOption>`. |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". Without a label, set `aria-label`. |
-| `message` | `ReactNode` |  | Figma "Alert" + select_message text. |
-| `messageType` | `"info" \| "success" \| "error"` | `'error' when invalid, otherwise 'info'` | Figma select_message "Type". |
-| `name` | `string` |  | Form field name (renders a hidden native `<select>`). |
-| `onChange` | `((value: Key \| null) => void)` |  | Called with the newly selected option id. |
-| `onOpenChange` | `((open: boolean) => void)` |  | Called when the list opens or closes. |
-| `open` | `boolean` |  | Figma State "Open" (controlled). |
-| `placeholder` | `string` | `내용 선택` | Figma "Display Text" while nothing is selected. |
-| `readOnly` | `boolean` | `false` | Figma State "Read-only": shows the value without the caret; the list does not open. |
-| `required` | `boolean` |  | Requires a selection (native form validation through the hidden `<select>`). |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size". |
-| `style` | `CSSProperties` |  | Style of the root element (e.g. its width — the list is as wide as the field). |
-| `value` | `Key \| null` |  | Selected option id (controlled); `null` = nothing selected. |
+| `invalid` | `boolean` | `false` | 오류 — 오류 테두리로 표시합니다. |
+| `items` | `Iterable<T>` |  | 옵션을 데이터로 만들 때 쓰는 목록. 이때 `children`은 `(item) => <SelectOption id={…}>…</SelectOption>` 함수입니다. |
+| `label` | `ReactNode` |  | 선택 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `message` | `ReactNode` |  | 선택 칸 아래에 보이는 도움말 메시지. |
+| `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
+| `name` | `string` |  | 폼 필드 이름. 주면 폼을 보낼 때 선택값이 함께 전송됩니다. |
+| `onChange` | `((value: Key \| null) => void)` |  | 새로 고른 옵션의 `id`와 함께 호출됩니다. |
+| `onOpenChange` | `((open: boolean) => void)` |  | 목록이 펼쳐지거나 닫힐 때 호출됩니다. |
+| `open` | `boolean` |  | 목록 펼침 여부(제어). |
+| `placeholder` | `string` | `내용 선택` | 아무것도 고르지 않았을 때 보이는 글자. |
+| `readOnly` | `boolean` | `false` | 읽기 전용 — 화살표 없이 값만 보이고 목록이 펼쳐지지 않습니다. |
+| `required` | `boolean` |  | 꼭 골라야 하는 항목으로 표시합니다. `name`과 함께 쓰면 폼을 보낼 때 선택 여부를 검사합니다. |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. 옵션 높이도 함께 맞춰집니다. |
+| `style` | `CSSProperties` |  | 바깥 요소의 스타일. 너비를 정하면 목록도 같은 너비로 펼쳐집니다. |
+| `value` | `Key \| null` |  | 선택한 옵션의 `id`(제어). `null`이면 선택 없음입니다. |
 
 ### `SelectOption`
 
 **보조 컴포넌트** — `Select` 안
 
-Figma component set `option` (97:2286) — one choice of a `Select`; `id` identifies it in the Select value. State: Hover / Pressed = pointer hover / press (keyboard focus uses the Hover look), Selected = the Select value (semibold brand text + check icon), Disabled = `disabled`.
+`Select` 목록 안의 옵션 하나입니다. `id`로 옵션을 구분하고, 선택되면 굵은 글자와 체크 아이콘으로 표시됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Option Text". |
-| `checkIcon` | `boolean` | `true` | Figma "Check Icon": the check after the text of the selected option. Off: the semibold brand text alone marks it. |
+| `children` *(필수)* | `ReactNode` |  | 옵션 글자. |
+| `checkIcon` | `boolean` | `true` | 선택된 옵션 글자 뒤에 체크 아이콘을 보여 줍니다. 끄면 굵은 글자로만 선택을 표시합니다. |
 | `className` | `string` |  |  |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
+| `disabled` | `boolean` |  | 비활성 — 고를 수 없고 키보드로 이동할 때 건너뜁니다. |
 | `style` | `CSSProperties` |  |  |
 
 - 타입: `SelectProps`, `SelectOptionProps`
@@ -1082,11 +1082,11 @@ Figma component set `option` (97:2286) — one choice of a `Select`; `id` identi
 
 **공개 컴포넌트**
 
-Figma component set `skeleton` (697:4486): a placeholder shape (colors/skeleton/background, border-radius/rounded; Circle rounded-xl) while content loads. Decorative — announce the loading state on the surrounding region (e.g. `DataState state="loading"`). Static, as in Figma (no animation).
+내용을 불러오는 동안 자리를 표시하는 정지된 도형입니다. 화면 낭독기가 읽지 않으므로, 불러오는 중이라는 사실은 감싸는 영역(예: `DataState state="loading"`)에서 알립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `shape` | `"circle" \| "line" \| "shape4" \| "block"` | `line` | Figma "Shape": Line 60 × 8, Shape4 100 × 10, Block 140 × 12, Circle 24. Set `style` width / height to resize. |
+| `shape` | `"circle" \| "line" \| "shape4" \| "block"` | `line` | 모양 — line(60 × 8) · shape4(100 × 10) · block(140 × 12) · circle(24 × 24). 크기는 `style`의 width · height로 바꿀 수 있습니다. |
 
 - 상수: `SKELETON_SHAPES`
 - 타입: `SkeletonProps`, `SkeletonShape`
@@ -1097,29 +1097,29 @@ Figma component set `skeleton` (697:4486): a placeholder shape (colors/skeleton/
 
 **공개 컴포넌트**
 
-Figma component set `slider` (391:1988) with `handle` (391:2013). Pointer, touch and keyboard (arrows, Page Up / Down, Home / End) come from react-aria-components; the optional number field (Figma "Show Input") is the Input component and commits on Enter or blur.
+정해진 범위 안에서 숫자 값을 고르는 슬라이더입니다. 마우스 · 터치 · 키보드로 조작하고, 옆의 숫자 입력 칸에 값을 직접 입력할 수도 있습니다. 입력 칸 값은 Enter를 누르거나 다른 곳을 선택하면 확정됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `aria-label` | `string` |  | Accessible name — Figma shows no label, so one of `aria-label` / `aria-labelledby` is required. |
+| `aria-label` | `string` |  | 화면 낭독기가 읽는 이름. 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby`가 꼭 필요합니다. |
 | `aria-labelledby` | `string` |  |  |
-| `className` | `string` |  | Class name of the root element. |
-| `defaultValue` | `number` | `minValue` | Initial value (uncontrolled). |
-| `disabled` | `boolean` | `false` | Figma State "Disabled". |
-| `formatOptions` | `NumberFormatOptions` |  | Number formatting of the range labels, value label and field. |
+| `className` | `string` |  | 바깥 요소의 클래스 이름. |
+| `defaultValue` | `number` | `minValue` | 처음 값(비제어). |
+| `disabled` | `boolean` | `false` | 비활성 — 값을 바꿀 수 없습니다. |
+| `formatOptions` | `NumberFormatOptions` |  | 범위 · 값 라벨 · 숫자 입력 칸의 숫자 형식. |
 | `id` | `string` |  |  |
-| `inputLabel` | `string` | `값 입력` | Accessible name of the number field. |
-| `maxValue` | `number` | `100` | Largest value, shown at the right end of the range row. |
-| `minValue` | `number` | `0` | Smallest value, shown at the left end of the range row. |
-| `name` | `string` |  | Form field name (the slider's range input). |
-| `onChange` | `((value: number) => void)` |  | Called continuously while the value changes. |
-| `onChangeEnd` | `((value: number) => void)` |  | Called when the user finishes a change (pointer up, key press, input committed). |
-| `showInput` | `boolean` | `true` | Figma "Show Input": number field next to the slider. |
-| `step` | `number` | `1` | Step between values. |
-| `style` | `CSSProperties` |  | Style of the root element (e.g. its width). |
-| `unit` | `ReactNode` |  | Unit after the number field and in the value label (Figma "명"). |
-| `value` | `number` |  | Current value (controlled). |
-| `valueLabel` | `boolean` | `true` | Figma handle "Value Label": value tag above the handle on hover, drag and keyboard focus. |
+| `inputLabel` | `string` | `값 입력` | 숫자 입력 칸의 이름(화면 낭독기용). |
+| `maxValue` | `number` | `100` | 가장 큰 값. 슬라이더 아래 오른쪽 끝에 보입니다. |
+| `minValue` | `number` | `0` | 가장 작은 값. 슬라이더 아래 왼쪽 끝에 보입니다. |
+| `name` | `string` |  | 폼 필드 이름. |
+| `onChange` | `((value: number) => void)` |  | 값이 바뀌는 동안 계속 호출됩니다. |
+| `onChangeEnd` | `((value: number) => void)` |  | 드래그를 마치거나, 키를 누르거나, 숫자 입력 칸의 값을 확정하면 호출됩니다. |
+| `showInput` | `boolean` | `true` | 슬라이더 오른쪽에 숫자 입력 칸을 보여 줍니다. |
+| `step` | `number` | `1` | 값 사이 간격. |
+| `style` | `CSSProperties` |  | 바깥 요소의 스타일(예: 너비). |
+| `unit` | `ReactNode` |  | 숫자 입력 칸 뒤와 값 라벨에 붙는 단위(예: 명). |
+| `value` | `number` |  | 현재 값(제어). |
+| `valueLabel` | `boolean` | `true` | 마우스를 올리거나 드래그하거나 키보드로 선택하면 손잡이 위에 값을 보여 줍니다. |
 
 - 타입: `SliderProps`
 
@@ -1129,38 +1129,38 @@ Figma component set `slider` (391:1988) with `handle` (391:2013). Pointer, touch
 
 **공개 컴포넌트**
 
-Figma component sets `stepper_horizontal` (179:2043) and `stepper_vertical` (203:3949): indicators joined by connectors; a connector is Completed after a completed step. Progress display only (not interactive).
+여러 단계로 된 과정에서 지금 몇 번째 단계인지 보여 줍니다. 완료된 단계 뒤의 연결선은 완료 모양이 되며, 진행 상황을 보여 주기만 하고 누를 수는 없습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `steps` *(필수)* | `StepperStep[]` |  | The steps, in order (Figma "Steps": 3 – 5). |
-| `currentStep` | `number` | `0` | Index of the current step (0-based). Earlier steps are completed, later ones upcoming. |
-| `orientation` | `"horizontal" \| "vertical"` | `horizontal` | Figma "Type". |
+| `steps` *(필수)* | `StepperStep[]` |  | 단계 목록(순서대로). |
+| `currentStep` | `number` | `0` | 지금 단계의 순서(0부터 셈). 앞 단계는 완료, 뒤 단계는 예정으로 보입니다. |
+| `orientation` | `"horizontal" \| "vertical"` | `horizontal` | 방향 — 가로(`horizontal`) · 세로(`vertical`). |
 
 ### `StepperIndicator`
 
 ⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Stepper` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
-Figma component sets `stepper_indicator_horizontal` (179:1621) and `stepper_indicator_vertical` (203:3708): 20px circle (number, CheckCircle when completed, WarningCircle on error) with label and sub label. The root is as wide (horizontal) or as tall (vertical) as the circle; the text overflows it centred, as in Figma.
+단계 하나를 나타내는 원과 글자입니다. 원 안에는 번호가 보이고, 완료이면 체크 아이콘, 오류이면 경고 아이콘이 보입니다. `Stepper`가 안에서 그립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `step` *(필수)* | `number` |  | Step number in the circle (Upcoming · Current · Locked). |
-| `description` | `ReactNode` |  | Figma "Sub-Label Text" ("Sub-Label" on). |
-| `label` | `ReactNode` |  | Figma "Label Text" ("Label" on). |
-| `orientation` | `"horizontal" \| "vertical"` | `horizontal` | Figma set: stepper_indicator_horizontal (text under the circle) or _vertical (text beside it). |
-| `status` | `"error" \| "current" \| "completed" \| "upcoming" \| "locked"` | `upcoming` | Figma "Variant". |
+| `step` *(필수)* | `number` |  | 원 안에 보이는 단계 번호(`upcoming` · `current` · `locked`일 때). |
+| `description` | `ReactNode` |  | 제목 아래 설명. |
+| `label` | `ReactNode` |  | 단계 제목. |
+| `orientation` | `"horizontal" \| "vertical"` | `horizontal` | 방향 — 가로이면 글자가 원 아래, 세로이면 원 옆에 놓입니다. |
+| `status` | `"error" \| "current" \| "completed" \| "upcoming" \| "locked"` | `upcoming` | 단계 상태. |
 
 ### `StepperConnector`
 
 ⚠️ **내부 부품 — 사용 금지**: 상위 컴포넌트 `Stepper` 안에서 그려집니다([public-api.md](./public-api.md#3-사용-금지--내부-api)).
 
-Figma component sets `stepper_connector_horizontal` (179:1614) and `stepper_connector_vertical` (203:4253). The line is an SVG rect so it keeps the Figma geometry (1px centred on the band, i.e. on a half pixel).
+단계 사이를 잇는 선입니다. `Stepper`가 안에서 그립니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `completed` | `boolean` | `false` | Figma "State" Completed. |
-| `orientation` | `"horizontal" \| "vertical"` | `horizontal` | Figma "Type". |
+| `completed` | `boolean` | `false` | 완료 모양으로 그릴지 여부. |
+| `orientation` | `"horizontal" \| "vertical"` | `horizontal` | 방향. |
 
 - 상수: `STEPPER_ORIENTATIONS`, `STEPPER_STATUSES`
 - 타입: `StepperProps`, `StepperStep`, `StepperIndicatorProps` *(내부 — 사용 금지)*, `StepperConnectorProps` *(내부 — 사용 금지)*, `StepperOrientation`, `StepperStatus`
@@ -1171,14 +1171,14 @@ Figma component sets `stepper_connector_horizontal` (179:1614) and `stepper_conn
 
 **공개 컴포넌트**
 
-Figma component set `switch` (107:409). Checked = `checked` / `defaultChecked`; State: Hover / Pressed are the native :hover / :active, Disabled = `disabled`. Renders `<input type="checkbox" role="switch">`; its props (name, checked, onChange, …) and the ref go to it. Space toggles it.
+설정을 켜고 끄는 스위치입니다. 켜짐은 `checked` · `defaultChecked`로 정하고 Space 키로도 바꿀 수 있으며, 나머지 `<input>` 속성과 `ref`는 스위치에 그대로 전달됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `className` | `string` |  | Class name of the root `<label>`. |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". Without a label, give the switch an `aria-label`. |
-| `size` | `"sm" \| "md"` | `sm` | Figma "Size". |
-| `style` | `CSSProperties` |  | Style of the root `<label>`. |
+| `className` | `string` |  | 라벨을 포함한 바깥 요소의 클래스 이름. |
+| `label` | `ReactNode` |  | 스위치 옆에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `size` | `"sm" \| "md"` | `sm` | 크기. |
+| `style` | `CSSProperties` |  | 라벨을 포함한 바깥 요소의 스타일. |
 
 - 상수: `SWITCH_SIZES`
 - 타입: `SwitchProps`, `SwitchSize`
@@ -1189,7 +1189,7 @@ Figma component set `switch` (107:409). Checked = `checked` / `defaultChecked`; 
 
 **공개 컴포넌트**
 
-Data table built from the Figma `table_header` (351:3452) and `table_body` (355:3739) cells, composed as in the Figma table_data example (react-aria-components Table: grid keyboard navigation, selection, sorting, row actions). Rows are clickable when `onRowAction` is set (Figma example Hover / Pressed).
+여러 항목의 데이터를 행과 열로 보여 주는 표입니다. 화살표 키로 칸을 이동하고, 행 선택 · 정렬 · 행 동작을 지원합니다. `onRowAction`이 있으면 행을 누를 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1199,7 +1199,7 @@ Data table built from the Figma `table_header` (351:3452) and `table_body` (355:
 
 **보조 컴포넌트** — `Table` 안
 
-Header row of `TableColumn`s.
+열 머리글 행입니다. 안에 `TableColumn`을 넣습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1209,20 +1209,20 @@ Header row of `TableColumn`s.
 
 **보조 컴포넌트** — `TableHeader` 안
 
-Figma `table_header` Type Text. "Filter" = `allowsSorting` (CaretUpDown; the sort order is announced with aria-sort, the icon turns …/icon/active while sorted), "Info" = `info`.
+열 머리글입니다. `info`를 주면 도움말 아이콘, `allowsSorting`을 주면 정렬 아이콘이 붙습니다. 정렬 중인 열은 아이콘 색이 바뀌고, 정렬 방향은 화면 낭독기에 전달됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Title". |
+| `children` *(필수)* | `ReactNode` |  | 열 제목. |
 | `className` | `string` |  |  |
-| `info` | `ReactNode` |  | Figma "Info": help text shown in a tooltip on the info icon. |
-| `infoLabel` | `string` | `도움말` | Accessible name of the info icon. |
+| `info` | `ReactNode` |  | 도움말. 넘기면 정보 아이콘이 붙고, 아이콘에 마우스를 올리거나 키보드로 선택하면 툴팁으로 보입니다. |
+| `infoLabel` | `string` | `도움말` | 화면 낭독기가 읽는 정보 아이콘 이름. |
 
 ### `TableSelectionColumn`
 
 **보조 컴포넌트** — `TableHeader` 안(다중 선택 표)
 
-Figma `table_header` Type Checkbox: the select-all column (selectionMode="multiple").
+전체 선택 체크박스 열입니다. `selectionMode="multiple"`일 때 씁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1232,7 +1232,7 @@ Figma `table_header` Type Checkbox: the select-all column (selectionMode="multip
 
 **보조 컴포넌트** — `TableHeader` 안(제목 없는 열)
 
-Figma `table_header` Type Empty: a column without a visible title (e.g. for actions); name it with `aria-label`. The name is also inside the header cell as text for screen readers only, so the header is not empty for assistive technology (axe empty-table-header) while it stays blank on screen as in Figma.
+제목이 보이지 않는 열입니다(예: 작업 · 편집 아이콘 열). `aria-label`로 열 이름을 붙이면 화면에는 보이지 않고 화면 낭독기가 읽습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1243,7 +1243,7 @@ Figma `table_header` Type Empty: a column without a visible title (e.g. for acti
 
 **보조 컴포넌트** — `Table` 안
 
-Rows of the table; `renderEmptyState` shows e.g. an `EmptyState` when there are no rows.
+표의 본문입니다. 행이 없을 때 보여 줄 내용(예: `EmptyState`)은 `renderEmptyState`로 넘깁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1253,7 +1253,7 @@ Rows of the table; `renderEmptyState` shows e.g. an `EmptyState` when there are 
 
 **보조 컴포넌트** — `TableBody` 안
 
-A body row. Hover / Pressed backgrounds (Figma example) apply when the row has an action.
+본문 행입니다. 행 동작(`onRowAction`)이 있으면 마우스를 올리거나 누를 때 배경이 바뀝니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1263,18 +1263,18 @@ A body row. Hover / Pressed backgrounds (Figma example) apply when the row has a
 
 **보조 컴포넌트** — `TableRow` 안
 
-Figma `table_body` cell.
+본문 칸입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `className` | `string` |  |  |
-| `variant` | `"strong" \| "text"` | `text` | Figma `table_body` Type: Text (default) or Strong Text. Other types are their components inside the cell. |
+| `variant` | `"strong" \| "text"` | `text` | 글자 모양 — 보통(`text`, 기본) · 굵게(`strong`). 배지 · 버튼 같은 다른 내용은 칸 안에 그 컴포넌트를 넣습니다. |
 
 ### `TableSelectionCell`
 
 **보조 컴포넌트** — `TableRow` 안(다중 선택 표)
 
-Figma `table_body` Type Checkbox: the row selection cell.
+행 선택 체크박스 칸입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1284,7 +1284,7 @@ Figma `table_body` Type Checkbox: the row selection cell.
 
 **보조 컴포넌트** — `TableCell` 안(순서 변경 표)
 
-Figma `table_body` Type Reorder: drag handle (List icon) for tables with `dragAndDropHooks`.
+행을 끌어서 순서를 바꾸는 손잡이입니다. `dragAndDropHooks`가 있는 표에서 씁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1294,32 +1294,32 @@ Figma `table_body` Type Reorder: drag handle (List icon) for tables with `dragAn
 
 **공개 컴포넌트**
 
-Figma table_key-value (example 855:9118): `KeyValueItem`s in a two-column list (`<dl>`). Keys share one column (at least 160px), values fill the rest; only the first row has a top border.
+한 항목의 속성을 이름(키)과 값으로 보여 주는 표입니다. 안에 `KeyValueItem`을 넣습니다. 키 열은 같은 너비(최소 160px)로 맞춰지고, 값 열이 나머지를 채웁니다.
 
 ### `KeyValueItem`
 
 **보조 컴포넌트** — `KeyValueTable` 안
 
-One row: Figma `table_key` (355:4193) + `table_value` (355:4460).
+키-값 표의 한 행입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma `table_value` content: text (Type Text) or a component such as `Badge` (Type Badge). |
-| `label` *(필수)* | `ReactNode` |  | Figma `table_key` "Title". |
-| `disabled` | `boolean` | `false` | Figma `table_value_editable` State Disabled: the cell background (the controls inside take `disabled`). |
-| `editable` | `boolean` | `false` | Figma `table_value_editable` (management mode) with a field — Input, Select, DatePicker (or two for a range): the field shows no frame until it is hovered or focused, so the value reads like text. |
-| `keyProps` | `(Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, "ref"> & { [dataAttribute: `data-${string}`]: string; })` |  | Data attributes for the key cell (e.g. test ids). |
-| `required` | `boolean` | `false` | Figma `table_key` Type Required: red dot after the label (and `requiredLabel` for screen readers). |
-| `requiredLabel` | `string` | `필수` | Text read for the required dot. |
-| `stack` | `boolean` | `false` | Stack the value content vertically, m-2 apart (Figma File Upload cell). |
-| `unit` | `ReactNode` |  | Text after the value (Figma "단위", "Show unit"). |
-| `valueProps` | `(Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, "ref"> & { [dataAttribute: `data-${string}`]: string; })` |  | Data attributes for the value cell. |
+| `children` *(필수)* | `ReactNode` |  | 값. 글자나 `Badge` 같은 컴포넌트를 넣습니다. |
+| `label` *(필수)* | `ReactNode` |  | 키(항목 이름). |
+| `disabled` | `boolean` | `false` | 비활성 칸 배경. 안의 입력 컴포넌트에는 `disabled`를 따로 줍니다. |
+| `editable` | `boolean` | `false` | 편집 칸. Input · Select · DatePicker(기간이면 두 개)를 넣으면 평소에는 글자처럼 보이고, 마우스를 올리거나 편집하는 동안 입력 상자가 보입니다. |
+| `keyProps` | `(Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, "ref"> & { [dataAttribute: `data-${string}`]: string; })` |  | 키 칸에 넘길 속성(예: 테스트 id). |
+| `required` | `boolean` | `false` | 필수 표시. 이름 뒤에 빨간 점이 붙고, 화면 낭독기는 `requiredLabel`을 읽습니다. |
+| `requiredLabel` | `string` | `필수` | 필수 점을 화면 낭독기가 읽는 글자. |
+| `stack` | `boolean` | `false` | 값 내용을 세로로 쌓습니다(예: 파일 첨부 칸). |
+| `unit` | `ReactNode` |  | 값 뒤에 붙는 단위 글자. |
+| `valueProps` | `(Omit<DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>, "ref"> & { [dataAttribute: `data-${string}`]: string; })` |  | 값 칸에 넘길 속성. |
 
 ### `KeyValueGroup`
 
 **보조 컴포넌트** — `KeyValueItem` 안(값 여러 개를 한 줄로)
 
-A row of value content m-2 apart (e.g. a button and its hint, or chips and a reset button).
+값 칸 안에서 여러 내용을 가로로 나란히 둡니다(예: 버튼과 안내 글자, 필터 칩과 초기화 버튼).
 
 - 타입: `TableProps`, `TableHeaderProps`, `TableColumnProps`, `TableBodyProps`, `TableRowProps`, `TableCellProps`, `KeyValueTableProps`, `KeyValueItemProps`
 
@@ -1329,28 +1329,28 @@ A row of value content m-2 apart (e.g. a button and its hint, or chips and a res
 
 **공개 컴포넌트**
 
-Figma component sets `tab_filled` (91:5000) and `tab_line` (91:5241). Arrow keys move between tabs, Home / End jump to the ends (react-aria-components tablist pattern). State: Hover / Pressed = :hover / press, Selected = the selected tab, Disabled = `disabledKeys` or `Tab disabled`.
+한 화면의 내용을 탭으로 나눠 보여 줍니다. ← → 방향키로 탭을 옮기고, Home · End로 처음과 끝 탭으로 갑니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | `TabList` and `TabPanel`s. |
-| `appearance` | `"line" \| "filled"` | `line` | Figma set: `tab_filled` (filled) or `tab_line` (line). |
+| `children` *(필수)* | `ReactNode` |  | `TabList`와 `TabPanel`들. |
+| `appearance` | `"line" \| "filled"` | `line` | 모양 — 밑줄(`line`) · 채움(`filled`). |
 | `className` | `string` |  |  |
-| `defaultSelectedKey` | `Key` |  | Initially selected tab id (uncontrolled). |
-| `disabledKeys` | `Iterable<Key>` |  | Tab ids that cannot be selected (Figma State "Disabled"). |
-| `keyboardActivation` | `"manual" \| "automatic"` | `'automatic'` | Activate a tab on focus (automatic) or on Enter / Space (manual). |
-| `onSelectionChange` | `((key: Key) => void)` |  | Called with the newly selected tab id. |
-| `selectedKey` | `Key` |  | Selected tab id (controlled). |
-| `shape` | `"square" \| "rounded"` | `square` | Figma "Shape" (filled only). |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | Figma "Size". |
+| `defaultSelectedKey` | `Key` |  | 처음 선택할 탭의 `id`. `selectedKey` 없이 탭이 스스로 선택을 관리할 때 씁니다. |
+| `disabledKeys` | `Iterable<Key>` |  | 고를 수 없는 탭의 `id` 목록(비활성). |
+| `keyboardActivation` | `"manual" \| "automatic"` | `'automatic'` | 방향키로 옮기면 바로 선택(`automatic`)할지, Enter · Space를 눌러야 선택(`manual`)할지 정합니다. |
+| `onSelectionChange` | `((key: Key) => void)` |  | 선택이 바뀌면 새로 선택된 탭의 `id`로 호출됩니다. |
+| `selectedKey` | `Key` |  | 선택된 탭의 `id`. 넘기면 선택을 바깥에서 관리합니다. |
+| `shape` | `"square" \| "rounded"` | `square` | 모서리 모양(`filled`에만 적용). |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
 | `style` | `CSSProperties` |  |  |
-| `variant` | `"primary" \| "secondary"` | `primary` | Figma "Variant" — the Selected colour (Primary #004a38 · Secondary #007c56). |
+| `variant` | `"primary" \| "secondary"` | `primary` | 종류 — 선택된 탭의 색. |
 
 ### `TabList`
 
 **보조 컴포넌트** — `Tabs` 안
 
-The row of tabs. Figma defines no spacing between tabs, so they sit side by side.
+탭을 한 줄로 늘어놓는 탭 목록입니다. 탭은 간격 없이 나란히 놓입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1360,19 +1360,19 @@ The row of tabs. Figma defines no spacing between tabs, so they sit side by side
 
 **보조 컴포넌트** — `TabList` 안
 
-One tab (Figma tab_filled / tab_line variant). `id` links it to its `TabPanel`.
+탭 하나입니다. 같은 `id`를 가진 `TabPanel`과 짝을 이룹니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Label Text". |
+| `children` *(필수)* | `ReactNode` |  | 탭 글자. |
 | `className` | `string` |  |  |
-| `disabled` | `boolean` |  | Figma State "Disabled". |
+| `disabled` | `boolean` |  | 비활성 — 고를 수 없고, 방향키로 옮길 때도 건너뜁니다. |
 
 ### `TabPanel`
 
 **보조 컴포넌트** — `Tabs` 안
 
-Content of a tab (not styled in Figma).
+탭 하나의 내용입니다. 따로 꾸밈이 없으므로 내용의 여백 등은 직접 정합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1387,18 +1387,18 @@ Content of a tab (not styled in Figma).
 
 **공개 컴포넌트**
 
-Figma component set `textarea` (86:2597) with `textarea_message` (86:2733). The container is 100px high as in Figma; the text scrolls inside it. Native textarea props and the ref go to the `<textarea>`.
+여러 줄 글자를 입력받는 입력 칸입니다. 높이가 고정되어 내용이 넘치면 안에서 스크롤되고, 나머지 `<textarea>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `className` | `string` |  | Class name of the root element. |
-| `invalid` | `boolean` | `false` | Figma State "Error". |
-| `label` | `ReactNode` |  | Figma "Label" + "Label Text". |
-| `message` | `ReactNode` |  | Figma "Alert" + "Alert Text" (textarea_message). |
-| `messageType` | `"info" \| "success" \| "error"` | `'error' when invalid, otherwise 'info'` | Figma textarea_message "Type". |
-| `showCount` | `boolean` | `true` | Figma "Counter": shows `current/maxLength` when `maxLength` is set. |
-| `size` | `"sm" \| "md"` | `sm` | Figma "Size". |
-| `style` | `CSSProperties` |  | Style of the root element. |
+| `className` | `string` |  | 바깥 요소의 클래스 이름. |
+| `invalid` | `boolean` | `false` | 오류 — 오류 테두리로 표시합니다. |
+| `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
+| `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
+| `showCount` | `boolean` | `true` | `maxLength`가 있을 때 `입력한 글자 수/최대 글자 수`를 보여 줍니다. |
+| `size` | `"sm" \| "md"` | `sm` | 크기. |
+| `style` | `CSSProperties` |  | 바깥 요소의 스타일. |
 
 - 상수: `TEXTAREA_SIZES`
 - 타입: `TextareaProps`, `TextareaSize`
@@ -1409,28 +1409,28 @@ Figma component set `textarea` (86:2597) with `textarea_message` (86:2733). The 
 
 **공개 컴포넌트**
 
-Figma component set `toast` (91:5927) as a static element (e.g. inside a page). For notifications that appear and disappear use `<ToastRegion />` with `showToast()`.
+토스트를 페이지 안에 고정으로 그립니다. 나타났다 사라지는 토스트는 `<ToastRegion />`과 `showToast()`를 씁니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | Figma "Alert Text". |
-| `closeLabel` | `string` | `알림 닫기` | Accessible name of the close button. |
-| `onClose` | `(() => void)` |  | Called by the close button. |
-| `showClose` | `boolean` | `true` | Figma "Close Icon". |
-| `status` | `"success" \| "error" \| "information"` | `information` | Figma "Status". |
+| `children` *(필수)* | `ReactNode` |  | 메시지. 한 줄로 보이며 길면 말줄임으로 잘립니다. |
+| `closeLabel` | `string` | `알림 닫기` | 화면 낭독기가 읽는 닫기 버튼 이름. |
+| `onClose` | `(() => void)` |  | 닫기 버튼을 누르면 호출됩니다. |
+| `showClose` | `boolean` | `true` | 닫기 버튼을 표시합니다. |
+| `status` | `"success" \| "error" \| "information"` | `information` | 종류 — 안내 · 성공 · 오류. |
 
 ### `ToastRegion`
 
 **공개 컴포넌트**
 
-Shows queued toasts (react-aria-components Toast — UNSTABLE in 1.22, wrapped here so the package API stays stable): a labelled region, each toast announced, timers paused while hovered or focused, close button dismisses.
+`showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다. 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드로 선택한 동안에는 자동으로 닫히지 않습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `aria-label` | `string` | `알림` | Accessible name of the region. |
-| `className` | `string` |  |  |
-| `closeLabel` | `string` | `알림 닫기` | Accessible name of the close buttons. |
-| `queue` | `ToastQueue<ToastContent>` | `new ToastQueue<ToastContent>({ maxVisibleToasts: 3 })` | Queue to show. |
+| `aria-label` | `string` | `알림` | 화면 낭독기가 읽는 토스트 영역 이름. |
+| `className` | `string` |  | 영역의 클래스. 토스트가 나타나는 위치를 바꿀 때 씁니다. |
+| `closeLabel` | `string` | `알림 닫기` | 화면 낭독기가 읽는 닫기 버튼 이름. |
+| `queue` | `ToastQueue<ToastContent>` | `new ToastQueue<ToastContent>({ maxVisibleToasts: 3 })` | 보여 줄 토스트 목록. 지정하지 않으면 `showToast`가 쓰는 기본 목록을 보여 줍니다. |
 
 - 함수: `showToast`, `closeToast`
 - 타입: `ToastProps`, `ToastRegionProps`, `ToastContent`
@@ -1442,21 +1442,21 @@ Shows queued toasts (react-aria-components Toast — UNSTABLE in 1.22, wrapped h
 
 **공개 컴포넌트**
 
-Figma component set `tooltip` (149:1111): a short label shown on hover and keyboard focus (react-aria-components TooltipTrigger: role="tooltip", aria-describedby on the trigger, Escape closes).
+마우스를 올리거나 키보드로 선택하면 짧은 설명을 보여 주는 툴팁입니다. Esc를 누르면 닫힙니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactElement<unknown, string \| JSXElementConstructor<any>>` |  | The element that shows the tooltip on hover and keyboard focus (must forward its ref and props, e.g. `Button`). |
-| `content` *(필수)* | `ReactNode` |  | Figma "Message Text". |
-| `className` | `string` |  | Class of the tooltip bubble. |
-| `closeDelay` | `number` | `500` | Delay before hiding, in ms. |
-| `defaultOpen` | `boolean` |  | Initial open state (uncontrolled). |
-| `delay` | `number` | `500` | Hover delay before showing, in ms (keyboard focus shows it at once) — Design System Rules 05. |
-| `disabled` | `boolean` |  | Disables the tooltip. |
-| `onOpenChange` | `((open: boolean) => void)` |  | Called when the tooltip opens or closes. |
-| `open` | `boolean` |  | Open state (controlled). |
-| `placement` | `"bottom" \| "top" \| "left" \| "right"` | `top` | Figma "Placement": side of the trigger. Flips when there is no room. |
-| `showArrow` | `boolean` | `true` | Figma "Arrow". |
+| `children` *(필수)* | `ReactElement<unknown, string \| JSXElementConstructor<any>>` |  | 툴팁을 띄울 요소. ref와 props를 전달하는 컴포넌트여야 합니다(예: `Button`). |
+| `content` *(필수)* | `ReactNode` |  | 툴팁에 보여 줄 설명. |
+| `className` | `string` |  | 툴팁 말풍선의 클래스. |
+| `closeDelay` | `number` | `500` | 마우스나 포커스가 떠난 뒤 닫히기까지의 시간(ms). |
+| `defaultOpen` | `boolean` |  | 처음 열림 여부. 직접 제어하지 않을 때 씁니다. |
+| `delay` | `number` | `500` | 마우스를 올린 뒤 나타나기까지의 시간(ms). 키보드로 선택하면 바로 나타납니다. |
+| `disabled` | `boolean` |  | 툴팁을 끕니다. |
+| `onOpenChange` | `((open: boolean) => void)` |  | 툴팁이 열리거나 닫힐 때 호출됩니다. |
+| `open` | `boolean` |  | 열림 여부. 직접 제어할 때 씁니다. |
+| `placement` | `"bottom" \| "top" \| "left" \| "right"` | `top` | 나타날 쪽. 공간이 없으면 반대쪽에 나타납니다. |
+| `showArrow` | `boolean` | `true` | 화살표를 표시합니다. |
 
 - 상수: `TOOLTIP_PLACEMENTS`
 - 타입: `TooltipProps`, `TooltipPlacement`

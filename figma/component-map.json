@@ -1,0 +1,199 @@
+{
+  "//": "React component -> Figma component set names (version-independent). Node IDs come from figma/geometry/<set>.json of the current Figma version (docs/figma-sync.md).",
+  "components": {
+    "Button": [
+      "button_basic"
+    ],
+    "IconButton": [
+      "button_icon"
+    ],
+    "TextButton": [
+      "button_text"
+    ],
+    "Input": [
+      "input",
+      "input_message"
+    ],
+    "Textarea": [
+      "textarea",
+      "textarea_message"
+    ],
+    "SearchField": [
+      "search-field"
+    ],
+    "Checkbox": [
+      "checkbox"
+    ],
+    "Switch": [
+      "switch"
+    ],
+    "Select": [
+      "select",
+      "listbox",
+      "option"
+    ],
+    "Slider": [
+      "slider",
+      "handle"
+    ],
+    "SegmentedControl": [
+      "segmented-control",
+      "segmented-item"
+    ],
+    "Chip": [
+      "chip-multi"
+    ],
+    "InputChip": [
+      "chip-input"
+    ],
+    "FilterChip": [
+      "chip-filter"
+    ],
+    "FilterChipSelect": [
+      "chip-filter"
+    ],
+    "Calendar": [
+      "date-picker_calendar",
+      "date-picker_header",
+      "date-picker_day"
+    ],
+    "DatePicker": [
+      "date-picker_trigger",
+      "date-picker_message"
+    ],
+    "Loading": [
+      "loading"
+    ],
+    "FileUploader": [
+      "file-uploader"
+    ],
+    "Link": [
+      "link"
+    ],
+    "Tabs": [
+      "tab_filled",
+      "tab_line"
+    ],
+    "Pagination": [
+      "pagination"
+    ],
+    "DropdownMenu": [
+      "dropdownmenu_item",
+      "dropdownmenu_line"
+    ],
+    "Breadcrumb": [
+      "breadcrumb"
+    ],
+    "Stepper": [
+      "stepper_horizontal",
+      "stepper_vertical"
+    ],
+    "Badge": [
+      "badge_status"
+    ],
+    "BadgeDot": [
+      "badge_dot"
+    ],
+    "BadgeCount": [
+      "badge_count"
+    ],
+    "Progress": [
+      "progress"
+    ],
+    "Alert": [
+      "alert"
+    ],
+    "Toast": [
+      "toast"
+    ],
+    "Tooltip": [
+      "tooltip"
+    ],
+    "EmptyState": [
+      "empty-state"
+    ],
+    "AccordionItem": [
+      "accordion-item"
+    ],
+    "Dialog": [
+      "dialog"
+    ],
+    "Table": [
+      "table_header",
+      "table_body"
+    ],
+    "Chart": [
+      "chart"
+    ],
+    "Skeleton": [
+      "skeleton"
+    ],
+    "MetricTrend": [
+      "metric-trend"
+    ],
+    "DataFreshness": [
+      "data-freshness"
+    ],
+    "MetricCard": [
+      "metric-card"
+    ],
+    "DataState": [
+      "data-state"
+    ],
+    "DashboardFilterBar": [
+      "dashboard-filter-bar"
+    ],
+    "Radio": [
+      "radio"
+    ],
+    "SelectOption": [
+      "option"
+    ],
+    "NavLink": [
+      "item_link"
+    ],
+    "NavChild": [
+      "item_child"
+    ],
+    "KeyValueItem": [
+      "table_key",
+      "table_value"
+    ],
+    "FileUploaderItem": [
+      "file-uploader-item"
+    ],
+    "ChartLegendItem": [
+      "chart-legend-item"
+    ],
+    "ChartTooltip": [
+      "chart-tooltip"
+    ],
+    "PaginationItem": [
+      "pagination_item"
+    ],
+    "PaginationControl": [
+      "pagination_control"
+    ],
+    "BreadcrumbItem": [
+      "breadcrumb-item"
+    ],
+    "BreadcrumbSeparator": [
+      "breadcrumb-modern-separator"
+    ],
+    "StepperIndicator": [
+      "stepper_indicator_horizontal",
+      "stepper_indicator_vertical"
+    ],
+    "StepperConnector": [
+      "stepper_connector_horizontal",
+      "stepper_connector_vertical"
+    ],
+    "NavParentItem": [
+      "item_parent"
+    ]
+  },
+  "nodeIdsNotInSnapshot": {
+    "//": "Node IDs of the current Figma version (🔵 Ver 0.4) for sets missing from figma/metadata and figma/geometry — update on a new version.",
+    "breadcrumb-modern-separator": "710:4795"
+  }
+}

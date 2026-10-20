@@ -1,6 +1,6 @@
 # Figma ↔ Storybook 동기화 상태 (컴포넌트별)
 
-생성: 2026-10-19 09:28 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-19 09:11 UTC), 스토리 테스트 + a11y 리포터 실행, Usage 문서의 Figma 속성 대조.
+생성: 2026-10-20 01:20 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-20 00:55 UTC), 스토리 테스트 + a11y 리포터 실행, 개발 노트(docs/components)의 Figma 속성 대조.
 
 | 열 | 기준 |
 | --- | --- |
@@ -9,7 +9,7 @@
 | 시각적 정합성 확인 | 변형별 DOM · 픽셀 · 글자 위치 검사 통과 수 — Chromium / Firefox / WebKit. "수동 검토"는 검증 설정에 이유와 함께 비교에서 뺀 변형(Table Textarea 두 줄 값, F58)으로, 통과로 세지 않음 |
 | 인터랙션 검증 | 컴포넌트 스토리의 `play` 함수 수와 스토리 테스트 결과(실제 브라우저 Vitest) |
 | 접근성 검증 | Storybook a11y(axe 기본 규칙) 경고가 있는 스토리 수 — 사이드바 삼각형과 같은 결과 |
-| 문서 동기화 완료 | Usage MDX가 있고 모든 Figma 속성(변형 축 · Boolean · 글자 · 인스턴스)이 문서에 언급됨 |
+| 문서 동기화 완료 | Storybook 사용 방법 문서가 있고, 모든 Figma 속성(변형 축 · Boolean · 글자 · 인스턴스)이 개발 노트의 Figma ↔ Props 대응에 있음 |
 
 | 컴포넌트 | Figma 정의 확인 | Storybook 구현 확인 | 시각적 정합성 확인 (C / F / W) | 인터랙션 검증 | 접근성 검증 | 문서 동기화 완료 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -53,8 +53,59 @@
 
 요약: 37개 검증 단위 — Figma 정의 37 · 구현 37 · 시각 3 엔진 37(수동 검토 변형 제외 모두 통과) · 인터랙션 37 · 접근성 37 · 문서 37. 스토리 테스트 396개(실패 0, a11y 경고 0).
 
+## 문서 점검 (2026-10-20 문서 · 정책 간소화)
+
+| 열 | 기준 |
+| --- | --- |
+| 사용 방법 문서 | 쉬운 한국어 구성(언제 사용하나요 · 사용 방법 · Props 절)이고, 원문에 노드 · 변수 ID · 버전명 · 날짜 · 정책 항목 ID · 내부 파일 경로 · MCP가 없음(코드 예제 · 예시 데이터 제외) |
+| 화면 문구 검사 | 렌더링된 문서 페이지와 모든 스토리 화면에서 노드 ID · 버전명 · 날짜 · 파일 경로 · 정책 ID · 영어 문장(단어 6개 이상)이 나온 횟수 — Storybook 자체 UI 문구 · 예시 데이터 제외 |
+| 개발 노트 | `docs/components/<Name>.md`가 있고 Figma 속성 ↔ Props 대응이 모두 있음 |
+
+| 컴포넌트 | 사용 방법 문서 | 화면 문구 검사 | 개발 노트 |
+| --- | --- | --- | --- |
+| button | ✓ | ✓ 0 | ✓ |
+| accordion | ✓ | ✓ 0 | ✓ |
+| alert | ✓ | ✓ 0 | ✓ |
+| badge | ✓ | ✓ 0 | ✓ |
+| breadcrumb | ✓ | ✓ 0 | ✓ |
+| card | ✓ | ✓ 0 | ✓ |
+| chart | ✓ | ✓ 0 | ✓ |
+| checkbox | ✓ | ✓ 0 | ✓ |
+| chip | ✓ | ✓ 0 | ✓ |
+| dashboard-filter-bar | ✓ | ✓ 0 | ✓ |
+| data-freshness | ✓ | ✓ 0 | ✓ |
+| data-state | ✓ | ✓ 0 | ✓ |
+| date-picker | ✓ | ✓ 0 | ✓ |
+| dialog | ✓ | ✓ 0 | ✓ |
+| dropdown-menu | ✓ | ✓ 0 | ✓ |
+| empty-state | ✓ | ✓ 0 | ✓ |
+| file-uploader | ✓ | ✓ 0 | ✓ |
+| input | ✓ | ✓ 0 | ✓ |
+| link | ✓ | ✓ 0 | ✓ |
+| metric-card | ✓ | ✓ 0 | ✓ |
+| metric-trend | ✓ | ✓ 0 | ✓ |
+| navigation | ✓ | ✓ 0 | ✓ |
+| pagination | ✓ | ✓ 0 | ✓ |
+| progress | ✓ | ✓ 0 | ✓ |
+| radio | ✓ | ✓ 0 | ✓ |
+| search-field | ✓ | ✓ 0 | ✓ |
+| segmented-control | ✓ | ✓ 0 | ✓ |
+| select | ✓ | ✓ 0 | ✓ |
+| skeleton | ✓ | ✓ 0 | ✓ |
+| slider | ✓ | ✓ 0 | ✓ |
+| stepper | ✓ | ✓ 0 | ✓ |
+| switch | ✓ | ✓ 0 | ✓ |
+| table | ✓ | ✓ 0 | ✓ |
+| tabs | ✓ | ✓ 0 | ✓ |
+| textarea | ✓ | ✓ 0 | ✓ |
+| toast | ✓ | ✓ 0 | ✓ |
+| tooltip | ✓ | ✓ 0 | ✓ |
+
+요약: 사용 방법 문서 37/37 · 화면 문구 37/37 · 개발 노트 37/37. 화면 검사 대상: Storybook의 모든 문서 페이지와 스토리(렌더링 결과).
+
 검증 설정에 따로 없는 Figma 세트 3개: `input_message` 83:3009 — `input` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만) · `textarea_message` 86:2733 — `textarea` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만) · `date-picker_header` 144:1377 — `date-picker_calendar` 변형 안의 인스턴스로 검증(부모 변형에 나오는 유형만).
 
 **자동으로 검증하지 못한 부분(미검증)**: 실제 화면 낭독기(NVDA · JAWS · VoiceOver)의 낭독 내용, 실제 터치 기기 · 모바일 브라우저,
-Figma 프로토타입 연결(대조 대상 아님 — Figma 쪽 동작 기준은 변형 · Design System Rules · 컴포넌트 주석이며 문서 대조로만 확인),
-Figma 주석 · Rules 문구의 의미 일치(사람 검토). 시각 정합성은 검증 설정이 매핑한 레이어 · 픽셀 범위 안에서만 판정합니다.
+Figma 프로토타입 연결(대조 대상 아님 — Figma 쪽 동작 기준은 변형 · Design System Rules이며 문서 대조로만 확인),
+Figma Rules 문구와 Storybook 설명의 의미 일치 · 한국어 표현의 자연스러움(사람 검토 — 자동 검사는 기술 정보 · 영어 문장 유무만 판정).
+시각 정합성은 검증 설정이 매핑한 레이어 · 픽셀 범위 안에서만 판정합니다.

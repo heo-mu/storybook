@@ -3,21 +3,20 @@ import { cx } from '../../utils/cx';
 import { useSegmentedControl } from './SegmentedControlContext';
 
 export type SegmentedControlItemProps = Omit<ComponentPropsWithoutRef<'input'>, 'type' | 'value' | 'className' | 'style' | 'children' | 'size'> & {
-  /** Value of this item in the SegmentedControl. */
+  /** `SegmentedControl` 안에서 이 옵션을 구분하는 값. */
   value: string;
-  /** Figma "Label". */
+  /** 옵션 글자. */
   children: ReactNode;
-  /** Figma State "Disabled" for this item only. */
+  /** 이 옵션만 비활성으로 만듭니다. */
   disabled?: boolean;
-  /** Class name of the item `<label>`. */
+  /** 옵션 요소의 클래스 이름. */
   className?: string;
-  /** Style of the item `<label>`. */
+  /** 옵션 요소의 스타일. */
   style?: CSSProperties;
 };
 
 /**
- * One segment (Figma `segmented-item`). Variant Selected = the control's value; State Hover / Pressed are
- * :hover / :active, Disabled = `disabled` here or on the control. Renders a visually hidden native radio.
+ * `SegmentedControl` 안의 옵션 하나입니다. 컨트롤의 값이 이 옵션의 `value`와 같으면 선택됨으로 표시됩니다.
  */
 export const SegmentedControlItem = forwardRef<HTMLInputElement, SegmentedControlItemProps>(function SegmentedControlItem(
   { value, children, disabled, className, style, onChange, ...rest },

@@ -6,19 +6,18 @@ import { resolveAppearance, type ButtonDisabledProp, type ButtonShape, type Butt
 export type IconButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'aria-label' | 'disabled'> &
   ButtonToneProps &
   ButtonDisabledProp & {
-    /** Figma "Size". @default 'xs' */
+    /** 크기. @default 'xs' */
     size?: IconButtonSize;
-    /** Figma "Shape". @default 'square' */
+    /** 모서리 모양. @default 'square' */
     shape?: ButtonShape;
-    /** The icon instance. Sized to 16px (20px at md). */
+    /** 표시할 아이콘. 버튼 크기에 맞춰집니다. */
     icon: ReactNode;
-    /** Accessible name — the Figma component keeps its "Label" text layer hidden. */
+    /** 화면 낭독기가 읽는 버튼 이름(필수). */
     'aria-label': string;
   };
 
 /**
- * Figma component set `button_icon` (67:2368).
- * State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
+ * 아이콘만 있는 버튼입니다. 종류 · 모양 · 상태는 Button과 같고, `aria-label`로 이름을 꼭 붙입니다.
  */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
   { variant = 'primary', appearance, size = 'xs', shape = 'square', icon, className, type = 'button', ...rest },

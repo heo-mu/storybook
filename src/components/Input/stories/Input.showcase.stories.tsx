@@ -4,11 +4,13 @@ import { Input } from '../Input';
 import { FIELD_SIZES, type FieldSize } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs input`.
 const meta = {
-  title: 'Components/Input/Showcase',
+  title: '컴포넌트/Input/전체 보기',
+  id: 'components-input-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -36,6 +38,7 @@ function figmaVariant(size: FieldSize, state: State) {
 }
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -61,6 +64,7 @@ export const Overview: Story = {
 
 /** All 21 Figma variants: Size (rows) × State (columns). */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -78,11 +82,12 @@ export const VariantMatrix: Story = {
 
 /** Every state at size sm. */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <StorySection title="State">
       {STATES.map((state) => (
         <div key={state} style={{ width: 320 }}>
-          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{state}</div>
+          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{koLabel(state)}</div>
           <Input {...figmaVariant('sm', state)} />
         </div>
       ))}
@@ -92,6 +97,7 @@ export const States: Story = {
 
 /** Typing fills the field (Completed), the clear button empties it, the eye toggles password visibility. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => (
     <div style={{ width: 320, display: 'grid', gap: 24 }}>
       <Input label="이름" placeholder="이름 입력" />
@@ -126,6 +132,7 @@ export const Interaction: Story = {
 
 /** Label, error and message wiring for assistive technology. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ width: 320 }}>
       <Input label="전화번호" defaultValue="010-12" invalid message="전화번호 형식이 아닙니다." />

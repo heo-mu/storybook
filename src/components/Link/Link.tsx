@@ -4,23 +4,22 @@ import { cx } from '../../utils/cx';
 import type { LinkSize } from './Link.options';
 
 export type LinkProps = Omit<ComponentPropsWithoutRef<'a'>, 'children'> & {
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: LinkSize;
-  /** Figma "Label Text". */
+  /** 링크 글자. */
   children: ReactNode;
-  /** Opens in a new tab (`target="_blank"`, `rel="noopener noreferrer"`) and announces it. */
+  /** 새 창으로 엽니다. 화면 낭독기는 글자 뒤에 `newTabLabel`을 함께 읽습니다. */
   external?: boolean;
-  /** Figma "Icon" (arrow-square-out). @default `external` */
+  /** 새 창 아이콘 표시 여부. @default `external` */
   showIcon?: boolean;
-  /** Figma State "Disabled": rendered without `href`, `aria-disabled`, not focusable. */
+  /** 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. */
   disabled?: boolean;
-  /** Text read after the label for external links. @default '(새 창)' */
+  /** 새 창 링크에서 화면 낭독기가 글자 뒤에 읽는 말. @default '(새 창)' */
   newTabLabel?: string;
 };
 
 /**
- * Figma component set `link` (111:1509). State: Hover / Pressed / Visited are :hover / :active / :visited,
- * Disabled = `disabled`. Renders a native `<a>`.
+ * 다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다. 마우스를 올리거나 누르면 모양이 바뀌고, 방문한 링크는 방문한 모양으로 보입니다.
  */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { size = 'sm', children, external = false, showIcon, disabled = false, newTabLabel = '(새 창)', href, target, rel, onClick, className, ...rest },

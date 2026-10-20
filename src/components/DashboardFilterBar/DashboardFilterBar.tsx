@@ -2,18 +2,17 @@ import { Children, forwardRef, Fragment, useId, type ComponentPropsWithoutRef, t
 import { cx } from '../../utils/cx';
 
 export type DashboardFilterBarProps = ComponentPropsWithoutRef<'div'> & {
-  /** `DashboardFilterGroup`s; a "|" divider is drawn between them. */
+  /** 조건 묶음(`DashboardFilterGroup`). 묶음 사이에 구분선이 들어갑니다. */
   children: ReactNode;
-  /** Buttons at the right end (Figma: reset icon button and "조회"). */
+  /** 오른쪽 끝 버튼(예: 초기화 아이콘 버튼과 "조회"). */
   actions?: ReactNode;
-  /** Name of the search landmark. @default '조회 조건' */
+  /** 화면 낭독기가 읽는 검색 영역 이름. @default '조회 조건' */
   'aria-label'?: string;
 };
 
 /**
- * Figma component `dashboard-filter-bar` (698:4163): the query conditions of a dashboard — filter groups m-6 apart
- * with "|" dividers, and actions p-3 apart at the right, m-4 from the filters, in a white card (padding 16,
- * radius 12, elevation-3 shadow). A `search` landmark.
+ * 대시보드의 조회 조건을 한곳에 모아 보여 주는 막대입니다. 조건 묶음 사이에 구분선이 들어가고, 오른쪽 끝에 버튼을 둡니다.
+ * 화면이 좁으면 묶음 단위로 다음 줄로 넘어갑니다.
  */
 export const DashboardFilterBar = forwardRef<HTMLDivElement, DashboardFilterBarProps>(function DashboardFilterBar(
   { children, actions, className, 'aria-label': ariaLabel = '조회 조건', ...rest },
@@ -40,13 +39,13 @@ export const DashboardFilterBar = forwardRef<HTMLDivElement, DashboardFilterBarP
 });
 
 export type DashboardFilterGroupProps = ComponentPropsWithoutRef<'div'> & {
-  /** Figma group label ("조회 대상", "조회 기간" …, sm/leading-normal/medium, text/tertiary); names the group. */
+  /** 묶음 라벨(예: "조회 대상", "조회 기간"). 화면 낭독기도 이 라벨을 묶음 이름으로 읽습니다. */
   label?: ReactNode;
-  /** The controls (Select, FilterChip, SegmentedControl, DatePicker …), p-2 apart. Give each an `aria-label`. */
+  /** 컨트롤(Select · FilterChip · SegmentedControl · DatePicker 등). 컨트롤마다 `aria-label`을 붙입니다. */
   children: ReactNode;
 };
 
-/** A labelled group of controls in a `DashboardFilterBar` (`role="group"`, named by its label). */
+/** `DashboardFilterBar` 안의 라벨이 붙은 컨트롤 묶음입니다. */
 export const DashboardFilterGroup = forwardRef<HTMLDivElement, DashboardFilterGroupProps>(function DashboardFilterGroup(
   { label, children, className, ...rest },
   ref,
@@ -66,13 +65,13 @@ export const DashboardFilterGroup = forwardRef<HTMLDivElement, DashboardFilterGr
 });
 
 export type DashboardFilterRangeProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** Start control (e.g. a DatePicker with `aria-label="시작일"`). */
+  /** 시작 컨트롤(예: `aria-label="시작일"`인 DatePicker). */
   from: ReactNode;
-  /** End control. */
+  /** 끝 컨트롤. */
   to: ReactNode;
 };
 
-/** Two controls joined by "~" (text/tertiary), m-2 apart — the Figma date range. */
+/** 두 컨트롤을 "~"로 이어 기간을 나타냅니다. */
 export const DashboardFilterRange = forwardRef<HTMLDivElement, DashboardFilterRangeProps>(function DashboardFilterRange(
   { from, to, className, ...rest },
   ref,

@@ -4,25 +4,26 @@ import { KeyValueItem, KeyValueTable, Table, TableBody, TableCell, TableColumn, 
 import { Badge } from '../Badge';
 import { Button } from '../Button';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Table.showcase.stories.tsx
+// 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/Table.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Table/Table',
+  title: '컴포넌트/Table/Table',
+  id: 'components-table-table',
   component: Table,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Data table from the Figma cells **table_header** (351:3452) and **table_body** (355:3739) on react-aria-components ' +
-          'Table: `Table` > `TableHeader` (`TableColumn` — Info → `info`, Filter → `allowsSorting`; `TableSelectionColumn`; ' +
-          '`TableEmptyColumn`) + `TableBody` > `TableRow` > `TableCell` (`variant` text / strong; Badge, Button, Switch, icons ' +
-          'inside; `TableSelectionCell`; `TableDragHandle`). Rows with `onRowAction` show the Figma Hover / Pressed rows. ' +
-          'Key-value: `KeyValueTable` > `KeyValueItem` (table_key + table_value).',
+          '여러 항목의 데이터를 행과 열로 보여 주는 표입니다. 행 선택은 `selectionMode`, 행을 눌렀을 때의 동작은 `onRowAction`으로 정하고, ' +
+          '한 항목의 속성은 `KeyValueTable`로 보여 줍니다.',
       },
     },
   },
   args: { 'aria-label': '설비 목록', selectionMode: 'multiple', onRowAction: fn(), onSelectionChange: fn(), children: null },
-  argTypes: { children: { control: false }, selectionMode: { control: 'inline-radio', options: ['none', 'single', 'multiple'] } },
+  argTypes: {
+    children: { control: false, description: '머리글(`TableHeader`)과 본문(`TableBody`)' },
+    selectionMode: { control: 'inline-radio', options: ['none', 'single', 'multiple'], description: '행 선택 방식 — 없음(none) · 하나(single) · 여러 개(multiple)' },
+  },
   render: (args) => (
     <Table {...args}>
       <TableHeader>
@@ -61,14 +62,18 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** 행 선택 방식을 바꿔 볼 수 있습니다. 행을 누르면 `onRowAction`이 호출됩니다. */
+export const Playground: Story = { name: '직접 체험' };
 
+/** 행 선택 체크박스 없이 쓰는 표입니다. */
 export const WithoutSelection: Story = {
+  name: '선택 없음',
   args: { selectionMode: 'none' },
 };
 
-/** `KeyValueTable` for the properties of one item. */
+/** 한 항목의 속성을 이름과 값으로 보여 주는 키-값 표입니다. */
 export const KeyValue: Story = {
+  name: '키-값 표',
   render: () => (
     <KeyValueTable style={{ width: 480 }}>
       <KeyValueItem label="설비명" required>

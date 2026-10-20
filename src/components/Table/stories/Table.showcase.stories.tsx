@@ -24,7 +24,8 @@ import { NotePencilIcon } from '../../../icons';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs table` (sets table_header, table_body).
 const meta = {
-  title: 'Components/Table/Showcase',
+  title: '컴포넌트/Table/전체 보기',
+  id: 'components-table-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -40,6 +41,7 @@ const ROWS: Item[] = [
 ];
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <Table aria-label="설비 목록" selectionMode="multiple" onRowAction={() => {}}>
       <TableHeader>
@@ -96,6 +98,7 @@ function HeaderCell({ type }: { type: 'Text' | 'Checkbox' | 'Empty' }) {
 
 /** Figma `table_header` (3): Type Text · Checkbox · Empty. */
 export const HeaderMatrix: Story = {
+  name: '머리글 모든 변형',
   render: () => (
     <div style={{ display: 'flex', gap: 40, alignItems: 'flex-start' }}>
       <HeaderCell type="Text" />
@@ -142,6 +145,7 @@ function ReorderCell() {
 
 /** Figma `table_body` (8): the cell types. */
 export const BodyMatrix: Story = {
+  name: '본문 칸 모든 변형',
   render: () => (
     <div style={{ display: 'flex', gap: 40, alignItems: 'flex-end', flexWrap: 'wrap' }}>
       <BodyCell figma="Type=Text">데이터</BodyCell>
@@ -174,6 +178,7 @@ export const BodyMatrix: Story = {
  * border, is not a Figma cell).
  */
 export const KeyValueMatrix: Story = {
+  name: '키-값 표 모든 변형',
   render: () => (
     <KeyValueTable style={{ width: 480 }}>
       <KeyValueItem label="항목명">항목명</KeyValueItem>
@@ -191,6 +196,7 @@ export const KeyValueMatrix: Story = {
 
 /** Key-value semantics: a description list; the required dot is announced. */
 export const KeyValueAccessibility: Story = {
+  name: '키-값 표 접근성',
   render: () => (
     <KeyValueTable style={{ width: 480 }}>
       <KeyValueItem label="설비명" required>
@@ -213,6 +219,7 @@ export const KeyValueAccessibility: Story = {
 
 /** Rows with an action: click / Enter runs it; selection with the checkboxes; sorting from the header. */
 export const Interaction: StoryObj<{ onRowAction: Mock<(key: unknown) => void> }> = {
+  name: '동작',
   args: { onRowAction: fn() },
   render: (args) => (
     <Table aria-label="설비 목록" selectionMode="multiple" onRowAction={args.onRowAction}>

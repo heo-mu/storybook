@@ -85,9 +85,10 @@ exists in Figma since the 2026-10-19 sync (Secondary / Solid added); without `ap
 
 ## Storybook
 
-- `Components/<Name>/Usage` — usage guide, Figma → props mapping, code policies, accessibility notes
-- `Components/<Name>/<Component>` — Docs (props table), Playground and usage stories (in the MCP manifest)
-- `Components/<Name>/Showcase` (Button: `Overview`, `Variant Matrix`, `States`, `Tests`) — visual verification against Figma (not in the MCP manifest)
-- `Foundations/Design Tokens`
+- `컴포넌트/<Name>/사용 방법` — purpose, when to use, variants, states, code, accessibility (plain Korean)
+- `컴포넌트/<Name>/<Component>` — 문서 (props table), 직접 체험 and usage stories (in the MCP manifest)
+- `컴포넌트/<Name>/전체 보기` (Button: `개요`, `모든 변형`, `상태별 보기`, `동작 확인`) — visual verification against Figma (not in the MCP manifest). Story IDs stay English (`components-<name>-showcase--…`).
+- `기초/디자인 토큰`, `기초/포커스`
+- Developer details (Figma mapping, node IDs, policy details): `docs/` — start at `docs/README.md`
 
 The Storybook MCP server is registered for Claude Code in `.mcp.json` (`platform-ds-storybook`); see `CLAUDE.md`.

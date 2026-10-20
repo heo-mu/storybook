@@ -7,7 +7,8 @@ import { Button } from '../../Button';
 // Visual verification (not in the MCP manifest). Open tooltips carry data-figma names checked by
 // `node scripts/verify-figma.mjs tooltip` (set tooltip).
 const meta = {
-  title: 'Components/Tooltip/Showcase',
+  title: '컴포넌트/Tooltip/전체 보기',
+  id: 'components-tooltip-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -18,6 +19,7 @@ type Story = StoryObj;
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ padding: 64 }}>
       <Tooltip content="툴팁 내용" defaultOpen>
@@ -31,6 +33,7 @@ export const Overview: Story = {
 
 /** Figma `tooltip` (4): Placement with the arrow, each tooltip open next to its trigger. */
 export const Matrix: Story = {
+  name: '모든 변형',
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 200px)', gap: 24, padding: 80 }}>
       {TOOLTIP_PLACEMENTS.map((placement) => (
@@ -46,6 +49,7 @@ export const Matrix: Story = {
 
 /** Keyboard focus shows the tooltip immediately, Escape hides it; hover shows it after the delay. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => (
     <div style={{ padding: 64 }}>
       <Tooltip content="변경 사항을 저장합니다" delay={0}>

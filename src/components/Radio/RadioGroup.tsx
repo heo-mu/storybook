@@ -5,27 +5,26 @@ import type { ChoiceGroupOrientation, ChoiceSize } from '../Choice';
 import { RadioGroupContext } from './RadioGroupContext';
 
 export type RadioGroupProps = Omit<ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> & {
-  /** Selected value (controlled); `null` = nothing selected. */
+  /** 선택한 값(제어). `null`이면 선택 없음입니다. */
   value?: string | null;
-  /** Initially selected value (uncontrolled). @default null */
+  /** 처음 선택된 값(비제어). @default null */
   defaultValue?: string | null;
-  /** Called with the newly selected value. */
+  /** 새로 고른 값과 함께 호출됩니다. */
   onChange?: (value: string) => void;
-  /** `name` of the radios (form submission and arrow-key grouping). @default generated */
+  /** 그룹 안 라디오 버튼들의 `name`(폼 전송 · 방향키 이동 묶음). @default 자동 생성 */
   name?: string;
-  /** Size applied to every radio that does not set its own. */
+  /** 크기를 따로 정하지 않은 라디오 버튼에 적용할 크기. */
   size?: ChoiceSize;
-  /** Disables every radio in the group. */
+  /** 그룹 안 모든 라디오 버튼을 비활성으로 만듭니다. */
   disabled?: boolean;
-  /** Marks the choice as required (native validation). */
+  /** 꼭 골라야 하는 항목으로 표시합니다(폼을 보낼 때 검사). */
   required?: boolean;
-  /** Stacking direction — items are 8px apart (16px in a row), Design System Rules 08. @default 'vertical' */
+  /** 배치 방향 — 세로(vertical) · 가로(horizontal). 항목 사이 간격은 자동으로 맞춰집니다. @default 'vertical' */
   orientation?: ChoiceGroupOrientation;
 };
 
 /**
- * Groups `Radio`s (role="radiogroup") and manages the selected value. Not a Figma component — semantic
- * wrapper only; label it with `aria-label` or `aria-labelledby`.
+ * 라디오 버튼들을 묶어 선택한 값 하나를 관리합니다. `aria-label` 또는 `aria-labelledby`로 그룹 이름을 붙입니다.
  */
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(
   { value, defaultValue = null, onChange, name, size, disabled, required, orientation = 'vertical', className, children, ...rest },

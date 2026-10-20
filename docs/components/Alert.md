@@ -46,3 +46,8 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `ALER-04` **닫기 버튼**: 없습니다 — Alert는 화면 상태를 설명하는 고정 메시지입니다. 사용자가 닫아야 하는 알림은 Toast를 쓰고, 필요한 동작은 `action`에 넣으세요(Rules 06).
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+- Figma 컴포넌트 세트: `alert`(179:6087). Figma 속성 `Sub`가 켜졌을 때의 `Sub Text`가 `description`입니다.
+- 상태 아이콘은 `statusIcon.ts`의 `STATUS_ICON`(info-fill · check-circle-fill · x-circle-fill)을 Toast와 함께 씁니다.

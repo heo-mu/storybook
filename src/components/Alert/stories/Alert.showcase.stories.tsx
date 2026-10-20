@@ -8,7 +8,8 @@ import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs alert` (set alert).
 const meta = {
-  title: 'Components/Alert/Showcase',
+  title: '컴포넌트/Alert/전체 보기',
+  id: 'components-alert-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -24,6 +25,7 @@ const figmaButton = (
 );
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ display: 'grid', gap: 12, width: 360 }}>
       <Alert status="information" title="점검 예정" description="7월 30일 02:00 – 04:00에 서비스를 점검합니다." />
@@ -44,6 +46,7 @@ export const Overview: Story = {
 
 /** Figma `alert` (3): Status, with Icon · Sub · Button on (Figma defaults), 320px wide. */
 export const Matrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -58,6 +61,7 @@ export const Matrix: Story = {
 
 /** The action is an ordinary button in the Tab order. */
 export const Interaction: StoryObj<{ onRetry: Mock<() => void> }> = {
+  name: '동작',
   args: { onRetry: fn() },
   render: (args) => (
     <div style={{ width: 360 }}>
@@ -83,6 +87,7 @@ export const Interaction: StoryObj<{ onRetry: Mock<() => void> }> = {
 
 /** Error → role="alert"; information / success → role="status". */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ display: 'grid', gap: 12, width: 360 }}>
       <Alert status="error" title="결제 실패" />

@@ -5,7 +5,8 @@ import { DataState } from '../DataState';
 // Visual verification (not in the MCP manifest). Elements carry data-figma names checked by
 // `node scripts/verify-figma.mjs data-state`.
 const meta = {
-  title: 'Components/DataState/Showcase',
+  title: '컴포넌트/DataState/전체 보기',
+  id: 'components-datastate-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -17,6 +18,7 @@ const noop = () => {};
 
 /** The 6 Figma variants (460px). */
 export const Figma: Story = {
+  name: '모든 변형',
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 460px)', gap: 20, alignItems: 'start' }}>
       <DataState data-figma="State=Loading" state="loading" />
@@ -31,6 +33,7 @@ export const Figma: Story = {
 
 /** A polite live region; the button calls `onAction`. */
 export const Accessibility: StoryObj<{ onAction: () => void }> = {
+  name: '접근성',
   args: { onAction: fn() },
   render: (args) => (
     <div style={{ width: 460 }}>
@@ -46,6 +49,7 @@ export const Accessibility: StoryObj<{ onAction: () => void }> = {
 
 /** Loading: the label is announced, the skeletons are hidden. */
 export const LoadingAccessibility: Story = {
+  name: '로딩 접근성',
   render: () => <DataState state="loading" />,
   play: async ({ canvas }) => {
     const status = canvas.getByRole('status');

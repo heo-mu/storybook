@@ -4,10 +4,12 @@ import { Textarea } from '../Textarea';
 import { TEXTAREA_SIZES, type TextareaSize } from '../Textarea.options';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest): `node scripts/verify-figma.mjs textarea`.
 const meta = {
-  title: 'Components/Textarea/Showcase',
+  title: '컴포넌트/Textarea/전체 보기',
+  id: 'components-textarea-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -35,6 +37,7 @@ function figmaVariant(size: TextareaSize, state: State) {
 }
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <StorySection title="Size (sm · md) · message · counter">
       <div style={{ width: 320 }}><Textarea label="요청 사항" placeholder="내용 입력" maxLength={100} /></div>
@@ -46,6 +49,7 @@ export const Overview: Story = {
 
 /** All 14 Figma variants: Size (rows) × State (columns). */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -62,11 +66,12 @@ export const VariantMatrix: Story = {
 };
 
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <StorySection title="State (sm)">
       {STATES.map((state) => (
         <div key={state} style={{ width: 320 }}>
-          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{state}</div>
+          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{koLabel(state)}</div>
           <Textarea {...figmaVariant('sm', state)} />
         </div>
       ))}
@@ -76,6 +81,7 @@ export const States: Story = {
 
 /** Typing updates the counter and the Completed state. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => (
     <div style={{ width: 320 }}>
       <Textarea label="메모" placeholder="내용 입력" maxLength={20} />
@@ -93,6 +99,7 @@ export const Interaction: Story = {
 };
 
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <div style={{ width: 320 }}>
       <Textarea label="사유" defaultValue="짧음" maxLength={100} invalid message="10자 이상 입력하세요." />

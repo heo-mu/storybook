@@ -2,16 +2,33 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Switch.showcase.stories';
 import { Switch } from './Switch';
 
-<Meta title="Components/Switch/Usage" />
+<Meta title="컴포넌트/Switch/사용 방법" id="components-switch-usage" name="Docs" />
 
-# Switch — 사용 가이드
+# Switch
 
-Figma **Switch** 프레임(107:188)의 `switch` 세트(16개)를 구현한 토글 스위치입니다.
-`<input type="checkbox" role="switch">`이므로 Space 키로 전환되고, 스크린리더에는 "켜짐 / 꺼짐"으로 전달됩니다.
+설정을 켜고 끄는 스위치입니다. 켜짐과 꺼짐 두 가지 상태만 있습니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 알림 받기 · 자동 저장처럼 켜거나 끄는 설정에 사용합니다.
+
+## 종류
+
+- 켜짐은 `checked` · `defaultChecked`로 정합니다.
+- 크기는 `size`(`sm` · `md`)로 고릅니다. 기본은 `sm`입니다.
+- `label`을 빼면 스위치만 보입니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+- 마우스를 올리거나 누르면 모양이 바뀝니다.
+- `disabled`이면 누를 수 없고 키보드로도 선택되지 않습니다.
+- 키보드로 선택하면 스위치 둘레에 포커스 테두리가 보입니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -23,36 +40,14 @@ Figma **Switch** 프레임(107:188)의 `switch` 세트(16개)를 구현한 토�
 <Switch label="자동 저장" checked={autoSave} onChange={(e) => setAutoSave(e.target.checked)} size="md" />`}
 />
 
-## Figma 속성 → Props
+## 접근성
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Checked False · True | `checked` / `defaultChecked` | |
-| Size sm · md | `size` | 트랙 32×16 · 36×18px. 기본 `'sm'` |
-| Label / Label Text | `label` | 생략하면 `aria-label` 지정 |
-| State Hover · Pressed | 브라우저 `:hover` · `:active` | |
-| State Disabled | `disabled` | |
+- `label`이 없으면 `aria-label`로 이름을 꼭 붙입니다.
+- Space 키로 켜고 끕니다. 화면 낭독기에는 "켜짐" 또는 "꺼짐"으로 전달됩니다.
 
-## 정책
+## 주의사항
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `SWIT-01` **포커스**: 키보드 포커스(`:focus-visible`)일 때 트랙 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — switch).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `SWIT-02` **전환 애니메이션**: 썸이 즉시 이동합니다(Rules 09).
-
-## 상태
-
-<Canvas of={Showcase.States} />
+- 나머지 `<input>` 속성과 `ref`는 실제 스위치에 전달되고, `className` · `style`은 라벨을 포함한 바깥 요소에 적용됩니다.
 
 ## Props
 

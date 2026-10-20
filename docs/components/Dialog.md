@@ -63,3 +63,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 | Esc | 닫고 트리거로 포커스 복귀 |
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+- react-aria-components `ModalOverlay` · `Modal` · `Dialog` 기반입니다(포커스 이동 · 가둠 · 복귀, Esc 닫기). `trigger`가 있으면 `DialogTrigger` + `Pressable`로 감쌉니다.
+- `children`(헤더와 버튼 사이 내용)은 Figma `dialog` 컴포넌트에 없는 영역입니다(DIAL-02).
+- Figma `dialog_footer`의 버튼은 Button Tertiary · Solid · lg와 Primary · Solid · lg이며 240px 푸터를 같은 너비로 나눕니다.
+- 사용 방법 페이지의 대표 Canvas는 열린 상태로 고정된 `전체 보기 / 모든 변형`(Showcase.Figma) 대신 트리거로 여는 `Dialog / 확인 대화상자`(Confirm) 스토리를 씁니다. 열린 모달(`position: fixed` 덮개)을 문서 페이지에 바로 그리면 페이지 전체를 덮을 수 있기 때문입니다.

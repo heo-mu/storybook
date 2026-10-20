@@ -1,6 +1,6 @@
 import { parseDate, type CalendarDate } from '@internationalized/date';
 
-/** ISO calendar date string, e.g. '2026-07-30'. */
+/** 'YYYY-MM-DD' 형식의 날짜 문자열입니다. */
 export type ISODate = string;
 
 /** Parses 'YYYY-MM-DD'; returns null for anything else. */

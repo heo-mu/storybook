@@ -3,19 +3,17 @@ import { fn } from 'storybook/test';
 import { Dialog } from './Dialog';
 import { Button } from '../Button';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Dialog.showcase.stories.tsx
+// 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/Dialog.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: 'Components/Dialog/Dialog',
+  title: '컴포넌트/Dialog/Dialog',
+  id: 'components-dialog-dialog',
   component: Dialog,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component **dialog** (149:2838): a modal panel. `title`, `description`, `actions` (the footer buttons — Figma ' +
-          'uses Button Tertiary · Solid · lg and Primary · Solid · lg; a function receives `close`). Open it with `trigger` or ' +
-          '`open` / `onOpenChange`. Focus moves into the dialog, stays inside and returns to the trigger; Escape closes ' +
-          '(react-aria-components Modal + Dialog).',
+          '화면 위에 떠서 사용자의 응답을 받는 대화상자입니다. `title` · `description` · `actions`로 내용을 채우고, `trigger` 또는 `open` · `onOpenChange`로 엽니다.',
       },
     },
   },
@@ -42,14 +40,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** 모든 Props를 직접 바꿔 볼 수 있습니다. 버튼을 눌러 대화상자를 열어 보세요. */
+export const Playground: Story = { name: '직접 체험' };
 
-/** A confirmation that interrupts the user (role="alertdialog"). */
+/** 삭제처럼 사용자의 흐름을 멈추고 확인받는 대화상자입니다(`role="alertdialog"`). */
 export const Confirm: Story = {
+  name: '확인 대화상자',
   args: { role: 'alertdialog', title: '파일을 삭제할까요?', description: '삭제한 파일은 되돌릴 수 없습니다.', trigger: <Button>삭제</Button> },
 };
 
-/** Content between the header and the buttons (Design System Rules 08: the same m-8 gap — not a part of the Figma component). */
+/** 제목과 버튼 사이에 내용을 넣은 예입니다. */
 export const WithContent: Story = {
+  name: '내용 있음',
   args: { children: <p style={{ margin: 0, textAlign: 'center' }}>추가 안내 내용</p> },
 };

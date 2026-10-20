@@ -3,20 +3,18 @@ import { XIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 
 export type ImageUploadPreviewProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** Image to show (e.g. an object URL of the chosen file). */
+  /** 보여 줄 이미지 주소(예: 고른 파일의 object URL). */
   src: string;
-  /** Text alternative of the image. */
+  /** 이미지 대체 글자. */
   alt: string;
-  /** Called by the remove button; without it there is no button. */
+  /** 삭제 버튼을 누르면 호출됩니다. 넘기지 않으면 삭제 버튼이 없습니다. */
   onRemove?: () => void;
-  /** Accessible name of the remove button. @default '이미지 삭제' */
+  /** 화면 낭독기가 읽는 삭제 버튼 이름. @default '이미지 삭제' */
   removeLabel?: string;
 };
 
 /**
- * The uploaded image of the Figma key-value File Upload cell (`table_value_editable`, 503:23264): a 100px square with
- * a round remove button (18px, padding p-0_5, colors/fill/secondary/subtle/default, 1px colors/border/gray-subtler,
- * X 12px colors/icon/secondary) centred on its top-right corner.
+ * 업로드한 이미지를 정사각형 미리보기로 보여 줍니다. 오른쪽 위 모서리에 둥근 삭제 버튼이 붙습니다.
  */
 export const ImageUploadPreview = forwardRef<HTMLDivElement, ImageUploadPreviewProps>(function ImageUploadPreview(
   { src, alt, onRemove, removeLabel = '이미지 삭제', className, ...rest },

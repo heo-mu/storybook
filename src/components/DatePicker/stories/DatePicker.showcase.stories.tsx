@@ -5,12 +5,14 @@ import { DatePicker } from '../DatePicker';
 import { FieldMessage, FIELD_SIZES, type FieldSize } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs date-picker` (sets date-picker_trigger, date-picker_message; the calendar
 // sets are in Calendar/Showcase).
 const meta = {
-  title: 'Components/DatePicker/Showcase',
+  title: '컴포넌트/DatePicker/전체 보기',
+  id: 'components-datepicker-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -40,6 +42,7 @@ function figmaVariant(size: FieldSize, state: State) {
 }
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -61,6 +64,7 @@ export const Overview: Story = {
 
 /** All 21 Figma trigger variants: Size (rows) × State (columns). */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
@@ -78,6 +82,7 @@ export const VariantMatrix: Story = {
 
 /** Figma `date-picker_message` (Info · Success · Error). */
 export const MessageMatrix: Story = {
+  name: '메시지 모든 변형',
   render: () => (
     <div className="ds-date-picker">
       <FigmaMatrix
@@ -93,11 +98,12 @@ export const MessageMatrix: Story = {
 
 /** Every state at size sm. */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <StorySection title="State">
       {STATES.map((state) => (
         <div key={state} style={{ width: 320 }}>
-          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{state}</div>
+          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{koLabel(state)}</div>
           <DatePicker {...figmaVariant('sm', state)} />
         </div>
       ))}
@@ -107,6 +113,7 @@ export const States: Story = {
 
 /** The field with its calendar open (Figma example "Calendar Container"). */
 export const Open: Story = {
+  name: '열림',
   render: () => (
     // Padding keeps the popover clear of react-aria's 12px viewport margin, so it can align with the field.
     <div style={{ width: 296, padding: 24, paddingBottom: 300 }}>
@@ -137,6 +144,7 @@ function Controlled() {
 
 /** Typing a date, invalid text, choosing from the calendar. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => <Controlled />,
   play: async ({ canvas, canvasElement, userEvent, step }) => {
     const input = canvas.getByRole('textbox', { name: '방문일' });
@@ -177,6 +185,7 @@ export const Interaction: Story = {
 
 /** Field label, invalid state and message; the hidden input submits ISO dates. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <form aria-label="예약" style={{ width: 320 }}>
       <DatePicker label="예약일" name="date" defaultValue="2026-07-30" invalid message="예약할 수 없는 날짜입니다." />

@@ -3,20 +3,19 @@ import { cx } from '../../utils/cx';
 import type { SwitchSize } from './Switch.options';
 
 export type SwitchProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'type' | 'className' | 'style' | 'children'> & {
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: SwitchSize;
-  /** Figma "Label" + "Label Text". Without a label, give the switch an `aria-label`. */
+  /** 스위치 옆에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** Class name of the root `<label>`. */
+  /** 라벨을 포함한 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root `<label>`. */
+  /** 라벨을 포함한 바깥 요소의 스타일. */
   style?: CSSProperties;
 };
 
 /**
- * Figma component set `switch` (107:409). Checked = `checked` / `defaultChecked`; State: Hover / Pressed are
- * the native :hover / :active, Disabled = `disabled`. Renders `<input type="checkbox" role="switch">`; its
- * props (name, checked, onChange, …) and the ref go to it. Space toggles it.
+ * 설정을 켜고 끄는 스위치입니다. 켜짐은 `checked` · `defaultChecked`로 정하고 Space 키로도 바꿀 수 있으며,
+ * 나머지 `<input>` 속성과 `ref`는 스위치에 그대로 전달됩니다.
  */
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch({ size = 'sm', label, className, style, disabled, ...rest }, ref) {
   return (

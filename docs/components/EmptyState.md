@@ -46,3 +46,9 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `EMPT-02` **너비**: 최대 320px(Figma와 같음), 부모가 더 좁으면 그 너비로 줄어듭니다(Rules 08).
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+- 세로 가운데 정렬입니다. 아이콘 · 제목 · 설명은 `m-1` 간격으로 붙고, `action`은 글 묶음 아래 `m-3` 간격에 놓입니다.
+- 아이콘은 16px이며 Figma 자리 표시 아이콘은 Database입니다. `aria-hidden`으로 감싸 장식으로 처리합니다.
+- 너비는 CSS `width: 320px; max-width: 100%`입니다.

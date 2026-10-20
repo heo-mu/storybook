@@ -70,3 +70,12 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### NavLink · NavGroup · NavChild
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `item_parent`(180:5246) → `NavGroup` 버튼(`NavParentItem`), `item_link`(180:6174) → `NavLink`, `item_child`(180:6249) → `NavChild`.
+- `Navigation` 컨테이너: padding p-5, `colors/navigation/lnb/background`, 항목 사이 m-1_5. 너비는 레이아웃이 정합니다(Figma 예시 240px).
+- `NavGroup` 하위 목록: p-4 들여쓰기, 1px 선(`…/child/selected/indicator/selected`), 선과 항목 사이 m-2_5 — Figma LNB 예시와 같습니다.
+- `NavLink` · `NavChild`의 State Hover는 `:hover`입니다. 그룹은 `aria-expanded`가 있는 버튼이고, 선택된 항목은 `aria-current="page"`입니다.

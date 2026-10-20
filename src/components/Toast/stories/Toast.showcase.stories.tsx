@@ -10,7 +10,8 @@ import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs toast` (set toast).
 const meta = {
-  title: 'Components/Toast/Showcase',
+  title: '컴포넌트/Toast/전체 보기',
+  id: 'components-toast-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -21,6 +22,7 @@ type Story = StoryObj;
 const NAME: Record<AlertStatus, string> = { information: 'Information', success: 'Success', error: 'Error' };
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       <Toast status="information">새 버전이 있습니다</Toast>
@@ -32,6 +34,7 @@ export const Overview: Story = {
 
 /** Figma `toast` (3): Status, Close Icon on. */
 export const Matrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       columns={['toast']}
@@ -48,6 +51,7 @@ const storyQueue = new ToastQueue<ToastContent>({ maxVisibleToasts: 5 });
 
 /** `ToastRegion`: toasts appear in a landmark region, the close button removes them, focus is managed by react-aria. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => (
     <div>
       <Button onClick={() => storyQueue.add({ status: 'success', message: '저장했습니다' })}>저장</Button>
@@ -77,6 +81,7 @@ export const Interaction: Story = {
 
 /** Design System Rules 06: at most 3 on screen, the same message is not stacked, errors stay until closed. */
 export const Policy: Story = {
+  name: '표시 규칙(개수 · 시간 · 중복)',
   render: () => <ToastRegion />,
   play: async ({ canvasElement, step }) => {
     const body = within(canvasElement.ownerDocument.body);
@@ -107,6 +112,7 @@ export const Policy: Story = {
 };
 
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => <Toast status="error">업로드에 실패했습니다</Toast>,
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('status')).toHaveTextContent('업로드에 실패했습니다');

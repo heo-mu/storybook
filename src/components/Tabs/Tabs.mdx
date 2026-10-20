@@ -2,16 +2,41 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Tabs.showcase.stories';
 import { Tabs, TabList, Tab, TabPanel } from './Tabs';
 
-<Meta title="Components/Tabs/Usage" />
+<Meta title="컴포넌트/Tabs/사용 방법" id="components-tabs-usage" name="Docs" />
 
-# Tabs — 사용 가이드
+# Tabs
 
-Figma **Tab** 프레임(86:3121)의 `tab_filled`(60개) · `tab_line`(30개)를 구현한 탭입니다.
-키보드 · ARIA(tablist / tab / tabpanel)는 react-aria-components가 담당합니다.
+Tabs는 한 화면의 내용을 몇 갈래로 나누고, 탭을 눌러 바꿔 보게 합니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 주문 상태처럼 같은 화면 안에서 내용을 나눠 보여 줄 때 씁니다.
+- `Tabs` 안에 탭 목록 `TabList`와 탭 `Tab`, 탭마다 내용 `TabPanel`을 넣습니다.
+
+## 종류
+
+| `appearance` | 모양 |
+| --- | --- |
+| `line` (기본) | 탭 아래로 선이 이어지고, 선택된 탭의 밑줄이 강조됩니다 |
+| `filled` | 탭마다 배경이 있고, 선택된 탭의 배경이 강조됩니다 |
+
+- `variant`(`primary` · `secondary`)로 선택된 탭의 색을 고릅니다.
+- 크기는 `size`(`sm` · `md` · `lg`)로 고릅니다. 기본은 `sm`입니다.
+- `filled` 탭은 `shape`(`square` · `rounded`)로 모서리 모양을 고릅니다.
+- 탭은 간격 없이 나란히 놓입니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+- 마우스를 올리거나 누르면 모양이 바뀝니다.
+- 선택된 탭은 선택됨 모양으로 보입니다.
+- `Tab`의 `disabled`이면 고를 수 없고, 방향키로 옮길 때도 건너뜁니다.
+- 키보드로 선택하면 탭과 탭 패널에 포커스 테두리가 보입니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -28,53 +53,23 @@ Figma **Tab** 프레임(86:3121)의 `tab_filled`(60개) · `tab_line`(30개)를 
   <TabPanel id="canceled">…</TabPanel>
 </Tabs>
 
-// 채워진 둥근 탭 (Secondary · md)
+// 채운 둥근 탭 (Secondary · md)
 <Tabs appearance="filled" shape="rounded" variant="secondary" size="md">…</Tabs>`}
 />
 
-## Figma 속성 → Props
+- `Tab`과 `TabPanel`은 같은 `id`로 짝을 짓습니다.
+- 처음 선택할 탭은 `defaultSelectedKey`로 정합니다. 선택을 바깥에서 관리하려면 `selectedKey`와 `onSelectionChange`를 씁니다.
+- `TabPanel`에는 따로 꾸밈이 없습니다. 내용의 여백 등은 직접 정합니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| 세트 tab_line · tab_filled | `appearance` | `'line'`(기본) · `'filled'` |
-| Variant Primary · Secondary | `variant` | 선택 색 #004a38 · #007c56 |
-| Size sm · md · lg | `size` | 높이 line 28 · 32 · 40, filled 28 · 36 · 40px |
-| Shape Square · Rounded | `shape` | filled만 |
-| State Hover · Pressed | 브라우저 `:hover` · 누름 | |
-| State Selected | `selectedKey` / `defaultSelectedKey` | |
-| State Disabled | `Tab disabled` | 키보드 이동에서 건너뜀 |
-| Label Text | `Tab` children | |
+## 접근성
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `TABS-03` **포커스**: 키보드 포커스(`:focus-visible`)일 때 탭 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — tab_filled · tab_line).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `TABS-01` **탭 간격 · 정렬**: 간격 없이 나란히 둡니다 — line 탭은 이웃 탭의 밑줄이 이어져 하나의 선이 됩니다(Rules 08).
-- `TABS-02` **활성화 방식**: 방향키로 이동하면 바로 선택(automatic). 내용이 무거우면 `keyboardActivation="manual"`(Enter · Space로 선택, Rules 04).
-- `TABS-05` **패널 포커스**: 키보드 포커스일 때 패널 바깥 2px에 2px `colors/border/focus` 링(Design System Rules 02 — 탭 패널에는 Figma `Focus` 속성이 없어 규칙이 기준).
-
-### 개발 구현 세부 사항
-
-디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
-
-- `TABS-04` **패널**: 스타일 없이 내용만 렌더링합니다.
-
-## 상태
-
-<Canvas of={Showcase.States} />
+- `TabList`에는 `aria-label`로 탭 목록의 이름을 붙입니다.
+- ← → 방향키로 탭을 옮기고, Home · End로 처음과 끝 탭으로 갑니다.
+- 방향키로 옮기면 바로 선택됩니다. 내용이 무거우면 `keyboardActivation="manual"`로 바꿔 Enter · Space를 눌러야 선택되게 합니다.
 
 ## Props
+
+### Tabs
 
 <ArgTypes of={Tabs} />
 

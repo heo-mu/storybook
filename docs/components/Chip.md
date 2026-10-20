@@ -106,3 +106,15 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ### FilterChip
 
 ### FilterChipSelect
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
+
+- Figma 컴포넌트 세트: `chip-multi`(201:12711, 24개) → `Chip`, `chip-input`(558:26017, 12개) → `InputChip`, `chip-filter`(558:25704, 48개) → `FilterChip`.
+- `Chip`은 `<button aria-pressed>`, State Hover · Pressed는 `:hover` · `:active`, Disabled는 `disabled`.
+- `InputChip`은 칩 전체가 삭제 버튼이라 누르는 대상이 칩 높이 전체입니다. 접근성 이름은 라벨 + `removeLabel`("삭제").
+- `FilterChip`은 react-aria `Button` 기반이라 react-aria 오버레이(`MenuTrigger`, `DialogTrigger`)의 트리거가 될 수 있고, 그 안에서는 `aria-expanded`가 자동입니다. 활성화는 `onPress`(또는 `onClick`).
+- `FilterChipSelect`는 Figma `chip-filter` + `listbox` · `option` Size=sm("chip-filter 선택 예시", Design System Rules 04 · 07)입니다. 키보드 · 화면 낭독기 동작은 react-aria Select(버튼 + listbox)를 따릅니다.
+- `FilterChipSelect`의 `name`은 숨겨진 네이티브 select가 값을 폼에 실어 보냅니다.
+- `FilterChipSelect`의 `defaultOpen`은 편집 중인 표 필터처럼 Figma Expanded 상태를 처음부터 보여 줄 때 씁니다.

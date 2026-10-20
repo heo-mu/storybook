@@ -16,7 +16,8 @@ import { PlusIcon } from '../icons';
 
 // Design System Rules 02 · Focus (Figma component property "Focus", token colors/border/focus).
 const meta = {
-  title: 'Foundations/Focus',
+  title: '기초/포커스',
+  id: 'foundations-focus',
   tags: ['!manifest'],
   parameters: {
     controls: { disable: true },
@@ -31,11 +32,11 @@ const focus = { 'data-pseudo': 'focus' } as const;
 const row = { display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', padding: 8 } as const;
 
 /**
- * The keyboard focus ring (`:focus-visible`, Figma "Focus" = true): 2px `colors/border/focus` 2px outside the control,
- * following its corners. Full-width rows (navigation, accordion, table) draw it inside their edge. Text fields and
- * Select show focus with their border (Figma State=Focus). Shown here with storybook-addon-pseudo-states.
+ * 키보드로 선택하면 컨트롤 바깥 2px 거리에 2px 두께의 포커스 테두리(`colors/border/focus`)가 모서리를 따라 보입니다.
+ * 메뉴 · 아코디언 · 표처럼 너비를 채우는 행은 안쪽 가장자리에 그리고, 입력 칸과 Select는 테두리 색으로 포커스를 표시합니다.
  */
 export const Rings: Story = {
+  name: '포커스 표시',
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <div style={row}>
@@ -82,8 +83,9 @@ const focusColor = () => {
   return c;
 };
 
-/** Tab through real controls: each focused control shows the same ring (react-aria controls through data-focus-visible). */
+/** Tab 키로 실제 컨트롤을 차례로 선택해 볼 수 있습니다. 선택된 컨트롤마다 포커스 테두리가 보입니다. */
 export const Keyboard: Story = {
+  name: '키보드',
   render: () => (
     <div style={{ display: 'grid', gap: 16, width: 360 }}>
       <div style={row}>

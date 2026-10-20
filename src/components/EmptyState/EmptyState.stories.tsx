@@ -3,18 +3,17 @@ import { EmptyState } from './EmptyState';
 import { TextButton } from '../Button';
 import { CaretRightIcon, DatabaseIcon } from '../../icons';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/EmptyState.showcase.stories.tsx
+// 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/EmptyState.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: 'Components/EmptyState/EmptyState',
+  title: '컴포넌트/EmptyState/EmptyState',
+  id: 'components-emptystate-emptystate',
   component: EmptyState,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component **empty-state** (724:14963): Title Text → `title`, Description / Description Text → `description`, ' +
-          'Icon → `icon` (16px, decorative), the button below → `action` (Figma: TextButton with CaretRight). Centred, ' +
-          '320px wide (narrower when the parent is).',
+          '보여 줄 내용이 없을 때 그 자리에 안내를 보여 주는 빈 상태입니다. `title`은 꼭 넣고, `icon` · `description` · `action`은 필요할 때만 넣습니다.',
       },
     },
   },
@@ -30,12 +29,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** 모든 Props를 직접 바꿔 볼 수 있습니다. */
+export const Playground: Story = { name: '직접 체험' };
 
 export const WithoutAction: Story = {
+  name: '버튼 없음',
   args: { action: undefined, title: '검색 결과가 없습니다', description: '다른 검색어를 입력해 보세요.' },
 };
 
 export const TitleOnly: Story = {
+  name: '제목만',
   args: { action: undefined, description: undefined, icon: undefined, title: '표시할 항목이 없습니다' },
 };

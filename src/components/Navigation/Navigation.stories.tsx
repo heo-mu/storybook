@@ -2,19 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NavChild, NavGroup, NavLink, Navigation } from './Navigation';
 import { ListIcon } from '../../icons';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Navigation.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Navigation.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Navigation/Navigation',
+  title: '컴포넌트/Navigation/Navigation',
+  id: 'components-navigation-navigation',
   component: Navigation,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'LNB built from the Figma component sets **item_parent** (180:5246), **item_link** (180:6174) and **item_child** ' +
-          '(180:6249), composed as in the Figma LNB example. `Navigation` > `NavLink` (item_link, Selected → `selected`) and ' +
-          '`NavGroup` (item_parent, Expanded → `expanded` / `defaultExpanded`) > `NavChild` (item_child, Selected → `selected`). ' +
-          'Selected items get `aria-current="page"`; groups are buttons with `aria-expanded`. `NavParentItem` is the bare group button.',
+          '화면 왼쪽에 두는 메뉴(LNB)입니다. 바로 이동하는 메뉴는 `NavLink`, 펼치는 메뉴 그룹은 `NavGroup`과 하위 메뉴 `NavChild`로 만들고, 지금 페이지에는 `selected`를 줍니다.',
       },
     },
   },
@@ -52,10 +50,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
-/** A selected top-level page (item_link Selected). */
+/** 첫 단계 메뉴가 지금 페이지로 선택된 모양입니다. */
 export const SelectedLink: Story = {
+  name: '선택된 링크',
   render: (args) => (
     <Navigation {...args}>
       <NavLink href="#dashboard" icon={<ListIcon />} selected>
@@ -68,8 +67,9 @@ export const SelectedLink: Story = {
   ),
 };
 
-/** Items without icons (Figma "Icon" off). */
+/** 아이콘 없이 글자만 있는 메뉴입니다. */
 export const WithoutIcons: Story = {
+  name: '아이콘 없음',
   render: (args) => (
     <Navigation {...args}>
       <NavGroup label="에너지 관리" defaultExpanded>

@@ -50,3 +50,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `MCAR-04` **접근성**: 카드 전체가 제목으로 이름 붙은 그룹(`role="group"`)입니다. 아이콘은 장식입니다(Rules 03).
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
+
+- 머리글(아이콘 + 제목) · 값과 단위 · 비교 행(증감 + 문구)은 `m-3` 간격이며, 흰 카드(padding 16, 모서리 12, `elevation-3` 그림자) 안에 있습니다.
+- 값은 `3xl/leading-normal/semibold`, 비교 행은 Figma comparison row(`trend` + "Comparison" 글자)입니다.

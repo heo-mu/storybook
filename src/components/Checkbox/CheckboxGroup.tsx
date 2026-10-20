@@ -5,25 +5,24 @@ import type { ChoiceGroupOrientation, ChoiceSize } from '../Choice';
 import { CheckboxGroupContext } from './CheckboxGroupContext';
 
 export type CheckboxGroupProps = Omit<ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> & {
-  /** Selected values (controlled). */
+  /** 선택한 값 목록(제어). */
   value?: string[];
-  /** Initially selected values (uncontrolled). @default [] */
+  /** 처음 선택된 값 목록(비제어). @default [] */
   defaultValue?: string[];
-  /** Called with the new list of selected values. */
+  /** 새 선택값 목록과 함께 호출됩니다. */
   onChange?: (value: string[]) => void;
-  /** `name` given to every checkbox in the group (form submission). */
+  /** 그룹 안 모든 체크박스에 주는 `name`(폼 전송용). */
   name?: string;
-  /** Size applied to every checkbox that does not set its own. */
+  /** 크기를 따로 정하지 않은 체크박스에 적용할 크기. */
   size?: ChoiceSize;
-  /** Disables every checkbox in the group. */
+  /** 그룹 안 모든 체크박스를 비활성으로 만듭니다. */
   disabled?: boolean;
-  /** Stacking direction — items are 8px apart (16px in a row), Design System Rules 08. @default 'vertical' */
+  /** 배치 방향 — 세로(vertical) · 가로(horizontal). 항목 사이 간격은 자동으로 맞춰집니다. @default 'vertical' */
   orientation?: ChoiceGroupOrientation;
 };
 
 /**
- * Groups `Checkbox`es that have a `value` (role="group") and manages the selected values.
- * Not a Figma component — semantic wrapper only; label it with `aria-label` or `aria-labelledby`.
+ * `value`가 있는 체크박스들을 묶어 선택한 값 목록을 관리합니다. `aria-label` 또는 `aria-labelledby`로 그룹 이름을 붙입니다.
  */
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(function CheckboxGroup(
   { value, defaultValue = [], onChange, name, size, disabled, orientation = 'vertical', className, children, ...rest },

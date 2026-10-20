@@ -5,28 +5,27 @@ import { FieldMessage, useFieldValue, type FieldMessageType } from '../Field';
 import type { TextareaSize } from './Textarea.options';
 
 export type TextareaProps = Omit<ComponentPropsWithoutRef<'textarea'>, 'className' | 'style'> & {
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: TextareaSize;
-  /** Figma "Label" + "Label Text". */
+  /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** Figma "Alert" + "Alert Text" (textarea_message). */
+  /** 입력 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
-  /** Figma textarea_message "Type". @default 'error' when invalid, otherwise 'info' */
+  /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
   messageType?: FieldMessageType;
-  /** Figma State "Error". */
+  /** 오류 — 오류 테두리로 표시합니다. */
   invalid?: boolean;
-  /** Figma "Counter": shows `current/maxLength` when `maxLength` is set. @default true */
+  /** `maxLength`가 있을 때 `입력한 글자 수/최대 글자 수`를 보여 줍니다. @default true */
   showCount?: boolean;
-  /** Class name of the root element. */
+  /** 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root element. */
+  /** 바깥 요소의 스타일. */
   style?: CSSProperties;
 };
 
 /**
- * Figma component set `textarea` (86:2597) with `textarea_message` (86:2733).
- * The container is 100px high as in Figma; the text scrolls inside it.
- * Native textarea props and the ref go to the `<textarea>`.
+ * 여러 줄 글자를 입력받는 입력 칸입니다. 높이가 고정되어 내용이 넘치면 안에서 스크롤되고,
+ * 나머지 `<textarea>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
  */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
   { size = 'sm', label, message, messageType, invalid = false, showCount = true, className, style, id, value, defaultValue, onChange, disabled, readOnly, maxLength, 'aria-describedby': describedBy, ...rest },

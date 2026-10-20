@@ -3,18 +3,16 @@ import { cx } from '../../utils/cx';
 import type { ChartColor, ChartLegendType } from './Chart.options';
 
 export type ChartLegendItemProps = Omit<ComponentPropsWithoutRef<'span'>, 'children' | 'color'> & {
-  /** Figma "Label". */
+  /** 범례 글자(계열 이름). */
   children: ReactNode;
-  /** Figma "Type": a line, a dashed line (5 / 3) or a 12px square. @default 'bar' */
+  /** 표시 모양 — 선(`line`) · 점선(`dash-line`) · 네모(`bar`). @default 'bar' */
   type?: ChartLegendType;
-  /** Series colour of the marker. @default '02' for `dash-line` (Figma: colors/chart/line/compare), otherwise 'brand' */
+  /** 표시 색. @default `dash-line`은 '02', 나머지는 'brand' */
   color?: ChartColor;
 };
 
 /**
- * Figma component set `chart-legend-item` (697:4514): a series marker and its label, m-1_5 apart
- * (label xs/leading-normal/normal, colors/chart/legend/label/default; marker colors/chart/bar/* for `bar`, colors/chart/line/*
- * for the lines). `Chart` renders its own legend; use this for custom legends.
+ * 범례 항목 하나(표시 모양과 계열 이름)입니다. `Chart`는 범례를 직접 그리므로, 범례를 따로 만들 때만 씁니다.
  */
 export const ChartLegendItem = forwardRef<HTMLSpanElement, ChartLegendItemProps>(function ChartLegendItem(
   { children, type = 'bar', color = type === 'dash-line' ? '02' : 'brand', className, ...rest },

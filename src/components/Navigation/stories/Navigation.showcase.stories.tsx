@@ -8,7 +8,8 @@ import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs navigation` (sets item_parent, item_link, item_child).
 const meta = {
-  title: 'Components/Navigation/Showcase',
+  title: '컴포넌트/Navigation/전체 보기',
+  id: 'components-navigation-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -18,6 +19,7 @@ type Story = StoryObj;
 
 /** The Figma LNB example: two groups (one expanded with a selected child) and two links, 240px wide. */
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <Navigation aria-label="주 메뉴" style={{ width: 240 }}>
       <NavGroup label="1뎁스명" icon={<ListIcon />}>
@@ -45,6 +47,7 @@ const pseudo = (state: (typeof STATES)[number]) => (state === 'Hover' ? PSEUDO.h
 
 /** Figma `item_parent` (4): State × Expanded, 200px wide. */
 export const ParentMatrix: Story = {
+  name: '상위 메뉴 모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={200}
@@ -66,6 +69,7 @@ export const ParentMatrix: Story = {
 
 /** Figma `item_link` (4): State × Variant, 200px wide. */
 export const LinkMatrix: Story = {
+  name: '링크 메뉴 모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={200}
@@ -87,6 +91,7 @@ export const LinkMatrix: Story = {
 
 /** Figma `item_child` (4): State × Variant, 200px wide. */
 export const ChildMatrix: Story = {
+  name: '하위 메뉴 모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={200}
@@ -108,6 +113,7 @@ export const ChildMatrix: Story = {
 
 /** The group button toggles its list (Enter / Space / click); links stay in the Tab order. */
 export const Interaction: StoryObj<{ onExpandedChange: Mock<(expanded: boolean) => void> }> = {
+  name: '동작',
   args: { onExpandedChange: fn() },
   render: (args) => (
     <Navigation aria-label="주 메뉴" style={{ width: 240 }}>
@@ -150,6 +156,7 @@ export const Interaction: StoryObj<{ onExpandedChange: Mock<(expanded: boolean) 
 
 /** nav landmark, lists, aria-current for the selected page, aria-expanded / aria-controls on groups. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <Navigation aria-label="주 메뉴" style={{ width: 240 }}>
       <NavGroup label="에너지" icon={<ListIcon />} defaultExpanded>

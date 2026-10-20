@@ -5,26 +5,25 @@ import { cx } from '../../utils/cx';
 import type { ChipSize } from './Chip.options';
 
 export type FilterChipProps = Omit<ButtonProps, 'children' | 'className' | 'isDisabled'> & {
-  /** Figma "Size". @default 'xs' */
+  /** 크기. @default 'xs' */
   size?: ChipSize;
-  /** Figma "Label Text" — the filter name or its current value. */
+  /** 칩 글자 — 필터 이름이나 지금 적용된 값. */
   children: ReactNode;
-  /** Figma Variant "Selected": the filter has a value applied. */
+  /** 선택됨 — 필터 값이 적용된 상태입니다. */
   selected?: boolean;
   /**
-   * Figma "Expanded": its menu or panel is open (caret up, `aria-expanded`). Inside a react-aria trigger
-   * (e.g. `MenuTrigger`, `DialogTrigger`) this is set automatically.
+   * 펼침 — 메뉴나 패널이 열린 상태로, 위쪽 화살표가 보입니다.
+   * `MenuTrigger` · `DialogTrigger` 안에서는 자동으로 정해집니다.
    */
   expanded?: boolean;
-  /** Figma State "Disabled". */
+  /** 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. */
   disabled?: boolean;
   className?: string;
 };
 
 /**
- * Figma component set `chip-filter` (558:25704) — a chip that opens a filter menu or panel.
- * State Hover / Pressed are :hover / pressed, Disabled = `disabled`. Built on the react-aria `Button`, so it
- * can be the trigger of react-aria overlays; `onPress` (or `onClick`) handles activation.
+ * 필터 메뉴나 패널을 여는 칩입니다. `MenuTrigger` · `DialogTrigger`의 트리거로 쓸 수 있고,
+ * 누르면 `onPress`(또는 `onClick`)가 호출됩니다.
  */
 export const FilterChip = forwardRef<HTMLButtonElement, FilterChipProps>(function FilterChip(
   { size = 'xs', children, selected = false, expanded, disabled, className, ...rest },

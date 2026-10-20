@@ -6,21 +6,20 @@ import type { ButtonDisabledProp, TextButtonSize, TextButtonVariant } from './Bu
 
 export type TextButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'disabled'> &
   ButtonDisabledProp & {
-  /** Figma "Type" ("Primary" / "SecondarySecondary"). Both are bound to the same variables in Ver 0.4. @default 'primary' */
+  /** 종류. @default 'primary' */
   variant?: TextButtonVariant;
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: TextButtonSize;
-  /** Figma "Left Icon" (boolean + icon instance): rendered when provided. Sized to 16px. */
+  /** 글자 왼쪽 아이콘. */
   leftIcon?: ReactNode;
-  /** Figma "Right Icon" (boolean + icon instance): rendered when provided. Sized to 16px. */
+  /** 글자 오른쪽 아이콘. */
   rightIcon?: ReactNode;
-  /** Figma "Label Text". */
+  /** 버튼 글자. */
   children: ReactNode;
 };
 
 /**
- * Figma component set `button_text` (432:8395).
- * State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
+ * 배경 없이 글자로만 보이는 가벼운 버튼입니다. 더보기처럼 덜 강조할 행동에 씁니다.
  */
 export const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(function TextButton(
   { variant = 'primary', size = 'sm', leftIcon, rightIcon, children, className, type = 'button', ...rest },

@@ -2,15 +2,19 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/EmptyState.showcase.stories';
 import { EmptyState } from './EmptyState';
 
-<Meta title="Components/EmptyState/Usage" />
+<Meta title="컴포넌트/EmptyState/사용 방법" id="components-emptystate-usage" name="Docs" />
 
-# Empty State — 사용 가이드
+# EmptyState
 
-Figma **Empty State** 프레임(174:1480)의 `empty-state`(724:14963)를 구현했습니다. 목록 · 차트 등이 비어 있을 때 가운데에 보여 줍니다.
+빈 상태는 목록이나 차트에 보여 줄 내용이 없을 때 그 자리 가운데에 안내를 보여 줍니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 아직 데이터가 없거나 검색 결과가 없을 때 씁니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -24,31 +28,14 @@ Figma **Empty State** 프레임(174:1480)의 `empty-state`(724:14963)를 구현�
 />`}
 />
 
-## Figma 속성 → Props
+- 제목(`title`)은 꼭 넣고, 아이콘(`icon`) · 설명(`description`) · 버튼(`action`)은 필요할 때만 넣습니다.
+- 사용자가 할 일이 없는 빈 상태에는 버튼을 두지 않습니다.
+- 버튼은 `TextButton`에 오른쪽 화살표 아이콘(`CaretRightIcon`)을 붙여 씁니다.
+- 너비는 320px이고, 부모가 더 좁으면 그 너비에 맞춰 줄어듭니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Title Text | `title` | |
-| Description · Description Text | `description` | 가운데 정렬, 줄바꿈 |
-| Icon | `icon` | 16px, 장식 |
-| 버튼(button_text) | `action` | Figma: TextButton Primary sm + CaretRight |
+## 접근성
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `EMPT-01` **버튼 유무**: Figma 속성 `Show Button`(2026-10-19 추가)과 같이 `action`은 선택입니다 — 할 일이 없는 빈 상태에는 버튼을 두지 않습니다(Rules 07).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `EMPT-02` **너비**: 최대 320px(Figma와 같음), 부모가 더 좁으면 그 너비로 줄어듭니다(Rules 08).
+- 아이콘은 꾸밈으로 처리되어 화면 낭독기가 읽지 않습니다.
 
 ## Props
 

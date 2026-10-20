@@ -4,35 +4,33 @@ import { cx } from '../../utils/cx';
 import { FieldMessage, setNativeValue, useFieldValue, useMergedRef, type FieldMessageType, type FieldSize } from '../Field';
 
 export type InputProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className' | 'style'> & {
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: FieldSize;
-  /** Figma "Label" + "Label Text". */
+  /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** Figma "Alert" + "Alert Text" (input_message). */
+  /** 입력 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
-  /** Figma input_message "Type". @default 'error' when invalid, otherwise 'info' */
+  /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
   messageType?: FieldMessageType;
-  /** Figma State "Error": red 2px border, `aria-invalid`. */
+  /** 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. */
   invalid?: boolean;
-  /** Clear button (Figma icon/X, shown on hover and focus). @default true */
+  /** 마우스를 올리거나 키보드로 선택하면 지우기 버튼(X)을 보여 줍니다. @default true */
   clearable?: boolean;
-  /** Called after the clear button empties the field. */
+  /** 지우기 버튼으로 값을 비운 뒤 호출됩니다. */
   onClear?: () => void;
-  /** For `type="password"`: show/hide toggle (Figma "Icon-eye"). @default true */
+  /** `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다. @default true */
   revealable?: boolean;
-  /** Initial visibility of a password value. @default false */
+  /** 비밀번호를 처음부터 보이게 할지 정합니다. @default false */
   defaultRevealed?: boolean;
-  /** Class name of the root element. */
+  /** 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root element. */
+  /** 바깥 요소의 스타일. */
   style?: CSSProperties;
 };
 
 /**
- * Figma component set `input` (76:2945) with `input_message` (83:3009).
- * State: Hover / Focus are the native :hover / :focus-within, Completed = the field has a value,
- * Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`.
- * Native input props (value, onChange, name, …) and the ref go to the `<input>`.
+ * 한 줄짜리 글자를 입력받는 입력 칸입니다. 라벨 · 도움말 메시지 · 비밀번호 보기 버튼을 붙일 수 있고,
+ * 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {

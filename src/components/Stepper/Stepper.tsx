@@ -7,22 +7,21 @@ import type { StepperOrientation, StepperStatus } from './Stepper.options';
 const STATUS_TEXT: Partial<Record<StepperStatus, string>> = { completed: '완료', error: '오류', locked: '잠김' };
 
 export type StepperIndicatorProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** Figma "Variant". @default 'upcoming' */
+  /** 단계 상태. @default 'upcoming' */
   status?: StepperStatus;
-  /** Step number in the circle (Upcoming · Current · Locked). */
+  /** 원 안에 보이는 단계 번호(`upcoming` · `current` · `locked`일 때). */
   step: number;
-  /** Figma "Label Text" ("Label" on). */
+  /** 단계 제목. */
   label?: ReactNode;
-  /** Figma "Sub-Label Text" ("Sub-Label" on). */
+  /** 제목 아래 설명. */
   description?: ReactNode;
-  /** Figma set: stepper_indicator_horizontal (text under the circle) or _vertical (text beside it). @default 'horizontal' */
+  /** 방향 — 가로이면 글자가 원 아래, 세로이면 원 옆에 놓입니다. @default 'horizontal' */
   orientation?: StepperOrientation;
 };
 
 /**
- * Figma component sets `stepper_indicator_horizontal` (179:1621) and `stepper_indicator_vertical` (203:3708):
- * 20px circle (number, CheckCircle when completed, WarningCircle on error) with label and sub label. The root is as
- * wide (horizontal) or as tall (vertical) as the circle; the text overflows it centred, as in Figma.
+ * 단계 하나를 나타내는 원과 글자입니다. 원 안에는 번호가 보이고, 완료이면 체크 아이콘, 오류이면 경고 아이콘이 보입니다.
+ * `Stepper`가 안에서 그립니다.
  * @internal Rendered by `Stepper` — use that (docs/public-api.md).
  */
 export const StepperIndicator = forwardRef<HTMLDivElement, StepperIndicatorProps>(function StepperIndicator(
@@ -57,15 +56,14 @@ export const StepperIndicator = forwardRef<HTMLDivElement, StepperIndicatorProps
 });
 
 export type StepperConnectorProps = Omit<ComponentPropsWithoutRef<'span'>, 'children'> & {
-  /** Figma "State" Completed. @default false */
+  /** 완료 모양으로 그릴지 여부. @default false */
   completed?: boolean;
-  /** Figma "Type". @default 'horizontal' */
+  /** 방향. @default 'horizontal' */
   orientation?: StepperOrientation;
 };
 
 /**
- * Figma component sets `stepper_connector_horizontal` (179:1614) and `stepper_connector_vertical` (203:4253).
- * The line is an SVG rect so it keeps the Figma geometry (1px centred on the band, i.e. on a half pixel).
+ * 단계 사이를 잇는 선입니다. `Stepper`가 안에서 그립니다.
  * @internal Rendered by `Stepper` — use that (docs/public-api.md).
  */
 export function StepperConnector({ completed = false, orientation = 'horizontal', className, ...rest }: StepperConnectorProps) {
@@ -79,26 +77,26 @@ export function StepperConnector({ completed = false, orientation = 'horizontal'
 }
 
 export type StepperStep = {
-  /** Step title (Figma "Label Text"). */
+  /** 단계 제목. */
   label?: ReactNode;
-  /** Text under the title (Figma "Sub-Label Text"). */
+  /** 제목 아래 설명. */
   description?: ReactNode;
-  /** Overrides the status derived from `currentStep` — e.g. 'locked' or 'error'. */
+  /** 단계 상태를 직접 정합니다(예: 'locked', 'error'). 없으면 `currentStep`에 따라 정해집니다. */
   status?: StepperStatus;
 };
 
 export type StepperProps = Omit<ComponentPropsWithoutRef<'ol'>, 'children'> & {
-  /** The steps, in order (Figma "Steps": 3 – 5). */
+  /** 단계 목록(순서대로). */
   steps: StepperStep[];
-  /** Index of the current step (0-based). Earlier steps are completed, later ones upcoming. @default 0 */
+  /** 지금 단계의 순서(0부터 셈). 앞 단계는 완료, 뒤 단계는 예정으로 보입니다. @default 0 */
   currentStep?: number;
-  /** Figma "Type". @default 'horizontal' */
+  /** 방향 — 가로(`horizontal`) · 세로(`vertical`). @default 'horizontal' */
   orientation?: StepperOrientation;
 };
 
 /**
- * Figma component sets `stepper_horizontal` (179:2043) and `stepper_vertical` (203:3949): indicators joined by
- * connectors; a connector is Completed after a completed step. Progress display only (not interactive).
+ * 여러 단계로 된 과정에서 지금 몇 번째 단계인지 보여 줍니다. 완료된 단계 뒤의 연결선은 완료 모양이 되며,
+ * 진행 상황을 보여 주기만 하고 누를 수는 없습니다.
  */
 export const Stepper = forwardRef<HTMLOListElement, StepperProps>(function Stepper(
   { steps, currentStep = 0, orientation = 'horizontal', className, ...rest },

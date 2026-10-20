@@ -14,21 +14,21 @@ import { STATUS_ICON } from '../Alert/statusIcon';
 import { toastQueue, type ToastContent } from './toastQueue';
 
 export type ToastProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** Figma "Status". @default 'information' */
+  /** 종류 — 안내 · 성공 · 오류. @default 'information' */
   status?: AlertStatus;
-  /** Figma "Alert Text". */
+  /** 메시지. 한 줄로 보이며 길면 말줄임으로 잘립니다. */
   children: ReactNode;
-  /** Figma "Close Icon". @default true */
+  /** 닫기 버튼을 표시합니다. @default true */
   showClose?: boolean;
-  /** Called by the close button. */
+  /** 닫기 버튼을 누르면 호출됩니다. */
   onClose?: () => void;
-  /** Accessible name of the close button. @default '알림 닫기' */
+  /** 화면 낭독기가 읽는 닫기 버튼 이름. @default '알림 닫기' */
   closeLabel?: string;
 };
 
 /**
- * Figma component set `toast` (91:5927) as a static element (e.g. inside a page). For notifications that appear
- * and disappear use `<ToastRegion />` with `showToast()`.
+ * 토스트를 페이지 안에 고정으로 그립니다.
+ * 나타났다 사라지는 토스트는 `<ToastRegion />`과 `showToast()`를 씁니다.
  */
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
   { status = 'information', children, showClose = true, onClose, closeLabel = '알림 닫기', className, ...rest },
@@ -51,18 +51,19 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
 });
 
 export type ToastRegionProps = {
-  /** Queue to show. @default toastQueue (used by `showToast`) */
+  /** 보여 줄 토스트 목록. 지정하지 않으면 `showToast`가 쓰는 기본 목록을 보여 줍니다. @default toastQueue */
   queue?: UNSTABLE_ToastQueue<ToastContent>;
-  /** Accessible name of the region. @default '알림' */
+  /** 화면 낭독기가 읽는 토스트 영역 이름. @default '알림' */
   'aria-label'?: string;
-  /** Accessible name of the close buttons. @default '알림 닫기' */
+  /** 화면 낭독기가 읽는 닫기 버튼 이름. @default '알림 닫기' */
   closeLabel?: string;
+  /** 영역의 클래스. 토스트가 나타나는 위치를 바꿀 때 씁니다. */
   className?: string;
 };
 
 /**
- * Shows queued toasts (react-aria-components Toast — UNSTABLE in 1.22, wrapped here so the package API stays stable):
- * a labelled region, each toast announced, timers paused while hovered or focused, close button dismisses.
+ * `showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다.
+ * 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드로 선택한 동안에는 자동으로 닫히지 않습니다.
  */
 export function ToastRegion({ queue = toastQueue, 'aria-label': ariaLabel = '알림', closeLabel = '알림 닫기', className }: ToastRegionProps) {
   return (

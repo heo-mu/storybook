@@ -2,46 +2,48 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Badge, BadgeCount, BadgeDot } from './Badge';
 import { BADGE_APPEARANCES, BADGE_SHAPES, BADGE_SIZES, BADGE_STATUSES } from './Badge.options';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Badge.showcase.stories.tsx
+// 사용 예 스토리(컴포넌트 매니페스트 포함). 검증용 스토리는 ./stories/Badge.showcase.stories.tsx에 있고 !manifest 태그.
 const meta = {
-  title: 'Components/Badge/Badge',
+  title: '컴포넌트/Badge/Badge',
+  id: 'components-badge-badge',
   component: Badge,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component sets **badge_status** (91:6152, 84 variants), **badge_dot** (95:2681, 21) and **badge_count** ' +
-          '(95:2762, 14). `Badge`: Status → `status`, Appearance → `appearance`, Size → `size`, Shape → `shape`, Dot → `dot`, ' +
-          'Label Text → children. `BadgeDot`: Status · Size (4 / 6 / 8px), decorative unless `aria-label`. `BadgeCount`: ' +
-          '`count` with `max` (Digits Multiple shows "99+").',
+          '상태를 짧은 글자로 알려 주는 배지입니다. 색은 `status`, 모양은 `appearance`, 크기는 `size`로 고르며, 점만 필요하면 `BadgeDot`, 개수는 `BadgeCount`를 씁니다.',
       },
     },
   },
   args: { children: '진행 중', status: 'basic', appearance: 'filled', size: 'sm', shape: 'square', dot: true },
   argTypes: {
-    status: { control: 'select', options: BADGE_STATUSES, description: 'Figma "Status"', table: { defaultValue: { summary: 'basic' } } },
-    appearance: { control: 'inline-radio', options: BADGE_APPEARANCES, description: 'Figma "Appearance"', table: { defaultValue: { summary: 'filled' } } },
-    size: { control: 'inline-radio', options: BADGE_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'sm' } } },
-    shape: { control: 'inline-radio', options: BADGE_SHAPES, description: 'Figma "Shape"', table: { defaultValue: { summary: 'square' } } },
+    status: { control: 'select', options: BADGE_STATUSES, description: '종류 — 상태를 나타내는 색', table: { defaultValue: { summary: 'basic' } } },
+    appearance: { control: 'inline-radio', options: BADGE_APPEARANCES, description: '모양 — 채움(filled) · 테두리(outline)', table: { defaultValue: { summary: 'filled' } } },
+    size: { control: 'inline-radio', options: BADGE_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
+    shape: { control: 'inline-radio', options: BADGE_SHAPES, description: '모서리 모양', table: { defaultValue: { summary: 'square' } } },
   },
 } satisfies Meta<typeof Badge>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** 모든 Props를 직접 바꿔 볼 수 있습니다. */
+export const Playground: Story = { name: '직접 체험' };
 
 export const OutlineRounded: Story = {
+  name: 'Outline · 둥근 모양',
   args: { children: '경고', status: 'warning', appearance: 'outline', shape: 'rounded', size: 'md' },
 };
 
 export const WithoutDot: Story = {
+  name: '점 없음',
   args: { children: '정보', status: 'information', dot: false, size: 'lg' },
 };
 
-/** `BadgeDot` and `BadgeCount` next to a label. */
+/** 글자 옆에 `BadgeDot`과 `BadgeCount`를 둔 예입니다. */
 export const DotAndCount: Story = {
+  name: '점 · 숫자 배지',
   render: () => (
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
       <span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>

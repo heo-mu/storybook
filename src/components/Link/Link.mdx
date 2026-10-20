@@ -2,15 +2,35 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Link.showcase.stories';
 import { Link } from './Link';
 
-<Meta title="Components/Link/Usage" />
+<Meta title="컴포넌트/Link/사용 방법" id="components-link-usage" name="Docs" />
 
-# Link — 사용 가이드
+# Link
 
-Figma **Link** 프레임(111:960)의 `link` 세트(15개)를 구현한 밑줄 텍스트 링크입니다. 네이티브 `<a>`를 사용합니다.
+Link는 다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 이용약관처럼 다른 페이지나 문서로 이동할 때 씁니다.
+- 새 창으로 여는 링크에는 `external`을 켭니다.
+
+## 종류
+
+- 크기는 `size`(`sm` · `md` · `lg`)로 고릅니다. 기본은 `sm`입니다.
+- `external`을 켜면 새 창으로 열리고, 글자 뒤에 새 창 아이콘이 붙습니다.
+- 새 창 아이콘은 새 창으로 여는 링크에만 씁니다. 아이콘을 따로 켜고 끄려면 `showIcon`을 씁니다.
+
+## 상태
+
+<Canvas of={Showcase.States} />
+
+- 마우스를 올리거나 누르면 모양이 바뀝니다.
+- 이미 방문한 링크는 방문한 모양으로 보입니다.
+- `disabled`이면 누를 수 없고 키보드로도 선택되지 않습니다.
+- 키보드로 선택하면 포커스 테두리가 보입니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -18,44 +38,17 @@ Figma **Link** 프레임(111:960)의 `link` 세트(15개)를 구현한 밑줄 �
 
 <Link href="/terms">이용약관</Link>
 
-// 새 창 (아이콘 + 스크린리더 "(새 창)")
+// 새 창으로 열기 (아이콘이 붙고, 화면 낭독기는 "(새 창)"을 함께 읽습니다)
 <Link href="https://www.figma.com" external>Figma 열기</Link>
 
-// 라우터 링크 — 다른 컴포넌트로 렌더링이 필요하면 클래스만 재사용
+// 라우터 링크처럼 다른 컴포넌트로 그려야 하면 클래스만 가져다 씁니다
 <a className="ds-link" data-size="sm" href="/docs">문서</a>`}
 />
 
-## Figma 속성 → Props
+## 접근성
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Size sm · md · lg | `size` | 글자 12 · 14 · 16px, 밑줄 |
-| Label Text | children | |
-| Icon (arrow-square-out) | `showIcon` | 기본값은 `external` |
-| State Hover · Pressed · Visited | 브라우저 `:hover` · `:active` · `:visited` | |
-| State Disabled | `disabled` | href 제거, `aria-disabled`, Tab 순서에서 빠짐 |
-
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 정의 정책
-
-Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
-
-- `LINK-02` **포커스**: 키보드 포커스(`:focus-visible`)일 때 링크 바깥 2px에 2px `colors/border/focus` 링, 마우스 클릭에는 그리지 않습니다(Figma 속성 `Focus` — link).
-- `LINK-03` **md 줄 높이**: 20px. 2026-10-19 Figma 텍스트 스타일 `sm/leading-normal/underline`의 줄 높이를 `font/line-height/leading-5`(20px)에 연결해 코드와 같습니다(C3 해소).
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `LINK-01` **외부 링크**: 화살표 아이콘은 새 창으로 여는 링크에만 씁니다 — `external`(`target="_blank"`, `rel="noopener noreferrer"`, 숨은 "(새 창)" 텍스트). 아이콘만 필요하면 `showIcon`(Rules 04).
-
-## 상태
-
-<Canvas of={Showcase.States} />
+- `external` 링크는 화면 낭독기가 글자 뒤에 "(새 창)"을 함께 읽습니다. 다른 말이 필요하면 `newTabLabel`로 바꿉니다.
+- `disabled` 링크는 화면 낭독기에 비활성 링크로 알려집니다.
 
 ## Props
 

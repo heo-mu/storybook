@@ -44,3 +44,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `MTRE-02` **좋음 · 나쁨(Tone)**: 색으로만 구분됩니다. 의미가 중요하면 주변 문장(예: MetricCard의 비교 문구)에서 설명하세요(Rules 03 — 색만으로 전하지 않기).
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
+
+- 방향 아이콘은 12px이고, 배경 `dashboard/background`, padding · 아이콘과 글자 간격 `p-1`, 모서리 `rounded-sm`입니다.
+- children은 Figma "Change Text", `direction`은 "Direction", `tone`은 "Tone"입니다.

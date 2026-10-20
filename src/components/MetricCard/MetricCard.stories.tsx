@@ -3,18 +3,18 @@ import { MetricCard } from './MetricCard';
 import { MetricTrend } from '../MetricTrend';
 import { LightningIcon } from '../../icons';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/MetricCard.showcase.stories.tsx
+// 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/MetricCard.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/MetricCard/MetricCard',
+  title: '컴포넌트/MetricCard/MetricCard',
+  id: 'components-metriccard-metriccard',
   component: MetricCard,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component **metric-card** (697:4487): Title → `title` (heading, `headingLevel`), header icon → `icon` (20px), ' +
-          'Value → `value`, Unit → `unit`, comparison row → `trend` (a `MetricTrend`) + `comparison`. Fills its container ' +
-          '(Figma 386px).',
+          '대시보드의 핵심 지표 하나를 보여 주는 카드입니다. 지표 이름은 `title`, 값은 `value` · `unit`, 증감은 `trend`(보통 `MetricTrend`)와 ' +
+          '`comparison`으로 넣습니다.',
       },
     },
   },
@@ -41,15 +41,18 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** 모든 부분을 넣은 지표 카드입니다. */
+export const Playground: Story = { name: '직접 체험' };
 
-/** Value only. */
+/** 아이콘과 비교 없이 값만 보여 주는 카드입니다. */
 export const ValueOnly: Story = {
+  name: '값만',
   args: { icon: undefined, trend: undefined, comparison: undefined, title: '가동 설비', value: '128', unit: '대' },
 };
 
-/** Several cards in a dashboard row. */
+/** 대시보드에서 카드 여러 개를 가로로 나란히 둔 예입니다. */
 export const Row: Story = {
+  name: '가로 배치',
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 16, width: 900, maxWidth: '100%' }}>
       <MetricCard

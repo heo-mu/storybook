@@ -5,19 +5,17 @@ import { DatePicker } from '../DatePicker';
 import { SegmentedControl, SegmentedControlItem } from '../SegmentedControl';
 import { Select, SelectOption } from '../Select';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/DashboardFilterBar.showcase.stories.tsx
+// 사용 예 스토리(Storybook MCP 매니페스트 포함). 검증용 스토리는 ./stories/DashboardFilterBar.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/DashboardFilterBar/DashboardFilterBar',
+  title: '컴포넌트/DashboardFilterBar/DashboardFilterBar',
+  id: 'components-dashboardfilterbar-dashboardfilterbar',
   component: DashboardFilterBar,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component **dashboard-filter-bar** (698:4163): the query conditions of a dashboard. `DashboardFilterBar` > ' +
-          '`DashboardFilterGroup` (label + controls; "|" dividers are added between groups) and `DashboardFilterRange` (from ~ to); ' +
-          'buttons at the right → `actions`. A `search` landmark (`aria-label`, default 조회 조건). The controls are the design ' +
-          'system Select · FilterChip · SegmentedControl · DatePicker (sm) — give each an `aria-label`.',
+          '대시보드의 조회 조건을 한곳에 모아 보여 주는 막대입니다. 조건은 `DashboardFilterGroup`으로 묶어 넣고, 오른쪽 버튼은 `actions`에 넣습니다.',
       },
     },
   },
@@ -55,10 +53,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+/** 조회 대상과 조회 기간 조건이 있는 막대입니다. */
+export const Playground: Story = { name: '직접 체험' };
 
-/** Narrower than its content: the groups wrap onto further rows. */
+/** 내용보다 좁으면 묶음 단위로 다음 줄로 넘어갑니다. */
 export const Narrow: Story = {
+  name: '좁은 화면',
   render: () => (
     <DashboardFilterBar
       style={{ width: 640 }}

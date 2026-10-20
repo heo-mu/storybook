@@ -7,21 +7,20 @@ import { resolveAppearance, type ButtonDisabledProp, type ButtonShape, type Butt
 export type ButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'disabled'> &
   ButtonToneProps &
   ButtonDisabledProp & {
-    /** Figma "Size". @default 'xs' */
+    /** 크기. @default 'xs' */
     size?: ButtonSize;
-    /** Figma "Shape". @default 'square' */
+    /** 모서리 모양. @default 'square' */
     shape?: ButtonShape;
-    /** Figma "Left Icon" (boolean + icon instance): rendered when provided. Sized to 16px (20px at lg). */
+    /** 글자 왼쪽 아이콘. 넘기면 표시되며 버튼 크기에 맞춰집니다. */
     leftIcon?: ReactNode;
-    /** Figma "Right Icon" (boolean + icon instance): rendered when provided. Sized to 16px (20px at lg). */
+    /** 글자 오른쪽 아이콘. 넘기면 표시되며 버튼 크기에 맞춰집니다. */
     rightIcon?: ReactNode;
-    /** Figma "Label Text". */
+    /** 버튼 글자. */
     children: ReactNode;
   };
 
 /**
- * Figma component set `button_basic` (54:2904).
- * State "Hover"/"Pressed" are the native :hover/:active states; "Disabled" is the `disabled` prop.
+ * 사용자가 행동을 실행하는 버튼입니다. 마우스를 올리거나 누르면 모양이 바뀌고, `disabled`이면 누를 수 없습니다.
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant = 'primary', appearance, size = 'xs', shape = 'square', leftIcon, rightIcon, children, className, type = 'button', ...rest },

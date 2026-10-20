@@ -60,3 +60,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## 상태
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
+
+- Figma 컴포넌트 세트: `input`(76:2945), `input_message`(83:3009).
+- 지우기 버튼 아이콘은 Figma `icon/X`, 비밀번호 표시 버튼 아이콘은 Figma `Icon-eye`입니다.

@@ -6,27 +6,26 @@ import { Loading } from '../Loading';
 import type { FileUploaderItemStatus } from './FileUploader.options';
 
 export type FileUploaderItemProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
-  /** Figma "File Name". */
+  /** 파일 이름. 길면 말줄임표로 줄입니다. */
   fileName: ReactNode;
-  /** Figma "File Info" (size, status text …). */
+  /** 파일 정보(크기, 진행 상태 글자 등). */
   fileInfo?: ReactNode;
-  /** Figma State: Completed (remove button), uploading (spinner), download (download button). @default 'completed' */
+  /** 상태 — 삭제 버튼(`completed`), 업로드 중 표시(`uploading`), 다운로드 버튼(`download`). @default 'completed' */
   status?: FileUploaderItemStatus;
-  /** Called by the "삭제" button (status 'completed'). */
+  /** "삭제" 버튼을 누르면 호출됩니다(`completed`일 때). */
   onRemove?: () => void;
-  /** Called by the "다운로드" button (status 'download'). */
+  /** "다운로드" 버튼을 누르면 호출됩니다(`download`일 때). */
   onDownload?: () => void;
-  /** @default '삭제' */
+  /** 삭제 버튼 글자. @default '삭제' */
   removeLabel?: string;
-  /** @default '다운로드' */
+  /** 다운로드 버튼 글자. @default '다운로드' */
   downloadLabel?: string;
-  /** Accessible name of the spinner. @default '업로드 중' */
+  /** 화면 낭독기가 읽는 업로드 중 표시의 이름. @default '업로드 중' */
   uploadingLabel?: string;
 };
 
 /**
- * Figma component set `file-uploader-item` (651:3999): one file in an upload list. The actions are the
- * TextButton (button_text Primary sm) with the file name as their description.
+ * 업로드 목록에서 파일 하나를 보여 주는 줄입니다. 버튼은 파일 이름을 설명으로 함께 읽어 어느 파일의 버튼인지 구분됩니다.
  */
 export const FileUploaderItem = forwardRef<HTMLDivElement, FileUploaderItemProps>(function FileUploaderItem(
   {

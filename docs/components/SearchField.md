@@ -31,7 +31,7 @@ import { SearchField } from 'platform-design-system';
 
 - `<input type="search">`이며, Enter 키에서 `onSearch(value)`가 호출됩니다. 브라우저 기본 지우기 아이콘은 숨깁니다.
 - 지우기 버튼(X)은 Figma처럼 Focus · Error 상태에서 보입니다(마우스용, `tabIndex=-1`). 누르면 값을 비우고 `onClear`를 호출하며 포커스를 유지합니다.
-- Solid 타입의 Error는 Figma에 테두리가 없습니다(글자색만 변경) — [figma-issues](../../../docs/figma-issues.md) 참고.
+- Solid · Outline 모두 Error에서 2px 안쪽 오류 테두리를 그립니다(Solid는 2026-10-19 Figma에 추가된 `colors/search-field/solid/border/error`, E8 — [figma-issues](../figma-issues.md)).
 
 ## 정책
 
@@ -53,3 +53,9 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## 상태
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
+
+- Figma 컴포넌트 세트: `search-field`(216:6570).

@@ -2,15 +2,32 @@ import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as Showcase from './stories/Alert.showcase.stories';
 import { Alert } from './Alert';
 
-<Meta title="Components/Alert/Usage" />
+<Meta title="컴포넌트/Alert/사용 방법" id="components-alert-usage" name="Docs" />
 
-# Alert — 사용 가이드
+# Alert
 
-Figma **Alert** 프레임(179:5471)의 `alert`(3개)를 구현했습니다. 화면 안에 머무는 안내 메시지입니다(잠시 떴다 사라지는 알림은 Toast).
+알림은 화면 안에 머물며 상태나 안내를 전하는 메시지입니다. 잠시 나타났다 사라지는 메시지는 토스트(Toast)를 씁니다.
 
 <Canvas of={Showcase.Overview} />
 
-## 사용 예
+## 언제 사용하나요
+
+- 점검 예정 · 업로드 실패처럼 지금 화면의 상태를 설명할 때 씁니다.
+- 알림에는 닫기 버튼이 없습니다. 사용자가 닫아야 하는 메시지는 토스트(Toast)를 씁니다.
+
+## 종류
+
+| `status` | 쓰임 |
+| --- | --- |
+| `information` | 안내 |
+| `success` | 성공 |
+| `error` | 오류 |
+
+- 종류마다 아이콘과 색이 다릅니다. 아이콘은 `showIcon={false}`로 숨길 수 있습니다.
+- 제목(`title`)만 쓰거나 설명(`description`)을 더할 수 있습니다.
+- 필요한 동작은 `action`에 버튼으로 넣습니다. 버튼은 `Button`의 `tertiary` · `outline` · `xs`를 씁니다.
+
+## 사용 방법
 
 <Source
   language="tsx"
@@ -26,29 +43,13 @@ Figma **Alert** 프레임(179:5471)의 `alert`(3개)를 구현했습니다. 화�
 />`}
 />
 
-## Figma 속성 → Props
+- 알림은 부모 너비를 채웁니다.
+- 설명이 길면 줄을 바꿔 모두 보여 줍니다. 되도록 문구를 짧게 씁니다.
 
-| Figma | Prop | 비고 |
-| --- | --- | --- |
-| Status Information · Success · Error | `status` | 상태 아이콘(20px)과 색 |
-| Alert Text | `title` | |
-| Sub · Sub Text | `description` | |
-| Icon | `showIcon` | |
-| Button | `action` | Figma: Button Tertiary · Outline · xs |
+## 접근성
 
-## 정책
-
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
-항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
-
-### Figma 문서화 정책
-
-Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
-
-- `ALER-01` **너비**: 부모 너비를 채웁니다. Figma의 320px은 예시 폭입니다(Rules 08).
-- `ALER-02` **설명 길이**: 줄바꿈하며 자르지 않습니다. 길면 문구를 줄이는 것이 원칙입니다(Figma 예시의 "최대 2줄"은 권장 길이, Rules 08).
-- `ALER-03` **역할(role)**: 오류는 `role="alert"`(바로 읽음), 안내 · 성공은 `role="status"`. `role` prop으로 바꿀 수 있습니다(Rules 03 · alert 주석).
-- `ALER-04` **닫기 버튼**: 없습니다 — Alert는 화면 상태를 설명하는 고정 메시지입니다. 사용자가 닫아야 하는 알림은 Toast를 쓰고, 필요한 동작은 `action`에 넣으세요(Rules 06).
+- `error` 알림은 화면 낭독기가 바로 읽습니다(`role="alert"`).
+- `information` · `success` 알림은 `role="status"`로 읽힙니다. 필요하면 `role`로 바꿀 수 있습니다.
 
 ## Props
 

@@ -9,7 +9,8 @@ import { Badge } from '../../Badge';
 // Interaction and application examples of FilterChipSelect (not in the MCP manifest) — Figma "chip-filter 선택 예시"
 // (1011:12956, multiple) and "단일 선택 예시" (Design System Rules 07).
 const meta = {
-  title: 'Components/Chip/FilterChipSelect/Showcase',
+  title: '컴포넌트/Chip/FilterChipSelect/전체 보기',
+  id: 'components-chip-filterchipselect-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },
 } satisfies Meta;
@@ -24,6 +25,7 @@ const listbox = () => within(document.body).findByRole('listbox');
 
 /** Figma "기본": the four filters of the Figma example, nothing applied. */
 export const Basic: Story = {
+  name: '기본',
   render: () => (
     <div style={{ display: 'flex', gap: 4 }}>
       {FIGMA_FILTERS.map((f) => (
@@ -38,6 +40,7 @@ export const Basic: Story = {
  * then turning every option off removes the filter.
  */
 export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = {
+  name: '여러 개 선택',
   args: { onChange: fn() },
   render: (args) => (
     <div style={{ display: 'flex', gap: 4, minHeight: 260 }}>
@@ -101,6 +104,7 @@ export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = 
 
 /** Single selection: choosing applies and closes; "전체" removes the filter. */
 export const SingleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = {
+  name: '하나 선택',
   args: { onChange: fn() },
   render: (args) => (
     <div style={{ minHeight: 220 }}>
@@ -145,6 +149,7 @@ export const SingleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = {
 
 /** Keyboard only: Tab to the chip, ↓ opens, arrows move, Space toggles, Esc applies and returns focus to the chip. */
 export const Keyboard: Story = {
+  name: '키보드',
   render: () => (
     <div style={{ minHeight: 240 }}>
       <FilterChipSelect label="색상" options={OPTIONS} />
@@ -169,6 +174,7 @@ export const Keyboard: Story = {
 
 /** Disabled: no panel, not focusable by Tab. */
 export const Disabled: Story = {
+  name: '비활성',
   render: () => <FilterChipSelect label="스타일" options={OPTIONS} disabled defaultValue={['1']} />,
   play: async ({ canvasElement, userEvent }) => {
     const chip = chipOf(canvasElement, /^스타일/);
@@ -197,6 +203,7 @@ const STATUS_BADGE = { 정상: 'success', 주의: 'warning', 점검: 'danger' } 
  * The filters are controlled by the screen, so "필터 초기화" clears all of them.
  */
 export const FilterArea: Story = {
+  name: '필터 영역',
   render: function Render() {
     const [buildings, setBuildings] = useState<Key[]>([]);
     const [kinds, setKinds] = useState<Key[]>([]);

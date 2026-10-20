@@ -16,34 +16,32 @@ type TabsStyle = { appearance: TabsAppearance; variant: TabsVariant; size: TabsS
 const TabsStyleContext = createContext<TabsStyle>({ appearance: 'line', variant: 'primary', size: 'sm', shape: 'square' });
 
 export type TabsProps = {
-  /** Figma set: `tab_filled` (filled) or `tab_line` (line). @default 'line' */
+  /** 모양 — 밑줄(`line`) · 채움(`filled`). @default 'line' */
   appearance?: TabsAppearance;
-  /** Figma "Variant" — the Selected colour (Primary #004a38 · Secondary #007c56). @default 'primary' */
+  /** 종류 — 선택된 탭의 색. @default 'primary' */
   variant?: TabsVariant;
-  /** Figma "Size". @default 'sm' */
+  /** 크기. @default 'sm' */
   size?: TabsSize;
-  /** Figma "Shape" (filled only). @default 'square' */
+  /** 모서리 모양(`filled`에만 적용). @default 'square' */
   shape?: TabsShape;
-  /** Selected tab id (controlled). */
+  /** 선택된 탭의 `id`. 넘기면 선택을 바깥에서 관리합니다. */
   selectedKey?: Key;
-  /** Initially selected tab id (uncontrolled). */
+  /** 처음 선택할 탭의 `id`. `selectedKey` 없이 탭이 스스로 선택을 관리할 때 씁니다. */
   defaultSelectedKey?: Key;
-  /** Called with the newly selected tab id. */
+  /** 선택이 바뀌면 새로 선택된 탭의 `id`로 호출됩니다. */
   onSelectionChange?: (key: Key) => void;
-  /** Tab ids that cannot be selected (Figma State "Disabled"). */
+  /** 고를 수 없는 탭의 `id` 목록(비활성). */
   disabledKeys?: Iterable<Key>;
-  /** Activate a tab on focus (automatic) or on Enter / Space (manual). @default 'automatic' */
+  /** 방향키로 옮기면 바로 선택(`automatic`)할지, Enter · Space를 눌러야 선택(`manual`)할지 정합니다. @default 'automatic' */
   keyboardActivation?: 'automatic' | 'manual';
-  /** `TabList` and `TabPanel`s. */
+  /** `TabList`와 `TabPanel`들. */
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
 };
 
 /**
- * Figma component sets `tab_filled` (91:5000) and `tab_line` (91:5241). Arrow keys move between tabs,
- * Home / End jump to the ends (react-aria-components tablist pattern). State: Hover / Pressed = :hover / press,
- * Selected = the selected tab, Disabled = `disabledKeys` or `Tab disabled`.
+ * 한 화면의 내용을 탭으로 나눠 보여 줍니다. ← → 방향키로 탭을 옮기고, Home · End로 처음과 끝 탭으로 갑니다.
  */
 export function Tabs({ appearance = 'line', variant = 'primary', size = 'sm', shape = 'square', className, children, ...rest }: TabsProps) {
   return (
@@ -56,26 +54,26 @@ export function Tabs({ appearance = 'line', variant = 'primary', size = 'sm', sh
 }
 
 export type TabListProps<T extends object = object> = Omit<AriaTabListProps<T>, 'className'> & {
-  /** Name of the tab list (e.g. what the tabs switch). */
+  /** 화면 낭독기가 읽는 탭 목록 이름(예: 탭으로 바꾸는 내용). */
   'aria-label'?: string;
   className?: string;
 };
 
-/** The row of tabs. Figma defines no spacing between tabs, so they sit side by side. */
+/** 탭을 한 줄로 늘어놓는 탭 목록입니다. 탭은 간격 없이 나란히 놓입니다. */
 export function TabList<T extends object = object>({ className, ...rest }: TabListProps<T>) {
   const { appearance } = useContext(TabsStyleContext);
   return <AriaTabList {...rest} className={cx('ds-tabs__list', className)} data-appearance={appearance} />;
 }
 
 export type TabProps = Omit<AriaTabProps, 'className' | 'children' | 'isDisabled'> & {
-  /** Figma "Label Text". */
+  /** 탭 글자. */
   children: ReactNode;
-  /** Figma State "Disabled". */
+  /** 비활성 — 고를 수 없고, 방향키로 옮길 때도 건너뜁니다. */
   disabled?: boolean;
   className?: string;
 };
 
-/** One tab (Figma tab_filled / tab_line variant). `id` links it to its `TabPanel`. */
+/** 탭 하나입니다. 같은 `id`를 가진 `TabPanel`과 짝을 이룹니다. */
 export function Tab({ className, children, disabled, ...rest }: TabProps) {
   const { appearance, variant, size, shape } = useContext(TabsStyleContext);
   return (
@@ -95,7 +93,7 @@ export function Tab({ className, children, disabled, ...rest }: TabProps) {
 
 export type TabPanelProps = Omit<AriaTabPanelProps, 'className'> & { className?: string };
 
-/** Content of a tab (not styled in Figma). */
+/** 탭 하나의 내용입니다. 따로 꾸밈이 없으므로 내용의 여백 등은 직접 정합니다. */
 export function TabPanel({ className, ...rest }: TabPanelProps) {
   return <AriaTabPanel {...rest} className={cx('ds-tabs__panel', className)} />;
 }

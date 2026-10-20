@@ -27,6 +27,10 @@ const config: StorybookConfig = {
       propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
     },
   },
+  docs: {
+    // Sidebar label of the generated component docs pages (Korean UI). Usage MDX pages keep their ids with name="Docs".
+    defaultName: '문서',
+  },
   features: {
     // Required by the Storybook MCP docs toolset (docs-list / docs-show).
     componentsManifest: true,

@@ -62,3 +62,10 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 ## Props
 
 ### ToastRegion
+
+## 구현 메모 (Storybook에서 옮김)
+
+- Figma 컴포넌트 세트: `toast`(91:5927).
+- `ToastRegion`은 react-aria-components Toast(UNSTABLE_ToastRegion · UNSTABLE_Toast)로 이름 있는 영역(landmark), 토스트 낭독, 마우스 오버 · 포커스 중 타이머 정지를 제공합니다.
+- 기본 큐는 `new UNSTABLE_ToastQueue({ maxVisibleToasts: 3 })`이고, `showToast`는 `timeout`을 `Math.max(5000, timeout)`으로 보정합니다.
+- 정적 `Toast`는 `role="status"`로 렌더링됩니다(`role` prop으로 덮어쓸 수 있음).

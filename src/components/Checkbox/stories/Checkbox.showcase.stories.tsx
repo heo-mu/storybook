@@ -6,11 +6,13 @@ import { CheckboxGroup } from '../CheckboxGroup';
 import { CHOICE_SIZES, type ChoiceSize } from '../../Choice';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { koLabel } from '../../../storybook/koLabel';
 
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs checkbox`.
 const meta = {
-  title: 'Components/Checkbox/Showcase',
+  title: '컴포넌트/Checkbox/전체 보기',
+  id: 'components-checkbox-showcase',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
 } satisfies Meta;
@@ -36,6 +38,7 @@ function figmaVariant(selection: Selection, size: ChoiceSize, state: State) {
 }
 
 export const Overview: Story = {
+  name: '개요',
   render: () => (
     <div>
       <StorySection title="Size (sm · md · lg)">
@@ -59,6 +62,7 @@ export const Overview: Story = {
 
 /** All 36 Figma variants: Selection × Size (rows) × State (columns). */
 export const VariantMatrix: Story = {
+  name: '모든 변형',
   render: () => (
     <FigmaMatrix
       columns={[...STATES]}
@@ -80,12 +84,13 @@ export const VariantMatrix: Story = {
 
 /** Every state at size md. */
 export const States: Story = {
+  name: '상태별 보기',
   render: () => (
     <div>
       {SELECTIONS.map((selection) => (
         <StorySection key={selection} title={selection}>
           {STATES.map((state) => (
-            <Checkbox key={state} {...figmaVariant(selection, 'md', state)} label={state} />
+            <Checkbox key={state} {...figmaVariant(selection, 'md', state)} label={koLabel(state)} />
           ))}
         </StorySection>
       ))}
@@ -117,6 +122,7 @@ function SelectAll() {
 
 /** Click and Space toggle; a parent checkbox shows Indeterminate while only some children are checked. */
 export const Interaction: Story = {
+  name: '동작',
   render: () => <SelectAll />,
   play: async ({ canvas, userEvent, step }) => {
     const parent = canvas.getByRole('checkbox', { name: '전체 동의' });
@@ -146,6 +152,7 @@ export const Interaction: Story = {
 
 /** Design System Rules 08: items 8px apart when stacked; 16px apart in a row, 8px between wrapped rows (the group's own CSS — no `style`). */
 export const GroupSpacing: Story = {
+  name: '그룹 간격',
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
       <CheckboxGroup aria-label="세로" name="spacing-v">
@@ -172,6 +179,7 @@ export const GroupSpacing: Story = {
 
 /** Native checkbox semantics: name from the label, disabled state, group role. */
 export const Accessibility: Story = {
+  name: '접근성',
   render: () => (
     <CheckboxGroup aria-label="알림 설정" defaultValue={['news']}>
       <Checkbox value="news" label="소식 받기" />

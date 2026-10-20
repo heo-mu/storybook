@@ -5,16 +5,15 @@ import { TEXT_BUTTON_SIZES, TEXT_BUTTON_VARIANTS } from './Button.options';
 import { ICON_MAPPING, ICON_OPTIONS } from './stories/icon-controls';
 
 const meta = {
-  title: 'Components/Button/TextButton',
+  title: '컴포넌트/Button/TextButton',
+  id: 'components-button-textbutton',
   component: TextButton,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component set **button_text** (432:8395, 16 variants). Type → `variant`, Size → `size`, ' +
-          'Left/Right Icon → `leftIcon`/`rightIcon` (icon elements), Label Text → `children`. In Ver 0.4 both Types ' +
-          '("Primary", "SecondarySecondary") are bound to the same `colors/button_text/*` variables, so they render identically.',
+          '배경 없이 글자로만 보이는 가벼운 버튼입니다. 더보기처럼 덜 강조할 행동에 씁니다.',
       },
     },
   },
@@ -26,25 +25,27 @@ const meta = {
     onClick: fn(),
   },
   argTypes: {
-    variant: { control: 'inline-radio', options: TEXT_BUTTON_VARIANTS, description: 'Figma "Type"', table: { defaultValue: { summary: 'primary' } } },
-    size: { control: 'inline-radio', options: TEXT_BUTTON_SIZES, description: 'Figma "Size"', table: { defaultValue: { summary: 'sm' } } },
-    leftIcon: { control: 'select', options: ICON_OPTIONS, mapping: ICON_MAPPING, description: 'Figma "Left Icon" — an icon element (ReactNode)' },
-    rightIcon: { control: 'select', options: ICON_OPTIONS, mapping: ICON_MAPPING, description: 'Figma "Right Icon" — an icon element (ReactNode)' },
-    children: { control: 'text', description: 'Figma "Label Text"' },
-    disabled: { control: 'boolean', description: 'Figma State "Disabled"' },
+    variant: { control: 'inline-radio', options: TEXT_BUTTON_VARIANTS, description: '종류', table: { defaultValue: { summary: 'primary' } } },
+    size: { control: 'inline-radio', options: TEXT_BUTTON_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
+    leftIcon: { control: 'select', options: ICON_OPTIONS, mapping: ICON_MAPPING, description: '글자 왼쪽 아이콘' },
+    rightIcon: { control: 'select', options: ICON_OPTIONS, mapping: ICON_MAPPING, description: '글자 오른쪽 아이콘' },
+    children: { control: 'text', description: '버튼 글자' },
+    disabled: { control: 'boolean', description: '비활성 — 누를 수 없고 키보드로도 선택되지 않음' },
   },
 } satisfies Meta<typeof TextButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Every prop is wired to a control (icons can be switched on in the Left/Right Icon controls). */
-export const Playground: Story = {};
+/** 모든 Props를 직접 바꿔 볼 수 있습니다. */
+export const Playground: Story = { name: '직접 체험' };
 
 export const Medium: Story = {
+  name: '중간 크기',
   args: { size: 'md' },
 };
 
 export const Disabled: Story = {
+  name: '비활성',
   args: { disabled: true },
 };

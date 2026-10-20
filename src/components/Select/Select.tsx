@@ -7,62 +7,60 @@ import { FieldMessage, type FieldMessageType, type FieldSize } from '../Field';
 import { SelectSizeContext } from './SelectContext';
 
 export type SelectProps<T extends object = object> = {
-  /** Figma "Size". @default 'sm' */
+  /** 크기. 옵션 높이도 함께 맞춰집니다. @default 'sm' */
   size?: FieldSize;
-  /** Figma "Label" + "Label Text". Without a label, set `aria-label`. */
+  /** 선택 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** Figma "Display Text" while nothing is selected. @default '내용 선택' */
+  /** 아무것도 고르지 않았을 때 보이는 글자. @default '내용 선택' */
   placeholder?: string;
-  /** Figma "Alert" + select_message text. */
+  /** 선택 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
-  /** Figma select_message "Type". @default 'error' when invalid, otherwise 'info' */
+  /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
   messageType?: FieldMessageType;
-  /** Figma State "Error". */
+  /** 오류 — 오류 테두리로 표시합니다. */
   invalid?: boolean;
-  /** Figma State "Disabled". */
+  /** 비활성 — 고를 수 없고 키보드로도 선택되지 않습니다. */
   disabled?: boolean;
-  /** Figma State "Read-only": shows the value without the caret; the list does not open. */
+  /** 읽기 전용 — 화살표 없이 값만 보이고 목록이 펼쳐지지 않습니다. */
   readOnly?: boolean;
-  /** Requires a selection (native form validation through the hidden `<select>`). */
+  /** 꼭 골라야 하는 항목으로 표시합니다. `name`과 함께 쓰면 폼을 보낼 때 선택 여부를 검사합니다. */
   required?: boolean;
-  /** Selected option id (controlled); `null` = nothing selected. */
+  /** 선택한 옵션의 `id`(제어). `null`이면 선택 없음입니다. */
   value?: Key | null;
-  /** Initially selected option id (uncontrolled). @default null */
+  /** 처음 선택된 옵션의 `id`(비제어). @default null */
   defaultValue?: Key | null;
-  /** Called with the newly selected option id. */
+  /** 새로 고른 옵션의 `id`와 함께 호출됩니다. */
   onChange?: (value: Key | null) => void;
-  /** Figma State "Open" (controlled). */
+  /** 목록 펼침 여부(제어). */
   open?: boolean;
-  /** Initially open (uncontrolled). */
+  /** 처음에 목록을 펼쳐 둘지 정합니다(비제어). */
   defaultOpen?: boolean;
-  /** Called when the list opens or closes. */
+  /** 목록이 펼쳐지거나 닫힐 때 호출됩니다. */
   onOpenChange?: (open: boolean) => void;
-  /** Form field name (renders a hidden native `<select>`). */
+  /** 폼 필드 이름. 주면 폼을 보낼 때 선택값이 함께 전송됩니다. */
   name?: string;
-  /** Id of the form the hidden `<select>` belongs to. */
+  /** 선택값을 보낼 폼의 `id`. */
   form?: string;
-  /** Option ids that cannot be selected. */
+  /** 고를 수 없는 옵션의 `id` 목록. */
   disabledKeys?: Iterable<Key>;
-  /** Data for dynamic options; `children` is then a function `(item) => <SelectOption id={…}>…</SelectOption>`. */
+  /** 옵션을 데이터로 만들 때 쓰는 목록. 이때 `children`은 `(item) => <SelectOption id={…}>…</SelectOption>` 함수입니다. */
   items?: Iterable<T>;
-  /** `SelectOption` elements, or a render function when `items` is given. */
+  /** `SelectOption` 요소들. `items`를 쓰면 옵션을 만드는 함수입니다. */
   children: ReactNode | ((item: T) => ReactNode);
   id?: string;
   autoFocus?: boolean;
   'aria-label'?: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
-  /** Class name of the root element. */
+  /** 바깥 요소의 클래스 이름. */
   className?: string;
-  /** Style of the root element (e.g. its width — the list is as wide as the field). */
+  /** 바깥 요소의 스타일. 너비를 정하면 목록도 같은 너비로 펼쳐집니다. */
   style?: CSSProperties;
 };
 
 /**
- * Figma component set `select` (95:4740) with `listbox` (97:2665), `option` (97:2286) and `select_message`
- * (95:2960). Keyboard, focus, typeahead and ARIA come from react-aria-components (button + listbox
- * popover); all styles are the Figma variables. State: Hover = :hover, Open = list open, Completed = has a
- * value, Error = `invalid`, Disabled = `disabled`, Read-only = `readOnly`.
+ * 목록을 펼쳐 옵션 하나를 고르는 선택 칸입니다. 옵션은 `SelectOption`으로 넣고, 값은 선택한 옵션의 `id`입니다.
+ * 마우스와 키보드(방향키 · Enter · Esc · 글자 입력)로 모두 조작할 수 있습니다.
  */
 export function Select<T extends object = object>({
   size = 'sm',

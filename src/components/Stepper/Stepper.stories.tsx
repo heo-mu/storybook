@@ -2,20 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Stepper } from './Stepper';
 import { STEPPER_ORIENTATIONS } from './Stepper.options';
 
-// Usage stories (Storybook MCP manifest). Verification stories: ./stories/Stepper.showcase.stories.tsx
+// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Stepper.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: 'Components/Stepper/Stepper',
+  title: '컴포넌트/Stepper/Stepper',
+  id: 'components-stepper-stepper',
   component: Stepper,
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Figma component sets **stepper_horizontal** (179:2043) and **stepper_vertical** (203:3949) built from ' +
-          '**stepper_indicator_*** (Variant Upcoming / Current / Completed / Locked / Error) and **stepper_connector_*** ' +
-          '(Default / Completed). Pass `steps` and `currentStep` (0-based): earlier steps are Completed, later ones Upcoming; ' +
-          '`status` on a step overrides it (Locked, Error). Type → `orientation`. `StepperIndicator` and `StepperConnector` are ' +
-          'exported for custom layouts. Progress display only — not interactive.',
+          '여러 단계로 된 과정에서 지금 몇 번째 단계인지 보여 줍니다(누를 수 없음). 단계는 `steps`, 지금 단계는 `currentStep`(0부터), 방향은 `orientation`으로 정합니다.',
       },
     },
   },
@@ -31,7 +28,7 @@ const meta = {
     ],
   },
   argTypes: {
-    orientation: { control: 'inline-radio', options: STEPPER_ORIENTATIONS, description: 'Figma "Type"', table: { defaultValue: { summary: 'horizontal' } } },
+    orientation: { control: 'inline-radio', options: STEPPER_ORIENTATIONS, description: '방향 — 가로(horizontal) · 세로(vertical)', table: { defaultValue: { summary: 'horizontal' } } },
     currentStep: { control: { type: 'number', min: 0, max: 3 } },
   },
   decorators: [(Story) => <div style={{ padding: '16px 24px' }}>{Story()}</div>],
@@ -40,14 +37,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = { name: '직접 체험' };
 
 export const Vertical: Story = {
+  name: '세로',
   args: { orientation: 'vertical' },
 };
 
-/** Step-level status: an error and a locked step. */
+/** 단계의 `status`로 오류 단계와 잠긴 단계를 표시합니다. */
 export const ErrorAndLocked: Story = {
+  name: '오류 · 잠김',
   args: {
     currentStep: 2,
     steps: [
@@ -59,7 +58,8 @@ export const ErrorAndLocked: Story = {
   },
 };
 
-/** Labels only (Figma "Sub-Label" off). */
+/** 설명 없이 제목만 있는 단계입니다. */
 export const LabelsOnly: Story = {
+  name: '라벨만',
   args: { steps: [{ label: '장바구니' }, { label: '배송 정보' }, { label: '결제' }] },
 };

@@ -55,3 +55,9 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 | Esc | 툴팁 닫기 |
 
 ## Props
+
+## 구현 메모 (Storybook에서 옮김)
+
+- Figma 컴포넌트 세트: `tooltip`(149:1111).
+- react-aria-components `TooltipTrigger` · `Tooltip` 기반입니다. 말풍선은 `role="tooltip"`이고 트리거에 `aria-describedby`가 붙습니다. 트리거는 `Focusable`로 감쌉니다.
+- `closeDelay`는 값을 넘기지 않으면 react-aria 기본값(500ms)을 씁니다.

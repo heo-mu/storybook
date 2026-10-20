@@ -17,34 +17,30 @@ import { cx } from '../../utils/cx';
 
 export type DropdownMenuProps = {
   /**
-   * The element that opens the menu: a react-aria Button / FilterChip, or any element that forwards its ref and
-   * props (e.g. the design-system `Button`).
+   * 메뉴를 여는 요소. `Button`이나 `FilterChip`처럼 ref와 props를 그대로 전달하는 요소를 넘깁니다.
    */
   trigger: ReactElement<DOMAttributes<HTMLElement>, string> | ReactElement;
-  /** Accessible name of the menu. */
+  /** 화면 낭독기가 읽는 메뉴 이름. */
   'aria-label'?: string;
-  /** `DropdownMenuItem`, `DropdownMenuSection` and `DropdownMenuSeparator` elements. */
+  /** `DropdownMenuItem` · `DropdownMenuSection` · `DropdownMenuSeparator`들. */
   children: ReactNode;
-  /** Called with the id of the activated item. */
+  /** 항목을 고르면 그 항목의 `id`로 호출됩니다. */
   onAction?: (key: Key) => void;
-  /** Open state (controlled). */
+  /** 메뉴가 열렸는지 여부. 넘기면 바깥에서 관리합니다. */
   open?: boolean;
-  /** Called when the menu opens or closes. */
+  /** 메뉴가 열리거나 닫히면 호출됩니다. */
   onOpenChange?: (open: boolean) => void;
-  /** Position relative to the trigger. @default 'bottom start' */
+  /** 트리거를 기준으로 한 메뉴 위치. @default 'bottom start' */
   placement?: Placement;
-  /** Gap between the trigger and the panel in px (4 as Select / Date Picker; the Figma breadcrumb menu uses 2). @default 4 */
+  /** 트리거와 메뉴 사이 간격(px). @default 4 */
   offset?: number;
-  /** Item ids that cannot be activated (Figma State "Disabled"). */
+  /** 고를 수 없는 항목의 `id` 목록(비활성). */
   disabledKeys?: Iterable<Key>;
   className?: string;
 };
 
 /**
- * Dropdown menu built from the Figma `dropdownmenu_item` (179:4819) and `dropdownmenu_line` (179:5082)
- * components and the menu panel of the Figma examples (Menu Container): padding p-1, 1px border,
- * border-radius/rounded, effect elevation-3. Keyboard, focus and ARIA (menu / menuitem) come from
- * react-aria-components; Escape closes and focus returns to the trigger.
+ * 버튼을 누르면 펼쳐지는 동작 메뉴입니다. 방향키로 항목을 옮기고, Esc로 닫으면 키보드 위치가 트리거로 돌아갑니다.
  */
 export function DropdownMenu({
   trigger,
@@ -69,22 +65,22 @@ export function DropdownMenu({
 }
 
 export type DropdownMenuItemProps = Omit<MenuItemProps, 'className' | 'children' | 'isDisabled'> & {
-  /** Figma "Item" (label). */
+  /** 항목 이름. */
   children: ReactNode;
-  /** Figma "Sub" text under the label ("Sub Text" on). */
+  /** 이름 아래 설명. */
   description?: ReactNode;
-  /** Figma "Left Icon". */
+  /** 이름 앞 아이콘. */
   icon?: ReactNode;
-  /** Figma "Right Icon" — the caret, for items that open a submenu or a next step. @default false */
+  /** 오른쪽 화살표 — 다른 화면으로 이동하는 항목이라는 표시입니다. @default false */
   chevron?: boolean;
-  /** Figma State "Alert": a destructive action (danger colours). */
+  /** 삭제처럼 위험한 작업 — 경고 색으로 보입니다. */
   danger?: boolean;
-  /** Figma State "Disabled". */
+  /** 비활성 — 고를 수 없고, 방향키로 옮길 때도 건너뜁니다. */
   disabled?: boolean;
   className?: string;
 };
 
-/** Figma `dropdownmenu_item` Type Content. State: Hover = pointer hover or keyboard focus, Alert = `danger`, Disabled = `disabled`. */
+/** 메뉴 항목 하나입니다. 마우스를 올리거나 키보드로 선택하면 같은 모양으로 바뀝니다. */
 export function DropdownMenuItem({ children, description, icon, chevron = false, danger = false, disabled, className, textValue, ...rest }: DropdownMenuItemProps) {
   return (
     <MenuItem
@@ -111,17 +107,17 @@ export function DropdownMenuItem({ children, description, icon, chevron = false,
 }
 
 export type DropdownMenuSectionProps = {
-  /** Figma `dropdownmenu_item` Type Title (group title). */
+  /** 묶음 제목. */
   title?: ReactNode;
-  /** Items of the group. */
+  /** 묶음 안의 항목들. */
   children: ReactNode;
-  /** Section id. */
+  /** 묶음 `id`. */
   id?: Key;
-  /** Accessible name when there is no visible title. */
+  /** 보이는 제목이 없을 때 화면 낭독기가 읽는 묶음 이름. */
   'aria-label'?: string;
 };
 
-/** A group of items with an optional title (Figma Type Title). */
+/** 메뉴 항목 묶음입니다. 위에 제목을 붙일 수 있습니다. */
 export function DropdownMenuSection({ title, children, id, 'aria-label': ariaLabel }: DropdownMenuSectionProps) {
   return (
     <MenuSection id={id} aria-label={ariaLabel} className="ds-dropdown__section">
@@ -135,7 +131,7 @@ export function DropdownMenuSection({ title, children, id, 'aria-label': ariaLab
   );
 }
 
-/** Figma `dropdownmenu_line`: divider between groups. */
+/** 메뉴 항목 묶음 사이의 구분선입니다. */
 export function DropdownMenuSeparator() {
   return <Separator className="ds-dropdown__separator" />;
 }
