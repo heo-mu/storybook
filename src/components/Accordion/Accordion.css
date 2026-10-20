@@ -1,7 +1,7 @@
 /*
  * Accordion — Figma `accordion-item` (1035:15648, restored 2026-10-19 — F80).
  *   trigger: padding spacing/accordion/padding × spacing/accordion/trigger-padding-x (md 10 12 · sm 8 10), min-height
- *            size/accordion/trigger-height (44 · 36), gap p-2, border-radius/accordion/default; title md base/leading-normal/medium · sm sm/leading-normal/medium (Expanded:
+ *            size/accordion/trigger-height (44 · 36), gap p-2, square trigger corners; title md base/leading-normal/medium · sm sm/leading-normal/medium (Expanded:
  *            semibold, colors/accordion/title/*), description xs/leading-normal/normal (…/body) p-1 below;
  *            caret 16px (CaretDown …/icon/default, CaretUp …/icon/expanded, …/icon/disabled)
  *   divider: Figma line directly under the trigger, drawn on the trigger's last pixel row (::after) —
@@ -43,7 +43,7 @@
   margin: 0;
   padding: var(--spacing-accordion-padding-md) var(--spacing-accordion-trigger-padding-x-md);
   border: 0;
-  border-radius: var(--border-radius-accordion-default);
+  border-radius: 0;
   background-color: var(--_bg);
   font: inherit;
   text-align: left;
@@ -157,8 +157,12 @@
   padding: var(--spacing-padding-p-3) var(--spacing-accordion-trigger-padding-x-sm) var(--spacing-accordion-body-padding);
 }
 
-/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, inside the trigger edge (full-width row). */
-.ds-accordion__trigger[data-focus-visible] {
-  outline: var(--border-width-border-2) solid var(--colors-border-focus);
-  outline-offset: calc(-1 * var(--border-width-border-2));
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): keep the intentional 4px focus-ring corners independent of the square trigger. */
+.ds-accordion__trigger[data-focus-visible]::before {
+  position: absolute;
+  inset: 0;
+  border: var(--border-width-border-2) solid var(--colors-border-focus);
+  border-radius: 4px;
+  content: '';
+  pointer-events: none;
 }

@@ -76,6 +76,7 @@ export const Matrix: Story = {
       const divider = getComputedStyle(trigger, '::after');
       await expect(divider.opacity).toBe(disabled ? '0' : '1');
       await expect(divider.height).toBe('1px');
+      await expect(getComputedStyle(trigger).borderRadius).toBe('0px');
       await expect(trigger.getBoundingClientRect().height).toBe(small ? 36 : 44);
       await expect(item.getBoundingClientRect().height).toBe((small ? 36 : 44) + (item.hasAttribute('data-expanded') ? 64 : 0));
     }
@@ -107,6 +108,7 @@ export const Interaction: StoryObj<{ onExpandedChange: Mock<(keys: Set<unknown>)
     await step('Enter opens the first item', async () => {
       await userEvent.tab();
       await expect(first).toHaveFocus();
+      await expect(getComputedStyle(first, '::before').borderRadius).toBe('4px');
       await userEvent.keyboard('{Enter}');
       await expect(first).toHaveAttribute('aria-expanded', 'true');
       await expect(canvas.getByText('첫째 내용')).toBeVisible();
