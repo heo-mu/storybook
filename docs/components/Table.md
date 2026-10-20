@@ -126,6 +126,7 @@ Figma 정리를 기다리는 항목입니다. 정리될 때까지 아래처럼 �
 컴포넌트 JSDoc(Storybook Props 표)을 한국어 사용 설명으로 바꾸면서 옮긴 기술 정보입니다.
 
 - `Table`은 Figma `table_header`(351:3452) · `table_body`(355:3739) 칸을 Figma table_data 예시처럼 조합한 것입니다.
+- 칸 내용은 가로 가운데 정렬입니다 — 모든 `table_header` · `table_body` 변형이 auto layout CENTER이고, table_data 예시 · 목록 화면 예시가 칸을 160px로 늘려도 가운데에 둡니다(2026-10-20 동기화 전에는 왼쪽 정렬이었음). 긴 글 · 숫자 열의 정렬 규칙은 Figma에 없습니다(v1.0-candidate.md 검토 항목).
 - `TableColumn`의 정렬 아이콘은 CaretUpDown 하나이며, 정렬 중에는 `…/icon/active` 색입니다(TABL-06).
 - `TableEmptyColumn`의 `aria-label`을 머리글 칸 안에 화면 낭독기용 글자로도 넣는 이유: 보조 기술에서 머리글이 비지 않게 하려는 것(axe `empty-table-header`)이며, 화면에는 Figma처럼 비어 있습니다.
 - `TableDragHandle`은 List 아이콘을 씁니다(Figma `table_body` Type Reorder).

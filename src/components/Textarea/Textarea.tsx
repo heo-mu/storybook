@@ -1,14 +1,16 @@
 import { forwardRef, useId, type ComponentPropsWithoutRef, type CSSProperties, type ReactNode } from 'react';
 import { cx } from '../../utils/cx';
-import { FieldMessage, useFieldValue, type FieldMessageType } from '../Field';
+import { FieldLabelRow, FieldMessage, useFieldValue, type FieldMessageType } from '../Field';
 
 import type { TextareaSize } from './Textarea.options';
 
-export type TextareaProps = Omit<ComponentPropsWithoutRef<'textarea'>, 'className' | 'style'> & {
+export type TextareaProps = Omit<ComponentPropsWithoutRef<'textarea'>, 'className' | 'style' | 'required'> & {
   /** 크기. @default 'sm' */
   size?: TextareaSize;
   /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
+  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. */
+  required?: boolean;
   /** 입력 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
   /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
@@ -28,7 +30,7 @@ export type TextareaProps = Omit<ComponentPropsWithoutRef<'textarea'>, 'classNam
  * 나머지 `<textarea>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
  */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
-  { size = 'sm', label, message, messageType, invalid = false, showCount = true, className, style, id, value, defaultValue, onChange, disabled, readOnly, maxLength, 'aria-describedby': describedBy, ...rest },
+  { size = 'sm', label, required = false, message, messageType, invalid = false, showCount = true, className, style, id, value, defaultValue, onChange, disabled, readOnly, maxLength, 'aria-describedby': describedBy, ...rest },
   ref,
 ) {
   const autoId = useId();
@@ -50,9 +52,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
       data-readonly={readOnly || undefined}
     >
       {label != null && label !== false && (
-        <label className="ds-field__label" htmlFor={textareaId}>
-          {label}
-        </label>
+        <FieldLabelRow required={required}>
+          <label className="ds-field__label" htmlFor={textareaId}>
+            {label}
+          </label>
+        </FieldLabelRow>
       )}
       <div className="ds-field__control ds-textarea__control">
         <textarea
@@ -60,6 +64,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
           ref={ref}
           id={textareaId}
           className="ds-field__input ds-textarea__input"
+          required={required}
           value={value}
           defaultValue={defaultValue}
           onChange={handleChange}

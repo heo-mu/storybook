@@ -20,6 +20,7 @@ const meta = {
   args: {
     label: '라벨명',
     size: 'sm',
+    required: false,
     invalid: false,
     disabled: false,
     readOnly: false,
@@ -31,6 +32,7 @@ const meta = {
     label: { control: 'text', description: '라벨' },
     message: { control: 'text', description: '입력 칸 아래 도움말 메시지' },
     messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류' },
+    required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 읽음' },
     invalid: { control: 'boolean', description: '오류 상태' },
     disabled: { control: 'boolean', description: '비활성 — 입력할 수 없음' },
     readOnly: { control: 'boolean', description: '읽기 전용 — 날짜만 보여 주고 달력 버튼이 없음' },
@@ -45,6 +47,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = { name: '직접 체험' };
+
+export const Required: Story = {
+  name: '필수 입력',
+  args: { label: '방문일', required: true },
+};
 
 export const WithValue: Story = {
   name: '값 있음',

@@ -3,7 +3,7 @@ import { Button, Label, ListBox, Popover, Select as AriaSelect, SelectValue, typ
 import { CaretDownIcon, CaretUpIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
-import { FieldMessage, type FieldMessageType, type FieldSize } from '../Field';
+import { FieldLabelRow, FieldMessage, type FieldMessageType, type FieldSize } from '../Field';
 import { SelectSizeContext } from './SelectContext';
 
 export type SelectProps<T extends object = object> = {
@@ -23,7 +23,7 @@ export type SelectProps<T extends object = object> = {
   disabled?: boolean;
   /** 읽기 전용 — 화살표 없이 값만 보이고 목록이 펼쳐지지 않습니다. */
   readOnly?: boolean;
-  /** 꼭 골라야 하는 항목으로 표시합니다. `name`과 함께 쓰면 폼을 보낼 때 선택 여부를 검사합니다. */
+  /** 꼭 골라야 하는 칸 — 라벨 뒤에 점을 붙이고 화면 낭독기에 "필수"를 알립니다. `name`과 함께 쓰면 폼을 보낼 때 선택 여부를 검사합니다. */
   required?: boolean;
   /** 선택한 옵션의 `id`(제어). `null`이면 선택 없음입니다. */
   value?: Key | null;
@@ -71,7 +71,7 @@ export function Select<T extends object = object>({
   invalid = false,
   disabled = false,
   readOnly = false,
-  required,
+  required = false,
   value,
   defaultValue = null,
   onChange,
@@ -88,6 +88,7 @@ export function Select<T extends object = object>({
   const autoId = useId();
   const messageId = `${autoId}-message`;
   const readOnlyId = `${autoId}-readonly`;
+  const requiredId = `${autoId}-required`;
   const [selected, setSelected] = useControllableState<Key | null>(value, defaultValue, onChange);
   const hasMessage = message !== undefined && message !== null && message !== false;
 
@@ -111,11 +112,16 @@ export function Select<T extends object = object>({
         isInvalid={invalid}
         isDisabled={disabled}
         isRequired={required}
-        aria-describedby={cx(describedBy, hasMessage && messageId, readOnly && readOnlyId) || undefined}
+        // The trigger is a button, which has no required state: "필수" is read as its description instead.
+        aria-describedby={cx(describedBy, hasMessage && messageId, readOnly && readOnlyId, required && requiredId) || undefined}
       >
         {({ isOpen }) => (
           <>
-            {label != null && label !== false && <Label className="ds-field__label">{label}</Label>}
+            {label != null && label !== false && (
+              <FieldLabelRow required={required}>
+                <Label className="ds-field__label">{label}</Label>
+              </FieldLabelRow>
+            )}
             <Button className="ds-field__control ds-select__trigger">
               <SelectValue className="ds-select__value" />
               {!readOnly && (
@@ -127,6 +133,11 @@ export function Select<T extends object = object>({
             {readOnly && (
               <span id={readOnlyId} hidden>
                 읽기 전용
+              </span>
+            )}
+            {required && (
+              <span id={requiredId} hidden>
+                필수
               </span>
             )}
             {hasMessage && (

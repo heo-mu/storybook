@@ -33,6 +33,7 @@ import { DatePicker, Calendar } from 'platform-design-system';
 | --- | --- | --- |
 | Size sm · md · lg | `size` | 필드 높이 36 · 44 · 52px |
 | Label / Alert | `label` · `message` · `messageType` | |
+| Required | `required` | 라벨 뒤 4px 점(`colors/date-picker/trigger/outline/required/default`, 라벨과 m-2) + 입력 요소 `required`. 점은 `aria-hidden` |
 | Display Text "YYYY.MM.DD" | `placeholder` | 값은 YYYY.MM.DD 형식으로 표시 |
 | State Hover · Focus | 브라우저 `:hover` · `:focus-within` | |
 | State Completed | 날짜가 있을 때 자동 | |

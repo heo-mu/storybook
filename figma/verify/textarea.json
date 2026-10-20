@@ -9,7 +9,8 @@
       "contentDependent": ["Character count/Character count container/*"],
       "//contentDependent": "Figma's counter digits (1 / 50 / 200) are mock values; the component shows the real length",
       "parts": {
-        "Label": ".ds-field__label",
+        "Label row": ".ds-field__label-row",
+        "Label row/Label": ".ds-field__label",
         "Container": ".ds-textarea__control",
         "Container/Input": { "selector": ".ds-textarea__input", "compare": "xyw" },
         "Character count": ".ds-textarea__footer",

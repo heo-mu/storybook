@@ -5,6 +5,7 @@ import { expect, fn, waitFor, type Mock } from 'storybook/test';
 const vi = (f: unknown) => f as Mock<(files: File[]) => void>;
 import { FileUploader } from '../FileUploader';
 import { FileUploaderItem } from '../FileUploaderItem';
+import type { FileUploaderItemStatus } from '../FileUploader.options';
 import { Loading } from '../../Loading';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
@@ -42,6 +43,7 @@ export const Overview: Story = {
       <FileUploaderItem fileName="에너지절약_참여안내.pdf" fileInfo="1.2 MB · 업로드 완료" status="completed" />
       <FileUploaderItem fileName="설문결과_2026.xlsx" fileInfo="3.4 MB · 업로드 중" status="uploading" />
       <FileUploaderItem fileName="참가신청서_양식.hwp" fileInfo="85 KB" status="download" />
+      <FileUploaderItem fileName="현장사진_원본.png" fileInfo="24 MB · 파일당 10 MB를 넘어 업로드 실패" status="error" />
       <StorySection title="Loading (md · sm)">
         <Loading label="무엇하는 중..." />
         <Loading size="sm" label="무엇하는 중..." />
@@ -73,19 +75,25 @@ export const DropzoneMatrix: Story = {
   ),
 };
 
-/** Figma `file-uploader-item` (Completed · uploading · download), 320px wide. */
+/** Figma `file-uploader-item` (Completed · uploading · download · Error), 320px wide. */
 export const ItemMatrix: Story = {
   name: '항목 모든 변형',
   render: () => (
     <FigmaMatrix
       cellWidth={320}
       columns={['file-uploader-item']}
-      rows={(['Completed', 'uploading', 'download'] as const).map((state) => ({
+      rows={(['Completed', 'uploading', 'download', 'Error'] as const).map((state) => ({
         label: state,
         cells: [
           {
             figma: `State=${state}`,
-            node: <FileUploaderItem fileName="에너지절약_참여안내.pdf" fileInfo="1.2 MB · 업로드 완료" status={state.toLowerCase() as 'completed' | 'uploading' | 'download'} />,
+            node: (
+              <FileUploaderItem
+                fileName="에너지절약_참여안내.pdf"
+                fileInfo={state === 'Error' ? '1.2 MB · 업로드 실패' : '1.2 MB · 업로드 완료'}
+                status={state.toLowerCase() as FileUploaderItemStatus}
+              />
+            ),
           },
         ],
       }))}
@@ -178,13 +186,14 @@ export const Interaction: StoryObj<{ onFilesSelected: (files: File[]) => void }>
   },
 };
 
-/** The drop area is a button described by the helper text; the spinner is a status. */
+/** The drop area is a button described by the helper text; the spinner is a status; a failed file's remove button reads the reason. */
 export const Accessibility: Story = {
   name: '접근성',
   render: () => (
     <div style={{ width: 353, display: 'grid', gap: 8 }}>
       <FileUploader helperText={FIGMA_HELPER} />
       <FileUploaderItem fileName="자료.pdf" fileInfo="업로드 중" status="uploading" />
+      <FileUploaderItem fileName="사진.png" fileInfo="24 MB · 업로드 실패" status="error" />
     </div>
   ),
   play: async ({ canvas }) => {
@@ -192,5 +201,6 @@ export const Accessibility: Story = {
     const zone = canvas.getByRole('button', { name: (name) => name.startsWith(FIGMA_TITLE) && name.endsWith(FIGMA_HELPER) });
     await expect(zone).toBeInTheDocument();
     await expect(canvas.getByRole('status', { name: '업로드 중' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: '삭제', description: '사진.png 24 MB · 업로드 실패' })).toBeInTheDocument();
   },
 };

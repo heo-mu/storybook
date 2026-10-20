@@ -1,13 +1,15 @@
 import { forwardRef, useId, useRef, useState, type ComponentPropsWithoutRef, type CSSProperties, type ReactNode } from 'react';
 import { EyeIcon, XIcon } from '../../icons';
 import { cx } from '../../utils/cx';
-import { FieldMessage, setNativeValue, useFieldValue, useMergedRef, type FieldMessageType, type FieldSize } from '../Field';
+import { FieldLabelRow, FieldMessage, setNativeValue, useFieldValue, useMergedRef, type FieldMessageType, type FieldSize } from '../Field';
 
-export type InputProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className' | 'style'> & {
+export type InputProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className' | 'style' | 'required'> & {
   /** 크기. @default 'sm' */
   size?: FieldSize;
   /** 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
+  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. */
+  required?: boolean;
   /** 입력 칸 아래에 보이는 도움말 메시지. */
   message?: ReactNode;
   /** 도움말 메시지 종류. @default 'info' (`invalid`이면 'error') */
@@ -36,6 +38,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     size = 'sm',
     label,
+    required = false,
     message,
     messageType,
     invalid = false,
@@ -86,9 +89,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       data-readonly={readOnly || undefined}
     >
       {label != null && label !== false && (
-        <label className="ds-field__label" htmlFor={inputId}>
-          {label}
-        </label>
+        <FieldLabelRow required={required}>
+          <label className="ds-field__label" htmlFor={inputId}>
+            {label}
+          </label>
+        </FieldLabelRow>
       )}
       <div className="ds-field__control">
         <input
@@ -96,6 +101,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           ref={mergedRef}
           id={inputId}
           className="ds-field__input"
+          required={required}
           type={isPassword && revealed ? 'text' : type}
           value={value}
           defaultValue={defaultValue}

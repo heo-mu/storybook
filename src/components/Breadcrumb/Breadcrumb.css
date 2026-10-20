@@ -97,7 +97,9 @@
   --_icon: var(--colors-breadcrumb-home-icon-pressed);
 }
 
-.ds-breadcrumb-item[data-open] {
+/* Open (overflow menu shown): Figma Role=Open Hover · Pressed keep the label in …/label/focus — as specific as the
+ * :hover / :active rules above and later, so it wins over their label colour (found by the 2026-10-20 text colour check). */
+.ds-breadcrumb-item[data-open]:is(a, button) {
   --_fg: var(--colors-breadcrumb-label-focus);
 }
 

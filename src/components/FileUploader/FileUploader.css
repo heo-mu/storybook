@@ -178,6 +178,11 @@
   letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
 }
 
+/* Upload failed — Figma State=Error: file info in colors/file-uploader/helper/error, remove button kept. */
+.ds-file-item[data-status='error'] .ds-file-item__meta {
+  color: var(--colors-file-uploader-helper-error);
+}
+
 .ds-file-item__action,
 .ds-file-item__spinner {
   flex-shrink: 0;

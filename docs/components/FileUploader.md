@@ -41,7 +41,7 @@ const [files, setFiles] = useState<Upload[]>([]);
 | State Hover · Pressed | 브라우저 `:hover` · `:active` | |
 | State Drag-over | 파일을 영역 위로 끌 때 자동 | |
 | State Disabled | `disabled` | |
-| file-uploader-item State Completed · uploading · download | `status` | `onRemove` · `onDownload` |
+| file-uploader-item State Completed · uploading · download · Error | `status` (`error`) | `onRemove` · `onDownload`. Error: 파일 정보 `colors/file-uploader/helper/error`, 삭제 버튼 유지, 버튼 설명에 실패 이유 |
 | File Name · File Info | `fileName` · `fileInfo` | 긴 이름은 말줄임 |
 | loading size · text | `Loading` `size` · `label` | |
 | Title Text · Helper Text | `title` · `helperText` | |

@@ -25,6 +25,13 @@ DatePicker는 날짜를 직접 입력하거나 달력에서 고르는 입력 칸
 - 입력 칸 위에는 `label`, 아래에는 도움말 메시지 `message`를 둘 수 있습니다.
 - 메시지 종류는 `messageType`(`info` · `success` · `error`)으로 고릅니다. 지정하지 않으면 오류일 때 `error`, 그 밖에는 `info`입니다.
 
+## 필수 입력
+
+<Canvas of={Showcase.RequiredMark} />
+
+- `required`를 주면 라벨 뒤에 점이 붙어 꼭 입력해야 하는 칸임을 알립니다. 점은 라벨이 있을 때만 보입니다.
+- 점은 표의 필수 항목(`KeyValueItem required`)과 같은 색 · 크기입니다.
+
 ## 상태
 
 <Canvas of={Showcase.States} />
@@ -43,6 +50,9 @@ DatePicker는 날짜를 직접 입력하거나 달력에서 고르는 입력 칸
 
 // 값은 'YYYY-MM-DD' 문자열이고, 화면에는 YYYY.MM.DD로 보입니다
 <DatePicker label="시작일" name="start" value={start} onChange={setStart} />
+
+// 필수 입력 — 라벨 뒤에 점
+<DatePicker label="방문일" name="visit" required />
 
 // 고를 수 있는 기간을 정하고 주말은 막습니다
 <DatePicker label="상담일" minValue="2026-07-06" maxValue="2026-08-31"
@@ -72,6 +82,7 @@ DatePicker는 날짜를 직접 입력하거나 달력에서 고르는 입력 칸
 ## 접근성
 
 - `label`이 없으면 `aria-label`로 이름을 꼭 붙입니다.
+- `required`이면 날짜 입력 칸이 "필수"로 읽힙니다(점은 장식이라 읽지 않습니다).
 - 달력 버튼은 화면 낭독기가 "달력 열기"로 읽습니다. 다른 말이 필요하면 `calendarButtonLabel`로 바꿉니다.
 - 화면 낭독기는 날짜 칸을 보이는 숫자와 전체 날짜(요일 포함)로 읽습니다.
 

@@ -23,6 +23,7 @@ import { Textarea } from 'platform-design-system';
 | --- | --- | --- |
 | Size sm · md | `size` | 기본 `'sm'` |
 | Label / Label Text | `label` | |
+| Required | `required` | 라벨 뒤 4px 점(`colors/textarea/outline/required/default`, 라벨과 m-2) + 입력 요소 `required`. 점은 `aria-hidden` |
 | Alert / Alert Text, textarea_message Type | `message`, `messageType` | |
 | Counter | `showCount` + `maxLength` | `현재/최대`. `maxLength`가 있을 때 표시 |
 | State Hover · Focus · Completed · Error · Disabled · Read-only | 브라우저 상태 · 값 유무 · `invalid` · `disabled` · `readOnly` | |

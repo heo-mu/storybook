@@ -6,6 +6,7 @@ import { FieldMessage, FIELD_SIZES, type FieldSize } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
+import { expectRequiredMark } from '../../../storybook/requiredMark';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs date-picker` (sets date-picker_trigger, date-picker_message; the calendar
@@ -197,5 +198,27 @@ export const Accessibility: Story = {
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(canvas.getByRole('button', { name: '달력 열기' })).toHaveAttribute('aria-expanded', 'false');
     await expect(new FormData(canvasElement.querySelector('form')!).get('date')).toBe('2026-07-30');
+  },
+};
+
+/** Figma Required on (every size): the dot after the label; the date input is required for assistive technology and form checks. */
+export const RequiredMark: Story = {
+  name: '필수 표시',
+  render: () => (
+    <div style={{ width: 320, display: 'grid', gap: 24 }}>
+      {FIELD_SIZES.map((size) => (
+        <DatePicker key={size} size={size} label={`방문일 (${size})`} required />
+      ))}
+      <DatePicker label="종료일" />
+    </div>
+  ),
+  play: async ({ canvas, canvasElement }) => {
+    for (const size of FIELD_SIZES) {
+      const input = canvas.getByRole('textbox', { name: `방문일 (${size})` });
+      await expect(input).toBeRequired();
+      await expectRequiredMark(input.closest('.ds-field')!, '--colors-date-picker-trigger-outline-required-default');
+    }
+    await expect(canvas.getByRole('textbox', { name: '종료일' })).not.toBeRequired();
+    await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(3);
   },
 };

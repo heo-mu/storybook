@@ -4,7 +4,7 @@ import { CalendarDotsIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
 import { Calendar, type ISODate } from '../Calendar';
-import { FieldMessage, type FieldMessageType, type FieldSize } from '../Field';
+import { FieldLabelRow, FieldMessage, type FieldMessageType, type FieldSize } from '../Field';
 import { formatDateText, parseDateText } from './dateText';
 
 export type DatePickerProps = {
@@ -24,6 +24,7 @@ export type DatePickerProps = {
   disabled?: boolean;
   /** 읽기 전용 — 날짜만 보여 주고 달력 버튼이 없습니다. */
   readOnly?: boolean;
+  /** 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽습니다. */
   required?: boolean;
   /** 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 비어 있습니다. */
   value?: ISODate | null;
@@ -67,7 +68,7 @@ export function DatePicker({
   invalid = false,
   disabled = false,
   readOnly = false,
-  required,
+  required = false,
   value,
   defaultValue = null,
   onChange,
@@ -141,9 +142,11 @@ export function DatePicker({
       data-readonly={readOnly || undefined}
     >
       {hasLabel && (
-        <label className="ds-field__label" id={labelId} htmlFor={inputId}>
-          {label}
-        </label>
+        <FieldLabelRow required={required}>
+          <label className="ds-field__label" id={labelId} htmlFor={inputId}>
+            {label}
+          </label>
+        </FieldLabelRow>
       )}
       <div className="ds-field__control" ref={controlRef}>
         <input

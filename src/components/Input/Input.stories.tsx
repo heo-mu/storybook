@@ -21,6 +21,7 @@ const meta = {
     label: '라벨명',
     placeholder: '내용 입력',
     size: 'sm',
+    required: false,
     invalid: false,
     disabled: false,
     readOnly: false,
@@ -33,6 +34,7 @@ const meta = {
     label: { control: 'text', description: '입력 칸 위 라벨 — 없으면 aria-label을 붙임' },
     message: { control: 'text', description: '입력 칸 아래 도움말 메시지' },
     messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 info' },
+    required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 읽음' },
     invalid: { control: 'boolean', description: '오류 — 빨간 테두리로 표시' },
     disabled: { control: 'boolean', description: '비활성 — 입력할 수 없음' },
     readOnly: { control: 'boolean', description: '읽기 전용 — 값을 볼 수만 있음' },
@@ -46,6 +48,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = { name: '직접 체험' };
+
+export const Required: Story = {
+  name: '필수 입력',
+  args: { label: '이름', placeholder: '이름 입력', required: true },
+};
 
 export const WithMessage: Story = {
   name: '메시지 있음',

@@ -46,11 +46,14 @@ function TableFilter({ disabled, reset, open }: { disabled?: boolean; reset?: bo
   );
 }
 
-/** Story-only stand-in for an uploaded image: the Figma placeholder (grey square with crossed lines). */
+/**
+ * Story-only stand-in for an uploaded image: the Figma placeholder (grey square with crossed lines) — colors/surface/overlay
+ * #e9ebee and colors/border/gray-subtle #a1a8b5 since 2026-10-20 (F86; a data-URI image cannot read CSS variables).
+ */
 const PLACEHOLDER =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="#d9d9d9"/><path d="M0 0L100 100M100 0L0 100" stroke="#b1b8be"/></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="#e9ebee"/><path d="M0 0L100 100M100 0L0 100" stroke="#a1a8b5"/></svg>',
   );
 
 /** One Figma `table_value_editable` variant as a key-value row (Figma sample texts per state). */

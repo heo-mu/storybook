@@ -10,9 +10,8 @@
  */
 
 .ds-slider {
-  /* Remote effect style "md-3,10" (DROP_SHADOW 0 4 6 −1, color/shadow/shadow-3 #051b3c33) — not in this
-   * file's variables, reproduced from the Figma values (F13). */
-  --ds-slider-handle-shadow: 0 4px 6px -1px #051b3c33;
+  /* Local effect style elevation-slider-handle since 2026-10-20 (F13). */
+  --ds-slider-handle-shadow: var(--effect-elevation-slider-handle);
 
   box-sizing: border-box;
   display: flex;

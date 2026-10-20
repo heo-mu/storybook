@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '업로드 목록에서 파일 하나를 보여 주는 줄입니다. `status`로 "삭제" 버튼(`completed`), 로딩 표시(`uploading`), "다운로드" 버튼(`download`) 중 하나를 고릅니다.',
+          '업로드 목록에서 파일 하나를 보여 주는 줄입니다. `status`로 "삭제" 버튼(`completed`), 로딩 표시(`uploading`), "다운로드" 버튼(`download`), 업로드 실패(`error` — 파일 정보가 오류 색, "삭제" 버튼 유지) 중 하나를 고릅니다.',
       },
     },
   },
@@ -25,7 +25,7 @@ const meta = {
     onDownload: fn(),
   },
   argTypes: {
-    status: { control: 'inline-radio', options: FILE_UPLOADER_ITEM_STATUSES, description: '상태 — 삭제 버튼 · 업로드 중 · 다운로드 버튼' },
+    status: { control: 'inline-radio', options: FILE_UPLOADER_ITEM_STATUSES, description: '상태 — 삭제 버튼 · 업로드 중 · 다운로드 버튼 · 업로드 실패' },
   },
   decorators: [(Story) => <div style={{ width: 320 }}><Story /></div>],
 } satisfies Meta<typeof FileUploaderItem>;
@@ -43,6 +43,11 @@ export const Uploading: Story = {
 export const Download: Story = {
   name: '내려받기',
   args: { status: 'download', fileInfo: '1.2 MB' },
+};
+
+export const Failed: Story = {
+  name: '업로드 실패',
+  args: { status: 'error', fileInfo: '1.2 MB · 업로드 실패' },
 };
 
 export const LongName: Story = {

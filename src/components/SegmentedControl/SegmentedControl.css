@@ -124,7 +124,7 @@
   text-overflow: ellipsis;
 }
 
-/* Selected palette — the shadow is an unbound effect in Figma (#00000017, 0 1 2), reproduced as is (F17). */
+/* Selected palette — the shadow is the local effect style elevation-segmented-selected since 2026-10-20 (F18). */
 .ds-segmented__input:checked + .ds-segmented__segment {
   --_bg-default: var(--colors-segmented-control-selected-background-default);
   --_bg-hover: var(--colors-segmented-control-selected-background-hover);
@@ -134,7 +134,7 @@
   --_fg-hover: var(--colors-segmented-control-selected-label-hover);
   --_fg-pressed: var(--colors-segmented-control-selected-label-pressed);
   --_fg-disabled: var(--colors-segmented-control-selected-label-disabled);
-  --_shadow: 0 1px 2px 0 #00000017;
+  --_shadow: var(--effect-elevation-segmented-selected);
 }
 
 .ds-segmented[data-size='xs'] .ds-segmented__input:checked + .ds-segmented__segment {

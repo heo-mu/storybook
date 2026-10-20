@@ -11,7 +11,14 @@
   파일 실패(`State=Error`). 결함: select Focus 속성 연결(F89), input 눈 아이콘 기본값(F90), 예시 이름 · 설명(F91).
   예시: Form · Dashboard · Table 목록 화면(섹션 "사용 예시 화면"). 정책 표 3행. 검증: 컴포넌트 결합 감사 0건(손잡이 레이어 흐림은 의도), 색 변수 ALL_SCOPES 0,
   code syntax 누락 0, 체크섬 8그룹 일치, 화면 확인(스크린숏). 남은 결정 V-1 – V-12.
-- ② 진행 전 — 코드: 토큰 재생성(완료), Slider · Segmented 그림자 토큰, 입력 칸 값 토큰 이름, `required`(4개), FileUploaderItem `error`, Chart F77 기준 이미지, 표 자리표시 이미지, 문서 · 스토리.
+- ② **완료** — 코드: 입력 칸 글자 색을 Figma가 쓰는 `value/*` · `placeholder/*` 토큰으로(값 같음), Slider · Segmented 그림자 → 효과 스타일 토큰,
+  `required`(Input · Textarea · Select · DatePicker — 라벨 뒤 점 + 입력 요소 required, Select는 버튼 설명 "필수"), FileUploaderItem `status="error"`,
+  표 칸 내용 가운데 정렬(모든 Figma 표 칸이 CENTER), Breadcrumb Open Hover · Pressed 글자 색(`label/focus`) 특이도 버그 수정.
+  스토리: 필수 표시 검증 스토리 4개, 항목 매트릭스 Error, 사용 예시 3쪽(`사용 예시/입력 화면 · 대시보드 화면 · 목록 화면`, Figma 예시와 같은 구성 · 상호작용 테스트).
+  기준: 71세트 기준 이미지 재캡처(10-19 글자 색 변경이 기준 이미지에 빠져 있었음 — 글자는 픽셀 비교에서 제외돼 놓침), 입력 칸 4세트 · 파일 항목 · Breadcrumb geometry.
+  검증 강화: verify-figma에 **글자 색 비교** 추가(글자 상자의 가장 진한 픽셀, 채널 차 ≤ 40 — 옛 기준 이미지로 실패하는지 먼저 확인).
+  이 검사와 전체 검증으로 찾은 Figma 문제를 Figma에서 먼저 고침: F33(Breadcrumb 펼침 변형을 정책대로), F92(파일 실패 변형 이름 속성 연결), F93(① 바인딩 때 빠진 누름 원 불투명도),
+  Dashboard 예시 범례 "유형" → "이번달 · 저번달". 결과: 스토리 테스트 408/408, Chromium 정합성 전체 통과(Breadcrumb · Slider 수정 후).
 
 ## Figma · Storybook 문서 · 정책 간소화 (2026-10-20, 완료)
 

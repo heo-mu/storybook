@@ -7,9 +7,10 @@
   --ds-field-bg: var(--colors-input-outline-background-default);
   --ds-field-border-color: var(--colors-input-outline-border-default);
   --ds-field-border-width: var(--border-width-border);
-  /* Figma binds the value text to …/label/* and the empty text to …/label/default. */
-  --ds-field-text: var(--colors-input-outline-label-completed);
-  --ds-field-placeholder: var(--colors-input-outline-label-default);
+  /* Value and empty text: …/value/* · …/placeholder/* (Figma since 2026-10-20, E1 · E3). Required dot: …/required/default. */
+  --ds-field-required: var(--colors-input-outline-required-default);
+  --ds-field-text: var(--colors-input-outline-value-default);
+  --ds-field-placeholder: var(--colors-input-outline-placeholder-default);
   --ds-field-icon: var(--colors-input-outline-icon-default);
 }
 
@@ -17,6 +18,7 @@
   --ds-field-bg: var(--colors-input-outline-background-completed);
   --ds-field-border-color: var(--colors-input-outline-border-completed);
   --ds-field-icon: var(--colors-input-outline-icon-completed);
+  --ds-field-text: var(--colors-input-outline-value-completed);
 }
 
 .ds-input:hover {
@@ -32,7 +34,7 @@
 .ds-input[data-invalid] {
   --ds-field-border-color: var(--colors-input-outline-border-error);
   --ds-field-border-width: var(--border-width-border-2);
-  --ds-field-text: var(--colors-input-outline-label-error);
+  --ds-field-text: var(--colors-input-outline-value-default);
   --ds-field-icon: var(--colors-input-outline-icon-error);
 }
 
@@ -47,8 +49,8 @@
   --ds-field-bg: var(--colors-input-outline-background-disabled);
   --ds-field-border-color: var(--colors-input-outline-border-disabled);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-input-outline-label-disabled);
-  --ds-field-placeholder: var(--colors-input-outline-label-disabled);
+  --ds-field-text: var(--colors-input-outline-value-disabled);
+  --ds-field-placeholder: var(--colors-input-outline-placeholder-disabled);
   --ds-field-icon: var(--colors-input-outline-icon-disabled);
 }
 

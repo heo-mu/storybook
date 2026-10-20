@@ -1,6 +1,6 @@
 /*
  * Shared field layout for Input (76:2945), Textarea (86:2597) and Search Field (216:6570):
- *   root (vertical auto-layout) → Label → Container → message / counter row.
+ *   root (vertical auto-layout) → Label row (Label · Required dot) → Container → message / counter row.
  * Components fill the --ds-field-* slots with their own Figma variables per state.
  */
 
@@ -46,6 +46,23 @@
   font-weight: var(--typography-sm-leading-normal-normal-font-weight);
   line-height: var(--typography-sm-leading-normal-normal-line-height);
   letter-spacing: var(--typography-sm-leading-normal-normal-letter-spacing);
+}
+
+/* Label row — horizontal, hugs: the label and the Required dot (4px, rounded-full, …/required/default) spacing/margin/m-2
+ * after it, centred on the label line. Each field sets --ds-field-required to its own Component token. */
+.ds-field__label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-margin-m-2);
+  max-width: 100%;
+}
+
+.ds-field__required {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--border-radius-rounded-full);
+  background-color: var(--ds-field-required);
 }
 
 /* Container — horizontal auto-layout, 1px (Error 2px) INSIDE stroke. */

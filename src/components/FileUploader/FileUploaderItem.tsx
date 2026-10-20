@@ -8,11 +8,14 @@ import type { FileUploaderItemStatus } from './FileUploader.options';
 export type FileUploaderItemProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
   /** 파일 이름. 길면 말줄임표로 줄입니다. */
   fileName: ReactNode;
-  /** 파일 정보(크기, 진행 상태 글자 등). */
+  /** 파일 정보(크기, 진행 상태 글자 등). `error`이면 실패 이유를 적습니다(예: '1.2 MB · 업로드 실패'). */
   fileInfo?: ReactNode;
-  /** 상태 — 삭제 버튼(`completed`), 업로드 중 표시(`uploading`), 다운로드 버튼(`download`). @default 'completed' */
+  /**
+   * 상태 — 삭제 버튼(`completed`), 업로드 중 표시(`uploading`), 다운로드 버튼(`download`),
+   * 업로드 실패(`error` — 파일 정보를 오류 색으로 보여 주고 삭제 버튼은 그대로). @default 'completed'
+   */
   status?: FileUploaderItemStatus;
-  /** "삭제" 버튼을 누르면 호출됩니다(`completed`일 때). */
+  /** "삭제" 버튼을 누르면 호출됩니다(`completed` · `error`일 때). */
   onRemove?: () => void;
   /** "다운로드" 버튼을 누르면 호출됩니다(`download`일 때). */
   onDownload?: () => void;
@@ -42,7 +45,10 @@ export const FileUploaderItem = forwardRef<HTMLDivElement, FileUploaderItemProps
   },
   ref,
 ) {
-  const nameId = `${useId()}-name`;
+  const autoId = useId();
+  const nameId = `${autoId}-name`;
+  const metaId = `${autoId}-meta`;
+  const hasInfo = fileInfo != null && fileInfo !== false;
   return (
     <div {...rest} ref={ref} className={cx('ds-file-item', className)} data-status={status} aria-busy={status === 'uploading' || undefined}>
       <FileTextIcon className="ds-file-item__icon" />
@@ -50,10 +56,20 @@ export const FileUploaderItem = forwardRef<HTMLDivElement, FileUploaderItemProps
         <span className="ds-file-item__name" id={nameId}>
           {fileName}
         </span>
-        {fileInfo != null && fileInfo !== false && <span className="ds-file-item__meta">{fileInfo}</span>}
+        {hasInfo && (
+          <span className="ds-file-item__meta" id={metaId}>
+            {fileInfo}
+          </span>
+        )}
       </div>
-      {status === 'completed' && (
-        <TextButton className="ds-file-item__action" rightIcon={<XCircleFillIcon />} aria-describedby={nameId} onClick={onRemove}>
+      {(status === 'completed' || status === 'error') && (
+        <TextButton
+          className="ds-file-item__action"
+          rightIcon={<XCircleFillIcon />}
+          // A failed file's button also reads the failure reason ("…, 업로드 실패").
+          aria-describedby={status === 'error' && hasInfo ? `${nameId} ${metaId}` : nameId}
+          onClick={onRemove}
+        >
           {removeLabel}
         </TextButton>
       )}

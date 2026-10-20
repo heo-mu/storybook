@@ -5,6 +5,7 @@ import { FIELD_SIZES, type FieldSize } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
+import { expectRequiredMark } from '../../../storybook/requiredMark';
 
 // Visual verification (not in the MCP manifest). Variant Matrix cells carry data-figma names
 // checked by `node scripts/verify-figma.mjs input`.
@@ -21,9 +22,9 @@ type Story = StoryObj;
 const STATES = ['Default', 'Hover', 'Focus', 'Completed', 'Error', 'Disabled', 'Read-only'] as const;
 type State = (typeof STATES)[number];
 
-/** Props reproducing one Figma variant (all Figma variants have "Icon-eye" on → password field, revealed). */
+/** Props reproducing one Figma variant ("Icon-eye" is off by default since 2026-10-20 — F90; the eye is for password fields only). */
 function figmaVariant(size: FieldSize, state: State) {
-  const base = { size, label: '라벨명', type: 'password', defaultRevealed: true } as const;
+  const base = { size, label: '라벨명' } as const;
   const value = { defaultValue: '내용 입력' };
   const empty = { placeholder: '내용 입력' };
   switch (state) {
@@ -145,5 +146,32 @@ export const Accessibility: Story = {
     // Figma Error: 2px colors/input/outline/border/error (status/danger/strong — red/700 #c10007 since A-1, 2026-10-19)
     const control = input.closest('.ds-field__control')!;
     await expect(getComputedStyle(control).boxShadow).toBe('rgb(193, 0, 7) 0px 0px 0px 2px inset');
+  },
+};
+
+/** Figma Required on (every size): the dot after the label; the input is required for assistive technology and form checks. */
+export const RequiredMark: Story = {
+  name: '필수 표시',
+  render: () => (
+    <form style={{ width: 320, display: 'grid', gap: 24 }} onSubmit={(event) => event.preventDefault()}>
+      {FIELD_SIZES.map((size) => (
+        <Input key={size} size={size} label={`이름 (${size})`} placeholder="이름 입력" required />
+      ))}
+      <Input label="메모" placeholder="메모 입력" />
+    </form>
+  ),
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    for (const size of FIELD_SIZES) {
+      const input = canvas.getByRole('textbox', { name: `이름 (${size})` });
+      await expect(input).toBeRequired();
+      await expectRequiredMark(input.closest('.ds-field')!, '--colors-input-outline-required-default');
+    }
+    await expect(canvas.getByRole('textbox', { name: '메모' })).not.toBeRequired();
+    await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(3);
+    // Native form check: empty required fields block the form until they are filled.
+    const form = canvasElement.querySelector('form')!;
+    await expect(form.checkValidity()).toBe(false);
+    for (const size of FIELD_SIZES) await userEvent.type(canvas.getByRole('textbox', { name: `이름 (${size})` }), '홍길동');
+    await expect(form.checkValidity()).toBe(true);
   },
 };

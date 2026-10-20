@@ -33,6 +33,7 @@ FileUploader는 파일을 끌어다 놓거나 눌러서 고르는 업로드 영�
 | `completed` (기본) | "삭제" 버튼 — 누르면 `onRemove` |
 | `uploading` | 회전하는 로딩 표시 |
 | `download` | "다운로드" 버튼 — 누르면 `onDownload` |
+| `error` | 업로드 실패 — 파일 정보(`fileInfo`)가 오류 색으로 바뀌고 "삭제" 버튼은 그대로 — 누르면 `onRemove` |
 
 ## 상태
 
@@ -63,8 +64,8 @@ const [files, setFiles] = useState<Upload[]>([]);
   <FileUploaderItem
     key={f.id}
     fileName={f.name}
-    fileInfo={f.done ? \`\${f.size} · 업로드 완료\` : \`\${f.size} · 업로드 중\`}
-    status={f.done ? 'completed' : 'uploading'}
+    fileInfo={f.failed ? \`\${f.size} · 업로드 실패\` : f.done ? \`\${f.size} · 업로드 완료\` : \`\${f.size} · 업로드 중\`}
+    status={f.failed ? 'error' : f.done ? 'completed' : 'uploading'}
     onRemove={() => remove(f.id)}
   />
 ))}`}
@@ -73,12 +74,13 @@ const [files, setFiles] = useState<Upload[]>([]);
 - 선택 창에서 고른 파일과 끌어다 놓은 파일 모두 `accept`에 맞는 것만 `onFilesSelected`로 전달됩니다.
 - `multiple`이 아니면 첫 파일 하나만 전달됩니다.
 - 파일 크기 · 개수 검사와 실제 업로드는 사용하는 화면에서 처리합니다.
+- 업로드에 실패한 파일은 목록에 남겨 `status="error"`로 보여 주고, `fileInfo`에 실패 이유를 적습니다(예: "24 MB · 파일당 10 MB를 넘어 업로드 실패").
 
 ## 접근성
 
 - 업로드 영역은 버튼입니다. Enter · Space로도 파일 선택 창을 엽니다.
 - 화면 낭독기는 `helperText`를 업로드 영역의 설명으로 함께 읽습니다.
-- "삭제" · "다운로드" 버튼은 파일 이름을 설명으로 함께 읽어, 어느 파일의 버튼인지 구분됩니다.
+- "삭제" · "다운로드" 버튼은 파일 이름을 설명으로 함께 읽어, 어느 파일의 버튼인지 구분됩니다. 업로드에 실패한 파일(`error`)의 "삭제" 버튼은 실패 이유도 함께 읽습니다.
 - `Loading`은 화면 낭독기가 `label`을 읽습니다. `label`이 없으면 `aria-label`로 이름을 붙이고, 그것도 없으면 "로딩 중"으로 읽습니다.
 - 기기에서 움직임 줄이기를 켜면 로딩 표시가 더 천천히 돕니다.
 

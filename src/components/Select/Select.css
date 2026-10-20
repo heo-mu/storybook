@@ -7,15 +7,17 @@
   --ds-field-bg: var(--colors-select-outline-outline-background-default);
   --ds-field-border-color: var(--colors-select-outline-outline-border-default);
   --ds-field-border-width: var(--border-width-border);
-  /* Figma binds the value to …/label/* and the empty Display Text to the semantic colors/text/placeholder. */
-  --ds-field-text: var(--colors-select-outline-outline-label-completed);
-  --ds-field-placeholder: var(--colors-text-placeholder);
+  /* Value and empty Display Text: …/value/* · …/placeholder/* (Figma since 2026-10-20, E1 · E3). Required dot: …/required/default. */
+  --ds-field-required: var(--colors-select-outline-outline-required-default);
+  --ds-field-text: var(--colors-select-outline-outline-value-default);
+  --ds-field-placeholder: var(--colors-select-outline-outline-placeholder-default);
   --ds-field-icon: var(--colors-select-outline-outline-icon-default);
 }
 
 .ds-select[data-filled] {
   --ds-field-bg: var(--colors-select-outline-outline-background-completed);
   --ds-field-border-color: var(--colors-select-outline-outline-border-completed);
+  --ds-field-text: var(--colors-select-outline-outline-value-completed);
 }
 
 .ds-select:hover {
@@ -36,7 +38,7 @@
 .ds-select[data-invalid] {
   --ds-field-border-color: var(--colors-select-outline-outline-border-error);
   --ds-field-border-width: var(--border-width-border-2);
-  --ds-field-text: var(--colors-select-outline-outline-label-error);
+  --ds-field-text: var(--colors-select-outline-outline-value-default);
   --ds-field-icon: var(--colors-select-outline-outline-icon-error);
 }
 
@@ -44,14 +46,14 @@
   --ds-field-bg: var(--colors-select-outline-outline-background-read-only);
   --ds-field-border-color: var(--colors-select-outline-outline-border-read-only);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-select-outline-outline-label-default);
+  --ds-field-text: var(--colors-select-outline-outline-value-default);
 }
 
 .ds-select[data-disabled] {
   --ds-field-bg: var(--colors-select-outline-outline-background-disabled);
   --ds-field-border-color: var(--colors-select-outline-outline-border-disabled);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-select-outline-outline-label-disabled);
+  --ds-field-text: var(--colors-select-outline-outline-value-disabled);
   --ds-field-placeholder: var(--colors-select-outline-outline-placeholder-disabled);
   --ds-field-icon: var(--colors-select-outline-outline-icon-disabled);
 }

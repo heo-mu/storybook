@@ -5,6 +5,7 @@ import { TEXTAREA_SIZES, type TextareaSize } from '../Textarea.options';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
+import { expectRequiredMark } from '../../../storybook/requiredMark';
 
 // Visual verification (not in the MCP manifest): `node scripts/verify-figma.mjs textarea`.
 const meta = {
@@ -110,5 +111,27 @@ export const Accessibility: Story = {
     await expect(textarea).toHaveAttribute('aria-invalid', 'true');
     // The message and the counter are both announced as the description.
     await expect(textarea).toHaveAccessibleDescription('10자 이상 입력하세요. 2 / 100');
+  },
+};
+
+/** Figma Required on (every size): the dot after the label; the textarea is required for assistive technology and form checks. */
+export const RequiredMark: Story = {
+  name: '필수 표시',
+  render: () => (
+    <div style={{ width: 320, display: 'grid', gap: 24 }}>
+      {TEXTAREA_SIZES.map((size) => (
+        <Textarea key={size} size={size} label={`신청 사유 (${size})`} placeholder="신청 사유 입력" required />
+      ))}
+      <Textarea label="메모" placeholder="메모 입력" />
+    </div>
+  ),
+  play: async ({ canvas, canvasElement }) => {
+    for (const size of TEXTAREA_SIZES) {
+      const textarea = canvas.getByRole('textbox', { name: `신청 사유 (${size})` });
+      await expect(textarea).toBeRequired();
+      await expectRequiredMark(textarea.closest('.ds-field')!, '--colors-textarea-outline-required-default');
+    }
+    await expect(canvas.getByRole('textbox', { name: '메모' })).not.toBeRequired();
+    await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(TEXTAREA_SIZES.length);
   },
 };

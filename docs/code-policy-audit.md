@@ -110,7 +110,7 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 
 | ID | 분류 | 이전 | Figma에 없던 것 | 결정 | Figma 반영 | 상태 | ID · 장 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| BREA-01 | B | 메뉴를 … 버튼 아래 2px에 열고 현재 페이지는 Current 유지 | Figma Expanded는 현재 페이지를 Open(브랜드 색)으로, 메뉴를 경로 끝에 그림(F33) | 메뉴는 연 트리거(…) 아래 2px, 시작 정렬. 현재 페이지 표시는 바뀌지 않음 | Rules 05 · Breadcrumb 주석 | Figma 문서화 정책 | Rules 05 |
+| BREA-01 | B | 메뉴를 … 버튼 아래 2px에 열고 현재 페이지는 Current 유지 | ~~Figma Expanded는 현재 페이지를 Open(브랜드 색)으로, 메뉴를 경로 끝에 그림(F33)~~ — 2026-10-20 Figma도 정책대로 고침 | 메뉴는 연 트리거(…) 아래 2px, 시작 정렬. 현재 페이지 표시는 바뀌지 않음 | Rules 05 · Breadcrumb 주석 | Figma 문서화 정책 | Rules 05 |
 | BREA-02 | A | 아이콘 상태색: Hover · Pressed · Current에 같은 이름 변수 사용 | Link Default 외 변형에 아이콘 없음(F34) | Figma 변수(`breadcrumb/home-icon/*`) 그대로 | Figma 변수로 정의됨 | Figma 정의 정책 | breadcrumb-item 710:4794 · Rules 02 |
 | BREA-03 | B | Show Parent는 Collapsed에만 | Full에서의 동작 없음 | Full은 전체 경로를 항상 표시 | Rules 07 | Figma 문서화 정책 | Rules 07 |
 | BREA-04 | B | 메뉴 너비 200px, 긴 이름은 넓어짐 | 너비 규칙 없음 | 최소 200px, 내용에 맞춰 넓어짐 | Rules 05 | Figma 문서화 정책 | Rules 05 |

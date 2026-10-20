@@ -5,15 +5,17 @@
   --ds-field-bg: var(--colors-textarea-outline-background-default);
   --ds-field-border-color: var(--colors-textarea-outline-border-default);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-textarea-outline-label-completed);
-  /* Figma binds the empty text directly to colors/text/placeholder. */
-  --ds-field-placeholder: var(--colors-text-placeholder);
+  --ds-field-text: var(--colors-textarea-outline-value-default);
+  /* Value and empty text: …/value/* · …/placeholder/* (Figma since 2026-10-20, E1 · E3). Required dot: …/required/default. */
+  --ds-field-required: var(--colors-textarea-outline-required-default);
+  --ds-field-placeholder: var(--colors-textarea-outline-placeholder-default);
   --ds-textarea-count: var(--colors-text-brand);
 }
 
 .ds-textarea[data-filled] {
   --ds-field-bg: var(--colors-textarea-outline-background-completed);
   --ds-field-border-color: var(--colors-textarea-outline-border-completed);
+  --ds-field-text: var(--colors-textarea-outline-value-completed);
 }
 
 .ds-textarea:hover {
@@ -27,7 +29,7 @@
 .ds-textarea[data-invalid] {
   --ds-field-border-color: var(--colors-textarea-outline-border-error);
   --ds-field-border-width: var(--border-width-border-2);
-  --ds-field-text: var(--colors-textarea-outline-label-error);
+  --ds-field-text: var(--colors-textarea-outline-value-default);
   /* Figma binds the over-limit count to colors/input/outline/helper/error. */
   --ds-textarea-count: var(--colors-input-outline-helper-error);
 }
@@ -36,14 +38,14 @@
   --ds-field-bg: var(--colors-textarea-outline-background-read-only);
   --ds-field-border-color: var(--colors-textarea-outline-border-read-only);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-textarea-outline-label-default);
+  --ds-field-text: var(--colors-textarea-outline-value-default);
 }
 
 .ds-textarea[data-disabled] {
   --ds-field-bg: var(--colors-textarea-outline-background-disabled);
   --ds-field-border-color: var(--colors-textarea-outline-border-disabled);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-textarea-outline-placeholder-disabled);
+  --ds-field-text: var(--colors-textarea-outline-value-disabled);
   --ds-field-placeholder: var(--colors-textarea-outline-placeholder-disabled);
 }
 

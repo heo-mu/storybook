@@ -22,6 +22,7 @@ const meta = {
     label: '라벨명',
     placeholder: '내용 선택',
     size: 'sm',
+    required: false,
     invalid: false,
     disabled: false,
     readOnly: false,
@@ -35,6 +36,7 @@ const meta = {
     placeholder: { control: 'text', description: '아무것도 고르지 않았을 때 보이는 글자' },
     message: { control: 'text', description: '선택 칸 아래 도움말 메시지' },
     messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류' },
+    required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 알림' },
     invalid: { control: 'boolean', description: '오류 — 오류 테두리로 표시' },
     disabled: { control: 'boolean', description: '비활성 — 고를 수 없음' },
     readOnly: { control: 'boolean', description: '읽기 전용 — 값만 보이고 목록이 펼쳐지지 않음' },
@@ -57,6 +59,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = { name: '직접 체험' };
+
+export const Required: Story = {
+  name: '필수 입력',
+  args: { label: '과일', required: true },
+};
 
 export const WithValue: Story = {
   name: '값 있음',

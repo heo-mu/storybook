@@ -30,9 +30,10 @@ const [value, setValue] = useState('');
 | --- | --- | --- |
 | Size sm · md · lg | `size` | 기본 `'sm'`. 컨테이너 높이 36 · 44 · 52px |
 | Label / Label Text | `label` | 생략하면 라벨 없음 → `aria-label` 지정 |
+| Required | `required` | 라벨 뒤 4px 점(`colors/input/outline/required/default`, 라벨과 m-2) + 입력 요소 `required`. 점은 `aria-hidden` |
 | Alert / Alert Text | `message` | `input_message` |
 | input_message Type Info · Success · Error | `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'info'` |
-| Icon-eye | `type="password"` + `revealable` | 비밀번호 표시/숨김 토글 |
+| Icon-eye | `type="password"` + `revealable` | 비밀번호 표시/숨김 토글. Figma 기본값 끔(2026-10-20, F90) — 비밀번호 칸에서만 켬 |
 | State Hover · Focus | 브라우저 `:hover` · `:focus-within` | |
 | State Completed | 값이 있을 때 자동 | |
 | State Error | `invalid` | 2px 빨간 테두리, `aria-invalid` |

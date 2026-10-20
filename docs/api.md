@@ -543,7 +543,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `open` | `boolean` |  | 달력이 열렸는지 여부. 넘기면 바깥에서 관리합니다. |
 | `placeholder` | `string` | `YYYY.MM.DD` | 비어 있을 때 보이는 안내 글자. |
 | `readOnly` | `boolean` | `false` | 읽기 전용 — 날짜만 보여 주고 달력 버튼이 없습니다. |
-| `required` | `boolean` |  |  |
+| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽습니다. |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
 | `style` | `CSSProperties` |  | 가장 바깥 요소의 스타일. |
 | `value` | `string \| null` |  | 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 비어 있습니다. |
@@ -687,11 +687,11 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | --- | --- | --- | --- |
 | `fileName` *(필수)* | `ReactNode` |  | 파일 이름. 길면 말줄임표로 줄입니다. |
 | `downloadLabel` | `string` | `다운로드` | 다운로드 버튼 글자. |
-| `fileInfo` | `ReactNode` |  | 파일 정보(크기, 진행 상태 글자 등). |
+| `fileInfo` | `ReactNode` |  | 파일 정보(크기, 진행 상태 글자 등). `error`이면 실패 이유를 적습니다(예: '1.2 MB · 업로드 실패'). |
 | `onDownload` | `(() => void)` |  | "다운로드" 버튼을 누르면 호출됩니다(`download`일 때). |
-| `onRemove` | `(() => void)` |  | "삭제" 버튼을 누르면 호출됩니다(`completed`일 때). |
+| `onRemove` | `(() => void)` |  | "삭제" 버튼을 누르면 호출됩니다(`completed` · `error`일 때). |
 | `removeLabel` | `string` | `삭제` | 삭제 버튼 글자. |
-| `status` | `"download" \| "completed" \| "uploading"` | `completed` | 상태 — 삭제 버튼(`completed`), 업로드 중 표시(`uploading`), 다운로드 버튼(`download`). |
+| `status` | `"error" \| "download" \| "completed" \| "uploading"` | `completed` | 상태 — 삭제 버튼(`completed`), 업로드 중 표시(`uploading`), 다운로드 버튼(`download`), 업로드 실패(`error` — 파일 정보를 오류 색으로 보여 주고 삭제 버튼은 그대로). |
 | `uploadingLabel` | `string` | `업로드 중` | 화면 낭독기가 읽는 업로드 중 표시의 이름. |
 
 ### `ImageUploadPreview`
@@ -728,6 +728,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
 | `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
 | `onClear` | `(() => void)` |  | 지우기 버튼으로 값을 비운 뒤 호출됩니다. |
+| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
 | `revealable` | `boolean` | `true` | `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다. |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
 | `style` | `CSSProperties` |  | 바깥 요소의 스타일. |
@@ -1055,7 +1056,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `open` | `boolean` |  | 목록 펼침 여부(제어). |
 | `placeholder` | `string` | `내용 선택` | 아무것도 고르지 않았을 때 보이는 글자. |
 | `readOnly` | `boolean` | `false` | 읽기 전용 — 화살표 없이 값만 보이고 목록이 펼쳐지지 않습니다. |
-| `required` | `boolean` |  | 꼭 골라야 하는 항목으로 표시합니다. `name`과 함께 쓰면 폼을 보낼 때 선택 여부를 검사합니다. |
+| `required` | `boolean` | `false` | 꼭 골라야 하는 칸 — 라벨 뒤에 점을 붙이고 화면 낭독기에 "필수"를 알립니다. `name`과 함께 쓰면 폼을 보낼 때 선택 여부를 검사합니다. |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. 옵션 높이도 함께 맞춰집니다. |
 | `style` | `CSSProperties` |  | 바깥 요소의 스타일. 너비를 정하면 목록도 같은 너비로 펼쳐집니다. |
 | `value` | `Key \| null` |  | 선택한 옵션의 `id`(제어). `null`이면 선택 없음입니다. |
@@ -1396,6 +1397,7 @@ export 314개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
 | `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
 | `messageType` | `"info" \| "success" \| "error"` | `'info' (`invalid`이면 'error')` | 도움말 메시지 종류. |
+| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
 | `showCount` | `boolean` | `true` | `maxLength`가 있을 때 `입력한 글자 수/최대 글자 수`를 보여 줍니다. |
 | `size` | `"sm" \| "md"` | `sm` | 크기. |
 | `style` | `CSSProperties` |  | 바깥 요소의 스타일. |

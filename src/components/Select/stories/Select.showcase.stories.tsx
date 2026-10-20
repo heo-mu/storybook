@@ -9,6 +9,7 @@ import { FieldMessage, FIELD_SIZES, type FieldSize } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 import { koLabel } from '../../../storybook/koLabel';
+import { expectRequiredMark } from '../../../storybook/requiredMark';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs select` (sets select, listbox, option, select_message).
@@ -334,5 +335,31 @@ export const Accessibility: Story = {
     await expect(canvasElement.querySelector('.ds-select')).toHaveAttribute('data-invalid');
     const form = canvasElement.querySelector('form')!;
     await expect(new FormData(form).get('region')).toBe('seoul');
+  },
+};
+
+/** Figma Required on (every size): the dot after the label; the trigger button is described as "필수" (a button has no required state). */
+export const RequiredMark: Story = {
+  name: '필수 표시',
+  render: () => (
+    <div style={{ width: 320, display: 'grid', gap: 24 }}>
+      {FIELD_SIZES.map((size) => (
+        <Select key={size} size={size} label={`과일 (${size})`} required>
+          <SelectOption id="apple">사과</SelectOption>
+          <SelectOption id="banana">바나나</SelectOption>
+        </Select>
+      ))}
+      <Select label="메모">
+        <SelectOption id="apple">사과</SelectOption>
+      </Select>
+    </div>
+  ),
+  play: async ({ canvas, canvasElement }) => {
+    for (const size of FIELD_SIZES) {
+      const trigger = canvas.getByRole('button', { name: (name) => name.endsWith(`과일 (${size})`), description: '필수' });
+      await expectRequiredMark(trigger.closest('.ds-field')!, '--colors-select-outline-outline-required-default');
+    }
+    await expect(canvas.getByRole('button', { name: (name) => name.endsWith('메모') })).not.toHaveAccessibleDescription('필수');
+    await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(3);
   },
 };

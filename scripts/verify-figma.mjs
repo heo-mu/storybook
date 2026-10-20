@@ -8,6 +8,7 @@
 //   • pixels outside text boxes vs the Figma screenshot (figma/reference/<set>.png) — colours, borders,
 //     icons, radii; text is rasterised differently by Figma and browsers, so text boxes are compared by
 //   • glyph placement (ink centroid of each Figma text box, ±0.5px)
+//   • text colour (the strongest ink pixel of each text box, ≤ textColorTolerance per RGB channel, default 40)
 // Variant positions inside the set come from figma/metadata/section-58-5174.xml.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -65,6 +66,24 @@ function inkCentroid(img, box) {
   let sum = 0, sx = 0, sy = 0;
   for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const d = Math.abs(at(x, y) - base); if (d < 30) continue; sum += d; sx += d * x; sy += d * y; }
   return sum > 200 ? { x: sx / sum, y: sy / sum } : null;
+}
+
+/** Colour of the pixel farthest from the box background — the text colour where a glyph stem covers a whole pixel. */
+function inkColor(img, box) {
+  const px = (x, y) => { const i = (y * img.width + x) * 4; return [img.data[i], img.data[i + 1], img.data[i + 2]]; };
+  const x0 = Math.max(0, Math.floor(box.x) - 1), y0 = Math.max(0, Math.floor(box.y) - 1);
+  const x1 = Math.min(img.width, Math.ceil(box.x + box.w) + 1), y1 = Math.min(img.height, Math.ceil(box.y + box.h) + 1);
+  if (x1 <= x0 || y1 <= y0) return null;
+  const counts = new Map();
+  for (let x = x0; x < x1; x++) for (const y of [y0, y1 - 1]) { const k = px(x, y).join(); counts.set(k, (counts.get(k) || 0) + 1); }
+  const base = [...counts].sort((a, b) => b[1] - a[1])[0][0].split(',').map(Number);
+  let best = null, bestD = 0;
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+    const c = px(x, y);
+    const d = Math.hypot(c[0] - base[0], c[1] - base[1], c[2] - base[2]);
+    if (d > bestD) { bestD = d; best = c; }
+  }
+  return bestD >= 40 ? best : null;
 }
 
 function sideBySide(a, b, diff) {
@@ -279,7 +298,21 @@ for (const set of config.sets) {
         else if (!subpixel && Math.abs(dx) > 0.5) notes.push(`${t.p} glyph dx ${dx.toFixed(2)} (${BROWSER} text rendering)`);
       }
       pixel.glyphs = offsets;
-      if (issues.some((i) => i.cat === 'pixels' || i.cat === 'text-position')) {
+      // Text colour — the strongest ink pixel of each Figma text box vs the same box in the DOM.
+      // `textColorTolerance`: max RGB channel difference (default 40 — anti-aliased stems never reach 100% coverage alike).
+      const colorTol = set.textColorTolerance ?? 40;
+      const colors = [];
+      for (const t of textBoxes) {
+        if (contentDependent.some((re) => re.test(t.p))) continue;
+        const a = inkColor(fig, t), b = inkColor(dom, t);
+        if (!a || !b) continue;
+        const d = Math.max(...a.map((v, i) => Math.abs(v - b[i])));
+        colors.push({ p: t.p, d });
+        const hex = (c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
+        if (d > colorTol) issues.push({ cat: 'text-colour', detail: `${t.p} ink ${hex(b)} vs Figma ${hex(a)} (Δ${d})` });
+      }
+      pixel.textColors = colors;
+      if (issues.some((i) => i.cat === 'pixels' || i.cat === 'text-position' || i.cat === 'text-colour')) {
         const pixDiff = new PNG({ width: w, height: h });
         pixelmatch(fig.data, dom.data, pixDiff.data, w, h, { threshold: 0.1 });
         const file = `${BROWSER}--${set.set}--${m.name.replace(/[^a-zA-Z0-9]+/g, '_')}.png`;
@@ -313,6 +346,8 @@ for (const set of config.sets) {
   for (const [v, why] of Object.entries(set.skipVariants ?? {})) lines.push(`  ◇ manual review (variant not compared) — ${v}: ${why}`);
   for (const [cat, list] of Object.entries(byCat)) lines.push(`  ✗ ${cat}: ${list.length} — e.g. ${list[0]}`);
   lines.push(`  non-text pixels: mean ${((ratios.reduce((a, b) => a + b, 0) / Math.max(1, ratios.length)) * 100).toFixed(2)}% differing, max ${(Math.max(0, ...ratios) * 100).toFixed(2)}%`);
+  const textColors = results.flatMap((r) => r.pixel?.textColors ?? []);
+  if (textColors.length) lines.push(`  text colour vs Figma: ${textColors.length} text boxes, max channel Δ${Math.max(...textColors.map((c) => c.d))}`);
   if (glyphs.length) lines.push(`  glyph offset vs Figma: max |dx| ${Math.max(...glyphs.map((o) => Math.abs(o.dx))).toFixed(2)}px, max |dy| ${Math.max(...glyphs.map((o) => Math.abs(o.dy))).toFixed(2)}px`);
   const noteCount = results.reduce((a, r) => a + r.notes.length, 0);
   if (noteCount) lines.push(`  ~ ${noteCount} sub-pixel text-width notes (Figma whole-pixel text boxes)`);

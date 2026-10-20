@@ -37,6 +37,7 @@ const [region, setRegion] = useState<Key | null>(null);
 | --- | --- | --- |
 | Size sm · md · lg | `size` | 필드 높이 36 · 44 · 52px, 옵션 높이 36 · 40 · 44px |
 | Label / Label Text | `label` | 생략하면 `aria-label` 지정 |
+| Required | `required` | 라벨 뒤 4px 점(`colors/select/outline/outline/required/default`, 라벨과 m-2, `aria-hidden`). 버튼에는 필수 상태가 없어 "필수"를 버튼 설명(`aria-describedby`)으로 전달, 숨은 `<select>`는 `required` |
 | Display Text | 선택한 옵션 텍스트 / `placeholder` | 기본 placeholder `'내용 선택'`, 한 줄 말줄임 |
 | Alert / select_message Type | `message` · `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'info'` |
 | State Hover | 브라우저 `:hover` | |

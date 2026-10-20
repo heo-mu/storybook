@@ -22,6 +22,13 @@ import { Input } from './Input';
 - `messageType`을 지정하지 않으면 `invalid`일 때 `error`, 아니면 `info`로 보입니다.
 - `type="password"`이면 눈 아이콘 버튼으로 비밀번호를 보이거나 숨길 수 있습니다. 필요 없으면 `revealable={false}`로 끕니다.
 
+## 필수 입력
+
+<Canvas of={Showcase.RequiredMark} />
+
+- `required`를 주면 라벨 뒤에 점이 붙어 꼭 입력해야 하는 칸임을 알립니다. 점은 라벨이 있을 때만 보입니다.
+- 점은 표의 필수 항목(`KeyValueItem required`)과 같은 색 · 크기입니다.
+
 ## 상태
 
 <Canvas of={Showcase.States} />
@@ -44,6 +51,9 @@ import { Input } from './Input';
 const [value, setValue] = useState('');
 <Input label="이름" value={value} onChange={(e) => setValue(e.target.value)} />
 
+// 필수 입력 — 라벨 뒤에 점
+<Input label="이름" name="name" required />
+
 // 검증 메시지
 <Input label="전화번호" value={phone} invalid={!valid} message={valid ? undefined : '전화번호 형식이 아닙니다.'} />
 
@@ -55,6 +65,7 @@ const [value, setValue] = useState('');
 
 - `label`이 없으면 `aria-label`로 이름을 꼭 붙입니다.
 - `invalid`이면 화면 낭독기에도 오류 상태가 전달되고, 도움말 메시지는 입력 칸 설명으로 함께 읽힙니다.
+- `required`이면 입력 칸이 "필수"로 읽힙니다(점은 장식이라 읽지 않습니다). 폼을 보낼 때 브라우저가 빈 칸을 막으며, 직접 검사할 때는 폼에 `noValidate`를 주고 `invalid` · `message`로 알려 줍니다.
 - 지우기 버튼은 마우스용이라 Tab 키로 이동하지 않습니다. 키보드에서는 글자를 모두 선택한 뒤 지웁니다.
 - 비밀번호 보기 버튼은 지금 비밀번호가 보이는지 화면 낭독기에 알려 줍니다.
 

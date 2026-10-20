@@ -1,22 +1,24 @@
 /*
  * DatePicker — Figma component set `date-picker_trigger` (144:723), Type Outline. Field layout from Field.css.
  * State: Default → (has a date) Completed → :hover Hover → :focus-within Focus → Error → Read-only → Disabled
- * (later rules win). Colours are the Figma bindings (colors/date-picker/trigger/outline/*); the empty state
- * binds the semantic colors/text/placeholder and colors/icon/placeholder directly (docs/figma-issues.md F24).
+ * (later rules win). Colours are the Figma bindings (colors/date-picker/trigger/outline/*: value · placeholder text since
+ * 2026-10-20, E1 · E3); the empty icon binds the semantic colors/icon/placeholder directly (docs/figma-issues.md F24).
  */
 .ds-date-picker {
   --ds-field-bg: var(--colors-date-picker-trigger-outline-background-default);
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-default);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-date-picker-trigger-outline-label-completed);
-  --ds-field-placeholder: var(--colors-text-placeholder);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-value-default);
+  --ds-field-placeholder: var(--colors-date-picker-trigger-outline-placeholder-default);
   --ds-field-icon: var(--colors-icon-placeholder);
+  --ds-field-required: var(--colors-date-picker-trigger-outline-required-default);
 }
 
 .ds-date-picker[data-filled] {
   --ds-field-bg: var(--colors-date-picker-trigger-outline-background-completed);
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-completed);
   --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-default);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-value-completed);
 }
 
 .ds-date-picker:hover {
@@ -28,14 +30,15 @@
 .ds-date-picker[data-open] {
   --ds-field-bg: var(--colors-date-picker-trigger-outline-background-completed);
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-focus);
-  --ds-field-text: var(--colors-date-picker-trigger-outline-label-default);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-value-default);
   --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-default);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-value-completed);
 }
 
 .ds-date-picker[data-invalid] {
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-error);
   --ds-field-border-width: var(--border-width-border-2);
-  --ds-field-text: var(--colors-date-picker-trigger-outline-label-error);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-value-default);
   --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-error);
 }
 
@@ -43,14 +46,14 @@
   --ds-field-bg: var(--colors-date-picker-trigger-outline-background-read-only);
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-read-only);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-date-picker-trigger-outline-label-default);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-value-default);
 }
 
 .ds-date-picker[data-disabled] {
   --ds-field-bg: var(--colors-date-picker-trigger-outline-background-disabled);
   --ds-field-border-color: var(--colors-date-picker-trigger-outline-border-disabled);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-date-picker-trigger-outline-label-disabled);
+  --ds-field-text: var(--colors-date-picker-trigger-outline-value-disabled);
   --ds-field-placeholder: var(--colors-date-picker-trigger-outline-placeholder-disabled);
   --ds-field-icon: var(--colors-date-picker-trigger-outline-icon-disabled);
 }

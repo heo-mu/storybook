@@ -26,6 +26,13 @@ import { SelectOption } from './SelectOption';
 - 선택된 옵션은 굵은 글자와 체크 아이콘으로 표시됩니다. 체크 아이콘을 빼려면 `SelectOption`에 `checkIcon={false}`를 줍니다.
 - `message`를 넣으면 선택 칸 아래에 도움말 메시지가 보입니다. 메시지 종류는 `messageType`(`info` · `success` · `error`)으로 고릅니다.
 
+## 필수 입력
+
+<Canvas of={Showcase.RequiredMark} />
+
+- `required`를 주면 라벨 뒤에 점이 붙어 꼭 골라야 하는 칸임을 알립니다. 점은 라벨이 있을 때만 보입니다.
+- 점은 표의 필수 항목(`KeyValueItem required`)과 같은 색 · 크기입니다.
+
 ## 상태
 
 <Canvas of={Showcase.States} />
@@ -56,6 +63,11 @@ const [region, setRegion] = useState<Key | null>(null);
   …
 </Select>
 
+// 필수 선택 — 라벨 뒤에 점
+<Select label="부서" name="department" required>
+  …
+</Select>
+
 // 데이터로 옵션 만들기
 <Select label="국가" items={countries}>
   {(c) => <SelectOption id={c.code}>{c.name}</SelectOption>}
@@ -66,6 +78,7 @@ const [region, setRegion] = useState<Key | null>(null);
 
 - `label`이 없으면 `aria-label`로 이름을 꼭 붙입니다.
 - `readOnly`이면 화면 낭독기에 읽기 전용이라는 설명을 함께 전달합니다.
+- `required`이면 선택 칸 버튼의 설명으로 "필수"를 함께 읽습니다(버튼에는 필수 상태가 없어 설명으로 전달합니다). `name`이 있으면 폼을 보낼 때 선택 여부도 검사합니다.
 - 키보드로 이렇게 조작합니다.
 
 | 키 | 동작 |

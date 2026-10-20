@@ -119,7 +119,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F30 | **점선 테두리가 변마다 대시 간격을 맞춤**(9.85 ~ 10.25px) — CSS · SVG는 외곽선을 따라 이어 그림 | SVG 6 / 4 대시, 위상만 맞춤 — 테두리 픽셀은 수동 검토 | — |
 | F31 | **작업 중 원본 변경**: Button Secondary Solid 신설 · TextButton Secondary 색 분리 · 변수 삭제, `fill/primary/subtle/hover` 값 변경 | **2026-10-19 동기화** — Button 352/352. Primary · Outline 테두리 변수는 Figma에 복구(R1, `VariableID:1033:4608`)되어 코드도 토큰 사용 | — |
 | F32 | `dropdownmenu_line` 구분선 두께(`border-width`)가 원격 라이브러리 변수에 바인딩 | **해결(2026-10-19)** — 로컬 `border-width/border`(1)로(Breadcrumb 구분선 8곳도 같이) | — |
-| F33 | **breadcrumb Expanded=True**: 메뉴를 여는 … 버튼은 Link Default인데 현재 페이지 항목이 Role=Open(브랜드 색 · semibold), 메뉴는 경로 오른쪽 끝에 정렬(md x 89 · sm x 60) | **2026-10-19 정책화**(Rules 05 · breadcrumb 주석): 메뉴는 … 버튼 아래 2px(시작 정렬), 현재 페이지는 Current, Role=Open은 `BreadcrumbItem open` | — |
+| F33 | **breadcrumb Expanded=True**: 메뉴를 여는 … 버튼은 Link Default인데 현재 페이지 항목이 Role=Open(브랜드 색 · semibold), 메뉴는 경로 오른쪽 끝에 정렬(md x 89 · sm x 60) | **해결(2026-10-20)** — 정책(Rules 05)대로 Figma 고침: 현재 페이지 항목 Role=Current, 메뉴는 … 항목 아래 2px 시작 정렬. 새 글자 색 검사가 현재 페이지 글자 색 차이를 찾아 발견 | — |
 | F34 | breadcrumb-item Hover · Pressed · Open · Current Variant의 아이콘 슬롯이 비어 있음(Link Default만 House) — `breadcrumb/home-icon/hover · pressed · current`, `background/focus` · `border/focus` · `border/menu` 변수는 어디에도 바인딩되지 않음 | 아이콘 색은 같은 이름의 변수 사용, focus · menu 변수는 미사용 | 아이콘 슬롯 채우기, 변수 정리 |
 | F35 | breadcrumb "Show Parent"가 Full에서도 상위 페이지를 숨김(경로가 끊김) | **2026-10-19 정책화**(Rules 07): Show Parent는 Collapsed에만, Full은 전체 경로 | — |
 | F36 | item_link Unselected Hover 아이콘이 `…/link/unselected/icon/default`에 바인딩 — `…/icon/hover`(icon/secondary) 미사용(item_parent Hover는 `…/icon/hover` 사용) | 바인딩 그대로(Hover에도 기본 색) | 의도 확인 |
@@ -178,6 +178,8 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F89 | select State=Focus 변형 3개(1081:7873 · 7878 · 7883)에 속성 연결이 빠짐 — Label · Label Text · Display Text가 Focus 상태에서 적용되지 않음 | **해결(2026-10-20)** — Default 변형과 같은 연결로 복구 | — |
 | F90 | input `Icon-eye` 기본값이 켜짐 — 인스턴스 58개 중 53개가 직접 끔(눈 아이콘은 비밀번호 칸에서만 — Rules 04) | **해결(2026-10-20)** — 기본값 끔(비밀번호 칸만 켬). Default 변형에는 눈 레이어가 없어 기존 인스턴스 화면 변화 없음 | — |
 | F91 | 사용 예시 설명 문구 오류 — Accordion 예시에 Select 설명, Chip 설명에 Table 설명이 복사되어 있음. 예시 프레임 이름이 "Calendar Container" 등으로 내용과 맞지 않음 | **해결(2026-10-20)** — 설명을 실제 내용으로, 예시 프레임 19개 이름을 "<컴포넌트> 사용 예시" 등으로 | — |
+| F92 | file-uploader-item `State=Error`(v1.0 후보 점검에서 추가)의 파일 이름 글자가 `File Name` 속성에 연결되지 않음 — 인스턴스를 Error로 바꾸면 지정한 파일 이름이 기본값으로 돌아감 | **해결(2026-10-20 Storybook 동기화 중 발견)** — 다른 변형과 같은 연결. 파일 정보 줄은 오류 문구("업로드 실패")라 일부러 연결하지 않음(공유 속성의 기본값이 "업로드 완료") | — |
+| F93 | slider handle Pressed의 누름 원(684:6472) — v1.0 후보 점검에서 색을 `colors/slider/background/handle/default`에 연결할 때 칠 불투명도 20%가 100%로 바뀌어 진한 초록 고리로 보임 | **해결(2026-10-20 전체 검증에서 발견)** — 연결은 두고 불투명도 20% 복구(원래 #007c5633과 같은 모습) | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

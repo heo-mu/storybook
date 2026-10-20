@@ -24,6 +24,7 @@ const meta = {
     size: 'sm',
     maxLength: 100,
     showCount: true,
+    required: false,
     invalid: false,
     disabled: false,
     readOnly: false,
@@ -36,6 +37,7 @@ const meta = {
     messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES },
     maxLength: { control: 'number', description: '최대 글자 수' },
     showCount: { control: 'boolean', description: '글자 수 표시 — maxLength가 있을 때 보임' },
+    required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 읽음' },
     invalid: { control: 'boolean', description: '오류 — 오류 테두리로 표시' },
     disabled: { control: 'boolean' },
     readOnly: { control: 'boolean' },
@@ -47,6 +49,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = { name: '직접 체험' };
+
+export const Required: Story = {
+  name: '필수 입력',
+  args: { label: '신청 사유', placeholder: '신청 사유 입력', required: true },
+};
 
 export const WithMessage: Story = {
   name: '메시지 있음',

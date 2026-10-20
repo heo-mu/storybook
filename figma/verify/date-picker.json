@@ -7,7 +7,8 @@
       "background": "#ffffff",
       "harnessCss": "table { table-layout: fixed; } td, th { width: 344px; min-width: 344px; max-width: 344px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
       "parts": {
-        "Label": ".ds-field__label",
+        "Label row": ".ds-field__label-row",
+        "Label row/Label": ".ds-field__label",
         "Container": ".ds-field__control",
         "Container/date": ".ds-field__input",
         "Container/calendar-dots": ".ds-date-picker__button",

@@ -39,7 +39,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 지우기 · 비밀번호 | 지우기(X)는 마우스 보조 — Input은 Hover · Focus, Search Field는 Focus · Error에서 보이고 Tab 순서 제외, 키보드는 전체 선택 후 삭제. 눈 아이콘은 비밀번호 칸에서만, 상태는 `aria-pressed` | `clearable` · `type="password"` |
 | 선택 · 삭제 | Indeterminate를 누르면 전체 선택(Checked). InputChip은 칩 전체가 삭제 대상(클릭 · Enter · Space · Delete · Backspace). 드롭 영역은 버튼(Enter · Space) | — |
 | 필터 칩 선택 | 다중(기본): 옵션을 켜고 끄는 동안 패널 유지, 칩 글자 "필터명: 값, 값"(3개를 넘으면 "외 N"), 닫을 때(Esc · 바깥 · 칩) 적용되어 Selected. 모두 끄고 닫으면 해제. 단일: 고르면 바로 적용 · 닫힘, 첫 옵션 "전체"로 해제. 패널은 칩 아래 4px · 시작 정렬 · 최소 160px. 키보드: Enter · Space · ↓ 열기, 방향키 · 글자 이동, Space · Enter 선택, Esc 닫고 칩으로. 열린 칩은 State=Default · Expanded=True | `FilterChipSelect` · `aria-expanded` · listbox(`aria-multiselectable`) |
-| 필수 입력 | Input · Textarea · Select · Date Picker의 `Required` — 라벨 뒤 4px 점(`colors/<field>/…/required/default` → `status/point/strong`), 라벨과 8px(m-2). 코드: `required` → 점 표시(aria-hidden) + 입력 요소 `required`(화면 낭독기가 "필수"로 읽음). 표 키(`table_key` Type=Required)와 같은 표시 | Figma `Required` 속성 |
+| 필수 입력 | Input · Textarea · Select · Date Picker의 `Required` — 라벨 뒤 4px 점(`colors/<field>/…/required/default` → `status/point/strong`), 라벨과 8px(m-2). 코드: `required` → 점 표시(aria-hidden) + 입력 요소 `required`(화면 낭독기가 "필수"로 읽음). Select는 버튼에 필수 상태가 없어 "필수"를 버튼 설명으로 전달. 표 키(`table_key` Type=Required)와 같은 표시 | Figma `Required` 속성 |
 | 값 표시 | Slider 값 라벨은 Hover · 드래그 · 키보드 포커스 중 표시, 숫자 칸은 가장 긴 값 폭(트랙 길이 고정). Textarea 카운터는 실제 길이 / 최대 길이(`maxLength` 강제) | — |
 | 외부 링크 | 화살표 아이콘은 새 창으로 여는 링크에만, 숨은 "(새 창)" 문구 | Link `external` |
 
