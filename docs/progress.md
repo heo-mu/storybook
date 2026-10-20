@@ -2,6 +2,12 @@
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
+## Vercel 검수 준비 (2026-10-20, 진행 중)
+
+체크포인트 `checkpoint/pre-review-prep`(6c9dc87). 순서: ① Figma 수정(V-1 – V-5) → ② Storybook 동기화 → ③ 변경 범위 검증(F58 · 글자 색 기준 · 접근성 미판정 · 경고) → ④ 문서 · QA 체크리스트.
+- ① **완료** — 정책 확정과 Figma 제작: 도움말 Helper(메시지 4세트 · 필드 4세트 `Helper` 속성), 주의 Warning(alert · toast, 변수 3개), 처리 중 · Dialog 크기는 기존 구조로 확정(Rules 행),
+  묶음 오류(Rules 행 · Form 예시), F94 · F95 결함 수정. 체크섬 8그룹 일치, 필드 세트 geometry 변화 없음, 기준 이미지 4개 재캡처 — [figma-fix-requests.md W절](./figma-fix-requests.md#w-검수-준비--v-1--v-5-디자인-정책-확정-2026-10-20-사용자-승인-작업).
+
 ## v1.0 테스트 후보 준비 (2026-10-20, 완료)
 
 체크포인트 `checkpoint/pre-v1-candidate`(2c7dc48). 순서: ① Figma 독립 점검 · 보완 → ② Storybook 동기화 → ③ 전체 QA → ④ v1.0 후보 정리.

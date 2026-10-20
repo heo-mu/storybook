@@ -180,6 +180,8 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F91 | 사용 예시 설명 문구 오류 — Accordion 예시에 Select 설명, Chip 설명에 Table 설명이 복사되어 있음. 예시 프레임 이름이 "Calendar Container" 등으로 내용과 맞지 않음 | **해결(2026-10-20)** — 설명을 실제 내용으로, 예시 프레임 19개 이름을 "<컴포넌트> 사용 예시" 등으로 | — |
 | F92 | file-uploader-item `State=Error`(v1.0 후보 점검에서 추가)의 파일 이름 글자가 `File Name` 속성에 연결되지 않음 — 인스턴스를 Error로 바꾸면 지정한 파일 이름이 기본값으로 돌아감 | **해결(2026-10-20 Storybook 동기화 중 발견)** — 다른 변형과 같은 연결. 파일 정보 줄은 오류 문구("업로드 실패")라 일부러 연결하지 않음(공유 속성의 기본값이 "업로드 완료") | — |
 | F93 | slider handle Pressed의 누름 원(684:6472) — v1.0 후보 점검에서 색을 `colors/slider/background/handle/default`에 연결할 때 칠 불투명도 20%가 100%로 바뀌어 진한 초록 고리로 보임 | **해결(2026-10-20 전체 검증에서 발견)** — 연결은 두고 불투명도 20% 복구(원래 #007c5633과 같은 모습) | — |
+| F94 | textarea Completed · Error 변형의 메시지 줄("Character count", 글자 수 포함)이 `Alert`에 연결 — 메시지를 끄면 글자 수도 사라짐. Focus는 메시지만 `Alert`에 연결 | **해결(2026-10-20 검수 준비)** — 줄 연결을 풀고 메시지만 `Alert`(Focus와 같게). 파일의 textarea 인스턴스 1개는 영향 없음 | — |
+| F95 | toast `Close Icon` Boolean 속성이 어느 레이어에도 연결되지 않아 꺼도 닫기 아이콘이 그대로 | **해결(2026-10-20 검수 준비)** — 4개 변형의 닫기 아이콘(icon_size) 표시를 `Close Icon`에 연결. 코드는 이미 `showClose`(기본 true)로 대응 | — |
 
 ## D. 작업 중 관찰된 원본 변경
 

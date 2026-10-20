@@ -1,5 +1,5 @@
-# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (730 of 812)
-# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: accordion background/disabled, border/focus → border/hover, title/disabled); F80 2026-10-19: spacing/size/border-radius/border-width accordion tokens created (restored accordion-item 1035:15648); F78 2026-10-19: colors/chart/* Chart Component tokens created (chart 698:4399, chart-legend-item 697:4514, chart-tooltip 693:9776); A-1/A-2 2026-10-19: disabled labels → text/inactive, control borders → border/gray (hover gray-dark), switch off track 500/600/700, empty-state / stepper / switch text; policy pass: colors/dialog/scrim/default; full sync 2026-10-19 night: colors/search-field/solid/border/error (E8); chart token rework synced 2026-10-19 night (bar gradient start/end with alias opacity "*40%", line/{primary,compare,02,03,04}/default, label/legend/default; 91 chart paints moved off 5 deleted variables, same colours); v1.0 candidate 2026-10-20: colour scopes from usage (no ALL_SCOPES), required marks colors/{input,textarea,select/outline,date-picker/trigger}/outline/required/default, colors/file-uploader/helper/error
+# Figma snapshot — collection "Component" (mode: Mode 1), every variable except colors/button/* and colors/button_text/* (733 of 815)
+# Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), exported 2026-10-16 via Figma MCP use_figma (read-only); synced 2026-10-19 (F31: accordion background/disabled, border/focus → border/hover, title/disabled); F80 2026-10-19: spacing/size/border-radius/border-width accordion tokens created (restored accordion-item 1035:15648); F78 2026-10-19: colors/chart/* Chart Component tokens created (chart 698:4399, chart-legend-item 697:4514, chart-tooltip 693:9776); A-1/A-2 2026-10-19: disabled labels → text/inactive, control borders → border/gray (hover gray-dark), switch off track 500/600/700, empty-state / stepper / switch text; policy pass: colors/dialog/scrim/default; full sync 2026-10-19 night: colors/search-field/solid/border/error (E8); chart token rework synced 2026-10-19 night (bar gradient start/end with alias opacity "*40%", line/{primary,compare,02,03,04}/default, label/legend/default; 91 chart paints moved off 5 deleted variables, same colours); v1.0 candidate 2026-10-20: colour scopes from usage (no ALL_SCOPES), required marks colors/{input,textarea,select/outline,date-picker/trigger}/outline/required/default, colors/file-uploader/helper/error; review prep 2026-10-20: colors/alert/status-icon/warning, colors/toast/{border,status-icon}/warning (V-3, alias colors/brand-status/warning/strong)
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 # Lines without [scopes] are scoped ALL_SCOPES.
 #scopes ALL_SCOPES
@@ -151,10 +151,12 @@ colors/toast/background/default=@S:colors/surface/page [FRAME_FILL,SHAPE_FILL]
 colors/toast/border/information=@T:colors/brand-status/information/strong [STROKE_COLOR]
 colors/toast/border/succeess=@T:colors/brand-status/success/strong [STROKE_COLOR]
 colors/toast/border/error=@T:colors/brand-status/danger/strong [STROKE_COLOR]
+colors/toast/border/warning=@T:colors/brand-status/warning/strong [STROKE_COLOR]
 colors/toast/label/default=@S:colors/text/primary [TEXT_FILL]
 colors/toast/status-icon/information=@T:colors/brand-status/information/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
 colors/toast/status-icon/succeess=@T:colors/brand-status/success/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
 colors/toast/status-icon/error=@T:colors/brand-status/danger/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
+colors/toast/status-icon/warning=@T:colors/brand-status/warning/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
 colors/toast/close-icon/default=@S:colors/icon/tertiary [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
 colors/badge/dot/background/basic=@T:colors/brand/700 [FRAME_FILL,SHAPE_FILL]
 colors/badge/dot/background/gray=@T:colors/brand-gray/700 [FRAME_FILL,SHAPE_FILL]
@@ -494,6 +496,7 @@ colors/alert/label/description/default=@S:colors/text/tertiary [TEXT_FILL]
 colors/alert/status-icon/information=@T:colors/brand-status/information/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
 colors/alert/status-icon/success=@T:colors/brand-status/success/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
 colors/alert/status-icon/danger=@T:colors/brand-status/danger/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
+colors/alert/status-icon/warning=@T:colors/brand-status/warning/strong [FRAME_FILL,SHAPE_FILL,TEXT_FILL,STROKE_COLOR]
 colors/chip/chip/background/unselected/default=@S:colors/surface/page [FRAME_FILL,SHAPE_FILL]
 colors/chip/chip/background/unselected/hover=@S:colors/fill/primary/subtle/hover [FRAME_FILL,SHAPE_FILL]
 colors/chip/chip/background/unselected/pressed=@S:colors/fill/primary/subtle/pressed [FRAME_FILL,SHAPE_FILL]
