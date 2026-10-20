@@ -4,6 +4,9 @@ Storybook · 문서 · 코드에 "코드 정책(Figma에 정의되지 않은 부
 각 항목의 출처(컴포넌트 · Storybook 문서 ID), 이전 코드 정책, Figma에 없던 것, 결정한 정책, Figma 반영 방법 · 노드 · 변수 ID, 처리 상태를 적었습니다.
 Storybook 각 Usage 문서의 **정책** 절은 이 표의 ID를 그대로 씁니다.
 
+
+> **2026-10-20**: Figma Rules 표는 짧은 사용 규칙만 남기고(10장 삭제), Dev Mode 주석은 모두 지웠습니다. 아래 "Figma 위치" 열의 주석 · 10장 ID는 그 이전 버전의 기록이며, 세부 기준은 [policy-details.md](./policy-details.md)에 있습니다.
+
 ## 조사 범위
 
 - 문서: 모든 Usage MDX(37개)와 `docs/*.md`에서 "코드 정책", "Figma에 정의되지 않은 부분", "Figma 미정의", "개발 정책", "구현 정책", "Figma 미반영", "임의 정의", "Fallback", "미지원 상태", "브라우저 기본 포커스"를 검색.

@@ -127,7 +127,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 
 ## 컴포넌트 설명에서 옮긴 개발 메모
 
-Figma 컴포넌트 설명(Description)에서 개발 · 임시 메모를 빼고 사용 목적만 남겼습니다(2026-10-20). 뺀 내용:
+Figma 컴포넌트 설명(Description)에서 개발 · 임시 메모와 영어 기술 문구를 빼고 디자이너가 쓴 설명은 그대로 두었습니다(2026-10-20). Focus 속성 설명은 "Focus: 키보드로 선택했을 때 보이는 포커스 테두리입니다."로 바꿨습니다. 뺀 내용:
 
 | 컴포넌트 | 옮긴 내용 |
 | --- | --- |
@@ -137,9 +137,9 @@ Figma 컴포넌트 설명(Description)에서 개발 · 임시 메모를 빼고 �
 | pagination | "Previous / Next are Disabled when there is no page to move to (page 1 / last page)." → 07장 페이지 이동 |
 | card_header · card_footer | "Code: CardHeader (title · description · action)" · "Code: CardFooter" → [components/Card.md](./components/Card.md) |
 | file-uploader | "기존 button_basic과 Phosphor 아이콘 사용. 색상은 Component → Semantic 별칭." · "새 텍스트는 도구 제약으로 Noto Sans KR 임시 사용."(지난 임시 메모 — 지금은 Pretendard 텍스트 스타일) |
-| file-uploader-item | "실제 파일 처리 및 진행률 연동은 개발 구현 대상입니다." |
+| file-uploader-item | "(…표현하며) 실제 파일 처리 및 진행률 연동은 개발 구현 대상입니다." — 앞 문장은 "…표현합니다."로 마침 |
 | breadcrumb | "웹 구현: nav aria-label=현재 위치, 현재 항목 aria-current=page. 자동 폭 감지와 URL 이동은 별도 연결." · "펼침/축약 메뉴가 같은 경로 레이어를 사용합니다." |
 | breadcrumb-item | "아이콘은 기존 외부 icon_size의 노출 속성에서 교체합니다." |
 | metric-card | "내부 metric-trend와 icon_size 속성을 노출했습니다." |
 | dashboard-filter-bar | "기존 select, date-picker_trigger, segmented-control, chip-filter, button_basic 조합." · "조건 변경의 데이터 연동은 개발 구현 대상입니다." |
-| data-state | "State 변경 시 상태에 맞는 기본 문구를 표시하도록 상태별 편집 속성을 분리했습니다." · "실제 조회·재시도·권한 요청은 개발 구현 대상입니다." |
+| data-state | "실제 조회·재시도·권한 요청은 개발 구현 대상입니다." |
