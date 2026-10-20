@@ -179,8 +179,12 @@
   --ds-button-bg-pressed: var(--colors-button-secondary-solid-background-pressed);
   --ds-button-bg-disabled: var(--colors-button-secondary-solid-background-disabled);
   --ds-button-label-default: var(--colors-button-secondary-solid-label-default);
+  --ds-button-label-hover: var(--colors-button-secondary-solid-label-hover);
+  --ds-button-label-pressed: var(--colors-button-secondary-solid-label-pressed);
   --ds-button-label-disabled: var(--colors-button-secondary-solid-label-disabled);
   --ds-button-icon-default: var(--colors-button-secondary-solid-icon-default);
+  --ds-button-icon-hover: var(--colors-button-secondary-solid-icon-hover);
+  --ds-button-icon-pressed: var(--colors-button-secondary-solid-icon-pressed);
   --ds-button-icon-disabled: var(--colors-button-secondary-solid-icon-disabled);
 }
 

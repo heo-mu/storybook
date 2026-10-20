@@ -1,6 +1,7 @@
-# Figma snapshot — collection "Component" (mode: Mode 1), subset: colors/button/* and colors/button_text/* (82 of 764 variables)
+# Figma snapshot — collection "Component" (mode: Mode 1), subset: colors/button/* and colors/button_text/* (86 of 768 variables)
 # Source: [Platform] Web Design System (Ry3WecA6sP6lKPop1vXrTp), re-exported 2026-10-19 via Figma MCP use_figma (read-only) — F31 sync; tertiary/solid/background/{default,hover,pressed} re-aliased to colors/fill/tertiary/* in Figma 2026-10-19 (docs/analysis/F31-button-sync.md); R1 2026-10-19: colors/button/primary/outline/border/default recreated in Figma (VariableID:1033:4608, same alias as the deleted 59:2221); secondary/outline/background default·hover re-aliased in Figma (same values); A-1/A-2 2026-10-19: disabled labels → text/inactive, control borders → border/gray (hover gray-dark), switch off track 500/600/700, empty-state / stepper / switch text
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
+# 2026-10-20: Secondary/Solid hover and pressed label/icon aliases added in Figma for AA contrast.
 colors/button/primary/solid/background/default=@S:colors/fill/primary/strong/default [FRAME_FILL,SHAPE_FILL]
 colors/button/primary/solid/background/hover=@S:colors/fill/primary/strong/hover [FRAME_FILL,SHAPE_FILL]
 colors/button/primary/solid/background/pressed=@S:colors/fill/primary/strong/pressed [FRAME_FILL,SHAPE_FILL]
@@ -11,8 +12,12 @@ colors/button/primary/solid/icon/default=@S:colors/icon/inverse [FRAME_FILL,SHAP
 colors/button/primary/solid/icon/disabled=@S:colors/icon/disabled [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
 colors/button/secondary/solid/background/default=@S:colors/fill/secondary/strong/default [FRAME_FILL,SHAPE_FILL]
 colors/button/secondary/solid/label/default=@S:colors/text/inverse [TEXT_FILL]
+colors/button/secondary/solid/label/hover=@S:colors/text/primary [TEXT_FILL]
+colors/button/secondary/solid/label/pressed=@S:colors/text/primary [TEXT_FILL]
 colors/button/secondary/solid/label/disabled=@S:colors/text/inactive [TEXT_FILL]
 colors/button/secondary/solid/icon/default=@S:colors/icon/inverse [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
+colors/button/secondary/solid/icon/hover=@S:colors/icon/primary [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
+colors/button/secondary/solid/icon/pressed=@S:colors/icon/primary [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
 colors/button/secondary/solid/icon/disabled=@S:colors/icon/disabled [FRAME_FILL,SHAPE_FILL,STROKE_COLOR]
 colors/button/secondary/solid/border/default=@S:colors/fill/secondary/strong/default [STROKE_COLOR]
 colors/button/secondary/solid/border/disabled=@S:colors/fill/disabled/default [STROKE_COLOR]
