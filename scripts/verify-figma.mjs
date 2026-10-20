@@ -15,7 +15,7 @@ import { chromium, firefox, webkit } from 'playwright';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
 import { ROOT } from './lib/figma-snapshot.mjs';
-import { findById, loadPage } from './lib/figma-metadata.mjs';
+import { findById, findSetByName, loadPage } from './lib/figma-metadata.mjs';
 
 const args = process.argv.slice(2);
 const component = args.find((a) => !a.startsWith('--'));
@@ -129,8 +129,10 @@ for (const set of config.sets) {
     const [ox, oy] = geometry.origin ?? [0, 0];
     positions = new Map(Object.keys(geometry.variants).map((name) => [name, { x: ox, y: oy }]));
   } else {
-    const setNode = findById(sectionMeta, geometry.id) ?? (dashboardMeta && findById(dashboardMeta, geometry.id));
-    if (!setNode) throw new Error(`set ${geometry.id} not in metadata`);
+    // The node ID belongs to one Figma version; the set name is the fallback key after a copy or a new version.
+    const setNode = findById(sectionMeta, geometry.id) ?? (dashboardMeta && findById(dashboardMeta, geometry.id))
+      ?? findSetByName(sectionMeta, geometry.set) ?? (dashboardMeta && findSetByName(dashboardMeta, geometry.set));
+    if (!setNode) throw new Error(`set ${geometry.set} (${geometry.id}) not in metadata`);
     positions = new Map(setNode.children.map((c) => [c.name, c]));
   }
   // `geometryOnly`: "reason" — no reference image can be rendered (e.g. the Figma frame is hidden): sizes and

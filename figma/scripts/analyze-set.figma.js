@@ -2,6 +2,8 @@
 // Set SET_ID (and optionally REP_INDEX) at the top. Returns the representative variant's full layer
 // tree and, for every other variant, only the facets that differ from it.
 const SET_ID = '__SET_ID__';
+// Or SET_NAME (e.g. 'button_basic'): node IDs belong to one Figma version, the set name stays the same in a copy.
+const SET_NAME = '__SET_NAME__';
 const REP_INDEX = 0;
 const vars = await figma.variables.getLocalVariablesAsync();
 const vName = new Map(vars.map((v) => [v.id, v.name]));
@@ -38,7 +40,10 @@ async function facets(n, path, out) {
     for (const c of n.children) { const sub = {}; await facets(c, path + '/' + c.name, sub); for (const [k, v] of Object.entries(sub)) if (/\|(geo|fill|stroke|text|chars|main)$/.test(k) && k.split('/').length <= path.split('/').length + 2) out[k] = v; }
   }
 }
-const set = await figma.getNodeByIdAsync(SET_ID);
+const set = !SET_ID.startsWith('__')
+  ? await figma.getNodeByIdAsync(SET_ID)
+  : figma.currentPage.findOne((n) => (n.type === 'COMPONENT_SET' || n.type === 'COMPONENT') && n.name === SET_NAME);
+if (!set) throw new Error('set not found: ' + (SET_ID.startsWith('__') ? SET_NAME : SET_ID));
 const comps = set.children.filter((c) => c.type === 'COMPONENT');
 const flat = [];
 for (const c of comps) { const o = {}; await facets(c, '', o); flat.push({ name: c.name, vp: c.variantProperties || {}, o }); }

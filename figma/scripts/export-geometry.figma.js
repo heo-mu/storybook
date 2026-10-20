@@ -2,8 +2,13 @@
 // large sets). Returns, per variant, the root size and every visible descendant up to MAX_DEPTH
 // (vectors excluded) as [path, x, y, w, h, flags] relative to the variant (flags: T = text).
 const SET_ID = '__SET_ID__';
+// Or SET_NAME (e.g. 'button_basic'): node IDs belong to one Figma version, the set name stays the same in a copy.
+const SET_NAME = '__SET_NAME__';
 const FROM = 0, TO = 9999, MAX_DEPTH = 4;
-const set = await figma.getNodeByIdAsync(SET_ID);
+const set = !SET_ID.startsWith('__')
+  ? await figma.getNodeByIdAsync(SET_ID)
+  : figma.currentPage.findOne((n) => (n.type === 'COMPONENT_SET' || n.type === 'COMPONENT') && n.name === SET_NAME);
+if (!set) throw new Error('set not found: ' + (SET_ID.startsWith('__') ? SET_NAME : SET_ID));
 const r = (n) => Math.round(n * 100) / 100;
 const out = { set: set.name, id: set.id, variants: {} };
 for (const v of set.children.filter((c) => c.type === 'COMPONENT').slice(FROM, TO)) {
