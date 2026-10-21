@@ -37,7 +37,8 @@ import { TextButton } from './TextButton';
 
 <Canvas of={StatesStories.ButtonStates} />
 
-- Secondary / Solid는 Hover와 Pressed에서 배경이 단계적으로 밝아지며, 읽기 쉬운 대비를 위해 라벨과 아이콘은 어두운 색으로 바뀝니다.
+- Secondary / Solid는 Hover와 Pressed에서 배경이 단계적으로 밝아지며, 라벨과 아이콘은 Default와 같은 흰색을 유지해요. Button과 IconButton에 동일하게 적용돼요.
+- 이 조합의 대비율은 Default 5.14:1, Hover 3.51:1, Pressed 2.46:1이에요. Hover·Pressed 텍스트는 WCAG AA 4.5:1에 미달하고, Pressed 아이콘도 3:1에 미달해요. 현재 승인된 디자인 예외이며 접근성 기준을 충족한 조합은 아니에요.
 - 마우스를 올리거나 누르면 모양이 바뀝니다.
 - `disabled`이면 누를 수 없고 키보드 포커스를 받지 않습니다.
 - 키보드 포커스를 받으면 포커스 테두리가 보입니다.
