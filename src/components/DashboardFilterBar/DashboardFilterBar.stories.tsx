@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from './DashboardFilterBar';
+import { DashboardFilterBar, DashboardFilterGroup } from './DashboardFilterBar';
 import { Button } from '../Button';
 import { DatePicker } from '../DatePicker';
 import { SegmentedControl, SegmentedControlItem } from '../SegmentedControl';
@@ -41,10 +41,7 @@ const meta = {
           <SegmentedControlItem value="7d">최근 7일</SegmentedControlItem>
           <SegmentedControlItem value="30d">최근 30일</SegmentedControlItem>
         </SegmentedControl>
-        <DashboardFilterRange
-          from={<DatePicker size="sm" aria-label="시작일" defaultValue="2026-10-07" style={{ width: 136 }} />}
-          to={<DatePicker size="sm" aria-label="종료일" defaultValue="2026-10-13" style={{ width: 136 }} />}
-        />
+        <DatePicker aria-label="조회 기간" selectionMode="range" defaultRangeValue={{ start: '2026-10-07', end: '2026-10-13' }} />
       </DashboardFilterGroup>
     </DashboardFilterBar>
   ),
@@ -75,10 +72,7 @@ export const Narrow: Story = {
         </Select>
       </DashboardFilterGroup>
       <DashboardFilterGroup label="조회 기간">
-        <DashboardFilterRange
-          from={<DatePicker size="sm" aria-label="시작일" defaultValue="2026-10-07" style={{ width: 136 }} />}
-          to={<DatePicker size="sm" aria-label="종료일" defaultValue="2026-10-13" style={{ width: 136 }} />}
-        />
+        <DatePicker aria-label="조회 기간" selectionMode="range" defaultRangeValue={{ start: '2026-10-07', end: '2026-10-13' }} />
       </DashboardFilterGroup>
     </DashboardFilterBar>
   ),

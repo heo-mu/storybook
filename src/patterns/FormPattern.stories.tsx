@@ -110,7 +110,7 @@ function FormExample() {
         <SelectOption id="facility">시설운영팀</SelectOption>
         <SelectOption id="support">고객지원팀</SelectOption>
       </Select>
-      <DatePicker size="md" label="시작일" name="start" defaultValue="2026-10-20" />
+      <DatePicker label="시작일" name="start" defaultValue="2026-10-20" />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-margin-m-1_5)' }}>
         <span id="form-kind" className="ds-typography-sm-leading-normal-normal" style={{ color: 'var(--colors-text-secondary)' }}>
           구분

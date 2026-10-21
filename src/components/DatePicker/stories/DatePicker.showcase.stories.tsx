@@ -1,88 +1,53 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, waitFor, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 import { DatePicker } from '../DatePicker';
-import { FieldMessage, FIELD_SIZES, type FieldSize } from '../../Field';
+import { FieldMessage } from '../../Field';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
-import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
-import { koLabel } from '../../../storybook/koLabel';
 import { expectRequiredMark } from '../../../storybook/requiredMark';
 import { expectHelperMessage } from '../../../storybook/helperMessage';
 
-// Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
-// `node scripts/verify-figma.mjs date-picker` (sets date-picker_trigger, date-picker_message; the calendar
-// sets are in Calendar/Showcase).
-const meta = {
-  title: "Components/DatePicker/Gallery",
-  id: 'components-datepicker-showcase',
-  tags: ['!manifest'],
-  parameters: { ...PSEUDO_STORY_PARAMETERS, controls: { disable: true } },
-} satisfies Meta;
-
+const meta = { title: 'Components/DatePicker/Gallery', id: 'components-datepicker-showcase', tags: ['!manifest'], parameters: { controls: { disable: true } } } satisfies Meta;
 export default meta;
 type Story = StoryObj;
-
-const STATES = ['Default', 'Hover', 'Focus', 'Completed', 'Error', 'Disabled', 'Read-only'] as const;
-type State = (typeof STATES)[number];
-
-/**
- * Props reproducing one Figma variant. Figma shows the "YYYY.MM.DD" pattern in every state; states with a
- * date use a real date here (the text is compared as a box, not glyph by glyph — figma/verify/date-picker.json).
- */
-function figmaVariant(size: FieldSize, state: State) {
-  const base = { size, label: '라벨명' } as const;
-  const filled = { defaultValue: '2026-07-30' };
-  switch (state) {
-    case 'Default': return { ...base };
-    case 'Hover': return { ...base, className: PSEUDO.hover };
-    case 'Focus': return { ...base, ...filled, className: PSEUDO.focus, message: 'Alert 내용', messageType: 'info' as const };
-    case 'Completed': return { ...base, ...filled, message: 'Alert 내용', messageType: 'success' as const };
-    case 'Error': return { ...base, ...filled, invalid: true, message: 'Alert 내용', messageType: 'error' as const };
-    case 'Disabled': return { ...base, disabled: true };
-    case 'Read-only': return { ...base, ...filled, readOnly: true };
-  }
+export const Overview: Story = { render: () => <StorySection title="Single / Range">
+  <DatePicker label="방문일" defaultValue="2026-07-30" />
+  <DatePicker label="이용 기간" selectionMode="range" defaultRangeValue={{ start: '2026-07-10', end: '2026-07-16' }} />
+</StorySection> };
+export const VariantMatrix: Story = { name: 'Variants', render: () => <StorySection title="Selection">
+  <DatePicker label="Single" defaultFocusedValue="2026-07-15" />
+  <DatePicker label="Range" selectionMode="range" defaultFocusedValue="2026-07-15" />
+</StorySection> };
+export const States: Story = { render: () => <StorySection title="States">
+  <DatePicker label="선택" defaultValue="2026-07-30" />
+  <DatePicker label="오류" defaultValue="2026-07-30" invalid message="예약할 수 없는 날짜예요." />
+  <DatePicker label="비활성" disabled defaultValue="2026-07-30" />
+  <DatePicker label="읽기 전용" readOnly defaultValue="2026-07-30" />
+</StorySection> };
+export const Open: Story = { name: 'Calendar', render: () => <DatePicker aria-label="날짜" defaultValue="2026-07-30" />,
+  play: async ({ canvas }) => { await expect(canvas.getByRole('grid')).toBeVisible(); await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument(); } };
+function Controlled() {
+  const [value, setValue] = useState<string | null>(null);
+  return <><DatePicker label="방문일" value={value} onChange={setValue} name="visit" minValue="2026-07-01" defaultFocusedValue="2026-07-15" /><output>값: {value ?? '없음'}</output></>;
 }
-
-export const Overview: Story = {
-  name: "Overview",
-  render: () => (
-    <div>
-      <StorySection title="Size (sm · md · lg)">
-        {FIELD_SIZES.map((size) => (
-          <div key={size} style={{ width: 320 }}>
-            <DatePicker size={size} label="시작일" />
-          </div>
-        ))}
-      </StorySection>
-      <StorySection title="Message · Error · Disabled · Read-only">
-        <div style={{ width: 320 }}><DatePicker label="신청일" defaultValue="2026-07-30" message="평일만 선택할 수 있습니다." messageType="info" /></div>
-        <div style={{ width: 320 }}><DatePicker label="마감일" defaultValue="2026-07-01" invalid message="시작일 이후여야 합니다." /></div>
-        <div style={{ width: 320 }}><DatePicker label="비활성" disabled /></div>
-        <div style={{ width: 320 }}><DatePicker label="읽기 전용" defaultValue="2026-07-30" readOnly /></div>
-      </StorySection>
-    </div>
-  ),
-};
-
-/** 크기와 상태별 표현을 비교합니다. */
-export const VariantMatrix: Story = {
-  name: "Variants",
-  render: () => (
-    <FigmaMatrix
-      cellWidth={320}
-      columns={[...STATES]}
-      rows={FIELD_SIZES.map((size) => ({
-        label: size,
-        cells: STATES.map((state) => ({ figma: `Size=${size}, State=${state}`, node: <DatePicker {...figmaVariant(size, state)} /> })),
-      }))}
-    />
-  ),
+export const Interaction: Story = { render: () => <Controlled />, play: async ({ canvas, userEvent }) => {
+  await userEvent.click(canvas.getByRole('button', { name: /7월 20일/ }));
+  await expect(canvas.getByText('값: 2026-07-20')).toBeInTheDocument();
+  await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
+} };
+export const Accessibility: Story = { render: () => <form aria-label="예약"><DatePicker label="예약일" name="date" defaultValue="2026-07-30" invalid message="예약할 수 없는 날짜입니다." /></form>,
+  play: async ({ canvas, canvasElement }) => {
+    await expect(canvas.getByRole('application', { name: /예약일/ })).toHaveAccessibleDescription('예약할 수 없는 날짜입니다.');
+    await expect(new FormData(canvasElement.querySelector('form')!).get('date')).toBe('2026-07-30');
+  } };
+export const RequiredMark: Story = { name: 'Required', render: () => <><DatePicker label="방문일" required /><DatePicker label="종료일" /></>,
   play: async ({ canvasElement }) => {
-    await expect(canvasElement.querySelectorAll('[data-figma]')).toHaveLength(21);
-  },
-};
+    const fields = canvasElement.querySelectorAll('.ds-date-picker');
+    await expect(fields[0].querySelector('[role="application"]')).toHaveAccessibleDescription('필수 선택');
+    await expectRequiredMark(fields[0], '--colors-date-picker-trigger-outline-required-default');
+    await expect(fields[1].querySelector('.ds-field__required')).not.toBeInTheDocument();
+  } };
 
-/** 도움말·안내·성공·오류 메시지를 비교합니다. */
 export const MessageMatrix: Story = {
   name: "Messages",
   render: () => (
@@ -100,7 +65,7 @@ export const MessageMatrix: Story = {
               {
                 figma: 'Type=Helper, State=Disabled',
                 node: (
-                  <div className="ds-date-picker" data-disabled="">
+                  <div className="ds-date-picker" data-disabled="" aria-disabled="true">
                     <FieldMessage type="helper">Alert 내용</FieldMessage>
                   </div>
                 ),
@@ -113,133 +78,7 @@ export const MessageMatrix: Story = {
   ),
 };
 
-/** Every state at size sm. */
-export const States: Story = {
-  name: "States",
-  render: () => (
-    <StorySection title="State">
-      {STATES.map((state) => (
-        <div key={state} style={{ width: 320 }}>
-          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{koLabel(state)}</div>
-          <DatePicker {...figmaVariant('sm', state)} />
-        </div>
-      ))}
-    </StorySection>
-  ),
-};
 
-/** 목록이나 패널이 열린 상태를 확인합니다. */
-export const Open: Story = {
-  name: "Open",
-  render: () => (
-    // Padding keeps the popover clear of react-aria's 12px viewport margin, so it can align with the field.
-    <div style={{ width: 296, padding: 24, paddingBottom: 300 }}>
-      <DatePicker aria-label="날짜" defaultValue="2026-07-30" open />
-    </div>
-  ),
-  play: async ({ canvasElement }) => {
-    const body = within(canvasElement.ownerDocument.body);
-    const dialog = await body.findByRole('dialog');
-    const control = canvasElement.querySelector('.ds-field__control')!.getBoundingClientRect();
-    await waitFor(() => {
-      const box = dialog.querySelector('.ds-calendar')!.getBoundingClientRect();
-      expect(Math.round(box.top - control.bottom)).toBe(4);
-      expect(Math.round(box.left - control.left)).toBe(0);
-    });
-  },
-};
-
-function Controlled() {
-  const [value, setValue] = useState<string | null>(null);
-  return (
-    <div style={{ width: 320, display: 'grid', gap: 12, paddingBottom: 300 }}>
-      <DatePicker label="방문일" value={value} onChange={setValue} name="visit" minValue="2026-07-01" />
-      <output style={{ font: '12px sans-serif' }}>값: {value ?? '없음'}</output>
-    </div>
-  );
-}
-
-/** Typing a date, invalid text, choosing from the calendar. */
-export const Interaction: Story = {
-  name: "Interaction",
-  render: () => <Controlled />,
-  play: async ({ canvas, canvasElement, userEvent, step }) => {
-    const input = canvas.getByRole('textbox', { name: '방문일' });
-    const root = canvasElement.querySelector('.ds-date-picker')!;
-    await step('typed date is committed on Enter and formatted', async () => {
-      await userEvent.type(input, '20260715{Enter}');
-      await expect(canvas.getByText('값: 2026-07-15')).toBeInTheDocument();
-      await expect(input).toHaveValue('2026.07.15');
-    });
-    await step('an impossible or out-of-range date shows the Error state', async () => {
-      await userEvent.clear(input);
-      await userEvent.type(input, '2026.02.30{Enter}');
-      await expect(root).toHaveAttribute('data-invalid');
-      await expect(input).toHaveAttribute('aria-invalid', 'true');
-      await userEvent.clear(input);
-      await userEvent.type(input, '2026.06.30{Enter}');
-      await expect(root).toHaveAttribute('data-invalid');
-      await expect(canvas.getByText('값: 2026-07-15')).toBeInTheDocument();
-    });
-    await step('the calendar button opens the calendar; choosing a day fills the field', async () => {
-      await userEvent.clear(input);
-      await userEvent.type(input, '2026.07.15{Enter}');
-      await userEvent.click(canvas.getByRole('button', { name: '달력 열기' }));
-      const dialog = await within(canvasElement.ownerDocument.body).findByRole('dialog', { name: '방문일' });
-      await userEvent.click(within(dialog).getByRole('button', { name: /7월 20일/ }));
-      await expect(canvas.getByText('값: 2026-07-20')).toBeInTheDocument();
-      await expect(input).toHaveValue('2026.07.20');
-      await waitFor(() => expect(within(canvasElement.ownerDocument.body).queryByRole('dialog')).not.toBeInTheDocument());
-    });
-    await step('Alt + ↓ opens the calendar from the field', async () => {
-      input.focus();
-      await userEvent.keyboard('{Alt>}{ArrowDown}{/Alt}');
-      await within(canvasElement.ownerDocument.body).findByRole('dialog');
-      await userEvent.keyboard('{Escape}');
-    });
-  },
-};
-
-/** Field label, invalid state and message; the hidden input submits ISO dates. */
-export const Accessibility: Story = {
-  name: "Accessibility",
-  render: () => (
-    <form aria-label="예약" style={{ width: 320 }}>
-      <DatePicker label="예약일" name="date" defaultValue="2026-07-30" invalid message="예약할 수 없는 날짜입니다." />
-    </form>
-  ),
-  play: async ({ canvas, canvasElement }) => {
-    const input = canvas.getByRole('textbox', { name: '예약일' });
-    await expect(input).toHaveAccessibleDescription('예약할 수 없는 날짜입니다.');
-    await expect(input).toHaveAttribute('aria-invalid', 'true');
-    await expect(canvas.getByRole('button', { name: '달력 열기' })).toHaveAttribute('aria-expanded', 'false');
-    await expect(new FormData(canvasElement.querySelector('form')!).get('date')).toBe('2026-07-30');
-  },
-};
-
-/** 라벨의 필수 표시와 입력 요소의 필수 상태를 확인합니다. */
-export const RequiredMark: Story = {
-  name: "Required",
-  render: () => (
-    <div style={{ width: 320, display: 'grid', gap: 24 }}>
-      {FIELD_SIZES.map((size) => (
-        <DatePicker key={size} size={size} label={`방문일 (${size})`} required />
-      ))}
-      <DatePicker label="종료일" />
-    </div>
-  ),
-  play: async ({ canvas, canvasElement }) => {
-    for (const size of FIELD_SIZES) {
-      const input = canvas.getByRole('textbox', { name: `방문일 (${size})` });
-      await expect(input).toBeRequired();
-      await expectRequiredMark(input.closest('.ds-field')!, '--colors-date-picker-trigger-outline-required-default');
-    }
-    await expect(canvas.getByRole('textbox', { name: '종료일' })).not.toBeRequired();
-    await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(3);
-  },
-};
-
-/** 도움말과 오류 메시지, 비활성 필드의 표시를 비교합니다. */
 export const HelperMessage: Story = {
   name: "Helper Text",
   render: () => (

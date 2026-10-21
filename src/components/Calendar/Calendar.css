@@ -1,13 +1,4 @@
-/*
- * Calendar — Figma `date-picker_calendar` (144:1644): padding p-4, gap m-2, colors/date-picker/calendar/*,
- * 1px INSIDE border, border-radius/rounded, effect elevation-3.
- *   header (144:1377): month label lg/leading-normal/semibold + previous / next buttons (24px, gap m-1_5)
- *   grid: 7 columns of 24px with gap m-4 (16px); rows 24px with gap m-2 (8px); weekday row 24px + p-1 bottom
- *         padding and a 1px colors/border/disabled line
- *   day (144:1033): 24×24, border-radius/rounded, xs/leading-normal/medium centred
- * The grid stays a real <table> (react-aria grid semantics); border-spacing gives the gaps and negative
- * margins remove the outer spacing.
- */
+/* Calendar: 16px padding, 8px row gap, 24px day cells, 16px column gaps; TextButton year/month header. */
 
 .ds-calendar {
   box-sizing: border-box;
@@ -29,20 +20,6 @@
   gap: var(--spacing-margin-m-1_5);
 }
 
-.ds-calendar__title {
-  flex: 1 1 auto;
-  min-width: 0;
-  margin: 0;
-  color: var(--colors-date-picker-header-label-default);
-  font-family: var(--typography-lg-leading-normal-semibold-font-family), sans-serif;
-  font-size: var(--typography-lg-leading-normal-semibold-font-size);
-  font-weight: var(--typography-lg-leading-normal-semibold-font-weight);
-  /* 18 / 28: 27px line-height + 1px bottom padding keeps Firefox and WebKit on Figma's baseline (as the lg
-   * field value in Field.css); Chromium renders it the same either way. */
-  line-height: calc(var(--typography-lg-leading-normal-semibold-line-height) - 1px);
-  padding-bottom: 1px;
-  letter-spacing: var(--typography-lg-leading-normal-semibold-letter-spacing);
-}
 
 .ds-calendar__nav {
   display: flex;
@@ -202,7 +179,35 @@
 }
 
 @supports (width: calc-size(fit-content, round(up, size, 1px))) {
-  .ds-calendar__day-label {
+  .ds-calendar__day-label,
+  .ds-calendar__day-number {
     width: calc-size(fit-content, round(up, size, 1px));
   }
 }
+
+/* TextButton selectors share button tokens and Select option styles. */
+.ds-calendar__selectors { display: flex; align-items: center; gap: var(--spacing-margin-m-2); flex: 1; }
+.ds-calendar__accessible-title { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ds-calendar__select-popover { outline: none; }
+.ds-calendar__select-list { min-width: 120px; max-height: 216px; padding: 0; outline: none; }
+.ds-calendar__day { position: relative; }
+.ds-calendar--range .ds-calendar__day[data-selected]:not([data-outside-month]) {
+  background: transparent;
+  color: var(--colors-date-picker-day-label-interaction-default);
+}
+.ds-calendar--range .ds-calendar__day[data-selected]:not([data-outside-month])::before {
+  content: ''; position: absolute; top: 0; bottom: 0;
+  left: calc(-1 * var(--spacing-margin-m-2)); right: calc(-1 * var(--spacing-margin-m-2));
+  background: var(--colors-date-picker-day-background-range);
+}
+.ds-calendar--preview .ds-calendar__day[data-selected]:not([data-outside-month])::before { background: var(--colors-date-picker-day-background-range-preview); }
+.ds-calendar--range .ds-calendar__day[data-selected][data-selection-start]:not([data-outside-month])::before { left: 50%; }
+.ds-calendar--range .ds-calendar__day[data-selected][data-selection-end]:not([data-outside-month])::before { right: 50%; }
+.ds-calendar--range .ds-calendar__day-label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: var(--border-radius-rounded); }
+.ds-calendar--range .ds-calendar__day[data-selection-start] .ds-calendar__day-label,
+.ds-calendar--range .ds-calendar__day[data-selection-end] .ds-calendar__day-label {
+  background: var(--colors-date-picker-day-background-selected);
+  color: var(--colors-date-picker-day-label-status-selected);
+}
+.ds-calendar .ds-calendar__day[data-focus-visible] { z-index: 2; }
+.ds-calendar__day-number { display: block; }

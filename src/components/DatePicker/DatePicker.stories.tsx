@@ -1,99 +1,73 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, within } from 'storybook/test';
 import { DatePicker } from './DatePicker';
-import { FIELD_MESSAGE_TYPES, FIELD_SIZES } from '../Field';
+import { FIELD_MESSAGE_TYPES } from '../Field';
 
-// 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/DatePicker.showcase.stories.tsx에 있습니다.
 const meta = {
-  title: "Components/DatePicker/DatePicker",
-  id: 'components-datepicker-datepicker',
-  component: DatePicker,
-  tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component:
-          "날짜를 직접 입력하거나 달력에서 선택합니다. 달력만 표시하려면 Calendar를 사용합니다.",
-      },
-    },
-  },
-  args: {
-    label: '방문일',
-    size: 'sm',
-    required: false,
-    invalid: false,
-    disabled: false,
-    readOnly: false,
-    onChange: fn(),
-    onOpenChange: fn(),
-  },
+  title: 'Components/DatePicker/DatePicker', id: 'components-datepicker-datepicker',
+  component: DatePicker, tags: ['autodocs'],
+  parameters: { docs: { description: { component: '입력창 없이 달력에서 단일 날짜 또는 기간을 선택합니다.' } } },
+  args: { label: '방문일', defaultFocusedValue: '2026-07-15', onChange: fn(), onRangeChange: fn() },
   argTypes: {
-    size: { control: 'inline-radio', options: FIELD_SIZES, description: '크기', table: { defaultValue: { summary: 'sm' } } },
-    label: { control: 'text', description: '라벨' },
-    message: { control: 'text', description: '입력 필드 아래 도움말 메시지' },
-    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES, description: '도움말 메시지 종류 — 지정하지 않으면 오류일 때 error, 아니면 회색 도움말(helper)' },
-    required: { control: 'boolean', description: '필수 — 라벨 뒤 점 표시, 화면 낭독기가 "필수"로 읽음' },
-    invalid: { control: 'boolean', description: '오류 상태' },
-    disabled: { control: 'boolean', description: '비활성 — 입력할 수 없음' },
-    readOnly: { control: 'boolean', description: '읽기 전용 — 날짜만 보여 주고 달력 버튼이 없음' },
-    defaultValue: { control: 'text', description: "처음 날짜 'YYYY-MM-DD'" },
-    minValue: { control: 'text' },
-    maxValue: { control: 'text' },
+    selectionMode: { control: 'inline-radio', options: ['single', 'range'] },
+    messageType: { control: 'inline-radio', options: FIELD_MESSAGE_TYPES },
+    disabled: { control: 'boolean' }, readOnly: { control: 'boolean' },
+    minValue: { control: 'text' }, maxValue: { control: 'text' },
   },
-  decorators: [(Story) => <div style={{ width: 320, paddingBottom: 300 }}><Story /></div>],
 } satisfies Meta<typeof DatePicker>;
-
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = { name: "Playground" };
-
-export const Required: Story = {
-  name: "Required",
-  args: { label: '방문일', required: true },
-};
-
-export const WithValue: Story = {
-  name: "Selected Date",
-  args: { defaultValue: '2026-07-30' },
-};
-
-export const Helper: Story = {
-  name: "Helper Text",
-  args: { message: '평일만 고를 수 있습니다.' },
-};
-
-export const WithMessage: Story = {
-  name: "상태 메시지",
-  args: { defaultValue: '2026-07-30', message: '평일만 선택할 수 있습니다.', messageType: 'info' },
-};
-
-export const Range: Story = {
-  name: "선택 가능 기간",
-  args: { label: '방문일', minValue: '2026-07-06', maxValue: '2026-07-24', defaultValue: '2026-07-15' },
-};
-
-/** `isDateUnavailable`로 주말을 고를 수 없게 막습니다. */
-export const WeekdaysOnly: Story = {
-  name: '평일만 선택',
-  args: {
-    label: '상담일',
-    defaultValue: '2026-07-15',
-    isDateUnavailable: (iso: string) => [0, 6].includes(new Date(`${iso}T00:00:00`).getDay()),
+export const Playground: Story = { name: 'Playground' };
+export const SingleDate: Story = { name: 'Single Date', play: async ({ canvas, userEvent, args }) => {
+  await userEvent.click(canvas.getByRole('button', { name: /7월 20일/ }));
+  await expect(args.onChange).toHaveBeenCalledWith('2026-07-20');
+  await expect(canvas.queryByRole('textbox')).not.toBeInTheDocument();
+} };
+export const Required: Story = { args: { required: true } };
+export const WithValue: Story = { name: 'Selected Date', args: { defaultValue: '2026-07-30' } };
+export const Helper: Story = { name: 'Helper Text', args: { message: '날짜를 선택해 주세요.' } };
+export const WithMessage: Story = { name: 'Status Message', args: { message: '예약 가능한 날짜를 확인해 주세요.', messageType: 'info' } };
+export const Range: Story = { name: 'Date Limits', args: { minValue: '2026-07-06', maxValue: '2026-07-24' } };
+export const WeekdaysOnly: Story = { name: 'Disabled Dates', args: { isDateUnavailable: (iso: string) => [0, 6].includes(new Date(iso + 'T12:00:00').getDay()) } };
+export const Invalid: Story = { name: 'Error', args: { invalid: true, message: '예약할 수 없는 날짜예요.' } };
+export const Disabled: Story = { args: { disabled: true } };
+export const ReadOnly: Story = { name: 'Read Only', args: { readOnly: true, defaultValue: '2026-07-30' } };
+export const DateRange: Story = { name: 'Date Range', args: { selectionMode: 'range', label: '이용 기간' },
+  play: async ({ canvas, userEvent, args }) => {
+    await userEvent.click(canvas.getByRole('button', { name: /7월 16일/ }));
+    await userEvent.click(canvas.getByRole('button', { name: /7월 10일/ }));
+    await expect(args.onRangeChange).toHaveBeenLastCalledWith({ start: '2026-07-10', end: '2026-07-16' });
+    await userEvent.click(canvas.getByRole('button', { name: /7월 20일/ }));
+    await userEvent.click(canvas.getByRole('button', { name: /7월 20일/ }));
+    await expect(args.onRangeChange).toHaveBeenLastCalledWith({ start: '2026-07-20', end: '2026-07-20' });
   },
 };
-
-export const Invalid: Story = {
-  name: "Error",
-  args: { defaultValue: '2026-07-01', invalid: true, message: '시작일 이후여야 합니다.' },
+export const RangeHoverPreview: Story = { name: 'Range Hover Preview', args: { selectionMode: 'range', label: '이용 기간' },
+  play: async ({ canvas, canvasElement, userEvent, args }) => {
+    await userEvent.click(canvas.getByRole('button', { name: /7월 10일/ }));
+    await userEvent.hover(canvas.getByRole('button', { name: /7월 16일/ }));
+    await expect(canvasElement.querySelector('.ds-calendar--preview')).toBeInTheDocument();
+    await expect(canvasElement.querySelector('[data-date="2026-07-13"]')).toHaveAttribute('data-selected');
+    await expect(args.onRangeChange).not.toHaveBeenCalled();
+  },
 };
-
-export const Disabled: Story = {
-  name: "Disabled",
-  args: { disabled: true },
+export const YearMonthSelection: Story = { name: 'Year / Month Selection',
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const body = within(canvasElement.ownerDocument.body);
+    await userEvent.click(canvas.getByRole('button', { name: /연도/ }));
+    await userEvent.click(await body.findByRole('option', { name: '2028년' }));
+    await userEvent.click(canvas.getByRole('button', { name: /월 월$/ }));
+    await userEvent.click(await body.findByRole('option', { name: '2월' }));
+    await expect(canvas.getByRole('button', { name: /2028년 2월 29일/ })).toBeInTheDocument();
+  },
 };
-
-export const ReadOnly: Story = {
-  name: "Read Only",
-  args: { readOnly: true, defaultValue: '2026-07-30' },
+export const KeyboardInteraction: Story = { name: 'Keyboard Interaction',
+  play: async ({ canvas, userEvent, args }) => {
+    canvas.getByRole('button', { name: /7월 15일/ }).focus();
+    await userEvent.keyboard('{ArrowRight}{Enter}');
+    await expect(args.onChange).toHaveBeenCalledWith('2026-07-16');
+    const year = canvas.getByRole('button', { name: /연도/ });
+    year.focus(); await userEvent.keyboard('{ArrowDown}{Escape}');
+    await expect(year).toHaveFocus();
+  },
 };

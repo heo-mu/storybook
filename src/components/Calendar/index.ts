@@ -1,2 +1,2 @@
-export { Calendar, type CalendarProps } from './Calendar';
+export { Calendar, type CalendarProps, type DateRange } from './Calendar';
 export type { ISODate } from './dates';

@@ -89,14 +89,10 @@ function EditCell({ type, state, content }: { type: Type; state: State; content:
         { editable: true, unit: true },
       );
     case 'Date Picker':
-      return row(<DatePicker size="sm" aria-label="날짜" defaultValue={filled ? '2026-10-01' : null} disabled={disabled} className={field} />, { editable: true });
+      return row(<DatePicker aria-label="날짜" defaultValue={filled ? '2026-10-01' : null} disabled={disabled} className={field} />, { editable: true });
     case 'Date Range Picker':
       return row(
-        <>
-          <DatePicker size="sm" aria-label="시작일" defaultValue={filled ? '2026-10-01' : null} disabled={disabled} className={field} />
-          <span className="ds-kv__unit">~</span>
-          <DatePicker size="sm" aria-label="종료일" defaultValue={filled ? '2026-10-10' : null} disabled={disabled} className={field} />
-        </>,
+        <DatePicker aria-label="기간" selectionMode="range" defaultRangeValue={filled ? { start: '2026-10-01', end: '2026-10-10' } : null} disabled={disabled} className={field} />,
         { editable: true },
       );
     // Figma (since 2026-10-19): one chip-filter — Unselected "텍스트 선택" when empty, Selected with the summary when
@@ -191,7 +187,7 @@ export const EditableOpen: StoryObj<{ type: 'Select' | 'Date Picker' | 'Filter' 
           </KeyValueItem>
         ) : type === 'Date Picker' ? (
           <KeyValueItem label="항목명" editable valueProps={{ 'data-figma': 'Type=Date Picker, State=Editing, Content=Filled' }}>
-            <DatePicker size="sm" aria-label="날짜" defaultValue="2026-10-01" open />
+            <DatePicker aria-label="날짜" defaultValue="2026-10-01" />
           </KeyValueItem>
         ) : (
           <KeyValueItem label="항목명" valueProps={{ 'data-figma': 'Type=Filter, State=Editing, Content=Filled' }}>
@@ -212,7 +208,7 @@ export const EditableAccessibility: Story = {
         <Input size="sm" aria-label="설비명" defaultValue="공조기" />
       </KeyValueItem>
       <KeyValueItem label="점검일" editable>
-        <DatePicker size="sm" aria-label="점검일" />
+        <DatePicker aria-label="점검일" />
       </KeyValueItem>
     </KeyValueTable>
   ),

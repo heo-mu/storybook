@@ -1,5 +1,5 @@
 import { type ComponentPropsWithoutRef } from 'react';
-import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from '../DashboardFilterBar';
+import { DashboardFilterBar, DashboardFilterGroup } from '../DashboardFilterBar';
 import { Button, IconButton } from '../../Button';
 import { FilterChip } from '../../Chip';
 import { DatePicker } from '../../DatePicker';
@@ -44,10 +44,7 @@ export function FilterBarSample(props: Omit<ComponentPropsWithoutRef<typeof Dash
           <SegmentedControlItem value="7d">최근 7일</SegmentedControlItem>
           <SegmentedControlItem value="30d">최근 30일</SegmentedControlItem>
         </SegmentedControl>
-        <DashboardFilterRange
-          from={<DatePicker size="sm" aria-label="시작일" defaultValue="2026-10-07" style={{ width: 136 }} />}
-          to={<DatePicker size="sm" aria-label="종료일" defaultValue="2026-10-13" style={{ width: 136 }} />}
-        />
+        <DatePicker aria-label="조회 기간" selectionMode="range" defaultRangeValue={{ start: '2026-10-07', end: '2026-10-13' }} />
       </DashboardFilterGroup>
       <DashboardFilterGroup label="집계">
         <Select size="sm" aria-label="집계" defaultValue="day" style={{ width: 84 }}>

@@ -1,6 +1,6 @@
 import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as FilterBarStories from './DashboardFilterBar.stories';
-import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from './DashboardFilterBar';
+import { DashboardFilterBar, DashboardFilterGroup } from './DashboardFilterBar';
 
 <Meta title="Components/DashboardFilterBar/Usage" id="components-dashboardfilterbar-usage" name="Docs" />
 
@@ -13,7 +13,7 @@ import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from '
 ## 사용 시점
 
 - 대시보드에서 조회 대상 · 조회 기간 같은 조건을 고른 뒤 조회할 때 씁니다.
-- 조건 컨트롤은 디자인 시스템의 Select · FilterChip · SegmentedControl · DatePicker를 `size="sm"`으로 넣습니다.
+- 조건 컨트롤은 디자인 시스템의 Select · FilterChip · SegmentedControl을 `size="sm"`으로 넣습니다.
 
 ## 구성
 
@@ -32,16 +32,14 @@ import { DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange } from '
 
 <Source
   language="tsx"
-  code={`import { Button, DashboardFilterBar, DashboardFilterGroup, DashboardFilterRange, DatePicker, Select, SelectOption } from 'platform-design-system';
+  code={`import { Button, DashboardFilterBar, DashboardFilterGroup, DatePicker, Select, SelectOption } from 'platform-design-system';
 
 <DashboardFilterBar actions={<Button size="md">조회</Button>}>
   <DashboardFilterGroup label="조회 대상">
     <Select size="sm" aria-label="조회 대상" defaultValue="all"><SelectOption id="all">전체 단지</SelectOption></Select>
   </DashboardFilterGroup>
   <DashboardFilterGroup label="조회 기간">
-    <DashboardFilterRange
-      from={<DatePicker size="sm" aria-label="시작일" />}
-      to={<DatePicker size="sm" aria-label="종료일" />} />
+    <DatePicker selectionMode="range" aria-label="조회 기간" />
   </DashboardFilterGroup>
 </DashboardFilterBar>`}
 />

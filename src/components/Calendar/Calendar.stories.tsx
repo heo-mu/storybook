@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "달력에서 날짜를 선택합니다. 입력 필드와 함께 사용하려면 DatePicker를 사용합니다.",
+          "달력에서 날짜를 선택합니다. 라벨과 안내가 필요하면 DatePicker를 사용합니다.",
       },
     },
   },

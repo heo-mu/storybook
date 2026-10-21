@@ -48,12 +48,25 @@ export const CalendarMatrix: Story = {
   name: "Calendar",
   beforeEach: mockToday('2026-07-29'),
   render: () => (
-    <div style={{ padding: 16 }}>
-      <div data-figma="date-picker_calendar" style={{ display: 'flex', width: 'fit-content' }}>
+    <div style={{ padding: 16, display: 'flex', gap: 40 }}>
+      <div data-figma="Mode=Single, State=Selected" style={{ display: 'flex', width: 'fit-content' }}>
         <Calendar aria-label="2026년 7월" defaultValue="2026-07-30" />
       </div>
+      {(['Default', 'Start', 'Selected', 'Preview'] as const).map((state) => <div key={state} data-figma={`Mode=Range, State=${state}`} style={{ display: 'flex', width: 'fit-content' }}>
+        <Calendar aria-label={`Range ${state}`} selectionMode="range" defaultFocusedValue="2026-07-10"
+          defaultRangeValue={state === 'Selected' ? { start: '2026-07-10', end: '2026-07-16' } : undefined} />
+      </div>)}
     </div>
   ),
+  play: async ({ canvasElement, userEvent }) => {
+    const start = canvasElement.querySelector('[data-figma="Mode=Range, State=Start"]')!;
+    const preview = canvasElement.querySelector('[data-figma="Mode=Range, State=Preview"]')!;
+    await userEvent.click(start.querySelector('[data-date="2026-07-10"]')!);
+    await userEvent.click(preview.querySelector('[data-date="2026-07-10"]')!);
+    await userEvent.hover(preview.querySelector('[data-date="2026-07-16"]')!);
+    await waitFor(() => expect(preview.querySelectorAll('[data-selected]')).toHaveLength(7));
+    canvasElement.setAttribute('data-baseline-ready', 'true');
+  },
 };
 
 /** 오늘·선택·비활성 등 날짜 셀의 상태를 비교합니다. */
@@ -127,7 +140,7 @@ export const Interaction: Story = {
   render: () => <Calendar aria-label="일정" defaultFocusedValue="2026-07-15" />,
   play: async ({ canvas, userEvent, step }) => {
     await step('next month button', async () => {
-      await userEvent.click(canvas.getAllByRole('button')[1]);
+      await userEvent.click(canvas.getAllByRole('button', { name: '다음' }).find((button) => button.classList.contains('ds-calendar__nav-button'))!);
       await expect(canvas.getByRole('heading')).toHaveTextContent('2026년 8월');
     });
     await step('keyboard: focus a day, arrows, Enter selects', async () => {

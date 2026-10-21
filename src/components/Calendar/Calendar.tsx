@@ -1,21 +1,32 @@
 import { useCallback, useId, useMemo, type CSSProperties, type ReactNode } from 'react';
 import {
-  Button,
   Calendar as AriaCalendar,
+  RangeCalendar,
   CalendarCell,
   CalendarGrid,
   CalendarGridBody,
   CalendarGridHeader,
   CalendarHeaderCell,
-  Heading,
   type DateValue,
 } from 'react-aria-components';
-import { CaretLeftIcon, CaretRightIcon } from '../../icons';
+import { CalendarHeading } from './CalendarHeading';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
 import { toCalendarDate, toISODate, type ISODate } from './dates';
 
 export type CalendarProps = {
+  /** 단일 날짜 또는 연속된 기간. @default 'single' */
+  selectionMode?: 'single' | 'range';
+  /** 선택한 기간. 시작일과 종료일은 YYYY-MM-DD입니다. */
+  rangeValue?: DateRange | null;
+  defaultRangeValue?: DateRange | null;
+  onRangeChange?: (value: DateRange) => void;
+  readOnly?: boolean;
+  invalid?: boolean;
+  required?: boolean;
+  'aria-describedby'?: string;
+  'aria-labelledby'?: string;
+  id?: string;
   /** 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 선택이 없습니다. */
   value?: ISODate | null;
   /** 처음 선택된 날짜. `value` 없이 달력이 스스로 값을 관리할 때 씁니다. @default null */
@@ -40,6 +51,8 @@ export type CalendarProps = {
   style?: CSSProperties;
 };
 
+export type DateRange = { start: ISODate; end: ISODate };
+
 /**
  * The day number of a cell. react-aria names the cell with the full date ("2026년 7월 28일 화요일"), where Korean joins
  * the number to "일", so the visible label "28" is not a word of that name (WCAG 2.5.3 Label in Name). The cell is
@@ -59,13 +72,14 @@ function DayLabel({ children }: { children: ReactNode }) {
   );
   return (
     <span id={id} ref={ref} className="ds-calendar__day-label">
-      {children}
+      <span className="ds-calendar__day-number">{children}</span>
     </span>
   );
 }
 
-/** 달력에서 날짜를 선택합니다. 입력 필드와 함께 사용하려면 DatePicker를 사용합니다. */
+/** 단일 날짜 또는 기간을 선택하는 달력입니다. 라벨과 안내가 필요하면 DatePicker를 사용합니다. */
 export function Calendar({
+  selectionMode = 'single', rangeValue, defaultRangeValue = null, onRangeChange, readOnly, invalid, required,
   value,
   defaultValue = null,
   onChange,
@@ -79,49 +93,50 @@ export function Calendar({
   style,
   ...rest
 }: CalendarProps) {
+  const requiredId = useId();
   const [selected, setSelected] = useControllableState<ISODate | null>(value, defaultValue, onChange as ((v: ISODate | null) => void) | undefined);
   const unavailable = useMemo(
     () => (isDateUnavailable ? (date: DateValue) => isDateUnavailable(date.toString().slice(0, 10)) : undefined),
     [isDateUnavailable],
   );
-  return (
-    <AriaCalendar
-      {...rest}
-      className={cx('ds-calendar', className)}
-      style={style}
-      value={toCalendarDate(selected)}
-      onChange={(date) => setSelected(toISODate(date))}
-      minValue={toCalendarDate(minValue) ?? undefined}
-      maxValue={toCalendarDate(maxValue) ?? undefined}
-      isDateUnavailable={unavailable}
-      defaultFocusedValue={toCalendarDate(defaultFocusedValue) ?? undefined}
-      isDisabled={disabled}
-      autoFocus={autoFocus}
-    >
-      {/* A div, not <header>: the calendar title row is not a page banner landmark. */}
-      <div className="ds-calendar__header">
-        <Heading className="ds-calendar__title" />
-        <div className="ds-calendar__nav">
-          <Button slot="previous" className="ds-calendar__nav-button">
-            <CaretLeftIcon />
-          </Button>
-          <Button slot="next" className="ds-calendar__nav-button">
-            <CaretRightIcon />
-          </Button>
-        </div>
-      </div>
+  const [range, setRange] = useControllableState<DateRange | null>(rangeValue, defaultRangeValue, onRangeChange as ((v: DateRange | null) => void) | undefined);
+  const rangeStart = toCalendarDate(range?.start);
+  const rangeEnd = toCalendarDate(range?.end);
+  const parsedRange = rangeStart && rangeEnd ? (rangeStart.compare(rangeEnd) <= 0 ? { start: rangeStart, end: rangeEnd } : { start: rangeEnd, end: rangeStart }) : null;
+  const content = <>
+      {required && <span id={requiredId} hidden>필수 선택</span>}
+      <CalendarHeading minValue={minValue} maxValue={maxValue} isDateUnavailable={isDateUnavailable} disabled={disabled} />
       <div className="ds-calendar__grid-wrap">
         <CalendarGrid className="ds-calendar__grid">
           <CalendarGridHeader>{(day) => <CalendarHeaderCell className="ds-calendar__weekday">{day}</CalendarHeaderCell>}</CalendarGridHeader>
           <CalendarGridBody>
             {(date) => (
-              <CalendarCell date={date} className="ds-calendar__day">
+              <CalendarCell date={date} className="ds-calendar__day" data-date={date.toString()}>
                 {({ formattedDate }) => <DayLabel>{formattedDate}</DayLabel>}
               </CalendarCell>
             )}
           </CalendarGridBody>
         </CalendarGrid>
       </div>
-    </AriaCalendar>
-  );
+    </>;
+  const common = {
+    ...rest,
+    'aria-describedby': cx(rest['aria-describedby'], required && requiredId) || undefined,
+    style,
+    minValue: toCalendarDate(minValue) ?? undefined,
+    maxValue: toCalendarDate(maxValue) ?? undefined,
+    isDateUnavailable: unavailable,
+    defaultFocusedValue: toCalendarDate(defaultFocusedValue) ?? undefined,
+    isDisabled: disabled, isReadOnly: readOnly, isInvalid: invalid, autoFocus,
+  };
+  if (selectionMode === 'range') return <RangeCalendar {...common}
+    className={({ state }) => cx('ds-calendar', 'ds-calendar--range', state.anchorDate && 'ds-calendar--preview', className)}
+    value={parsedRange} onChange={(next) => setRange({ start: next.start.toString(), end: next.end.toString() })}
+  >{content}</RangeCalendar>;
+  return <AriaCalendar
+      {...common}
+      className={cx('ds-calendar', className)}
+      value={toCalendarDate(selected)}
+      onChange={(date) => setSelected(toISODate(date))}
+    >{content}</AriaCalendar>;
 }
