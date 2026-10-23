@@ -31,7 +31,7 @@ import { ChartTooltip } from './ChartTooltip';
 | `variant` | 모양 |
 | --- | --- |
 | `default` | 축 이름 · 값 눈금 · 범례가 있는 기본 차트 |
-| `simple` | 축과 범례가 없는 160px 높이의 간단한 차트. 마지막 항목이 현재 기간입니다. |
+| `simple` | 축과 범례를 생략한 160px 높이의 차트 |
 
 <Canvas of={ChartStories.Simple} />
 
@@ -42,6 +42,8 @@ import { ChartTooltip } from './ChartTooltip';
 
 ## 상태
 
+- `highlightedIndex`는 툴팁 없이 선택 영역의 배경만 강조합니다. 선·막대와 비교 계열의 색상은 유지합니다.
+- Hover 또는 키보드 탐색 중에는 탐색 중인 항목을 우선 표시하고, 탐색을 마치면 지정한 강조 위치로 돌아옵니다.
 - 마우스를 올리면 가장 가까운 항목이 강조되고 툴팁에 값이 보입니다. 선 차트는 안내선과 빈 원, 막대 차트는 강조 영역으로 표시합니다.
 - 터치 화면에서는 탭한 항목이 표시되고, 차트 밖을 누르면 닫힙니다.
 - 툴팁은 차트 안에 표시됩니다. 오른쪽 공간이 모자라면 왼쪽에 표시됩니다.
@@ -50,10 +52,12 @@ import { ChartTooltip } from './ChartTooltip';
 ## 색
 
 - 첫 계열은 브랜드 색, 두 번째 계열은 구분되는 다른 색으로 그립니다.
-- 간단 스타일 막대 차트는 현재 기간(마지막 항목)만 계열 색이고, 지난 기간은 옅은 회색으로 그립니다.
+- Simple을 포함한 모든 스타일에서 같은 계열의 색상은 동일합니다. 선택 상태는 색상 변경 대신 배경으로 구분합니다.
 - 색은 차트 전용 토큰(`colors/chart/*`)을 씁니다.
 
 ## 사용 예시
+
+<Canvas of={ChartStories.Highlighted} />
 
 <Source
   language="tsx"

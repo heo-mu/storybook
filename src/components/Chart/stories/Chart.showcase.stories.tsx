@@ -30,7 +30,7 @@ const AXES_BUILDINGS = { yAxisLabel: 'Y축: 전력 사용량 (kWh)', xAxisLabel:
 const AXES_HORIZONTAL = { yAxisLabel: 'Y축: 동별 구분', xAxisLabel: 'X축: 전력 사용량 (kWh)' };
 const AXES_DATES = { yAxisLabel: 'Y축: 전력 사용량 (kWh)', xAxisLabel: 'X축: 날짜 (월.일)' };
 
-// The Figma variants without the hover property; `hover` is the category drawn in their hover=yes copy.
+// Figma State values retain their original spelling. `hover` identifies the selected category.
 const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: ChartProps }> = [
   {
     name: 'Type=Line, Style=Default, Group=yes',
@@ -176,13 +176,34 @@ const FIGMA_BASE: Array<{ name: string; width: number; hover: number; props: Cha
 ];
 
 const FIGMA_CHARTS = FIGMA_BASE.flatMap(({ name, width, hover, props }) => [
-  { name: `${name}, hover=no`, width, props },
-  { name: `${name}, hover=yes`, width, props: { ...props, activeIndex: hover } },
+  { name: `${name}, State=Default`, width, props },
+  { name: `${name}, State=Hover`, width, props: { ...props, activeIndex: hover } },
+  ...(props.type !== 'line' || name === 'Type=Line, Style=Default, Group=yes'
+    ? [{ name: `${name}, State=Hilighted`, width, props: { ...props, highlightedIndex: hover } }]
+    : []),
 ]);
 
 /** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
   name: "Variants",
+  play: async ({ canvasElement }) => {
+    await waitFor(() => expect(canvasElement.querySelectorAll('.ds-chart__bar').length).toBeGreaterThan(0));
+    for (const chart of canvasElement.querySelectorAll('.ds-chart')) {
+      const state = chart.getAttribute('data-state');
+      const isLine = chart.getAttribute('data-type') === 'line';
+      if (!isLine) {
+        const colors = [...chart.querySelectorAll('.ds-chart__bar')].map(n => n.getAttribute('data-color'));
+        await expect(colors.every(c => c === 'brand' || c === 'compare')).toBe(true);
+      }
+      if (state === 'highlighted') {
+        await expect(chart.querySelector('.ds-chart__highlight')).not.toBeNull();
+        await expect(chart.querySelector('.ds-chart__tooltip')).toBeNull();
+        if (isLine) await expect(chart.querySelector('.ds-chart__point[data-current]')).toBeNull();
+      } else if (state === 'default') {
+        await expect(chart.querySelector('.ds-chart__highlight')).toBeNull();
+      }
+    }
+  },
   render: () => (
     <div style={{ display: 'grid', gap: 40, justifyItems: 'start' }}>
       {FIGMA_CHARTS.map(({ name, width, props }) => (

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, waitFor } from 'storybook/test';
 import { Chart } from './Chart';
 import { CHART_TYPES, CHART_VARIANTS } from './Chart.options';
 
@@ -35,6 +35,7 @@ const meta = {
     onActiveIndexChange: fn(),
   },
   argTypes: {
+    highlightedIndex: { control: { type: 'number', min: 0, step: 1 }, description: '툴팁 없이 선택 영역 배경을 강조합니다. null이면 해제합니다.' },
     type: { control: 'inline-radio', options: CHART_TYPES, description: '종류 — 선(line) · 세로 막대(bar-vertical) · 가로 막대(bar-horizontal)', table: { defaultValue: { summary: 'bar-vertical' } } },
     variant: { control: 'inline-radio', options: CHART_VARIANTS, description: '스타일 — 기본(default) · 간단(simple)', table: { defaultValue: { summary: 'default' } } },
   },
@@ -84,7 +85,7 @@ export const Line: Story = {
   ),
 };
 
-/** 축과 범례가 없는 간단 스타일입니다. 마지막 항목이 현재 기간이며, 마우스를 올리거나 키보드 포커스를 받으면 기본 스타일처럼 툴팁이 보입니다. */
+/** 축과 범례를 생략해 좁은 공간에 사용하는 스타일입니다. 모든 항목에서 계열 색상을 유지합니다. */
 export const Simple: Story = {
   name: "Simple",
   args: {
@@ -102,4 +103,35 @@ export const Simple: Story = {
 export const ControlledTooltip: Story = {
   name: "Controlled Tooltip",
   args: { activeIndex: 3 },
+};
+
+/** 선택 영역 배경만 강조합니다. 마우스나 키보드로 탐색하면 툴팁이 보이고, 탐색을 마치면 기존 강조 위치로 돌아옵니다. */
+export const Highlighted: Story = {
+  name: 'Highlighted',
+  args: { highlightedIndex: 3 },
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const plot = canvas.getByRole('group');
+    const chart = canvasElement.querySelector('.ds-chart')!;
+    await waitFor(() => expect(chart.querySelector('.ds-chart__highlight')).not.toBeNull());
+    const originalX = chart.querySelector('.ds-chart__highlight')!.getAttribute('x');
+    const colors = () => [...chart.querySelectorAll('.ds-chart__bar')].map((n) => n.getAttribute('data-color'));
+    const originalColors = colors();
+    await expect(chart).toHaveAttribute('data-state', 'highlighted');
+    await expect(chart.querySelector('.ds-chart__tooltip')).toBeNull();
+    const box = plot.getBoundingClientRect();
+    await userEvent.pointer({ target: plot, coords: { clientX: box.left + 90, clientY: box.top + 100 } });
+    await waitFor(() => expect(chart).toHaveAttribute('data-state', 'hover'));
+    await expect(chart.querySelector('.ds-chart__tooltip')).not.toBeNull();
+    await expect(chart.querySelector('.ds-chart__highlight')!.getAttribute('x')).not.toBe(originalX);
+    await expect(colors()).toEqual(originalColors);
+    await userEvent.unhover(plot);
+    await waitFor(() => expect(chart).toHaveAttribute('data-state', 'highlighted'));
+    await expect(chart.querySelector('.ds-chart__highlight')).toHaveAttribute('x', originalX!);
+    await userEvent.tab();
+    await userEvent.keyboard('{Home}');
+    await expect(chart).toHaveAttribute('data-state', 'hover');
+    await userEvent.keyboard('{Escape}');
+    await expect(chart).toHaveAttribute('data-state', 'highlighted');
+    await expect(chart.querySelector('.ds-chart__tooltip')).toBeNull();
+  },
 };

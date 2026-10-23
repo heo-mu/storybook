@@ -29,7 +29,7 @@ export type ChartProps = Omit<ComponentPropsWithoutRef<'figure'>, 'children'> & 
   /** 종류 — 선 · 세로 막대 · 가로 막대. @default 'bar-vertical' */
   type?: ChartType;
   /**
-   * 스타일. `default`는 축 이름 · 값 눈금 · 범례가 있고, `simple`은 마지막 항목이 현재 기간인 160px 높이의 간단한 차트입니다.
+   * 스타일. `default`는 축 이름 · 값 눈금 · 범례가 있고, `simple`은 축과 범례를 생략한 160px 높이의 차트입니다.
    * @default 'default'
    */
   variant?: ChartVariant;
@@ -49,6 +49,8 @@ export type ChartProps = Omit<ComponentPropsWithoutRef<'figure'>, 'children'> & 
   maxLabel?: ReactNode;
   /** 툴팁을 표시할 항목 번호. 넘기면 직접 제어하며, `null`이면 툴팁을 숨깁니다. */
   activeIndex?: number | null;
+  /** 툴팁 없이 배경을 강조할 항목 번호. Hover 중에는 탐색 중인 항목을 우선 표시합니다. @default null */
+  highlightedIndex?: number | null;
   /** 처음 툴팁을 표시할 항목 번호(직접 제어하지 않을 때). @default null */
   defaultActiveIndex?: number | null;
   /** 마우스 · 탭 · 키보드로 툴팁 항목이 바뀔 때 호출됩니다. 닫히면 `null`을 받습니다. */
@@ -97,14 +99,10 @@ function readMetrics(el: HTMLElement): Metrics {
 
 /**
  * Bar / line colour of series `k` — the same rule for vertical and horizontal bars (Figma Chart Component tokens
- * colors/chart/bar/* and colors/chart/line/*): main series brand, comparison `compare` (bars) or `02` (lines); in
- * simple bar charts the past periods are `history` / `history-compare` and the current period brand / `compare`.
+ * colors/chart/bar/* and colors/chart/line/*): main series brand, comparison `compare` (bars) or `02` (lines).
+ * State changes only the selected background, never the series colour.
  */
-function markColor(type: ChartType, variant: ChartVariant, k: number, current: boolean): ChartColor {
-  if (variant === 'simple' && type !== 'line') {
-    if (current) return k === 0 ? 'brand' : 'compare';
-    return k === 0 ? 'history' : 'history-compare';
-  }
+function markColor(type: ChartType, k: number): ChartColor {
   if (k === 0) return 'brand';
   return type === 'line' ? '02' : 'compare';
 }
@@ -132,6 +130,7 @@ type SceneInput = {
   width: number;
   m: Metrics;
   active: number | null;
+  highlighted: number | null;
   format: (value: number) => string;
   maxLabel: ReactNode;
   fill: (color: ChartColor, kind: 'v' | 'h' | 'area') => string;
@@ -163,7 +162,7 @@ function valueLabels({ ticks, m, format }: SceneInput, yOf: (v: number) => numbe
 }
 
 function lineScene(input: SceneInput): Scene {
-  const { variant, categories, series, ticks, width, m, active, maxLabel, fill } = input;
+  const { variant, categories, series, ticks, width, m, active, highlighted, maxLabel, fill } = input;
   const n = categories.length;
   const group = series.length > 1;
   const simple = variant === 'simple';
@@ -212,7 +211,7 @@ function lineScene(input: SceneInput): Scene {
   // The active (hovered / keyboard) category gets a ring on every series (Figma hover=yes); the default style draws
   // no markers at the first and last category.
   const dots = (k: number) => {
-    const color = markColor('line', variant, k, false);
+    const color = markColor('line', k);
     return (
       <g key={`dots-${k}`}>
         {points[k].map(([x, y], i) =>
@@ -231,7 +230,7 @@ function lineScene(input: SceneInput): Scene {
       key={`line-${k}`}
       className="ds-chart__line"
       data-series={k}
-      data-color={markColor('line', variant, k, false)}
+      data-color={markColor('line', k)}
       d={!simple && k === 0 ? roundedPolyline(run(k), m['line-corner']) : polyline(run(k))}
     />
   );
@@ -239,12 +238,18 @@ function lineScene(input: SceneInput): Scene {
   // Hover guide under everything: over the grid (default) or the whole drawing height (simple).
   const guide = active != null && <line key="guide" className="ds-chart__guide" x1={xs[active]} x2={xs[active]} y1={simple ? 0 : m['grid-top']} y2={base} />;
   let svg: ReactNode;
+  // Static line selection covers its category interval, without changing markers or showing a tooltip.
+  const selected = active == null ? highlighted : null;
+  const selectionLeft = selected == null ? 0 : selected === 0 ? (simple ? 0 : m['plot-left']) : (xs[selected - 1] + xs[selected]) / 2;
+  const selectionRight = selected == null ? 0 : selected === n - 1 ? width : (xs[selected] + xs[selected + 1]) / 2;
+  const selection = selected != null && <rect key="selection" className="ds-chart__highlight" x={selectionLeft} y={simple ? 0 : m['grid-top']} width={selectionRight - selectionLeft} height={base - (simple ? 0 : m['grid-top'])} />;
   if (simple) {
     const baseline = <line key="baseline" className="ds-chart__baseline" x1={0} x2={width} y1={base} y2={base} />;
-    svg = group ? [guide, baseline, ...order.flatMap((k) => [line(k), dots(k)])] : [guide, area, baseline, line(0), dots(0)];
+    svg = group ? [selection, guide, baseline, ...order.flatMap((k) => [line(k), dots(k)])] : [selection, guide, area, baseline, line(0), dots(0)];
   } else {
     svg = (
       <>
+        {selection}
         {guide}
         {ticks.map((t) => (
           <line key={t} className="ds-chart__grid" x1={m['plot-left']} x2={width} y1={yOf(t)} y2={yOf(t)} />
@@ -313,7 +318,7 @@ function barVerticalScene(input: SceneInput): Scene {
             {active === i && <rect className="ds-chart__highlight" x={c - m['highlight-size'] / 2} y={highlightTop} width={m['highlight-size']} height={bottom - highlightTop} />}
             {series.map((s, k) => {
               const y = yOf(valueAt(s, i));
-              const color = markColor('bar-vertical', variant, k, i === n - 1);
+              const color = markColor('bar-vertical', k);
               return <path key={k} className="ds-chart__bar" data-color={color} d={barPath(c - pairW / 2 + k * (barW + gap), y, barW, bottom - y, m['bar-radius'], 'up')} fill={fill(color, 'v')} />;
             })}
           </g>
@@ -385,7 +390,7 @@ function barHorizontalScene(input: SceneInput): Scene {
         <g key={i}>
           {active === i && <rect className="ds-chart__highlight" x={trackLeft} y={y + h / 2 - m['highlight-size'] / 2} width={trackW} height={m['highlight-size']} />}
           {series.map((s, k) => {
-            const color = markColor('bar-horizontal', variant, k, i === n - 1);
+            const color = markColor('bar-horizontal', k);
             const d = barPath(trackLeft, y + h / 2 - pairH / 2 + k * (barH + gap), lengthOf(valueAt(s, i)), barH, m['bar-radius'], 'right');
             return <path key={k} className="ds-chart__bar" data-color={color} d={d} fill={fill(color, 'h')} />;
           })}
@@ -461,6 +466,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
     formatValue = defaultFormat,
     maxLabel = '최고',
     activeIndex,
+    highlightedIndex = null,
     defaultActiveIndex = null,
     onActiveIndexChange,
     plotLabel = '차트 항목: 화살표 키로 값 확인',
@@ -478,6 +484,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const [activeValue, setActive] = useControllableState<number | null>(activeIndex, defaultActiveIndex, onActiveIndexChange);
   const active = interactive && activeValue != null && activeValue >= 0 && activeValue < n ? activeValue : null;
+  const highlighted = Number.isInteger(highlightedIndex) && highlightedIndex != null && highlightedIndex >= 0 && highlightedIndex < n ? highlightedIndex : null;
   const [announcement, setAnnouncement] = useState('');
 
   const plotRef = useRef<HTMLDivElement>(null);
@@ -515,7 +522,8 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
           ticks,
           width: size.width,
           m: size.m,
-          active,
+          active: type === 'line' ? active : active ?? highlighted,
+          highlighted,
           format: formatValue,
           maxLabel,
           fill,
@@ -616,7 +624,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   );
 
   return (
-    <figure {...rest} ref={ref} className={cx('ds-chart', className)} data-type={type} data-variant={variant} data-group={group ? 'yes' : 'no'} aria-label={ariaLabel}>
+    <figure {...rest} ref={ref} className={cx('ds-chart', className)} data-type={type} data-variant={variant} data-group={group ? 'yes' : 'no'} data-state={active != null ? 'hover' : highlighted != null ? 'highlighted' : 'default'} aria-label={ariaLabel}>
       {!simple && (yAxisLabel != null || xAxisLabel != null) && (
         <div className="ds-chart__axes">
           <span className="ds-chart__axis-label">{yAxisLabel}</span>
