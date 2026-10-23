@@ -20,6 +20,7 @@ const meta = {
   id: 'foundations-focus',
   tags: ['!manifest'],
   parameters: {
+    docs: { description: { component: 'Focus Ring은 colors/border/focus → brand-gray/500 (#778191)을 사용해요. 기본 surface 배경과 3.30–3.87:1 대비를 유지하며 두께와 간격은 기존 규칙을 따라요.' } },
     controls: { disable: true },
     pseudo: { focusVisible: ['[data-pseudo="focus"]'] },
   },
@@ -147,7 +148,12 @@ export const Keyboard: Story = {
     });
     await step('accordion trigger: ring inside the row edge', async () => {
       await userEvent.tab();
-      expectRing(canvasElement.querySelector('.ds-accordion__trigger[data-focus-visible]'), '-2px');
+      const trigger = canvasElement.querySelector('.ds-accordion__trigger[data-focus-visible]');
+      if (!trigger) throw new Error('accordion trigger is not keyboard focused');
+      const border = getComputedStyle(trigger, '::before');
+      expect([border.borderTopWidth, border.borderTopStyle, border.borderTopColor]).toEqual(['2px', 'solid', blue]);
+      expect([border.top, border.right, border.bottom, border.left]).toEqual(['0px', '0px', '0px', '0px']);
+      expect(border.borderRadius).toBe('4px');
     });
   },
 };

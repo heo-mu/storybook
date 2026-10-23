@@ -69,5 +69,5 @@
   --colors-fill-tertiary-hover: var(--colors-gray-225);
   --colors-fill-tertiary-pressed: var(--colors-gray-275);
   --colors-text-inactive: var(--colors-brand-gray-400);
-  --colors-border-focus: var(--colors-brand-700);
+  --colors-border-focus: var(--colors-brand-gray-500);
 }
