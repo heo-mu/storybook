@@ -1,6 +1,6 @@
 import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as CardStories from './Card.stories';
-import { Card, CardHeader } from './Card';
+import { Card, CardHeader, CardFooter } from './Card';
 
 <Meta title="Components/Card/Usage" id="components-card-usage" name="Docs" />
 
@@ -20,6 +20,8 @@ import { Card, CardHeader } from './Card';
 | `CardFooter` | 하단 동작 영역. 버튼을 동일한 너비로 배치합니다. |
 
 - 필요한 부분만 넣습니다. 예를 들어 푸터 없이 헤더와 본문만 써도 됩니다.
+- 하단 버튼은 기본적으로 세로로 쌓입니다. 나란히 배치하려면 `CardFooter layout="horizontal"`을 사용합니다. 버튼 하나만 넣으면 전체 너비를 채웁니다.
+- 헤더의 `action`에는 버튼 등 필요한 보조 동작을 넣을 수 있습니다.
 
 ## 사용 예시
 
@@ -54,3 +56,6 @@ import { Card, CardHeader } from './Card';
 
 ### CardHeader
 <ArgTypes of={CardHeader} />
+
+### CardFooter
+<ArgTypes of={CardFooter} />

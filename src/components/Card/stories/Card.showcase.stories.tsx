@@ -16,7 +16,7 @@ export default meta;
 type Story = StoryObj;
 
 /** Story-only stand-in for the content (the grey 280 × 100 rectangle of the Figma example). */
-const Placeholder = () => <div style={{ height: 100, background: 'var(--colors-surface-container)' }} />;
+const Placeholder = () => <div style={{ height: 100, background: '#ededed' }} />;
 
 /** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {
@@ -30,7 +30,7 @@ export const Figma: Story = {
           description="서브 내용 최대 2줄"
           action={
             <Button variant="tertiary" appearance="outline" size="sm">
-              라벨명
+              버튼
             </Button>
           }
         />
@@ -47,7 +47,7 @@ export const Figma: Story = {
           description="서브 내용 최대 2줄"
           action={
             <Button variant="tertiary" appearance="outline" size="sm">
-              라벨명
+              버튼
             </Button>
           }
         />

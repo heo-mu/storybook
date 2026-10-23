@@ -19,7 +19,7 @@ export type CardHeaderProps = Omit<ComponentPropsWithoutRef<'div'>, 'title'> & {
   headingLevel?: 2 | 3 | 4 | 5 | 6;
 };
 
-/** 카드 헤더입니다. 제목 · 설명 · 버튼을 두고, 아래에 구분선이 있습니다. */
+/** 카드 헤더입니다. 제목 · 설명 · 보조 동작을 담습니다. */
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function CardHeader(
   { title, description, action, headingLevel = 3, className, ...rest },
   ref,
@@ -41,7 +41,12 @@ export const CardContent = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'
   return <div {...rest} ref={ref} className={cx('ds-card__content', className)} />;
 });
 
-/** 카드 아래쪽 버튼 영역입니다. 버튼이 너비를 나눠 채웁니다. */
-export const CardFooter = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(function CardFooter({ className, ...rest }, ref) {
-  return <div {...rest} ref={ref} className={cx('ds-card__footer', className)} />;
+export type CardFooterProps = ComponentPropsWithoutRef<'div'> & {
+  /** 버튼 배치 방향. 기존 세로 배치를 기본으로 유지합니다. @default 'vertical' */
+  layout?: 'vertical' | 'horizontal';
+};
+
+/** 카드 아래쪽 버튼 영역입니다. 가로 배치에서는 버튼이 너비를 균등하게 나눕니다. */
+export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(function CardFooter({ layout = 'vertical', className, ...rest }, ref) {
+  return <div {...rest} ref={ref} className={cx('ds-card__footer', className)} data-layout={layout} />;
 });
