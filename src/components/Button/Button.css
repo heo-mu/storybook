@@ -59,7 +59,9 @@
   --ds-button-icon: var(--ds-button-icon-hover);
 }
 
-.ds-button-base:active {
+/* React Aria Select moves pointer capture to its overlay; retain the same Pressed tokens through data-pressed. */
+.ds-button-base:active,
+.ds-button-base[data-pressed] {
   --ds-button-bg: var(--ds-button-bg-pressed);
   --ds-button-label: var(--ds-button-label-pressed);
   --ds-button-icon: var(--ds-button-icon-pressed);

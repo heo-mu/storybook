@@ -54,7 +54,14 @@ export const RangeHoverPreview: Story = { name: 'Range Hover Preview', args: { s
 export const YearMonthSelection: Story = { name: 'Year / Month Selection',
   play: async ({ canvas, canvasElement, userEvent }) => {
     const body = within(canvasElement.ownerDocument.body);
+    // The calendar retains its Select behavior while sharing TextButton md typography and spacing.
+    const year = canvas.getByRole('button', { name: /연도/ });
+    await expect(year.getBoundingClientRect().height).toBe(32);
+    await expect(getComputedStyle(year).fontSize).toBe('14px');
     await userEvent.click(canvas.getByRole('button', { name: /연도/ }));
+    await expect(year).toHaveAttribute('data-pressed');
+    const pressedStyle = getComputedStyle(year);
+    await expect(pressedStyle.getPropertyValue('--ds-button-bg').trim()).toBe(pressedStyle.getPropertyValue('--ds-button-bg-pressed').trim());
     await userEvent.click(await body.findByRole('option', { name: '2028년' }));
     await userEvent.click(canvas.getByRole('button', { name: /월 월$/ }));
     await userEvent.click(await body.findByRole('option', { name: '2월' }));

@@ -47,7 +47,8 @@ export function CalendarHeading({ minValue, maxValue, isDateUnavailable, disable
   const picker = (kind: 'year' | 'month', values: number[]) => (
     <Select aria-label={kind === 'year' ? '연도' : '월'} selectedKey={date[kind]} isDisabled={disabled || !values.length}
       onSelectionChange={(key) => move(kind === 'year' ? Number(key) : date.year, kind === 'month' ? Number(key) : date.month)}>
-      <Button className="ds-button-base ds-text-button" data-variant="secondary" data-size="sm">
+      {/* Keep the Select trigger semantics; use the existing TextButton md style and tokens unchanged. */}
+      <Button className="ds-button-base ds-text-button" data-variant="secondary" data-size="md">
         <SelectValue className="ds-button__label">{date[kind]}{kind === 'year' ? '년' : '월'}</SelectValue>
         <span className="ds-button__icon"><CaretDownIcon /></span>
       </Button>

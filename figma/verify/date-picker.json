@@ -25,8 +25,8 @@
       "parts": {
         "Date Picker Header": ".ds-calendar__header",
         "Date Picker Header/Year and month": ".ds-calendar__selectors",
-        "Date Picker Header/Year and month/date-picker_select*": ".ds-calendar__selectors .ds-text-button",
-        "Date Picker Header/Year and month/date-picker_select*/button_text/Label": ".ds-calendar__selectors .ds-button__label",
+        "Date Picker Header/Year and month/button_text*": ".ds-calendar__selectors .ds-text-button",
+        "Date Picker Header/Year and month/button_text*/Label": ".ds-calendar__selectors .ds-button__label",
         "Date Picker Header/navigation": ".ds-calendar__nav",
         "Date Picker Header/navigation/date-picker_navigation*": ".ds-calendar__nav-button",
         "Date Grid Container": ".ds-calendar__grid-wrap",
