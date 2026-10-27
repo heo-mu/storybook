@@ -5,10 +5,7 @@
  *   icon UploadSimple 16px · title sm/leading-normal/medium · helper xs/leading-normal/normal (gap m-0_5)
  * State: Default → Hover → Pressed (Figma binds …/focus) → Drag-over → Disabled (later rules win).
  *   Disabled (2026-10-27 sync): background/disabled (surface/container), border/disabled, label/disabled (text/inactive),
- *   icon icon/default, no opacity. Figma binds the Disabled helper to helper/default, which renders #a1a8b5 there because the
- *   Figma file currently has text/placeholder = brand-gray/400 — a revert of the approved A-1 contrast decision (gray/600,
- *   docs/accessibility.md, docs/figma-issues.md F98). The code keeps A-1, so the disabled helper uses label/disabled (text/inactive,
- *   the same #a1a8b5; exempt from the contrast rule as part of a disabled control) until the token decision is made.
+ *   icon icon/default, no opacity; the helper keeps helper/default (text/placeholder, brand-gray/400 since 2026-10-27 — F98).
  */
 .ds-file-uploader__root {
   display: block;
@@ -63,7 +60,6 @@
   --_bg: var(--colors-file-uploader-background-disabled);
   --_bd: var(--colors-file-uploader-border-disabled);
   --_label: var(--colors-file-uploader-label-disabled);
-  --_helper: var(--colors-file-uploader-label-disabled);
 
   cursor: default;
   /* Drags hit the root instead, which refuses the drop (see FileUploader.tsx). */

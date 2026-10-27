@@ -41,8 +41,7 @@
       ],
       "//maskRects": "dashed border: Figma fits the 6/4 dash pattern to each side, SVG continues it around the outline (dash positions differ up to 3px)",
       "glyphDxTolerance": 1.2,
-      "//glyphDxTolerance": "the centred mixed Latin/Hangul helper line has the same ink extents and word positions as Figma (within 1px); its centroid differs 1.12px from glyph weight",
-      "//reference": "figma/reference/file-uploader.png (2026-10-27): State=Disabled from the current Figma (helper #a1a8b5); the four enabled states keep the 2026-10-20 render, where the helper is text/placeholder gray/600 (A-1). Figma currently has text/placeholder = gray/400 — decision pending (docs/figma-issues.md F98); re-export the whole set once decided."
+      "//glyphDxTolerance": "the centred mixed Latin/Hangul helper line has the same ink extents and word positions as Figma (within 1px); its centroid differs 1.12px from glyph weight"
     },
     {
       "set": "file-uploader-item",

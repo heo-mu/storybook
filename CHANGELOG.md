@@ -7,6 +7,22 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### 플레이스홀더 색 — Semantic `text/placeholder` 전체 동기화 (2026-10-27)
+
+Figma Semantic 컬렉션(모드 1개)의 `colors/text/placeholder`가 brand-gray/**600 #596475 → 400 #a1a8b5**로 바뀌어(2026-10-19 A-1 대비 개선 이전 값) 스냅샷 · 토큰 · 참조 이미지를 갱신했습니다.
+Figma MCP로 별칭 관계를 추적한 영향 범위 — Component 변수 13개(모두 직접 별칭, 간접 별칭 없음): `input/outline/placeholder/default` · `input/outline/label/default` ·
+`textarea/outline/placeholder/default` · `select/outline/outline/placeholder/default` · `search-field/{outline,solid}/label/{default,hover}` · `date-picker/trigger/outline/placeholder/default` ·
+`breadcrumb/label/default` · `file-uploader/helper/default` · `stepper/label/title/locked` · `table/key-value/value/label/default`.
+연결된 Figma 컴포넌트: input · password_field(신규 세트, 코드 미구현) · select · textarea · date-picker_trigger(코드 없음) · search-field · breadcrumb · breadcrumb-item ·
+file-uploader(안내 문구 5개 상태) · file-uploader-item(파일 정보) · stepper_indicator Locked · table_value_editable.
+
+- **토큰**: `figma/variables/semantic.txt` 한 줄, `npm run tokens` 결과 `src/tokens/semantic.css`(`--colors-text-placeholder`) · `tokens.json`(해석값 16곳). 컴포넌트 CSS는 모두 토큰을 참조하므로 개별 수정 없음.
+  FileUploader Disabled 안내 문구는 앞선 임시 규칙(`label/disabled`)을 걷어내고 Figma 바인딩 그대로 `helper/default`.
+- **참조 이미지**: file-uploader · file-uploader-item · input · select · textarea · search-field · breadcrumb · breadcrumb-item · stepper_indicator(가로 · 세로) · table_value_editable(+ 변형 4개).
+- **접근성(미해결 — 보고만, 색 재조정 없음)**: axe 감사 438 스토리에서 색 대비 위반 **105건**. 플레이스홀더 용도가 맞는 44건(Select 플레이스홀더 29, Table 편집 칸 빈 값 안내 15)은 Figma 결정으로 기록,
+  **용도 오류 43건**(Breadcrumb 상위 경로 링크 27 · FileUploaderItem 파일 정보 11 · Stepper 잠긴 단계 제목 5)은 플레이스홀더 토큰에 잘못 묶인 일반 글자라 Figma 바인딩 수정 요청 R9–R11,
+  나머지 18건은 Button Secondary Solid Hover · Pressed 흰 라벨(brand/600 · 500)로 이번 변경과 무관(F100). `KNOWN_CONTRAST`에는 넣지 않음 — [docs/accessibility.md](docs/accessibility.md).
+
 ### FileUploader Disabled — Figma 동기화 · 드롭 차단 (2026-10-27)
 
 Figma `file-uploader`(651:3945) State=Disabled를 다시 읽어 비교: 배경 `background/disabled`(surface/container #eff0f3) · 점선 테두리 `border/disabled`(#c9ced6) ·

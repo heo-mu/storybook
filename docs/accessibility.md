@@ -30,12 +30,27 @@ Figma 링 레이어와 DOM 링의 화면 비교(2026-10-19).
 Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). 모두 기존 팔레트 안에서 고른 색이고, 기준을 낮추거나 경고를 숨기지 않았습니다.
 흰 배경은 `surface/page` #fdfdfd 기준입니다.
 
+### 미해결 색 대비 위반 — `text/placeholder` brand-gray/400 동기화 이후 (2026-10-27)
+
+axe 감사(438 스토리) 색 대비 위반 **105건, 미해결**. 색은 Figma 값 그대로이며 기준을 낮추거나 `KNOWN_CONTRAST`에 넣지 않았습니다.
+
+| 구분 | 건수 | 요소 | 색 (흰 바탕 #fdfdfd) | 판정 |
+| --- | ---: | --- | --- | --- |
+| 플레이스홀더(용도 맞음) | 29 | Select `.ds-select__value[data-placeholder]` "내용 선택"(Form 예시 · 포커스 예시 포함) | #a1a8b5 2.35:1 | Figma 결정(F98)대로 유지 — 접근성 이슈로 기록. Input · Textarea · SearchField의 `::placeholder`도 같은 색(axe 미검사) |
+| 플레이스홀더(용도 맞음) | 15 | Table 키-값 편집 칸의 빈 값 안내 `dd`(`table/key-value/value/label/default`, 코드는 `--ds-field-placeholder`) | #a1a8b5 2.35:1 | 위와 같음 |
+| **용도 오류 — 일반 글자** | 27 | Breadcrumb 상위 경로 **링크** 라벨 `.ds-breadcrumb-item__label`(`breadcrumb/label/default` → `text/placeholder`) | #a1a8b5 2.35:1 | 내비게이션 글자가 플레이스홀더 토큰에 묶임 — Figma 바인딩 수정 요청(R9) |
+| **용도 오류 — 상태 안내** | 11 | FileUploaderItem 파일 정보 `.ds-file-item__meta`("1.2 MB · 업로드 완료", `file-uploader/helper/default` → `text/placeholder`) | #a1a8b5 2.35:1 | 상태 글자 — Figma 바인딩 수정 요청(R10). 같은 토큰의 FileUploader 안내 문구(#f5f6f7 위 2.21:1)도 포함 |
+| **용도 오류 — 단계 이름** | 5 | Stepper 잠긴 단계 제목 `.ds-stepper-indicator__label`(`stepper/label/title/locked` → `text/placeholder`) | #a1a8b5 2.35:1 | 잠긴 단계도 조작 대상이 아닐 뿐 읽어야 하는 글자 — Figma 바인딩 수정 요청(R11) |
+| 이번 변경과 무관 | 18 | Button Secondary Solid Hover · Pressed 흰 라벨(`button/secondary/solid/background/hover` → `fill/secondary/strong/hover` brand/600 #009b68 3.2:1, `pressed` brand/500 #02bb7b 2.4:1) — States · Variant Matrix 스토리의 pseudo-hover · pseudo-active 칸 | #fdfdfd on #009b68 · #02bb7b | A-1 기록(brand/800 · 900)과 달리 스냅샷 · Figma 모두 600 · 500 — 별도 이슈(F100), 이번 커밋에서 손대지 않음 |
+
+코드는 Figma 바인딩과 같게 유지합니다(토큰 구조 유지 원칙). 용도 오류 3종은 Figma에서 토큰을 바꾼 뒤 다시 동기화해야 하며, 그때까지 위 43건은 실제 사용자에게 보이는 글자의 대비 미달로 남습니다.
+
 ### 텍스트 (WCAG 1.4.3, 4.5:1)
 
 | 용도 | 토큰 | 이전 | 이후 | 사용처 |
 | --- | --- | --- | --- | --- |
 | 보조 텍스트 | Semantic `text/tertiary` brand-gray/500 → **600** | #778191 3.87:1 (#eff0f3 위 3.46) | #596475 5.89:1 (#eff0f3 위 5.26 · #f5f6f7 위 5.54) | 도움말 · 카운터 · 설명 · Segmented 선택 안 함 · Stepper 설명 · Card · Alert · DataFreshness · 차트 툴팁 제목 등 |
-| 플레이스홀더 · 정보 글자 | Semantic `text/placeholder` brand-gray/400 → **600** | #a1a8b5 2.35:1 | #596475 5.89:1 | Input · Textarea · Select · DatePicker · SearchField 플레이스홀더, Breadcrumb 상위 경로, FileUploader 파일 정보, Table 단위, Stepper 잠긴 단계 제목 |
+| 플레이스홀더 · 정보 글자 | Semantic `text/placeholder` brand-gray/400 → **600** — **2026-10-27 Figma에서 400으로 되돌림(디자인 결정, F98)**: 코드도 #a1a8b5(2.35:1)로 동기화, A-5 재발 | #a1a8b5 2.35:1 | #596475 5.89:1 → 2026-10-27 #a1a8b5 2.35:1 | Input · Textarea · Select · DatePicker · SearchField 플레이스홀더, Breadcrumb 상위 경로, FileUploader 파일 정보, Table 단위, Stepper 잠긴 단계 제목 |
 | 비활성 라벨(기준 제외) | 새 Semantic `text/inactive` = brand-gray/400 | (`text/placeholder`를 같이 씀) | #a1a8b5 그대로 | Button · TextButton · Chip · Table 편집 칸 · FileUploader · Accordion Disabled 라벨 — 플레이스홀더와 분리해 비활성 표시 유지 |
 | 잠긴 단계 설명 | `stepper/label/description/locked` text/disabled → text/tertiary | #c9ced6 1.55:1 | #596475 5.89:1 | Stepper Locked(조작 대상이 아니라 비활성 예외 아님 — 잠김은 제목 · 표시 원 · "잠김" 낭독으로 구분) |
 | 빈 상태 제목 · 설명 | `empty-state/title` tertiary → **secondary**, `description` placeholder → tertiary | #778191 3.87 · #a1a8b5 2.35 | #404b5d 8.67 · #596475 5.89 | EmptyState · DataState — 제목이 설명보다 한 단계 진한 위계 유지 |

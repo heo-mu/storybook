@@ -231,6 +231,16 @@ Figma를 Product Designer 관점에서 따로 점검하고(Storybook을 정답�
 작업 중 관찰된 다른 편집(이번 작업이 한 것 아님, 같은 값 — 동기화함): `colors/button/secondary/outline/background/default` · `/hover`가 `fill/secondary/subtle/*`로,
 `colors/chip-filter/background/unselected/default`가 `fill/primary/subtle/default`로 별칭 변경.
 
+## 플레이스홀더 토큰 오용 — 바인딩 수정 요청 (2026-10-27, 변경하지 않음)
+
+`text/placeholder`가 brand-gray/400(#a1a8b5)으로 바뀌면서(F98) 플레이스홀더가 아닌 글자에 이 토큰을 묶어 둔 곳이 대비 2.35:1로 내려갔습니다. 코드는 Figma 바인딩을 그대로 따르므로 Figma에서 바꾼 뒤 재동기화합니다.
+
+| # | 변수 | 현재 | 제안 | 영향 |
+| --- | --- | --- | --- | --- |
+| R9 | `colors/breadcrumb/label/default` | `text/placeholder` | `text/tertiary`(#596475, 5.89:1) — 현재 경로 `label/current`(text/secondary)보다 한 단계 연함 | breadcrumb · breadcrumb-item Link Default 라벨(27건) |
+| R10 | `colors/file-uploader/helper/default` | `text/placeholder` | `text/tertiary` — 다른 컴포넌트 helper/default와 같음 | file-uploader 안내 문구 5개 상태, file-uploader-item 파일 정보 3개 상태(11건) |
+| R11 | `colors/stepper/label/title/locked` | `text/placeholder` | `text/tertiary`(또는 `text/inactive` 유지 시 접근성 이슈로 수용) | stepper_indicator Locked 제목(5건) |
+
 ## 승인이 필요한 값 · 정책 변경 (변경하지 않음)
 
 | # | 내용 | 권장안 | 영향 범위 |
