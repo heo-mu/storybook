@@ -97,16 +97,18 @@
   --_icon: var(--colors-breadcrumb-home-icon-pressed);
 }
 
-/* Open (overflow menu shown): Figma Role=Open Hover · Pressed keep the label in …/label/focus — as specific as the
- * :hover / :active rules above and later, so it wins over their label colour (found by the 2026-10-20 text colour check). */
+/* Open (overflow menu shown): Figma dropped Role=Open and …/label/focus on 2026-10-27 (keyboard focus is the shared
+ * focus ring now), so the open trigger keeps the Pressed label colour — as specific as the :hover / :active rules so it
+ * wins over their label colour. */
 .ds-breadcrumb-item[data-open]:is(a, button) {
-  --_fg: var(--colors-breadcrumb-label-focus);
+  --_fg: var(--colors-breadcrumb-label-pressed);
 }
 
 .ds-breadcrumb-item[data-current] {
   --_bg: var(--colors-breadcrumb-background-current);
   --_fg: var(--colors-breadcrumb-label-current);
-  --_icon: var(--colors-breadcrumb-home-icon-current);
+  /* …/home-icon/current was removed from Figma (2026-10-27, the current item shows no icon there): follow the label colour. */
+  --_icon: var(--colors-breadcrumb-label-current);
 
   cursor: default;
 }

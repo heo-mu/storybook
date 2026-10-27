@@ -3,7 +3,7 @@
  * (179:1621), `stepper_indicator_vertical` (203:3708), `stepper_connector_horizontal` (179:1614),
  * `stepper_connector_vertical` (203:4253).
  *   indicator: 20px circle (padding p-0_5, border-radius/rounded-full) with the number (xs/leading-normal/medium,
- *       16px wide, centred) or a 16px icon; text m-2 from the circle — label sm/leading-normal/medium, sub label
+ *       16px wide, centred) or a 12px icon (Check · ExclamationMark since the 2026-10 Figma update); text m-2 from the circle — label sm/leading-normal/medium, sub label
  *       xs/leading-normal/normal, m-0_5 apart. Horizontal: text under the circle, centred, the root as wide as the
  *       circle (text overflows both sides). Vertical: text beside it, the root as tall as the circle.
  *   connector: 1px line (border-width/border) centred in a 20px band, padding p-1 at both ends; horizontal 180px,
@@ -116,8 +116,8 @@
 
 .ds-stepper-indicator__icon {
   display: block;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 
 .ds-stepper-indicator__content {

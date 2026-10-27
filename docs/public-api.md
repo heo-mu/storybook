@@ -8,13 +8,13 @@
 | --- | ---: | --- |
 | 공개 컴포넌트 | 50 | 화면에 바로 배치합니다. |
 | 보조 컴포넌트 | 32 | 적힌 상위 컴포넌트 안에서만 조합합니다. |
-| 타입 | 129 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
+| 타입 | 131 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
 | 상수 | 45 | Figma 속성 값 목록(`BUTTON_VARIANTS` 등) — 선택지 UI · 값 검증용 |
 | 함수 | 3 | `filterChipText()` · `showToast()` · `closeToast()` |
-| 아이콘 | 36 | `<이름>Icon` 컴포넌트 |
+| 아이콘 | 37 | `<이름>Icon` 컴포넌트 |
 | **내부 부품 — 사용 금지** | 7 | 상위 컴포넌트가 그립니다. |
 | **내부 API — 사용 금지** | 13 | 아래 대체 수단을 씁니다. |
-| 합계 | 315 | `src/index.ts`의 export 전체 |
+| 합계 | 318 | `src/index.ts`의 export 전체 |
 
 내부 부품 · 내부 API는 하위 호환을 보장하지 않으며 다음 메이저 버전에서 export 목록에서 빠질 수 있습니다.
 
@@ -45,7 +45,7 @@
 | [`InputChip`](./api.md#chip) | 지울 수 있는 입력값 칩 | `chip-input` 558:26017 |  |
 | [`FilterChip`](./api.md#chip) | 필터 칩(메뉴 · 패널을 여는 트리거) | `chip-filter` 558:25704 |  |
 | [`FilterChipSelect`](./api.md#chip) | 필터 칩 + 선택 패널(다중 · 단일, 닫을 때 적용) — Figma chip-filter 선택 예시 | `chip-filter` 558:25704 |  |
-| [`Calendar`](./api.md#calendar) | 달력(화면에 펼쳐 둔 형태) | `date-picker_calendar` 144:1644 · `date-picker_header` 144:1377 · `date-picker_day` 144:1033 |  |
+| [`Calendar`](./api.md#calendar) | 달력(화면에 펼쳐 둔 형태) | `date-picker_calendar` 1339:6880 · `date-picker_header` 144:1377 · `date-picker_day` 144:1033 |  |
 | [`DatePicker`](./api.md#datepicker) | 날짜 입력 + 달력 | `date-picker_trigger` 144:723 · `date-picker_message` 144:888 |  |
 | [`Loading`](./api.md#loading) | 로딩 표시 | `loading` 675:5644 |  |
 | [`FileUploader`](./api.md#fileuploader) | 파일 업로드 영역 | `file-uploader` 651:3945 | `FileUploaderItem` |
@@ -160,4 +160,4 @@ Figma 하위 세트를 그대로 옮긴 부품으로, 상위 컴포넌트가 상
 ## 4. 상수 · 아이콘
 
 - 상수: `FIELD_SIZES`, `FIELD_MESSAGE_TYPES`, `CHOICE_SIZES`, `CHOICE_GROUP_ORIENTATIONS`, `BUTTON_VARIANTS`, `BUTTON_APPEARANCES`, `BUTTON_SHAPES`, `BUTTON_SIZES`, `ICON_BUTTON_SIZES`, `TEXT_BUTTON_VARIANTS`, `TEXT_BUTTON_SIZES`, `TEXTAREA_SIZES`, `SEARCH_FIELD_APPEARANCES`, `SWITCH_SIZES`, `SEGMENTED_CONTROL_SIZES`, `CHIP_SIZES`, `LOADING_SIZES`, `FILE_UPLOADER_ITEM_STATUSES`, `LINK_SIZES`, `TABS_APPEARANCES`, `TABS_VARIANTS`, `TABS_SIZES`, `TABS_SHAPES`, `PAGINATION_SIZES`, `PAGINATION_SHAPES`, `BREADCRUMB_SIZES`, `BREADCRUMB_LAYOUTS`, `STEPPER_ORIENTATIONS`, `STEPPER_STATUSES`, `BADGE_STATUSES`, `BADGE_APPEARANCES`, `BADGE_SIZES`, `BADGE_SHAPES`, `ALERT_STATUSES`, `TOOLTIP_PLACEMENTS`, `ACCORDION_SIZES`, `CHART_TYPES`, `CHART_VARIANTS`, `CHART_LEGEND_TYPES`, `CHART_COLORS`, `SKELETON_SHAPES`, `METRIC_TREND_DIRECTIONS`, `METRIC_TREND_TONES`, `DATA_FRESHNESS_STATES`, `DATA_STATES`
-- 아이콘: `CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`
+- 아이콘: `CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `ExclamationMarkIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`

@@ -2,7 +2,7 @@
  * Figma component set `radio` (102:2677) — Selection Unselected / Selected × Size sm / md / lg ×
  * State Default / Hover / Pressed / Disabled.
  *   circle 14 / 16 / 18px, border-radius/rounded-full, 1px INSIDE stroke (inset box-shadow)
- *   dot 8 / 9 / 10px centred in the circle (Selected only)
+ *   dot 8 / 8 / 10px centred in the circle (Selected only; md 9 → 8px in Figma, 2026-10)
  */
 
 .ds-radio {
@@ -14,7 +14,7 @@
 
 .ds-radio[data-size='md'] {
   --ds-radio-box: 16px;
-  --ds-radio-dot: 9px;
+  --ds-radio-dot: 8px;
 }
 
 .ds-radio[data-size='lg'] {

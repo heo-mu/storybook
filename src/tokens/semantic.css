@@ -38,13 +38,13 @@
   --colors-text-secondary: var(--colors-brand-gray-700);
   --colors-fill-primary-strong-hover: var(--colors-brand-800);
   --colors-fill-secondary-strong-default: var(--colors-brand-700);
-  --colors-fill-secondary-strong-hover: var(--colors-brand-600);
-  --colors-fill-secondary-strong-pressed: var(--colors-brand-500);
+  --colors-fill-secondary-strong-hover: var(--colors-brand-800);
+  --colors-fill-secondary-strong-pressed: var(--colors-brand-900);
   --colors-fill-primary-strong-pressed: var(--colors-brand-700);
   --colors-fill-disabled-default: var(--colors-brand-gray-250);
   --colors-text-tertiary: var(--colors-brand-gray-600);
   --colors-text-inverse: var(--colors-white);
-  --colors-text-placeholder: var(--colors-brand-gray-400);
+  --colors-text-placeholder: var(--colors-brand-gray-600);
   --colors-text-disabled: var(--colors-brand-gray-300);
   --colors-text-brand: var(--colors-brand-700);
   --colors-text-link-default: var(--colors-blue-600);

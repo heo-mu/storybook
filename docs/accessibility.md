@@ -32,7 +32,9 @@ Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). �
 
 ### 미해결 색 대비 위반 — `text/placeholder` brand-gray/400 동기화 이후 (2026-10-27)
 
-axe 감사(438 스토리) 색 대비 위반 **105건, 미해결**. 색은 Figma 값 그대로이며 기준을 낮추거나 `KNOWN_CONTRAST`에 넣지 않았습니다.
+**해결(2026-10-27 저녁, Figma 수정 승인 작업)**: `text/placeholder` → brand-gray/600 복귀, 용도 오류 3종은 `text/tertiary`로 재바인딩(R9–R11), Button Secondary Solid Hover · Pressed는 brand/800 · 900. 다시 감사한 결과 색 대비 위반 ****0건**(438 스토리, 알려진 목록 없이 통과)**. 아래 표는 수정 전 분류 기록입니다.
+
+ axe 감사(438 스토리) 색 대비 위반 **105건**(수정 전). 색은 Figma 값 그대로이며 기준을 낮추거나 `KNOWN_CONTRAST`에 넣지 않았습니다.
 
 | 구분 | 건수 | 요소 | 색 (흰 바탕 #fdfdfd) | 판정 |
 | --- | ---: | --- | --- | --- |

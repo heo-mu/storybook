@@ -17,7 +17,7 @@
 | accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | alert (Alert) | ✓ alert 179:6087 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 1 · 스토리 9 | ✓ 경고 0 | ✓ |
-| breadcrumb (Breadcrumb) | ✓ breadcrumb-item 710:4794 · 12/12<br>breadcrumb 712:5106 · 6/6 | ✓ | ✓ 18/18 / 18/18 / 18/18 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
+| breadcrumb (Breadcrumb) | ✓ breadcrumb-item 710:4794 · 8/8 (Role=Open 삭제, 2026-10-27)<br>breadcrumb 712:5106 · 6/6 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | card (Card) | ✓ card_header 218:7173 · 1/1<br>card_footer 218:7174 · 1/1<br>card 185:8050 (예시 프레임) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
 | chart (Chart) | ✓ chart 698:4399 · 24/24<br>chart-legend-item 697:4514 · 3/3<br>chart-tooltip 693:9776 · 1/1 | ✓ | ✓ 28/28 / 28/28 / 28/28 | ✓ play 8 · 스토리 16 | ✓ 경고 0 | ✓ |
 | checkbox (Checkbox) | ✓ checkbox 99:2389 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 4 · 스토리 13 | ✓ 경고 0 | ✓ |

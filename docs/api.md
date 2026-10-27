@@ -7,7 +7,7 @@
   react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 컴포넌트의 사용 방법 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
 
-export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 129 · 상수 45 · 함수 3 · 아이콘 36 · 내부 API 13
+export 318개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 131 · 상수 45 · 함수 3 · 아이콘 37 · 내부 API 13
 
 ## 목차
 
@@ -19,7 +19,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-`AccordionItem`을 묶는 아코디언입니다. 기본은 한 번에 한 항목만 펼칩니다.
+관련 콘텐츠를 접고 펼쳐 필요한 정보부터 확인할 수 있는 컴포넌트입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -44,8 +44,8 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `className` | `string` |  |  |
 | `defaultExpanded` | `boolean` |  | 처음 펼침 여부. 단독으로 쓰며 직접 제어하지 않을 때 씁니다. |
 | `description` | `ReactNode` |  | 제목 아래 설명. |
-| `disabled` | `boolean` |  | 비활성 — 펼칠 수 없고 키보드로도 선택되지 않습니다. |
-| `divider` | `boolean` | `true` | 아래 구분선을 표시합니다. |
+| `disabled` | `boolean` |  | 비활성 — 펼칠 수 없고 키보드 포커스를 받지 않습니다. |
+| `divider` | `boolean` | `true` | 아래 구분선을 표시합니다. 비활성 상태에서는 표시하지 않습니다. |
 | `expanded` | `boolean` |  | 펼침 여부. `Accordion` 밖에서 단독으로 쓰며 직접 제어할 때 씁니다. |
 | `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | 제목의 제목 요소 수준(`h2` – `h6`). |
 | `id` | `Key` |  | 항목 id. `expandedKeys` · `defaultExpandedKeys`에서 이 값을 씁니다. |
@@ -60,7 +60,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-화면 안에 머물며 상태나 안내를 전하는 알림입니다. 오류는 화면 낭독기가 바로 읽고(`role="alert"`), 안내 · 성공 · 주의는 `role="status"`로 읽힙니다.
+현재 화면에서 알아야 할 상태나 안내를 지속적으로 표시합니다. 일시적인 작업 결과는 Toast를 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -79,7 +79,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-상태를 짧은 글자로 알려 주는 배지입니다. 보여 주기만 하며 누를 수 없습니다.
+상태나 개수를 간결하게 표시합니다. 사용자 동작을 실행하는 버튼과 구분해 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -122,22 +122,22 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-지금 페이지의 위치를 홈부터 이어지는 경로로 보여 줍니다. `collapsed` 배치에서는 홈 · … 메뉴(가려진 경로) · 상위 페이지 · 지금 페이지 순으로 보입니다.
+홈에서 현재 페이지까지의 계층 경로를 표시하고 상위 페이지로 이동할 수 있게 합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `items` *(필수)* | `BreadcrumbEntry[]` |  | 맨 위 단계부터 지금 페이지의 바로 위 페이지까지의 경로. |
-| `current` | `ReactNode` | `false` | 지금 페이지 이름. |
+| `items` *(필수)* | `BreadcrumbEntry[]` |  | 맨 위 단계부터 현재 페이지의 바로 위 페이지까지의 경로. |
+| `current` | `ReactNode` | `false` | 현재 페이지 이름. |
 | `defaultExpanded` | `boolean` | `false` | 처음에 … 메뉴를 열어 둘지 여부. `expanded` 없이 스스로 관리할 때 씁니다. |
 | `expanded` | `boolean` |  | … 메뉴가 열렸는지 여부. 넘기면 바깥에서 관리합니다. |
 | `homeHref` | `string` | `/` | 홈 아이콘의 링크 주소. |
 | `homeLabel` | `string` | `홈` | 화면 낭독기가 읽는 홈 이름. |
-| `layout` | `"full" \| "collapsed"` | `full` | 배치. `collapsed`는 홈 · 상위 페이지 · 지금 페이지만 보여 주고 나머지 경로를 … 메뉴에 넣습니다. |
+| `layout` | `"full" \| "collapsed"` | `full` | 배치. `collapsed`는 홈 · 상위 페이지 · 현재 페이지만 보여 주고 나머지 경로를 … 메뉴에 넣습니다. |
 | `menuTitle` | `string` | `상위 경로` | … 메뉴의 제목. |
 | `moreLabel` | `string` | `중간 경로 보기` | 화면 낭독기가 읽는 … 버튼 이름. |
 | `onAction` | `((id: Key) => void)` |  | `href`가 없는 경로를 누르면(경로나 … 메뉴에서) 그 경로의 `id`로 호출됩니다. |
 | `onExpandedChange` | `((expanded: boolean) => void)` |  | … 메뉴가 열리거나 닫히면 호출됩니다. |
-| `showParent` | `boolean` | `true` | `collapsed`에서 상위 페이지를 지금 페이지 옆에 보여 줄지 여부. |
+| `showParent` | `boolean` | `true` | `collapsed`에서 상위 페이지를 현재 페이지 옆에 보여 줄지 여부. |
 | `size` | `"sm" \| "md"` | `md` | 크기. |
 
 ### `BreadcrumbItem`
@@ -149,7 +149,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` | `ReactNode` |  | 항목 글자. 없으면 아이콘만 보이므로 `aria-label`을 붙입니다. |
-| `current` | `boolean` | `false` | 지금 페이지 — 링크가 아닌 글자로 보이고, 화면 낭독기에 현재 페이지로 알려집니다. |
+| `current` | `boolean` | `false` | 현재 페이지 — 링크가 아닌 글자로 보이고, 화면 낭독기에 현재 페이지로 알려집니다. |
 | `icon` | `ReactNode` |  | 글자 앞 아이콘(홈 아이콘, … 아이콘 등). |
 | `open` | `boolean` | `false` | 메뉴가 열린 항목 — 강조된 글자로 보입니다. |
 | `size` | `"sm" \| "md"` | `md` | 크기. |
@@ -169,7 +169,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-사용자가 행동을 실행하는 버튼입니다. 마우스를 올리거나 누르면 모양이 바뀌고, `disabled`이면 누를 수 없습니다.
+저장·조회·다음 단계 이동 등 사용자 동작을 실행합니다. 동작의 중요도에 맞춰 종류를 선택합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -186,7 +186,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-아이콘만 있는 버튼입니다. 종류 · 모양 · 상태는 Button과 같고, `aria-label`로 이름을 꼭 붙입니다.
+아이콘으로 동작을 표현하는 버튼입니다. `aria-label`로 동작의 이름을 제공합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -202,7 +202,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-배경 없이 글자로만 보이는 가벼운 버튼입니다. 더보기처럼 덜 강조할 행동에 씁니다.
+더보기 등 강조도가 낮은 보조 동작에 사용하는 텍스트 버튼입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -223,24 +223,34 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-한 달 단위로 날짜를 보여 주고 고르는 달력입니다. `DatePicker` 안에서 쓰이며, 화면에 펼쳐 두고 따로 쓸 수도 있습니다. 방향키 · Page Up · Page Down · Home · End로 날짜를 옮기고, 월 · 요일 이름은 언어 설정을 따릅니다.
+단일 날짜 또는 기간을 선택하는 달력입니다. 라벨과 안내가 필요하면 DatePicker를 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
+| `aria-describedby` | `string` |  |  |
 | `aria-label` | `string` | `월 제목` | 화면 낭독기가 읽는 달력 이름. |
+| `aria-labelledby` | `string` |  |  |
 | `autoFocus` | `boolean` |  | 처음 그려질 때 키보드 위치를 날짜 칸으로 옮깁니다. |
 | `className` | `string` |  |  |
 | `defaultFocusedValue` | `string` | `오늘` | 값이 없을 때 처음 보여 줄 달(그 달의 아무 날짜). |
+| `defaultRangeValue` | `DateRange \| null` | `null` |  |
 | `defaultValue` | `string \| null` | `null` | 처음 선택된 날짜. `value` 없이 달력이 스스로 값을 관리할 때 씁니다. |
 | `disabled` | `boolean` |  | 비활성 — 달력 전체를 고를 수 없게 합니다. |
+| `id` | `string` |  |  |
+| `invalid` | `boolean` |  |  |
 | `isDateUnavailable` | `((date: string) => boolean)` |  | 날짜별로 고를 수 없는 날을 정합니다. 고를 수 없는 날은 비활성으로 보입니다. |
 | `maxValue` | `string` |  | 고를 수 있는 가장 늦은 날짜. |
 | `minValue` | `string` |  | 고를 수 있는 가장 이른 날짜. 이전 날짜는 비활성으로 보입니다. |
 | `onChange` | `((value: string) => void)` |  | 날짜를 고르면 'YYYY-MM-DD' 값으로 호출됩니다. |
+| `onRangeChange` | `((value: DateRange) => void)` |  |  |
+| `rangeValue` | `DateRange \| null` |  | 선택한 기간. 시작일과 종료일은 YYYY-MM-DD입니다. |
+| `readOnly` | `boolean` |  |  |
+| `required` | `boolean` |  |  |
+| `selectionMode` | `"range" \| "single"` | `single` | 단일 날짜 또는 연속된 기간. |
 | `style` | `CSSProperties` |  |  |
 | `value` | `string \| null` |  | 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 선택이 없습니다. |
 
-- 타입: `CalendarProps`, `ISODate`
+- 타입: `CalendarProps`, `DateRange`, `ISODate`
 
 ## Card
 
@@ -248,13 +258,13 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-관련된 내용을 한 상자로 묶는 카드입니다. 안에 `CardHeader` · `CardContent` · `CardFooter`를 넣고, 너비는 부모를 채웁니다.
+관련 정보와 동작을 하나의 영역으로 묶습니다. 헤더·본문·푸터를 필요한 만큼 조합합니다.
 
 ### `CardHeader`
 
 **보조 컴포넌트** — `Card` 안
 
-카드 머리글입니다. 제목 · 설명 · 버튼을 두고, 아래에 구분선이 있습니다.
+카드 헤더입니다. 제목 · 설명 · 보조 동작을 담습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -273,9 +283,13 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **보조 컴포넌트** — `Card` 안
 
-카드 아래쪽 버튼 영역입니다. 버튼이 너비를 나눠 채웁니다.
+카드 아래쪽 버튼 영역입니다. 가로 배치에서는 버튼이 너비를 균등하게 나눕니다.
 
-- 타입: `CardProps`, `CardHeaderProps`
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `layout` | `"horizontal" \| "vertical"` | `vertical` | 버튼 배치 방향. 기존 세로 배치를 기본으로 유지합니다. |
+
+- 타입: `CardProps`, `CardHeaderProps`, `CardFooterProps`
 
 ## Chart
 
@@ -283,7 +297,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-항목별 수치를 선 · 세로 막대 · 가로 막대 차트로 보여 줍니다. 마우스를 올리거나 탭하거나 키보드(화살표 · Home · End · Esc)로 항목을 고르면 그 항목이 강조되고 툴팁에 값이 보입니다. 너비는 감싼 영역에 맞춰지고, 모든 값은 화면 낭독기용 표로도 제공합니다.
+수치의 추이와 항목 간 차이를 선 또는 막대 차트로 보여 줍니다. 툴팁으로 개별 값을 확인할 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -292,12 +306,13 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `activeIndex` | `number \| null` |  | 툴팁을 표시할 항목 번호. 넘기면 직접 제어하며, `null`이면 툴팁을 숨깁니다. |
 | `defaultActiveIndex` | `number \| null` | `null` | 처음 툴팁을 표시할 항목 번호(직접 제어하지 않을 때). |
 | `formatValue` | `((value: number) => string)` | `(value: number) => value.toLocaleString('ko-KR')` | 값 표시 형식(눈금 · 툴팁 · 화면 낭독기용 표). |
+| `highlightedIndex` | `number \| null` | `null` | 툴팁 없이 배경을 강조할 항목 번호. Hover 중에는 탐색 중인 항목을 우선 표시합니다. |
 | `maxLabel` | `ReactNode` | `최고` | 첫 계열의 가장 큰 값 위에 붙는 배지(선 차트, 기본 스타일). `false`면 숨깁니다. |
 | `onActiveIndexChange` | `((index: number \| null) => void)` |  | 마우스 · 탭 · 키보드로 툴팁 항목이 바뀔 때 호출됩니다. 닫히면 `null`을 받습니다. |
 | `plotLabel` | `string` | `차트 항목: 화살표 키로 값 확인` | 키보드로 선택하는 그림 영역의 이름(화면 낭독기용). |
 | `ticks` | `number[]` |  | 기본 스타일의 값 눈금(작은 값부터). 첫 값부터 끝 값까지가 축 범위입니다. 없으면 0부터 4칸으로 나눕니다. |
 | `type` | `"line" \| "bar-vertical" \| "bar-horizontal"` | `bar-vertical` | 종류 — 선 · 세로 막대 · 가로 막대. |
-| `variant` | `"default" \| "simple"` | `default` | 스타일. `default`는 축 이름 · 값 눈금 · 범례가 있고, `simple`은 마지막 항목이 현재 기간인 160px 높이의 간단한 차트입니다. |
+| `variant` | `"default" \| "simple"` | `default` | 스타일. `default`는 축 이름 · 값 눈금 · 범례가 있고, `simple`은 축과 범례를 생략한 160px 높이의 차트입니다. |
 | `xAxisLabel` | `ReactNode` |  | 가로축 이름(기본 스타일). |
 | `yAxisLabel` | `ReactNode` |  | 세로축 이름(기본 스타일). |
 
@@ -333,7 +348,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-항목을 켜고 끄거나 여러 개를 고르는 체크박스입니다. 선택은 `checked` · `defaultChecked`, 일부 선택은 `indeterminate`로 정하고, 나머지 `<input>` 속성과 `ref`는 체크박스에 그대로 전달됩니다.
+독립적인 옵션을 선택하거나 여러 옵션을 함께 선택할 때 사용합니다. CheckboxGroup으로 선택값을 함께 관리할 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -370,7 +385,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-여러 개를 켜고 끄는 필터 칩입니다. 선택되면 글자 뒤에 체크 아이콘이 붙고, `disabled`이면 누를 수 없습니다.
+필터 선택, 입력된 태그 삭제, 옵션 목록 열기에 사용하는 컴포넌트입니다. 목적에 따라 Chip·InputChip·FilterChip·FilterChipSelect를 선택합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -384,7 +399,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-입력한 값을 보여 주고 지울 수 있는 칩입니다. 칩 전체가 지우기 버튼이고, `disabled`이면 누를 수 없습니다.
+입력된 태그를 표시하고 삭제할 수 있는 칩입니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -397,13 +412,13 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-필터 메뉴나 패널을 여는 칩입니다. `MenuTrigger` · `DialogTrigger`의 트리거로 쓸 수 있고, 누르면 `onPress`(또는 `onClick`)가 호출됩니다.
+필터 메뉴나 패널을 여는 칩입니다. 적용된 조건과 펼침 상태를 표시하며 메뉴는 별도로 연결합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | 칩 글자 — 필터 이름이나 지금 적용된 값. |
 | `className` | `string` |  |  |
-| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. |
 | `expanded` | `boolean` |  | 펼침 — 메뉴나 패널이 열린 상태로, 위쪽 화살표가 보입니다. `MenuTrigger` · `DialogTrigger` 안에서는 자동으로 정해집니다. |
 | `selected` | `boolean` | `false` | 선택됨 — 필터 값이 적용된 상태입니다. |
 | `size` | `"xs" \| "sm" \| "md"` | `xs` | 크기. |
@@ -412,7 +427,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-필터 칩과 옵션 목록이 함께 있는 필터입니다. 값이 적용되면 칩이 선택됨 모양이 됩니다. - 여러 개 고르기(기본): 목록이 열린 채로 옵션을 켜고 끄고, 목록을 닫을 때 적용됩니다. 모두 끄고 닫으면 필터가 풀립니다. - 하나 고르기: 고르면 바로 적용되고 닫힙니다. 첫 옵션 "전체"(`clearLabel`)를 고르면 필터가 풀립니다.
+필터 칩과 옵션 목록을 함께 제공합니다. 다중 선택은 목록을 닫을 때, 단일 선택은 항목을 선택하는 즉시 적용됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -422,7 +437,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `clearLabel` | `string` | `'전체'` | 필터를 푸는 첫 옵션의 글자. |
 | `defaultOpen` | `boolean` | `false` | 처음부터 목록을 연 채로 보여 줄지 여부. |
 | `defaultValue` | `Key \| Key[] \| null` | `[] null` | 처음 적용된 값. `value` 없이 필터가 스스로 값을 관리할 때 씁니다. |
-| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. |
 | `maxDisplayed` | `number` | `3` | 칩에 이름을 보여 줄 값의 수. 넘치면 "외 N"으로 줄입니다. |
 | `name` | `string` |  | 폼으로 값을 보낼 때 쓰는 필드 이름. |
 | `onChange` | `((value: Key[]) => void) \| ((value: Key \| null) => void)` |  | 고른 값이 바뀐 채로 목록이 닫히면 적용된 값으로 호출됩니다. 적용된 값으로 호출됩니다. 필터를 풀면 `null`입니다. |
@@ -446,7 +461,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-대시보드의 조회 조건을 한곳에 모아 보여 주는 막대입니다. 조건 묶음 사이에 구분선이 들어가고, 오른쪽 끝에 버튼을 둡니다. 화면이 좁으면 묶음 단위로 다음 줄로 넘어갑니다.
+대시보드의 조회 조건과 실행 버튼을 한곳에 배치합니다. 조건을 그룹으로 구성할 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -481,7 +496,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-데이터가 얼마나 최신인지 상태 배지, 마지막 수신 시각, 갱신 주기로 보여 줍니다.
+데이터의 최신 상태, 마지막 수신 시각, 갱신 주기를 표시합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -500,7 +515,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-데이터 영역에 내용 대신 보여 주는 안내입니다. 불러오는 중에는 스켈레톤과 문구를, 나머지 상태에는 아이콘 · 제목 · 설명 · 버튼을 보여 줍니다. 상태가 바뀌면 화면 낭독기가 읽어 줍니다.
+데이터 영역의 로딩·빈 결과·오류·접근 제한·일부 데이터 누락 상태를 안내합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -521,34 +536,36 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-날짜를 직접 입력하거나 달력에서 고르는 입력 칸입니다. 입력한 날짜는 Enter를 누르거나 입력 칸을 벗어나면 확정되고, 달력 버튼이나 Alt + ↓로 달력을 엽니다.
+입력창 없이 날짜 또는 기간을 선택합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `aria-describedby` | `string` |  |  |
-| `aria-label` | `string` |  |  |
-| `calendarButtonLabel` | `string` | `달력 열기` | 화면 낭독기가 읽는 달력 버튼 이름. |
-| `className` | `string` |  | 가장 바깥 요소의 클래스 이름. |
-| `defaultValue` | `string \| null` | `null` | 처음 날짜. `value` 없이 입력 칸이 스스로 값을 관리할 때 씁니다. |
-| `disabled` | `boolean` | `false` | 비활성 — 입력할 수 없습니다. |
+| `aria-label` | `string` | `월 제목` | 화면 낭독기가 읽는 달력 이름. |
+| `aria-labelledby` | `string` |  |  |
+| `autoFocus` | `boolean` |  | 처음 그려질 때 키보드 위치를 날짜 칸으로 옮깁니다. |
+| `className` | `string` |  |  |
+| `defaultFocusedValue` | `string` | `오늘` | 값이 없을 때 처음 보여 줄 달(그 달의 아무 날짜). |
+| `defaultRangeValue` | `DateRange \| null` | `null` |  |
+| `defaultValue` | `string \| null` | `null` | 처음 선택된 날짜. `value` 없이 달력이 스스로 값을 관리할 때 씁니다. |
+| `disabled` | `boolean` |  | 비활성 — 달력 전체를 고를 수 없게 합니다. |
 | `id` | `string` |  |  |
-| `invalid` | `boolean` | `false` | 오류 상태. 없는 날짜나 고를 수 없는 날짜를 입력해도 오류 상태가 됩니다. |
-| `isDateUnavailable` | `((date: string) => boolean)` |  | 날짜별로 고를 수 없는 날을 정합니다. `true`를 돌려주면 고를 수 없습니다. |
-| `label` | `ReactNode` |  | 입력 칸 위 라벨. 라벨이 없으면 `aria-label`을 붙입니다. |
+| `invalid` | `boolean` |  |  |
+| `isDateUnavailable` | `((date: string) => boolean)` |  | 날짜별로 고를 수 없는 날을 정합니다. 고를 수 없는 날은 비활성으로 보입니다. |
+| `label` | `ReactNode` |  | 달력 위 라벨. 없으면 aria-label을 지정합니다. |
 | `maxValue` | `string` |  | 고를 수 있는 가장 늦은 날짜. |
-| `message` | `ReactNode` |  | 입력 칸 아래 도움말 메시지. |
-| `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
-| `minValue` | `string` |  | 고를 수 있는 가장 이른 날짜. |
-| `name` | `string` |  | 폼 필드 이름. 폼을 보낼 때 'YYYY-MM-DD' 값이 전송됩니다. |
-| `onChange` | `((value: string \| null) => void)` |  | 날짜가 바뀌면 새 날짜로, 입력 칸을 비우면 `null`로 호출됩니다. |
-| `onOpenChange` | `((open: boolean) => void)` |  | 달력이 열리거나 닫히면 호출됩니다. |
-| `open` | `boolean` |  | 달력이 열렸는지 여부. 넘기면 바깥에서 관리합니다. |
-| `placeholder` | `string` | `YYYY.MM.DD` | 비어 있을 때 보이는 안내 글자. |
-| `readOnly` | `boolean` | `false` | 읽기 전용 — 날짜만 보여 주고 달력 버튼이 없습니다. |
-| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽습니다. |
-| `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
-| `style` | `CSSProperties` |  | 가장 바깥 요소의 스타일. |
-| `value` | `string \| null` |  | 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 비어 있습니다. |
+| `message` | `ReactNode` |  | 달력 아래 도움말 또는 상태 메시지. |
+| `messageType` | `"helper" \| "info" \| "success" \| "error"` |  |  |
+| `minValue` | `string` |  | 고를 수 있는 가장 이른 날짜. 이전 날짜는 비활성으로 보입니다. |
+| `name` | `string` |  | Range는 name.start / name.end로 전송합니다. |
+| `onChange` | `((value: string \| null) => void)` |  |  |
+| `onRangeChange` | `((value: DateRange) => void)` |  |  |
+| `rangeValue` | `DateRange \| null` |  | 선택한 기간. 시작일과 종료일은 YYYY-MM-DD입니다. |
+| `readOnly` | `boolean` |  |  |
+| `required` | `boolean` |  |  |
+| `selectionMode` | `"range" \| "single"` | `single` | 단일 날짜 또는 연속된 기간. |
+| `style` | `CSSProperties` |  |  |
+| `value` | `string \| null` |  | 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 선택이 없습니다. |
 
 - 타입: `DatePickerProps`
 
@@ -558,7 +575,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-화면 위에 떠서 사용자의 응답을 받는 대화상자입니다. 열리면 포커스가 안으로 옮겨져 머물고, Esc로 닫으면 연 요소로 돌아갑니다.
+사용자의 확인이나 선택이 필요할 때 여는 모달 대화상자입니다. 열린 동안 배경 화면의 조작을 제한합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -583,7 +600,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-버튼을 누르면 펼쳐지는 동작 메뉴입니다. 방향키로 항목을 옮기고, Esc로 닫으면 키보드 위치가 트리거로 돌아갑니다.
+버튼을 누르면 관련 동작 목록이 열립니다. 이동·복제·삭제처럼 같은 대상에 적용할 작업을 모아 제공합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -602,7 +619,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **보조 컴포넌트** — `DropdownMenu` 안
 
-메뉴 항목 하나입니다. 마우스를 올리거나 키보드로 선택하면 같은 모양으로 바뀝니다.
+메뉴 항목 하나입니다. 마우스를 올리거나 키보드 포커스를 받으면 같은 모양으로 바뀝니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -641,7 +658,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-보여 줄 내용이 없을 때 그 자리 가운데에 안내를 보여 주는 빈 상태입니다. 너비는 320px이고, 부모가 더 좁으면 그 너비에 맞춰 줄어듭니다.
+목록이나 차트에 표시할 내용이 없을 때 이유와 다음 행동을 안내합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -663,7 +680,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-파일을 끌어다 놓거나 눌러서 고르는 업로드 영역입니다. 영역은 버튼이라 Enter · Space로도 파일 선택 창이 열리고, 파일을 위로 끌어오면 모양이 바뀝니다.
+드래그 앤 드롭 또는 파일 선택 창으로 파일을 받습니다. 선택한 파일은 FileUploaderItem으로 표시합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -683,7 +700,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **보조 컴포넌트** — `FileUploader` 아래 파일 목록
 
-업로드 목록에서 파일 하나를 보여 주는 줄입니다. 버튼은 파일 이름을 설명으로 함께 읽어 어느 파일의 버튼인지 구분됩니다.
+파일 이름·정보와 업로드 상태를 표시합니다. 상태에 따라 삭제 또는 다운로드 동작을 제공합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -718,19 +735,19 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-한 줄짜리 글자를 입력받는 입력 칸입니다. 라벨 · 도움말 메시지 · 비밀번호 보기 버튼을 붙일 수 있고, 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
+이름·이메일 등 한 줄의 텍스트를 입력받습니다. 라벨, 도움말, 오류 메시지와 비밀번호 표시 기능을 제공합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `className` | `string` |  | 바깥 요소의 클래스 이름. |
-| `clearable` | `boolean` | `true` | 마우스를 올리거나 키보드로 선택하면 지우기 버튼(X)을 보여 줍니다. |
+| `clearable` | `boolean` | `true` | 마우스를 올리거나 키보드 포커스를 받으면 지우기 버튼(X)을 보여 줍니다. |
 | `defaultRevealed` | `boolean` | `false` | 비밀번호를 처음부터 보이게 할지 정합니다. |
 | `invalid` | `boolean` | `false` | 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. |
-| `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
-| `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
+| `label` | `ReactNode` |  | 입력 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `message` | `ReactNode` |  | 입력 필드 아래에 보이는 도움말 메시지. |
 | `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `onClear` | `(() => void)` |  | 지우기 버튼으로 값을 비운 뒤 호출됩니다. |
-| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
+| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 필드에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
 | `revealable` | `boolean` | `true` | `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다. |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
 | `style` | `CSSProperties` |  | 바깥 요소의 스타일. |
@@ -743,12 +760,12 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-다른 페이지나 문서로 이동하는 밑줄 글자 링크입니다. 마우스를 올리거나 누르면 모양이 바뀌고, 방문한 링크는 방문한 모양으로 보입니다.
+다른 페이지나 문서로 이동하는 텍스트 링크입니다. 현재 화면에서 동작을 실행할 때는 Button을 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | 링크 글자. |
-| `disabled` | `boolean` | `false` | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
+| `disabled` | `boolean` | `false` | 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. |
 | `external` | `boolean` | `false` | 새 창으로 엽니다. 화면 낭독기는 글자 뒤에 `newTabLabel`을 함께 읽습니다. |
 | `newTabLabel` | `string` | `(새 창)` | 새 창 링크에서 화면 낭독기가 글자 뒤에 읽는 말. |
 | `showIcon` | `boolean` | ``external`` | 새 창 아이콘 표시 여부. |
@@ -763,7 +780,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-불러오거나 처리하는 중임을 알리는 회전 표시입니다. 화면 낭독기가 `label`(없으면 `aria-label`, 기본 '로딩 중')을 다른 안내를 끊지 않고 읽어 줍니다.
+데이터를 불러오거나 작업을 처리 중임을 표시합니다. 진행률을 알 수 있는 작업에는 Progress를 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -779,7 +796,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-대시보드의 핵심 지표 하나를 제목, 값과 단위, 비교로 보여 주는 카드입니다. 너비는 부모를 채웁니다.
+핵심 지표의 값과 단위, 이전 기간 대비 변화를 요약합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -799,14 +816,14 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-지표의 증감을 방향 아이콘과 함께 보여 줍니다. 방향은 `direction`, 그 변화가 좋은지 나쁜지는 `tone`으로 고릅니다.
+지표의 증감과 그 의미를 함께 표시합니다. 증가·감소 방향과 긍정·부정 평가는 별도로 지정합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | 증감 글자(예: "4.8%p"). |
 | `direction` | `"disabled" \| "flat" \| "up" \| "down"` | `up` | 방향 — 아이콘이 바뀝니다. `disabled`(비교할 값이 없음)는 회색으로 표시합니다. |
 | `directionLabel` | `string` | `LABELS[direction]` | 방향이 아이콘으로만 보이므로 화면 낭독기가 증감 앞에 읽는 글자. |
-| `tone` | `"positive" \| "negative" \| "neutral"` | `positive` | 좋고 나쁨 — 색이 바뀝니다. 좋음(`positive`) · 나쁨(`negative`) · 중립(`neutral`). |
+| `tone` | `"positive" \| "negative" \| "neutral"` | `positive` | 긍정·부정 의미 — 색이 바뀝니다. 좋음(`positive`) · 나쁨(`negative`) · 중립(`neutral`). |
 
 - 상수: `METRIC_TREND_DIRECTIONS`, `METRIC_TREND_TONES`
 - 타입: `MetricTrendProps`, `MetricTrendDirection`, `MetricTrendTone`
@@ -817,7 +834,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-화면 왼쪽에 두는 메뉴(LNB)의 틀입니다. 너비는 화면 배치에서 정하고, 메뉴 항목은 그 너비를 꽉 채웁니다.
+화면의 주요 페이지로 이동하는 사이드 내비게이션입니다. 링크와 펼칠 수 있는 메뉴 그룹으로 구성합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -832,7 +849,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `icon` | `ReactNode` |  | 메뉴 이름 앞 아이콘. |
-| `selected` | `boolean` | `false` | 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. |
+| `selected` | `boolean` | `false` | 선택됨 — 현재 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. |
 
 ### `NavGroup`
 
@@ -858,7 +875,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `selected` | `boolean` | `false` | 선택됨 — 지금 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. |
+| `selected` | `boolean` | `false` | 선택됨 — 현재 페이지입니다. 화면 낭독기에 현재 페이지로 알려집니다. |
 
 ### `NavParentItem`
 
@@ -880,17 +897,17 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-여러 페이지로 나뉜 내용에서 페이지를 옮겨 가는 페이지 이동 막대입니다. 이전 버튼, 페이지 번호, 다음 버튼으로 이루어지며, 첫 페이지와 마지막 페이지에서는 이전 · 다음 버튼이 비활성입니다.
+여러 페이지로 나뉜 목록에서 현재 페이지를 표시하고 다른 페이지로 이동합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `totalPages` *(필수)* | `number` |  | 전체 페이지 수. |
 | `defaultPage` | `number` | `1` | 처음 페이지. `page` 없이 스스로 관리할 때 씁니다. |
 | `onPageChange` | `((page: number) => void)` |  | 페이지가 바뀌면 새 페이지 번호로 호출됩니다. |
-| `page` | `number` |  | 지금 페이지(1부터 셈). 넘기면 바깥에서 관리합니다. |
+| `page` | `number` |  | 현재 페이지(1부터 셈). 넘기면 바깥에서 관리합니다. |
 | `shape` | `"square" \| "rounded"` | `square` |  |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` |  |
-| `visiblePages` | `number` | `5` | 한 번에 보이는 페이지 번호 수. 지금 페이지를 가운데 두고 보여 줍니다. |
+| `visiblePages` | `number` | `5` | 한 번에 보이는 페이지 번호 수. 현재 페이지를 가운데 두고 보여 줍니다. |
 
 ### `PaginationItem`
 
@@ -901,7 +918,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `page` *(필수)* | `number` |  | 페이지 번호. |
-| `current` | `boolean` | `false` | 지금 페이지인지 여부. |
+| `current` | `boolean` | `false` | 현재 페이지인지 여부. |
 | `shape` | `"square" \| "rounded"` | `square` |  |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` |  |
 
@@ -926,7 +943,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-작업이 얼마나 진행되었는지 보여 주는 진행 막대입니다. `value`는 `minValue`와 `maxValue` 사이 값이며 기본 범위는 0 – 100입니다. 이름은 `aria-label` 또는 `aria-labelledby`로 꼭 붙입니다.
+작업의 진행률을 막대로 표시합니다. 진행률을 알 수 없는 작업에는 Loading을 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -941,7 +958,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **보조 컴포넌트** — `RadioGroup` 안
 
-여러 옵션 중 하나만 고르는 라디오 버튼입니다. 보통 `RadioGroup` 안에서 쓰고, 단독으로 쓸 때는 `name` · `checked`를 직접 지정합니다. 같은 그룹 안에서는 방향키로 선택이 이동합니다.
+여러 옵션 중 하나를 선택할 때 사용합니다. RadioGroup으로 관련 옵션을 묶어 선택값을 관리합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -978,14 +995,14 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-검색어를 입력받는 입력 칸입니다. Enter 키를 누르면 `onSearch`가 호출되고, 키보드로 선택했거나 오류일 때 지우기 버튼(X)이 나타납니다. 나머지 `<input>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
+검색어를 입력하고 Enter 키로 검색을 요청합니다. 일반 텍스트 입력에는 Input을 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `appearance` | `"solid" \| "outline"` | `outline` | 모양 — 테두리(outline) · 채움(solid). |
 | `className` | `string` |  | 바깥 요소의 클래스 이름. |
 | `invalid` | `boolean` | `false` | 오류 — 오류 테두리로 표시합니다. |
-| `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `label` | `ReactNode` |  | 입력 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
 | `onClear` | `(() => void)` |  | 지우기 버튼으로 값을 비운 뒤 호출됩니다. |
 | `onSearch` | `((value: string) => void)` |  | Enter 키를 누르면 현재 검색어와 함께 호출됩니다. |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
@@ -1000,7 +1017,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-몇 개의 옵션을 나란히 보여 주고 그중 하나를 고르는 컨트롤입니다. 옵션들은 너비를 똑같이 나눠 쓰고, 방향키로 선택이 이동합니다. `aria-label` 또는 `aria-labelledby`로 이름을 붙입니다.
+관련 옵션을 나란히 표시하고 하나를 선택합니다. 일간·주간·월간처럼 소수의 옵션을 전환할 때 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1033,7 +1050,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-목록을 펼쳐 옵션 하나를 고르는 선택 칸입니다. 옵션은 `SelectOption`으로 넣고, 값은 선택한 옵션의 `id`입니다. 마우스와 키보드(방향키 · Enter · Esc · 글자 입력)로 모두 조작할 수 있습니다.
+옵션 목록에서 항목 하나를 선택합니다. SelectOption으로 목록을 구성합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1045,14 +1062,14 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `className` | `string` |  | 바깥 요소의 클래스 이름. |
 | `defaultOpen` | `boolean` |  | 처음에 목록을 펼쳐 둘지 정합니다(비제어). |
 | `defaultValue` | `Key \| null` | `null` | 처음 선택된 옵션의 `id`(비제어). |
-| `disabled` | `boolean` | `false` | 비활성 — 고를 수 없고 키보드로도 선택되지 않습니다. |
+| `disabled` | `boolean` | `false` | 비활성 — 고를 수 없고 키보드 포커스를 받지 않습니다. |
 | `disabledKeys` | `Iterable<Key>` |  | 고를 수 없는 옵션의 `id` 목록. |
 | `form` | `string` |  | 선택값을 보낼 폼의 `id`. |
 | `id` | `string` |  |  |
 | `invalid` | `boolean` | `false` | 오류 — 오류 테두리로 표시합니다. |
 | `items` | `Iterable<T>` |  | 옵션을 데이터로 만들 때 쓰는 목록. 이때 `children`은 `(item) => <SelectOption id={…}>…</SelectOption>` 함수입니다. |
-| `label` | `ReactNode` |  | 선택 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
-| `message` | `ReactNode` |  | 선택 칸 아래에 보이는 도움말 메시지. |
+| `label` | `ReactNode` |  | 선택 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `message` | `ReactNode` |  | 선택 필드 아래에 보이는 도움말 메시지. |
 | `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `name` | `string` |  | 폼 필드 이름. 주면 폼을 보낼 때 선택값이 함께 전송됩니다. |
 | `onChange` | `((value: Key \| null) => void)` |  | 새로 고른 옵션의 `id`와 함께 호출됩니다. |
@@ -1087,7 +1104,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-내용을 불러오는 동안 자리를 표시하는 정지된 도형입니다. 화면 낭독기가 읽지 않으므로, 불러오는 중이라는 사실은 감싸는 영역(예: `DataState state="loading"`)에서 알립니다.
+콘텐츠를 불러오는 동안 표시할 영역의 형태를 미리 보여 줍니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1102,29 +1119,29 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-정해진 범위 안에서 숫자 값을 고르는 슬라이더입니다. 마우스 · 터치 · 키보드로 조작하고, 옆의 숫자 입력 칸에 값을 직접 입력할 수도 있습니다. 입력 칸 값은 Enter를 누르거나 다른 곳을 선택하면 확정됩니다.
+정해진 범위에서 수치를 조절합니다. 드래그와 키보드를 지원하며 숫자 입력 필드를 함께 사용할 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `aria-label` | `string` |  | 화면 낭독기가 읽는 이름. 보이는 라벨이 없으므로 `aria-label` 또는 `aria-labelledby`가 꼭 필요합니다. |
 | `aria-labelledby` | `string` |  |  |
 | `className` | `string` |  | 바깥 요소의 클래스 이름. |
-| `defaultValue` | `number` | `minValue` | 처음 값(비제어). |
+| `defaultValue` | `number` | `minValue` | 초깃값(비제어). |
 | `disabled` | `boolean` | `false` | 비활성 — 값을 바꿀 수 없습니다. |
-| `formatOptions` | `NumberFormatOptions` |  | 범위 · 값 라벨 · 숫자 입력 칸의 숫자 형식. |
+| `formatOptions` | `NumberFormatOptions` |  | 범위 · 값 라벨 · 숫자 입력 필드의 숫자 형식. |
 | `id` | `string` |  |  |
-| `inputLabel` | `string` | `값 입력` | 숫자 입력 칸의 이름(화면 낭독기용). |
+| `inputLabel` | `string` | `값 입력` | 숫자 입력 필드의 이름(화면 낭독기용). |
 | `maxValue` | `number` | `100` | 가장 큰 값. 슬라이더 아래 오른쪽 끝에 보입니다. |
 | `minValue` | `number` | `0` | 가장 작은 값. 슬라이더 아래 왼쪽 끝에 보입니다. |
 | `name` | `string` |  | 폼 필드 이름. |
 | `onChange` | `((value: number) => void)` |  | 값이 바뀌는 동안 계속 호출됩니다. |
-| `onChangeEnd` | `((value: number) => void)` |  | 드래그를 마치거나, 키를 누르거나, 숫자 입력 칸의 값을 확정하면 호출됩니다. |
-| `showInput` | `boolean` | `true` | 슬라이더 오른쪽에 숫자 입력 칸을 보여 줍니다. |
+| `onChangeEnd` | `((value: number) => void)` |  | 드래그를 마치거나, 키를 누르거나, 숫자 입력 필드의 값을 확정하면 호출됩니다. |
+| `showInput` | `boolean` | `true` | 슬라이더 오른쪽에 숫자 입력 필드를 보여 줍니다. |
 | `step` | `number` | `1` | 값 사이 간격. |
 | `style` | `CSSProperties` |  | 바깥 요소의 스타일(예: 너비). |
-| `unit` | `ReactNode` |  | 숫자 입력 칸 뒤와 값 라벨에 붙는 단위(예: 명). |
+| `unit` | `ReactNode` |  | 숫자 입력 필드 뒤와 값 라벨에 붙는 단위(예: 명). |
 | `value` | `number` |  | 현재 값(제어). |
-| `valueLabel` | `boolean` | `true` | 마우스를 올리거나 드래그하거나 키보드로 선택하면 손잡이 위에 값을 보여 줍니다. |
+| `valueLabel` | `boolean` | `true` | 마우스를 올리거나 드래그하거나 키보드 포커스를 받으면 손잡이 위에 값을 보여 줍니다. |
 
 - 타입: `SliderProps`
 
@@ -1134,12 +1151,12 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-여러 단계로 된 과정에서 지금 몇 번째 단계인지 보여 줍니다. 완료된 단계 뒤의 연결선은 완료 모양이 되며, 진행 상황을 보여 주기만 하고 누를 수는 없습니다.
+여러 단계로 이루어진 과정의 현재 위치와 진행 상태를 표시합니다. 단계 이동 버튼으로 사용하지 않습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `steps` *(필수)* | `StepperStep[]` |  | 단계 목록(순서대로). |
-| `currentStep` | `number` | `0` | 지금 단계의 순서(0부터 셈). 앞 단계는 완료, 뒤 단계는 예정으로 보입니다. |
+| `currentStep` | `number` | `0` | 현재 단계의 순서(0부터 셈). 앞 단계는 완료, 뒤 단계는 예정으로 보입니다. |
 | `orientation` | `"horizontal" \| "vertical"` | `horizontal` | 방향 — 가로(`horizontal`) · 세로(`vertical`). |
 
 ### `StepperIndicator`
@@ -1176,7 +1193,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-설정을 켜고 끄는 스위치입니다. 켜짐은 `checked` · `defaultChecked`로 정하고 Space 키로도 바꿀 수 있으며, 나머지 `<input>` 속성과 `ref`는 스위치에 그대로 전달됩니다.
+알림·자동 저장 등 두 상태를 갖는 설정을 켜거나 끕니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1194,7 +1211,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-여러 항목의 데이터를 행과 열로 보여 주는 표입니다. 화살표 키로 칸을 이동하고, 행 선택 · 정렬 · 행 동작을 지원합니다. `onRowAction`이 있으면 행을 누를 수 있습니다.
+여러 항목의 데이터를 비교하고 선택·정렬할 수 있는 표입니다. 단일 항목의 상세 정보는 KeyValueTable을 사용합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1205,7 +1222,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **보조 컴포넌트** — `Table` 안
 
-열 머리글 행입니다. 안에 `TableColumn`을 넣습니다.
+열 헤더 행입니다. 안에 `TableColumn`을 넣습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1215,13 +1232,13 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **보조 컴포넌트** — `TableHeader` 안
 
-열 머리글입니다. `info`를 주면 도움말 아이콘, `allowsSorting`을 주면 정렬 아이콘이 붙습니다. 정렬 중인 열은 아이콘 색이 바뀌고, 정렬 방향은 화면 낭독기에 전달됩니다.
+열 헤더입니다. `info`를 주면 도움말 아이콘, `allowsSorting`을 주면 정렬 아이콘이 붙습니다. 정렬 중인 열은 아이콘 색이 바뀌고, 정렬 방향은 화면 낭독기에 전달됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | 열 제목. |
 | `className` | `string` |  |  |
-| `info` | `ReactNode` |  | 도움말. 넘기면 정보 아이콘이 붙고, 아이콘에 마우스를 올리거나 키보드로 선택하면 툴팁으로 보입니다. |
+| `info` | `ReactNode` |  | 도움말. 넘기면 정보 아이콘이 붙고, 아이콘에 마우스를 올리거나 키보드 포커스를 받으면 툴팁으로 보입니다. |
 | `infoLabel` | `string` | `도움말` | 화면 낭독기가 읽는 정보 아이콘 이름. |
 
 ### `TableSelectionColumn`
@@ -1335,7 +1352,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-한 화면의 내용을 탭으로 나눠 보여 줍니다. ← → 방향키로 탭을 옮기고, Home · End로 처음과 끝 탭으로 갑니다.
+같은 화면의 관련 콘텐츠를 구분하고 탭을 선택해 전환합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1393,16 +1410,16 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-여러 줄 글자를 입력받는 입력 칸입니다. 높이가 고정되어 내용이 넘치면 안에서 스크롤되고, 나머지 `<textarea>` 속성과 `ref`는 입력 칸에 그대로 전달됩니다.
+요청 사항·사유 등 여러 줄의 텍스트를 입력받습니다. 글자 수 제한과 현재 입력량을 표시할 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `className` | `string` |  | 바깥 요소의 클래스 이름. |
 | `invalid` | `boolean` | `false` | 오류 — 오류 테두리로 표시합니다. |
-| `label` | `ReactNode` |  | 입력 칸 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
-| `message` | `ReactNode` |  | 입력 칸 아래에 보이는 도움말 메시지. |
+| `label` | `ReactNode` |  | 입력 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
+| `message` | `ReactNode` |  | 입력 필드 아래에 보이는 도움말 메시지. |
 | `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
-| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 칸에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
+| `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 필드에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
 | `showCount` | `boolean` | `true` | `maxLength`가 있을 때 `입력한 글자 수/최대 글자 수`를 보여 줍니다. |
 | `size` | `"sm" \| "md"` | `sm` | 크기. |
 | `style` | `CSSProperties` |  | 바깥 요소의 스타일. |
@@ -1416,7 +1433,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-토스트를 페이지 안에 고정으로 그립니다. 나타났다 사라지는 토스트는 `<ToastRegion />`과 `showToast()`를 씁니다.
+작업 결과를 화면 아래에 알립니다. 안내·성공은 자동으로 닫히고, 주의·오류는 사용자가 닫을 때까지 유지됩니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1430,7 +1447,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-`showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다. 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드로 선택한 동안에는 자동으로 닫히지 않습니다.
+`showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다. 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드 포커스가 있는 동안에는 자동으로 닫히지 않습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1449,7 +1466,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-마우스를 올리거나 키보드로 선택하면 짧은 설명을 보여 주는 툴팁입니다. Esc를 누르면 닫힙니다.
+요소에 마우스를 올리거나 키보드 포커스를 두면 짧은 보충 설명을 표시합니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -1458,7 +1475,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `className` | `string` |  | 툴팁 말풍선의 클래스. |
 | `closeDelay` | `number` | `500` | 마우스나 포커스가 떠난 뒤 닫히기까지의 시간(ms). |
 | `defaultOpen` | `boolean` |  | 처음 열림 여부. 직접 제어하지 않을 때 씁니다. |
-| `delay` | `number` | `500` | 마우스를 올린 뒤 나타나기까지의 시간(ms). 키보드로 선택하면 바로 나타납니다. |
+| `delay` | `number` | `500` | 마우스를 올린 뒤 나타나기까지의 시간(ms). 키보드 포커스를 받으면 바로 나타납니다. |
 | `disabled` | `boolean` |  | 툴팁을 끕니다. |
 | `onOpenChange` | `((open: boolean) => void)` |  | 툴팁이 열리거나 닫힐 때 호출됩니다. |
 | `open` | `boolean` |  | 열림 여부. 직접 제어할 때 씁니다. |
@@ -1472,7 +1489,7 @@ export 315개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 Figma 아이콘 벡터(16 또는 32 그리드). Prop: `size`(기본 viewBox 크기) + SVG 속성. 색은 `currentColor`.
 
-`CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`
+`CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `ExclamationMarkIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`
 
 ## 기타
 

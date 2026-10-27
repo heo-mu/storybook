@@ -1,5 +1,5 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
-import { CheckCircleIcon, WarningCircleIcon } from '../../icons';
+import { CheckIcon, ExclamationMarkIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import type { StepperOrientation, StepperStatus } from './Stepper.options';
 
@@ -34,9 +34,9 @@ export const StepperIndicator = forwardRef<HTMLDivElement, StepperIndicatorProps
     <div {...rest} ref={ref} className={cx('ds-stepper-indicator', className)} data-status={status} data-orientation={orientation}>
       <span className="ds-stepper-indicator__circle" aria-hidden="true">
         {status === 'completed' ? (
-          <CheckCircleIcon className="ds-stepper-indicator__icon" />
+          <CheckIcon className="ds-stepper-indicator__icon" />
         ) : status === 'error' ? (
-          <WarningCircleIcon className="ds-stepper-indicator__icon" />
+          <ExclamationMarkIcon className="ds-stepper-indicator__icon" />
         ) : (
           <span className="ds-stepper-indicator__number">{step}</span>
         )}

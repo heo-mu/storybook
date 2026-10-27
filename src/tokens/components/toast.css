@@ -2,14 +2,14 @@
 /* Figma collection "Component" (Mode 1) — <kind>/toast/… — 11 variables */
 :root {
   --colors-toast-background-default: var(--colors-surface-page);
+  --colors-toast-label-title-default: var(--colors-text-primary);
+  --colors-toast-label-body-default: var(--colors-text-tertiary);
   --colors-toast-border-information: var(--colors-brand-status-information-strong);
   --colors-toast-border-succeess: var(--colors-brand-status-success-strong);
   --colors-toast-border-error: var(--colors-brand-status-danger-strong);
   --colors-toast-border-warning: var(--colors-brand-status-warning-strong);
-  --colors-toast-label-default: var(--colors-text-primary);
   --colors-toast-status-icon-information: var(--colors-brand-status-information-strong);
   --colors-toast-status-icon-succeess: var(--colors-brand-status-success-strong);
   --colors-toast-status-icon-error: var(--colors-brand-status-danger-strong);
   --colors-toast-status-icon-warning: var(--colors-brand-status-warning-strong);
-  --colors-toast-close-icon-default: var(--colors-icon-tertiary);
 }

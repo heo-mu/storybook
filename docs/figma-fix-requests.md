@@ -231,6 +231,29 @@ Figma를 Product Designer 관점에서 따로 점검하고(Storybook을 정답�
 작업 중 관찰된 다른 편집(이번 작업이 한 것 아님, 같은 값 — 동기화함): `colors/button/secondary/outline/background/default` · `/hover`가 `fill/secondary/subtle/*`로,
 `colors/chip-filter/background/unselected/default`가 `fill/primary/subtle/default`로 별칭 변경.
 
+## X. 접근성 전체 해결 — 토큰 수정 (2026-10-27 저녁, 사용자 승인 작업)
+
+| 항목 | Figma 변경 | 변수 · 노드 |
+| --- | --- | --- |
+| 플레이스홀더 | `colors/text/placeholder` brand-gray/400 → **600** (A-1 복귀, 5.89:1) | VariableID:47:7521 |
+| Button Secondary Solid | `colors/fill/secondary/strong/hover` brand/600 → **800**, `pressed` brand/500 → **900** (흰 라벨 7.27 · 10.14:1, Primary와 같은 단계 규칙) | VariableID:44:7324 · 44:7323 |
+| R9–R11 적용 | `breadcrumb/label/default` · `file-uploader/helper/default` · `stepper/label/title/locked` → `text/tertiary`; `stepper/label/description/locked` text/disabled → `text/tertiary`(A-1 복귀) | VariableID:111:1700 · 650:3867 · 203:3935 · 203:3939 |
+| A-2 복구 | `checkbox/border/unchecked/default` · `radio/border/unselected/default` gray-subtle → `border/gray`, `hover` gray → `border/gray-dark` | VariableID:100:2512 · 100:2513 · 102:2387 · 102:2388 |
+| F80 복구 | Component 컬렉션에 `spacing/accordion/trigger-padding-x/{md,sm}` · `spacing/accordion/padding/{md,sm}` · `spacing/accordion/body-padding` · `size/accordion/trigger-height/{md,sm}` · `border-radius/accordion/default` · `border-width/accordion/default` 재생성(원래 별칭 · 스코프 · WEB 코드 문법), accordion-item(1035:15648) 10개 변형의 Trigger · Body · Divider 94곳 재연결 | VariableID:1499:7382 – 7390 |
+| F96 | date-picker_calendar(1339:6880) 설명 "Secondary TextButton" → "Primary TextButton" | 1339:6880 |
+
+유지한 Figma 변경(동기화만): Tab 밑줄 `gray-subtler · gray-subtle · gray`, Stepper 현재 단계 배경 `fill/primary/strong/default`, Toast `label/title` · `label/body`, Breadcrumb Role=Open 삭제.
+
+## 플레이스홀더 토큰 오용 — 바인딩 수정 요청 (2026-10-27, 적용 완료 — X절)
+
+`text/placeholder`가 brand-gray/400(#a1a8b5)으로 바뀌면서(F98) 플레이스홀더가 아닌 글자에 이 토큰을 묶어 둔 곳이 대비 2.35:1로 내려갔습니다. 코드는 Figma 바인딩을 그대로 따르므로 Figma에서 바꾼 뒤 재동기화합니다.
+
+| # | 변수 | 현재 | 제안 | 영향 |
+| --- | --- | --- | --- | --- |
+| R9 | `colors/breadcrumb/label/default` | `text/placeholder` | `text/tertiary`(#596475, 5.89:1) — 현재 경로 `label/current`(text/secondary)보다 한 단계 연함 | breadcrumb · breadcrumb-item Link Default 라벨(27건) |
+| R10 | `colors/file-uploader/helper/default` | `text/placeholder` | `text/tertiary` — 다른 컴포넌트 helper/default와 같음 | file-uploader 안내 문구 5개 상태, file-uploader-item 파일 정보 3개 상태(11건) |
+| R11 | `colors/stepper/label/title/locked` | `text/placeholder` | `text/tertiary`(또는 `text/inactive` 유지 시 접근성 이슈로 수용) | stepper_indicator Locked 제목(5건) |
+
 ## 플레이스홀더 토큰 오용 — 바인딩 수정 요청 (2026-10-27, 변경하지 않음)
 
 `text/placeholder`가 brand-gray/400(#a1a8b5)으로 바뀌면서(F98) 플레이스홀더가 아닌 글자에 이 토큰을 묶어 둔 곳이 대비 2.35:1로 내려갔습니다. 코드는 Figma 바인딩을 그대로 따르므로 Figma에서 바꾼 뒤 재동기화합니다.

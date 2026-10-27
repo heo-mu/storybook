@@ -3,12 +3,12 @@
 :root {
   --colors-stepper-indicator-upcoming-background-default: var(--colors-surface-overlay);
   --colors-stepper-indicator-upcoming-label-default: var(--colors-text-secondary);
-  --colors-stepper-indicator-current-background-default: var(--colors-fill-primary-strong-pressed);
+  --colors-stepper-indicator-current-background-default: var(--colors-fill-primary-strong-default);
   --colors-stepper-indicator-current-label-default: var(--colors-text-inverse);
   --colors-stepper-indicator-completed-background-default: var(--colors-fill-primary-strong-default);
   --colors-stepper-indicator-completed-icon-default: var(--colors-icon-inverse);
   --colors-stepper-label-title-dafault: var(--colors-text-primary);
-  --colors-stepper-label-title-locked: var(--colors-text-placeholder);
+  --colors-stepper-label-title-locked: var(--colors-text-tertiary);
   --colors-stepper-label-title-error: var(--colors-status-error-strong);
   --colors-stepper-connector-incomplete-default: var(--colors-border-gray-subtler);
   --colors-stepper-connector-complete-default: var(--colors-fill-primary-strong-default);

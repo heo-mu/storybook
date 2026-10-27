@@ -87,7 +87,14 @@
   --_line: var(--_line-default);
 
   border-radius: 0;
-  box-shadow: inset 0 calc(-1 * var(--border-width-border)) 0 var(--_line);
+  /* Figma tab_line: 1px INSIDE bottom stroke; the Selected variant is 2px since the 2026-10 update. */
+  --_line-width: var(--border-width-border);
+
+  box-shadow: inset 0 calc(-1 * var(--_line-width)) 0 var(--_line);
+}
+
+.ds-tab[data-appearance='line'][data-selected] {
+  --_line-width: var(--border-width-border-2);
 }
 
 .ds-tab[data-appearance='line'][data-variant='secondary'] {

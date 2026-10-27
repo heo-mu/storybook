@@ -7,6 +7,21 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### 접근성 전체 해결 — Figma 토큰 수정 · 전체 동기화 (2026-10-27, Figma 수정 승인 작업)
+
+앞선 플레이스홀더 동기화(825335a)에서 미해결로 남긴 axe 색 대비 위반 105건을 Figma 원본에서 토큰 단위로 고치고 다시 동기화했습니다. 코드는 바인딩을 그대로 따르므로 컴포넌트 CSS 변경은 제거된 토큰을 쓰던 두 곳(Breadcrumb · Toast)뿐입니다.
+Figma 변경 기록: [docs/figma-fix-requests.md X절](docs/figma-fix-requests.md).
+
+- **플레이스홀더 · 안내 · 비활성 구분**: Semantic `text/placeholder` → brand-gray/600(#596475, 흰 바탕 5.89:1 · #f5f6f7 5.54:1)로 복귀(A-1). 안내 글자는 `text/tertiary`, 비활성 라벨은 `text/inactive`(gray/400)로 역할을 나눴습니다 —
+  `breadcrumb/label/default` · `file-uploader/helper/default` · `stepper/label/title/locked` · `stepper/label/description/locked` → `text/tertiary`(R9–R11 적용). Select · Table 빈 값 안내는 placeholder 유지.
+- **Button · IconButton Secondary Solid**: `fill/secondary/strong/hover` → brand/800(#006247, 흰 라벨 7.27:1), `pressed` → brand/900(#004a38, 10.14:1) — Primary Solid(900 → 800 → 700)와 같은 한 단계씩 어두워지는 규칙, 라벨 · 아이콘 흰색 유지. IconButton은 같은 `button/secondary/solid/*` 토큰을 씁니다.
+- **F99 드리프트 12개 정리**: Checkbox · Radio 선택 안 함 테두리 `border/gray`(#778191, 비텍스트 3.87:1) · Hover `border/gray-dark`로 복구(A-2, Figma의 gray-subtle 2.35:1은 오류). Tab 밑줄 한 단계 연하게 · Stepper 현재 단계 배경 `fill/primary/strong/default`는 의도된 변경으로 동기화. Toast `label/title` · `label/body` 변수 추가(코드는 title 사용, `label/default` · `close-icon/default`는 삭제됨 → 닫기 아이콘 `icon/tertiary`).
+- **Accordion 크기 토큰 복구(F80)**: Figma에서 지워져 바인딩이 끊겨 있던 `spacing·size·border-radius·border-width/accordion/*` 9개를 Component 컬렉션에 다시 만들고 accordion-item 10개 변형의 여백 · 최소 높이 · 구분선 두께 94곳에 다시 연결(값 변화 없음).
+- **Breadcrumb**: Figma가 Role=Open 변형과 `label/focus` · `home-icon/current`를 없애 8개 변형만 남음 — 열린 트리거는 `label/pressed`, 현재 항목 아이콘은 라벨 색, 갤러리 Items 행에서 Open 칸 제거, 기하 · 참조 이미지 재내보내기.
+- **스냅샷**: `figma/variables/semantic.txt` · `component-others.txt`가 Figma 체크섬과 전 그룹 일치(semantic 38439d42, compOthers 733 89299fb3). 참조 이미지 재내보내기 — button_basic · button_icon · checkbox · radio · tab_line · tab_filled · stepper_indicator(가로 · 세로) · breadcrumb · breadcrumb-item · input · select · textarea · search-field · file-uploader · file-uploader-item · table_value_editable(+4).
+- **접근성 결과**: axe 438 스토리 색 대비 위반 105 → **0건**(438 스토리, 알려진 목록 없이 통과) — [docs/accessibility.md](docs/accessibility.md).
+- **남은 항목**: Toast가 Figma에서 제목 + 본문 · "닫기" 텍스트 버튼 구조로 바뀜(F101, 별도 구현), `password_field` 새 세트(F99), empty-state · data-state · dashboard-filter-bar · table Date Range Picker의 기존 기하 불일치(이번 변경과 무관).
+
 ### 플레이스홀더 색 — Semantic `text/placeholder` 전체 동기화 (2026-10-27)
 
 Figma Semantic 컬렉션(모드 1개)의 `colors/text/placeholder`가 brand-gray/**600 #596475 → 400 #a1a8b5**로 바뀌어(2026-10-19 A-1 대비 개선 이전 값) 스냅샷 · 토큰 · 참조 이미지를 갱신했습니다.

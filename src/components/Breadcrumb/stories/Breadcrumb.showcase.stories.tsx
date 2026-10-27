@@ -41,8 +41,7 @@ const ITEM_CELLS = [
   { role: 'Link', state: 'Hover' },
   { role: 'Link', state: 'Pressed' },
   { role: 'Current', state: 'Default' },
-  { role: 'Open', state: 'Hover' },
-  { role: 'Open', state: 'Pressed' },
+  // Role=Open was removed from the Figma set on 2026-10-27 (8 variants remain); the open trigger is covered by the Breadcrumb Expanded stories.
 ] as const;
 
 /** 항목의 크기와 상태별 표현을 비교합니다. */
@@ -58,7 +57,7 @@ export const ItemMatrix: Story = {
           return {
             figma: `Role=${role}, Size=${size}, State=${state}`,
             node: (
-              <BreadcrumbItem size={size} current={role === 'Current'} open={role === 'Open'} href={role === 'Link' ? '#' : undefined} className={pseudo}>
+              <BreadcrumbItem size={size} current={role === 'Current'} href={role === 'Link' ? '#' : undefined} className={pseudo}>
                 에너지 관리
               </BreadcrumbItem>
             ),

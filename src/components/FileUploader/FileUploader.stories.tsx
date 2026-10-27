@@ -37,7 +37,7 @@ export const WithoutIcon: Story = {
   args: { showIcon: false },
 };
 
-/** Figma State=Disabled: surface/container background, border/disabled dashes, text/inactive title — and nothing can be dropped or picked. */
+/** Figma State=Disabled: surface/container background, border/disabled dashes, text/inactive title, text/tertiary helper — and nothing can be dropped or picked. */
 export const Disabled: Story = {
   name: "Disabled",
   args: { disabled: true },
@@ -48,7 +48,8 @@ export const Disabled: Story = {
     await expect(input).toBeDisabled();
     await expect(getComputedStyle(area).backgroundColor).toBe('rgb(239, 240, 243)');
     await expect(getComputedStyle(canvas.getByText(/파일을 끌어다 놓거나 선택하세요/)).color).toBe('rgb(161, 168, 181)');
-    await expect(getComputedStyle(canvas.getByText(/PDF, HWP/)).color).toBe('rgb(161, 168, 181)');
+    // helper/default → text/tertiary since the 2026-10-27 Figma token fix (title stays label/disabled = text/inactive)
+    await expect(getComputedStyle(canvas.getByText(/PDF, HWP/)).color).toBe('rgb(89, 100, 117)');
     await expect(getComputedStyle(canvasElement.querySelector('.ds-file-uploader__border rect')!).stroke).toBe('rgb(201, 206, 214)');
     // Pointer and keyboard: no file dialog, no callback, not in the Tab order.
     let dialogOpened = 0;

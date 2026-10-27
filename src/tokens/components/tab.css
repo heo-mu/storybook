@@ -16,9 +16,9 @@
   --colors-tab-primary-line-label-pressed: var(--colors-text-primary);
   --colors-tab-primary-line-label-selected: var(--colors-fill-primary-strong-default);
   --colors-tab-primary-line-label-disabled: var(--colors-text-disabled);
-  --colors-tab-primary-line-underline-default: var(--colors-border-gray-subtle);
-  --colors-tab-primary-line-underline-hover: var(--colors-border-gray);
-  --colors-tab-primary-line-underline-pressed: var(--colors-border-gray-dark);
+  --colors-tab-primary-line-underline-default: var(--colors-border-gray-subtler);
+  --colors-tab-primary-line-underline-hover: var(--colors-border-gray-subtle);
+  --colors-tab-primary-line-underline-pressed: var(--colors-border-gray);
   --colors-tab-primary-line-underline-selected: var(--colors-fill-primary-strong-default);
   --colors-tab-primary-line-underline-disabled: var(--colors-fill-disabled-default);
   --colors-tab-secondary-filled-background-default: var(--colors-alpha-white-0);
@@ -36,9 +36,9 @@
   --colors-tab-secondary-line-label-pressed: var(--colors-text-primary);
   --colors-tab-secondary-line-label-selected: var(--colors-fill-secondary-strong-default);
   --colors-tab-secondary-line-label-disabled: var(--colors-text-disabled);
-  --colors-tab-secondary-line-underline-default: var(--colors-border-gray-subtle);
-  --colors-tab-secondary-line-underline-hover: var(--colors-border-gray);
-  --colors-tab-secondary-line-underline-pressed: var(--colors-border-gray-dark);
+  --colors-tab-secondary-line-underline-default: var(--colors-border-gray-subtler);
+  --colors-tab-secondary-line-underline-hover: var(--colors-border-gray-subtle);
+  --colors-tab-secondary-line-underline-pressed: var(--colors-border-gray);
   --colors-tab-secondary-line-underline-selected: var(--colors-fill-secondary-strong-default);
   --colors-tab-secondary-line-underline-disabled: var(--colors-fill-disabled-default);
 }

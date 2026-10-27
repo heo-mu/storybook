@@ -1,7 +1,8 @@
 /*
  * Toast — Figma `toast` (91:5927): 320 × 36, padding p-3 p-2_5, gap p-2, border-radius/rounded,
  * colors/toast/background, 1px INSIDE border colors/toast/border/<status>, effect elevation-3; 20px status icon,
- * message sm/leading-normal/medium (…/label/default), 20px close icon (…/close-icon/default).
+ * message sm/leading-normal/medium (…/label/title/default — Figma renamed …/label/default on 2026-10-27 when the toast gained a
+ * title + body layout, not yet implemented here: F101), 20px close icon (colors/icon/tertiary — …/close-icon/default was removed).
  * The height is fixed in Figma, so the message stays on one line (ellipsis).
  * Region layout (position, gap between toasts, at most 3) — Design System Rules 06, see Toast.mdx.
  */
@@ -60,7 +61,7 @@
   flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
-  color: var(--colors-toast-label-default);
+  color: var(--colors-toast-label-title-default);
   font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
   font-size: var(--typography-sm-leading-normal-medium-font-size);
   font-weight: var(--typography-sm-leading-normal-medium-font-weight);
@@ -79,7 +80,7 @@
   padding: 0;
   border: 0;
   background: none;
-  color: var(--colors-toast-close-icon-default);
+  color: var(--colors-icon-tertiary);
   cursor: pointer;
 }
 
