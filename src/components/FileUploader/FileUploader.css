@@ -4,11 +4,25 @@
  *   stroke in the layout), border-radius/rounded, 1px INSIDE dashed stroke (dash 6, gap 4)
  *   icon UploadSimple 16px · title sm/leading-normal/medium · helper xs/leading-normal/normal (gap m-0_5)
  * State: Default → Hover → Pressed (Figma binds …/focus) → Drag-over → Disabled (later rules win).
+ *   Disabled (2026-10-27 sync): background/disabled (surface/container), border/disabled, label/disabled (text/inactive),
+ *   icon icon/default, no opacity. Figma binds the Disabled helper to helper/default, which renders #a1a8b5 there because the
+ *   Figma file currently has text/placeholder = brand-gray/400 — a revert of the approved A-1 contrast decision (gray/600,
+ *   docs/accessibility.md, docs/figma-issues.md F98). The code keeps A-1, so the disabled helper uses label/disabled (text/inactive,
+ *   the same #a1a8b5; exempt from the contrast rule as part of a disabled control) until the token decision is made.
  */
+.ds-file-uploader__root {
+  display: block;
+}
+
+.ds-file-uploader__root[data-disabled] {
+  cursor: default;
+}
+
 .ds-file-uploader {
   --_bg: var(--colors-file-uploader-background-default);
   --_bd: var(--colors-file-uploader-border-default);
   --_label: var(--colors-file-uploader-label-default);
+  --_helper: var(--colors-file-uploader-helper-default);
 
   position: relative;
   box-sizing: border-box;
@@ -49,8 +63,11 @@
   --_bg: var(--colors-file-uploader-background-disabled);
   --_bd: var(--colors-file-uploader-border-disabled);
   --_label: var(--colors-file-uploader-label-disabled);
+  --_helper: var(--colors-file-uploader-label-disabled);
 
   cursor: default;
+  /* Drags hit the root instead, which refuses the drop (see FileUploader.tsx). */
+  pointer-events: none;
 }
 
 /* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside the drop area. */
@@ -108,7 +125,7 @@
 }
 
 .ds-file-uploader__helper {
-  color: var(--colors-file-uploader-helper-default);
+  color: var(--_helper);
   font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
   font-size: var(--typography-xs-leading-normal-normal-font-size);
   font-weight: var(--typography-xs-leading-normal-normal-font-weight);

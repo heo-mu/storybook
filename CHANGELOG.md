@@ -7,6 +7,20 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### FileUploader Disabled — Figma 동기화 · 드롭 차단 (2026-10-27)
+
+Figma `file-uploader`(651:3945) State=Disabled를 다시 읽어 비교: 배경 `background/disabled`(surface/container #eff0f3) · 점선 테두리 `border/disabled`(#c9ced6) ·
+제목 `label/disabled`(text/inactive #a1a8b5) · 아이콘 `icon/default` · 불투명도 없음 — 구조와 여백은 다른 상태와 같고 코드도 이미 같았습니다.
+유일한 차이는 안내 문구: Figma는 `helper/default`(= `text/placeholder`)인데 **Figma 파일의 `text/placeholder`가 brand-gray/400(#a1a8b5)으로 되돌아가 있어**
+2026-10-19 승인된 A-1 대비 결정(gray/600 #596475, 5.89:1)과 충돌합니다(9개 컴포넌트 플레이스홀더 · 정보 글자가 2.35:1로 내려감 — [docs/figma-issues.md F98](docs/figma-issues.md)).
+
+- **화면 변경 — Disabled 안내 문구**: 비활성일 때 안내 문구를 `label/disabled`(text/inactive, #a1a8b5)로 — Figma Disabled와 같은 색이며 비활성 컨트롤이라 대비 예외.
+  공유 토큰 `text/placeholder`는 A-1 값(gray/600)을 유지해 다른 상태 · 다른 컴포넌트는 변화 없음(토큰 되돌림 여부는 결정 필요, 되돌릴 경우 작업 트리의 미커밋 내보내기 사용).
+- **Fixed — 비활성 드롭 차단**: 전에는 비활성 영역에 파일을 놓으면 브라우저 기본 동작(파일 열기)이 그대로였음. 이제 비활성 버튼은 포인터를 받지 않고(`pointer-events: none`)
+  바깥 `.ds-file-uploader__root`가 dragenter · dragover · drop을 막아(`dropEffect = 'none'`) "놓을 수 없음" 커서만 보입니다. 클릭 · Enter · Space · Tab 순서 제외 · 파일 선택 창은 기존대로 막힘.
+  DOM에 래퍼 `div.ds-file-uploader__root`가 하나 추가됨(`className` · `style` · `id` · ref는 그대로 버튼 · 입력에).
+- **스토리 · 문서**: `Disabled` 스토리에 상태 · 차단 검사(play), 사용 방법 문서의 상태 · 접근성 설명. 참조 이미지는 Disabled 변형만 현재 Figma로(나머지 4개는 A-1 상태 유지 — verify 설정 `//reference`).
+
 ### DropdownMenu — Figma 메뉴 패널 컴포넌트 동기화 (2026-10-27)
 
 Figma Dropdown Menu(179:2465)에서 예시 프레임이던 메뉴 패널이 컴포넌트 `dropdown-menu`(1440:8454, 200px: 제목 · 아이콘 항목 · 구분선 · 화살표 항목)와

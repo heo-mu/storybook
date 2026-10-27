@@ -59,9 +59,16 @@ export const FileUploader = forwardRef<HTMLInputElement, FileUploaderProps>(func
     event.preventDefault();
     if (delta) setDragDepth((d) => Math.max(0, d + delta));
   };
+  // Figma State=Disabled: the area takes nothing. The disabled button ignores the pointer (CSS), so a drag lands on
+  // this root, which refuses the drop (cursor "not allowed", no file delivered) instead of letting the browser open the file.
+  const refuseWhenDisabled = (event: DragEvent<HTMLDivElement>) => {
+    if (!disabled) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'none';
+  };
 
   return (
-    <>
+    <div className="ds-file-uploader__root" data-disabled={disabled || undefined} onDragEnter={refuseWhenDisabled} onDragOver={refuseWhenDisabled} onDrop={refuseWhenDisabled}>
       <button
         type="button"
         id={id}
@@ -107,6 +114,6 @@ export const FileUploader = forwardRef<HTMLInputElement, FileUploaderProps>(func
         tabIndex={-1}
         onChange={(event) => deliver(event.target.files)}
       />
-    </>
+    </div>
   );
 });
