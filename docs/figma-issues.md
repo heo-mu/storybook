@@ -182,6 +182,7 @@ Button 구현 중 **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, �
 | F93 | slider handle Pressed의 누름 원(684:6472) — v1.0 후보 점검에서 색을 `colors/slider/background/handle/default`에 연결할 때 칠 불투명도 20%가 100%로 바뀌어 진한 초록 고리로 보임 | **해결(2026-10-20 전체 검증에서 발견)** — 연결은 두고 불투명도 20% 복구(원래 #007c5633과 같은 모습) | — |
 | F94 | textarea Completed · Error 변형의 메시지 줄("Character count", 글자 수 포함)이 `Alert`에 연결 — 메시지를 끄면 글자 수도 사라짐. Focus는 메시지만 `Alert`에 연결 | **해결(2026-10-20 검수 준비)** — 줄 연결을 풀고 메시지만 `Alert`(Focus와 같게). 파일의 textarea 인스턴스 1개는 영향 없음 | — |
 | F95 | toast `Close Icon` Boolean 속성이 어느 레이어에도 연결되지 않아 꺼도 닫기 아이콘이 그대로 | **해결(2026-10-20 검수 준비)** — 4개 변형의 닫기 아이콘(icon_size) 표시를 `Close Icon`에 연결. 코드는 이미 `showClose`(기본 true)로 대응 | — |
+| F96 | **DatePicker 헤더 button_text Type 변경(2026-10-27 확인)** — `date-picker_header`(144:1377)의 연도 · 월 `button_text` 인스턴스(1338:5926 · 1435:8258)가 **Type=Primary**, Size=md, Right Icon만(CaretDown). 컴포넌트 `date-picker_calendar`(1339:6880) 설명은 아직 "Year/month use Secondary TextButton". button_text(432:8395)에는 `Focus` Boolean 속성(Focus ring: `colors/border/focus` 2px INSIDE, inset −4px, r 8)이 추가됨. 페이지 이름도 `🔵 Ver 0.4` → `🔵 Ver 0.5` | **코드 반영(2026-10-27)** — 헤더 버튼 `data-variant="primary"`, 참조 이미지 재내보내기. Focus ring은 기존 focus-visible outline(2px · offset 2px)과 같은 모습. 설명 문구는 Figma에서 "Primary"로 고쳐야 함(읽기 전용이라 미수정) | 설명을 Primary로 수정 |
 
 ## D. 작업 중 관찰된 원본 변경
 

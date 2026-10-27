@@ -58,6 +58,10 @@ export const YearMonthSelection: Story = { name: 'Year / Month Selection',
     const year = canvas.getByRole('button', { name: /연도/ });
     await expect(year.getBoundingClientRect().height).toBe(32);
     await expect(getComputedStyle(year).fontSize).toBe('14px');
+    // Figma date-picker_header (2026-10-27): button_text Type=Primary — label colors/button_text/primary/label/default, icon primary/icon/default.
+    await expect(year).toHaveAttribute('data-variant', 'primary');
+    await expect(getComputedStyle(year).color).toBe('rgb(64, 75, 93)');
+    await expect(getComputedStyle(year.querySelector('.ds-button__icon')!).color).toBe('rgb(119, 129, 145)');
     await userEvent.click(canvas.getByRole('button', { name: /연도/ }));
     await expect(year).toHaveAttribute('data-pressed');
     const pressedStyle = getComputedStyle(year);

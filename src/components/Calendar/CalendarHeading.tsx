@@ -47,8 +47,8 @@ export function CalendarHeading({ minValue, maxValue, isDateUnavailable, disable
   const picker = (kind: 'year' | 'month', values: number[]) => (
     <Select aria-label={kind === 'year' ? '연도' : '월'} selectedKey={date[kind]} isDisabled={disabled || !values.length}
       onSelectionChange={(key) => move(kind === 'year' ? Number(key) : date.year, kind === 'month' ? Number(key) : date.month)}>
-      {/* Keep the Select trigger semantics; use the existing TextButton md style and tokens unchanged. */}
-      <Button className="ds-button-base ds-text-button" data-variant="secondary" data-size="md">
+      {/* Keep the Select trigger semantics; Figma date-picker_header (144:1377) places button_text Type=Primary, Size=md, Right Icon only (2026-10-27). */}
+      <Button className="ds-button-base ds-text-button" data-variant="primary" data-size="md">
         <SelectValue className="ds-button__label">{date[kind]}{kind === 'year' ? '년' : '월'}</SelectValue>
         <span className="ds-button__icon"><CaretDownIcon /></span>
       </Button>

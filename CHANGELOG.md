@@ -7,6 +7,19 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### DatePicker 연도 · 월 버튼 — Figma button_text 동기화 (2026-10-27)
+
+Figma `date-picker_header`(144:1377)의 연도 · 월 `button_text` 인스턴스가 **Type=Primary, Size=md, Right Icon(CaretDown)만**으로 바뀌어(이전 Secondary) 그대로 반영했습니다.
+Figma MCP로 원본을 다시 읽어 확인: 변수 체크섬(Primitive · Theme · Semantic · Component colors/button*)과 글자 · 효과 스타일은 스냅샷과 같고, button_text 변형 16개의 여백(sm 4/2 · gap 2, md 6/2 · gap 4) · 모서리 4px · 글자 스타일(xs · sm medium) · 토큰 바인딩도 변함없음.
+
+- **화면 변경 — `DatePicker` · `Calendar` 헤더**: 연도 · 월 버튼 글자 `colors/button_text/primary/label/*`(기본 #404b5d, Hover · Pressed #131c2b),
+  아이콘 `primary/icon/*`(기본 #778191, Hover · Pressed #404b5d). 전에는 secondary(글자 #596475, 아이콘 #a1a8b5). 배경 Hover · Pressed 토큰은 두 Type이 같아 변화 없음.
+  Props · 공개 API · 연도 · 월 선택 동작 · 키보드 조작은 그대로이며, 공통 `TextButton`은 바꾸지 않음(헤더의 `data-variant`만 변경).
+- **Focus**: Figma button_text에 새로 추가된 `Focus` 속성(포커스 테두리 — `colors/border/focus` 2px, 버튼 밖 2px, 모서리 8px)은 기존
+  `.ds-button-base:focus-visible` 규칙(outline 2px · offset 2px)과 같은 모습이라 코드 변경 없음.
+- **스냅샷 · 검증**: `figma/reference/date-picker_calendar.png`를 현재 Figma(세트 1339:6880)로 다시 내보냄(기하 스냅샷은 동일해 그대로). `Year / Month Selection` 스토리에 Primary 색 검사 추가.
+  Figma 컴포넌트 설명 "Year/month use Secondary TextButton"은 이제 원본과 다름 — [docs/figma-issues.md F96](docs/figma-issues.md).
+
 ### 검수 준비 (2026-10-20, Figma와 함께 · 배포하지 않음)
 
 디자이너 검수 전 남은 핵심 사항 — 디자인 결정 V-1 – V-5를 기존 Figma 디자인 시스템 기준으로 확정해 Figma에 먼저 만들고 코드에 반영했습니다.
