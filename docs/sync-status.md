@@ -27,7 +27,7 @@
 | data-state (DataState) | ✓ data-state 698:4359 · 6/6 | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 8 | ✓ 경고 0 | ✓ |
 | date-picker (DatePicker · Calendar) | ✓ date-picker_trigger 144:723 · 21/21<br>date-picker_message 144:888 · 3/3<br>date-picker_calendar 144:1644 · 1/1<br>date-picker_day 144:1033 · 7/7<br>date-picker_navigation 144:1328 · 8/8 | ✓ | ✓ 40/40 / 40/40 / 40/40 | ✓ play 7 · 스토리 26 | ✓ 경고 0 | ✓ |
 | dialog (Dialog) | ✓ dialog 149:2838 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
-| dropdown-menu (DropdownMenu) | ✓ dropdownmenu_item 179:4819 · 5/5<br>dropdownmenu_line 179:5082 · 1/1 | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 9 | ✓ 경고 0 | ✓ |
+| dropdown-menu (DropdownMenu) | ✓ dropdownmenu_item 179:4819 · 5/5<br>dropdownmenu_line 179:5082 · 1/1<br>dropdown-menu 1440:8454 · 1/1 · dropdown-menu-sub 1440:8455 · 1/1 (2026-10-27 추가) | ✓ | ✓ 8/8 / 8/8 / 8/8 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | empty-state (EmptyState) | ✓ empty-state 724:14963 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | file-uploader (FileUploader · Loading) | ✓ file-uploader 651:3945 · 5/5<br>file-uploader-item 651:3999 · 4/4<br>loading 675:5644 · 2/2 | ✓ | ✓ 11/11 / 11/11 / 11/11 | ✓ play 2 · 스토리 18 | ✓ 경고 0 | ✓ |
 | input (Input) | ✓ input 76:2945 · 21/21 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 4 · 스토리 14 | ✓ 경고 0 | ✓ |

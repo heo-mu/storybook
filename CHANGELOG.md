@@ -7,6 +7,16 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### DropdownMenu — Figma 메뉴 패널 컴포넌트 동기화 (2026-10-27)
+
+Figma Dropdown Menu(179:2465)에서 예시 프레임이던 메뉴 패널이 컴포넌트 `dropdown-menu`(1440:8454, 200px: 제목 · 아이콘 항목 · 구분선 · 화살표 항목)와
+`dropdown-menu-sub`(1440:8455, 140px, 글자만 · "더보기...")로 바뀌었습니다. Figma MCP로 다시 읽어 비교한 결과 `dropdownmenu_item` 5개 변형 · `dropdownmenu_line` ·
+`colors/dropdown-menu/*` 변수 20개 · 글자 스타일 · 여백(항목 8/4/8/10 · gap 8 · 모서리 4, 제목 8/8/2/8, 패널 p-1 · 테두리 1px · elevation-3)은 스냅샷과 같아 **컴포넌트 코드와 토큰은 변경 없음**.
+
+- **검증 추가**: 두 패널 컴포넌트를 parity 검사에 포함 — `figma/geometry/dropdown-menu*.json` · `figma/reference/dropdown-menu*.png`(그림자 때문에 원점 8, 7) ·
+  `figma/verify/dropdown-menu.json` 세트 2개(`figmaPrefix` menu: · sub:), 갤러리 스토리 `Menu`(components-dropdownmenu-showcase--menu-matrix). 항목 · 제목 · 구분선 · 아이콘 · 화살표 위치와 픽셀이 세 엔진에서 일치.
+- **문서**: sync-status · component-inventory에 패널 컴포넌트 반영, Figma 관찰 사항 F97.
+
 ### DatePicker 연도 · 월 버튼 — Figma button_text 동기화 (2026-10-27)
 
 Figma `date-picker_header`(144:1377)의 연도 · 월 `button_text` 인스턴스가 **Type=Primary, Size=md, Right Icon(CaretDown)만**으로 바뀌어(이전 Secondary) 그대로 반영했습니다.

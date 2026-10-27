@@ -1,6 +1,7 @@
 /*
- * DropdownMenu — Figma `dropdownmenu_item` (179:4819), `dropdownmenu_line` (179:5082) and the menu panel of
- * the Figma examples (Menu Container 217:6197, breadcrumb dropdown).
+ * DropdownMenu — Figma `dropdownmenu_item` (179:4819), `dropdownmenu_line` (179:5082) and the menu panel components
+ * `dropdown-menu` (1440:8454, 200px) · `dropdown-menu-sub` (1440:8455, 140px, text only) — since 2026-10-27 components
+ * (before: the example frames in Menu Container 217:6197).
  *   panel: padding p-1, colors/dropdown-menu/background · border (1px INSIDE), border-radius/rounded,
  *          effect elevation-3
  *   item (Content): padding p-2 p-1 p-2 p-2_5 (top right bottom left), gap m-2, border-radius/rounded;

@@ -8,7 +8,7 @@ import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
-// `node scripts/verify-figma.mjs dropdown-menu` (sets dropdownmenu_item, dropdownmenu_line).
+// `node scripts/verify-figma.mjs dropdown-menu` (sets dropdownmenu_item, dropdownmenu_line, dropdown-menu, dropdown-menu-sub).
 const meta = {
   title: "Components/DropdownMenu/Gallery",
   id: 'components-dropdownmenu-showcase',
@@ -122,6 +122,79 @@ export const LineMatrix: Story = {
               node: (
                 <Menu aria-label="line">
                   <DropdownMenuSeparator />
+                </Menu>
+              ),
+            },
+          ],
+        },
+      ]}
+    />
+  ),
+};
+
+/**
+ * Figma `dropdown-menu` (1440:8454) · `dropdown-menu-sub` (1440:8455), the menu panel components added on 2026-10-27:
+ * the same items, dividers and widths (200px / 140px), checked by `node scripts/verify-figma.mjs dropdown-menu`
+ * (one story holds both sets, so the cells carry the `menu:` / `sub:` figmaPrefix).
+ */
+export const MenuMatrix: Story = {
+  name: "Menu",
+  render: () => (
+    <FigmaMatrix
+      columns={['dropdown-menu']}
+      rows={[
+        {
+          label: 'dropdown-menu',
+          cells: [
+            {
+              figma: 'menu:dropdown-menu',
+              node: (
+                <Menu aria-label="메뉴" className="ds-dropdown" style={{ width: 200 }}>
+                  <DropdownMenuSection title="제목">
+                    {['a1', 'a2', 'a3'].map((id) => (
+                      <DropdownMenuItem key={id} id={id} icon={<FolderSimpleDashedIcon />}>
+                        아이템
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSection>
+                  <DropdownMenuSeparator />
+                  {['b1', 'b2'].map((id) => (
+                    <DropdownMenuItem key={id} id={id} icon={<FolderSimpleDashedIcon />}>
+                      아이템
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuItem id="b3" icon={<FolderSimpleDashedIcon />} chevron>
+                    아이템
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  {['c1', 'c2', 'c3'].map((id) => (
+                    <DropdownMenuItem key={id} id={id} icon={<FolderSimpleDashedIcon />} chevron>
+                      아이템
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem id="d1" icon={<FolderSimpleDashedIcon />} chevron>
+                    아이템
+                  </DropdownMenuItem>
+                </Menu>
+              ),
+            },
+          ],
+        },
+        {
+          label: 'dropdown-menu-sub',
+          cells: [
+            {
+              figma: 'sub:dropdown-menu-sub',
+              node: (
+                <Menu aria-label="보조 메뉴" className="ds-dropdown" style={{ width: 140 }}>
+                  {['s1', 's2', 's3'].map((id) => (
+                    <DropdownMenuItem key={id} id={id}>
+                      아이템
+                    </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem id="more">더보기...</DropdownMenuItem>
                 </Menu>
               ),
             },

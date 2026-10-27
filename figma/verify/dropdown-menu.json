@@ -20,6 +20,37 @@
       "background": "#ffffff",
       "harnessCss": "table { table-layout: fixed; } td, th { width: 240px; min-width: 240px; max-width: 240px; }",
       "parts": {}
+    },
+    {
+      "set": "dropdown-menu",
+      "story": "components-dropdownmenu-showcase--menu-matrix",
+      "figmaPrefix": "menu:",
+      "background": "#ffffff",
+      "//": "Figma component dropdown-menu (1440:8454, added 2026-10-27): the 200px panel — title, items with icon / chevron, dividers. Reference image origin (8, 7) skips the elevation-3 shadow.",
+      "parts": {
+        "dropdownmenu_item": ".ds-dropdown__title",
+        "dropdownmenu_item/Text": ".ds-dropdown__title-text",
+        "dropdownmenu_item/Text/Title": ".ds-dropdown__title-text",
+        "dropdownmenu_item#*": ".ds-dropdown__item",
+        "dropdownmenu_item#*/icon_size": ".ds-dropdown__icon",
+        "dropdownmenu_item#*/icon_size#2": ".ds-dropdown__chevron",
+        "dropdownmenu_item#*/Text": ".ds-dropdown__text",
+        "dropdownmenu_item#*/Text/Item": ".ds-dropdown__label",
+        "Divider Line*": ".ds-dropdown__separator"
+      }
+    },
+    {
+      "set": "dropdown-menu-sub",
+      "story": "components-dropdownmenu-showcase--menu-matrix",
+      "figmaPrefix": "sub:",
+      "background": "#ffffff",
+      "//": "Figma component dropdown-menu-sub (1440:8455, added 2026-10-27): the 140px text-only panel. Reference image origin (8, 7) skips the elevation-3 shadow.",
+      "parts": {
+        "dropdownmenu_item*": ".ds-dropdown__item",
+        "dropdownmenu_item*/Text": ".ds-dropdown__text",
+        "dropdownmenu_item*/Text/Item": ".ds-dropdown__label",
+        "Divider Line": ".ds-dropdown__separator"
+      }
     }
   ]
 }
