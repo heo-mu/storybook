@@ -22,6 +22,9 @@ type Story = StoryObj;
 
 const STATES = ['Default', 'Hover', 'Focus', 'Completed', 'Error', 'Disabled', 'Read-only'] as const;
 type State = (typeof STATES)[number];
+// Figma `password_field` (1440:8466, 2026-10-27): the input states plus Focus-on (Focus with the value revealed).
+const PASSWORD_STATES = ['Default', 'Hover', 'Focus', 'Focus-on', 'Completed', 'Error', 'Disabled', 'Read-only'] as const;
+type PasswordState = (typeof PASSWORD_STATES)[number];
 
 /** Props reproducing one Figma variant ("Icon-eye" is off by default since 2026-10-20 — F90; the eye is for password fields only). */
 function figmaVariant(size: FieldSize, state: State) {
@@ -36,6 +39,24 @@ function figmaVariant(size: FieldSize, state: State) {
     case 'Error': return { ...base, ...value, invalid: true, message: 'Alert 내용', messageType: 'error' as const };
     case 'Disabled': return { ...base, ...empty, disabled: true };
     case 'Read-only': return { ...base, ...value, readOnly: true };
+  }
+}
+
+/** Props reproducing one Figma `password_field` variant: the masked text is "•••••••••" (9 characters → 9 mask dots in the
+ * browser), the placeholder of the empty states is the same dots, Focus-on shows "ABCDEFG" with the eye-slash icon. */
+function figmaPasswordVariant(size: FieldSize, state: PasswordState) {
+  const base = { size, label: '라벨명', type: 'password' } as const;
+  const masked = { defaultValue: '•••••••••' };
+  const empty = { placeholder: '•••••••••' };
+  switch (state) {
+    case 'Default': return { ...base, ...empty };
+    case 'Hover': return { ...base, ...empty, className: PSEUDO.hover };
+    case 'Focus': return { ...base, ...masked, className: PSEUDO.focus, message: 'Alert 내용', messageType: 'info' as const };
+    case 'Focus-on': return { ...base, defaultValue: 'ABCDEFG', defaultRevealed: true, className: PSEUDO.focus, message: 'Alert 내용', messageType: 'info' as const };
+    case 'Completed': return { ...base, ...masked, message: 'Alert 내용', messageType: 'success' as const };
+    case 'Error': return { ...base, ...masked, invalid: true, message: 'Alert 내용', messageType: 'error' as const };
+    case 'Disabled': return { ...base, ...empty, disabled: true };
+    case 'Read-only': return { ...base, ...masked, readOnly: true };
   }
 }
 
@@ -82,6 +103,43 @@ export const VariantMatrix: Story = {
   },
 };
 
+/** Figma `password_field` (1440:8466) — 8 states × 3 sizes, checked by `node scripts/verify-figma.mjs input` (set password_field). */
+export const PasswordMatrix: Story = {
+  name: "Password Variants",
+  render: () => (
+    <FigmaMatrix
+      cellWidth={320}
+      columns={[...PASSWORD_STATES]}
+      rows={FIELD_SIZES.map((size) => ({
+        label: size,
+        cells: PASSWORD_STATES.map((state) => ({ figma: `Type=Outline, Size=${size}, State=${state}`, node: <Input {...figmaPasswordVariant(size, state)} /> })),
+      }))}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.querySelectorAll('[data-figma]')).toHaveLength(24);
+    // Figma password_field has no clear (X) icon in any state; the eye-slash icon is shown only while revealed (Focus-on).
+    await expect(canvasElement.querySelectorAll('.ds-input__clear')).toHaveLength(0);
+    await expect(canvasElement.querySelectorAll('.ds-input__reveal[aria-pressed="true"]')).toHaveLength(3);
+    await expect(canvasElement.querySelectorAll('.ds-input__reveal[aria-pressed="true"] svg[viewBox="0 0 24 24"]')).toHaveLength(3);
+  },
+};
+
+/** Every password state at size sm. */
+export const PasswordStates: Story = {
+  name: "Password States",
+  render: () => (
+    <StorySection title="State">
+      {PASSWORD_STATES.map((state) => (
+        <div key={state} style={{ width: 320 }}>
+          <div style={{ font: '500 11px/16px sans-serif', marginBottom: 8, color: 'var(--colors-text-secondary)' }}>{koLabel(state)}</div>
+          <Input {...figmaPasswordVariant('sm', state)} />
+        </div>
+      ))}
+    </StorySection>
+  ),
+};
+
 /** Every state at size sm. */
 export const States: Story = {
   name: "States",
@@ -120,14 +178,21 @@ export const Interaction: Story = {
       await expect(root).not.toHaveAttribute('data-filled');
       await expect(name).toHaveFocus();
     });
-    await step('password reveal toggle', async () => {
+    await step('password reveal toggle — eye ↔ eye-slash icon, no clear button (Figma password_field)', async () => {
       const password = canvas.getByLabelText('비밀번호');
+      await expect(password.closest('.ds-input')!.querySelector('.ds-input__clear')).toBeNull();
       await userEvent.type(password, 'secret');
       await expect(password).toHaveAttribute('type', 'password');
       const toggle = canvas.getByRole('button', { name: '비밀번호 표시' });
+      await expect(toggle.querySelector('svg')).toHaveAttribute('viewBox', '0 0 16 16');
       await userEvent.click(toggle);
       await expect(password).toHaveAttribute('type', 'text');
-      await expect(canvas.getByRole('button', { name: '비밀번호 숨기기' })).toHaveAttribute('aria-pressed', 'true');
+      const hide = canvas.getByRole('button', { name: '비밀번호 숨기기' });
+      await expect(hide).toHaveAttribute('aria-pressed', 'true');
+      await expect(hide.querySelector('svg')).toHaveAttribute('viewBox', '0 0 24 24');
+      await userEvent.keyboard('{Enter}');
+      await expect(password).toHaveAttribute('type', 'password');
+      await expect(canvas.getByRole('button', { name: '비밀번호 표시' })).toHaveAttribute('aria-pressed', 'false');
     });
   },
 };

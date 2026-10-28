@@ -7,6 +7,14 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Password Field 동기화 — Figma `password_field` (2026-10-27)
+
+새 Figma 세트 `password_field`(1440:8466, Type=Outline · Size sm/md/lg · State 8종)를 최신 Figma 기준으로 분석해 `Input type="password"`에 반영했습니다. 라벨 · 테두리 · 배경 · 메시지 · 간격은 `input` 세트와 같은 토큰 · 규칙이어서 일반 Input 쪽은 바뀐 것이 없습니다.
+
+- **눈 아이콘 교체**: 비밀번호를 보이는 동안(Figma State=Focus-on)은 `icon/visibility_off`(새 `EyeSlashIcon`, 24px 그리드)로 바뀝니다. 숨긴 상태는 기존 눈 아이콘 그대로, 색은 `colors/input/outline/icon/*` 상태 토큰.
+- **지우기 버튼(X) 없음**: `password_field`에는 어떤 상태에도 지우기 아이콘이 없어 `type="password"`이면 `clearable`의 기본값이 꺼집니다(`clearable`을 명시하면 그대로 동작, Props 타입 변화 없음).
+- **검증 자산**: `figma/geometry/password_field.json` · `figma/reference/password_field.png` · `figma/verify/input.json`에 `password_field` 세트 추가(스토리 `Components/Input/Gallery › Password Variants`, 24개 변형). 스토리 `Password States` · 문서 "비밀번호" 절 추가, Interaction play에 아이콘 전환 · 키보드(Enter) · 지우기 버튼 없음 검사 추가.
+
 ### 접근성 전체 해결 — Figma 토큰 수정 · 전체 동기화 (2026-10-27, Figma 수정 승인 작업)
 
 앞선 플레이스홀더 동기화(825335a)에서 미해결로 남긴 axe 색 대비 위반 105건을 Figma 원본에서 토큰 단위로 고치고 다시 동기화했습니다. 코드는 바인딩을 그대로 따르므로 컴포넌트 CSS 변경은 제거된 토큰을 쓰던 두 곳(Breadcrumb · Toast)뿐입니다.
@@ -20,7 +28,7 @@ Figma 변경 기록: [docs/figma-fix-requests.md X절](docs/figma-fix-requests.m
 - **Breadcrumb**: Figma가 Role=Open 변형과 `label/focus` · `home-icon/current`를 없애 8개 변형만 남음 — 열린 트리거는 `label/pressed`, 현재 항목 아이콘은 라벨 색, 갤러리 Items 행에서 Open 칸 제거, 기하 · 참조 이미지 재내보내기.
 - **스냅샷**: `figma/variables/semantic.txt` · `component-others.txt`가 Figma 체크섬과 전 그룹 일치(semantic 38439d42, compOthers 733 89299fb3). 참조 이미지 재내보내기 — button_basic · button_icon · checkbox · radio · tab_line · tab_filled · stepper_indicator(가로 · 세로) · breadcrumb · breadcrumb-item · input · select · textarea · search-field · file-uploader · file-uploader-item · table_value_editable(+4).
 - **접근성 결과**: axe 438 스토리 색 대비 위반 105 → **0건**(438 스토리, 알려진 목록 없이 통과) — [docs/accessibility.md](docs/accessibility.md).
-- **남은 항목**: Toast가 Figma에서 제목 + 본문 · "닫기" 텍스트 버튼 구조로 바뀜(F101, 별도 구현), `password_field` 새 세트(F99), empty-state · data-state · dashboard-filter-bar · table Date Range Picker의 기존 기하 불일치(이번 변경과 무관).
+- **남은 항목**: Toast가 Figma에서 제목 + 본문 · "닫기" 텍스트 버튼 구조로 바뀜(F101, 별도 구현), `password_field` 새 세트(F99 — 위 "Password Field 동기화" 절에서 구현), empty-state · data-state · dashboard-filter-bar · table Date Range Picker의 기존 기하 불일치(이번 변경과 무관).
 
 ### 플레이스홀더 색 — Semantic `text/placeholder` 전체 동기화 (2026-10-27)
 

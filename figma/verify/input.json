@@ -19,6 +19,64 @@
       },
       "glyphDxTolerance": 0.6,
       "//glyphDxTolerance": "lg Disabled placeholder (#c9ced6 on #eff0f3) measures 0.54px horizontally; the images are identical, low-contrast centroid noise"
+    },
+    {
+      "set": "password_field",
+      "story": "components-input-showcase--password-matrix",
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 344px; min-width: 344px; max-width: 344px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Label row": ".ds-field__label-row",
+        "Label row/Label": ".ds-field__label",
+        "Container": ".ds-field__control",
+        "Container/Input": ".ds-field__input",
+        "Container/eye": ".ds-input__reveal[aria-pressed=\"false\"]",
+        "Container/icon/visibility_off": ".ds-input__reveal[aria-pressed=\"true\"]",
+        "Container/icon_size": ".ds-input__clear",
+        "input_message": ".ds-field-message",
+        "input_message/*-fill": ".ds-field-message__icon",
+        "input_message/*ext": ".ds-field-message__text"
+      },
+      "//": "Figma password_field (1440:8466): the eye is `Container/eye` (hidden in Default) and `Container/icon/visibility_off` while revealed (Focus-on) — the same button, told apart by aria-pressed; no clear icon exists — `Container/icon_size` is mapped so a rendered clear button fails the structure check.",
+      "knownDifferences": {
+        "Type=Outline, Size=sm, State=Disabled": "disabled placeholder dots (#c9ced6 on #eff0f3, nine 2px bullets at 14px): the text box renders identically (0 differing pixels at threshold 25, max channel delta 17) but the faint anti-aliasing shifts the ink centroid 0.93px — same low-contrast centroid noise as the input lg Disabled note",
+        "Type=Outline, Size=sm, State=Focus": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=sm, State=Completed": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=sm, State=Error": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=sm, State=Read-only": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=md, State=Focus": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=md, State=Completed": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=md, State=Error": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=md, State=Read-only": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=lg, State=Focus": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=lg, State=Completed": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=lg, State=Error": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        },
+        "Type=Outline, Size=lg, State=Read-only": {
+          "firefox": "Firefox masks password values with U+25CF BLACK CIRCLE (Chromium, WebKit and Figma: U+2022 bullet) — nine larger dots shift the ink centroid 22–30px; the engine mask glyph cannot be set from CSS (docs/browser-support.md)"
+        }
+      }
     }
   ]
 }

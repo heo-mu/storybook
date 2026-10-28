@@ -66,6 +66,9 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   (Firefox · WebKit이 1px 아래에 그리던 것을 보정, Chromium은 변화 없음). Textarea md는 여러 줄이므로 위 0.5px 패딩만 사용합니다.
 - 라벨 · 메시지 텍스트 너비는 Button 라벨과 같은 `calc-size()` 점진적 향상입니다.
 - 비기준 엔진(Firefox · WebKit)의 1px 미만 글리프 가로 차이는 글자 래스터화 차이로 기록만 하고 실패로 보지 않습니다(Chromium 기준 0.5px).
+- **비밀번호 마스킹 글자(Password Field, 2026-10-28 측정)**: `type="password"` 값을 Chromium · WebKit은 Figma와 같은 `•`(U+2022)로, Firefox는 `●`(U+25CF, 더 큰 점)으로 가립니다.
+  엔진이 정한 마스킹 글자라 CSS로 바꿀 수 없고(Firefox에는 `-webkit-text-security` 같은 지정도 없음), 값이 있는 12개 Variant(Focus · Completed · Error · Read-only × sm/md/lg)의 글리프 중심이
+  Firefox에서 22–30px 옮겨집니다. `figma/verify/input.json`의 `knownDifferences`(firefox)로 기록만 하고, 텍스트 밖 픽셀 · 기하 · 색은 세 엔진 모두 통과(password_field 24/24).
 
 ## 선택 컨트롤 (Checkbox · Radio · Switch · Select)
 

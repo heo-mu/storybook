@@ -7,7 +7,7 @@
   react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 컴포넌트의 사용 방법 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
 
-export 318개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 131 · 상수 45 · 함수 3 · 아이콘 37 · 내부 API 13
+export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 131 · 상수 45 · 함수 3 · 아이콘 38 · 내부 API 13
 
 ## 목차
 
@@ -740,7 +740,7 @@ export 318개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `className` | `string` |  | 바깥 요소의 클래스 이름. |
-| `clearable` | `boolean` | `true` | 마우스를 올리거나 키보드 포커스를 받으면 지우기 버튼(X)을 보여 줍니다. |
+| `clearable` | `boolean` | `type이 'password'가 아니면 true` | 마우스를 올리거나 키보드 포커스를 받으면 지우기 버튼(X)을 보여 줍니다. 비밀번호 칸(Figma `password_field`)에는 지우기 버튼이 없어 `type="password"`이면 기본으로 꺼집니다. |
 | `defaultRevealed` | `boolean` | `false` | 비밀번호를 처음부터 보이게 할지 정합니다. |
 | `invalid` | `boolean` | `false` | 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. |
 | `label` | `ReactNode` |  | 입력 필드 위에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
@@ -748,7 +748,7 @@ export 318개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 도움말 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `onClear` | `(() => void)` |  | 지우기 버튼으로 값을 비운 뒤 호출됩니다. |
 | `required` | `boolean` | `false` | 꼭 입력해야 하는 칸 — 라벨 뒤에 점을 붙이고, 입력 필드에 `required`를 넘겨 화면 낭독기가 "필수"로 읽고 폼 제출 때 빈 값을 검사합니다. |
-| `revealable` | `boolean` | `true` | `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다. |
+| `revealable` | `boolean` | `true` | `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다(보이는 동안은 눈 가림 아이콘). |
 | `size` | `"sm" \| "md" \| "lg"` | `sm` | 크기. |
 | `style` | `CSSProperties` |  | 바깥 요소의 스타일. |
 
@@ -1489,7 +1489,7 @@ export 318개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 Figma 아이콘 벡터(16 또는 32 그리드). Prop: `size`(기본 viewBox 크기) + SVG 속성. 색은 `currentColor`.
 
-`CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `ExclamationMarkIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`
+`CaretLeftIcon`, `CaretRightIcon`, `PlusIcon`, `XIcon`, `EyeIcon`, `EyeSlashIcon`, `MagnifyingGlassIcon`, `InfoFillIcon`, `CheckCircleFillIcon`, `XCircleFillIcon`, `CheckBoldIcon`, `MinusBoldIcon`, `CaretDownIcon`, `CaretUpIcon`, `CheckIcon`, `CalendarDotsIcon`, `UploadSimpleIcon`, `DownloadSimpleIcon`, `FileTextIcon`, `ArrowSquareOutIcon`, `FolderSimpleDashedIcon`, `HouseIcon`, `DotsThreeIcon`, `ListIcon`, `CheckCircleIcon`, `ExclamationMarkIcon`, `WarningCircleIcon`, `DatabaseIcon`, `InfoIcon`, `CaretUpDownIcon`, `NotePencilIcon`, `ArrowCounterClockwiseIcon`, `TrendUpIcon`, `TrendDownIcon`, `MinusIcon`, `LightningIcon`, `WarningFillIcon`, `WarningIcon`
 
 ## 기타
 

@@ -2,6 +2,8 @@
  * Input — Figma component set `input` (76:2945), Type=Outline.
  * State: Default → (has value) Completed → :hover Hover → :focus-within Focus → Error → Read-only → Disabled
  * (later rules win). Colours are the Figma bindings (colors/input/outline/*).
+ * Password fields — Figma set `password_field` (1440:8466, 2026-10-27): the same Label row / Container / message rules
+ * and tokens; State adds Focus-on (Focus with the value shown, icon/visibility_off). Only the eye is shown — no clear (X) icon.
  */
 .ds-input {
   --ds-field-bg: var(--colors-input-outline-background-default);
@@ -54,8 +56,8 @@
   --ds-field-icon: var(--colors-input-outline-icon-disabled);
 }
 
-/* Icon visibility as in Figma: the eye is hidden only in the Default state, the clear (X) icon
- * appears on Hover and Focus. */
+/* Icon visibility as in Figma: the eye (password_field) is hidden only in the Default state, the clear (X) icon
+ * (input) appears on Hover and Focus. */
 .ds-input__reveal,
 .ds-input__clear {
   display: none;

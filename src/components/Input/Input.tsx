@@ -1,5 +1,5 @@
 import { forwardRef, useId, useRef, useState, type ComponentPropsWithoutRef, type CSSProperties, type ReactNode } from 'react';
-import { EyeIcon, XIcon } from '../../icons';
+import { EyeIcon, EyeSlashIcon, XIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import { FieldLabelRow, FieldMessage, setNativeValue, useFieldValue, useMergedRef, type FieldMessageType, type FieldSize } from '../Field';
 
@@ -16,11 +16,11 @@ export type InputProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'class
   messageType?: FieldMessageType;
   /** 오류 — 빨간 테두리로 표시하고 화면 낭독기에도 오류 상태를 알립니다. */
   invalid?: boolean;
-  /** 마우스를 올리거나 키보드 포커스를 받으면 지우기 버튼(X)을 보여 줍니다. @default true */
+  /** 마우스를 올리거나 키보드 포커스를 받으면 지우기 버튼(X)을 보여 줍니다. 비밀번호 칸(Figma `password_field`)에는 지우기 버튼이 없어 `type="password"`이면 기본으로 꺼집니다. @default type이 'password'가 아니면 true */
   clearable?: boolean;
   /** 지우기 버튼으로 값을 비운 뒤 호출됩니다. */
   onClear?: () => void;
-  /** `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다. @default true */
+  /** `type="password"`일 때 비밀번호를 보이거나 숨기는 눈 아이콘 버튼을 보여 줍니다(보이는 동안은 눈 가림 아이콘). @default true */
   revealable?: boolean;
   /** 비밀번호를 처음부터 보이게 할지 정합니다. @default false */
   defaultRevealed?: boolean;
@@ -39,7 +39,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     message,
     messageType,
     invalid = false,
-    clearable = true,
+    clearable,
     onClear,
     revealable = true,
     defaultRevealed = false,
@@ -65,6 +65,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const { filled, handleChange } = useFieldValue(value, defaultValue, onChange);
   const [revealed, setRevealed] = useState(defaultRevealed);
   const isPassword = type === 'password';
+  // Figma password_field (1440:8466) shows only the eye — no clear (X) icon in any state.
+  const canClear = clearable ?? !isPassword;
   const hasMessage = message !== undefined && message !== null && message !== false;
 
   const clear = () => {
@@ -118,10 +120,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             disabled={disabled}
             onClick={() => setRevealed((r) => !r)}
           >
-            <EyeIcon />
+            {revealed ? <EyeSlashIcon /> : <EyeIcon />}
           </button>
         )}
-        {clearable && !disabled && !readOnly && (
+        {canClear && !disabled && !readOnly && (
           <button type="button" className="ds-field__action ds-input__clear" aria-label="입력 내용 지우기" tabIndex={-1} onClick={clear}>
             <XIcon />
           </button>

@@ -30,7 +30,7 @@
 | dropdown-menu (DropdownMenu) | ✓ dropdownmenu_item 179:4819 · 5/5<br>dropdownmenu_line 179:5082 · 1/1<br>dropdown-menu 1440:8454 · 1/1 · dropdown-menu-sub 1440:8455 · 1/1 (2026-10-27 추가) | ✓ | ✓ 8/8 / 8/8 / 8/8 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | empty-state (EmptyState) | ✓ empty-state 724:14963 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | file-uploader (FileUploader · Loading) | ✓ file-uploader 651:3945 · 5/5<br>file-uploader-item 651:3999 · 4/4<br>loading 675:5644 · 2/2 | ✓ | ✓ 11/11 / 11/11 / 11/11 | ✓ play 2 · 스토리 18 | ✓ 경고 0 | ✓ |
-| input (Input) | ✓ input 76:2945 · 21/21 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 4 · 스토리 14 | ✓ 경고 0 | ✓ |
+| input (Input) | ✓ input 76:2945 · 21/21 · password_field 1440:8466 · 24/24 (2026-10-28) | ✓ | ✓ 45/45 / 45/45 / 45/45 — Firefox 비밀번호 마스킹 글자(U+25CF) 12건은 기록(knownDifferences) | ✓ play 6 · 스토리 18 | ✓ 경고 0 | ✓ |
 | link (Link) | ✓ link 111:1509 · 15/15 | ✓ | ✓ 15/15 / 15/15 / 15/15 | ✓ play 3 · 스토리 9 | ✓ 경고 0 | ✓ |
 | metric-card (MetricCard) | ✓ metric-card 697:4487 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | metric-trend (MetricTrend) | ✓ metric-trend 697:4482 · 12/12 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
