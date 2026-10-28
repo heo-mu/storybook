@@ -58,14 +58,14 @@ for (const entry of entries) {
     await page.goto(url, { waitUntil: 'load', timeout: 60000 });
     await page
       .waitForFunction(
-        (docs) => (docs ? document.querySelector('.sbdocs, .sb-errordisplay') : document.querySelector('#storybook-root')?.childElementCount > 0 || document.querySelector('.sb-errordisplay')),
+        (docs) => (docs ? document.querySelector('.sbdocs') || document.body.classList.contains('sb-show-errordisplay') : document.querySelector('#storybook-root')?.querySelector(':scope > :not(template)') || document.body.classList.contains('sb-show-errordisplay')), // Storybook parks <template> elements in the root before the story mounts
         isDocs,
         { timeout: 20000 },
       )
-      .catch(() => current.issues.push({ cat: 'timeout', detail: 'nothing rendered within 20 s' }));
+      .catch(() => { if (!(!isDocs && (entry.tags || []).includes('play-fn'))) current.issues.push({ cat: 'timeout', detail: 'nothing rendered within 20 s' }); }); // a play-only story (e.g. a toast region) has nothing to mount — reported below as empty-before-play
     // Let lazy docs blocks (Canvas / ArgTypes) and fonts settle; large pages (Design Tokens) fill their text in late.
     await page.waitForTimeout(isDocs ? 600 : 200);
-    await page.waitForFunction((docs) => ((docs ? document.querySelector('.sbdocs') : document.querySelector('#storybook-root'))?.textContent || '').trim().length > 0 || document.querySelector('.sb-errordisplay'), isDocs, { timeout: 5000 }).catch(() => {});
+    await page.waitForFunction((docs) => ((docs ? document.querySelector('.sbdocs') : document.querySelector('#storybook-root'))?.textContent || '').trim().length > 0 || (!docs && document.querySelector('#storybook-root > :not(template)')) || document.body.classList.contains('sb-show-errordisplay'), isDocs, { timeout: 5000 }).catch(() => {});
     const state = await page.evaluate((docs) => {
       const overlay = document.querySelector('.sb-errordisplay');
       const overlayVisible = overlay && getComputedStyle(overlay).display !== 'none' && document.body.classList.contains('sb-show-errordisplay');
@@ -77,7 +77,7 @@ for (const entry of entries) {
       const overflow = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth;
       return {
         overlay: overlayVisible ? (overlay.querySelector('.sb-heading')?.textContent || overlay.textContent || '').trim().slice(0, 200) : null,
-        empty: docs ? !docsRoot || docsRoot.textContent.trim().length === 0 : !root || root.childElementCount === 0,
+        empty: docs ? !docsRoot || docsRoot.textContent.trim().length === 0 : !root || !root.querySelector(':scope > :not(template)'),
         emptyText: docs ? (docsRoot?.textContent || '').trim().length : (root?.textContent || '').trim().length,
         images: imgs,
         svgNoViewBox,

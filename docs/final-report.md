@@ -2,15 +2,15 @@
 
 Figma **[Platform] Web Design System**(`Ry3WecA6sP6lKPop1vXrTp`, 페이지 `🔵 Ver 0.5`)의 Component 섹션 68개 세트와
 Storybook 전체(스토리 444 · 문서 87 = 531개 항목)를 기존 검증 결과에 기대지 않고 처음부터 다시 검사한 결과입니다.
-배포: https://storybook-heo-mu.vercel.app/ (커밋 (아래 10절)). 이전 보고(2026-10-16)는 아래 "이전 보고" 절에 그대로 두었습니다.
+배포: https://storybook-heo-mu.vercel.app/ (커밋 499f693 · 보고서 갱신 커밋은 10절). 이전 보고(2026-10-16)는 아래 "이전 보고" 절에 그대로 두었습니다.
 
 ## 1. 검사한 범위
 
 | 검사 | 범위 | 결과 |
 | --- | --- | --- |
 | 실제 렌더링(`npm run verify:render`, 새 스크립트) | 로컬 531개 항목(스토리 444 · 문서 87) — 페이지 오류 · 콘솔 오류/경고 · 오류 화면 · 빈 렌더 · 깨진 이미지 · 폰트 · 가로 넘침 | 531/531 통과(실패 0, 정보 15 — Gallery 검증 행렬 13 · play 중 렌더 1 · 문서 inert 경고 1), 종료 코드 0 |
-| 실제 렌더링 — 배포 사이트 | 같은 검사를 `STORYBOOK_URL=https://storybook-heo-mu.vercel.app`로 | Push 후 검증 — 10절 |
-| 실제 인터랙션(`npm run verify:interaction`, 새 스크립트) | 31개 흐름 — Select · DatePicker(단일 · 기간 · 비활성 날짜 · 오류) · Checkbox(일부 선택 해제) · Radio · Chip Filter(다중 · 단일) · InputChip · Dropdown · Dialog(포커스 가둠 · 바깥 클릭 무시) · Toast(닫기 · 최대 3개) · Chart 툴팁(포인터 · 키보드) · Accordion · FileUploader · Table(행 선택 · 전체 선택 · 해제) · Dashboard Filter Bar · Tabs · Pagination · Slider · Segmented · Tooltip(지연 · 포커스 · Esc) · Input(지우기 · 비밀번호) · SearchField · Textarea · Switch · DatePicker 연도 · 월 선택 · 읽기 전용 · 비활성 · Form 예시 | Chromium 31/31 · Firefox 31/31 · WebKit 31/31 · 배포 Push 후 검증 — 10절 |
+| 실제 렌더링 — 배포 사이트 | 같은 검사를 `STORYBOOK_URL=https://storybook-heo-mu.vercel.app`로 | 531/531 통과(실패 0, 정보 14 — Gallery 행렬 13 · play 중 렌더 1), 종료 코드 0 |
+| 실제 인터랙션(`npm run verify:interaction`, 새 스크립트) | 31개 흐름 — Select · DatePicker(단일 · 기간 · 비활성 날짜 · 오류) · Checkbox(일부 선택 해제) · Radio · Chip Filter(다중 · 단일) · InputChip · Dropdown · Dialog(포커스 가둠 · 바깥 클릭 무시) · Toast(닫기 · 최대 3개) · Chart 툴팁(포인터 · 키보드) · Accordion · FileUploader · Table(행 선택 · 전체 선택 · 해제) · Dashboard Filter Bar · Tabs · Pagination · Slider · Segmented · Tooltip(지연 · 포커스 · Esc) · Input(지우기 · 비밀번호) · SearchField · Textarea · Switch · DatePicker 연도 · 월 선택 · 읽기 전용 · 비활성 · Form 예시 | Chromium 31/31 · Firefox 31/31 · WebKit 31/31 · 배포 사이트 31/31(종료 코드 0) |
 | 스토리 테스트(`npm test`) | 95 파일 · 444 스토리 | 444/444 통과 |
 | Figma 정합성(`npm run verify:all`) | 36개 컴포넌트 설정 · 세 엔진 + 글자 색 토큰 · 엔진 간 색 일치 | 36개 컴포넌트 × 3엔진 — 32개 통과, 4개(dashboard-filter-bar 0/1 · data-state 1/6 · empty-state 0/1 · table_value_editable 35/52)는 세 엔진 모두 실패(종료 코드 1). 2026-10-27 기록과 실패 목록 · 수치가 동일한 기존 글자 위치 차이이며 이번 변경과 무관(accordion · input · skeleton · button 등 변경 컴포넌트는 모두 통과). 로그의 "text tokens" · "text colour parity" 항목은 다른 세션의 미커밋 검사 스크립트가 낸 결과라 이 보고에서 판정하지 않음 |
 | Button 정합성(`npm run verify:button`) | 352 변형 + 실제 포인터 Hover · Pressed 36 | Chromium · Firefox · WebKit 통과(이 날 앞선 작업에서 확인) |
@@ -87,8 +87,8 @@ Storybook 전체(스토리 444 · 문서 87 = 531개 항목)를 기존 검증 �
 
 ## 10. GitHub · Vercel
 
-- 커밋 (아래 10절) → `heo-mu/storybook` main Push → Vercel 자동 배포 Ready(Push 후 기록).
-- 배포 사이트 검증: Push 후 검증 — 10절, 인터랙션 Push 후 검증 — 10절, 스크린샷의 DashboardFilterBar Usage 페이지 정상 렌더링.
+- 커밋 499f693(코드 · 문서 · 감사 스크립트) → `heo-mu/storybook` main Push(06:50:11Z) → Vercel 자동 배포 Ready(index.json 2026-10-28 06:50:49 GMT). 배포 검증 결과를 담은 이 보고서와 감사 스크립트의 대기 조건 보강은 후속 커밋으로 Push.
+- 배포 사이트 검증: 실제 렌더링 531/531(실패 0, 종료 코드 0), 인터랙션 31/31(종료 코드 0), 스크린샷의 DashboardFilterBar Usage 페이지 오류 없이 렌더링. 처음 두 번의 배포 검사에서 나온 "빈 렌더" 11건 · 6건은 사이트 문제가 아니라 감사 스크립트의 대기 조건(Storybook의 `<template>` 자리표시자 · 숨은 오류 화면 요소에 걸려 일찍 통과)이 원인이었고, 조건을 고친 뒤 로컬 · 배포 모두 0건입니다.
 - npm 배포 · v1.0 릴리스는 하지 않았습니다. 다른 세션의 미커밋 작업은 보존했습니다.
 
 ---
