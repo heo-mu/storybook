@@ -14,7 +14,7 @@
 | 컴포넌트 | Figma 정의 확인 | Storybook 구현 확인 | 시각적 정합성 확인 (C / F / W) | 인터랙션 검증 | 접근성 검증 | 문서 동기화 완료 |
 | --- | --- | --- | --- | --- | --- | --- |
 | button (Button) | ✓ button_basic 54:2904 · 192/192<br>button_icon 67:2368 · 144/144<br>button_text 432:8395 · 16/16 | ✓ | ✓ 352/352 / 352/352 / 352/352 | ✓ play 8 · 스토리 24 | ✓ 경고 0 | ✓ |
-| accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
+| accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 (2026-10-28 펼침 하단 구분선 동기화) | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | alert (Alert) | ✓ alert 179:6087 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 1 · 스토리 9 | ✓ 경고 0 | ✓ |
 | breadcrumb (Breadcrumb) | ✓ breadcrumb-item 710:4794 · 8/8 (Role=Open 삭제, 2026-10-27)<br>breadcrumb 712:5106 · 6/6 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |

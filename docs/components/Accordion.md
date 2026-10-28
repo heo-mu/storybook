@@ -28,7 +28,7 @@ import { Accordion, AccordionItem } from 'platform-design-system';
 | State Disabled | `disabled` | |
 | Title Text | `title` | |
 | Show Description · Description Text | `description` | |
-| Show Divider | `divider` | 기본 켜짐 |
+| Show Divider | `divider` | 기본 켜짐. 제목 아래 구분선과, 펼쳤을 때 내용 아래 구분선(2026-10-28 Figma 추가, `border/default`)을 함께 켜고 끕니다 |
 | Body (accordion-content) | `children` | |
 | Expanded True · False | 펼침 — `Accordion expandedKeys` / `defaultExpandedKeys` | |
 
@@ -41,7 +41,7 @@ Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:
 
 Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
 
-- `ACCO-01` **Hover · Expanded**: Hover는 모든 크기에서 배경 `background/hover`와 진한 구분선 `border/hover`, 펼친 항목은 진한 구분선(Figma State=Hover · Expanded).
+- `ACCO-01` **Hover · Expanded**: Hover는 모든 크기에서 배경 `background/hover`와 진한 구분선 `border/hover`, 펼친 항목은 진한 구분선(Figma State=Hover · Expanded). 펼친 항목은 내용 아래에 두 번째 구분선(`border/default`, Hover에서도 그대로)이 있습니다 — `.ds-accordion__panel::after`(Figma 2026-10-28).
 - `ACCO-02` **Disabled**: 배경 `background/disabled`(fill/disabled), 제목 `title/disabled`(text/inactive — 비활성 라벨).
 - `ACCO-06` **포커스**: 키보드 포커스일 때 트리거 안쪽 가장자리에 2px `colors/border/focus` 링(Figma 속성 `Focus`, 안쪽형) — 폭을 채우는 행이라 이웃 항목에 가려지지 않도록 안쪽에 그립니다.
 

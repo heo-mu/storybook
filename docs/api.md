@@ -45,7 +45,7 @@ export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `defaultExpanded` | `boolean` |  | 처음 펼침 여부. 단독으로 쓰며 직접 제어하지 않을 때 씁니다. |
 | `description` | `ReactNode` |  | 제목 아래 설명. |
 | `disabled` | `boolean` |  | 비활성 — 펼칠 수 없고 키보드 포커스를 받지 않습니다. |
-| `divider` | `boolean` | `true` | 아래 구분선을 표시합니다. 비활성 상태에서는 표시하지 않습니다. |
+| `divider` | `boolean` | `true` | 구분선을 표시합니다 — 제목 아래, 펼쳤을 때는 내용 아래에도. 비활성 상태에서는 표시하지 않습니다. |
 | `expanded` | `boolean` |  | 펼침 여부. `Accordion` 밖에서 단독으로 쓰며 직접 제어할 때 씁니다. |
 | `headingLevel` | `3 \| 2 \| 4 \| 5 \| 6` | `3` | 제목의 제목 요소 수준(`h2` – `h6`). |
 | `id` | `Key` |  | 항목 id. `expandedKeys` · `defaultExpandedKeys`에서 이 값을 씁니다. |

@@ -6,7 +6,8 @@
  *            caret 16px (CaretDown …/icon/default, CaretUp …/icon/expanded, …/icon/disabled)
  *   divider: Figma line directly under the trigger, drawn on the trigger's last pixel row (::after) —
  *            colors/accordion/border/default; Hover and Expanded …/border/hover (renamed from …/border/focus; Expanded
- *            uses it since the Figma update of 2026-10-19)
+ *            uses it since the Figma update of 2026-10-19). Expanded items (Figma 2026-10-28) also end with a second
+ *            divider under the body — always …/border/default — drawn on the panel's last pixel row (::after).
  *   disabled: …/background/disabled (fill/disabled), …/title/disabled (text/placeholder), divider opacity 0
  *   body:    padding top p-3, sides …/trigger-padding-x, bottom spacing/accordion/body-padding; text sm/leading-normal/normal
  *   divider: thickness border-width/accordion/default
@@ -141,6 +142,20 @@
 /* Keep the divider out of layout and hide it only for disabled items. */
 .ds-accordion__item[data-disabled] .ds-accordion__trigger[data-divider]::after {
   opacity: 0;
+}
+
+/* Bottom divider of an expanded item (Figma Expanded=True: a second Divider after the Body, colors/accordion/border/default
+ * in every state, bound to Show Divider like the trigger divider). */
+.ds-accordion__panel {
+  position: relative;
+}
+
+.ds-accordion__item[data-divider][data-expanded] .ds-accordion__panel::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--border-width-accordion-default);
+  background-color: var(--colors-accordion-border-default);
+  content: '';
 }
 
 .ds-accordion__body {

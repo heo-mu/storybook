@@ -64,7 +64,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
-| Accordion 1035:15645 | `accordion-item` (10, 작업 중 14→10: Focus 상태 삭제) Size md/sm · State Default/Hover/Disabled · Expanded | `Accordion`, `AccordionItem` | 6 | 완료 |
+| Accordion 1035:15645 | `accordion-item` (10) Size md/sm · State Default/Hover/Disabled · Expanded · Show Description · Show Divider · Body(swap) · Focus — 2026-10-28 펼친 항목 하단 구분선 추가 | `Accordion`, `AccordionItem` | 6 | 완료 |
 | Table 351:3340 | `table_header` (3) · `table_body` (8) · `table_key` (2) · `table_value` (2) · `table_value_editable` (52) | `Table` (+ Header · Column · Body · Row · Cell), `KeyValueTable`, `KeyValueItem`, `KeyValueGroup`, `ImageUploadPreview` | 7 | 완료 (editable 3개 수동 검토 — F58) |
 | Card 185:6512 (숨김) | `Frame 2147239186` · `Wrapper` | `Card`, `CardHeader`, `CardContent`, `CardFooter` | 7 | 완료 (Figma 프레임 숨김 — 위치 · 크기만 검증, F61) |
 | Chart 773:6723 | `chart` (24) Type Line/Bar Vertical/Bar Horizontal · Style Default/Simple · Group no/yes · hover no/yes · `chart-legend-item` (3) Line/Dash Line/Bar · `chart-tooltip` (단일) | `Chart`, `ChartLegendItem`, `ChartTooltip` | 7 | 완료 — Chart Component 토큰(F78), hover 24변형(F79). 차트 안 툴팁 위치 · 간단 선 바깥 22px는 수동 검토 — F63 · F64 |

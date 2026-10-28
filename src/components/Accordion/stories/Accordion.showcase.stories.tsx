@@ -79,6 +79,16 @@ export const Matrix: Story = {
       await expect(getComputedStyle(trigger).borderRadius).toBe('0px');
       await expect(trigger.getBoundingClientRect().height).toBe(small ? 36 : 44);
       await expect(item.getBoundingClientRect().height).toBe((small ? 36 : 44) + (item.hasAttribute('data-expanded') ? 64 : 0));
+      // Figma 2026-10-28: an expanded item ends with a second divider (border/default) under the body; collapsed items have none.
+      const panel = item.querySelector<HTMLElement>('.ds-accordion__panel');
+      const bottom = panel ? getComputedStyle(panel, '::after') : null;
+      if (item.hasAttribute('data-expanded')) {
+        await expect(bottom?.height).toBe('1px');
+        await expect(bottom?.backgroundColor).toBe('rgb(214, 218, 224)');
+        await expect(Math.round(panel!.getBoundingClientRect().bottom)).toBe(Math.round(item.getBoundingClientRect().bottom));
+      } else {
+        await expect(bottom?.content ?? 'none').toBe('none');
+      }
     }
   },
 };

@@ -7,6 +7,14 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Accordion 동기화 — 펼친 항목의 하단 구분선 (2026-10-28)
+
+Figma `accordion-item`(1035:15648, 10개)을 최신 원본으로 다시 읽었습니다. 트리거 높이 44 · 36, 패딩 · 간격 · 제목 · 본문 글자 · 아이콘 · 포커스 링 · `colors/accordion/*` 등 변수 20개(별칭 포함)는 스냅샷과 같고, 바뀐 것은 **Expanded=True 변형 4개에 내용 아래 두 번째 Divider(`colors/accordion/border/default`, Show Divider에 연결)가 추가**된 것입니다.
+
+- **AccordionItem**: 펼친 항목의 패널 마지막 픽셀 행에 1px `border/default` 구분선(`.ds-accordion__panel::after`, `divider` Prop으로 함께 끄고 켬). Props · 공개 API · 펼침/접힘 · 키보드 동작 변화 없음.
+- **검증 자산**: `figma/geometry/accordion-item.json`에 하단 Divider 추가, `figma/reference/accordion-item.png` 재추출. Variants play에 펼친 항목 하단 구분선(1px, #d6dae0) · 접힌 항목 없음 검사 추가.
+- **보고**: sm Default Expanded 트리거에만 `elevation-3` 효과가 있어(다른 Expanded 변형에는 없음, 화면 차이 없음) F102로 기록하고 코드에는 넣지 않았습니다.
+
 ### Toast 재설계 동기화 — Figma `toast` 제목 + 설명 + "닫기" 버튼, Rules 06 개정 (2026-10-28)
 
 Figma `toast` 세트(91:5927, F101)가 320×36 한 줄 + X 아이콘에서 **320×54(내용에 맞춰 높이, 최소 36)의 제목 + 설명 + "닫기" `button_text`** 구조로 바뀐 것을 반영했습니다. 패딩 p-2/p-2_5 · 간격 p-2 · radius 4 · 1px 테두리 `colors/toast/border/<status>` · elevation-3 그림자 · 20px 종류 아이콘은 그대로이고, 제목은 `colors/toast/label/title/default`(sm/medium), 새 설명은 `colors/toast/label/body/default`(xs/normal, 2px 아래)입니다.
