@@ -101,6 +101,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
 
 - `BUTT-02` **상태 표현**: Hover · Pressed는 실제 포인터 상태(`:hover`, `:active`), Disabled는 네이티브 `disabled`(Tab 순서에서 빠짐).
+- `BUTT-03` **처리 중(`loading`)** (2026-10-28, Figma Form 사용 예시 "저장 중" 1216:7451): 버튼은 Default 팔레트 · 크기를 유지하고(Hover · Pressed 변화 없음), 글자 · 아이콘은 자리만 남기고 투명(`opacity: 0`), 가운데에 Figma `loading` size=sm · Type=Inverse(16px, 2px 호, `colors/border/inverse` = 버튼 글자색)를 그립니다. `aria-busy` · `aria-disabled`로 상태를 알리고 포커스는 유지하며, 클릭 · Enter · Space를 무시해 중복 제출을 막습니다(`disabled`가 아님). 버튼 안의 `role="status"` 글자(`loadingLabel`)가 상태를 읽어 주고, 이름은 `aria-labelledby`로 라벨에 고정됩니다. Figma 예시의 저장 중 버튼은 글자를 지워 40px이지만 코드는 레이아웃이 흔들리지 않도록 원래 너비(49px)를 유지합니다. Figma `button_basic` 세트에는 Loading 변형이 없어 공통 상태로 추가하지 않았습니다(사용 예시 기준).
 
 ## 아이콘
 

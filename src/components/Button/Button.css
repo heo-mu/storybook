@@ -68,6 +68,45 @@
 }
 
 /* Declared after :hover/:active (same specificity) so Disabled always wins. */
+/* Loading (Figma Form 사용 예시 "저장 중", 2026-10-28): the Default palette stays (no hover / pressed change), the label and
+ * icons keep their space but are invisible, and a 16px inverse-style arc spins in the middle. Clicks are ignored in JS. */
+.ds-button-base[data-loading] {
+  --ds-button-bg: var(--ds-button-bg-default);
+  --ds-button-label: var(--ds-button-label-default);
+  --ds-button-icon: var(--ds-button-icon-default);
+
+  position: relative;
+  cursor: progress;
+}
+
+.ds-button-base[data-loading] > .ds-button__label,
+.ds-button-base[data-loading] > .ds-button__icon {
+  opacity: 0;
+}
+
+/* Specificity above .ds-loading (which sets the brand colour) so the arc takes the button label colour — Figma Type=Inverse on Solid. */
+.ds-button-base[data-loading] .ds-button__loading {
+  --ds-loading-color: var(--ds-button-label);
+}
+
+.ds-button__loading {
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  pointer-events: none;
+}
+
+.ds-button__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .ds-button-base:disabled {
   --ds-button-bg: var(--ds-button-bg-disabled);
   --ds-button-label: var(--ds-button-label-disabled);

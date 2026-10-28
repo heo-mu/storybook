@@ -177,6 +177,8 @@ export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | `appearance` | `"solid" \| "outline"` | `'solid' (secondary는 'outline')` | 모양 — 채움(solid) · 테두리(outline). |
 | `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
 | `leftIcon` | `ReactNode` |  | 글자 왼쪽 아이콘. 넘기면 표시되며 버튼 크기에 맞춰집니다. |
+| `loading` | `boolean` | `false` | 처리 중(Figma Form 사용 예시 "저장 중"): 글자 자리에 회전 표시가 보이고 버튼은 Default 모양 · 크기를 유지합니다. 누르거나 Enter · Space로 눌러도 `onClick` · 폼 제출이 일어나지 않고(중복 제출 방지), 포커스는 유지됩니다(`aria-busy` · `aria-disabled`). |
+| `loadingLabel` | `string` | `처리 중` | 처리 중일 때 화면 낭독기가 읽는 상태 글자. |
 | `rightIcon` | `ReactNode` |  | 글자 오른쪽 아이콘. 넘기면 표시되며 버튼 크기에 맞춰집니다. |
 | `shape` | `"square" \| "rounded"` | `square` | 모서리 모양. |
 | `size` | `"xs" \| "sm" \| "md" \| "lg"` | `xs` | 크기. |

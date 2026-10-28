@@ -5,7 +5,6 @@ import { Button } from '../components/Button';
 import { Checkbox, CheckboxGroup } from '../components/Checkbox';
 import { DatePicker } from '../components/DatePicker';
 import { Input } from '../components/Input';
-import { Loading } from '../components/Loading';
 import { Radio, RadioGroup } from '../components/Radio';
 import { Select, SelectOption } from '../components/Select';
 import { Textarea } from '../components/Textarea';
@@ -23,7 +22,7 @@ const meta = {
         component:
           '입력 화면을 만드는 방법입니다. 필수 항목은 `required`로 라벨 옆에 점을 붙이고, 입력 방법은 `message`로 칸 아래 회색 도움말로 알려 줍니다. ' +
           '형식이 틀리면 `invalid`와 `message`로 그 자리에 오류를 보여 주고, 필수 동의처럼 묶음에서 고르지 않은 것은 `CheckboxGroup`의 `invalid` · `message`로 묶음 아래에 알려 줍니다. ' +
-          '저장하는 동안에는 버튼을 `disabled`로 바꾸고 옆에 `Loading`(sm)을 보여 줍니다.',
+          '저장하는 동안에는 저장 버튼을 `loading`으로 바꿔 버튼 안에 회전 표시를 보여 주고(크기 · 색은 그대로, 다시 누를 수 없음), 끝나면 완료 메시지를 보여 줍니다.',
       },
     },
   },
@@ -57,6 +56,8 @@ function FormExample() {
   const [agree, setAgree] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [submits, setSubmits] = useState(0);
   const emailError = email === '' ? (submitted ? '이메일을 입력하세요.' : null) : EMAIL.test(email) ? null : '이메일 형식이 올바르지 않습니다. 예: name@company.com';
   const departmentError = submitted && department === null ? '부서를 선택하세요.' : null;
   const agreeError = submitted && !agree ? AGREE_ERROR : null;
@@ -77,8 +78,14 @@ function FormExample() {
       (first as HTMLElement | null)?.focus();
       return;
     }
+    if (saving) return; // the loading button already blocks this, kept as the form's own guard
+    setSubmits((n) => n + 1);
+    setSaved(false);
     setSaving(true);
-    window.setTimeout(() => setSaving(false), 1500);
+    window.setTimeout(() => {
+      setSaving(false);
+      setSaved(true);
+    }, 1500);
   };
 
   return (
@@ -132,12 +139,17 @@ function FormExample() {
       >
         <Checkbox value="yes" label="개인정보 수집 · 이용에 동의합니다" />
       </CheckboxGroup>
-      <div style={actions}>
-        {saving && <Loading size="sm" aria-label="저장 중" />}
-        <Button type="button" variant="tertiary" appearance="solid" size="md" disabled={saving}>
+      <div style={actions} data-submits={submits}>
+        {saved && (
+          <span role="status" className="ds-typography-sm-leading-normal-normal" style={{ marginRight: 'auto', color: 'var(--colors-status-success-strong)' }}>
+            저장했습니다
+          </span>
+        )}
+        {/* Figma "저장 중": 취소는 Default 그대로, 저장 버튼 안에 16px 회전 표시 — 버튼 크기 · 색 유지, 다시 누를 수 없음 */}
+        <Button type="button" variant="tertiary" appearance="solid" size="md">
           취소
         </Button>
-        <Button type="submit" variant="primary" appearance="solid" size="md" disabled={saving}>
+        <Button type="submit" variant="primary" appearance="solid" size="md" loading={saving} loadingLabel="저장 중">
           저장
         </Button>
       </div>
@@ -156,11 +168,10 @@ export const Form: Story = {
           저장 중일 때
         </span>
         <div style={actions}>
-          <Loading size="sm" aria-label="저장 중" />
-          <Button variant="tertiary" appearance="solid" size="md" disabled>
+          <Button variant="tertiary" appearance="solid" size="md">
             취소
           </Button>
-          <Button variant="primary" appearance="solid" size="md" disabled>
+          <Button variant="primary" appearance="solid" size="md" loading loadingLabel="저장 중">
             저장
           </Button>
         </div>
@@ -209,15 +220,30 @@ export const Form: Story = {
       await userEvent.click(agree);
       await expect(within(form).queryByText(AGREE_ERROR)).toBeNull();
     });
-    await step('저장 — 처리 중에는 버튼 비활성 · 로딩', async () => {
-      await userEvent.click(canvas.getAllByRole('button', { name: '저장' })[0]);
-      await expect(within(form).getByRole('status', { name: '저장 중' })).toBeInTheDocument();
-      await expect(within(form).getByRole('button', { name: '저장' })).toBeDisabled();
-      await waitFor(() => expect(within(form).queryByRole('status', { name: '저장 중' })).toBeNull(), { timeout: 3000 });
+    await step('저장 — 처리 중: 버튼 안 회전 표시, 크기 유지, 다시 눌러도 제출 안 됨, 끝나면 완료 메시지', async () => {
+      const save = within(form).getByRole('button', { name: '저장' });
+      const before = save.getBoundingClientRect();
+      await userEvent.click(save);
+      await expect(save).toHaveAttribute('aria-busy', 'true');
+      await expect(save).toHaveAttribute('aria-disabled', 'true');
+      await expect(within(save).getByRole('status', { name: '저장 중' })).toBeInTheDocument();
+      await expect(save.querySelector('.ds-loading__spinner')).toBeTruthy();
+      await expect(getComputedStyle(save.querySelector('.ds-button__label')!).opacity).toBe('0');
+      const during = save.getBoundingClientRect();
+      await expect([during.width, during.height]).toEqual([before.width, before.height]);
+      await expect(save).toHaveFocus();
+      await userEvent.click(save);
+      await userEvent.keyboard('{Enter}');
+      await expect(form.querySelector('[data-submits]')).toHaveAttribute('data-submits', '1');
+      await expect(within(form).getByRole('button', { name: '취소' })).toBeEnabled();
+      await waitFor(() => expect(within(save).queryByRole('status', { name: '저장 중' })).toBeNull(), { timeout: 3000 });
+      await expect(save).not.toHaveAttribute('aria-busy');
+      await expect(within(form).getByText('저장했습니다')).toHaveAttribute('role', 'status');
     });
     // The static rows below the form: the processing state and the required-consent error.
     const rows = (canvasElement.firstElementChild as HTMLElement).children;
-    await expect(within(rows[1] as HTMLElement).getAllByRole('status', { name: '저장 중' }).length).toBeGreaterThanOrEqual(1);
+    await expect(within(rows[1] as HTMLElement).getByRole('button', { name: '저장' })).toHaveAttribute('aria-busy', 'true');
+    await expect(within(rows[1] as HTMLElement).getByRole('status', { name: '저장 중' })).toBeInTheDocument();
     await expect(within(rows[2] as HTMLElement).getByRole('checkbox')).toHaveAccessibleDescription(AGREE_ERROR);
   },
 };

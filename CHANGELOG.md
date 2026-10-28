@@ -7,6 +7,14 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Button `loading` — Form 사용 예시 "저장 중" 동기화 (2026-10-28)
+
+Figma Form 사용 예시(1216:5172)의 "저장 중"(1216:7451)은 저장 버튼(Primary · Solid · md) 안에 `loading` size=sm · Type=Inverse(16px, 2px 흰 호 `colors/border/inverse`)를 두고 배경은 Default(`button/primary/solid/background/default`)를 유지하며, 취소 버튼은 Default 그대로입니다. 기존 코드는 버튼을 `disabled`로 바꾸고 옆에 `Loading`을 두었습니다.
+
+- **Button `loading` · `loadingLabel` Props 추가**(기존 Props · 기본 모양 변화 없음): 글자 · 아이콘은 자리만 남기고 투명, 가운데 16px 회전 표시(버튼 글자색), Default 팔레트 고정, `aria-busy` · `aria-disabled`, 포커스 유지, 클릭 · Enter · Space 무시(중복 제출 방지), `role="status"` 상태 글자. 버튼 너비는 유지합니다(Figma 예시는 글자를 지워 40px — 레이아웃 흔들림 방지를 위해 49px 유지).
+- **Loading**: 호 색을 `--ds-loading-color`(기본 `colors/border/brand`)로 빼내 버튼 안에서 Inverse로 재사용(시각 변화 없음).
+- **Form 예시**: 저장 중 버튼에 `loading`, 취소는 Default(Figma), 완료 시 "저장했습니다" 상태 메시지; play에 회전 표시 · 크기 유지 · 중복 제출 차단 · 완료 복귀 검사. Button 스토리 "처리 중" 추가, 사용 문서 · 개발 노트(BUTT-03) 갱신.
+
 ### Chip Filter — 선택값 표시 규칙 "첫 값 외 n개" (2026-10-28)
 
 `FilterChipSelect`의 칩 글자가 선택 개수에 따라 바뀝니다 — 0개 "필터명", 1개 "필터명: 값", 2개 이상 "필터명: 첫 값 외 n개"(n은 보여 준 값을 뺀 나머지). 예: 지역 → 지역: 서울 → 지역: 서울 외 1개 → 지역: 서울 외 2개. 첫 값은 선택 순서가 아니라 옵션 목록 순서를 따르고, 선택 · 해제 · 초기화 시 즉시 갱신됩니다.

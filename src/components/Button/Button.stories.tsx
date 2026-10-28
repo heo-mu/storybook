@@ -25,9 +25,12 @@ const meta = {
     size: 'xs',
     shape: 'square',
     disabled: false,
+    loading: false,
     onClick: fn(),
   },
   argTypes: {
+    loading: { control: 'boolean', description: '처리 중 — 글자 자리에 회전 표시, 다시 누를 수 없음(Figma Form 사용 예시 "저장 중")' },
+    loadingLabel: { control: 'text', description: '처리 중일 때 화면 낭독기가 읽는 글자', table: { defaultValue: { summary: '처리 중' } } },
     variant: { control: 'inline-radio', options: BUTTON_VARIANTS, description: '종류 — 행동의 중요도', table: { defaultValue: { summary: 'primary' } } },
     appearance: {
       control: 'inline-radio',
@@ -70,6 +73,12 @@ export const TertiaryOutline: Story = {
 export const RoundedLarge: Story = {
   name: "Large Rounded",
   args: { size: 'lg', shape: 'rounded' },
+};
+
+/** 처리 중(저장 중) — Figma Form 사용 예시의 "저장 중" 버튼: Primary · Solid · md, 16px 흰 회전 표시, 크기 · 색 유지. */
+export const Loading: Story = {
+  name: '처리 중',
+  args: { variant: 'primary', appearance: 'solid', size: 'md', loading: true, loadingLabel: '저장 중' },
 };
 
 export const Disabled: Story = {

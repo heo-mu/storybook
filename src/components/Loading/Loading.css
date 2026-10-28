@@ -10,6 +10,8 @@
 
 .ds-loading {
   --ds-loading-spinner: 24px;
+  /* Arc colour — Figma Type=Brand binds colors/border/brand; Type=Inverse (inside a solid button) binds colors/border/inverse. */
+  --ds-loading-color: var(--colors-border-brand);
   --ds-loading-angle: 100.5deg;
   --ds-loading-arc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 12C22 12.5523 22.4477 13 23 13C23.5523 13 24 12.5523 24 12H23H22ZM23.5193 15.3727C23.6742 14.8426 23.3701 14.2873 22.84 14.1323C22.3099 13.9773 21.7546 14.2814 21.5996 14.8115L22.5594 15.0921L23.5193 15.3727ZM12 23V22C6.47715 22 2 17.5228 2 12H1H0C0 18.6274 5.37258 24 12 24V23ZM1 12H2C2 6.47715 6.47715 2 12 2V1V0C5.37258 0 0 5.37258 0 12H1ZM12 1V2C17.5228 2 22 6.47715 22 12H23H24C24 5.37258 18.6274 0 12 0V1ZM22.5594 15.0921L21.5996 14.8115C20.3849 18.9665 16.5454 22 12 22V23V24C17.4577 24 22.062 20.3573 23.5193 15.3727L22.5594 15.0921Z'/%3E%3C/svg%3E");
 
@@ -54,14 +56,14 @@
   background: conic-gradient(
     from var(--ds-loading-angle),
     var(--colors-border-transparency) 0deg,
-    color-mix(in srgb, var(--colors-border-brand) 1.56%, transparent) 45deg,
-    color-mix(in srgb, var(--colors-border-brand) 6.25%, transparent) 90deg,
-    color-mix(in srgb, var(--colors-border-brand) 14.06%, transparent) 135deg,
-    color-mix(in srgb, var(--colors-border-brand) 25%, transparent) 180deg,
-    color-mix(in srgb, var(--colors-border-brand) 39.06%, transparent) 225deg,
-    color-mix(in srgb, var(--colors-border-brand) 56.25%, transparent) 270deg,
-    color-mix(in srgb, var(--colors-border-brand) 76.56%, transparent) 315deg,
-    var(--colors-border-brand) 360deg
+    color-mix(in srgb, var(--ds-loading-color) 1.56%, transparent) 45deg,
+    color-mix(in srgb, var(--ds-loading-color) 6.25%, transparent) 90deg,
+    color-mix(in srgb, var(--ds-loading-color) 14.06%, transparent) 135deg,
+    color-mix(in srgb, var(--ds-loading-color) 25%, transparent) 180deg,
+    color-mix(in srgb, var(--ds-loading-color) 39.06%, transparent) 225deg,
+    color-mix(in srgb, var(--ds-loading-color) 56.25%, transparent) 270deg,
+    color-mix(in srgb, var(--ds-loading-color) 76.56%, transparent) 315deg,
+    var(--ds-loading-color) 360deg
   );
   -webkit-mask: var(--ds-loading-arc) center / 100% 100% no-repeat;
   mask: var(--ds-loading-arc) center / 100% 100% no-repeat;
