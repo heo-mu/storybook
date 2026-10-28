@@ -7,6 +7,10 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### SearchField Solid border 재대조 — Figma 변수 변경 없음 (2026-10-28)
+
+`colors/search-field/solid/border/*`를 최신 Figma에서 다시 읽었습니다 — `hover` · `focus` = `@S:colors/border/gray-subtle`(brand-gray/400 #a1a8b5), `error` = `@T:colors/brand-status/error/strong`(#c10007), 모드 1개, Solid Default · Completed · Disabled 변형에는 테두리 없음. 스냅샷 · 생성 토큰(`src/tokens/components/search-field.css`) · 코드와 모두 같고, Component 체크섬(733 · 89299fb3)과 세트 스크린샷(2060×568 픽셀 동일)도 일치해 **반영할 변경이 없습니다**(세 엔진 36/36). 같은 Semantic `border/gray-subtle`를 쓰는 다른 변수(tab 밑줄 hover · dialog · chip · file-uploader 테두리)도 변화 없음. Semantic `fill/secondary/strong/hover · pressed` 드리프트(F100)는 그대로 남아 있습니다.
+
 ### Radio 재대조 — Figma `radio` 변경 없음 (2026-10-28)
 
 Figma `radio` 세트(102:2677, 24개)를 최신 원본으로 다시 읽어 변형 · 기하 · 바인딩 · `colors/radio/*` 22개 · 화면(344×252 픽셀 동일)을 스냅샷과 대조했습니다 — **차이 없음**, 세 엔진 24/24 통과. 코드 변경 없이 개발 노트(md 점 8px, 포커스 링 기하)와 동기화 상태만 갱신했습니다.
