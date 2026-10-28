@@ -242,6 +242,8 @@ Figma를 Product Designer 관점에서 따로 점검하고(Storybook을 정답�
 | F80 복구 | Component 컬렉션에 `spacing/accordion/trigger-padding-x/{md,sm}` · `spacing/accordion/padding/{md,sm}` · `spacing/accordion/body-padding` · `size/accordion/trigger-height/{md,sm}` · `border-radius/accordion/default` · `border-width/accordion/default` 재생성(원래 별칭 · 스코프 · WEB 코드 문법), accordion-item(1035:15648) 10개 변형의 Trigger · Body · Divider 94곳 재연결 | VariableID:1499:7382 – 7390 |
 | F96 | date-picker_calendar(1339:6880) 설명 "Secondary TextButton" → "Primary TextButton" | 1339:6880 |
 
+> **2026-10-28**: 사용자가 Figma에서 `colors/fill/secondary/strong/hover` · `pressed`를 다시 **brand/600 · brand/500**으로 되돌렸습니다(F100 종결, 이 작업은 Figma를 수정하지 않고 동기화만). 흰 라벨 대비 3.51:1 · 2.46:1은 [accessibility.md](./accessibility.md)에 기록.
+
 유지한 Figma 변경(동기화만): Tab 밑줄 `gray-subtler · gray-subtle · gray`, Stepper 현재 단계 배경 `fill/primary/strong/default`, Toast `label/title` · `label/body`, Breadcrumb Role=Open 삭제.
 
 ## Y. Chip Filter 선택값 표시 규칙 — 사용 예시 글자 수정 (2026-10-28, 사용자 요청 작업)

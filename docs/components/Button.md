@@ -102,6 +102,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 
 - `BUTT-02` **상태 표현**: Hover · Pressed는 실제 포인터 상태(`:hover`, `:active`), Disabled는 네이티브 `disabled`(Tab 순서에서 빠짐).
 - `BUTT-03` **처리 중(`loading`)** (2026-10-28, Figma Form 사용 예시 "저장 중" 1216:7451): 버튼은 Default 팔레트 · 크기를 유지하고(Hover · Pressed 변화 없음), 글자 · 아이콘은 자리만 남기고 투명(`opacity: 0`), 가운데에 Figma `loading` size=sm · Type=Inverse(16px, 2px 호, `colors/border/inverse` = 버튼 글자색)를 그립니다. `aria-busy` · `aria-disabled`로 상태를 알리고 포커스는 유지하며, 클릭 · Enter · Space를 무시해 중복 제출을 막습니다(`disabled`가 아님). 버튼 안의 `role="status"` 글자(`loadingLabel`)가 상태를 읽어 주고, 이름은 `aria-labelledby`로 라벨에 고정됩니다. Figma 예시의 저장 중 버튼은 글자를 지워 40px이지만 코드는 레이아웃이 흔들리지 않도록 원래 너비(49px)를 유지합니다. Figma `button_basic` 세트에는 Loading 변형이 없어 공통 상태로 추가하지 않았습니다(사용 예시 기준).
+- `BUTT-04` **Secondary / Solid Hover · Pressed 배경**(2026-10-28, Figma 결정값 F100 종결): Semantic `colors/fill/secondary/strong/hover` → brand/600(#009b68), `pressed` → brand/500(#02bb7b) — Component `button/secondary/solid/background/hover` · `pressed`가 그대로 참조하므로 코드는 별칭 변경 없이 `src/tokens/semantic.css` 재생성만으로 따라갑니다(Button · IconButton 공통, TextButton 무관). 흰 라벨(#fdfdfd) 대비 Hover 3.51:1 · Pressed 2.46:1(14px 본문 4.5:1 미달, Pressed는 비텍스트 3:1도 미달)로 axe 색 대비 18건(States · Variant Matrix의 pseudo-hover · active 칸)이 남습니다 — 색은 Figma 값 그대로 두고 [accessibility.md](../accessibility.md)에 기록.
 
 ## 아이콘
 

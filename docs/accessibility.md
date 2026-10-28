@@ -30,6 +30,18 @@ Figma 링 레이어와 DOM 링의 화면 비교(2026-10-19).
 Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). 모두 기존 팔레트 안에서 고른 색이고, 기준을 낮추거나 경고를 숨기지 않았습니다.
 흰 배경은 `surface/page` #fdfdfd 기준입니다.
 
+### Button Secondary Solid Hover · Pressed — Figma 결정값으로 재발 (2026-10-28)
+
+사용자가 Figma Semantic `colors/fill/secondary/strong/hover` · `pressed`를 brand/600 · 500으로 확정해(F100 종결) 코드를 동기화했습니다. 색은 Figma 값 그대로이며 기준을 낮추거나 `KNOWN_CONTRAST`에 넣지 않았습니다.
+axe 감사(444 스토리) 색 대비 위반 **18건** — 모두 아래 두 상태의 흰 라벨(#fdfdfd, 14px normal)입니다. Default(brand/700 #007c56, 5.14:1) · Disabled · Outline은 영향이 없습니다.
+
+| 상태 | 배경 | 흰 라벨 대비 | 기준 | 발견 위치 |
+| --- | --- | --- | --- | --- |
+| Secondary / Solid Hover | brand/600 #009b68 | **3.51:1** | 글자 4.5:1 미달(비텍스트 3:1은 충족) | Button · IconButton States · Variant Matrix 스토리의 pseudo-hover 칸 |
+| Secondary / Solid Pressed | brand/500 #02bb7b | **2.46:1** | 글자 4.5:1 · 비텍스트 3:1 모두 미달 | 같은 스토리의 pseudo-active 칸 |
+
+실제 사용 중에는 마우스를 올리거나 누르는 동안만 나타나는 색이지만, 그동안 라벨이 읽히기 어렵습니다. 디자인 결정(대비 수용 또는 brand/800 · 900 복귀)은 Figma 쪽 판단 대상입니다.
+
 ### 미해결 색 대비 위반 — `text/placeholder` brand-gray/400 동기화 이후 (2026-10-27)
 
 **해결(2026-10-27 저녁, Figma 수정 승인 작업)**: `text/placeholder` → brand-gray/600 복귀, 용도 오류 3종은 `text/tertiary`로 재바인딩(R9–R11), Button Secondary Solid Hover · Pressed는 brand/800 · 900. 다시 감사한 결과 색 대비 위반 ****0건**(438 스토리, 알려진 목록 없이 통과)**. 아래 표는 수정 전 분류 기록입니다.

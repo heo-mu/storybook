@@ -7,6 +7,14 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Button Secondary / Solid Hover · Pressed — Figma 결정값 동기화 (2026-10-28)
+
+Figma Semantic `colors/fill/secondary/strong/hover` · `pressed`가 brand/800 · 900에서 **brand/600(#009b68) · brand/500(#02bb7b)** 로 확정되었습니다(별칭 변경, 기본 brand/700 · 라벨 · 아이콘 · 테두리 · Component 별칭은 그대로, 다른 변수 변화 없음 — 체크섬 8그룹 일치, F100 종결).
+
+- 스냅샷 `figma/variables/semantic.txt` · `src/tokens/semantic.css` · `tokens.json` 재생성(CSS 하드코딩 없음). 영향: Button · IconButton Secondary / Solid의 Hover · Pressed 배경만(TextButton · 다른 Variant 무관).
+- 정합성: `figma/button-spec.json` 기대 색 4곳, 참조 이미지 button_basic(16칸) · button_icon(12칸) 재내보내기 — 352개 변형 + 실제 포인터 Hover · Pressed 36/36이 Chromium · Firefox · WebKit에서 통과.
+- 접근성: 흰 라벨 대비 Hover 3.51:1 · Pressed 2.46:1로 axe 색 대비 **18건**(States · Variant Matrix의 pseudo 상태 칸)이 남음 — 색은 Figma 값 그대로, [docs/accessibility.md](docs/accessibility.md)에 기록. Props · 공개 API 변화 없음.
+
 ### Design System Rules 동기화 (2026-10-28)
 
 Figma Design System Rules(02–09장 — "(계속)" 프레임과 10장은 없어짐)를 다시 읽어 뜻이 바뀐 행만 반영했습니다.
