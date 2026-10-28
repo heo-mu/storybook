@@ -37,7 +37,7 @@
 | navigation (Navigation) | ✓ item_parent 180:5246 · 4/4<br>item_link 180:6174 · 4/4<br>item_child 180:6249 · 4/4 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 2 · 스토리 9 | ✓ 경고 0 | ✓ |
 | pagination (Pagination) | ✓ pagination 132:871 · 3/3<br>pagination_item 132:520 · 24/24<br>pagination_control 132:604 · 48/48 | ✓ | ✓ 75/75 / 75/75 / 75/75 | ✓ play 2 · 스토리 11 | ✓ 경고 0 | ✓ |
 | progress (Progress) | ✓ progress 185:6518 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
-| radio (Radio) | ✓ radio 102:2677 · 24/24 | ✓ | ✓ 24/24 / 24/24 / 24/24 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
+| radio (Radio) | ✓ radio 102:2677 · 24/24 (2026-10-28 재대조, 변경 없음) | ✓ | ✓ 24/24 / 24/24 / 24/24 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
 | search-field (SearchField) | ✓ search-field 216:6570 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | segmented-control (SegmentedControl) | ✓ segmented-control 531:24471 · 3/3<br>segmented-item 524:24397 · 18/18 | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
 | select (Select) | ✓ select 95:4740 · 24/24<br>listbox 97:2665 · 3/3<br>option 97:2286 · 15/15<br>select_message 95:2960 · 3/3 | ✓ | ✓ 45/45 / 45/45 / 45/45 | ✓ play 6 · 스토리 21 | ✓ 경고 0 | ✓ |

@@ -29,7 +29,7 @@ import { Radio, RadioGroup } from 'platform-design-system';
 | Figma | Prop | 비고 |
 | --- | --- | --- |
 | Selection Unselected · Selected | `RadioGroup`의 `value` / `defaultValue` | 단독 사용 시 `checked` / `defaultChecked` |
-| Size sm · md · lg | `size` | 원 14 · 16 · 18px, 점 8 · 9 · 10px. 기본 `'sm'` |
+| Size sm · md · lg | `size` | 원 14 · 16 · 18px, 점 8 · 8 · 10px(md 점은 Figma에서 9 → 8px, 2026-10). 기본 `'sm'` |
 | Label / Label Text | `label` | 생략하면 `aria-label` 지정 |
 | State Hover · Pressed | 브라우저 `:hover` · `:active` | |
 | State Disabled | `disabled` | 그룹 전체는 `RadioGroup disabled` |
@@ -70,7 +70,8 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
-- Figma 컴포넌트 세트: `radio`(102:2677).
+- Figma 컴포넌트 세트: `radio`(102:2677, 24개 = Selection 2 × Size 3 × State 4, Boolean Label · Focus). 2026-10-28 최신 Figma 재대조: 변형 · 기하 · 바인딩 · 변수 · 화면이 스냅샷과 동일(세 엔진 24/24).
+- 포커스 링(Figma `Focus ring`, 숨김 레이어): 원 바깥 4px 상자에 2px INSIDE 스트로크 `colors/border/focus` = 원에서 2px 떨어진 2px 링 — 코드의 `outline-offset: p-0_5` + 2px outline과 같습니다.
 
 
 ## Storybook 검증 예시의 내부 참고

@@ -7,6 +7,12 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Radio 재대조 — Figma `radio` 변경 없음 (2026-10-28)
+
+Figma `radio` 세트(102:2677, 24개)를 최신 원본으로 다시 읽어 변형 · 기하 · 바인딩 · `colors/radio/*` 22개 · 화면(344×252 픽셀 동일)을 스냅샷과 대조했습니다 — **차이 없음**, 세 엔진 24/24 통과. 코드 변경 없이 개발 노트(md 점 8px, 포커스 링 기하)와 동기화 상태만 갱신했습니다.
+
+- **발견한 공통 토큰 드리프트(Radio 무관)**: Figma Semantic `fill/secondary/strong/hover` · `pressed`가 A-1 수정(brand/800 · 900, 2026-10-27 승인)에서 다시 brand/600 · 500으로 돌아감 — Button Secondary · Solid Hover · Pressed 흰 라벨 대비 3.51 · 2.46:1. 코드 · 스냅샷은 그대로 두고 F100에 기록(의도 확인 전까지 동기화하지 않음).
+
 ### Link 동기화 — Figma `link` Type 축 (2026-10-28)
 
 Figma `link` 세트(111:1509)가 State=Visited 변형을 **Type 축(Default · Visited)** 으로 분리했습니다(15 → 21개: Size 3 × State 4 + Visited 3, Visited Disabled 없음). 크기 · 패딩 · 간격 · 아이콘 · 텍스트 스타일 · 토큰 값은 바뀌지 않았습니다.
