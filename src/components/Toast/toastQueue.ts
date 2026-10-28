@@ -4,30 +4,56 @@ import type { AlertStatus } from '../Alert/Alert.options';
 
 /** 토스트 목록에 들어가는 토스트 하나의 내용. */
 export type ToastContent = {
-  /** 종류 — 안내 · 성공 · 오류. @default 'information' */
+  /** 종류 — 안내 · 성공 · 주의 · 오류. @default 'information' */
   status?: AlertStatus;
-  /** 메시지. */
+  /** 제목(메시지). 한 줄로 보입니다. */
   message: ReactNode;
+  /** 제목 아래 설명(Figma Sub Text). 없으면 제목만 보입니다. */
+  description?: ReactNode;
+  /** 종류 아이콘을 보일지 여부(Figma Show Icon). @default true */
+  showIcon?: boolean;
 };
+
+/** 한 번에 보이는 토스트 수(Design System Rules 06: 최대 3개). */
+export const MAX_VISIBLE_TOASTS = 3;
+/** 토스트가 보이는 시간(ms) — Rules 06: 1개당 5초. 더 짧게 정할 수 없습니다. */
+export const TOAST_TIMEOUT = 5000;
 
 /**
  * `<ToastRegion />`이 보여 주는 기본 토스트 목록입니다.
  * @internal 직접 쓰지 말고 `showToast` · `closeToast`를 씁니다.
  */
-export const toastQueue = new ToastQueue<ToastContent>({ maxVisibleToasts: 3 });
+export const toastQueue = new ToastQueue<ToastContent>({ maxVisibleToasts: MAX_VISIBLE_TOASTS });
+
+export type ShowToastOptions = {
+  /** 종류. @default 'information' */
+  status?: AlertStatus;
+  /** 제목 아래 설명. */
+  description?: ReactNode;
+  /** 종류 아이콘 표시 여부. @default true */
+  showIcon?: boolean;
+  /** 자동으로 닫히는 시간(ms). 5000보다 짧게 정할 수 없고, `null`이면 닫을 때까지 남습니다. @default 5000 */
+  timeout?: number | null;
+};
 
 /**
  * 토스트를 띄우고, `closeToast(key)`에 넘길 key를 돌려줍니다.
- * `timeout`(ms)이 지나면 자동으로 닫히며 5000보다 짧게 정할 수 없습니다. 기본은 5000이고, `status: 'error'` · `'warning'`은 `null`(닫을 때까지 유지)입니다.
- * 한 번에 3개까지 보이고 오래된 토스트는 기다립니다. 같은 문구와 종류를 다시 보내면 겹쳐 쌓지 않고 새로 바꿔 보여 줍니다.
+ * Design System Rules 06(2026-10-28): 모든 종류가 5초 뒤 자동으로 닫히고(`timeout`은 5000 이상, `null`이면 닫을 때까지 유지),
+ * 한 번에 3개까지 보이며 네 번째가 오면 가장 오래된 토스트가 밀려 나가 사라집니다.
+ * 같은 문구와 종류를 다시 보내면 겹쳐 쌓지 않고 새로 바꿔 보여 줍니다.
  */
-export function showToast(message: ReactNode, { status = 'information', timeout = status === 'error' || status === 'warning' ? null : 5000 }: { status?: AlertStatus; timeout?: number | null } = {}) {
+export function showToast(message: ReactNode, { status = 'information', description, showIcon, timeout = TOAST_TIMEOUT }: ShowToastOptions = {}) {
   if (typeof message === 'string' || typeof message === 'number') {
     for (const toast of toastQueue.visibleToasts) {
       if (toast.content.message === message && (toast.content.status ?? 'information') === status) toastQueue.close(toast.key);
     }
   }
-  return toastQueue.add({ status, message }, timeout === null ? undefined : { timeout: Math.max(5000, timeout) });
+  // Rules 06: a fourth toast pushes the oldest one out (visibleToasts is newest first — the oldest is last).
+  while (toastQueue.visibleToasts.length >= MAX_VISIBLE_TOASTS) {
+    const oldest = toastQueue.visibleToasts[toastQueue.visibleToasts.length - 1];
+    toastQueue.close(oldest.key);
+  }
+  return toastQueue.add({ status, message, description, showIcon }, timeout === null ? undefined : { timeout: Math.max(TOAST_TIMEOUT, timeout) });
 }
 
 /** `showToast`가 돌려준 key로 그 토스트를 닫습니다. */

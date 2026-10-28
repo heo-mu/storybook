@@ -9,10 +9,19 @@
       "parts": {
         "Icon and Text": ".ds-toast__body",
         "Icon and Text/*-fill": ".ds-toast__icon",
-        "Icon and Text/Text": ".ds-toast__message",
-        "icon_size": ".ds-toast__close",
-        "icon_size/icon/X": ".ds-toast__close > svg",
-        "icon_size/icon/X/X": ".ds-toast__close > svg"
+        "Icon and Text/File info": ".ds-toast__content",
+        "Icon and Text/File info/File name": ".ds-toast__message",
+        "Icon and Text/File info/File metadata": ".ds-toast__description",
+        "button_text": ".ds-toast__close",
+        "button_text/Label": ".ds-toast__close .ds-button__label",
+        "button_text/icon_size": ".ds-toast__close .ds-button__icon"
+      },
+      "//": "Figma toast redesign 2026-10-27 (F101): title + description + \"닫기\" button_text; set positions in figma/geometry/toast.json.",
+      "glyphTolerances": {
+        "Icon and Text/File info/File metadata": {
+          "dx": 0.8,
+          "why": "12px xs/leading-normal/normal with 1% tracking (\"설명 텍스트\"): the text box, colour and size match Figma exactly, but Chromium lays the five Hangul glyphs 0.4px narrower than Figma (55.6 vs 56px), moving the ink centroid 0.7px — 41 of 896 box pixels differ by anti-aliasing only (max channel delta 47)"
+        }
       }
     }
   ]

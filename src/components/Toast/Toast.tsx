@@ -7,41 +7,54 @@ import {
   UNSTABLE_ToastRegion as RACToastRegion,
   type UNSTABLE_ToastQueue,
 } from 'react-aria-components';
-import { XIcon } from '../../icons';
+import { XCircleFillIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import type { AlertStatus } from '../Alert/Alert.options';
 import { STATUS_ICON } from '../Alert/statusIcon';
+import { ButtonIconSlot } from '../Button/ButtonIconSlot';
+import { TextButton } from '../Button/TextButton';
 import { toastQueue, type ToastContent } from './toastQueue';
+
+/** Figma toast close: `button_text` Primary sm, label "닫기" with the XCircle (fill) right icon. */
+const CLOSE_TEXT = '닫기';
 
 export type ToastProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
   /** 종류 — 안내 · 성공 · 주의 · 오류. @default 'information' */
   status?: AlertStatus;
-  /** 메시지. 한 줄로 보이며 길면 말줄임으로 잘립니다. */
+  /** 제목(메시지). 한 줄로 보이며 길면 말줄임으로 잘립니다. */
   children: ReactNode;
-  /** 닫기 버튼을 표시합니다. @default true */
+  /** 제목 아래 설명(Figma Sub Text). 한 줄로 보이며 길면 말줄임으로 잘립니다. */
+  description?: ReactNode;
+  /** 종류 아이콘을 표시합니다(Figma Show Icon). @default true */
+  showIcon?: boolean;
+  /** "닫기" 버튼을 표시합니다. @default true */
   showClose?: boolean;
   /** 닫기 버튼을 누르면 호출됩니다. */
   onClose?: () => void;
-  /** 화면 낭독기가 읽는 닫기 버튼 이름. @default '알림 닫기' */
+  /** 화면 낭독기가 읽는 닫기 버튼 이름(보이는 글자는 "닫기"). @default '알림 닫기' */
   closeLabel?: string;
 };
 
-/** 작업 결과를 화면 아래에 알립니다. 안내·성공은 자동으로 닫히고, 주의·오류는 사용자가 닫을 때까지 유지됩니다. */
+/** 작업 결과를 화면 아래 오른쪽에 잠깐 알립니다. 5초 뒤 자동으로 닫히고, "닫기"로 바로 닫을 수 있습니다. */
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
-  { status = 'information', children, showClose = true, onClose, closeLabel = '알림 닫기', className, ...rest },
+  { status = 'information', children, description, showIcon = true, showClose = true, onClose, closeLabel = '알림 닫기', className, ...rest },
   ref,
 ) {
   const Icon = STATUS_ICON[status];
+  const hasDescription = description != null && description !== false;
   return (
     <div role="status" {...rest} ref={ref} className={cx('ds-toast', className)} data-status={status}>
       <div className="ds-toast__body">
-        <Icon className="ds-toast__icon" />
-        <span className="ds-toast__message">{children}</span>
+        {showIcon && <Icon className="ds-toast__icon" />}
+        <div className="ds-toast__content">
+          <span className="ds-toast__message">{children}</span>
+          {hasDescription && <span className="ds-toast__description">{description}</span>}
+        </div>
       </div>
       {showClose && (
-        <button type="button" className="ds-toast__close" aria-label={closeLabel} onClick={() => onClose?.()}>
-          <XIcon />
-        </button>
+        <TextButton size="sm" className="ds-toast__close" rightIcon={<XCircleFillIcon />} aria-label={closeLabel} onClick={() => onClose?.()}>
+          {CLOSE_TEXT}
+        </TextButton>
       )}
     </div>
   );
@@ -52,7 +65,7 @@ export type ToastRegionProps = {
   queue?: UNSTABLE_ToastQueue<ToastContent>;
   /** 화면 낭독기가 읽는 토스트 영역 이름. @default '알림' */
   'aria-label'?: string;
-  /** 화면 낭독기가 읽는 닫기 버튼 이름. @default '알림 닫기' */
+  /** 화면 낭독기가 읽는 닫기 버튼 이름(보이는 글자는 "닫기"). @default '알림 닫기' */
   closeLabel?: string;
   /** 영역의 클래스. 토스트가 나타나는 위치를 바꿀 때 씁니다. */
   className?: string;
@@ -60,7 +73,8 @@ export type ToastRegionProps = {
 
 /**
  * `showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다.
- * 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드 포커스가 있는 동안에는 자동으로 닫히지 않습니다.
+ * 화면 아래 오른쪽에 최신 토스트가 아래에서 위로 쌓이고, 토스트가 나타나면 화면 낭독기가 읽습니다.
+ * 마우스를 올리거나 키보드 포커스가 있는 동안에는 자동으로 닫히지 않습니다.
  */
 export function ToastRegion({ queue = toastQueue, 'aria-label': ariaLabel = '알림', closeLabel = '알림 닫기', className }: ToastRegionProps) {
   return (
@@ -68,16 +82,28 @@ export function ToastRegion({ queue = toastQueue, 'aria-label': ariaLabel = '알
       {({ toast }) => {
         const status = toast.content.status ?? 'information';
         const Icon = STATUS_ICON[status];
+        const hasDescription = toast.content.description != null && toast.content.description !== false;
         return (
           <RACToast toast={toast} className="ds-toast" data-status={status}>
             <RACToastContent className="ds-toast__body">
-              <Icon className="ds-toast__icon" />
-              <Text slot="title" className="ds-toast__message">
-                {toast.content.message}
-              </Text>
+              {toast.content.showIcon !== false && <Icon className="ds-toast__icon" />}
+              <div className="ds-toast__content">
+                <Text slot="title" className="ds-toast__message">
+                  {toast.content.message}
+                </Text>
+                {hasDescription && (
+                  <Text slot="description" className="ds-toast__description">
+                    {toast.content.description}
+                  </Text>
+                )}
+              </div>
             </RACToastContent>
-            <Button slot="close" className="ds-toast__close" aria-label={closeLabel}>
-              <XIcon />
+            {/* The same DOM and classes as TextButton (sm, primary) on react-aria's close button (focus management + queue.close). */}
+            <Button slot="close" className="ds-button-base ds-text-button ds-toast__close" data-variant="primary" data-size="sm" aria-label={closeLabel}>
+              <span className="ds-button__label">{CLOSE_TEXT}</span>
+              <ButtonIconSlot>
+                <XCircleFillIcon />
+              </ButtonIconSlot>
             </Button>
           </RACToast>
         );

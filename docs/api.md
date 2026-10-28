@@ -1433,28 +1433,30 @@ export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-작업 결과를 화면 아래에 알립니다. 안내·성공은 자동으로 닫히고, 주의·오류는 사용자가 닫을 때까지 유지됩니다.
+작업 결과를 화면 아래 오른쪽에 잠깐 알립니다. 5초 뒤 자동으로 닫히고, "닫기"로 바로 닫을 수 있습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `children` *(필수)* | `ReactNode` |  | 메시지. 한 줄로 보이며 길면 말줄임으로 잘립니다. |
-| `closeLabel` | `string` | `알림 닫기` | 화면 낭독기가 읽는 닫기 버튼 이름. |
+| `children` *(필수)* | `ReactNode` |  | 제목(메시지). 한 줄로 보이며 길면 말줄임으로 잘립니다. |
+| `closeLabel` | `string` | `알림 닫기` | 화면 낭독기가 읽는 닫기 버튼 이름(보이는 글자는 "닫기"). |
+| `description` | `ReactNode` |  | 제목 아래 설명(Figma Sub Text). 한 줄로 보이며 길면 말줄임으로 잘립니다. |
 | `onClose` | `(() => void)` |  | 닫기 버튼을 누르면 호출됩니다. |
-| `showClose` | `boolean` | `true` | 닫기 버튼을 표시합니다. |
+| `showClose` | `boolean` | `true` | "닫기" 버튼을 표시합니다. |
+| `showIcon` | `boolean` | `true` | 종류 아이콘을 표시합니다(Figma Show Icon). |
 | `status` | `"success" \| "error" \| "warning" \| "information"` | `information` | 종류 — 안내 · 성공 · 주의 · 오류. |
 
 ### `ToastRegion`
 
 **공개 컴포넌트**
 
-`showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다. 토스트가 나타나면 화면 낭독기가 읽고, 마우스를 올리거나 키보드 포커스가 있는 동안에는 자동으로 닫히지 않습니다.
+`showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다. 화면 아래 오른쪽에 최신 토스트가 아래에서 위로 쌓이고, 토스트가 나타나면 화면 낭독기가 읽습니다. 마우스를 올리거나 키보드 포커스가 있는 동안에는 자동으로 닫히지 않습니다.
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `aria-label` | `string` | `알림` | 화면 낭독기가 읽는 토스트 영역 이름. |
 | `className` | `string` |  | 영역의 클래스. 토스트가 나타나는 위치를 바꿀 때 씁니다. |
-| `closeLabel` | `string` | `알림 닫기` | 화면 낭독기가 읽는 닫기 버튼 이름. |
-| `queue` | `ToastQueue<ToastContent>` | `new ToastQueue<ToastContent>({ maxVisibleToasts: 3 })` | 보여 줄 토스트 목록. 지정하지 않으면 `showToast`가 쓰는 기본 목록을 보여 줍니다. |
+| `closeLabel` | `string` | `알림 닫기` | 화면 낭독기가 읽는 닫기 버튼 이름(보이는 글자는 "닫기"). |
+| `queue` | `ToastQueue<ToastContent>` | `new ToastQueue<ToastContent>({ maxVisibleToasts: MAX_VISIBLE_TOASTS })` | 보여 줄 토스트 목록. 지정하지 않으면 `showToast`가 쓰는 기본 목록을 보여 줍니다. |
 
 - 함수: `showToast`, `closeToast`
 - 타입: `ToastProps`, `ToastRegionProps`, `ToastContent`

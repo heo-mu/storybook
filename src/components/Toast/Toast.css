@@ -1,10 +1,12 @@
 /*
- * Toast — Figma `toast` (91:5927): 320 × 36, padding p-3 p-2_5, gap p-2, border-radius/rounded,
- * colors/toast/background, 1px INSIDE border colors/toast/border/<status>, effect elevation-3; 20px status icon,
- * message sm/leading-normal/medium (…/label/title/default — Figma renamed …/label/default on 2026-10-27 when the toast gained a
- * title + body layout, not yet implemented here: F101), 20px close icon (colors/icon/tertiary — …/close-icon/default was removed).
- * The height is fixed in Figma, so the message stays on one line (ellipsis).
- * Region layout (position, gap between toasts, at most 3) — Design System Rules 06, see Toast.mdx.
+ * Toast — Figma `toast` (91:5927, redesigned 2026-10-27 · synced 2026-10-28, F101): 320px wide, height hugs the content
+ * (min 36px; 40px with a title only, 54px with the description), padding p-2 p-2_5, gap p-2, items centred,
+ * border-radius/rounded, colors/toast/background/default, 1px INSIDE border colors/toast/border/<status>, effect elevation-3.
+ *   "Icon and Text" (fills the width, gap p-2): 20px status icon colors/toast/status-icon/<status> + "File info" column (gap p-0_5):
+ *       title sm/leading-normal/medium colors/toast/label/title/default, description xs/leading-normal/normal …/label/body/default.
+ *   Close: `button_text` Primary sm — "닫기" + XCircle (fill) 16px right icon (TextButton styles from Button.css).
+ * Texts stay on one line with an ellipsis (Design System Rules 08: "토스트는 한 줄로 줄입니다").
+ * Region (Rules 06): bottom right, at most 3, newest at the bottom stacking upward — see Toast.mdx.
  */
 
 .ds-toast {
@@ -17,8 +19,8 @@
   gap: var(--spacing-padding-p-2);
   width: 320px;
   max-width: 100%;
-  height: 36px;
-  padding: var(--spacing-padding-p-3) var(--spacing-padding-p-2_5);
+  min-height: 36px;
+  padding: var(--spacing-padding-p-2) var(--spacing-padding-p-2_5);
   border-radius: var(--border-radius-rounded);
   background-color: var(--colors-toast-background-default);
   box-shadow:
@@ -57,53 +59,67 @@
   color: var(--_icon);
 }
 
-.ds-toast__message {
+/* Figma "File info": title + description column, gap p-0_5, fills the remaining width. */
+.ds-toast__content {
+  display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-padding-p-0_5);
   min-width: 0;
+}
+
+.ds-toast__message,
+.ds-toast__description {
+  display: block;
+  max-width: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-toast__message {
   color: var(--colors-toast-label-title-default);
   font-family: var(--typography-sm-leading-normal-medium-font-family), sans-serif;
   font-size: var(--typography-sm-leading-normal-medium-font-size);
   font-weight: var(--typography-sm-leading-normal-medium-font-weight);
   line-height: var(--typography-sm-leading-normal-medium-line-height);
   letter-spacing: var(--typography-sm-leading-normal-medium-letter-spacing);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
+.ds-toast__description {
+  color: var(--colors-toast-label-body-default);
+  font-family: var(--typography-xs-leading-normal-normal-font-family), sans-serif;
+  font-size: var(--typography-xs-leading-normal-normal-font-size);
+  font-weight: var(--typography-xs-leading-normal-normal-font-weight);
+  line-height: var(--typography-xs-leading-normal-normal-line-height);
+  letter-spacing: var(--typography-xs-leading-normal-normal-letter-spacing);
+}
+
+/* Figma auto-width text boxes are whole pixels (docs/browser-support.md). */
+@supports (width: calc-size(fit-content, round(up, size, 1px))) {
+  .ds-toast__message,
+  .ds-toast__description {
+    width: calc-size(fit-content, round(up, size, 1px));
+  }
+}
+
+/* Close — the TextButton (Primary sm) itself; only its place in the row is set here. */
 .ds-toast__close {
-  display: flex;
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--colors-icon-tertiary);
-  cursor: pointer;
 }
 
-.ds-toast__close > svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Region: bottom centre, newest at the bottom (Design System Rules 06). */
+/*
+ * Region — Design System Rules 06 (2026-10-28): bottom right of the screen (p-5 from both edges), toasts m-2 apart,
+ * the newest at the bottom stacking upward. react-aria renders the newest toast first, so the column is reversed.
+ */
 .ds-toast-region {
   position: fixed;
+  right: var(--spacing-padding-p-5);
   bottom: var(--spacing-padding-p-5);
-  left: 50%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  align-items: flex-end;
   gap: var(--spacing-margin-m-2);
-  translate: -50% 0;
   outline: none;
-}
-
-/* Keyboard focus — Design System Rules 02 (no Figma "Focus" property on this part — the rule applies): 2px colors/border/focus, 2px outside the close icon. */
-.ds-toast__close:focus-visible {
-  outline: var(--border-width-border-2) solid var(--colors-border-focus);
-  outline-offset: var(--spacing-padding-p-0_5);
 }

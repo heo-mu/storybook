@@ -16,12 +16,16 @@ const meta = {
     docs: {
       description: {
         component:
-          "작업 결과를 화면 아래에 알립니다. 안내·성공은 자동으로 닫히고, 주의·오류는 사용자가 닫을 때까지 유지됩니다.",
+          "작업 결과를 화면 아래 오른쪽에 잠깐 알립니다. 5초 뒤 자동으로 닫히고, \"닫기\"로 바로 닫을 수 있습니다.",
       },
     },
   },
-  args: { children: '저장했습니다', status: 'success', showClose: true, onClose: fn() },
-  argTypes: { status: { control: 'inline-radio', options: ALERT_STATUSES, description: '종류 — 안내 · 성공 · 주의 · 오류', table: { defaultValue: { summary: 'information' } } } },
+  args: { children: '저장했습니다', description: '변경 내용이 서버에 저장되었습니다', status: 'success', showIcon: true, showClose: true, onClose: fn() },
+  argTypes: {
+    status: { control: 'inline-radio', options: ALERT_STATUSES, description: '종류 — 안내 · 성공 · 주의 · 오류', table: { defaultValue: { summary: 'information' } } },
+    description: { control: 'text', description: '제목 아래 설명' },
+    showIcon: { control: 'boolean', description: '종류 아이콘 표시 여부' },
+  },
 } satisfies Meta<typeof Toast>;
 
 export default meta;
@@ -30,14 +34,15 @@ type Story = StoryObj<typeof meta>;
 /** 모든 Props를 직접 바꿔 볼 수 있습니다. */
 export const Playground: Story = { name: "Playground" };
 
-/** `ToastRegion`을 두고 `showToast()`로 토스트를 띄웁니다. 오류는 닫을 때까지 남습니다. */
+/** `ToastRegion`을 두고 `showToast()`로 토스트를 띄웁니다. 모든 종류가 5초 뒤 닫히고, `timeout: null`이면 닫을 때까지 남습니다. */
 export const WithRegion: Story = {
   name: '토스트 영역',
   render: () => (
     <div style={{ display: 'flex', gap: 8 }}>
-      <Button onClick={() => showToast('새 버전이 있습니다')}>안내</Button>
+      <Button onClick={() => showToast('새 버전이 있습니다', { description: '새로 고치면 적용됩니다' })}>안내</Button>
       <Button onClick={() => showToast('저장했습니다', { status: 'success' })}>성공</Button>
-      <Button onClick={() => showToast('저장하지 못했습니다', { status: 'error', timeout: null })}>오류 (닫을 때까지)</Button>
+      <Button onClick={() => showToast('저장하지 못했습니다', { status: 'error', description: '네트워크 연결을 확인하세요' })}>오류</Button>
+      <Button onClick={() => showToast('업로드 중입니다', { timeout: null })}>닫을 때까지 유지</Button>
       <ToastRegion />
     </div>
   ),
@@ -70,8 +75,14 @@ export const CloseFromCode: Story = {
   },
 };
 
-/** 주의 토스트는 오류처럼 사용자가 닫을 때까지 남습니다(`showToast`의 기본 시간 없음). */
+/** 제목만 있는 토스트는 40px, 설명이 있으면 54px 높이입니다. */
+export const TitleOnly: Story = {
+  name: '제목만',
+  args: { description: undefined, children: '저장했습니다' },
+};
+
+/** 주의 토스트. 다른 종류처럼 5초 뒤 닫힙니다. */
 export const Warning: Story = {
   name: '주의',
-  args: { status: 'warning', children: '일부 항목만 저장했습니다' },
+  args: { status: 'warning', children: '일부 항목만 저장했습니다', description: '2개 항목은 다시 확인하세요' },
 };

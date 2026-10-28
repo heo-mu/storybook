@@ -7,6 +7,14 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Toast 재설계 동기화 — Figma `toast` 제목 + 설명 + "닫기" 버튼, Rules 06 개정 (2026-10-28)
+
+Figma `toast` 세트(91:5927, F101)가 320×36 한 줄 + X 아이콘에서 **320×54(내용에 맞춰 높이, 최소 36)의 제목 + 설명 + "닫기" `button_text`** 구조로 바뀐 것을 반영했습니다. 패딩 p-2/p-2_5 · 간격 p-2 · radius 4 · 1px 테두리 `colors/toast/border/<status>` · elevation-3 그림자 · 20px 종류 아이콘은 그대로이고, 제목은 `colors/toast/label/title/default`(sm/medium), 새 설명은 `colors/toast/label/body/default`(xs/normal, 2px 아래)입니다.
+
+- **Toast / ToastRegion**: `description` · `showIcon` Props 추가(Figma Sub Text · Show Icon), 닫기는 "닫기" 글자 + 원형 X 아이콘의 `TextButton`(Primary sm, 영역에서는 react-aria 닫기 버튼에 같은 클래스 · 구조). 기존 Props(`status` · `children` · `showClose` · `onClose` · `closeLabel`)와 `showToast` · `closeToast` · `toastQueue`는 그대로 — `showToast` 옵션에 `description` · `showIcon` 추가.
+- **표시 규칙(Design System Rules 06, Figma 개정)**: 화면 아래 **오른쪽**(이전 가운데), 최신 토스트가 아래에 붙고 위로 쌓임, **모든 종류 5초 뒤 닫힘**(이전에는 오류 · 주의가 닫을 때까지 유지 — `timeout: null`로 여전히 가능), 한 번에 3개 — **네 번째가 오면 가장 오래된 토스트가 밀려 나가 사라짐**(이전에는 대기열). 마우스 오버 · 포커스 중 일시 정지와 중복 교체는 유지. Figma에 진행 표시줄 · 애니메이션은 없어 추가하지 않았습니다.
+- **검증 자산**: `figma/geometry/toast.json` · `figma/reference/toast.png`(362×318) 재추출, `figma/verify/toast.json` 부품 매핑 갱신(설명 글자 12px 1% 자간의 0.7px 중심 차이는 사유와 함께 기록). 스토리 · Usage · 개발 노트 갱신.
+
 ### Tab underline 토큰 재대조 — 이미 동기화된 값 (2026-10-28)
 
 `colors/tab/primary/line/underline/*` · `colors/tab/secondary/line/underline/*`를 최신 Figma에서 다시 읽었습니다. 현재 값은 `default` = `@S:colors/border/gray-subtler`(#d6dae0), `hover` = `@S:colors/border/gray-subtle`(#a1a8b5), `pressed` = `@S:colors/border/gray`(#778191), `selected` = `fill/primary|secondary/strong/default`(#004a38 · #007c56), `disabled` = `fill/disabled/default`(#d6dae0), 모드 1개 — **2026-10-27 커밋 21c053a(F99 드리프트 정리)에서 이미 동기화한 값과 같고** 스냅샷 · 생성 토큰 · 코드 · Component 체크섬(733 · 89299fb3)이 모두 일치해 반영할 변경이 없습니다. 그 전 값(2026-10-16 스냅샷)은 default gray-subtle #a1a8b5 · hover gray #778191 · pressed gray-dark #596475였습니다. `tab_line` 30개 변형의 하단 스트로크만 이 변수를 쓰고(`tab_filled`에는 밑줄 없음), 세트 화면은 픽셀 동일, 세 엔진 90/90 통과.

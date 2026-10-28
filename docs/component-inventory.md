@@ -53,7 +53,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 | Badge 91:5943 | `badge_dot` (21) · `badge_status` (84) Status 7 · Appearance · Size · Shape · `badge_count` (14) | `Badge`, `BadgeDot`, `BadgeCount` | 5 | 완료 |
 | Progress 185:6435 | `progress` (단일) | `Progress` | 5 | 완료 |
 | Alert 179:5471 | `alert` (3) Information/Success/Error · Sub, Button, Icon | `Alert` | 5 | 완료 |
-| Toast 91:5557 | `toast` (3) Information/Success/Error · Close Icon | `Toast`, `ToastRegion`, `showToast` | 5 | 완료 |
+| Toast 91:5557 | `toast` (4) Status Information/Success/Warning/Error · Alert Text · Sub Text · Show Icon · Show Sub Text — 2026-10-27 재설계(제목 + 설명 + `button_text` "닫기"), 2026-10-28 동기화 | `Toast`, `ToastRegion`, `showToast`, `closeToast` | 4 | 완료 |
 | Tooltip 149:780 | `tooltip` (4) Placement Top/Right/Bottom/Left · Arrow | `Tooltip` | 5 | 완료 |
 | Empty State 174:1480 | `empty-state` (단일) Description, Icon | `EmptyState` | 5 | 완료 |
 | Dialog 149:1287 | `dialog` (단일, 420×228) | `Dialog` | 6 | 완료 |
