@@ -257,6 +257,19 @@ Figma를 Product Designer 관점에서 따로 점검하고(Storybook을 정답�
 
 바꾸지 않은 곳: `table_value_editable` Type=Filter · Content=Filled 변형 4개의 "선택유형: 옵션명, 옵션명"(컴포넌트 변형 안의 예시 — 코드 예시는 `maxDisplayed={2}`로 같은 글자 유지), `dashboard-filter-bar`의 "비교: 이전 7일"(값 1개라 규칙과 같음). 표 변형도 새 규칙으로 맞출지는 결정 대상입니다.
 
+## Z. 전체 품질 감사 — 끊어진 · 외부 변수 바인딩 수정 (2026-10-28, QA 브리프의 "명확한 오류는 직접 수정" 승인)
+
+Component 섹션 68개 세트를 모두 훑어(use_figma 읽기) 하드코딩 색 · 삭제된 변수 참조 · 외부 라이브러리 변수 참조를 찾았습니다. 변수 · 스타일 자체는 바꾸지 않았고(체크섬 8그룹 동일) 노드 바인딩만 고쳤습니다.
+
+| 세트 | 문제 | 수정 | 시각 변화 |
+| --- | --- | --- | --- |
+| accordion-item(1035:15648) | 10개 변형의 Trigger 네 모서리가 삭제된 변수 `VariableID:1042:6704`(값 0)에 묶임 — F80 복구 누락 | 복구된 `border-radius/accordion/default`(1499:7389 → rounded 4px)로 재연결(40곳) | 트리거 모서리 0 → 4px(코드 · 참조 이미지 동기화) |
+| card(1306:10075) | 루트 테두리 두께 4곳이 외부 라이브러리 변수 `border-width`(1)에 묶임 | `border-width/border`(17:1970)로 재연결 | 없음 |
+| password_field(1440:8466) | Focus-on 3개 변형의 `icon/visibility_off`(외부 아이콘 인스턴스) 벡터 6곳이 외부 변수 `color/icon/gray` · `color/icon/inverse-static`에 묶임 | 회색 5곳 → `colors/input/outline/icon/focus`, 흰 테두리 1곳 → `colors/input/outline/background/default`(18곳) | 없음(참조 이미지 재대조 0픽셀) |
+| handle(391:2013) | 값 라벨 "Description Top"(외부 `Tag/state` 인스턴스)의 글자 속성 5개가 외부 폰트 변수에 묶임 | 로컬 텍스트 스타일 `xxs/leading-normal/semibold` 재적용 — 인스턴스 내부 바인딩은 이 파일에서 풀리지 않아 그대로 남음(F105) | 없음 |
+
+수정하지 않고 기록만 한 것: card Content의 하드코딩 회색 상자(F106), 바인딩되지 않은 Component 변수 97개(F107), Primitive의 ALL_SCOPES 55개 · 같은 값을 가리키는 Semantic 쌍 9개(F108), 이름 없는 프레임(`Frame 2147…`) — alert · slider · file-uploader · table_value_editable · card(F109).
+
 ## 플레이스홀더 토큰 오용 — 바인딩 수정 요청 (2026-10-27, 적용 완료 — X절)
 
 `text/placeholder`가 brand-gray/400(#a1a8b5)으로 바뀌면서(F98) 플레이스홀더가 아닌 글자에 이 토큰을 묶어 둔 곳이 대비 2.35:1로 내려갔습니다. 코드는 Figma 바인딩을 그대로 따르므로 Figma에서 바꾼 뒤 재동기화합니다.

@@ -39,6 +39,9 @@ to access component and documentation knowledge before answering or acting on UI
 - `node scripts/verify-figma.mjs <component> [--browser=…]` — parity check driven by figma/verify/<component>.json;
   `npm run verify:all` runs every component in Chromium, Firefox and WebKit
 - `npm run verify:a11y` — axe-core audit of every story (known Figma token contrast issues listed separately)
+- `npm run verify:render` — opens every story AND docs page in a real browser: page errors, console errors / warnings, error overlay,
+  empty render, broken images, fonts, overflow (`STORYBOOK_URL=https://… ` for the deployed site, `--browser=firefox|webkit`)
+- `npm run verify:interaction` — real pointer / keyboard flows of the main components (select · deselect · close · error · disabled)
 - `npm run docs:api` — regenerate docs/api.md (public API) after changing exports or prop JSDoc
 
 ## Docs

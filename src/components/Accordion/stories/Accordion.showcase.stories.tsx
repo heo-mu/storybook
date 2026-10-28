@@ -76,7 +76,8 @@ export const Matrix: Story = {
       const divider = getComputedStyle(trigger, '::after');
       await expect(divider.opacity).toBe(disabled ? '0' : '1');
       await expect(divider.height).toBe('1px');
-      await expect(getComputedStyle(trigger).borderRadius).toBe('0px');
+      // Figma Trigger corners: border-radius/accordion/default (rounded, 4px) — restored 2026-10-28 (the binding pointed at a deleted variable and rendered 0).
+      await expect(getComputedStyle(trigger).borderRadius).toBe('4px');
       await expect(trigger.getBoundingClientRect().height).toBe(small ? 36 : 44);
       await expect(item.getBoundingClientRect().height).toBe((small ? 36 : 44) + (item.hasAttribute('data-expanded') ? 64 : 0));
       // Figma 2026-10-28: an expanded item ends with a second divider (border/default) under the body; collapsed items have none.

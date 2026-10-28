@@ -156,6 +156,10 @@ function TableCheckbox() {
       disabled={ctx.isDisabled}
       aria-label={ctx['aria-label']}
       onChange={(event) => ctx.onChange?.(event.target.checked)}
+      // A real pointer click must not reach the column header / row press handlers: react-aria's usePress calls
+      // preventDefault() on the click when the column is not sortable, and the browser then reverts the native
+      // checkbox — the select-all box showed the opposite of the selection (2026-10-28 real-browser audit).
+      onClick={(event) => event.stopPropagation()}
     />
   );
 }

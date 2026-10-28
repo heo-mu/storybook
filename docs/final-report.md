@@ -1,4 +1,100 @@
-# 최종 보고 — Platform Web Design System React 컴포넌트
+# 최종 QA 보고 — Figma × Storybook 전체 품질 감사 (2026-10-28)
+
+Figma **[Platform] Web Design System**(`Ry3WecA6sP6lKPop1vXrTp`, 페이지 `🔵 Ver 0.5`)의 Component 섹션 68개 세트와
+Storybook 전체(스토리 444 · 문서 87 = 531개 항목)를 기존 검증 결과에 기대지 않고 처음부터 다시 검사한 결과입니다.
+배포: https://storybook-heo-mu.vercel.app/ (커밋 (아래 10절)). 이전 보고(2026-10-16)는 아래 "이전 보고" 절에 그대로 두었습니다.
+
+## 1. 검사한 범위
+
+| 검사 | 범위 | 결과 |
+| --- | --- | --- |
+| 실제 렌더링(`npm run verify:render`, 새 스크립트) | 로컬 531개 항목(스토리 444 · 문서 87) — 페이지 오류 · 콘솔 오류/경고 · 오류 화면 · 빈 렌더 · 깨진 이미지 · 폰트 · 가로 넘침 | 531/531 통과(실패 0, 정보 15 — Gallery 검증 행렬 13 · play 중 렌더 1 · 문서 inert 경고 1), 종료 코드 0 |
+| 실제 렌더링 — 배포 사이트 | 같은 검사를 `STORYBOOK_URL=https://storybook-heo-mu.vercel.app`로 | Push 후 검증 — 10절 |
+| 실제 인터랙션(`npm run verify:interaction`, 새 스크립트) | 31개 흐름 — Select · DatePicker(단일 · 기간 · 비활성 날짜 · 오류) · Checkbox(일부 선택 해제) · Radio · Chip Filter(다중 · 단일) · InputChip · Dropdown · Dialog(포커스 가둠 · 바깥 클릭 무시) · Toast(닫기 · 최대 3개) · Chart 툴팁(포인터 · 키보드) · Accordion · FileUploader · Table(행 선택 · 전체 선택 · 해제) · Dashboard Filter Bar · Tabs · Pagination · Slider · Segmented · Tooltip(지연 · 포커스 · Esc) · Input(지우기 · 비밀번호) · SearchField · Textarea · Switch · DatePicker 연도 · 월 선택 · 읽기 전용 · 비활성 · Form 예시 | Chromium 31/31 · Firefox 31/31 · WebKit 31/31 · 배포 Push 후 검증 — 10절 |
+| 스토리 테스트(`npm test`) | 95 파일 · 444 스토리 | 444/444 통과 |
+| Figma 정합성(`npm run verify:all`) | 36개 컴포넌트 설정 · 세 엔진 + 글자 색 토큰 · 엔진 간 색 일치 | 36개 컴포넌트 × 3엔진 — 32개 통과, 4개(dashboard-filter-bar 0/1 · data-state 1/6 · empty-state 0/1 · table_value_editable 35/52)는 세 엔진 모두 실패(종료 코드 1). 2026-10-27 기록과 실패 목록 · 수치가 동일한 기존 글자 위치 차이이며 이번 변경과 무관(accordion · input · skeleton · button 등 변경 컴포넌트는 모두 통과). 로그의 "text tokens" · "text colour parity" 항목은 다른 세션의 미커밋 검사 스크립트가 낸 결과라 이 보고에서 판정하지 않음 |
+| Button 정합성(`npm run verify:button`) | 352 변형 + 실제 포인터 Hover · Pressed 36 | Chromium · Firefox · WebKit 통과(이 날 앞선 작업에서 확인) |
+| 접근성(`npm run verify:a11y`) | 444 스토리 axe 기본 규칙, 제외 없음 | 색 대비 18건(모두 Button Secondary / Solid Hover · Pressed 흰 라벨), 그 밖 0건 — 종료 코드 1(기준 완화 없음) |
+| TypeScript · ESLint · Library Build · Storybook Build | — | 모두 통과(tsc -b · oxlint · vite build · storybook build) |
+| 외부 React 프로젝트 Import | `npm pack` 결과를 ESM · CJS로 불러 `renderToString`, CSS 하위 경로 | 통과 — ESM · CJS 각 179개 export 동일, 누락 0, 10개 컴포넌트 서버 렌더링, styles · fonts · tokens CSS 하위 경로, 타입 선언 포함(패키지 번들의 secondary hover 토큰 brand/600 확인) |
+| Figma 설계 검수(use_figma 읽기) | 68개 세트 — 하드코딩 색 · 삭제된 변수 참조 · 외부 라이브러리 변수 참조 · 고정 폭 글자 · 이름 없는 프레임, 변수 1548개의 사용 여부 · 스코프 · 중복 역할, 텍스트 스타일 46개 | 아래 3절 |
+
+## 2. 런타임 오류와 수정
+
+| 오류 | 원인 | 수정 · 검증 |
+| --- | --- | --- |
+| 배포 사이트 DashboardFilterBar Usage 문서 `ReferenceError: DashboardFilterRange is not defined`(스크린샷) | `DashboardFilterBar.mdx`가 `<ArgTypes of={DashboardFilterRange} />`를 쓰면서 import에 `DashboardFilterRange`를 빠뜨림. 컴포넌트 export · public API는 정상(`index.ts` · docs/api.md에 있음). 로컬 Storybook은 2026-10-27 이후 이 문서를 연 적이 없어 발견되지 않았고, 배포 번들도 같은 코드라 같은 오류 | import 추가. 38개 MDX 전체를 스크립트로 훑어 "참조만 있고 import 없는 식별자"가 더 없음을 확인. 로컬 · 배포 모두 실제 렌더링 검사 통과 |
+| 다른 Dashboard 컴포넌트(MetricCard · MetricTrend · DataFreshness · DataState · Skeleton) | 같은 유형 없음 — 실제 렌더링 검사에서 문서 · 스토리 모두 정상 | — |
+
+## 3. Figma에서 발견한 설계 오류
+
+직접 수정(브리프 승인, [figma-fix-requests Z절](./figma-fix-requests.md)) — 변수 · 스타일은 바꾸지 않았고(체크섬 8그룹 라이브와 동일) 노드 바인딩만 고쳤습니다.
+
+| 세트 | 오류 | 수정 | 코드 영향 |
+| --- | --- | --- | --- |
+| accordion-item | 10개 변형 Trigger의 네 모서리가 F80 때 삭제된 변수(값 0)에 묶여 0으로 그려짐 — 복구된 `border-radius/accordion/default`(rounded 4px)와 어긋남 | 복구 변수로 재연결(40곳) | 트리거 모서리 0 → 4px(`var(--border-radius-accordion-default)`), 스토리 기대값 · 참조 이미지 갱신, 정합성 10/10 |
+| card | 루트 테두리 두께 4곳이 외부 라이브러리 변수 `border-width`에 묶임 | `border-width/border`(1px)로 재연결 | 없음 |
+| password_field | Focus-on 변형의 눈 아이콘(외부 아이콘 인스턴스) 벡터 6곳이 외부 변수 `color/icon/gray` · `inverse-static`에 묶임 | `colors/input/outline/icon/focus` · `background/default`로 재연결(18곳) | 없음(재내보낸 세트 이미지와 2픽셀 차이) |
+| handle(Slider) | 값 라벨이 외부 `Tag/state` 인스턴스라 글자 속성이 외부 폰트 변수에 묶임 | 로컬 텍스트 스타일 재적용 — 인스턴스 내부 바인딩은 이 파일에서 풀리지 않음 | 없음(값 동일) |
+
+기록만 한 항목(figma-issues): F105 외부 인스턴스 의존, F106 card 예시 상자 하드코딩 회색, F107 노드에 적용되지 않은 Component 변수 97개(예: `input/outline/label/*`, `date-picker/day/border/*`), F108 Primitive 55개의 ALL_SCOPES · 같은 값 · 같은 스코프의 Semantic 쌍 9개(`text/tertiary`=`text/placeholder` 등 역할 구분 토큰), F109 이름 없는 프레임(alert · slider · file-uploader · table_value_editable · card · chart).
+구조 · 상태 검수: 68개 세트 모두 변형 · 속성이 코드의 Props와 1:1로 대응하고(Focus 속성 24세트), 누락된 필수 상태는 없었습니다. Rules 문서의 모순(09장 애니메이션 · 05장 하위 메뉴 · 06장 처리 중)은 이 날 앞선 작업(F103)에 기록되어 결정 대기입니다.
+
+## 4. Storybook에서 발견한 구현 오류
+
+| 오류 | 발견 방법 | 수정 |
+| --- | --- | --- |
+| Table 전체 선택 체크박스 — 실제 클릭에서 체크 표시가 반대로 보이고 두 번째 클릭이 해제되지 않음 | 실제 포인터 감사(합성 이벤트의 스토리 테스트는 통과) | 머리글 열은 정렬이 없으면 react-aria `usePress`가 클릭 기본 동작을 막아 브라우저가 네이티브 체크박스를 되돌림 → `TableCheckbox`가 클릭 전파를 멈춤(TABL-11). 행 선택 · 전체 선택 · 해제 실제 포인터 검증 |
+| Accordion 트리거 모서리 0px | Figma 삭제 변수 바인딩 추적 | 위 3절 — 토큰 사용으로 교체 |
+| DashboardFilterBar 문서 ReferenceError | 배포 사이트 스크린샷 · 실제 렌더링 검사 | 위 2절 |
+
+정보로 기록한 렌더링 특성(결함 아님, 검사 스크립트가 구분해 보고): Gallery 검증 행렬 13개가 1400px 화면보다 넓음(Figma 세트 프레임을 그대로 펼친 검증용 스토리), Toast "표시 규칙" 스토리는 play 중에만 렌더링, DropdownMenu 문서 페이지의 react-aria `<Pressable>` 경고는 Storybook이 문서 페이지를 만드는 동안 스토리 컨테이너를 `inert`로 두기 때문(스토리 모드 · 실제 앱에는 없음).
+
+## 5. Figma ↔ Storybook 불일치와 해결
+
+- 변수 · 스타일: 라이브 체크섬 8그룹이 스냅샷과 모두 일치(이 날 앞선 Button Secondary/Solid 동기화 포함).
+- 노드 바인딩: 위 3절 4건(accordion 시각 차이 1건 동기화, 3건은 값 동일).
+- 세 엔진 정합성: 32/36 컴포넌트 통과, 실패 4개는 2026-10-27과 동일한 기존 글자 위치 차이. 기존에 기록된 글자 위치 차이(table_value_editable · empty-state · data-state · dashboard-filter-bar)는 그대로이며 이번 작업과 무관합니다.
+
+## 6. 누락된 인터랙션과 개선
+
+- 29개 실제 흐름에서 미구현 동작은 없었습니다. Tooltip은 react-aria 기본 `closeDelay`(0.5초) 뒤 닫히고, 포인터가 바깥에서 들어와야 열립니다(실제 사용과 같음).
+- 개선: `verify:render` · `verify:interaction`을 추가해 문서 페이지 오류와 실제 포인터 동작을 자동 검사합니다(AGENTS.md 전체 QA 순서에 포함).
+
+## 7. 접근성
+
+- axe(444 스토리): 색 대비 18건(모두 Button Secondary / Solid Hover · Pressed 흰 라벨), 그 밖 0건 — 종료 코드 1(기준 완화 없음) — 모두 Button Secondary / Solid Hover · Pressed의 흰 라벨(brand/600 3.51:1 · brand/500 2.46:1, 이 날 사용자 결정으로 확정된 Figma 값, F100). 기준을 낮추거나 알려진 목록에 넣지 않았습니다.
+- 실제 키보드(인터랙션 감사): Select · Dropdown · Dialog(포커스 가둠 · 복귀) · DatePicker · Radio · Tabs(비활성 건너뜀) · Slider · Segmented · Accordion · Tooltip(포커스 즉시 · Esc) · Switch · Checkbox(Space) 통과.
+- 수동 검증 대상(자동 검사 밖): 화면 낭독기 실제 낭독 순서, 200% 확대 시 레이아웃(검사는 1400px 한 뷰포트), 움직임 줄이기 설정에서의 체감(Loading 3초 · Skeleton 6초는 CSS로 확인), Hover · Pressed 색(브라우저 pseudo 상태는 axe가 스토리의 고정 칸으로만 검사).
+
+## 8. 전체 회귀
+
+| 항목 | 결과 |
+| --- | --- |
+| `npm test` | 444/444 |
+| `npm run verify:a11y` | 색 대비 18건(모두 Button Secondary / Solid Hover · Pressed 흰 라벨), 그 밖 0건 — 종료 코드 1(기준 완화 없음) |
+| `npm run verify:render` | 531/531 통과(실패 0, 정보 15 — Gallery 검증 행렬 13 · play 중 렌더 1 · 문서 inert 경고 1), 종료 코드 0 |
+| `npm run verify:interaction` | Chromium · Firefox · WebKit 각 31/31(종료 코드 0) |
+| `npm run verify:all` | 36개 컴포넌트 × 3엔진 — 32개 통과, 4개(dashboard-filter-bar 0/1 · data-state 1/6 · empty-state 0/1 · table_value_editable 35/52)는 세 엔진 모두 실패(종료 코드 1). 2026-10-27 기록과 실패 목록 · 수치가 동일한 기존 글자 위치 차이이며 이번 변경과 무관(accordion · input · skeleton · button 등 변경 컴포넌트는 모두 통과). 로그의 "text tokens" · "text colour parity" 항목은 다른 세션의 미커밋 검사 스크립트가 낸 결과라 이 보고에서 판정하지 않음 |
+| typecheck · lint · build · build-storybook | 모두 통과(tsc -b · oxlint · vite build · storybook build) |
+| 외부 소비자 스모크 | 통과 — ESM · CJS 각 179개 export 동일, 누락 0, 10개 컴포넌트 서버 렌더링, styles · fonts · tokens CSS 하위 경로, 타입 선언 포함(패키지 번들의 secondary hover 토큰 brand/600 확인) |
+
+## 9. 미해결 · 미검증
+
+- Figma 결정 대기: F100 대비(Secondary Solid), F102 accordion sm Expanded 그림자, F103 Rules 모순, F105–F109(이번 감사), table_value_editable Filter 변형 글자.
+- 기존 정합성 차이: table_value_editable · empty-state · data-state · dashboard-filter-bar의 글자 위치(이전 기록과 동일).
+- 자동 검사 밖: 7절의 수동 검증 대상. 반응형은 1400px 뷰포트의 가로 넘침만 검사했고 좁은 화면 레이아웃은 Dashboard Filter Bar "좁은 컨테이너" 스토리로만 확인했습니다.
+
+## 10. GitHub · Vercel
+
+- 커밋 (아래 10절) → `heo-mu/storybook` main Push → Vercel 자동 배포 Ready(Push 후 기록).
+- 배포 사이트 검증: Push 후 검증 — 10절, 인터랙션 Push 후 검증 — 10절, 스크린샷의 DashboardFilterBar Usage 페이지 정상 렌더링.
+- npm 배포 · v1.0 릴리스는 하지 않았습니다. 다른 세션의 미커밋 작업은 보존했습니다.
+
+---
+
+## 이전 보고 (2026-10-16)
+
 
 Figma **[Platform] Web Design System**(`Ry3WecA6sP6lKPop1vXrTp`, 페이지 `🔵 Ver 0.4`)의 Component 섹션(58:5174)과
 Dashboard components 섹션(728:25472)을 React 라이브러리 + Storybook으로 구현한 결과입니다. (2026-10-16)

@@ -99,7 +99,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 상태 변화 | 색 · 배경 · 펼침 · 열림 · 썸 이동 · 진행 막대 · 단계 이동은 즉시(애니메이션 없음) — Rules 09 첫 행 그대로. 2026-10-28에 아래 참고 링크 행들이 같은 장에 추가되어 이 행과 충돌하며, Figma에는 시간 · 곡선 값이 없어(프로토타입 전환도 모두 즉시) 코드는 즉시 전환을 유지(결정 대기, figma-issues F103) | — |
 | Segmented Control | Rules 09(2026-10-28 추가): "참고 링크(heroui.pro segment)대로 움직임". 값이 없고 "상태 변화" 행과 충돌해 미구현 — 선택 이동은 즉시 | 결정 대기 · [components/SegmentedControl.md](./components/SegmentedControl.md) |
 | Stepper | Rules 09(2026-10-28 추가): "한 단계씩 라인이 채워지며 이동"(heroui.pro stepper 링크). 값이 없어 연결선 · 표시기는 즉시 바뀜 | 결정 대기 · STEP-03 |
-| 하위 메뉴 | Rules 09(2026-10-28 추가): "dropdown-menu 1depth · dropdown-menu-sub 2depth"(shadcn 링크) — 05장 "하위 메뉴를 두지 않음"과 충돌하고 Figma에 dropdown-menu-sub 세트가 없음 → 미지원 유지 | 결정 대기 · DROP-05 |
+| 하위 메뉴 | Rules 09(2026-10-28 추가): "dropdown-menu 1depth · dropdown-menu-sub 2depth"(shadcn 링크) — 05장 "하위 메뉴를 두지 않음"과 충돌. dropdown-menu-sub(1440:8455)는 140px 글자 전용 메뉴 패널 단일 컴포넌트로 코드에 있고(정합성 1/1), 중첩 열림 동작은 Figma에 변형 · 예시가 없어 미지원 유지 | 결정 대기 · DROP-05 |
 | 펼침 · 닫힘 | Rules 09(2026-10-28 추가): Select 목록 · Date Picker 달력 · Breadcrumb 메뉴 · 필터 칩 패널은 "참고 링크(heroui dropdown)의 애니메이션". 값이 없고 "상태 변화" 행과 충돌해 즉시 열림 · 닫힘 유지 | 결정 대기 |
 | 반복 움직임 | 스피너 1초/바퀴, 동작 줄이기 설정에서 3초/바퀴. Skeleton은 참고 링크(shadcn/ui Skeleton)대로 밝기 맥동 — 불투명도 1 → 0.5 → 1, 2초, `cubic-bezier(0.4, 0, 0.6, 1)` 반복, 동작 줄이기 6초(2026-10-28 구현, 이전: 정적) | `prefers-reduced-motion` · Loading · Skeleton CSS |
 

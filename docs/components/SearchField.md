@@ -29,7 +29,7 @@ import { SearchField } from 'platform-design-system';
 
 ## 동작
 
-- `<input type="search">`이며, Enter 키에서 `onSearch(value)`가 호출됩니다. 브라우저 기본 지우기 아이콘은 숨깁니다.
+- `<input type="search">`이며, Enter 키에서 `onSearch(value)`가 호출됩니다. 브라우저 기본 지우기 아이콘은 숨깁니다. 값이 있을 때 Esc는 값을 지우고(`onClear`), 비어 있으면 Esc를 바깥(예: 대화상자)으로 흘려보냅니다 — Chromium · Firefox는 `type="search"`를 기본으로 지우지만 WebKit은 지우지 않아 2026-10-28 실제 브라우저 감사에서 코드로 통일했습니다.
 - 지우기 버튼(X)은 Figma처럼 Focus · Error 상태에서 보입니다(마우스용, `tabIndex=-1`). 누르면 값을 비우고 `onClear`를 호출하며 포커스를 유지합니다.
 - Solid · Outline 모두 Error에서 2px 안쪽 오류 테두리를 그립니다(Solid는 2026-10-19 Figma에 추가된 `colors/search-field/solid/border/error`, E8 — [figma-issues](../figma-issues.md)).
 

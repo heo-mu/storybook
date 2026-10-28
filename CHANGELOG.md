@@ -7,6 +7,17 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### 전체 품질 감사 — Figma × Storybook 독립 QA (2026-10-28)
+
+기존 테스트 결과에 기대지 않고 Figma 68개 세트와 Storybook 531개 항목(스토리 444 · 문서 87)을 처음부터 다시 검사했습니다.
+
+- **런타임 오류 수정**: DashboardFilterBar 사용 문서가 `DashboardFilterRange`를 import 없이 `<ArgTypes of>`에 써서 배포 사이트에서 ReferenceError로 비어 있었습니다 — import 추가. 38개 MDX의 같은 유형(참조만 있고 import 없는 식별자)을 스크립트로 검사해 다른 문서에는 없음을 확인.
+- **실제 브라우저에서만 드러난 동작 오류**: Table 전체 선택 체크박스가 실제 클릭에서 반대로 표시되고 해제되지 않음(react-aria 머리글 press가 클릭 기본 동작을 막아 네이티브 체크박스가 되돌아감) — `TableCheckbox` 클릭 전파 차단으로 수정(TABL-11).
+- **Figma 설계 오류 수정(브리프 승인)**: accordion-item Trigger 모서리가 삭제된 변수에 묶여 0으로 그려지던 것을 복구 변수(4px)로 재연결 — 코드 · 참조 이미지 동기화(ACCO-07); card 테두리 두께 · password_field 눈 아이콘의 외부 라이브러리 변수 바인딩을 로컬 토큰으로 교체(시각 변화 없음). 기록만 한 항목: F105–F109(외부 인스턴스, 하드코딩 예시 상자, 미사용 Component 변수 97개, ALL_SCOPES · 중복 역할 토큰, 이름 없는 프레임).
+- **SearchField Esc**: 값이 있을 때 Esc로 지우기를 코드로 통일 — Chromium · Firefox는 `type="search"`를 기본으로 지우지만 WebKit은 지우지 않아 세 엔진 동작이 달랐습니다(실제 브라우저 감사). 빈 값이면 Esc를 바깥으로 전달.
+- **QA 스크립트 추가**: `npm run verify:render`(모든 스토리 · 문서 페이지의 실제 렌더링 — 페이지 오류 · 콘솔 · 오류 화면 · 빈 렌더 · 깨진 이미지 · 폰트 · 가로 넘침, 배포 사이트도 검사), `npm run verify:interaction`(29개 실제 포인터 · 키보드 흐름). Accordion 스토리의 모서리 기대값 갱신.
+- 보고서: [docs/final-report.md](docs/final-report.md).
+
 ### Button Secondary / Solid Hover · Pressed — Figma 결정값 동기화 (2026-10-28)
 
 Figma Semantic `colors/fill/secondary/strong/hover` · `pressed`가 brand/800 · 900에서 **brand/600(#009b68) · brand/500(#02bb7b)** 로 확정되었습니다(별칭 변경, 기본 brand/700 · 라벨 · 아이콘 · 테두리 · Component 별칭은 그대로, 다른 변수 변화 없음 — 체크섬 8그룹 일치, F100 종결).

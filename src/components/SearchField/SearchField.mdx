@@ -49,6 +49,7 @@ import { SearchField } from './SearchField';
 ## 사용 규칙
 
 - `onSearch`는 Enter 키를 누를 때만 호출됩니다. 입력할 때마다 값을 받으려면 `onChange`를 씁니다.
+- 값이 있을 때 Esc 키를 누르면 검색어가 지워집니다(모든 브라우저에서 같게 동작). 비어 있으면 Esc는 바깥으로 전달됩니다.
 - 나머지 `<input>` 속성과 `ref`는 실제 입력 필드에 전달되고, `className` · `style`은 바깥 요소에 적용됩니다.
 
 ## Props

@@ -44,7 +44,8 @@
   margin: 0;
   padding: var(--spacing-accordion-padding-md) var(--spacing-accordion-trigger-padding-x-md);
   border: 0;
-  border-radius: 0;
+  /* Figma Trigger corners — border-radius/accordion/default (rounded, 4px). Until 2026-10-28 the Figma binding pointed at a deleted variable and rendered 0. */
+  border-radius: var(--border-radius-accordion-default);
   background-color: var(--_bg);
   font: inherit;
   text-align: left;
@@ -172,7 +173,7 @@
   padding: var(--spacing-padding-p-3) var(--spacing-accordion-trigger-padding-x-sm) var(--spacing-accordion-body-padding);
 }
 
-/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): keep the intentional 4px focus-ring corners independent of the square trigger. */
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 4px ring corners, matching the trigger corners. */
 .ds-accordion__trigger[data-focus-visible]::before {
   position: absolute;
   inset: 0;

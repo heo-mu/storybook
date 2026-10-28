@@ -47,6 +47,12 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(functi
     onKeyDown?.(event);
     if (event.defaultPrevented) return;
     if (event.key === 'Enter') onSearch?.(current);
+    // Escape clears the field in every engine. Chromium and Firefox clear `type="search"` natively, WebKit does not
+    // (2026-10-28 real-browser audit); an empty field lets Escape propagate (e.g. to close a dialog), as react-aria does.
+    if (event.key === 'Escape' && event.currentTarget.value !== '') {
+      event.preventDefault();
+      clear();
+    }
   };
 
   return (

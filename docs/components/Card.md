@@ -50,6 +50,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
 
 - `CARD-02` **너비**: 부모 너비를 채웁니다. Figma의 320px은 예시 폭입니다(Rules 08).
+- `CARD-04` **테두리 두께 토큰**(2026-10-28 QA): Figma `card` 루트의 네 변 테두리 두께가 외부 라이브러리 변수(`border-width` = 1)에 묶여 있어 디자인 시스템 토큰 `border-width/border`(1px)로 다시 연결했습니다(QA 승인 작업, Z절). 값 · 코드 변화 없음. Content 자리의 회색 예시 상자(#ededed, 하드코딩)는 예시 그래픽이라 그대로 두고 기록만 했습니다(figma-issues F106).
 - `CARD-03` **설명 길이**: 줄바꿈하며 자르지 않습니다(예시 문구의 "최대 2줄"은 권장 길이, Rules 08).
 
 ## Props

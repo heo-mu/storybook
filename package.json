@@ -37,6 +37,8 @@
     "verify:button": "node scripts/verify-button.mjs",
     "verify:figma": "node scripts/verify-figma.mjs",
     "verify:a11y": "node scripts/a11y-audit.mjs",
+    "verify:render": "node scripts/render-audit.mjs",
+    "verify:interaction": "node scripts/interaction-audit.mjs",
     "verify:all": "node scripts/verify-all.mjs",
     "docs:api": "node scripts/generate-api-docs.mjs"
   },
