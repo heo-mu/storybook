@@ -7,6 +7,13 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Stepper 동기화 — Figma 합성 세트의 Completed 아이콘 (2026-10-28)
+
+Figma Stepper 프레임(151:697)의 세트 6개(indicator 5+5 · connector 2+2 · stepper 3+3)를 최신 원본으로 다시 읽었습니다. 변형 · 기하 · 패딩 · 간격 · 텍스트 스타일 · `colors/stepper/*` 18개 변수는 스냅샷과 같고, 바뀐 것은 `stepper_horizontal` · `stepper_vertical` 세트 안 Completed 표시기 인스턴스의 아이콘이 check-circle에서 표시기 세트와 같은 12px `icon/Check`로 정리된 것뿐입니다(indicator · connector 세트 화면은 픽셀 동일).
+
+- 코드는 이미 `CheckIcon`(12px)을 그리고 있어 **컴포넌트 · 토큰 변경 없음**. `figma/reference/stepper_horizontal.png` · `stepper_vertical.png`를 최신 화면으로 갱신하고 세 엔진 20/20을 다시 통과했습니다(이전 참조 이미지의 check-circle은 23px 차이로 허용치 안에 있었음).
+- 개발 노트의 아이콘 설명(CheckCircle · WarningCircle → Check · ExclamationMark) 수정.
+
 ### SearchField Solid border 재대조 — Figma 변수 변경 없음 (2026-10-28)
 
 `colors/search-field/solid/border/*`를 최신 Figma에서 다시 읽었습니다 — `hover` · `focus` = `@S:colors/border/gray-subtle`(brand-gray/400 #a1a8b5), `error` = `@T:colors/brand-status/error/strong`(#c10007), 모드 1개, Solid Default · Completed · Disabled 변형에는 테두리 없음. 스냅샷 · 생성 토큰(`src/tokens/components/search-field.css`) · 코드와 모두 같고, Component 체크섬(733 · 89299fb3)과 세트 스크린샷(2060×568 픽셀 동일)도 일치해 **반영할 변경이 없습니다**(세 엔진 36/36). 같은 Semantic `border/gray-subtle`를 쓰는 다른 변수(tab 밑줄 hover · dialog · chip · file-uploader 테두리)도 변화 없음. Semantic `fill/secondary/strong/hover · pressed` 드리프트(F100)는 그대로 남아 있습니다.

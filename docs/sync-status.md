@@ -43,7 +43,7 @@
 | select (Select) | ✓ select 95:4740 · 24/24<br>listbox 97:2665 · 3/3<br>option 97:2286 · 15/15<br>select_message 95:2960 · 3/3 | ✓ | ✓ 45/45 / 45/45 / 45/45 | ✓ play 6 · 스토리 21 | ✓ 경고 0 | ✓ |
 | skeleton (Skeleton) | ✓ skeleton 697:4486 · 4/4 | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | slider (Slider) | ✓ slider 391:1988 · 2/2<br>handle 391:2013 · 5/5 | ✓ | ✓ 7/7 / 7/7 / 7/7 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
-| stepper (Stepper) | ✓ stepper_indicator_horizontal 179:1621 · 5/5<br>stepper_indicator_vertical 203:3708 · 5/5<br>stepper_connector_horizontal 179:1614 · 2/2<br>stepper_connector_vertical 203:4253 · 2/2<br>stepper_horizontal 179:2043 · 3/3<br>stepper_vertical 203:3949 · 3/3 | ✓ | ✓ 20/20 / 20/20 / 20/20 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
+| stepper (Stepper) | ✓ stepper_indicator_horizontal 179:1621 · 5/5<br>stepper_indicator_vertical 203:3708 · 5/5<br>stepper_connector_horizontal 179:1614 · 2/2<br>stepper_connector_vertical 203:4253 · 2/2<br>stepper_horizontal 179:2043 · 3/3<br>stepper_vertical 203:3949 · 3/3 (2026-10-28 재대조: 합성 세트의 Completed 아이콘 Check로 정리, 참조 이미지 갱신) | ✓ | ✓ 20/20 / 20/20 / 20/20 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | switch (Switch) | ✓ switch 107:409 · 16/16 | ✓ | ✓ 16/16 / 16/16 / 16/16 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | table (Table) | ✓ table_header 351:3452 · 3/3<br>table_body 355:3739 · 8/8<br>table_key 355:4193 · 2/2<br>table_value 355:4460 · 2/2<br>table_value_editable 503:23264 · 52/52 | ✓ | ✓ 64/67 (수동 검토 3) / 64/67 (수동 검토 3) / 64/67 (수동 검토 3) | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
 | tabs (Tabs) | ✓ tab_filled 91:5000 · 60/60<br>tab_line 91:5241 · 30/30 | ✓ | ✓ 90/90 / 90/90 / 90/90 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
