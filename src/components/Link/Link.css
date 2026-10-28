@@ -2,7 +2,9 @@
  * Link — Figma component set `link` (111:1509).
  *   padding p-0 / p-0_5 / p-0_5 / p-1 (top right bottom left), gap m-0_5 (lg m-1), border-radius/rounded
  *   label: xs · sm · base /leading-normal/underline (Medium, underlined) · icon arrow-square-out 16 / 18 / 20
- * State: Default → Visited → Hover → Pressed → Disabled (later rules win).
+ * Figma 2026-10-28: Visited became a Type axis (Type=Default | Visited × State Default/Hover/Pressed; no Visited Disabled).
+ *   A visited link keeps colors/link/label/visited · icon/visited on Hover and Pressed — only the background changes.
+ * State: Default → Hover → Pressed → Visited (colour) → Disabled (later rules win).
  */
 .ds-link {
   --ds-link-icon: 16px;
@@ -76,14 +78,6 @@
   color: var(--colors-link-icon-default);
 }
 
-.ds-link:visited {
-  color: var(--colors-link-label-visited);
-}
-
-.ds-link:visited .ds-link__icon {
-  color: var(--colors-link-icon-visited);
-}
-
 .ds-link:hover {
   background-color: var(--colors-link-background-hover);
   color: var(--colors-link-label-hover);
@@ -100,6 +94,20 @@
 
 .ds-link:active .ds-link__icon {
   color: var(--colors-link-icon-pressed);
+}
+
+/* Figma Type=Visited (State Default · Hover · Pressed): the label and icon stay colors/link/label/visited · icon/visited,
+ * the Hover / Pressed background still applies (rules above). Browsers only allow colour changes on :visited. */
+.ds-link:visited,
+.ds-link:visited:hover,
+.ds-link:visited:active {
+  color: var(--colors-link-label-visited);
+}
+
+.ds-link:visited .ds-link__icon,
+.ds-link:visited:hover .ds-link__icon,
+.ds-link:visited:active .ds-link__icon {
+  color: var(--colors-link-icon-visited);
 }
 
 .ds-link[data-disabled] {

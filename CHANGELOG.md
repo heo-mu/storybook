@@ -7,6 +7,13 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Link 동기화 — Figma `link` Type 축 (2026-10-28)
+
+Figma `link` 세트(111:1509)가 State=Visited 변형을 **Type 축(Default · Visited)** 으로 분리했습니다(15 → 21개: Size 3 × State 4 + Visited 3, Visited Disabled 없음). 크기 · 패딩 · 간격 · 아이콘 · 텍스트 스타일 · 토큰 값은 바뀌지 않았습니다.
+
+- **방문한 링크의 Hover · Pressed**: 글자 · 아이콘이 `colors/link/label/visited` · `icon/visited`를 유지하고 배경만 `background/hover · pressed`로 바뀝니다(이전 코드는 Hover · Pressed 글자색으로 덮어썼음). Props · 공개 API 변화 없음.
+- **검증 자산**: `figma/geometry/link.json` 재추출(21개, 위치 포함) · `figma/reference/link.png`(460×282) · `figma/verify/link.json` 변형 이름 갱신. 스토리 Variants 21칸(Size × Type 행), States에 방문 Hover · Pressed 추가, Interaction play에 클릭 이동 · Enter · 비활성 클릭 무시 검사 추가.
+
 ### Password Field 동기화 — Figma `password_field` (2026-10-27)
 
 새 Figma 세트 `password_field`(1440:8466, Type=Outline · Size sm/md/lg · State 8종)를 최신 Figma 기준으로 분석해 `Input type="password"`에 반영했습니다. 라벨 · 테두리 · 배경 · 메시지 · 간격은 `input` 세트와 같은 토큰 · 규칙이어서 일반 Input 쪽은 바뀐 것이 없습니다.

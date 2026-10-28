@@ -4,7 +4,7 @@
 > Figma 노드 ID · 변수 ID는 현재 Figma 버전(🔵 Ver 0.4)에 속한 보조 정보이며, 대응 기준은 컴포넌트 · 세트 이름입니다([figma-sync.md](../figma-sync.md)).
 > 정책 항목 ID(`XXXX-00`)의 출처 · 상태는 [code-policy-audit.md](../code-policy-audit.md).
 
-Figma **Link** 프레임(111:960)의 `link` 세트(15개)를 구현한 밑줄 텍스트 링크입니다. 네이티브 `<a>`를 사용합니다.
+Figma **Link** 프레임(111:960)의 `link` 세트(21개 — 2026-10-28부터 Type 축 Default · Visited)를 구현한 밑줄 텍스트 링크입니다. 네이티브 `<a>`를 사용합니다.
 
 ## 사용 예
 
@@ -27,7 +27,8 @@ import { Link } from 'platform-design-system';
 | Size sm · md · lg | `size` | 글자 12 · 14 · 16px, 밑줄 |
 | Label Text | children | |
 | Icon (arrow-square-out) | `showIcon` | 기본값은 `external` |
-| State Hover · Pressed · Visited | 브라우저 `:hover` · `:active` · `:visited` | |
+| State Hover · Pressed | 브라우저 `:hover` · `:active` | 배경 `colors/link/background/hover · pressed`, 글자 · 아이콘 `label/hover · pressed` |
+| Type Visited (State Default · Hover · Pressed) | 브라우저 `:visited` | 글자 · 아이콘은 `label/visited` · `icon/visited`를 Hover · Pressed에서도 유지, 배경만 바뀜. Visited Disabled 변형은 없음(2026-10-28) |
 | State Disabled | `disabled` | href 제거, `aria-disabled`, Tab 순서에서 빠짐 |
 
 ## 정책
@@ -56,12 +57,13 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 컴포넌트 JSDoc · 스토리 설명에서 사용자 문서로 옮기지 않은 내용입니다.
 
-- Figma 컴포넌트 세트: `link`(111:1509, 15개). 네이티브 `<a>`를 그립니다.
-- State: Hover · Pressed · Visited = `:hover` · `:active` · `:visited`, Disabled = `disabled`(`href` 없음, `aria-disabled`, `role="link"`, 포커스되지 않음).
+- Figma 컴포넌트 세트: `link`(111:1509, 21개 = Size 3 × (State 4 + Visited 3)). 네이티브 `<a>`를 그립니다.
+- State: Hover · Pressed = `:hover` · `:active`, Type Visited = `:visited`(Hover · Pressed와 겹치면 글자색 유지), Disabled = `disabled`(`href` 없음, `aria-disabled`, `role="link"`, 포커스되지 않음).
+- 브라우저는 `:visited`에 색만 허용하고 `getComputedStyle`은 방문 전 색을 돌려주므로, 스토리는 pseudo-states 애드온의 `pseudo-visited` 클래스로 검증합니다.
 
 
 ## Storybook 검증 예시의 내부 참고
 
 사용 문서에서 분리한 원본 참조입니다. 현재 동작·정책 안내는 Storybook Usage를 따릅니다.
 
-- `Link.showcase.stories.tsx / VariantMatrix`: All 15 Figma variants (Figma "Icon" on): Size (rows) × State (columns).
+- `Link.showcase.stories.tsx / VariantMatrix`: All 21 Figma variants (Figma "Icon" on): Size × Type (rows) × State (columns); play checks the visited colour on Hover · Pressed.

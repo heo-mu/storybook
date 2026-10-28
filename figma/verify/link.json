@@ -11,9 +11,10 @@
         "arrow-square-out": ".ds-link__icon"
       },
       "knownDifferences": {
-        "Size=lg, State=Default": "underline offset / thickness are AUTO in Figma; the browser draws the 16px underline ~1.5px higher, pulling the label centroid up (glyphs match) — as option md Disabled",
-        "Size=lg, State=Disabled": "same as lg Default (low-contrast label)"
-      }
+        "Size=lg, State=Default, Type=Default": "underline offset / thickness are AUTO in Figma; the browser draws the 16px underline ~1.5px higher, pulling the label centroid up (glyphs match) — as option md Disabled",
+        "Size=lg, State=Disabled, Type=Default": "same as lg Default (low-contrast label)"
+      },
+      "//": "Figma 2026-10-28: Visited is a Type axis (Type=Default | Visited); 21 variants, positions in figma/geometry/link.json."
     }
   ]
 }
