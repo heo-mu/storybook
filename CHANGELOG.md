@@ -7,6 +7,10 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Tab underline 토큰 재대조 — 이미 동기화된 값 (2026-10-28)
+
+`colors/tab/primary/line/underline/*` · `colors/tab/secondary/line/underline/*`를 최신 Figma에서 다시 읽었습니다. 현재 값은 `default` = `@S:colors/border/gray-subtler`(#d6dae0), `hover` = `@S:colors/border/gray-subtle`(#a1a8b5), `pressed` = `@S:colors/border/gray`(#778191), `selected` = `fill/primary|secondary/strong/default`(#004a38 · #007c56), `disabled` = `fill/disabled/default`(#d6dae0), 모드 1개 — **2026-10-27 커밋 21c053a(F99 드리프트 정리)에서 이미 동기화한 값과 같고** 스냅샷 · 생성 토큰 · 코드 · Component 체크섬(733 · 89299fb3)이 모두 일치해 반영할 변경이 없습니다. 그 전 값(2026-10-16 스냅샷)은 default gray-subtle #a1a8b5 · hover gray #778191 · pressed gray-dark #596475였습니다. `tab_line` 30개 변형의 하단 스트로크만 이 변수를 쓰고(`tab_filled`에는 밑줄 없음), 세트 화면은 픽셀 동일, 세 엔진 90/90 통과.
+
 ### Stepper 동기화 — Figma 합성 세트의 Completed 아이콘 (2026-10-28)
 
 Figma Stepper 프레임(151:697)의 세트 6개(indicator 5+5 · connector 2+2 · stepper 3+3)를 최신 원본으로 다시 읽었습니다. 변형 · 기하 · 패딩 · 간격 · 텍스트 스타일 · `colors/stepper/*` 18개 변수는 스냅샷과 같고, 바뀐 것은 `stepper_horizontal` · `stepper_vertical` 세트 안 Completed 표시기 인스턴스의 아이콘이 check-circle에서 표시기 세트와 같은 12px `icon/Check`로 정리된 것뿐입니다(indicator · connector 세트 화면은 픽셀 동일).
