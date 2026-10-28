@@ -7,6 +7,15 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### DatePicker 통합 — Input · Inline, Select형 날짜 필드, Examples · Calendar 그룹 제거 (2026-10-28)
+
+**Breaking(배포 전 0.1.0)**: `DatePicker`가 기본으로 날짜 필드(`variant="input"`)를 그립니다. 이전의 달력만 그리던 동작은 `variant="inline"`입니다. `Calendar` export는 그대로입니다(호환, `DatePicker variant="inline"` 권장).
+
+- **Input**: Figma `date-picker_trigger`(Select와 같은 Field 레이아웃 + calendar-dots 아이콘, `colors/date-picker/trigger/outline/*` 토큰)를 버튼으로 구현 — 필드 · 아이콘 클릭 또는 Enter · Space · ↓로 아래 4px에 달력 팝오버, Single은 고르면 닫힘, Range는 종료일까지 고르면 "시작 ~ 종료"로 표시 후 닫힘, Esc · 바깥 클릭은 고르지 않고 닫힘, 포커스는 필드로 복귀, 비활성 · 읽기 전용은 열리지 않음(읽기 전용은 아이콘 없음), 여러 필드는 독립. 새 Props `variant` · `size` · `placeholder` · `open` · `defaultOpen` · `onOpenChange` · `autoFocus`. 직접 입력(텍스트) 기능은 두지 않습니다.
+- **Figma**: 숨겨져 있던 `date-picker_trigger` 세트 복귀 · 설명 교체, State=Open 3개 추가(Select Open과 같은 테두리 · 아이콘), 사용 예시 프레임 재구성(Input Single · Range · Open, Inline) — [figma-fix-requests AA절](docs/figma-fix-requests.md). 변수 · 스타일 변화 없음.
+- **Storybook**: 최상위 `Examples`(Form · Dashboard · Table List)와 `Calendar` 그룹 제거. DatePicker 아래에 Playground · Single Date · Date Range · Inline Calendar · Inline Date Range · Sizes · 상태 스토리 · Keyboard Interaction · Inline Keyboard, Gallery에 Input Variants(21) · Open(3) · Calendar · Day States · Navigation · Outside Click · Independent 등. 정합성 검사 설정 `figma/verify/date-picker.json`에 트리거 세트 복귀(24/24 세 엔진 통과), 기하 · 참조 이미지 갱신. `verify:interaction`의 DatePicker 흐름 5개를 필드 기준으로 교체, Form 예시 흐름 삭제.
+- 문서: DatePicker 사용 문서 · 개발 노트 재작성, API 문서 재생성.
+
 ### 전체 품질 감사 — Figma × Storybook 독립 QA (2026-10-28)
 
 기존 테스트 결과에 기대지 않고 Figma 68개 세트와 Storybook 531개 항목(스토리 444 · 문서 87)을 처음부터 다시 검사했습니다.

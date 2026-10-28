@@ -21,7 +21,6 @@ const preview: Preview = {
         order: [
           'Foundations', ['Design Tokens', 'Focus'],
           'Components', ['*', ['Usage', '*', 'Overview', 'States', 'Variants', 'Gallery', 'Editable Cells', 'Surface Comparison', 'Checks']],
-          'Examples', ['Form', 'Dashboard', 'Table List'],
         ],
       },
     },

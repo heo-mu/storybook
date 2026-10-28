@@ -257,6 +257,18 @@ Figma를 Product Designer 관점에서 따로 점검하고(Storybook을 정답�
 
 바꾸지 않은 곳: `table_value_editable` Type=Filter · Content=Filled 변형 4개의 "선택유형: 옵션명, 옵션명"(컴포넌트 변형 안의 예시 — 코드 예시는 `maxDisplayed={2}`로 같은 글자 유지), `dashboard-filter-bar`의 "비교: 이전 7일"(값 1개라 규칙과 같음). 표 변형도 새 규칙으로 맞출지는 결정 대상입니다.
 
+## AA. DatePicker Input — date-picker_trigger 복귀 · Open 상태 · 사용 예시 (2026-10-28, 사용자 요청 작업)
+
+Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select형 날짜 필드 `date-picker_trigger`(144:723)를 다시 기준 디자인으로 썼습니다. 변수 · 스타일은 만들지 않았고(기존 `colors/date-picker/trigger/outline/*` 그대로, 체크섬 8그룹 동일) 세트 · 예시만 고쳤습니다.
+
+| 항목 | Figma 변경 | 노드 |
+| --- | --- | --- |
+| 세트 표시 | 숨겨져 있던(`visible=false`, 설명 "Legacy … calendar-only") `date-picker_trigger` 세트와 제목 글자를 다시 보이게 하고, 설명을 DatePicker Input 규칙(Select 구조 + calendar-dots 아이콘, 아래 4px 팝오버, Display Text 형식, 직접 입력 아님)으로 교체 | 144:723 · 149:834 |
+| State=Open 추가 | Focus 변형을 복제해 `Size=sm · md · lg, State=Open` 3개 추가(테두리 `…/border/focus` 유지, 아이콘 `colors/icon/secondary` — Select Open과 같음, 메시지 없음). 세트 2740×356으로 확장 | 1609:7471 · 1609:7480 · 1609:7489 |
+| 사용 예시 | "date-picker 사용 예시" 프레임을 "DatePicker 사용 예시 — Input / Inline"으로 재구성: Input · Single(필드 Completed "2026.10.28" + Single 달력), Input · Range("2026.10.28 ~ 2026.11.03" + Range Selected 달력), Input · Open(State=Open 필드 + 달력), Inline(달력만). 필드와 달력은 세로 자동 레이아웃 4px 간격 | 149:840 · 149:844 · 1609:7513 · 1609:7699 · 1609:7870 |
+
+코드: 기하 `figma/geometry/date-picker_trigger.json`(24개, 위치 포함) 재추출, 참조 이미지에 Open 3칸 추가, `figma/verify/date-picker.json`에 트리거 세트 복귀.
+
 ## Z. 전체 품질 감사 — 끊어진 · 외부 변수 바인딩 수정 (2026-10-28, QA 브리프의 "명확한 오류는 직접 수정" 승인)
 
 Component 섹션 68개 세트를 모두 훑어(use_figma 읽기) 하드코딩 색 · 삭제된 변수 참조 · 외부 라이브러리 변수 참조를 찾았습니다. 변수 · 스타일 자체는 바꾸지 않았고(체크섬 8그룹 동일) 노드 바인딩만 고쳤습니다.

@@ -2,6 +2,47 @@
   "component": "DatePicker",
   "sets": [
     {
+      "set": "date-picker_trigger",
+      "story": [
+        "components-datepicker-showcase--variant-matrix",
+        "components-datepicker-showcase--open&args=size:sm",
+        "components-datepicker-showcase--open&args=size:md",
+        "components-datepicker-showcase--open&args=size:lg"
+      ],
+      "background": "#ffffff",
+      "harnessCss": "table { table-layout: fixed; } td, th { width: 344px; min-width: 344px; max-width: 344px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
+      "parts": {
+        "Label row": ".ds-field__label-row",
+        "Label row/Label": ".ds-field__label",
+        "Container": ".ds-date-picker__trigger",
+        "Container/date": ".ds-date-picker__value",
+        "Container/calendar-dots": ".ds-date-picker__icon",
+        "date-picker_message": ".ds-field-message",
+        "date-picker_message/*-fill": ".ds-field-message__icon",
+        "date-picker_message/*ext": ".ds-field-message__text"
+      },
+      "glyphDxTolerance": 0.8,
+      "//glyphDxTolerance": "Latin placeholder YYYY.MM.DD: the browser kerns the Y-Y pairs tighter than Figma, the run is ~1.3px shorter and its centroid moves -0.56..-0.77px (images otherwise identical)",
+      "//": "DatePicker Input (2026-10-28): the Select-shaped field with the calendar-dots icon; State=Open (3 sizes, added in Figma 2026-10-28) is captured from the Open story because the calendar popover would cover the matrix.",
+      "knownDifferences": {
+        "Size=sm, State=Focus": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=sm, State=Completed": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=sm, State=Error": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=sm, State=Read-only": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=sm, State=Open": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=md, State=Focus": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=md, State=Completed": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=md, State=Error": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=md, State=Read-only": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=md, State=Open": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=lg, State=Focus": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=lg, State=Completed": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=lg, State=Error": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=lg, State=Read-only": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not",
+        "Size=lg, State=Open": "Figma shows the YYYY.MM.DD pattern; the story shows a real date (2026.07.30) — text box compared, glyphs not"
+      }
+    },
+    {
       "set": "date-picker_message",
       "story": "components-datepicker-showcase--message-matrix",
       "background": "#ffffff",
@@ -20,7 +61,7 @@
     },
     {
       "set": "date-picker_calendar",
-      "story": "components-calendar-showcase--calendar-matrix",
+      "story": "components-datepicker-showcase--calendar-matrix",
       "background": "#ffffff",
       "parts": {
         "Date Picker Header": ".ds-calendar__header",
@@ -53,7 +94,7 @@
     },
     {
       "set": "date-picker_day",
-      "story": "components-calendar-showcase--day-matrix",
+      "story": "components-datepicker-showcase--day-matrix",
       "background": "#ffffff",
       "parts": {
         "Day Number": ".ds-calendar__day-label"
@@ -61,7 +102,7 @@
     },
     {
       "set": "date-picker_navigation",
-      "story": "components-calendar-showcase--navigation-matrix",
+      "story": "components-datepicker-showcase--navigation-matrix",
       "background": "#ffffff",
       "parts": {
         "caret-*": ".ds-calendar__nav-button > svg"

@@ -8,13 +8,13 @@
 | --- | ---: | --- |
 | 공개 컴포넌트 | 50 | 화면에 바로 배치합니다. |
 | 보조 컴포넌트 | 32 | 적힌 상위 컴포넌트 안에서만 조합합니다. |
-| 타입 | 131 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
+| 타입 | 132 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
 | 상수 | 45 | Figma 속성 값 목록(`BUTTON_VARIANTS` 등) — 선택지 UI · 값 검증용 |
 | 함수 | 3 | `filterChipText()` · `showToast()` · `closeToast()` |
 | 아이콘 | 38 | `<이름>Icon` 컴포넌트 |
 | **내부 부품 — 사용 금지** | 7 | 상위 컴포넌트가 그립니다. |
 | **내부 API — 사용 금지** | 13 | 아래 대체 수단을 씁니다. |
-| 합계 | 319 | `src/index.ts`의 export 전체 |
+| 합계 | 320 | `src/index.ts`의 export 전체 |
 
 내부 부품 · 내부 API는 하위 호환을 보장하지 않으며 다음 메이저 버전에서 export 목록에서 빠질 수 있습니다.
 

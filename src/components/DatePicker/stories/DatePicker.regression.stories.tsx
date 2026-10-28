@@ -4,7 +4,7 @@ import { DatePicker } from '../DatePicker';
 
 const meta = {
   title: 'Components/DatePicker/Regression', id: 'components-datepicker-regression', component: DatePicker,
-  tags: ['!manifest'], args: { label: '기간', selectionMode: 'range', onRangeChange: fn(), onChange: fn() },
+  tags: ['!manifest'], args: { variant: 'inline', label: '기간', selectionMode: 'range', onRangeChange: fn(), onChange: fn() },
 } satisfies Meta<typeof DatePicker>;
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -53,8 +53,8 @@ export const LeapAndMonthEnd: Story = { args: { selectionMode: 'single', default
 };
 export const IndependentInstances: Story = {
   render: () => <div style={{ display: 'flex', gap: 24 }}>
-    <DatePicker label="첫 번째" defaultFocusedValue="2026-07-15" />
-    <DatePicker label="두 번째" selectionMode="range" defaultFocusedValue="2026-07-15" />
+    <DatePicker variant="inline" label="첫 번째" defaultFocusedValue="2026-07-15" />
+    <DatePicker variant="inline" label="두 번째" selectionMode="range" defaultFocusedValue="2026-07-15" />
   </div>,
   play: async ({ canvas, userEvent }) => {
     const first = within(canvas.getByRole('application', { name: /첫 번째/ }));

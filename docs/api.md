@@ -7,7 +7,7 @@
   react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 컴포넌트의 사용 방법 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
 
-export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 131 · 상수 45 · 함수 3 · 아이콘 38 · 내부 API 13
+export 320개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 132 · 상수 45 · 함수 3 · 아이콘 38 · 내부 API 13
 
 ## 목차
 
@@ -521,7 +521,7 @@ export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `state` *(필수)* | `"error" \| "loading" \| "empty" \| "no-results" \| "no-access" \| "partial"` |  | 상태 — 불러오는 중 · 빈 상태 · 결과 없음 · 오류 · 권한 없음 · 일부만 표시. |
+| `state` *(필수)* | `"loading" \| "error" \| "empty" \| "no-results" \| "no-access" \| "partial"` |  | 상태 — 불러오는 중 · 빈 상태 · 결과 없음 · 오류 · 권한 없음 · 일부만 표시. |
 | `action` | `ReactNode` |  | 버튼 대신 넣을 요소. |
 | `actionLabel` | `ReactNode` |  | 문구 아래 버튼의 글자. 지정하지 않으면 상태별 기본 문구를 씁니다. |
 | `description` | `ReactNode` |  | 설명. 지정하지 않으면 상태별 기본 문구를 쓰고(`partial`은 없음 — 실제 수치를 넣습니다), `null`이면 숨깁니다. |
@@ -538,38 +538,44 @@ export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 **공개 컴포넌트**
 
-입력창 없이 날짜 또는 기간을 선택합니다.
+날짜 또는 기간을 선택합니다. 필드를 누르면 달력이 열리고(`input`), 달력만 둘 수도 있습니다(`inline`).
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `aria-describedby` | `string` |  |  |
 | `aria-label` | `string` | `월 제목` | 화면 낭독기가 읽는 달력 이름. |
 | `aria-labelledby` | `string` |  |  |
-| `autoFocus` | `boolean` |  | 처음 그려질 때 키보드 위치를 날짜 칸으로 옮깁니다. |
+| `autoFocus` | `boolean` |  | 처음 그려질 때 포커스를 줍니다 — `input`은 필드, `inline`은 날짜 칸. |
 | `className` | `string` |  |  |
 | `defaultFocusedValue` | `string` | `오늘` | 값이 없을 때 처음 보여 줄 달(그 달의 아무 날짜). |
+| `defaultOpen` | `boolean` | `false` | 처음에 달력을 열어 둘지(`input`일 때, 비제어). |
 | `defaultRangeValue` | `DateRange \| null` | `null` |  |
 | `defaultValue` | `string \| null` | `null` | 처음 선택된 날짜. `value` 없이 달력이 스스로 값을 관리할 때 씁니다. |
 | `disabled` | `boolean` |  | 비활성 — 달력 전체를 고를 수 없게 합니다. |
 | `id` | `string` |  |  |
 | `invalid` | `boolean` |  |  |
 | `isDateUnavailable` | `((date: string) => boolean)` |  | 날짜별로 고를 수 없는 날을 정합니다. 고를 수 없는 날은 비활성으로 보입니다. |
-| `label` | `ReactNode` |  | 달력 위 라벨. 없으면 aria-label을 지정합니다. |
+| `label` | `ReactNode` |  | 필드(또는 달력) 위 라벨. 없으면 `aria-label`을 지정합니다. |
 | `maxValue` | `string` |  | 고를 수 있는 가장 늦은 날짜. |
-| `message` | `ReactNode` |  | 달력 아래 도움말 또는 상태 메시지. |
-| `messageType` | `"helper" \| "info" \| "success" \| "error"` |  |  |
+| `message` | `ReactNode` |  | 아래 도움말 또는 상태 메시지. |
+| `messageType` | `"helper" \| "info" \| "success" \| "error"` | `오류이면 'error', 그 밖에는 'helper'` | 메시지 종류 — 입력 방법은 회색 도움말(`helper`), 상태를 알릴 때만 `info` · `success` · `error`. |
 | `minValue` | `string` |  | 고를 수 있는 가장 이른 날짜. 이전 날짜는 비활성으로 보입니다. |
-| `name` | `string` |  | Range는 name.start / name.end로 전송합니다. |
-| `onChange` | `((value: string \| null) => void)` |  |  |
+| `name` | `string` |  | 폼 필드 이름. 기간은 name.start / name.end로 전송합니다. |
+| `onChange` | `((value: string \| null) => void)` |  | 날짜를 고르면 'YYYY-MM-DD'로 호출됩니다. |
+| `onOpenChange` | `((open: boolean) => void)` |  | 달력이 열리거나 닫힐 때 호출됩니다. |
 | `onRangeChange` | `((value: DateRange) => void)` |  |  |
+| `open` | `boolean` |  | 달력이 열려 있는지(`input`일 때, 제어). |
+| `placeholder` | `string` | `'YYYY.MM.DD', 기간은 'YYYY.MM.DD ~ YYYY.MM.DD'` | 비어 있을 때 필드에 보이는 안내 글자(`input`일 때). |
 | `rangeValue` | `DateRange \| null` |  | 선택한 기간. 시작일과 종료일은 YYYY-MM-DD입니다. |
 | `readOnly` | `boolean` |  |  |
 | `required` | `boolean` |  |  |
 | `selectionMode` | `"range" \| "single"` | `single` | 단일 날짜 또는 연속된 기간. |
+| `size` | `"sm" \| "md" \| "lg"` | `sm` | 필드 크기(`input`일 때). 필드 높이 36 · 44 · 52px. |
 | `style` | `CSSProperties` |  |  |
 | `value` | `string \| null` |  | 선택된 날짜 'YYYY-MM-DD'. 넘기면 바깥에서 값을 관리합니다. `null`이면 선택이 없습니다. |
+| `variant` | `DatePickerVariant` | `input` | 표시 방식 — `input`은 날짜 필드를 누르면 달력이 열리고(Figma date-picker_trigger), `inline`은 달력만 보여 줍니다(date-picker_calendar). |
 
-- 타입: `DatePickerProps`
+- 타입: `DatePickerProps`, `DatePickerVariant`
 
 ## Dialog
 

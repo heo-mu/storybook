@@ -83,37 +83,96 @@ const flows = {
     await sleep(200);
     expect((await page.getByRole('listbox').count()) === 0, 'read-only select opened a list');
   },
-  async 'DatePicker — single: pick a day, keyboard moves and selects'() {
+  async 'DatePicker — input: click opens the calendar below the field, choosing closes it and shows the date, focus returns'() {
     await story('components-datepicker-datepicker--playground');
-    const day15 = root().getByRole('button', { name: /^15 / });
-    await day15.click();
+    const trigger = root().getByRole('button', { name: /방문일/ });
+    expect((await trigger.textContent()).includes('YYYY.MM.DD'), 'empty field does not show the YYYY.MM.DD placeholder');
+    await trigger.click();
+    const dialog = page.getByRole('dialog');
+    await dialog.waitFor({ timeout: 3000 });
+    const tb = await trigger.boundingBox(); const db = await dialog.boundingBox();
+    expect(Math.round(db.y - (tb.y + tb.height)) === 4, `calendar is ${Math.round(db.y - (tb.y + tb.height))}px below the field, expected 4`);
+    expect(Math.round(db.x) === Math.round(tb.x), `calendar left ${Math.round(db.x)} is not aligned with the field left ${Math.round(tb.x)}`);
+    await page.getByRole('button', { name: /^20 2026년 7월/ }).click();
+    await sleep(200);
+    expect((await dialog.count()) === 0, 'calendar did not close after choosing a day');
+    expect((await trigger.textContent()).includes('2026.07.20'), 'field does not show the chosen date');
+    const a = await active();
+    expect(a && /방문일/.test(a.name || '') || (await trigger.evaluate((e) => e === document.activeElement)), 'focus did not return to the field');
+  },
+  async 'DatePicker — input: Escape and outside click close without choosing; keyboard opens and selects'() {
+    await story('components-datepicker-datepicker--playground');
+    const trigger = root().getByRole('button', { name: /방문일/ });
+    await trigger.click();
+    await page.getByRole('dialog').waitFor({ timeout: 3000 });
+    await page.keyboard.press('Escape');
+    await sleep(200);
+    expect((await page.getByRole('dialog').count()) === 0, 'Escape did not close the calendar');
+    expect((await trigger.textContent()).includes('YYYY.MM.DD'), 'Escape changed the value');
+    expect(await trigger.evaluate((e) => e === document.activeElement), 'focus did not return after Escape');
+    await trigger.click();
+    await page.getByRole('dialog').waitFor({ timeout: 3000 });
+    await page.mouse.click(5, 5);
+    await sleep(200);
+    expect((await page.getByRole('dialog').count()) === 0, 'outside click did not close the calendar');
+    await trigger.focus();
+    await page.keyboard.press('ArrowDown');
+    await page.getByRole('dialog').waitFor({ timeout: 3000 });
+    await sleep(100);
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('Enter');
+    await sleep(200);
+    expect((await page.getByRole('dialog').count()) === 0, 'Enter did not choose and close');
+    expect(/2026\.07\.16/.test(await trigger.textContent()), 'keyboard choice (16th) is not shown in the field');
+  },
+  async 'DatePicker — range input: start and end close the calendar and show "start ~ end"'() {
+    await story('components-datepicker-datepicker--playground&args=selectionMode:range'); // the Date Range story runs its own play in the iframe
+    const trigger = root().getByRole('button', { name: /방문일/ });
+    await trigger.click();
+    const dialog = page.getByRole('dialog');
+    await dialog.waitFor({ timeout: 3000 });
+    await page.getByRole('button', { name: /^10 2026년 7월/ }).click();
     await sleep(150);
-    const cell = root().getByRole('gridcell', { name: /^15 / });
-    expect((await cell.getAttribute('aria-selected')) === 'true' || (await day15.getAttribute('aria-pressed')) === 'true' || (await day15.evaluate((e) => e.closest('[data-selected], [aria-selected="true"]') !== null)), 'day 15 is not selected after click');
+    expect((await dialog.count()) === 1, 'calendar closed after the start date (range needs an end date)');
+    await page.getByRole('button', { name: /^14 2026년 7월/ }).click();
+    await sleep(200);
+    expect((await dialog.count()) === 0, 'calendar did not close after the end date');
+    expect((await trigger.textContent()).includes('2026.07.10 ~ 2026.07.14'), `field shows "${(await trigger.textContent()).trim()}"`);
+  },
+  async 'DatePicker — inline: pick a day, keyboard moves and selects; range marks the days between'() {
+    await story('components-datepicker-datepicker--playground&args=variant:inline');
+    await root().getByRole('button', { name: /^15 / }).click();
+    await sleep(150);
+    expect(await root().getByRole('gridcell', { name: /^15 / }).evaluate((e) => e.getAttribute('aria-selected') === 'true' || e.querySelector('[aria-selected="true"], [data-selected]') !== null), 'day 15 is not selected after click');
     await root().getByRole('button', { name: /^16 / }).focus();
     await page.keyboard.press('ArrowRight');
     const a = await active();
     expect(a && /17일/.test(a.name), `ArrowRight did not move focus to day 17 (got ${a?.name})`);
-    await page.keyboard.press('Enter');
-    await sleep(150);
-    expect(await root().getByRole('gridcell', { name: /^17 / }).evaluate((e) => e.getAttribute('aria-selected') === 'true' || e.querySelector('[aria-selected="true"], [data-selected]') !== null), 'Enter did not select day 17');
-  },
-  async 'DatePicker — range: start and end days, days between are in range'() {
-    await story('components-datepicker-datepicker--date-range');
+    await story('components-datepicker-datepicker--playground&args=variant:inline;selectionMode:range');
     await root().getByRole('button', { name: /^10 / }).click();
     await root().getByRole('button', { name: /^14 / }).click();
     await sleep(150);
-    const selected = await root().locator('[aria-selected="true"], [data-selected]').count();
-    expect(selected >= 2, `expected start and end selected, got ${selected}`);
-    const between = await root().getByRole('gridcell', { name: /^12 / }).evaluate((e) => e.matches('[aria-selected="true"], [data-selected], [data-selection-start], [data-selection-end]') || e.querySelector('[aria-selected="true"], [data-selected]') !== null || /range|selected/.test(e.className + ' ' + (e.firstElementChild?.className || '')));
-    expect(between, 'day 12 between start and end is not marked as part of the range');
+    expect((await root().locator('[aria-selected="true"], [data-selected]').count()) >= 2, 'range start / end not selected');
+    expect(await root().getByRole('gridcell', { name: /^12 / }).evaluate((e) => e.matches('[aria-selected="true"], [data-selected]') || e.querySelector('[aria-selected="true"], [data-selected]') !== null), 'day 12 between start and end is not marked');
   },
-  async 'DatePicker — disabled dates cannot be chosen, invalid typed value shows error'() {
+  async 'DatePicker — disabled dates, error, disabled and read-only fields'() {
     await story('components-datepicker-datepicker--weekdays-only');
-    const disabledDays = await root().getByRole('button', { disabled: true }).count();
-    expect(disabledDays > 0, 'no disabled days rendered in the weekdays-only story');
+    await page.getByRole('dialog').waitFor({ timeout: 3000 });
+    expect((await page.getByRole('button', { disabled: true }).count()) > 0, 'no disabled days in the weekdays-only story');
     await story('components-datepicker-datepicker--invalid');
-    expect((await root().locator('[aria-invalid="true"], [data-invalid]').count()) > 0, 'error story has no aria-invalid control');
+    expect((await root().locator('[aria-invalid="true"]').count()) > 0, 'error story has no aria-invalid field');
+    await story('components-datepicker-datepicker--disabled');
+    const disabled = root().getByRole('button', { name: /방문일/ });
+    expect(await disabled.isDisabled(), 'disabled field is enabled');
+    await disabled.click({ force: true });
+    await sleep(200);
+    expect((await page.getByRole('dialog').count()) === 0, 'disabled field opened the calendar');
+    await story('components-datepicker-datepicker--read-only');
+    const ro = root().getByRole('button', { name: /방문일/ });
+    expect((await ro.textContent()).includes('2026.07.30'), 'read-only field does not show its value');
+    await ro.click();
+    await sleep(200);
+    expect((await page.getByRole('dialog').count()) === 0, 'read-only field opened the calendar');
   },
   async 'Checkbox — click toggles; indeterminate click clears'() {
     await story('components-checkbox-checkbox--playground');
@@ -481,26 +540,6 @@ const flows = {
     await root().getByRole('button', { name: '이전' }).first().click();
     await sleep(150);
     expect((await heading.textContent()).trim() === afterMonth, '이전 did not move back');
-  },
-  async 'DatePicker — read-only and disabled fields ignore clicks, selected value is announced'() {
-    await story('components-datepicker-datepicker--read-only');
-    const selected = root().locator('[aria-selected="true"], [data-selected]');
-    expect((await selected.count()) >= 1, 'read-only story shows no selected date');
-    await root().getByRole('button', { name: /^15 / }).click({ force: true });
-    await sleep(150);
-    expect(await root().getByRole('gridcell', { name: /^30 2026년 7월/ }).evaluate((e) => e.getAttribute('aria-selected') === 'true' || e.querySelector('[aria-selected="true"], [data-selected]') !== null), 'read-only date picker changed its value on click');
-    await story('components-datepicker-datepicker--disabled');
-    const dayButtons = root().getByRole('button', { name: /^\d+ 2026년/ });
-    const enabled = await dayButtons.filter({ hasNot: page.locator('[disabled]') }).evaluateAll((els) => els.filter((e) => !e.disabled && e.getAttribute('aria-disabled') !== 'true').length);
-    expect(enabled === 0, `${enabled} day buttons are still enabled in the disabled story`);
-  },
-  async 'Form example — validation on submit, loading state blocks double submit, completion message'() {
-    await story('patterns-form--form');
-    const save = root().getByRole('button', { name: '저장' }).first(); // the story also shows a static '저장 중' row
-    await save.click();
-    await sleep(100);
-    const invalid = await root().locator('[aria-invalid="true"]').count();
-    expect(invalid > 0, 'submitting the empty form did not mark any field invalid');
   },
 };
 

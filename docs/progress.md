@@ -1,3 +1,5 @@
+> 2026-10-28: Storybook 최상위 `Examples` 그룹(Form · Dashboard · Table List 예시)과 `Calendar` 그룹을 제거했습니다. 날짜 선택은 `DatePicker`(Input · Inline) 하나로 통합했고 Calendar 스토리는 DatePicker 아래로 옮겼습니다. 아래 본문의 Examples · Calendar 언급은 그 이전 기록입니다.
+
 # 진행 기록 — 전체 컴포넌트 구축
 
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
