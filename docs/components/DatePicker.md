@@ -62,7 +62,7 @@ import { DatePicker, Calendar } from 'platform-design-system';
 
 ## 정책
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 — 2026-10-28 확인)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
 
 ### Figma 정의 정책
@@ -79,6 +79,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DPCK-01` **직접 입력**: 지원합니다. 해석할 수 없는 날짜(2026.02.30 등)나 범위 밖 날짜는 값을 바꾸지 않고 Error 상태로 표시합니다(Rules 04 · date-picker_trigger 주석).
 - `DPCK-02` **달력 위치**: 필드 아래 4px, 필드 왼쪽에 맞춤. 공간이 없으면 위로 열립니다(Rules 05).
 - `DPCK-05` **날짜 칸 이름**: 보이는 숫자를 먼저, 이어서 react-aria의 전체 날짜를 읽습니다 — "27 2026년 9월 27일 일요일"(선택됨 · 오늘 문구 포함). 한국어 날짜는 숫자가 "27일"로 붙어 보이는 "27"이 이름의 낱말이 되지 않기 때문입니다(WCAG 2.5.3, Rules 03).
+- `DPCK-06` **달력 열림 · 닫힘 애니메이션**: 없습니다 — 즉시 열리고 닫힙니다. Rules 09(2026-10-28 추가 행)는 "참고 링크(heroui dropdown)의 애니메이션"이지만 Figma에 값이 없고 "상태 변화는 바로" 행과 충돌해 미구현입니다(결정 대기, figma-issues F103).
 
 ## 상태
 

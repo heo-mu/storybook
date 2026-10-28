@@ -43,7 +43,7 @@ import { Breadcrumb } from 'platform-design-system';
 
 ## 정책
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 — 2026-10-28 확인)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
 
 ### Figma 정의 정책
@@ -60,6 +60,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `BREA-01` **펼친 상태(… 메뉴)**: 메뉴는 연 트리거(… 버튼) 아래 2px, 시작 정렬로 열리고 현재 페이지 항목은 Current 그대로입니다(Rules 05 · breadcrumb 주석, 2026-10-20부터 Figma 펼침 변형도 같음 — F33). Figma Role=Open은 `BreadcrumbItem open`으로 쓸 수 있고, Hover · Pressed에서도 `label/focus` 색을 유지합니다.
 - `BREA-03` **Show Parent**: Collapsed에만 적용합니다. Full은 항상 전체 경로를 보여 줍니다 — 상위 페이지를 숨기면 경로가 끊기기 때문입니다(Rules 07).
 - `BREA-04` **메뉴 너비**: 최소 200px, 더 긴 이름은 넓어집니다(Rules 05).
+- `BREA-06` **메뉴 열림 · 닫힘 애니메이션**: 없습니다 — 즉시 열리고 닫힙니다. Rules 09(2026-10-28 추가 행)는 "참고 링크(heroui dropdown)의 애니메이션"이지만 Figma에 값이 없고 "상태 변화는 바로" 행과 충돌해 미구현입니다(결정 대기, figma-issues F103).
 
 ## 상태
 

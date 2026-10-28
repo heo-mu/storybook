@@ -49,6 +49,8 @@ Storybook 각 Usage 문서의 **정책** 절은 이 표의 ID를 그대로 씁�
 | 09 | 모션 | 1100:5579 |
 | 10 | 개발 구현 세부 — 디자인 컴포넌트에 넣지 않는 항목 | 1100:5645 |
 
+> **2026-10-28 재조회**: 07–09장은 Rules 프레임(227:3774) 안의 1280:8082 · 1280:8135 · 1280:8181로 옮겨졌고, "(계속)" 프레임 1100:5082와 10장은 없어졌습니다(위 노드는 2026-10-19 기록). 바뀐 행과 구현 상태는 [policy-details.md](./policy-details.md)(04 · 06 · 09장), 충돌은 [figma-issues.md F103](./figma-issues.md).
+
 컴포넌트 고유 규칙은 Dev Mode 주석(Interaction · Accessibility · Development · Content)으로 세트에 붙였습니다 — 13개 세트, 주석 17개:
 
 Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `breadcrumb 712:5106` · Chart `chart 698:4399 · chart-tooltip 693:9776` · Chip `chip-input 558:26017` · DatePicker `date-picker_trigger 144:723` · Toast `toast 91:5927` · Tooltip `tooltip 149:1111` · Dialog `dialog 149:2838` · Select `select 95:4740` · Slider `slider 391:1988` · Table `table_value_editable 503:23264`.

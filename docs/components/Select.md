@@ -66,7 +66,7 @@ const [region, setRegion] = useState<Key | null>(null);
 
 ## 정책
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 — 2026-10-28 확인)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
 
 ### Figma 정의 정책
@@ -85,6 +85,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `SELE-03` **선택된 옵션에 마우스를 올릴 때**: 배경은 Hover · Pressed 색, 글자는 Selected 스타일을 유지합니다 — 선택 표시가 Hover보다 우선합니다(Rules 02).
 - `SELE-04` **목록 위치 · 최대 높이**: 필드 아래 4px(`spacing/margin/m-1`), 필드와 같은 너비. 화면 아래 공간이 부족하면 위로 열리고, 높이는 화면 안에 맞춰 줄어들며 목록이 스크롤됩니다(Rules 05 · select 주석).
 - `SELE-06` **Read-only**: 스크린리더에 "읽기 전용" 설명을 함께 전달합니다(Rules 03).
+- `SELE-09` **목록 열림 · 닫힘 애니메이션**: 없습니다 — 즉시 열리고 닫힙니다. Rules 09(2026-10-28 추가 행)는 "참고 링크(heroui dropdown)의 애니메이션"이지만 Figma에 값이 없고 "상태 변화는 바로" 행과 충돌해 미구현입니다(결정 대기, figma-issues F103).
 
 ### 개발 구현 세부 사항
 

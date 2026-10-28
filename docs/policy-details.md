@@ -5,6 +5,8 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 정책 항목 목록과 출처는 [code-policy-audit.md](./code-policy-audit.md)에 있습니다.
 
 > 장 번호는 Figma Rules와 같습니다. 10장(개발 구현 세부)은 Figma에서 빼고 이 문서에만 둡니다.
+>
+> **2026-10-28 재조회**: 02–09장이 Rules 프레임 하나에 있고 "(계속)" 프레임은 없어졌습니다. 06 · 07 · 09장 제목이 바뀌었고(알림 · 진행 표시 / 데이터 표시 / 움직임), 뜻이 바뀐 행은 04장 선택 · 삭제, 필터 칩, 06장 토스트("주의" 행 삭제), 09장 움직임(참고 링크 행 5개)입니다 — 각 행에 날짜를 적었습니다. Figma 표에 없는 세부 행(탭 선택 방식 · 도움말 · 외부 링크 등)은 이 문서의 개발 기준으로 유지합니다.
 
 ## 02. 상태 표현
 
@@ -37,8 +39,8 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 탭 선택 방식 | 방향키로 이동하면 바로 선택(`keyboardActivation="automatic"`). 내용이 무거우면 `manual`(Enter · Space) | Tabs `keyboardActivation` |
 | 입력 검증 | 입력을 마친 뒤(blur) 또는 제출할 때 검증, 입력 중에는 오류 해제만. Date Picker 직접 입력: 해석할 수 없거나 범위 밖이면 Error, 값은 바꾸지 않음 | `invalid` · `message` props |
 | 지우기 · 비밀번호 | 지우기(X)는 마우스 보조 — Input은 Hover · Focus, Search Field는 Focus · Error에서 보이고 Tab 순서 제외, 키보드는 전체 선택 후 삭제. 눈 아이콘은 비밀번호 칸에서만, 상태는 `aria-pressed` | `clearable` · `type="password"` |
-| 선택 · 삭제 | Indeterminate를 누르면 전체 선택(Checked). InputChip은 칩 전체가 삭제 대상(클릭 · Enter · Space · Delete · Backspace). 드롭 영역은 버튼(Enter · Space) | — |
-| 필터 칩 선택 | 다중(기본): 옵션을 켜고 끄는 동안 패널 유지, 칩 글자 "필터명: 값, 값"(3개를 넘으면 "외 N"), 닫을 때(Esc · 바깥 · 칩) 적용되어 Selected. 모두 끄고 닫으면 해제. 단일: 고르면 바로 적용 · 닫힘, 첫 옵션 "전체"로 해제. 패널은 칩 아래 4px · 시작 정렬 · 최소 160px. 키보드: Enter · Space · ↓ 열기, 방향키 · 글자 이동, Space · Enter 선택, Esc 닫고 칩으로. 열린 칩은 State=Default · Expanded=True | `FilterChipSelect` · `aria-expanded` · listbox(`aria-multiselectable`) |
+| 선택 · 삭제 | 일부 선택(Indeterminate) 체크박스를 누르면(클릭 · Space) 해제 — 전체 선택 체크박스는 하위 항목을 모두 해제(2026-10-28 개정, 이전: 전체 선택). InputChip은 칩 전체가 삭제 대상(클릭 · Enter · Space · Delete · Backspace). 드롭 영역은 버튼(Enter · Space) | — |
+| 필터 칩 선택 | 다중(기본): 옵션을 켜고 끄는 동안 패널 유지, 칩 글자는 0개 "필터명" · 1개 "필터명: 값" · 2개 이상 "필터명: 첫 값 외 n개"(2026-10-28 개정, 첫 값은 옵션 목록 순서), 닫을 때(Esc · 바깥 · 칩) 적용되어 Selected. 모두 끄고 닫으면 해제. 단일: 고르면 바로 적용 · 닫힘, 첫 옵션 "전체"로 해제. 패널은 칩 아래 4px · 시작 정렬 · 최소 160px. 키보드: Enter · Space · ↓ 열기, 방향키 · 글자 이동, Space · Enter 선택, Esc 닫고 칩으로. 열린 칩은 State=Default · Expanded=True | `FilterChipSelect` · `aria-expanded` · listbox(`aria-multiselectable`) |
 | 도움말 | Input · Textarea · Select · Date Picker 아래 회색 도움말(Figma `*_message` Type=Helper, 아이콘 없음) — `helper/default`(text/tertiary), 비활성 칸 `helper/disabled`. `message`만 주면 도움말, 오류면 같은 자리에 오류 메시지. 메시지는 컨트롤의 `aria-describedby`. 필드 세트의 Boolean `Helper`(기본 끔)로 Figma에서 켬 | Rules 04 "도움말" · Form 사용 예시(부서) |
 | 묶음 오류 | Checkbox · Radio 묶음에서 필수 선택을 하지 않으면 묶음 아래 6px(`p-1_5`)에 `input_message` Error. 상자 · 원 색은 그대로(Figma에 오류 상태 없음). 코드: `CheckboxGroup` · `RadioGroup`의 `invalid` · `message` — 체크박스마다 `aria-invalid`(group에는 쓸 수 없음), radiogroup에 `aria-invalid`, 항목마다 메시지 `aria-describedby`. 동의 하나도 묶음으로 감쌈 | Rules 04 "묶음 오류" · Form 예시 "필수 동의를 하지 않고 저장했을 때" |
 | 필수 입력 | Input · Textarea · Select · Date Picker의 `Required` — 라벨 뒤 4px 점(`colors/<field>/…/required/default` → `status/point/strong`), 라벨과 8px(m-2). 코드: `required` → 점 표시(aria-hidden) + 입력 요소 `required`(화면 낭독기가 "필수"로 읽음). Select는 버튼에 필수 상태가 없어 "필수"를 버튼 설명으로 전달. 표 키(`table_key` Type=Required)와 같은 표시 | Figma `Required` 속성 |
@@ -59,17 +61,17 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | Tooltip 지연 | 마우스 0.5초 뒤, 키보드 포커스는 즉시 | Tooltip `delay` 500 |
 | 하위 메뉴 | 지원하지 않음 — chevron은 다른 화면으로 이동한다는 표시 | — |
 
-## 06. 피드백 — 알림 · 진행
+## 06. 알림 · 진행 표시
 
 | 정책 | 상세 기준 | 토큰 · 근거 |
 | --- | --- | --- |
-| Toast | 화면 아래 가운데(아래 20px), 토스트 사이 8px, 최대 3개(새 토스트가 보이고 오래된 것은 대기). 안내 · 성공 5초, 오류 · 주의는 닫을 때까지(닫기 아이콘). Hover · 포커스 중 정지. 같은 문구 · 상태는 겹치지 않고 다시 표시 | `spacing/padding/p-5` · `spacing/margin/m-2` · `role=status` |
+| Toast | 화면 아래 오른쪽(오른쪽 · 아래 20px), 토스트 사이 8px, 한 번에 최대 3개 — 최신 토스트가 아래에 붙고 먼저 온 것이 위로 밀리며, 네 번째가 오면 가장 오래된 것이 사라짐. 모든 종류가 5초 뒤 닫힘(`timeout`은 5초보다 짧게 못 함, `null`이면 닫을 때까지). "닫기" 텍스트 버튼. Hover · 포커스 중 정지. 같은 문구 · 상태는 겹치지 않고 다시 표시(2026-10-28 개정, 이전: 아래 가운데 · 오류 · 주의는 닫을 때까지) | `spacing/padding/p-5` · `spacing/margin/m-2` · `role=status` · 참고 링크 shadcn toast |
 | Alert | 화면 상태를 설명하는 고정 메시지 — 사용자가 닫지 않음(닫아야 하면 Toast). 설명은 줄바꿈, 자르지 않음. 폭은 부모를 채움 | 오류 `role=alert`, 그 밖 `status` |
-| 처리 중 | 저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼을 Disabled로 두고 옆에 Loading(sm)을 표시. 버튼 안 스피너는 쓰지 않음(2026-10-20 V-2 확정 — 버튼 6가지 색마다 새 색이 필요) | Rules 06 "처리 중" · Form 사용 예시 "저장 중일 때" |
-| 주의 | 작업은 계속할 수 있지만 확인이 필요할 때(예: 일부 데이터만 표시). 작업을 막는 문제는 오류. Alert · Toast `Status=Warning` — 주황 삼각형(`brand-status/warning/strong`, 흰 바탕 5.1:1), `role="status"`, 토스트는 닫을 때까지 | Rules 06 "주의" |
+| 처리 중 | Rules 06 행은 그대로 "버튼을 누를 수 없게 하고 로딩을 함께 — Disabled 버튼과 Loading(sm)"이지만, Figma Form 사용 예시 "저장 중"은 저장 버튼 안에 16px 회전 표시(Default 색 유지)이고 코드는 2026-10-28 요청으로 예시를 따릅니다(Button `loading`: 누를 수 없음 · `aria-busy`). Rules 행과 사용 예시가 서로 달라 결정 대기 — Rules 행을 예시에 맞게 고치거나(Figma 수정 필요) 코드를 Disabled + 옆 Loading으로 되돌림 | Rules 06 "처리 중" · Form 사용 예시 "저장 중" · [components/Button.md](./components/Button.md) BUTT-03 |
+| 주의 | 작업은 계속할 수 있지만 확인이 필요할 때(예: 일부 데이터만 표시). 작업을 막는 문제는 오류. Alert · Toast `Status=Warning` — 주황 삼각형(`brand-status/warning/strong`, 흰 바탕 5.1:1), `role="status"`. 2026-10-28 Figma Rules 06 표에서 이 행이 빠졌으나 Warning 변형 · 변수는 그대로라 개발 기준으로 유지(토스트의 "닫을 때까지"는 위 Toast 행대로 5초로 바뀜) | Alert · Toast `Status=Warning`(Figma 표에는 없음) |
 | 진행 · 로딩 | 진행률을 알면 Progress, 모르면 Loading. Skeleton은 장식이며 감싸는 영역(DataState)이 불러오는 중을 알림 | `aria-busy` · `role=status` |
 
-## 07. 데이터 — 차트 · 표 · 목록 · 빈 상태
+## 07. 데이터 표시
 
 | 정책 | 상세 기준 | 토큰 · 근거 |
 | --- | --- | --- |
@@ -90,12 +92,16 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 로캘 · 숫자 | 요일 · 월은 로캘(한국어 일 월 화 …). Badge Count는 99를 넘으면 "99+" | — |
 | 줄바꿈 | Dashboard Filter Bar는 좁으면 그룹 단위로 줄바꿈(줄 사이 m-6). Slider 숫자 칸은 가장 긴 값 폭이라 트랙 길이가 바뀌지 않음 | — |
 
-## 09. 모션
+## 09. 움직임
 
 | 정책 | 상세 기준 | 토큰 · 근거 |
 | --- | --- | --- |
-| 상태 전환 | 색 · 배경 · 펼침 · 열림 · 썸 이동 · 진행 막대 · 단계 이동은 즉시(애니메이션 없음) | — |
-| 반복 모션 | 스피너 1초/바퀴, 동작 줄이기 설정에서 3초/바퀴. Skeleton은 정적 | `prefers-reduced-motion` |
+| 상태 변화 | 색 · 배경 · 펼침 · 열림 · 썸 이동 · 진행 막대 · 단계 이동은 즉시(애니메이션 없음) — Rules 09 첫 행 그대로. 2026-10-28에 아래 참고 링크 행들이 같은 장에 추가되어 이 행과 충돌하며, Figma에는 시간 · 곡선 값이 없어(프로토타입 전환도 모두 즉시) 코드는 즉시 전환을 유지(결정 대기, figma-issues F103) | — |
+| Segmented Control | Rules 09(2026-10-28 추가): "참고 링크(heroui.pro segment)대로 움직임". 값이 없고 "상태 변화" 행과 충돌해 미구현 — 선택 이동은 즉시 | 결정 대기 · [components/SegmentedControl.md](./components/SegmentedControl.md) |
+| Stepper | Rules 09(2026-10-28 추가): "한 단계씩 라인이 채워지며 이동"(heroui.pro stepper 링크). 값이 없어 연결선 · 표시기는 즉시 바뀜 | 결정 대기 · STEP-03 |
+| 하위 메뉴 | Rules 09(2026-10-28 추가): "dropdown-menu 1depth · dropdown-menu-sub 2depth"(shadcn 링크) — 05장 "하위 메뉴를 두지 않음"과 충돌하고 Figma에 dropdown-menu-sub 세트가 없음 → 미지원 유지 | 결정 대기 · DROP-05 |
+| 펼침 · 닫힘 | Rules 09(2026-10-28 추가): Select 목록 · Date Picker 달력 · Breadcrumb 메뉴 · 필터 칩 패널은 "참고 링크(heroui dropdown)의 애니메이션". 값이 없고 "상태 변화" 행과 충돌해 즉시 열림 · 닫힘 유지 | 결정 대기 |
+| 반복 움직임 | 스피너 1초/바퀴, 동작 줄이기 설정에서 3초/바퀴. Skeleton은 참고 링크(shadcn/ui Skeleton)대로 밝기 맥동 — 불투명도 1 → 0.5 → 1, 2초, `cubic-bezier(0.4, 0, 0.6, 1)` 반복, 동작 줄이기 6초(2026-10-28 구현, 이전: 정적) | `prefers-reduced-motion` · Loading · Skeleton CSS |
 
 ## 10. 개발 구현 세부 (디자인 컴포넌트에 넣지 않는 항목)
 

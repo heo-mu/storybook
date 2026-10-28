@@ -7,6 +7,14 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Design System Rules 동기화 (2026-10-28)
+
+Figma Design System Rules(02–09장 — "(계속)" 프레임과 10장은 없어짐)를 다시 읽어 뜻이 바뀐 행만 반영했습니다.
+
+- **Skeleton 맥동**(Rules 09 "반복 움직임" 개정, 이전 "정적"): 참고 링크(shadcn/ui Skeleton)대로 불투명도 1 → 0.5 → 1, 2초, `cubic-bezier(0.4, 0, 0.6, 1)` 반복, 움직임 줄이기 설정에서 6초. 색 · 크기 · Props 변화 없음. Motion 스토리 추가.
+- **정합성 검사**: 스크린샷을 애니메이션을 멈춘 상태(`animations: 'disabled'`)로 찍어 Skeleton · 스피너가 들어간 변형의 비교가 흔들리지 않게 했습니다.
+- **문서**: policy-details 04장(일부 선택 체크박스는 해제 · 필터 칩 "첫 값 외 n개" — 이미 구현), 06장(토스트 하단 오른쪽 · 모두 5초 — 이미 구현, "주의" 행 삭제, "처리 중" 행과 Form 예시 충돌), 09장(참고 링크 행 5개와 구현 상태), 장 제목(06 알림 · 진행 표시, 07 데이터 표시, 09 움직임), 컴포넌트 노트의 Rules 프레임 참조 정리. Segmented Control · Stepper · 열림 · 닫힘 애니메이션과 하위 메뉴 행은 Figma에 값이 없고 다른 행과 충돌해 미구현(figma-issues F103).
+
 ### Button `loading` — Form 사용 예시 "저장 중" 동기화 (2026-10-28)
 
 Figma Form 사용 예시(1216:5172)의 "저장 중"(1216:7451)은 저장 버튼(Primary · Solid · md) 안에 `loading` size=sm · Type=Inverse(16px, 2px 흰 호 `colors/border/inverse`)를 두고 배경은 Default(`button/primary/solid/background/default`)를 유지하며, 취소 버튼은 Default 그대로입니다. 기존 코드는 버튼을 `disabled`로 바꾸고 옆에 `Loading`을 두었습니다.

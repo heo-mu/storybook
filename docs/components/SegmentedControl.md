@@ -36,7 +36,7 @@ import { SegmentedControl, SegmentedControlItem } from 'platform-design-system';
 
 ## 정책
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 — 2026-10-28 확인)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
 
 ### Figma 정의 정책
@@ -45,6 +45,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 
 - `SEGM-01` **포커스**: 키보드 포커스일 때 선택된 항목 바깥 2px에 2px `colors/border/focus` 링(Figma 속성 `Focus` — segmented-item).
 - `SEGM-02` **선택된 항목의 Hover · Pressed**: Variant는 없지만 같은 값의 Component 변수(`…/selected/background/hover` 등)가 Figma에 있어 그대로 사용합니다(시각 변화 없음).
+- `SEGM-04` **선택 이동 애니메이션**: 없습니다 — 선택은 즉시 바뀝니다. Rules 09(2026-10-28 추가 행)는 "참고 링크(heroui.pro segment)대로 움직임"이지만 Figma에 시간 · 곡선 값이 없고(세트의 프로토타입 전환도 모두 즉시) "상태 변화는 바로" 행과 충돌해 미구현입니다(결정 대기, figma-issues F103).
 
 ### Figma 반영 대기
 

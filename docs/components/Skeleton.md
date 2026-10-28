@@ -4,7 +4,7 @@
 > Figma 노드 ID · 변수 ID는 현재 Figma 버전(🔵 Ver 0.4)에 속한 보조 정보이며, 대응 기준은 컴포넌트 · 세트 이름입니다([figma-sync.md](../figma-sync.md)).
 > 정책 항목 ID(`XXXX-00`)의 출처 · 상태는 [code-policy-audit.md](../code-policy-audit.md).
 
-Figma **skeleton**(697:4486, 4개 변형)을 구현했습니다. 내용을 불러오는 동안 자리를 표시하는 정적인 도형입니다.
+Figma **skeleton**(697:4486, 4개 변형)을 구현했습니다. 내용을 불러오는 동안 자리를 표시하는 도형이며, 밝기가 맥동합니다(Rules 09, 2026-10-28).
 
 ## 사용 예
 
@@ -31,14 +31,14 @@ import { Skeleton } from 'platform-design-system';
 
 ## 정책
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 — 2026-10-28 확인)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
 
 ### Figma 문서화 정책
 
 Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
 
-- `SKEL-01` **애니메이션 없음**: 정적으로 둡니다(Rules 09).
+- `SKEL-01` **맥동**(2026-10-28 개정, 이전: 정적): Rules 09 "Skeleton은 참고 링크(shadcn/ui Skeleton)대로 움직입니다" — Tailwind `animate-pulse`와 같은 불투명도 1 → 0.5 → 1, 2초, `cubic-bezier(0.4, 0, 0.6, 1)` 반복(`ds-skeleton-pulse`). `prefers-reduced-motion`에서는 6초(Rules 03 "느리게", Loading의 3배 규칙과 같음). 색 · 크기 · Props는 그대로이고, 정합성 검사는 애니메이션을 멈춘 상태(`animations: 'disabled'`, 불투명도 1)로 비교합니다.
 - `SKEL-03` **접근성**: 장식(`aria-hidden`)입니다. 불러오는 중이라는 사실은 감싸는 영역에서 알리세요(`DataState state="loading"`은 `role="status"`, Rules 06).
 
 ### 개발 구현 세부 사항

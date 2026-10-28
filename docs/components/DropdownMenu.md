@@ -40,7 +40,7 @@ import { Button, DropdownMenu, DropdownMenuItem, DropdownMenuSection, DropdownMe
 
 ## 정책
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 — 2026-10-28 확인)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
 
 ### Figma 문서화 정책
@@ -51,7 +51,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DROP-02` **키보드 포커스**: 포커스된 항목은 Hover와 같은 모양입니다(Rules 02 — 목록 항목 포커스).
 - `DROP-03` **패널 위치**: 트리거 아래 4px(`offset`, Select · Date Picker와 같음 — Breadcrumb은 2px), 시작 정렬. 화면 밖으로 나가면 위치를 뒤집습니다(Rules 05).
 - `DROP-04` **패널 너비**: 내용에 맞춥니다(Figma의 200 · 140px은 예시 폭). 필요하면 `className`으로 지정합니다(Rules 05).
-- `DROP-05` **하위 메뉴**: 지원하지 않습니다. `chevron`은 다른 화면으로 이동한다는 표시입니다(Rules 05).
+- `DROP-05` **하위 메뉴**: 지원하지 않습니다. `chevron`은 다른 화면으로 이동한다는 표시입니다(Rules 05). Rules 09(2026-10-28 추가 행)는 "dropdown-menu 1depth · dropdown-menu-sub 2depth"(shadcn 링크)라고 하지만 Rules 05와 충돌하고 Figma에 `dropdown-menu-sub` 세트가 없어 미지원을 유지합니다(결정 대기, figma-issues F103).
 - `DROP-06` **설명이 있는 항목의 이름**: 라벨과 설명(`description`) 전체가 항목 이름입니다 — 보이는 글자가 모두 이름에 들어갑니다(WCAG 2.5.3, Rules 03).
 
 ## 키보드

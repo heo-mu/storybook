@@ -136,11 +136,12 @@ page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text(
 async function screenshotCell(page, name) {
   const locate = () => page.locator(`[data-figma="${name.replace(/"/g, '\\"')}"]`).first();
   try {
-    return await locate().screenshot();
+    // Rules 09 (2026-10-28): the Skeleton pulses — capture the resting state (infinite animations reset to their start).
+    return await locate().screenshot({ animations: 'disabled' });
   } catch (e) {
     if (!/not attached/.test(String(e))) throw e;
     await page.waitForTimeout(500);
-    return locate().screenshot();
+    return locate().screenshot({ animations: 'disabled' });
   }
 }
 

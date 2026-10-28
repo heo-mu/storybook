@@ -39,7 +39,7 @@ import { Stepper } from 'platform-design-system';
 
 ## 정책
 
-Figma **Design System Rules**(Component 섹션의 Rules 227:3774 · 계속 1100:5082)와 컴포넌트 주석이 기준입니다.
+Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 — 2026-10-28 확인)와 컴포넌트 주석이 기준입니다.
 항목 앞 ID는 `docs/code-policy-audit.md`(출처 · 처리 상태)의 항목입니다.
 
 ### Figma 문서화 정책
@@ -48,7 +48,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `STEP-01` **연결선 길이**: 가로 기본 180px(Figma), Stepper에 너비를 주면 연결선이 남는 폭을 채웁니다. 세로 연결선은 48px 고정입니다(Rules 08).
 - `STEP-02` **스크린 리더 문구**: 완료 · 오류 · 잠김은 색과 아이콘으로만 보이므로 "N단계, 완료"처럼 숨은 문구를 함께 읽습니다(Rules 03).
-- `STEP-03` **애니메이션**: 없습니다 — Figma에는 참고 링크(heroui stepper)만 있고 값이 없습니다(Rules 09).
+- `STEP-03` **애니메이션**: 없습니다 — 연결선 · 표시기는 즉시 바뀝니다. Rules 09(2026-10-28 추가 행)는 "한 단계씩 라인이 채워지며 이동"(heroui.pro stepper 링크)이지만 Figma에 시간 · 곡선 값이 없고 같은 장의 "상태 변화는 바로" 행과 충돌해 미구현입니다(결정 대기, figma-issues F103).
 - `STEP-04` **텍스트 넘침**: 표시기 루트는 원 크기(20px)이고 라벨이 양옆(가로) 또는 위아래(세로)로 넘칩니다. 가로 Stepper 양 끝 라벨이 잘리지 않도록 바깥에 라벨 폭의 절반만큼 여백을 두세요(Rules 08).
 
 ## 상태

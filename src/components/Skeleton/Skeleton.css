@@ -1,6 +1,8 @@
 /*
  * Skeleton — Figma `skeleton` (697:4486): colors/skeleton/background, border-radius/rounded.
  *   Line 60 × 8 · Shape4 100 × 10 · Block 140 × 12 · Circle 24 × 24 (border-radius/rounded-xl)
+ * Motion — Design System Rules 09 (2026-10-28): the Skeleton pulses like the reference (shadcn/ui `animate-pulse`):
+ *   opacity 1 → 0.5 → 1 over 2s, cubic-bezier(0.4, 0, 0.6, 1), repeating; 6s with reduced motion (Rules 03: slower, not off).
  */
 
 .ds-skeleton {
@@ -26,4 +28,21 @@
   width: 24px;
   height: 24px;
   border-radius: var(--border-radius-rounded-xl);
+}
+
+/* Pulse — Rules 09 (2026-10-28), reference shadcn/ui Skeleton (Tailwind animate-pulse). Colour · size do not change. */
+.ds-skeleton {
+  animation: ds-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes ds-skeleton-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-skeleton {
+    animation-duration: 6s;
+  }
 }
