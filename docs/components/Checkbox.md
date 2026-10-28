@@ -72,7 +72,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
 
 - `CHEC-02` **항목 간격**: `CheckboxGroup`은 세로 8px(`spacing/margin/m-2`), 가로(`orientation="horizontal"`) 16px(`m-4`), 줄바꿈 시 줄 사이 8px(Rules 08).
-- `CHEC-03` **Indeterminate 클릭**: 누르면 전체 선택(Checked)이 됩니다 — 브라우저가 Indeterminate를 해제하고 체크합니다. 제어 컴포넌트라면 `onChange`에서 다시 계산하세요(Rules 04).
+- `CHEC-03` **Indeterminate 클릭**(2026-10-28 개정): 누르면(클릭 · Space) **해제(Unchecked)** 됩니다 — 브라우저 기본은 체크이지만 `Checkbox`가 `onChange` 전에 `event.target.checked`를 `false`로 바꿔 전체 선택 체크박스가 하위 항목을 모두 해제하게 합니다. 제어 컴포넌트는 `e.target.checked`(false)로 하위 항목과 `indeterminate`를 다시 계산하세요(이전 규칙: 누르면 전체 선택 — Rules 04).
 
 ## 상태
 

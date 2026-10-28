@@ -120,7 +120,7 @@ function SelectAll() {
   );
 }
 
-/** Click and Space toggle; a parent checkbox shows Indeterminate while only some children are checked. */
+/** Click and Space toggle; a parent checkbox shows Indeterminate while only some children are checked, and activating it in that state clears every child. */
 export const Interaction: Story = {
   name: "Interaction",
   render: () => <SelectAll />,
@@ -131,9 +131,25 @@ export const Interaction: Story = {
       await expect(parent).toHaveProperty('indeterminate', true);
       await expect(parent).toBePartiallyChecked();
     });
+    await step('clicking the indeterminate parent clears every child (unchecked, not checked)', async () => {
+      await userEvent.click(parent);
+      await expect(parent).not.toBeChecked();
+      await expect(parent).toHaveProperty('indeterminate', false);
+      for (const name of ['이메일', 'SMS', '앱 푸시']) await expect(canvas.getByRole('checkbox', { name })).not.toBeChecked();
+    });
+    await step('Space on the indeterminate parent clears every child too', async () => {
+      await userEvent.click(canvas.getByText('이메일'));
+      await expect(parent).toHaveProperty('indeterminate', true);
+      parent.focus();
+      await userEvent.keyboard(' ');
+      await expect(parent).not.toBeChecked();
+      await expect(canvas.getByRole('checkbox', { name: '이메일' })).not.toBeChecked();
+    });
     await step('clicking the label toggles a child', async () => {
+      await userEvent.click(canvas.getByText('이메일'));
       await userEvent.click(canvas.getByText('SMS'));
       await expect(sms).toBeChecked();
+      await expect(parent).toHaveProperty('indeterminate', true);
     });
     await step('Space toggles the focused checkbox', async () => {
       const push = canvas.getByRole('checkbox', { name: '앱 푸시' });

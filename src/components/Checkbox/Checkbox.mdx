@@ -84,7 +84,7 @@ import { CheckboxGroup } from './CheckboxGroup';
 
 ## 사용 규칙
 
-- 일부 선택 상태에서 누르면 선택됨으로 바뀝니다. 제어 컴포넌트라면 `onChange`에서 `indeterminate` 값을 다시 계산합니다.
+- 일부 선택 상태에서 누르면(클릭 · Space) 해제됩니다 — 전체 선택 체크박스라면 하위 항목이 모두 해제됩니다. `onChange`의 `e.target.checked`는 `false`로 전달되므로, 제어 컴포넌트는 그 값으로 하위 항목과 `indeterminate`를 다시 계산합니다.
 - 나머지 `<input>` 속성과 `ref`는 실제 체크박스에 전달되고, `className` · `style`은 라벨을 포함한 바깥 요소에 적용됩니다.
 
 ## Props

@@ -7,6 +7,10 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Checkbox — Indeterminate 상태에서 누르면 해제 (2026-10-28)
+
+일부 선택(`indeterminate`) 체크박스를 클릭하거나 Space로 누르면 브라우저 기본(선택됨) 대신 **해제(Unchecked)** 로 바뀝니다. `Checkbox`가 `onChange` 전에 `event.target.checked`를 `false`로 바꾸므로, 전체 선택 체크박스는 하위 항목을 모두 해제하고 `CheckboxGroup` 안의 항목도 같은 규칙을 따릅니다. 단순 Checked ↔ Unchecked 전환, Disabled 차단, Props · 공개 API · Figma 디자인은 그대로입니다. 사용 문서 · 개발 노트(CHEC-03) · Interaction 스토리(클릭 · Space로 전체 해제) 갱신.
+
 ### Accordion 동기화 — 펼친 항목의 하단 구분선 (2026-10-28)
 
 Figma `accordion-item`(1035:15648, 10개)을 최신 원본으로 다시 읽었습니다. 트리거 높이 44 · 36, 패딩 · 간격 · 제목 · 본문 글자 · 아이콘 · 포커스 링 · `colors/accordion/*` 등 변수 20개(별칭 포함)는 스냅샷과 같고, 바뀐 것은 **Expanded=True 변형 4개에 내용 아래 두 번째 Divider(`colors/accordion/border/default`, Show Divider에 연결)가 추가**된 것입니다.

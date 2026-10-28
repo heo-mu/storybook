@@ -353,7 +353,7 @@ export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `className` | `string` |  | 라벨을 포함한 바깥 요소의 클래스 이름. |
-| `indeterminate` | `boolean` | `false` | 일부 선택 — 켜져 있는 동안 체크 표시 대신 가로줄을 보여 줍니다. |
+| `indeterminate` | `boolean` | `false` | 일부 선택 — 켜져 있는 동안 체크 표시 대신 가로줄을 보여 줍니다. 이 상태에서 누르면(클릭 · Space) 선택이 아니라 **해제**로 바뀝니다(전체 선택 체크박스가 하위 항목을 모두 해제). |
 | `label` | `ReactNode` |  | 상자 옆에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. |
 | `size` | `"sm" \| "md" \| "lg"` | `'sm'` | 크기. `CheckboxGroup` 안에서는 그룹 크기를 따릅니다. |
 | `style` | `CSSProperties` |  | 라벨을 포함한 바깥 요소의 스타일. |

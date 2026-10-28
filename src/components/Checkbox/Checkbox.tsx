@@ -10,7 +10,7 @@ export type CheckboxProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'ty
   size?: ChoiceSize;
   /** 상자 옆에 보이는 라벨. 없으면 `aria-label`로 이름을 붙입니다. */
   label?: ReactNode;
-  /** 일부 선택 — 켜져 있는 동안 체크 표시 대신 가로줄을 보여 줍니다. @default false */
+  /** 일부 선택 — 켜져 있는 동안 체크 표시 대신 가로줄을 보여 줍니다. 이 상태에서 누르면(클릭 · Space) 선택이 아니라 **해제**로 바뀝니다(전체 선택 체크박스가 하위 항목을 모두 해제). @default false */
   indeterminate?: boolean;
   /** 폼 값. `CheckboxGroup` 안에서는 그룹 값에서 이 체크박스를 구분합니다. */
   value?: string;
@@ -37,6 +37,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // Indeterminate rule (2026-10-28): the browser would turn a mixed checkbox *on*; the design system clears it instead,
+    // so a "전체 선택" checkbox in the mixed state unchecks every child. Reported as `event.target.checked === false`.
+    if (indeterminate && event.target.checked) event.target.checked = false;
     if (inGroup) group.toggle(value, event.target.checked);
     onChange?.(event);
   };
