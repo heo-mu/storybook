@@ -18,7 +18,7 @@ export type FilterChipSelectOption = {
 };
 
 type FilterChipSelectBase = {
-  /** 필터 이름. 적용된 값이 없을 때 칩 글자이고, 값이 있으면 "필터명: 값, 값"이 됩니다. */
+  /** 필터 이름. 적용된 값이 없을 때 칩 글자이고, 값이 하나면 "필터명: 값", 둘 이상이면 "필터명: 첫 값 외 n개"가 됩니다. */
   label: string;
   /** 고를 수 있는 옵션 목록(보이는 순서대로). */
   options: FilterChipSelectOption[];
@@ -26,7 +26,7 @@ type FilterChipSelectBase = {
   size?: ChipSize;
   /** 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. */
   disabled?: boolean;
-  /** 칩에 이름을 보여 줄 값의 수. 넘치면 "외 N"으로 줄입니다. @default 3 */
+  /** 칩에 이름을 보여 줄 값의 수. 넘치는 값은 "외 n개"로 줄입니다(표시 규칙 2026-10-28: 첫 값만 보여 줌). @default 1 */
   maxDisplayed?: number;
   /** 폼으로 값을 보낼 때 쓰는 필드 이름. */
   name?: string;
@@ -68,7 +68,7 @@ const CLEAR = '__ds-filter-clear__';
 
 /** 필터 칩과 옵션 목록을 함께 제공합니다. 다중 선택은 목록을 닫을 때, 단일 선택은 항목을 선택하는 즉시 적용됩니다. */
 export const FilterChipSelect = forwardRef(function FilterChipSelect(props: FilterChipSelectProps, ref: ForwardedRef<HTMLButtonElement>) {
-  const { label, options, size = 'md', disabled, maxDisplayed = 3, name, onOpenChange, defaultOpen = false, className } = props;
+  const { label, options, size = 'md', disabled, maxDisplayed = 1, name, onOpenChange, defaultOpen = false, className } = props;
   const single = props.selectionMode === 'single';
   const clearLabel = single ? ((props as FilterChipSelectSingleProps).clearLabel ?? '전체') : undefined;
 
@@ -90,8 +90,10 @@ export const FilterChipSelect = forwardRef(function FilterChipSelect(props: Filt
   };
   const shown = open ? pending : applied;
 
-  const labelOf = (id: Key) => options.find((o) => o.id === id)?.label ?? String(id);
-  const text = filterChipText(label, shown.map(labelOf), maxDisplayed);
+  // Names in the option list's order (not the order the user clicked), so the first shown value is stable; keys that are
+  // not in the list keep their own order after the known ones.
+  const names = [...options.filter((o) => shown.includes(o.id)).map((o) => o.label), ...shown.filter((k) => !options.some((o) => o.id === k)).map(String)];
+  const text = filterChipText(label, names, maxDisplayed);
   const same = (a: Key[], b: Key[]) => a.length === b.length && a.every((k) => b.includes(k));
 
   const changeOpen = (isOpen: boolean) => {

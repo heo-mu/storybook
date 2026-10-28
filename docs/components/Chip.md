@@ -38,7 +38,7 @@ import { Chip, InputChip, FilterChip } from 'platform-design-system';
 ## Chip Filter 적용 — FilterChipSelect
 
 Figma **chip-filter 다중 선택 예시**(1011:12956)와 **단일 선택 예시**(1149:6756)를 그대로 구현한 컴포넌트입니다. 칩을 누르면 칩 아래 4px에
-`listbox` · `option`(Size=sm, 최소 160px)이 열리고, 적용된 값이 있으면 칩이 Selected(브랜드 테두리 · 글자)이며 글자가 "필터명: 값, 값"이 됩니다.
+`listbox` · `option`(Size=sm, 최소 160px)이 열리고, 적용된 값이 있으면 칩이 Selected(브랜드 테두리 · 글자)이며 글자가 "필터명: 값" 또는 "필터명: 첫 값 외 n개"가 됩니다.
 
 | 선택 방식 | 쓰는 곳 | 동작 |
 | --- | --- | --- |
@@ -94,7 +94,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `CHIP-01` **InputChip 삭제 대상**: X 아이콘(12px)만이 아니라 칩 전체가 삭제 버튼입니다(터치 대상 크기 확보). 키보드는 Enter · Space · Delete · Backspace(Rules 04 · chip-input 주석).
 - `CHIP-03` **Chip 그룹**: 칩 사이 4px(`spacing/margin/m-1` — Figma 예시와 같음), 줄바꿈 시 같은 간격(Rules 08). 그룹 컴포넌트는 없으므로 사용처에서 `role="group"`(이름 포함)과 `gap: var(--spacing-margin-m-1)`를 지정합니다.
-- `CHIP-04` **필터 칩 선택**: 다중(기본)은 패널을 연 채 켜고 끄며 닫을 때 적용, 단일은 고르면 적용 · 닫힘, "전체"로 해제. 칩 글자 "필터명: 값, 값"(3개를 넘으면 "외 N") — Figma 다중 · 단일 선택 예시(1011:12956 · 1149:6756), Rules 04 · chip-filter 주석.
+- `CHIP-04` **필터 칩 선택**: 다중(기본)은 패널을 연 채 켜고 끄며 닫을 때 적용, 단일은 고르면 적용 · 닫힘, "전체"로 해제. 칩 글자는 0개 "필터명" · 1개 "필터명: 값" · 2개 이상 "필터명: 첫 값 외 n개"(2026-10-28 개정, 첫 값은 옵션 목록 순서, `maxDisplayed`로 나열 수 조정) — Figma 다중 · 단일 선택 예시(1011:12956 · 1149:6756), Rules 04 · chip-filter 주석.
 
 ## 상태
 

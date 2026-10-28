@@ -7,6 +7,14 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Chip Filter — 선택값 표시 규칙 "첫 값 외 n개" (2026-10-28)
+
+`FilterChipSelect`의 칩 글자가 선택 개수에 따라 바뀝니다 — 0개 "필터명", 1개 "필터명: 값", 2개 이상 "필터명: 첫 값 외 n개"(n은 보여 준 값을 뺀 나머지). 예: 지역 → 지역: 서울 → 지역: 서울 외 1개 → 지역: 서울 외 2개. 첫 값은 선택 순서가 아니라 옵션 목록 순서를 따르고, 선택 · 해제 · 초기화 시 즉시 갱신됩니다.
+
+- `filterChipText`: "외 n" → "외 n개", `maxDisplayed` 기본 3 → **1**(Prop은 그대로 — 늘리면 이름을 더 나열). 디자인 · 상태 · 선택/해제 · 단일 선택 · Disabled · 키보드 동작은 변화 없음.
+- 스토리: 표시 규칙 스토리(0 · 1 · 2 · 3개, 순서 일관성, 해제) 추가, 기존 play 기대값 갱신. 표 편집 예시는 Figma 표 변형과 같은 "옵션명, 옵션명"을 `maxDisplayed={2}`로 유지.
+- Figma: `chip-filter 다중 선택 예시`(1011:12956)의 인스턴스 글자 5개를 새 규칙으로 수정([figma-fix-requests Y절](docs/figma-fix-requests.md)). 세트 · 변수 변경 없음.
+
 ### Checkbox — Indeterminate 상태에서 누르면 해제 (2026-10-28)
 
 일부 선택(`indeterminate`) 체크박스를 클릭하거나 Space로 누르면 브라우저 기본(선택됨) 대신 **해제(Unchecked)** 로 바뀝니다. `Checkbox`가 `onChange` 전에 `event.target.checked`를 `false`로 바꾸므로, 전체 선택 체크박스는 하위 항목을 모두 해제하고 `CheckboxGroup` 안의 항목도 같은 규칙을 따릅니다. 단순 Checked ↔ Unchecked 전환, Disabled 차단, Props · 공개 API · Figma 디자인은 그대로입니다. 사용 문서 · 개발 노트(CHEC-03) · Interaction 스토리(클릭 · Space로 전체 해제) 갱신.

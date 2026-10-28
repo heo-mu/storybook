@@ -36,7 +36,7 @@ const meta = {
     label: { control: 'text', description: '필터 이름' },
     size: { control: 'inline-radio', options: CHIP_SIZES, description: '크기', table: { defaultValue: { summary: 'md' } } },
     disabled: { control: 'boolean', description: '비활성 — 조작과 키보드 포커스 제한' },
-    maxDisplayed: { control: { type: 'number', min: 1, max: 5 } },
+    maxDisplayed: { control: { type: 'number', min: 1, max: 5 }, description: '이름을 나열할 값의 수 — 기본 1(첫 값 외 n개)', table: { defaultValue: { summary: '1' } } },
     options: { control: 'object' },
   },
 } satisfies Meta<typeof FilterChipSelect>;
@@ -47,7 +47,7 @@ type Story = StoryObj<typeof meta>;
 /** 다중 선택 예시입니다. 목록을 닫으면 선택한 값이 필터에 적용됩니다. */
 export const Playground: Story = { name: "Playground" };
 
-/** 처음부터 값이 적용된 필터입니다. 선택 상태로 "나이대: 20대, 30대"가 보입니다. */
+/** 처음부터 값이 적용된 필터입니다. 선택 상태로 "나이대: 20대 외 1개"가 보입니다(둘 이상이면 첫 값 + 외 n개). */
 export const WithValue: Story = {
   name: '필터 적용',
   args: { defaultValue: ['20', '30'] },

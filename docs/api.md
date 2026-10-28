@@ -431,14 +431,14 @@ export 319개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `label` *(필수)* | `string` |  | 필터 이름. 적용된 값이 없을 때 칩 글자이고, 값이 있으면 "필터명: 값, 값"이 됩니다. |
+| `label` *(필수)* | `string` |  | 필터 이름. 적용된 값이 없을 때 칩 글자이고, 값이 하나면 "필터명: 값", 둘 이상이면 "필터명: 첫 값 외 n개"가 됩니다. |
 | `options` *(필수)* | `FilterChipSelectOption[]` |  | 고를 수 있는 옵션 목록(보이는 순서대로). |
 | `className` | `string` |  |  |
 | `clearLabel` | `string` | `'전체'` | 필터를 푸는 첫 옵션의 글자. |
 | `defaultOpen` | `boolean` | `false` | 처음부터 목록을 연 채로 보여 줄지 여부. |
 | `defaultValue` | `Key \| Key[] \| null` | `[] null` | 처음 적용된 값. `value` 없이 필터가 스스로 값을 관리할 때 씁니다. |
 | `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드 포커스를 받지 않습니다. |
-| `maxDisplayed` | `number` | `3` | 칩에 이름을 보여 줄 값의 수. 넘치면 "외 N"으로 줄입니다. |
+| `maxDisplayed` | `number` | `1` | 칩에 이름을 보여 줄 값의 수. 넘치는 값은 "외 n개"로 줄입니다(표시 규칙 2026-10-28: 첫 값만 보여 줌). |
 | `name` | `string` |  | 폼으로 값을 보낼 때 쓰는 필드 이름. |
 | `onChange` | `((value: Key[]) => void) \| ((value: Key \| null) => void)` |  | 고른 값이 바뀐 채로 목록이 닫히면 적용된 값으로 호출됩니다. 적용된 값으로 호출됩니다. 필터를 풀면 `null`입니다. |
 | `onOpenChange` | `((isOpen: boolean) => void)` |  | 목록이 열리거나 닫히면 호출됩니다. |

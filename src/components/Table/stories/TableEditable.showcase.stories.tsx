@@ -36,7 +36,8 @@ function TableFilter({ disabled, reset, open }: { disabled?: boolean; reset?: bo
   const [value, setValue] = useState<Key[]>(['a', 'b']);
   return (
     <KeyValueGroup>
-      <FilterChipSelect label="선택유형" options={FILTER_OPTIONS} value={value} onChange={setValue} disabled={disabled} defaultOpen={open} />
+      {/* Figma table_value_editable Filter · Filled lists two names ("선택유형: 옵션명, 옵션명"): maxDisplayed keeps that example text under the 2026-10-28 "첫 값 외 n개" default. */}
+      <FilterChipSelect label="선택유형" options={FILTER_OPTIONS} value={value} onChange={setValue} disabled={disabled} defaultOpen={open} maxDisplayed={2} />
       {reset && (
         <TextButton rightIcon={<ArrowCounterClockwiseIcon />} onClick={() => setValue([])}>
           초기화

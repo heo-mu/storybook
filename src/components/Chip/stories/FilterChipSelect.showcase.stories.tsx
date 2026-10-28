@@ -65,7 +65,7 @@ export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = 
       await userEvent.click(within(await listbox()).getByRole('option', { name: '옵션 2' }));
       await userEvent.click(within(await listbox()).getByRole('option', { name: '옵션 3' }));
       await expect(await listbox()).toBeInTheDocument();
-      await expect(chip()).toHaveTextContent('나이대: 옵션 2, 옵션 3');
+      await expect(chip()).toHaveTextContent('나이대: 옵션 2 외 1개');
       await expect(chip()).not.toHaveAttribute('data-selected');
       await expect(args.onChange).not.toHaveBeenCalled();
     });
@@ -74,7 +74,7 @@ export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = 
       await waitFor(() => expect(within(document.body).queryByRole('listbox')).toBeNull());
       await expect(args.onChange).toHaveBeenLastCalledWith(['2', '3']);
       await expect(chip()).toHaveAttribute('data-selected');
-      await expect(chip()).toHaveTextContent('나이대: 옵션 2, 옵션 3');
+      await expect(chip()).toHaveTextContent('나이대: 옵션 2 외 1개');
       await expect(chip()).toHaveFocus();
     });
     await step('다시 열림 → 다시 선택 중 → 다시 선택 완료', async () => {
@@ -83,7 +83,7 @@ export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = 
       await expect(within(lb).getByRole('option', { name: '옵션 2' })).toHaveAttribute('aria-selected', 'true');
       await expect(chip()).toHaveAttribute('data-selected'); // still applied while reopened
       await userEvent.click(within(lb).getByRole('option', { name: '옵션 5' }));
-      await expect(chip()).toHaveTextContent('나이대: 옵션 2, 옵션 3, 옵션 5');
+      await expect(chip()).toHaveTextContent('나이대: 옵션 2 외 2개');
       await userEvent.click(canvasElement.ownerDocument.body);
       await waitFor(() => expect(within(document.body).queryByRole('listbox')).toBeNull());
       await expect(args.onChange).toHaveBeenLastCalledWith(['2', '3', '5']);
@@ -140,6 +140,52 @@ export const SingleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = {
       await waitFor(() => expect(args.onChange).toHaveBeenLastCalledWith(null));
       await expect(chip()).not.toHaveAttribute('data-selected');
       await expect(chip()).toHaveTextContent(/^기간$/);
+    });
+  },
+};
+
+/** 표시 규칙(2026-10-28): 0개 → 필터명, 1개 → "필터명: 값", 2개 이상 → "필터명: 첫 값 외 n개" — 첫 값은 옵션 목록 순서 기준, 해제 · 초기화 시 즉시 갱신. */
+export const LabelRule: Story = {
+  name: '표시 규칙(0 · 1 · 2 · 3개)',
+  render: () => (
+    <div style={{ display: 'flex', gap: 4, minHeight: 260 }}>
+      <FilterChipSelect label="지역" options={['서울', '경기', '인천', '부산'].map((v) => ({ id: v, label: v }))} />
+    </div>
+  ),
+  play: async ({ canvasElement, userEvent, step }) => {
+    const chip = () => chipOf(canvasElement, /^지역/);
+    const pick = async (name: string) => userEvent.click(within(await listbox()).getByRole('option', { name }));
+    await step('0개 → 지역', async () => {
+      await expect(chip()).toHaveTextContent(/^지역$/);
+    });
+    await step('1개 → 지역: 서울', async () => {
+      await userEvent.click(chip());
+      await pick('서울');
+      await expect(chip()).toHaveTextContent(/^지역: 서울$/);
+    });
+    await step('2개 → 지역: 서울 외 1개', async () => {
+      await pick('경기');
+      await expect(chip()).toHaveTextContent(/^지역: 서울 외 1개$/);
+    });
+    await step('3개 → 지역: 서울 외 2개', async () => {
+      await pick('인천');
+      await expect(chip()).toHaveTextContent(/^지역: 서울 외 2개$/);
+    });
+    await step('첫 값은 선택 순서가 아니라 옵션 목록 순서: 서울을 빼면 경기 외 1개', async () => {
+      await pick('서울');
+      await expect(chip()).toHaveTextContent(/^지역: 경기 외 1개$/);
+      await pick('서울');
+      await expect(chip()).toHaveTextContent(/^지역: 서울 외 2개$/);
+    });
+    await step('해제하면 즉시 갱신, 전부 해제하면 필터명만', async () => {
+      await pick('인천');
+      await pick('경기');
+      await expect(chip()).toHaveTextContent(/^지역: 서울$/);
+      await pick('서울');
+      await expect(chip()).toHaveTextContent(/^지역$/);
+      await userEvent.keyboard('{Escape}');
+      await waitFor(() => expect(within(document.body).queryByRole('listbox')).toBeNull());
+      await expect(chip()).not.toHaveAttribute('data-selected');
     });
   },
 };
@@ -257,7 +303,7 @@ export const FilterArea: Story = {
       for (const name of ['101동', '103동']) await userEvent.click(within(await listbox()).getByRole('option', { name }));
       await userEvent.keyboard('{Escape}');
       await waitFor(() => expect(count()).toHaveTextContent('5개 설비'));
-      await expect(canvas.getByRole('button', { name: /^동/ })).toHaveTextContent('동: 101동, 103동');
+      await expect(canvas.getByRole('button', { name: /^동/ })).toHaveTextContent('동: 101동 외 1개');
     });
     await step('단일: 상태 정상', async () => {
       await userEvent.click(canvas.getByRole('button', { name: /^상태/ }));

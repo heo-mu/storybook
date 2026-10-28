@@ -244,6 +244,17 @@ Figma를 Product Designer 관점에서 따로 점검하고(Storybook을 정답�
 
 유지한 Figma 변경(동기화만): Tab 밑줄 `gray-subtler · gray-subtle · gray`, Stepper 현재 단계 배경 `fill/primary/strong/default`, Toast `label/title` · `label/body`, Breadcrumb Role=Open 삭제.
 
+## Y. Chip Filter 선택값 표시 규칙 — 사용 예시 글자 수정 (2026-10-28, 사용자 요청 작업)
+
+필터 칩 글자 규칙이 "필터명: 값, 값"(3개 초과 시 "외 N")에서 **0개 "필터명" · 1개 "필터명: 값" · 2개 이상 "필터명: 첫 값 외 n개"** 로 바뀌어, `chip-filter 다중 선택 예시`(1011:12956)의 인스턴스 `Label Text` 속성을 코드와 같은 글자로 고쳤습니다. 컴포넌트 세트 · 변수는 바꾸지 않았습니다.
+
+| 인스턴스 | 이전 | 이후 |
+| --- | --- | --- |
+| 1011:13442 · 1011:13401 · 1011:13541 · 1011:13675 | 나이대: 옵션명, 옵션명 | 나이대: 옵션명 외 1개 |
+| 1011:13556 | 나이대: 옵션명, 옵션명, 옵션명 | 나이대: 옵션명 외 2개 |
+
+바꾸지 않은 곳: `table_value_editable` Type=Filter · Content=Filled 변형 4개의 "선택유형: 옵션명, 옵션명"(컴포넌트 변형 안의 예시 — 코드 예시는 `maxDisplayed={2}`로 같은 글자 유지), `dashboard-filter-bar`의 "비교: 이전 7일"(값 1개라 규칙과 같음). 표 변형도 새 규칙으로 맞출지는 결정 대상입니다.
+
 ## 플레이스홀더 토큰 오용 — 바인딩 수정 요청 (2026-10-27, 적용 완료 — X절)
 
 `text/placeholder`가 brand-gray/400(#a1a8b5)으로 바뀌면서(F98) 플레이스홀더가 아닌 글자에 이 토큰을 묶어 둔 곳이 대비 2.35:1로 내려갔습니다. 코드는 Figma 바인딩을 그대로 따르므로 Figma에서 바꾼 뒤 재동기화합니다.
