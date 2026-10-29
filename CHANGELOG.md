@@ -12,7 +12,7 @@
 - **SearchField 토큰 이름(F112)**: `search-field/{outline,solid}/label/*`가 입력 글자를 뜻하던 것을 다른 필드와 같은 구조로 바꿨습니다 — `label/default · hover · disabled` → `placeholder/default · hover · disabled`, `label/completed · error` → `value/completed · error`(이름만 변경, 변수 ID · 노드 바인딩 유지). input처럼 `value/default`(Focus) · `value/disabled`를 추가했고 Focus 변형 6곳 · solid Hover 변형 3곳을 알맞은 토큰에 묶었습니다(색 동일). CSS 변수 이름이 바뀌었습니다: `--colors-search-field-*-label-*` → `--colors-search-field-*-placeholder-*` · `-value-*`(배포 전 0.1.0, SearchField.css 외 참조 없음). 공개 Props 변화 없음.
 - **Textarea 비활성 카운터(F113 ①)**: Figma Disabled 변형의 카운터가 `counter/disabled`(text/disabled)로 바뀌어 코드도 비활성 상태에서 카운터 전체를 같은 색으로 보입니다(이전: 현재 수 brand · 나머지 tertiary). 비활성 카운터 요소에 `aria-disabled`(비활성 컨트롤의 일부 — 대비 예외, 라벨 · 메시지와 같은 처리). 참조 이미지 갱신, 14/14 세 엔진.
 - **Navigation 링크 Hover 아이콘(F113 ②, F36)**: Unselected Hover 변형 아이콘이 `…/icon/hover`(icon/secondary)로 묶여 코드도 hover에서 아이콘이 한 단계 진해집니다(item_parent와 같은 규칙). 참조 이미지 갱신, item_link 4/4 세 엔진.
-- **Table 행 아이콘(F113 ③)**: `table/data/icon/hover` 별칭을 icon/tertiary(기본보다 연함) → icon/primary로 고치고, 끌기 손잡이 hover · pressed에 `data/icon/hover` · `pressed`를 적용했습니다(세트에 Hover 변형은 없음).
+- **Table 행 아이콘(F113 ③)**: `table/data/icon/hover` 별칭을 icon/tertiary(기본보다 연함) → icon/primary로 고치고, 행 hover · pressed에서 끌기 손잡이 아이콘에 `data/icon/hover` · `pressed`를 적용했습니다(세트에 Hover 변형은 없음; 손잡이는 react-aria가 포인터 이벤트를 행에 넘기므로 행 상태를 따름).
 - Slider handle 토큰 2개(`slider/background/handle/outline` · `border/handle/brand`)는 legacy 페이지 slider-outline 대안이 24곳에서 쓰고 있어 유지 — [docs/components/Slider.md](docs/components/Slider.md) SLID 노트.
 
 ### Figma 변수 · 구조 정리 — Component 변수 56개 삭제 · 바인딩 6 · 레이어 이름 370 · Rules 06 주의 행 (2026-10-29)

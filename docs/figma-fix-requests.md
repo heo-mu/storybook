@@ -355,7 +355,7 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 | --- | --- | --- |
 | textarea Disabled 카운터 | 86:3036 · 3037 · 3038(sm), 86:3042 · 3043 · 3044(md) → `colors/textarea/outline/counter/disabled` | 현재 수 `counter/completed` brand/700 #007c56, "/" · 최대 수 `counter/default` brand-gray/600 #778191 → 모두 text/disabled brand-gray/300 #c2c7d0 (비활성 value · placeholder · helper와 같은 규칙) |
 | navigation item_link Hover · Unselected 아이콘 | I476:18731;128:1335;2:44340;8899:59372 → `…/link/unselected/icon/hover` | icon/tertiary brand-gray/500 → icon/secondary brand-gray/700 (item_parent Hover와 같음) |
-| table `data/icon/hover` 별칭 | 변수 355:3807 값 `S:colors/icon/tertiary` → `S:colors/icon/primary` | hover가 기본(icon/secondary 700)보다 연한 500이던 위계를 900으로 — header `icon/active` · 다른 컴포넌트의 hover 단계와 같은 방향. 세트에 Hover 변형이 없어 노드 바인딩 없음(코드 끌기 손잡이에 적용) |
+| table `data/icon/hover` 별칭 | 변수 355:3807 값 `S:colors/icon/tertiary` → `S:colors/icon/primary` | hover가 기본(icon/secondary 700)보다 연한 500이던 위계를 900으로 — header `icon/active` · 다른 컴포넌트의 hover 단계와 같은 방향. 세트에 Hover 변형이 없어 노드 바인딩 없음(코드: 행 hover · pressed가 끌기 손잡이 아이콘을 칠함) |
 
 유지: `slider/background/handle/outline` · `slider/border/handle/brand` — legacy 페이지 "Slider · 디자인 대안 2종"의 slider-outline 세트와 그 인스턴스 24곳이 바인딩(채택되지 않은 대안이지만 삭제하면 legacy 노드가 풀림).
 

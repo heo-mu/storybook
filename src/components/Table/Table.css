@@ -141,12 +141,16 @@
   cursor: grab;
 }
 
-/* Row icon states — Figma colors/table/data/icon/hover · pressed (no variants in the set; 2026-10-29, F113). */
+/* Row icon states — Figma colors/table/data/icon/hover · pressed (no variants in the set; 2026-10-29, F113).
+   react-aria gives the drag handle pointer-events: none (the row is the pointer drag source), so the row's hover · pressed
+   state colours the handle; the handle's own states cover keyboard focus + Enter. */
+.ds-table__row[data-hovered] .ds-table__drag,
 .ds-table__drag:hover,
 .ds-table__drag[data-hovered] {
   --_icon: var(--colors-table-data-icon-hover);
 }
 
+.ds-table__row[data-pressed] .ds-table__drag,
 .ds-table__drag:active,
 .ds-table__drag[data-pressed] {
   --_icon: var(--colors-table-data-icon-pressed);
