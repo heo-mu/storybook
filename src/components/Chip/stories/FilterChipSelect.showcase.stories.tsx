@@ -212,7 +212,7 @@ export const Keyboard: Story = {
     await expect(chip).toHaveTextContent('색상: 옵션 2');
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(within(document.body).queryByRole('listbox')).toBeNull());
-    await expect(chip).toHaveFocus();
+    await waitFor(() => expect(chip).toHaveFocus()); // focus returns once the 100ms close motion ends
     await expect(chip).toHaveAttribute('data-selected');
   },
 };
