@@ -51,7 +51,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DROP-02` **키보드 포커스**: 포커스된 항목은 Hover와 같은 모양입니다(Rules 02 — 목록 항목 포커스).
 - `DROP-03` **패널 위치**: 트리거 아래 4px(`offset`, Select · Date Picker와 같음 — Breadcrumb은 2px), 시작 정렬. 화면 밖으로 나가면 위치를 뒤집습니다(Rules 05).
 - `DROP-04` **패널 너비**: 내용에 맞춥니다(Figma의 200 · 140px은 예시 폭). 필요하면 `className`으로 지정합니다(Rules 05).
-- `DROP-05` **하위 메뉴**: 지원하지 않습니다. `chevron`은 다른 화면으로 이동한다는 표시입니다(Rules 05). Rules 09(2026-10-28 추가 행)는 "dropdown-menu 1depth · dropdown-menu-sub 2depth"(shadcn 링크)라고 하지만 Rules 05와 충돌합니다. Figma `dropdown-menu-sub`(1440:8455)는 140px 글자 전용 메뉴 패널(단일 컴포넌트, Menu 갤러리에서 정합성 1/1)이고 중첩 열림 동작 · 변형은 없어 미지원을 유지합니다(결정 대기, figma-issues F103).
+- `DROP-05` **하위 메뉴**: 지원하지 않습니다. `chevron`은 다른 화면으로 이동한다는 표시입니다(Rules 05). Rules 09의 dropdown-menu-sub 행은 2026-10-28 저녁에 "기본 메뉴(200px) · 글자만 있는 좁은 메뉴(140px), 하위 메뉴 없음(05장)"으로 고쳐 Rules 05와 충돌이 없습니다(F103 해결). Figma `dropdown-menu-sub`(1440:8455)는 140px 글자 전용 메뉴 패널(단일 컴포넌트, Menu 갤러리에서 정합성 1/1)이고 중첩 열림 동작 · 변형은 없어 지원하지 않습니다.
 - `DROP-06` **설명이 있는 항목의 이름**: 라벨과 설명(`description`) 전체가 항목 이름입니다 — 보이는 글자가 모두 이름에 들어갑니다(WCAG 2.5.3, Rules 03).
 
 ## 키보드

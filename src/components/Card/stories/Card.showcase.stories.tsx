@@ -15,8 +15,8 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-/** Story-only stand-in for the content (the grey 280 × 100 rectangle of the Figma example). */
-const Placeholder = () => <div style={{ height: 100, background: '#ededed' }} />;
+/** Story-only stand-in for the content (the 280 × 100 colors/surface/container rectangle of the Figma example). */
+const Placeholder = () => <div style={{ height: 100, background: 'var(--colors-surface-container)' }} />;
 
 /** 지원하는 구성과 상태를 비교합니다. */
 export const Figma: Story = {

@@ -53,6 +53,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `ACCO-04` **애니메이션**: 펼침 · 접힘은 즉시 바뀝니다(Rules 09).
 - `ACCO-05` **너비**: 부모 너비를 채웁니다. Figma의 320px은 예시 폭입니다(Rules 08).
 - `ACCO-07` **트리거 모서리**(2026-10-28 QA): Figma Trigger의 네 모서리는 `border-radius/accordion/default`(→ `border-radius/rounded`, 4px)에 묶여 있습니다. F80 복구 때 Trigger 모서리만 삭제된 옛 변수(값 0)를 가리킨 채 남아 0으로 그려졌고 코드도 0이었습니다 — Figma 바인딩을 복구된 변수로 다시 연결하고(QA 승인 작업, [figma-fix-requests Z절](../figma-fix-requests.md)) 코드는 `var(--border-radius-accordion-default)`를 씁니다. 다른 목록 행(option · dropdownmenu_item · item_parent)과 같은 4px입니다. 참조 이미지 재내보내기, 정합성 10/10.
+- `ACCO-08` **sm Default Expanded 트리거 그림자**(2026-10-28 저녁, F102 해결): Figma `Size=sm, State=Default, Expanded=True` 변형의 Trigger에만 붙어 있던 `elevation-3` 효과 스타일을 제거해 다른 Expanded 변형 3개와 같게 했습니다([figma-fix-requests AB절](../figma-fix-requests.md)). 세트 스크린샷 픽셀 동일 — 코드 · 참조 이미지 변화 없음.
 
 ## 키보드
 

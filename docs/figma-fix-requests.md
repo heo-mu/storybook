@@ -269,6 +269,24 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 
 코드: 기하 `figma/geometry/date-picker_trigger.json`(24개, 위치 포함) 재추출, 참조 이미지에 Open 3칸 추가, `figma/verify/date-picker.json`에 트리거 세트 복귀.
 
+## AB. 잔여 이슈 통합 개선 — Variables · 효과 · Rules 글 · 구조 정리 (2026-10-28 저녁, 사용자 요청 작업)
+
+"Figma 디자인 오류는 Figma 먼저" 원칙으로 아래를 고쳤습니다. 변수 삭제는 하지 않았고(미사용 변수 일괄 삭제 금지), 변경 뒤 체크섬 8그룹이 스냅샷과 일치합니다(semantic · primScalars는 스냅샷 쪽을 함께 갱신).
+
+| 항목 | Figma 변경 | 노드 · 변수 | 전 → 후 |
+| --- | --- | --- | --- |
+| F100 Button Secondary / Solid 대비 | Semantic `colors/fill/secondary/strong/hover` 별칭 brand/600 → **brand/800**, `pressed` brand/500 → **brand/900**(Component `button/secondary/solid/background/*`는 그대로 참조) | Semantic 2개 | 흰 라벨(#fdfdfd) 대비 Hover #009b68 3.51:1 → #006247 **7.42:1**, Pressed #02bb7b 2.46:1 → #004a38 **10.2:1** |
+| F102 accordion 외톨이 그림자 | `Size=sm, State=Default, Expanded=True` Trigger의 `elevation-3` 효과 스타일 제거(다른 Expanded 변형 3개와 같게) | accordion-item 1035:15648 | 세트 스크린샷 픽셀 동일 |
+| F103 Rules 글 | 06장 "처리 중": "저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼 안에 로딩 표시를 보여 주고, 다시 누를 수 없게 합니다." / "버튼 안 Loading(sm), 버튼 색은 그대로 — Form 사용 예시 \"저장 중\"". 09장: Segmented Control · Stepper · 펼침 · 닫힘(select · calendar · breadcrumb · chip-filter) 행 → "즉시 바뀜", dropdown-menu-sub 행 → "기본 메뉴(200px) · 글자만 있는 좁은 메뉴(140px), 하위 메뉴 없음(05장)", 반복 움직임 행에 "스피너 1초 · 스켈레톤 2초" | 1217:7952 · 1217:7954, 1530:10724 · 10726 · 10732 · 10734 · 10740 · 10742 · 10748 · 10750, 1280:8204 | 구현과 같은 말(코드 변화 없음) |
+| F105 외부 인스턴스 | password_field Focus-on 3개 변형의 `icon/visibility_off` 인스턴스 → 로컬 프레임으로 분리; slider handle 값 라벨의 `Tag/state` 인스턴스 2개 → 로컬 글자 "Value label"로 분리(텍스트 스타일 `xxs/leading-normal/semibold` 재적용) | 1625:7980 · 7989 · 7998, 1625:8007 · 8009 | 외부 바인딩 0, 픽셀 변화 없음 |
+| F106 card 예시 상자 | `Frame 2147240282` → 이름 "Content placeholder", 채움 #ededed → `colors/surface/container` 바인딩 | I1304:5732;1351:11925 | gray/100 #eff0f3 |
+| F108 스코프 | Primitive `font/size/*` · `shadows/scale/*` · `pro/screen-size/*` · `meta/library-version` · `font/family/basic` 55개 ALL_SCOPES → 스코프 없음 | Primitive 55개 | 값 변화 없음, 선택기에서 숨김 |
+| F110 table_value_editable Date Range Picker | Default · Disabled × Empty · Filled: 글자 두 개 + "~" → 글자 하나 "YYYY.MM.DD ~ YYYY.MM.DD"(FILL, 288px); Hover Empty · Filled · Editing Filled: `date-picker_trigger` 두 개 + "~" → 트리거 하나(298px, Display Text "… ~ …") | 507:23354 · 540:24701 · 507:23692 · 540:24639, 503:23283 · 507:23416 · 513:24048 | 통합 DatePicker Range(필드 하나)와 같은 구조 |
+
+하지 않은 것: 이름이 잘못 만들어진 Component 변수 7개(`default` · `hover` · `pressed` · `disabled` · `active` · `selected` · `disabled-selected`, 바인딩 · 참조 없음)는 삭제 대상이지만 이 세션에서 삭제 실행이 허용되지 않아 그대로 두고 보고합니다(F107). DatePicker Open 사용 예시 필드는 이미 메시지 줄 없는 70px라 변경하지 않았습니다.
+
+코드: `figma/variables/semantic.txt` · `primitive-scalars.txt` 스냅샷, `src/tokens` 재생성, `figma/button-spec.json`, 참조 이미지(button_basic · button_icon · table_value_editable · empty-state · data-state), 기하(table_value_editable · empty-state · data-state), `figma/verify/table.json`.
+
 ## Z. 전체 품질 감사 — 끊어진 · 외부 변수 바인딩 수정 (2026-10-28, QA 브리프의 "명확한 오류는 직접 수정" 승인)
 
 Component 섹션 68개 세트를 모두 훑어(use_figma 읽기) 하드코딩 색 · 삭제된 변수 참조 · 외부 라이브러리 변수 참조를 찾았습니다. 변수 · 스타일 자체는 바꾸지 않았고(체크섬 8그룹 동일) 노드 바인딩만 고쳤습니다.

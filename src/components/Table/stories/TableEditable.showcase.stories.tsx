@@ -188,7 +188,7 @@ export const EditableOpen: StoryObj<{ type: 'Select' | 'Date Picker' | 'Filter' 
           </KeyValueItem>
         ) : type === 'Date Picker' ? (
           <KeyValueItem label="항목명" editable valueProps={{ 'data-figma': 'Type=Date Picker, State=Editing, Content=Filled' }}>
-            <DatePicker aria-label="날짜" defaultValue="2026-10-01" />
+            <DatePicker aria-label="날짜" defaultValue="2026-10-01" defaultOpen />
           </KeyValueItem>
         ) : (
           <KeyValueItem label="항목명" valueProps={{ 'data-figma': 'Type=Filter, State=Editing, Content=Filled' }}>

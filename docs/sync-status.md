@@ -13,22 +13,22 @@
 
 | 컴포넌트 | Figma 정의 확인 | Storybook 구현 확인 | 시각적 정합성 확인 (C / F / W) | 인터랙션 검증 | 접근성 검증 | 문서 동기화 완료 |
 | --- | --- | --- | --- | --- | --- | --- |
-| button (Button) | ✓ button_basic 54:2904 · 192/192<br>button_icon 67:2368 · 144/144<br>button_text 432:8395 · 16/16 | ✓ | ✓ 352/352 / 352/352 / 352/352 | ✓ play 8 · 스토리 24 | ✓ 경고 0 | ✓ |
-| accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 (2026-10-28 펼침 하단 구분선 · 트리거 모서리 4px 동기화) | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
+| button (Button) | ✓ button_basic 54:2904 · 192/192 (2026-10-28 저녁 Secondary Solid Hover · Pressed brand/800 · 900)<br>button_icon 67:2368 · 144/144<br>button_text 432:8395 · 16/16 | ✓ | ✓ 352/352 / 352/352 / 352/352 | ✓ play 8 · 스토리 24 | ✓ 경고 0 | ✓ |
+| accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 (2026-10-28 펼침 하단 구분선 · 트리거 모서리 4px 동기화, 저녁 sm Default Expanded 외톨이 그림자 제거 F102) | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | alert (Alert) | ✓ alert 179:6087 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 1 · 스토리 9 | ✓ 경고 0 | ✓ |
 | breadcrumb (Breadcrumb) | ✓ breadcrumb-item 710:4794 · 8/8 (Role=Open 삭제, 2026-10-27)<br>breadcrumb 712:5106 · 6/6 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
-| card (Card) | ✓ card_header 218:7173 · 1/1<br>card_footer 218:7174 · 1/1<br>card 185:8050 (예시 프레임) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
+| card (Card) | ✓ card_header 218:7173 · 1/1<br>card_footer 218:7174 · 1/1<br>card 185:8050 (예시 프레임, 2026-10-28 Content placeholder → surface/container) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
 | chart (Chart) | ✓ chart 698:4399 · 24/24<br>chart-legend-item 697:4514 · 3/3<br>chart-tooltip 693:9776 · 1/1 | ✓ | ✓ 28/28 / 28/28 / 28/28 | ✓ play 8 · 스토리 16 | ✓ 경고 0 | ✓ |
 | checkbox (Checkbox) | ✓ checkbox 99:2389 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 4 · 스토리 13 | ✓ 경고 0 | ✓ |
 | chip (Chip) | ✓ chip-multi 201:12711 · 24/24<br>chip-input 558:26017 · 12/12<br>chip-filter 558:25704 · 48/48 | ✓ | ✓ 84/84 / 84/84 / 84/84 | ✓ play 9 · 스토리 31 | ✓ 경고 0 | ✓ |
-| dashboard-filter-bar (DashboardFilterBar) | ✓ dashboard-filter-bar 698:4163 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
+| dashboard-filter-bar (DashboardFilterBar) | ✓ dashboard-filter-bar 698:4163 · 1/1 (2026-10-28 스토리 기간 입력 DashboardFilterRange + DatePicker 136px ×2) | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
 | data-freshness (DataFreshness) | ✓ data-freshness 697:4543 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
-| data-state (DataState) | ✓ data-state 698:4359 · 6/6 | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 8 | ✓ 경고 0 | ✓ |
+| data-state (DataState) | ✓ data-state 698:4359 · 6/6 (2026-10-28 Loading 상하 12px 동기화 · 기하 재추출) | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 8 | ✓ 경고 0 | ✓ |
 | date-picker (DatePicker — Input · Inline, Calendar 호환) | ✓ date-picker_trigger 144:723 · 24/24 (2026-10-28 Open 3 추가, Input 복귀)<br>date-picker_message 144:888 · 3/3<br>date-picker_calendar 144:1644 · 1/1<br>date-picker_day 144:1033 · 7/7<br>date-picker_navigation 144:1328 · 8/8 | ✓ | ✓ 40/40 / 40/40 / 40/40 | ✓ play 7 · 스토리 26 | ✓ 경고 0 | ✓ |
 | dialog (Dialog) | ✓ dialog 149:2838 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | dropdown-menu (DropdownMenu) | ✓ dropdownmenu_item 179:4819 · 5/5<br>dropdownmenu_line 179:5082 · 1/1<br>dropdown-menu 1440:8454 · 1/1 · dropdown-menu-sub 1440:8455 · 1/1 (2026-10-27 추가) | ✓ | ✓ 8/8 / 8/8 / 8/8 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
-| empty-state (EmptyState) | ✓ empty-state 724:14963 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
+| empty-state (EmptyState) | ✓ empty-state 724:14963 · 1/1 (2026-10-28 기하 · 참조 재추출) | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | file-uploader (FileUploader · Loading) | ✓ file-uploader 651:3945 · 5/5<br>file-uploader-item 651:3999 · 4/4<br>loading 675:5644 · 2/2 | ✓ | ✓ 11/11 / 11/11 / 11/11 | ✓ play 2 · 스토리 18 | ✓ 경고 0 | ✓ |
 | input (Input) | ✓ input 76:2945 · 21/21 · password_field 1440:8466 · 24/24 (2026-10-28) | ✓ | ✓ 45/45 / 45/45 / 45/45 — Firefox 비밀번호 마스킹 글자(U+25CF) 12건은 기록(knownDifferences) | ✓ play 6 · 스토리 18 | ✓ 경고 0 | ✓ |
 | link (Link) | ✓ link 111:1509 · 21/21 (2026-10-28 Type 축) | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 3 · 스토리 9 | ✓ 경고 0 | ✓ |
@@ -45,7 +45,7 @@
 | slider (Slider) | ✓ slider 391:1988 · 2/2<br>handle 391:2013 · 5/5 | ✓ | ✓ 7/7 / 7/7 / 7/7 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | stepper (Stepper) | ✓ stepper_indicator_horizontal 179:1621 · 5/5<br>stepper_indicator_vertical 203:3708 · 5/5<br>stepper_connector_horizontal 179:1614 · 2/2<br>stepper_connector_vertical 203:4253 · 2/2<br>stepper_horizontal 179:2043 · 3/3<br>stepper_vertical 203:3949 · 3/3 (2026-10-28 재대조: 합성 세트의 Completed 아이콘 Check로 정리, 참조 이미지 갱신) | ✓ | ✓ 20/20 / 20/20 / 20/20 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | switch (Switch) | ✓ switch 107:409 · 16/16 | ✓ | ✓ 16/16 / 16/16 / 16/16 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
-| table (Table) | ✓ table_header 351:3452 · 3/3<br>table_body 355:3739 · 8/8<br>table_key 355:4193 · 2/2<br>table_value 355:4460 · 2/2<br>table_value_editable 503:23264 · 52/52 | ✓ | ✓ 64/67 (수동 검토 3) / 64/67 (수동 검토 3) / 64/67 (수동 검토 3) | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
+| table (Table) | ✓ table_header 351:3452 · 3/3<br>table_body 355:3739 · 8/8<br>table_key 355:4193 · 2/2<br>table_value 355:4460 · 2/2<br>table_value_editable 503:23264 · 52/52 (2026-10-28 Date Range Picker 7개 변형 단일 필드로 재구성) | ✓ | ✓ 64/67 (수동 검토 3) / 64/67 (수동 검토 3) / 64/67 (수동 검토 3) | ✓ play 3 · 스토리 12 | ✓ 경고 0 | ✓ |
 | tabs (Tabs) | ✓ tab_filled 91:5000 · 60/60<br>tab_line 91:5241 · 30/30 (2026-10-28 `line/underline/*` 재대조: 2026-10-27 동기화 값과 동일) | ✓ | ✓ 90/90 / 90/90 / 90/90 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | textarea (Textarea) | ✓ textarea 86:2597 · 14/14 | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 4 · 스토리 13 | ✓ 경고 0 | ✓ |
 | toast (Toast) | ✓ toast 91:5927 · 4/4 (2026-10-28 재설계 동기화: 제목 + 설명 + "닫기" 버튼) | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 4 · 스토리 8 | ✓ 경고 0 | ✓ |

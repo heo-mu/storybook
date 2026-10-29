@@ -83,6 +83,7 @@ Storybook 전체(스토리 444 · 문서 87 = 531개 항목)를 기존 검증 �
 
 - Figma 결정 대기: F100 대비(Secondary Solid), F102 accordion sm Expanded 그림자, F103 Rules 모순, F105–F109(이번 감사), table_value_editable Filter 변형 글자.
 - 기존 정합성 차이: table_value_editable · empty-state · data-state · dashboard-filter-bar의 글자 위치(이전 기록과 동일).
+- **후속(2026-10-28 저녁, 잔여 이슈 통합 개선)**: 위 두 항목을 처리했습니다 — F100 brand/800 · 900(axe 색 대비 0건), F102 · F103 · F105 · F106 · F108 Figma 수정, 정합성 4개는 기하 · 참조 재추출 뒤 세 엔진 통과(원인은 오래된 스냅샷 · 스토리 예시, 코드 수정은 DataState Loading 여백뿐). 기록: [CHANGELOG](../CHANGELOG.md) · [figma-fix-requests AB절](./figma-fix-requests.md) · figma-issues F110 · F111. 남은 결정: F107 잘못 만들어진 변수 7개 삭제 · 미사용 67개, F108 같은 값 쌍 9개, F109 이름 없는 프레임, F103 ④ 06장 "주의" 행.
 - 자동 검사 밖: 7절의 수동 검증 대상. 반응형은 1400px 뷰포트의 가로 넘침만 검사했고 좁은 화면 레이아웃은 Dashboard Filter Bar "좁은 컨테이너" 스토리로만 확인했습니다.
 
 ## 10. GitHub · Vercel

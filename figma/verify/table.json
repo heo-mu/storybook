@@ -397,7 +397,8 @@
           "selector": [
             ".ds-field__input",
             ".ds-select__value",
-            ".ds-kv__unit"
+            ".ds-kv__unit",
+            ".ds-date-picker__value"
           ],
           "compare": "xyh",
           "optional": true
@@ -411,7 +412,8 @@
         },
         "Title#3": {
           "selector": [
-            ".ds-field__input"
+            ".ds-field__input",
+            ".ds-date-picker__value"
           ],
           "compare": "xyh",
           "optional": true

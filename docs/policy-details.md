@@ -59,7 +59,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 대화상자 크기 | 한 가지 420px — 가운데 정렬 확인 · 선택용(제목 · 설명 · 240px 버튼). 안에 넣는 입력은 1–2개까지, 입력이 많은 작업은 화면으로 | Rules 05 "대화상자 크기" |
 | 모달 덮개 | 모달은 검정 50% 덮개로 뒤 화면을 가리고 조작 · 스크롤을 막음 | `colors/dialog/scrim/default` → `surface/scrim`(black 50%) · Dialog "Modal example" |
 | Tooltip 지연 | 마우스 0.5초 뒤, 키보드 포커스는 즉시 | Tooltip `delay` 500 |
-| 하위 메뉴 | 지원하지 않음 — chevron은 다른 화면으로 이동한다는 표시 | — |
+| 하위 메뉴 | 두지 않음(Rules 05). Rules 09의 dropdown-menu-sub 행은 2026-10-28 저녁에 "기본 메뉴(200px) · 글자만 있는 좁은 메뉴(140px), 하위 메뉴 없음(05장)"으로 고쳐 충돌이 없음. dropdown-menu-sub(1440:8455)는 140px 글자 전용 메뉴 패널 단일 컴포넌트(정합성 1/1) | DROP-05 |
 
 ## 06. 알림 · 진행 표시
 
@@ -67,7 +67,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | --- | --- | --- |
 | Toast | 화면 아래 오른쪽(오른쪽 · 아래 20px), 토스트 사이 8px, 한 번에 최대 3개 — 최신 토스트가 아래에 붙고 먼저 온 것이 위로 밀리며, 네 번째가 오면 가장 오래된 것이 사라짐. 모든 종류가 5초 뒤 닫힘(`timeout`은 5초보다 짧게 못 함, `null`이면 닫을 때까지). "닫기" 텍스트 버튼. Hover · 포커스 중 정지. 같은 문구 · 상태는 겹치지 않고 다시 표시(2026-10-28 개정, 이전: 아래 가운데 · 오류 · 주의는 닫을 때까지) | `spacing/padding/p-5` · `spacing/margin/m-2` · `role=status` · 참고 링크 shadcn toast |
 | Alert | 화면 상태를 설명하는 고정 메시지 — 사용자가 닫지 않음(닫아야 하면 Toast). 설명은 줄바꿈, 자르지 않음. 폭은 부모를 채움 | 오류 `role=alert`, 그 밖 `status` |
-| 처리 중 | Rules 06 행은 그대로 "버튼을 누를 수 없게 하고 로딩을 함께 — Disabled 버튼과 Loading(sm)"이지만, Figma Form 사용 예시 "저장 중"은 저장 버튼 안에 16px 회전 표시(Default 색 유지)이고 코드는 2026-10-28 요청으로 예시를 따릅니다(Button `loading`: 누를 수 없음 · `aria-busy`). Rules 행과 사용 예시가 서로 달라 결정 대기 — Rules 행을 예시에 맞게 고치거나(Figma 수정 필요) 코드를 Disabled + 옆 Loading으로 되돌림 | Rules 06 "처리 중" · Form 사용 예시 "저장 중" · [components/Button.md](./components/Button.md) BUTT-03 |
+| 처리 중 | 저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼 안에 로딩 표시(Loading sm)를 보여 주고 다시 누를 수 없게 함 — Rules 06 행을 2026-10-28에 Form 사용 예시 "저장 중"과 같게 고쳤음(F103 해결). 코드는 Button `loading`(누를 수 없음 · `aria-busy`, 버튼 색 그대로) | Rules 06 "처리 중" · Form 사용 예시 "저장 중" · [components/Button.md](./components/Button.md) BUTT-03 |
 | 주의 | 작업은 계속할 수 있지만 확인이 필요할 때(예: 일부 데이터만 표시). 작업을 막는 문제는 오류. Alert · Toast `Status=Warning` — 주황 삼각형(`brand-status/warning/strong`, 흰 바탕 5.1:1), `role="status"`. 2026-10-28 Figma Rules 06 표에서 이 행이 빠졌으나 Warning 변형 · 변수는 그대로라 개발 기준으로 유지(토스트의 "닫을 때까지"는 위 Toast 행대로 5초로 바뀜) | Alert · Toast `Status=Warning`(Figma 표에는 없음) |
 | 진행 · 로딩 | 진행률을 알면 Progress, 모르면 Loading. Skeleton은 장식이며 감싸는 영역(DataState)이 불러오는 중을 알림 | `aria-busy` · `role=status` |
 
@@ -96,12 +96,12 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 
 | 정책 | 상세 기준 | 토큰 · 근거 |
 | --- | --- | --- |
-| 상태 변화 | 색 · 배경 · 펼침 · 열림 · 썸 이동 · 진행 막대 · 단계 이동은 즉시(애니메이션 없음) — Rules 09 첫 행 그대로. 2026-10-28에 아래 참고 링크 행들이 같은 장에 추가되어 이 행과 충돌하며, Figma에는 시간 · 곡선 값이 없어(프로토타입 전환도 모두 즉시) 코드는 즉시 전환을 유지(결정 대기, figma-issues F103) | — |
-| Segmented Control | Rules 09(2026-10-28 추가): "참고 링크(heroui.pro segment)대로 움직임". 값이 없고 "상태 변화" 행과 충돌해 미구현 — 선택 이동은 즉시 | 결정 대기 · [components/SegmentedControl.md](./components/SegmentedControl.md) |
-| Stepper | Rules 09(2026-10-28 추가): "한 단계씩 라인이 채워지며 이동"(heroui.pro stepper 링크). 값이 없어 연결선 · 표시기는 즉시 바뀜 | 결정 대기 · STEP-03 |
+| 상태 변화 | 색 · 배경 · 펼침 · 열림 · 썸 이동 · 진행 막대 · 단계 이동은 즉시(애니메이션 없음) — Rules 09 첫 행 그대로. 2026-10-28에 추가됐던 참고 링크 행들은 같은 날 저녁 "즉시 바뀜"으로 고쳐 충돌이 없음(F103 해결) | — |
+| Segmented Control | 선택 이동은 즉시 — Rules 09 행도 2026-10-28 저녁에 "즉시 바뀜"으로 고침 | [components/SegmentedControl.md](./components/SegmentedControl.md) SEGM-04 |
+| Stepper | 연결선 · 표시기는 즉시 바뀜 — Rules 09 행도 2026-10-28 저녁에 "즉시 바뀜"으로 고침 | STEP-03 |
 | 하위 메뉴 | Rules 09(2026-10-28 추가): "dropdown-menu 1depth · dropdown-menu-sub 2depth"(shadcn 링크) — 05장 "하위 메뉴를 두지 않음"과 충돌. dropdown-menu-sub(1440:8455)는 140px 글자 전용 메뉴 패널 단일 컴포넌트로 코드에 있고(정합성 1/1), 중첩 열림 동작은 Figma에 변형 · 예시가 없어 미지원 유지 | 결정 대기 · DROP-05 |
-| 펼침 · 닫힘 | Rules 09(2026-10-28 추가): Select 목록 · Date Picker 달력 · Breadcrumb 메뉴 · 필터 칩 패널은 "참고 링크(heroui dropdown)의 애니메이션". 값이 없고 "상태 변화" 행과 충돌해 즉시 열림 · 닫힘 유지 | 결정 대기 |
-| 반복 움직임 | 스피너 1초/바퀴, 동작 줄이기 설정에서 3초/바퀴. Skeleton은 참고 링크(shadcn/ui Skeleton)대로 밝기 맥동 — 불투명도 1 → 0.5 → 1, 2초, `cubic-bezier(0.4, 0, 0.6, 1)` 반복, 동작 줄이기 6초(2026-10-28 구현, 이전: 정적) | `prefers-reduced-motion` · Loading · Skeleton CSS |
+| 펼침 · 닫힘 | Select 목록 · Date Picker 달력 · Breadcrumb 메뉴 · 필터 칩 패널은 즉시 열림 · 닫힘 — Rules 09 행도 2026-10-28 저녁에 "즉시"로 고침 | SELE-09 · DPCK-06 · BREA-06 · CHIP-07 |
+| 반복 움직임 | 스피너 1초/바퀴, 동작 줄이기 설정에서 3초/바퀴. Skeleton은 참고 링크(shadcn/ui Skeleton)대로 밝기 맥동 — 불투명도 1 → 0.5 → 1, 2초, `cubic-bezier(0.4, 0, 0.6, 1)` 반복, 동작 줄이기 6초(2026-10-28 구현, 이전: 정적). Rules 09 반복 움직임 행에도 2026-10-28 저녁 "스피너 1초 · 스켈레톤 2초"를 적음 | `prefers-reduced-motion` · Loading · Skeleton CSS |
 
 ## 10. 개발 구현 세부 (디자인 컴포넌트에 넣지 않는 항목)
 

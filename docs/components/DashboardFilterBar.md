@@ -53,6 +53,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `DFBR-01` **좁은 화면**: 그룹 단위로 다음 줄로 넘어갑니다(줄 간격도 `m-6`). Figma는 1616px 한 줄만 있습니다(Rules 08).
 - `DFBR-05` **접근성**: 바는 `role="search"` 랜드마크(`aria-label`, 기본 "조회 조건"), 그룹은 라벨로 이름 붙은 `role="group"`. 각 컨트롤에도 `aria-label`을 주세요(Figma 컨트롤에는 보이는 라벨이 없음). "|" · "~"는 장식입니다(Rules 03).
+- `DFBR-06` **조회 기간 날짜 범위 예시**(2026-10-28 저녁): Figma 예시의 기간은 136px 날짜 필드 두 개를 "~"로 이은 구성입니다. 스토리 예시(FilterBarSample)를 `DashboardFilterRange` + `DatePicker size="sm"` 두 개로 맞춰 정합성 1/1(세 엔진) — 컴포넌트 코드 변화 없음(figma-issues F111).
 
 ## Props
 

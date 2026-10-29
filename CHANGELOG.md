@@ -7,6 +7,16 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### 잔여 이슈 통합 개선 — Button 대비 · Figma 구조 정리 · 정합성 재검사 (2026-10-28 저녁)
+
+Figma 쪽 오류는 Figma에서, Storybook 쪽 오류는 코드에서 고쳤습니다([docs/figma-fix-requests.md AB절](docs/figma-fix-requests.md)). 변수 삭제는 하지 않았습니다.
+
+- **Button Secondary / Solid 대비(F100)**: Semantic `fill/secondary/strong/hover` · `pressed` → brand/800 · 900(흰 라벨 7.42:1 · 10.2:1, 이전 brand/600 · 500은 3.51:1 · 2.46:1). `src/tokens` 재생성, `figma/button-spec.json` · 참조 이미지(button_basic 16칸 · button_icon 12칸) 갱신, 352/352 세 엔진, axe 색 대비 0건.
+- **Figma 정리**: accordion-item sm Default Expanded 트리거의 외톨이 `elevation-3` 제거(F102, 픽셀 동일); Design System Rules 06 "처리 중" · 09 Segmented Control · Stepper · dropdown-menu-sub · 펼침 · 닫힘 · 반복 움직임 행을 구현과 같은 쉬운 말로 고침(F103, 코드 변화 없음); password_field 눈 아이콘 3곳 · slider handle 값 라벨 2곳의 외부 라이브러리 인스턴스 분리(F105); card Content 예시 상자 이름 지정 · `surface/container` 바인딩(F106); Primitive 55개의 ALL_SCOPES 해제(F108 — 스냅샷 `primitive-scalars.txt` 동기화, CSS 변화 없음); table_value_editable Date Range Picker 7개 변형을 통합 DatePicker 구조(필드 하나 "시작 ~ 종료")로 재구성(F110).
+- **정합성 재검사(이전 실패 4개)**: dashboard-filter-bar 1/1 · empty-state 1/1 · data-state 6/6 · table_value_editable 49/49(수동 검토 3) — Chromium · Firefox · WebKit 통과. 원인은 Figma 변경 뒤 다시 추출하지 않은 기하 · 참조 이미지와 스토리 예시의 옛 구성(F111). 실제 코드 수정은 DataState Loading 상하 12px(`spacing/padding/p-3`, Figma 높이 66 → 90)뿐이고, FilterBarSample 기간 입력을 `DashboardFilterRange` + 136px `DatePicker` 두 개로, "편집 칸 목록 열림 · Date Picker" 스토리는 `defaultOpen`으로 실제 열린 상태를, Card 스토리 자리표시 상자는 `var(--colors-surface-container)`로 바꿨습니다.
+- **DatePicker 잔여**: `DatePickerVariant` 타입은 `dist/components/DatePicker/*.d.ts`로 내보내지며 소비 프로젝트 타입 검사(`DatePickerVariant` · `DatePickerProps` · `FieldSize` import, tsc strict) 통과. Figma Open 사용 예시 필드는 이미 메시지 줄 없는 70px라 변경 없음.
+- 보고만(결정 대기): 노드에 적용되지 않은 Component 변수 90개(코드가 쓰는 상태 토큰 23 · 미사용 67)와 이름이 잘못 만들어진 변수 7개(F107), 같은 값의 Semantic 쌍 9개(F108), 이름 없는 프레임(F109), Rules 06 "주의" 행 누락(F103 ④).
+
 ### DatePicker 통합 — Input · Inline, Select형 날짜 필드, Examples · Calendar 그룹 제거 (2026-10-28)
 
 **Breaking(배포 전 0.1.0)**: `DatePicker`가 기본으로 날짜 필드(`variant="input"`)를 그립니다. 이전의 달력만 그리던 동작은 `variant="inline"`입니다. `Calendar` export는 그대로입니다(호환, `DatePicker variant="inline"` 권장).

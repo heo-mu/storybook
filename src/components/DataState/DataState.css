@@ -17,6 +17,8 @@
 }
 
 .ds-data-state[data-state='loading'] {
+  /* Figma data-state State=Loading: spacing/padding/p-3 above and below, spacing/margin/m-3 between. */
+  padding-block: var(--spacing-padding-p-3);
   gap: var(--spacing-margin-m-3);
 }
 

@@ -32,7 +32,7 @@ export const Figma: Story = {
   play: async ({ canvasElement }) => {
     for (const state of canvasElement.querySelectorAll<HTMLElement>('[data-figma]')) {
       const loading = state.dataset.figma === 'State=Loading';
-      await expect(state.getBoundingClientRect().height).toBe(loading ? 66 : 120);
+      await expect(state.getBoundingClientRect().height).toBe(loading ? 90 : 120);
       const content = state.querySelector<HTMLElement>('.ds-empty-state');
       if (content) {
         await expect(getComputedStyle(content).paddingTop).toBe('12px');
