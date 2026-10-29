@@ -55,6 +55,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
 
 - `TOAS-05` **react-aria Toast**: react-aria-components 1.22에서 UNSTABLE API입니다. 이 패키지의 `ToastRegion` · `showToast` · `closeToast`가 감싸므로 라이브러리가 바뀌어도 사용하는 쪽 코드는 그대로입니다. `toastQueue`(react-aria 큐 자체)는 내부 API이니 직접 쓰지 마세요.
+- `TOAS-08` **주의 정책**(2026-10-29): Rules 06 "주의" 행 — Toast Warning은 확인이 필요한 일을 잠깐(5초) 알리고, 확인할 때까지 남겨야 하면 Alert(사용 문서 · policy-details 06 동일, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## 키보드
 

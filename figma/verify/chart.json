@@ -137,7 +137,7 @@
       "figmaPrefix": "legend:",
       "background": "#ffffff",
       "parts": {
-        "Rectangle 34624613": {
+        "Series swatch": {
           "selector": ".ds-chart-legend-item[data-type='bar'] .ds-chart-legend-item__marker",
           "optional": true
         },
@@ -151,12 +151,12 @@
       "background": "#ffffff",
       "parts": {
         "Time": ".ds-chart-tooltip__title",
-        "Frame 2147240250/Frame 2147240235/Info container*": {
+        "Content/Label column/Info container*": {
           "selector": ".ds-chart-tooltip__label",
           "compare": "xyh"
         },
-        "Frame 2147240250/Frame 2147240235/Info container*/Indicator": ".ds-chart-tooltip__indicator",
-        "Frame 2147240250/Frame 2147240249/Pressure label*": ".ds-chart-tooltip__value"
+        "Content/Label column/Info container*/Indicator": ".ds-chart-tooltip__indicator",
+        "Content/Value column/Pressure label*": ".ds-chart-tooltip__value"
       },
       "//parts": "label rows: the label is at least 40 and at most 80px wide (Figma min / max width since the 2026-10-19 rework), so a short label such as \"유형\" keeps the 40px column — checked through the value x positions and the root width"
     }

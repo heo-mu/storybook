@@ -6,12 +6,12 @@
       "story": "components-datastate-showcase--figma",
       "background": "#ffffff",
       "parts": {
-        "Frame 2147240246": {
+        "Skeleton group": {
           "selector": ".ds-data-state__skeleton",
           "compare": "yh",
           "optional": true
         },
-        "Frame 2147240246/skeleton*": {
+        "Skeleton group/skeleton*": {
           "selector": ".ds-skeleton",
           "optional": true
         },
@@ -24,23 +24,23 @@
           "selector": ".ds-empty-state",
           "optional": true
         },
-        "empty-state/Frame *": {
+        "empty-state/Content": {
           "selector": ".ds-empty-state__text",
           "optional": true
         },
-        "empty-state/Frame */icon_size": {
+        "empty-state/Content/icon_size": {
           "selector": ".ds-empty-state__icon",
           "optional": true
         },
-        "empty-state/Frame */icon_size/*": {
+        "empty-state/Content/icon_size/*": {
           "selector": ".ds-empty-state__icon > svg",
           "optional": true
         },
-        "empty-state/Frame */Title": {
+        "empty-state/Content/Title": {
           "selector": ".ds-empty-state__title",
           "optional": true
         },
-        "empty-state/Frame */Description": {
+        "empty-state/Content/Description": {
           "selector": ".ds-empty-state__description",
           "optional": true
         },
@@ -62,7 +62,7 @@
           "dx": 1.4,
           "why": "Hangul glyphs start and end on the same pixel columns as Figma (±1px); the browser rasterises light grey text heavier, which moves the ink centroid (Chromium up to 0.95px, Firefox 1.35px, WebKit 1.17px)"
         },
-        "empty-state/Frame */*": {
+        "empty-state/Content/*": {
           "dx": 1.4,
           "why": "Hangul glyphs start and end on the same pixel columns as Figma (±1px); the browser rasterises light grey text heavier, which moves the ink centroid (Chromium up to 0.95px, Firefox 1.35px, WebKit 1.17px)"
         },

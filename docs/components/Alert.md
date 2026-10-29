@@ -44,6 +44,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `ALER-02` **설명 길이**: 줄바꿈하며 자르지 않습니다. 길면 문구를 줄이는 것이 원칙입니다(Figma 예시의 "최대 2줄"은 권장 길이, Rules 08).
 - `ALER-03` **역할(role)**: 오류는 `role="alert"`(바로 읽음), 안내 · 성공은 `role="status"`. `role` prop으로 바꿀 수 있습니다(Rules 03 · alert 주석).
 - `ALER-04` **닫기 버튼**: 없습니다 — Alert는 화면 상태를 설명하는 고정 메시지입니다. 사용자가 닫아야 하는 알림은 Toast를 쓰고, 필요한 동작은 `action`에 넣으세요(Rules 06).
+- `ALER-05` **주의 정책 · 레이어 이름**(2026-10-29): Design System Rules 06에 "주의" 행을 추가했습니다 — 작업은 이어갈 수 있지만 확인이 필요한 일, 주황 삼각형, 확인할 것 한 문장 + 버튼, 오류 · 성공 · 안내와의 차이(사용 문서 · policy-details 06 동일). 글자 묶음 `Frame 2147239186` → `Text group`(4변형, 검증 설정 갱신, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## Props
 

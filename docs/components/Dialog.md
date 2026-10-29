@@ -55,6 +55,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DIAL-02` **내용 영역**: `children`은 헤더와 버튼 사이에 같은 간격(`m-8`)으로 놓입니다(Rules 08).
 - `DIAL-03` **닫기 · 포커스**: Esc로 닫힘(`keyboardDismissDisabled`로 끔), 바깥 클릭은 `dismissable`일 때만(입력 유실 방지). 열리면 포커스가 안으로 이동해 갇히고, 닫히면 연 요소로 돌아갑니다. 닫기(X) 버튼은 없습니다(Rules 05 · dialog 주석).
 - `DIAL-04` **열림 · 닫힘 애니메이션**: 없습니다 — 즉시 나타납니다(Rules 09).
+- `DIAL-05` **삭제한 토큰**(2026-10-29): dialog는 title · description 토큰만 쓰므로 `dialog/body/default`(alpha/black/900)를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). 코드 변화 없음.
 
 ## 키보드
 

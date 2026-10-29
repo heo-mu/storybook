@@ -8,9 +8,9 @@
       "background": "#ffffff",
       "geometryOnly": "geometry comparison only; review the current Figma component render separately",
       "parts": {
-        "Frame 2147239191": ".ds-card__heading",
-        "Frame 2147239191/Text": ".ds-card__title",
-        "Frame 2147239191/Text#2": ".ds-card__description",
+        "Heading": ".ds-card__heading",
+        "Heading/Text": ".ds-card__title",
+        "Heading/Text#2": ".ds-card__description",
         "Sub Action/button_basic": ".ds-button"
       }
     },
@@ -34,7 +34,7 @@
       "parts": {
         "card_header": ".ds-card__header",
         "card_content": ".ds-card__content",
-        "card_content/Content/Frame 2147240282": ".ds-card__content > *",
+        "card_content/Content/Content placeholder": ".ds-card__content > *",
         "card_button": ".ds-card__footer"
       }
     }

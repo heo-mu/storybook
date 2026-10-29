@@ -51,6 +51,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DSTA-02` **Partial 설명**: Figma 기본 문구에 실제 수치("130대 중 128대")가 있어 기본값으로 쓰지 않습니다. 사용처의 실제 수치로 쓰세요(Rules 07).
 - `DSTA-03` **접근성**: 상태가 바뀌면 읽어 주도록 `role="status"`(Loading은 `aria-busy`)입니다. 스켈레톤 · 아이콘은 장식입니다(Rules 03 · 06).
 - `DSTA-05` **Loading 상하 여백**(2026-10-28 저녁): Figma `data-state` State=Loading이 스냅샷 이후 위아래 `spacing/padding/p-3`(12px)를 갖게 되어(높이 66 → 90) 코드도 같은 여백을 둡니다. 스켈레톤 막대 · 문구 사이 간격 12px(`margin/m-3`)은 그대로입니다. 기하 · 참조 이미지 재추출, 정합성 6/6(세 엔진), 스토리 검사 높이 90(figma-issues F111).
+- `DSTA-06` **레이어 이름**(2026-10-29): 스켈레톤 묶음 `Frame 2147240246` → `Skeleton group`, 안의 empty-state 글자 묶음은 `Content`(검증 설정 갱신, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## Props
 

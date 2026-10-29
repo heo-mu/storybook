@@ -287,6 +287,54 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 
 코드: `figma/variables/semantic.txt` · `primitive-scalars.txt` 스냅샷, `src/tokens` 재생성, `figma/button-spec.json`, 참조 이미지(button_basic · button_icon · table_value_editable · empty-state · data-state), 기하(table_value_editable · empty-state · data-state), `figma/verify/table.json`.
 
+## AC. 변수 · 구조 정리 — 잘못 만든 변수 7 · 미사용 67 · Semantic 쌍 · 레이어 이름 · Rules 06 주의 (2026-10-29, 사용자 승인 작업)
+
+수정 직전마다 최신 상태를 다시 읽고(두 페이지 바인딩 스캔 15,604 · 2,927 노드, 별칭 참조, 코드 참조), 삭제는 참조 0건인 변수만 했습니다. 변경 뒤 체크섬: compButton 79 `795ac638` · compOthers 684 `fc8a95d0`(그 외 6그룹 변화 없음), 삭제된 변수를 가리키는 바인딩 0건, Component 819 → 763.
+
+### 1. 잘못 만들어진 Component 변수 7개 — 삭제
+
+| 변수 | ID | 값(별칭) | 참조 | 처리 |
+| --- | --- | --- | --- | --- |
+| `hover` | 151:1022 | `S:colors/fill/primary/subtle/hover` | legacy 페이지 화면 시안 프레임 4곳(773:12493 · 773:12739 · 773:13510 · 868:10915) | 4곳을 별칭 대상 Semantic으로 옮긴 뒤 삭제(같은 색) |
+| `default` | 151:1021 | `S:colors/surface/page` | legacy 4곳(773:12689 · 773:12708 · 773:13511 · 868:10916) | 같은 방식으로 옮긴 뒤 삭제 |
+| `pressed` · `disabled` · `active` · `selected` · `disabled-selected` | 151:1023 · 151:1024 · 151:1046 · 180:12183 · 201:12970 | `fill/primary/subtle/pressed` · `surface/container` · `text/inverse` · `fill/primary/strong/default` · `fill/disabled/default` | 바인딩 0 · 별칭 0 · 코드 0(토큰 생성기 제외 항목) | 삭제 |
+
+### 2. 노드에 묶이지 않은 Component 변수 67개 — 삭제 49 · 바인딩 6 · 유지 12
+
+판단 기준: Figma 변형이 실제로 그리는 색, 다른 변수의 별칭 참조, 코드 CSS 참조, 향후 상태 · Variant에서의 역할.
+
+| 처리 | 변수 | 근거 |
+| --- | --- | --- |
+| 삭제 7 | `button/secondary/solid/border/default` · `disabled`, `tertiary/solid/border/default` · `disabled`, `secondary/outline/border/disabled`, `tertiary/outline/border/disabled`, `button/progress/border` | Solid 버튼과 Outline Disabled 변형은 테두리가 없고(stroke none), progress는 대응 Variant 없음 |
+| 삭제 16 | input · textarea · select · date-picker_trigger의 `label/default` · `completed` · `error` · `disabled` | 네 필드 모두 모든 상태의 라벨을 Semantic `text/secondary`에 묶음(값도 `text/primary` 등으로 어긋나 있었음) |
+| 삭제 6 | `search-field/outline/value/default`, `solid/value/default`, `outline/helper/information` · `error`, `solid/helper/info` · `error` | 값은 `label/completed`와 중복, search-field 36개 변형에 도움말 없음(코드도 없음) |
+| 삭제 8 | `date-picker/weekday/label/default`, `date-picker/day/border/*` 7개 | 요일 글자는 `text/tertiary` 직접 바인딩, 날짜 칸에는 stroke 속성이 없음 |
+| 삭제 12 | `select/…/option/background/selected`, `dialog/body/default`, `loading/spinner/indicator/start` · `end`, `empty-state/background/default`, `card/divider/default`, `navigation/…/child/unselected/indicator/selected`, `breadcrumb/background/focus` · `border/focus` · `border/menu`, `file-uploader/icon/drag-over`, `dashboard/border/default` | Selected 옵션은 채움 없음, dialog는 title · description만, 스피너는 `border/brand` · `transparency` · `inverse` 사용, 카드 구분선 없음, 포커스는 공통 `border/focus`, 메뉴 테두리는 dropdown-menu 토큰, 드래그 아이콘은 모든 상태 `icon/default`, 대시보드 구분선은 `border/gray-subtle` |
+| 바인딩 3 | `button/tertiary/solid/background/default` · `hover` · `pressed` | button_basic · button_icon Tertiary · Solid 42개 변형이 Semantic `fill/tertiary/*`를 직접 쓰던 것을 Component 토큰으로(같은 별칭, 색 동일). 코드 Button.css도 같은 토큰 |
+| 바인딩 2 | `textarea/outline/counter/completed` · `error` | 현재 글자 수 13곳(`text/brand` → completed), 초과 글자 수 2곳(input `helper/error` → counter/error, 같은 #c10007). 코드 Textarea.css도 같은 토큰 |
+| 바인딩 1 | `empty-state/icon/default` | 아이콘 벡터(`icon/placeholder` → 같은 값의 Component 토큰). 코드 EmptyState.css도 같은 토큰 |
+| 유지 12 | `textarea/outline/counter/disabled`, `table/data/icon/hover` · `pressed`, `navigation/lnb/item/link/unselected/icon/hover`, `slider/background/handle/outline` · `border/handle/brand`, `chart/bar/03` · `04/gradient/start` · `end`, `chart/line/03` · `04` | 향후 상태(F113), legacy 페이지 slider-outline 대안이 바인딩 중(24곳), 차트 시리즈 3 · 4 확장용(Semantic `chart/series/03` · `04` 존재) |
+
+코드 CSS가 쓰는 나머지 23개(필드 `value/disabled` 4, `input/outline/icon/default`, `search-field/solid/label/hover`, select `check-icon/disabled`, dropdown-menu `item/icon/hover`, table 머리글 아이콘 2, segmented selected hover · pressed 4, breadcrumb home-icon 2, chart history · compare · 02 그라데이션 6, `chart/line/compare`)는 Figma 변형이 그리지 않는 상태 토큰이라 그대로 둡니다.
+
+### 3. 같은 값의 Semantic 토큰 — 통합 없음
+
+값 · 스코프가 같은 11묶음(쌍 8 · 셋 3)은 모두 뜻이 다른 토큰이라 유지합니다: `surface/page` = `fill/primary/subtle/default` = `fill/secondary/subtle/default`(페이지 표면 ↔ Subtle 버튼 배경; hover · pressed 2묶음도 같은 관계), `border/focus` = `border/gray`(포커스 링 ↔ 회색 테두리), `icon/placeholder` = `icon/disabled`, `text/tertiary` = `text/placeholder`(F98 결정), `icon/brand` = `chart/series/brand`, `surface/overlay` = `fill/tertiary/default`, `fill/primary/strong/hover` = `fill/secondary/strong/hover` · `fill/primary/strong/default` = `fill/secondary/strong/pressed` · `fill/secondary/strong/default` = `fill/primary/strong/pressed`(Primary는 밝아지고 Secondary는 어두워지는 서로 다른 단계가 겹친 것). 잘못된 별칭은 없었습니다.
+
+### 4. 레이어 이름 정리 — 370개
+
+| 범위 | 변경 | 노드 |
+| --- | --- | --- |
+| 컴포넌트 48 | empty-state `Content`; alert `Text group`(4); table_value_editable `Select open` · `Date picker open` · `Remove icon`; slider `Track group` · `Track control` · `Track` · `Indicator` · `Range labels` · `Value input`(2변형); handle `Handle`(5) · `Interaction ring`; file-uploader `Text group`(5); chart-tooltip `Content` · `Label column` · `Value column`; chart `Magnitude labels`(3); chart-legend-item `Series swatch`; card_header `Heading`; card_content `Content placeholder`; dashboard-filter-bar `Filters` · `Date range` · `Interval` · `Actions`; data-state `Skeleton group`; data-freshness `Details`(3) | 724:14949, 179:5988 · 5984 · 5908 · 1252:5700, 507:23792 · 524:24207 · 371:5202, 391:1990–2007 · 2063, 391:2015 · 2018 · 2020 · 2022 · 684:6472 · 6474, 675:4581–4607, 742:31790 · 693:9777 · 742:31767, 742:32020 · 1406:13890 · 1011:14276, 746:33293, 217:7089, 1351:11925, 693:10154 · 10449 · 705:11678 · 693:9814, 705:11805, 693:9690 · 9699 · 9704 |
+| 사용 예시 57 | `Child menu`(4) · `Divider`(2) · `Text actions` · `Actions` · `Date action`, Dropdown Menu `Menu examples` · `Default menu` · `Sub menu`, Chip `Chip row` · `Input chip row` · `Filter chip row` · `Chip states` · `Chip multi states` · `Chip input states` · `Chip filter states` · `Example step`(12) · `Filter chip row`(11) · `Chips and list`(7), Table `Date grids`, File Uploader `Uploader with files` · `File list section` · `File list header` · `File count` · `File list`, Card `Heading`(2) | 1508:10364 · 476:19832 · 476:18670 · 180:5204, 1440:8413 · 8411 · 8412, 570:26771 · 26772 · 26758, 1011:13711 · 13707 · 13708 · 13709, 1011:13700–13674 · 1149:6761–6813, 507:23868, 746:34176–34184, 218:7167 · 1351:12805 |
+| Design System Rules 표 265 | 표 9개의 프레임을 `Table` · `Header row` · `Row` · `Policy cell` · `Rule cell` · `Basis cell`로(Information container 포함) | 227:3801 …, 1097:5011 …, 1100:5011 …, 1280:8084 … |
+
+인스턴스는 메인 컴포넌트 이름을 따르므로 따로 바꾸지 않았고(이름 재정의 0건), 크기 · 배치 · Auto Layout · 컴포넌트 연결은 손대지 않았습니다. 코드: 기하 14개 · 검증 설정 10개 파일의 부품 이름 갱신.
+
+### 5. Rules 06 "주의" 행 추가
+
+알림(Alert) 행을 복제해 그 아래에 넣었습니다(1656:7954, 글자 1656:7956 · 7957 · 7959 · 7961). 정책 · 적용 대상 "주의 / Alert · Toast (Warning)", 사용 규칙 "작업은 이어갈 수 있지만 확인이 필요한 일을 알립니다. 예: 일부 데이터만 표시, 곧 만료되는 설정. 작업을 막는 문제는 오류, 잘 끝난 일은 성공, 참고할 내용은 안내로 보여 줍니다. 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 버튼을 함께 둡니다.", 디자인 기준 "Warning 상태 — 주황 삼각형 아이콘과 warning 색. 자리와 크기는 다른 상태와 같습니다. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초)." Rules 프레임은 세로 자동 레이아웃이라 아래 장은 자동으로 밀렸습니다(06장 296 → 388px).
+
 ## Z. 전체 품질 감사 — 끊어진 · 외부 변수 바인딩 수정 (2026-10-28, QA 브리프의 "명확한 오류는 직접 수정" 승인)
 
 Component 섹션 68개 세트를 모두 훑어(use_figma 읽기) 하드코딩 색 · 삭제된 변수 참조 · 외부 라이브러리 변수 참조를 찾았습니다. 변수 · 스타일 자체는 바꾸지 않았고(체크섬 8그룹 동일) 노드 바인딩만 고쳤습니다.

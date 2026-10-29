@@ -108,6 +108,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `CHAR-04` **간단 선 차트의 점 · 선**: Figma 샘플 점은 기간 이름 가운데에 있지 않습니다(F64). 코드는 각 기간 가운데에 두고, 선은 첫 · 마지막 구간의 기울기로 양 끝까지 이어 그립니다.
 - `CHAR-08` **툴팁 렌더링**: 툴팁은 포털 없이 그림 영역 안에 `position: absolute`(z-index 1)로 그려 스크롤 · 레이아웃 변화 · transform에 차트와 함께 움직입니다. 열려 있는 동안 스크롤 · 창 크기 변경 때 보이는 부분만 다시 계산합니다(`overflow`가 있는 조상과 화면). 각 차트의 상태는 독립적이며 다른 차트와 툴팁을 공유하지 않습니다(2026-10-19 — 이전의 `<body>` 포털은 화면 밖 차트의 툴팁이 화면 가장자리에 남는 문제가 있었음).
+- `CHAR-09` **시리즈 3 · 4 토큰 · 레이어 이름**(2026-10-29): `chart/bar/03` · `04/gradient/start` · `end`와 `chart/line/03` · `04`는 Figma · 코드 모두 아직 쓰지 않지만 Semantic `chart/series/03` · `04`와 짝을 이루는 확장용 토큰이라 유지합니다. chart-tooltip `Content` · `Label column` · `Value column`, chart `Magnitude labels`, chart-legend-item `Series swatch`로 기본 이름 레이어를 정리했습니다(검증 설정 갱신, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## Props
 

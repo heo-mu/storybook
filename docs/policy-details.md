@@ -68,7 +68,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | Toast | 화면 아래 오른쪽(오른쪽 · 아래 20px), 토스트 사이 8px, 한 번에 최대 3개 — 최신 토스트가 아래에 붙고 먼저 온 것이 위로 밀리며, 네 번째가 오면 가장 오래된 것이 사라짐. 모든 종류가 5초 뒤 닫힘(`timeout`은 5초보다 짧게 못 함, `null`이면 닫을 때까지). "닫기" 텍스트 버튼. Hover · 포커스 중 정지. 같은 문구 · 상태는 겹치지 않고 다시 표시(2026-10-28 개정, 이전: 아래 가운데 · 오류 · 주의는 닫을 때까지) | `spacing/padding/p-5` · `spacing/margin/m-2` · `role=status` · 참고 링크 shadcn toast |
 | Alert | 화면 상태를 설명하는 고정 메시지 — 사용자가 닫지 않음(닫아야 하면 Toast). 설명은 줄바꿈, 자르지 않음. 폭은 부모를 채움 | 오류 `role=alert`, 그 밖 `status` |
 | 처리 중 | 저장처럼 시간이 걸리는 동작은 끝날 때까지 버튼 안에 로딩 표시(Loading sm)를 보여 주고 다시 누를 수 없게 함 — Rules 06 행을 2026-10-28에 Form 사용 예시 "저장 중"과 같게 고쳤음(F103 해결). 코드는 Button `loading`(누를 수 없음 · `aria-busy`, 버튼 색 그대로) | Rules 06 "처리 중" · Form 사용 예시 "저장 중" · [components/Button.md](./components/Button.md) BUTT-03 |
-| 주의 | 작업은 계속할 수 있지만 확인이 필요할 때(예: 일부 데이터만 표시). 작업을 막는 문제는 오류. Alert · Toast `Status=Warning` — 주황 삼각형(`brand-status/warning/strong`, 흰 바탕 5.1:1), `role="status"`. 2026-10-28 Figma Rules 06 표에서 이 행이 빠졌으나 Warning 변형 · 변수는 그대로라 개발 기준으로 유지(토스트의 "닫을 때까지"는 위 Toast 행대로 5초로 바뀜) | Alert · Toast `Status=Warning`(Figma 표에는 없음) |
+| 주의 | 작업은 이어갈 수 있지만 확인이 필요한 일을 알림(예: 일부 데이터만 표시, 곧 만료되는 설정). 작업을 막는 문제는 오류, 잘 끝난 일은 성공, 참고할 내용은 안내. 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 버튼을 함께 둠. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초). 2026-10-29 Figma Rules 06 표에 "주의" 행을 추가해 표와 같음(F103 ④ 해결) | Alert · Toast `Status=Warning` — 주황 삼각형(`brand-status/warning/strong`, 흰 바탕 5.1:1), 자리 · 크기는 다른 상태와 같음, `role="status"` |
 | 진행 · 로딩 | 진행률을 알면 Progress, 모르면 Loading. Skeleton은 장식이며 감싸는 영역(DataState)이 불러오는 중을 알림 | `aria-busy` · `role=status` |
 
 ## 07. 데이터 표시

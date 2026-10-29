@@ -7,39 +7,35 @@
       "background": "#ffffff",
       "harnessCss": "table { table-layout: fixed; } td, th { width: 312px; min-width: 312px; max-width: 312px; } tr > :first-child { width: 120px; min-width: 120px; max-width: 120px; }",
       "parts": {
-        "Frame 2147238937": ".ds-slider__main",
-        "Frame 2147238937/Frame 2147238934": ".ds-slider__track",
-        "Frame 2147238937/Frame 2147238934/Frame 2147238819": ".ds-slider__rail",
-        "Frame 2147238937/Frame 2147238934/Frame 2147238819/Rectangle 34624605": {
+        "Track group": ".ds-slider__main",
+        "Track group/Track control": ".ds-slider__track",
+        "Track group/Track control/Track": ".ds-slider__rail",
+        "Track group/Track control/Track/Indicator": {
           "selector": ".ds-slider__fill",
           "compare": "xyh"
         },
-        "Frame 2147238937/Frame 2147238934/handle": {
+        "Track group/Track control/handle": {
           "selector": ".ds-slider__thumb",
           "compare": "ywh"
         },
-        "Frame 2147238937/Frame 2147238934/handle/Rectangle 34624610": {
+        "Track group/Track control/handle/Handle": {
           "selector": ".ds-slider__knob",
           "compare": "ywh"
         },
-        "Frame 2147238937/Frame 2147238936": ".ds-slider__range",
-        "Frame 2147238937/Frame 2147238936/*": ".ds-slider__range-label",
-        "Frame 2147238916": {
+        "Track group/Range labels": ".ds-slider__range",
+        "Track group/Range labels/*": ".ds-slider__range-label",
+        "Value input": {
           "selector": ".ds-slider__entry",
           "optional": true
         },
-        "Frame 2147238938": {
-          "selector": ".ds-slider__entry",
-          "optional": true
-        },
-        "Frame */input": ".ds-slider__input",
-        "Frame */input/Container": ".ds-slider__input .ds-field__control",
-        "Frame */input/Container/Input": ".ds-slider__input .ds-field__input",
-        "Frame */명": ".ds-slider__unit"
+        "Value input/input": ".ds-slider__input",
+        "Value input/input/Container": ".ds-slider__input .ds-field__control",
+        "Value input/input/Container/Input": ".ds-slider__input .ds-field__input",
+        "Value input/명": ".ds-slider__unit"
       },
       "maskPixels": [
         {
-          "node": "Frame 2147238937/Frame 2147238934/handle",
+          "node": "Track group/Track control/handle",
           "pad": 4
         }
       ],
@@ -54,12 +50,10 @@
       "background": "#ffffff",
       "harnessCss": "table { table-layout: fixed; } td { width: 44px; min-width: 44px; max-width: 44px; } th { width: 200px; min-width: 200px; max-width: 200px; }",
       "parts": {
-        "Rectangle *": [
-          ".ds-slider__knob",
-          ".ds-slider__halo"
-        ],
-        "Tag/state": ".ds-slider__value-label",
-        "Tag/state/Description Top": ".ds-slider__value-text"
+        "Handle": ".ds-slider__knob",
+        "Interaction ring": ".ds-slider__halo",
+        "Value label": ".ds-slider__value-label",
+        "Value label/Description Top": ".ds-slider__value-text"
       }
     }
   ]

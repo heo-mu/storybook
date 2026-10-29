@@ -103,6 +103,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 - `BUTT-02` **상태 표현**: Hover · Pressed는 실제 포인터 상태(`:hover`, `:active`), Disabled는 네이티브 `disabled`(Tab 순서에서 빠짐).
 - `BUTT-03` **처리 중(`loading`)** (2026-10-28, Figma Form 사용 예시 "저장 중" 1216:7451): 버튼은 Default 팔레트 · 크기를 유지하고(Hover · Pressed 변화 없음), 글자 · 아이콘은 자리만 남기고 투명(`opacity: 0`), 가운데에 Figma `loading` size=sm · Type=Inverse(16px, 2px 호, `colors/border/inverse` = 버튼 글자색)를 그립니다. `aria-busy` · `aria-disabled`로 상태를 알리고 포커스는 유지하며, 클릭 · Enter · Space를 무시해 중복 제출을 막습니다(`disabled`가 아님). 버튼 안의 `role="status"` 글자(`loadingLabel`)가 상태를 읽어 주고, 이름은 `aria-labelledby`로 라벨에 고정됩니다. Figma 예시의 저장 중 버튼은 글자를 지워 40px이지만 코드는 레이아웃이 흔들리지 않도록 원래 너비(49px)를 유지합니다. Figma `button_basic` 세트에는 Loading 변형이 없어 공통 상태로 추가하지 않았습니다(사용 예시 기준).
 - `BUTT-04` **Secondary / Solid Hover · Pressed 배경**(2026-10-28, F100): 아침에 Figma 결정값 brand/600(#009b68) · brand/500(#02bb7b)으로 동기화했으나 흰 라벨 대비가 3.51:1 · 2.46:1로 본문 4.5:1에 못 미쳐(axe 색 대비 18건) 같은 날 저녁 잔여 이슈 작업에서 Semantic `colors/fill/secondary/strong/hover` → brand/800(#006247, 7.42:1), `pressed` → brand/900(#004a38, 10.2:1)로 고쳤습니다(Figma 수정 승인 작업, [figma-fix-requests AB절](../figma-fix-requests.md)). Primary(700 → 800 → 900)처럼 한 단계씩 어두워지는 규칙이고, Component `button/secondary/solid/background/hover` · `pressed`가 그대로 참조하므로 코드는 `src/tokens/semantic.css` 재생성과 `figma/button-spec.json` · 참조 이미지(button_basic 16칸 · button_icon 12칸) 갱신으로 따라갑니다(Button · IconButton 공통, TextButton 무관). 352/352 세 엔진, axe 색 대비 0건.
+- `BUTT-05` **Tertiary · Solid 배경 토큰 · 삭제된 테두리 토큰**(2026-10-29): Figma Tertiary · Solid 변형 42개가 Semantic `fill/tertiary/*`를 직접 쓰던 것을 Component `colors/button/tertiary/solid/background/default` · `hover` · `pressed`(같은 별칭)로 바꿨고 Button.css도 같은 토큰을 씁니다 — 색 변화 없음, 352/352 세 엔진. Solid 버튼 · Outline Disabled 변형에 테두리가 없어 `secondary/solid/border/*` · `tertiary/solid/border/*` · `secondary/outline/border/disabled` · `tertiary/outline/border/disabled`와 `progress/border`는 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## 아이콘
 
@@ -128,7 +129,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 3. `button_basic`의 **Secondary / Outline Hover·Pressed** 테두리는 Square 변형에서 `secondary/solid/border/default`,
    Rounded 변형에서 `secondary/outline/border/default` 에 바인딩되어 있습니다(값은 동일 #007c56). 구현은 `secondary/outline/border/default` 를 사용합니다.
 4. `*/solid/border/*`, `*/outline/border/disabled` 토큰은 존재하지만 컴포넌트에는 테두리가 적용되어 있지 않습니다(Solid 전체, Outline Disabled).
-5. `colors/button/progress/border` 토큰에 대응하는 Variant는 없습니다.
+5. `colors/button/progress/border` 토큰은 대응 Variant가 없어 2026-10-29에 삭제했습니다(AC절).
 6. Focus 상태가 정의되어 있지 않습니다.
 
 토큰·타이포그래피를 포함한 전체 목록과 정리 제안은 저장소의 `docs/figma-issues.md`에 있습니다.

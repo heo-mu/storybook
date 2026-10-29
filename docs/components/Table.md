@@ -118,6 +118,7 @@ Figma 정리를 기다리는 항목입니다. 정리될 때까지 아래처럼 �
 
 - `TABL-02` **Textarea 유형**: Figma는 편집 시 한 줄 Input을 쓰면서 채워진 값은 두 줄로 그려 둘을 함께 구현할 수 없습니다. 한 줄 Input으로 구현했고, 두 줄 변형 3개의 Figma 정리를 기다립니다(F58).
 - `TABL-12` **편집 칸의 날짜 범위 · 열린 달력**(2026-10-28 저녁): Figma `table_value_editable`의 Date Range Picker 7개 변형이 통합 DatePicker 이전의 두 필드 + "~" 구조로 남아 있어 글자 하나("YYYY.MM.DD ~ YYYY.MM.DD") · `date-picker_trigger` 하나(298px)로 재구성했습니다(F110, [figma-fix-requests AB절](../figma-fix-requests.md)). 정합성 설정의 `Title` 선택자에 `.ds-date-picker__value`를 더했고, "편집 칸 목록 열림 · Date Picker" 스토리는 `defaultOpen`으로 실제 열린 상태를 그립니다(이전에는 닫힌 필드라 6px 들여쓰기 · 298px 폭이 적용되지 않았음). table_value_editable 49/49(수동 검토 3, 세 엔진).
+- `TABL-13` **레이어 이름 · 토큰**(2026-10-29): table_value_editable의 `Select open` · `Date picker open` · `Remove icon`(검증 설정 갱신). 행 아이콘의 `data/icon/hover` · `pressed`는 대응 변형이 없지만 상호작용 상태 토큰으로 유지합니다(figma-issues F113, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## Props
 

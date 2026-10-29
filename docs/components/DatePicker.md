@@ -91,6 +91,7 @@ Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 —
 
 - `DPCK-08` **필드 이름 · 설명**: 필드 버튼의 이름은 "현재 값 + 라벨"(`aria-labelledby` = 값 span + 라벨), 메시지 · "읽기 전용" · "필수"는 `aria-describedby`. 열린 달력은 `Dialog`(라벨로 이름), `Calendar autoFocus`로 포커스가 들어가고 닫히면 react-aria가 필드로 돌려줍니다.
 - `DPCK-09` **열림 상태 토큰**: `[data-open]`은 Figma State=Open — `…/border/focus` + `colors/icon/secondary`. 필드 글자 상태별 토큰은 DatePicker.css 머리말 참고.
+- `DPCK-10` **삭제한 토큰**(2026-10-29): 날짜 칸에 stroke 속성이 없어 `day/border/*` 7개를, 요일 글자가 `text/tertiary`를 직접 써 `weekday/label/default`를, 라벨이 `text/secondary`로 통일돼 `trigger/outline/label/*` 4개를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). 코드 변화 없음.
 
 ## Storybook
 

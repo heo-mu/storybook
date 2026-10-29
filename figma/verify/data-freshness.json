@@ -13,16 +13,16 @@
         "badge_status": ".ds-badge",
         "badge_status/Circle": ".ds-badge__dot",
         "badge_status/Label": ".ds-badge__label",
-        "Frame *": ".ds-data-freshness__meta",
-        "Frame */Timestamp": ".ds-data-freshness__time",
-        "Frame */Interval*": ".ds-data-freshness__interval"
+        "Details": ".ds-data-freshness__meta",
+        "Details/Timestamp": ".ds-data-freshness__time",
+        "Details/Interval*": ".ds-data-freshness__interval"
       },
       "glyphTolerances": {
         "badge_status/Label": {
           "dx": 0.9,
           "why": "Hangul glyphs start and end on the same pixel columns as Figma (Stale \"수신 지연\": ink columns 13–56 in both, ink mass 78.3 vs 77.9); the browser rasterises them heavier, which moves the ink centroid — 0.73px with orange/600, 0.86px with the darker orange/700 (A-1, 2026-10-19)"
         },
-        "Frame */Interval": {
+        "Details/Interval": {
           "dx": 0.7,
           "dy": 0.6,
           "why": "the 3px middle dot \"·\": Firefox draws it 0.5px higher and 0.6px right"

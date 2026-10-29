@@ -9,9 +9,9 @@
       "parts": {
         "Icon and Text": ".ds-alert__body",
         "Icon and Text/*-fill": ".ds-alert__icon",
-        "Icon and Text/Frame *": ".ds-alert__text",
-        "Icon and Text/Frame */Text": ".ds-alert__title",
-        "Icon and Text/Frame */Text#2": ".ds-alert__description",
+        "Icon and Text/Text group": ".ds-alert__text",
+        "Icon and Text/Text group/Text": ".ds-alert__title",
+        "Icon and Text/Text group/Text#2": ".ds-alert__description",
         "button_basic": ".ds-alert__action > .ds-button",
         "button_basic/Label": ".ds-alert__action .ds-button__label"
       }

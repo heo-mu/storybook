@@ -9,9 +9,9 @@
       "parts": {
         "icon_size": ".ds-file-uploader__icon",
         "icon_size/UploadSimple": ".ds-file-uploader__icon",
-        "Frame *": ".ds-file-uploader__text",
-        "Frame */Title": ".ds-file-uploader__title",
-        "Frame */Helper": ".ds-file-uploader__helper"
+        "Text group": ".ds-file-uploader__text",
+        "Text group/Title": ".ds-file-uploader__title",
+        "Text group/Helper": ".ds-file-uploader__helper"
       },
       "maskRects": [
         [

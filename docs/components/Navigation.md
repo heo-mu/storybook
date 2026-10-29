@@ -58,6 +58,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
 
 - `NAVI-02` **하위 목록 선**: Figma는 1px 선을 반 픽셀 위치(x 15.5–16.5)에 그려 두 열에 흐리게 나뉩니다. 코드도 같은 기하(SVG rect)로 그려 같은 모양입니다(F37).
+- `NAVI-06` **토큰 정리**(2026-10-29): item_child에 표시기 노드가 없어 이름도 모순이던 `lnb/item/child/unselected/indicator/selected`를 삭제했습니다. `link/unselected/icon/hover`(icon/secondary)는 Hover 변형이 `icon/default`(icon/tertiary)를 써 묶지 않고 향후 상태용으로 둡니다(figma-issues F113, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## 키보드
 

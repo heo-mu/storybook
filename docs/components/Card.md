@@ -52,6 +52,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `CARD-02` **너비**: 부모 너비를 채웁니다. Figma의 320px은 예시 폭입니다(Rules 08).
 - `CARD-04` **테두리 두께 토큰**(2026-10-28 QA): Figma `card` 루트의 네 변 테두리 두께가 외부 라이브러리 변수(`border-width` = 1)에 묶여 있어 디자인 시스템 토큰 `border-width/border`(1px)로 다시 연결했습니다(QA 승인 작업, Z절). 값 · 코드 변화 없음. Content 자리의 회색 예시 상자는 2026-10-28 저녁에 이름을 "Content placeholder"로, 채움을 `colors/surface/container`(gray/100 #eff0f3)로 바꿨고(F106 해결, [figma-fix-requests AB절](../figma-fix-requests.md)), 스토리의 자리표시 상자도 같은 토큰을 씁니다(기하 정합성만 비교 — 변화 없음).
 - `CARD-03` **설명 길이**: 줄바꿈하며 자르지 않습니다(예시 문구의 "최대 2줄"은 권장 길이, Rules 08).
+- `CARD-05` **레이어 이름 · 구분선 토큰**(2026-10-29): card_header의 글자 묶음 `Frame 2147239191` → `Heading`, card_content의 예시 상자 → `Content placeholder`(메인 컴포넌트). 머리글 구분선이 없는 현재 디자인에 맞춰 `card/divider/default`를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## Props
 

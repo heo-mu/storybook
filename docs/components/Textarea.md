@@ -43,6 +43,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `TEXT-01` **높이 · 스크롤**: 컨테이너 높이는 Figma와 같은 100px 고정, 내용이 넘치면 내부 스크롤됩니다. 크기 조절 핸들은 두지 않습니다(Rules 08).
 - `TEXT-02` **카운터**: 숫자는 실제 입력 길이 / 최대 길이입니다(Figma의 1 · 50 · 200은 예시 값). `maxLength`는 브라우저가 강제합니다(Rules 04).
+- `TEXT-03` **카운터 토큰**(2026-10-29): Figma 카운터의 현재 글자 수는 `colors/textarea/outline/counter/completed`(→ `text/brand`), 초과 글자 수는 `counter/error`(→ `brand-status/danger/strong`)에 묶었습니다 — 이전에는 Semantic `text/brand`와 input의 `helper/error`를 직접 썼습니다(색 동일). Textarea.css의 `--ds-textarea-count`도 같은 토큰입니다. Disabled 변형의 현재 글자 수는 디자인대로 brand 색을 유지하고 `counter/disabled`는 향후 상태용으로 둡니다(figma-issues F113). 라벨 토큰 `label/*` 4개는 디자인이 라벨을 `text/secondary`로 통일해 삭제([figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## 상태
 

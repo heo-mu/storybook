@@ -372,8 +372,8 @@
         ]
       },
       "ignore": [
-        "Frame 2147240210/listbox",
-        "Frame 2147240212/date-picker_calendar",
+        "Select open/listbox",
+        "Date picker open/date-picker_calendar",
         "listbox"
       ],
       "skipVariants": {
@@ -426,11 +426,11 @@
           "selector": ".ds-select",
           "optional": true
         },
-        "Frame 2147240210": {
+        "Select open": {
           "selector": ".ds-select",
           "optional": true
         },
-        "Frame 2147240210/select": {
+        "Select open/select": {
           "selector": ".ds-select",
           "optional": true
         },
@@ -442,11 +442,11 @@
           "selector": ".ds-date-picker",
           "optional": true
         },
-        "Frame 2147240212": {
+        "Date picker open": {
           "selector": ".ds-date-picker",
           "optional": true
         },
-        "Frame 2147240212/date-picker_trigger": {
+        "Date picker open/date-picker_trigger": {
           "selector": ".ds-date-picker",
           "optional": true
         },
@@ -482,7 +482,7 @@
           "selector": ".ds-image-preview",
           "optional": true
         },
-        "Image Upload Vector/Frame 2147239476": {
+        "Image Upload Vector/Remove icon": {
           "selector": ".ds-image-preview__remove",
           "optional": true
         }

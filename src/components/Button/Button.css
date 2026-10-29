@@ -229,12 +229,13 @@
   --ds-button-icon-disabled: var(--colors-button-secondary-solid-icon-disabled);
 }
 
-/* Tertiary / Solid background: Figma binds Default · Hover · Pressed to the Semantic tertiary surface tokens (2026-10-19). */
+/* Tertiary / Solid background: the Component tokens alias the Semantic tertiary surface tokens (fill/tertiary/*, 2026-10-19 values). */
 .ds-button[data-variant='tertiary'][data-appearance='solid'],
 .ds-icon-button[data-variant='tertiary'][data-appearance='solid'] {
-  --ds-button-bg-default: var(--colors-fill-tertiary-default);
-  --ds-button-bg-hover: var(--colors-fill-tertiary-hover);
-  --ds-button-bg-pressed: var(--colors-fill-tertiary-pressed);
+  /* Figma Tertiary · Solid binds colors/button/tertiary/solid/background/* (→ fill/tertiary/*, 2026-10-29 cleanup). */
+  --ds-button-bg-default: var(--colors-button-tertiary-solid-background-default);
+  --ds-button-bg-hover: var(--colors-button-tertiary-solid-background-hover);
+  --ds-button-bg-pressed: var(--colors-button-tertiary-solid-background-pressed);
   --ds-button-bg-disabled: var(--colors-button-tertiary-solid-background-disabled);
   --ds-button-label-default: var(--colors-button-tertiary-solid-label-default);
   --ds-button-label-disabled: var(--colors-button-tertiary-solid-label-disabled);

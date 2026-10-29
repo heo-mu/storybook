@@ -49,6 +49,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
 
 - `SEAR-01` **지우기 버튼**: Focus · Error 상태에서 보이고 Tab 순서에서 제외됩니다(Input과 같은 규칙). Enter로 `onSearch`가 호출됩니다(Rules 04).
+- `SEAR-03` **토큰 이름 · 삭제**(2026-10-29): Figma 36개 변형에 도움말이 없고 코드도 메시지를 두지 않아 `search-field/*/helper/*` 4개와, `label/completed`와 값이 같은 `search-field/*/value/default` 2개를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). `label/*`가 입력 글자를 뜻하는 이름(다른 필드는 `placeholder` · `value`)은 CSS · 검증 설정 · 글자 색 검사 데이터까지 바뀌어 보류했습니다(figma-issues F112).
 
 ## 상태
 

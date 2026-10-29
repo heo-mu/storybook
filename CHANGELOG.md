@@ -7,6 +7,17 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Figma 변수 · 구조 정리 — Component 변수 56개 삭제 · 바인딩 6 · 레이어 이름 370 · Rules 06 주의 행 (2026-10-29)
+
+디자인 시스템의 뜻과 확장성을 지키면서 쓰이지 않는 구조를 정리했습니다([docs/figma-fix-requests.md AC절](docs/figma-fix-requests.md)). 색 · 크기 · 배치는 바뀌지 않았고, 공개 API · 컴포넌트 동작도 그대로입니다.
+
+- **잘못 만들어진 Component 변수 7개 삭제**(`default` · `hover` · `pressed` · `disabled` · `active` · `selected` · `disabled-selected`): legacy 페이지 화면 시안이 쓰던 `hover` · `default` 8곳은 같은 색의 Semantic으로 옮긴 뒤 삭제. 토큰 생성기가 건너뛰던 항목이라 CSS 변화 없음.
+- **노드에 묶이지 않은 Component 변수 67개 정리**: 폐기 · 중복 49개 삭제(Solid 버튼 테두리 · 필드 라벨 상태 토큰 16개 — 디자인은 라벨을 `text/secondary`로 통일 — · search-field value · helper · 달력 날짜 테두리 · 로딩 스피너 · 카드 구분선 · 브레드크럼 포커스 등, 모두 두 페이지 바인딩 0 · 별칭 0 · 코드 0 확인), 역할이 있는 6개는 Figma 노드에 바인딩하고 코드도 같은 토큰을 씀 — Button Tertiary · Solid 배경 `button/tertiary/solid/background/*`(이전 Semantic 직접 참조), Textarea 카운터 `counter/completed` · `counter/error`(이전 `text/brand` · input helper/error), EmptyState 아이콘 `empty-state/icon/default` — 색 변화 없음; 12개는 향후 상태 · 시리즈 3 · 4 · legacy 대안용으로 유지. Component 819 → 763, `src/tokens` 재생성(1548 → 1499 변수).
+- **같은 값의 Semantic 토큰 11묶음**: 뜻 · 적용 대상 · 독립 변경 가능성을 검토해 모두 별도 토큰으로 유지(통합 없음, 잘못된 별칭 없음) — figma-issues F108.
+- **이름 없는 레이어 370개 이름 정리**(컴포넌트 48 · 사용 예시 57 · Rules 표 265): 크기 · 배치 · 인스턴스 연결 변경 없음. 기하 · 검증 설정의 부품 이름을 같이 바꿔 정합성 검사는 그대로 통과(alert · empty-state · data-state · table · card · slider · file-uploader · chart · dashboard-filter-bar · data-freshness).
+- **Design System Rules 06 "주의" 행 추가**: 언제 쓰는지(작업은 이어갈 수 있지만 확인이 필요한 일), 어떻게 보이는지(주황 삼각형, 다른 상태와 같은 자리), 무엇을 안내하는지(확인할 것 한 문장 · 버튼), 오류 · 성공 · 안내와의 차이. Alert · Toast 사용 문서와 docs/policy-details.md 06에 같은 내용.
+- 보고만: search-field 토큰 이름이 다른 필드와 반대(F112), 상태 토큰은 있으나 변형이 다른 색을 쓰는 3건(F113).
+
 ### 잔여 이슈 통합 개선 — Button 대비 · Figma 구조 정리 · 정합성 재검사 (2026-10-28 저녁)
 
 Figma 쪽 오류는 Figma에서, Storybook 쪽 오류는 코드에서 고쳤습니다([docs/figma-fix-requests.md AB절](docs/figma-fix-requests.md)). 변수 삭제는 하지 않았습니다.

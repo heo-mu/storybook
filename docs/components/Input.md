@@ -64,6 +64,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `INPU-03` **Error + Focus**: Error 테두리를 유지합니다 — 오류 표시가 포커스 표시보다 우선합니다(Rules 02).
 - `INPU-05` **Figma 눈 아이콘(보이는 상태)의 토큰**(2026-10-28 QA): `password_field` Focus-on 변형의 `icon/visibility_off`는 외부 라이브러리 아이콘 인스턴스라 벡터 색이 다른 파일의 변수(`color/icon/gray` · `color/icon/inverse-static`)에 묶여 있었습니다. 디자인 시스템 토큰 `colors/input/outline/icon/focus`(가려진 눈과 같은 상태 색)와 흰 테두리는 `colors/input/outline/background/default`로 다시 연결했습니다(QA 승인 작업, Z절). 픽셀 변화 없음(참조 이미지 재대조), 코드 변화 없음. **해결(2026-10-28 저녁)**: 세 `icon/visibility_off` 인스턴스를 분리해 로컬 프레임으로 바꿨습니다 — 외부 컴포넌트 의존 0, 픽셀 · 코드 변화 없음([figma-fix-requests AB절](../figma-fix-requests.md)).
 - `INPU-04` **눈 아이콘 포커스**: 키보드 포커스일 때 버튼 바깥 2px에 2px `colors/border/focus` 링(Design System Rules 02 — 입력 칸 안의 버튼에는 Figma `Focus` 속성이 없어 규칙이 기준). 입력 칸 자체는 Figma State=Focus 테두리입니다.
+- `INPU-06` **삭제한 토큰**(2026-10-29): 라벨이 모든 상태에서 `text/secondary`라 `input/outline/label/*` 4개를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). 코드 변화 없음.
 
 ## 상태
 

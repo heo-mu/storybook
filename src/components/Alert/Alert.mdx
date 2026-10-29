@@ -27,6 +27,8 @@ import { Alert } from './Alert';
 - 종류마다 아이콘과 색이 다릅니다. 아이콘은 `showIcon={false}`로 숨길 수 있습니다.
 - 제목(`title`)만 쓰거나 설명(`description`)을 더할 수 있습니다.
 - 필요한 동작은 `action`에 버튼으로 넣습니다. 버튼은 `Button`의 `tertiary` · `outline` · `xs`를 씁니다.
+- `warning`(주의)은 작업은 이어갈 수 있지만 확인이 필요한 일에 씁니다 — 예: 일부 데이터만 표시됨, 곧 만료되는 설정. 작업을 막는 문제는 `error`, 잘 끝난 일은 `success`, 참고할 내용은 `information`입니다.
+- 주의 알림은 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 `action` 버튼을 함께 둡니다. 아이콘은 주황 삼각형이고 자리와 크기는 다른 종류와 같습니다. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초)입니다(Design System Rules 06 "주의").
 
 ## 사용 예시
 

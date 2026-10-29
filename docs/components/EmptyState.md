@@ -45,6 +45,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `EMPT-02` **너비**: 최대 320px(Figma와 같음), 부모가 더 좁으면 그 너비로 줄어듭니다(Rules 08).
 - `EMPT-03` **정합성 재검사**(2026-10-28 저녁): 2026-10-27 이후 실패로 기록됐던 글자 위치 차이는 Figma 변경 뒤 다시 추출하지 않은 기하 · 참조 이미지 때문이었습니다. 현재 Figma(320×120, 상하 12px)로 다시 추출해 1/1(세 엔진) 통과 — 코드 변화 없음(figma-issues F111).
+- `EMPT-04` **아이콘 토큰**(2026-10-29): Figma 아이콘 벡터를 `colors/empty-state/icon/default`(→ `icon/placeholder`, 같은 값)에 묶었고 EmptyState.css도 같은 토큰을 씁니다 — 색 변화 없음. 배경 토큰 `empty-state/background/default`는 디자인에 배경이 없어 삭제. 글자 묶음 프레임 이름 `Frame 2147240242` → `Content`(검증 설정 갱신, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## Props
 

@@ -45,6 +45,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
 
 - `DFRE-01` **마크업**: `dateTime`을 주면 시각을 `<time datetime>`으로 표시합니다. "·"는 장식으로 숨깁니다.
+- `DFRE-04` **레이어 이름**(2026-10-29): 시각 · 주기 글자 묶음 `Frame 2147240232` · `233` · `234` → `Details`(검증 설정 갱신, [figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## Props
 

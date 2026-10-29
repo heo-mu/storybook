@@ -61,6 +61,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `BREA-03` **Show Parent**: Collapsed에만 적용합니다. Full은 항상 전체 경로를 보여 줍니다 — 상위 페이지를 숨기면 경로가 끊기기 때문입니다(Rules 07).
 - `BREA-04` **메뉴 너비**: 최소 200px, 더 긴 이름은 넓어집니다(Rules 05).
 - `BREA-06` **메뉴 열림 · 닫힘 애니메이션**: 없습니다 — 즉시 열리고 닫힙니다. Rules 09의 해당 행도 2026-10-28 저녁에 "즉시"로 고쳐 충돌이 없습니다(F103 해결).
+- `BREA-07` **삭제한 토큰**(2026-10-29): 포커스는 공통 `border/focus` 링이고 "더보기" 메뉴 테두리는 dropdown-menu 토큰을 써서 `breadcrumb/background/focus` · `border/focus` · `border/menu`를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). 코드 변화 없음.
 
 ## 상태
 

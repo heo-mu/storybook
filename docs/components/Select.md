@@ -92,6 +92,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
 
 - `SELE-05` **스크롤 표시**: Figma `scroll`(4px 둥근 막대)은 브라우저 스크롤바 스타일로 구현했습니다(Chromium · Safari 4px, Firefox는 `scrollbar-width: thin`). 내용이 넘칠 때만 보입니다.
+- `SELE-10` **삭제한 토큰**(2026-10-29): Selected 옵션 변형은 채움이 없어(Select.css도 `transparent`) `option/background/selected`를 삭제했고, 라벨 토큰 `label/*` 4개는 디자인이 라벨을 `text/secondary`로 통일해 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). 코드 변화 없음.
 
 ## 상태
 

@@ -73,6 +73,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 디자인 컴포넌트에 넣지 않는 기술 구현입니다(Design System Rules 10).
 
 - `FILE-05` **점선 테두리**: SVG로 6 / 4 대시를 그립니다. Figma는 대시를 변마다 맞춰 그려 모서리 근처 대시 위치가 최대 3px 다릅니다(수동 검토).
+- `FILE-07` **레이어 이름 · 삭제한 토큰**(2026-10-29): 글자 묶음 프레임 5개를 `Text group`으로(검증 설정 갱신). 아이콘이 모든 상태에서 `icon/default`라 `file-uploader/icon/drag-over`를 삭제했고, Loading 스피너는 `border/brand` · `transparency` · `inverse`를 써 `loading/spinner/indicator/start` · `end`를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)).
 
 ## 상태
 
