@@ -141,6 +141,17 @@
   cursor: grab;
 }
 
+/* Row icon states — Figma colors/table/data/icon/hover · pressed (no variants in the set; 2026-10-29, F113). */
+.ds-table__drag:hover,
+.ds-table__drag[data-hovered] {
+  --_icon: var(--colors-table-data-icon-hover);
+}
+
+.ds-table__drag:active,
+.ds-table__drag[data-pressed] {
+  --_icon: var(--colors-table-data-icon-pressed);
+}
+
 /* Figma rounds auto-width text boxes up to whole pixels (docs/browser-support.md). */
 @supports (width: calc-size(fit-content, round(up, size, 1px))) {
   .ds-table__column-title,

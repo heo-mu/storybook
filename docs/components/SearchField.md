@@ -50,6 +50,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `SEAR-01` **지우기 버튼**: Focus · Error 상태에서 보이고 Tab 순서에서 제외됩니다(Input과 같은 규칙). Enter로 `onSearch`가 호출됩니다(Rules 04).
 - `SEAR-03` **토큰 이름 · 삭제**(2026-10-29): Figma 36개 변형에 도움말이 없고 코드도 메시지를 두지 않아 `search-field/*/helper/*` 4개와, `label/completed`와 값이 같은 `search-field/*/value/default` 2개를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). `label/*`가 입력 글자를 뜻하는 이름(다른 필드는 `placeholder` · `value`)은 CSS · 검증 설정 · 글자 색 검사 데이터까지 바뀌어 보류했습니다(figma-issues F112).
+- `SEAR-04` **토큰 이름 구조화**(2026-10-29, F112 해결): `label/*`가 입력 글자를 뜻하던 이름을 다른 필드와 같은 `placeholder/*` · `value/*`로 바꿨습니다(ID · 바인딩 유지, [figma-fix-requests AD절](../figma-fix-requests.md)). input처럼 `value/default`(Focus) · `value/disabled`를 추가했고, SearchField.css는 기본 `value/default`, 값이 있으면 `value/completed`, 오류 `value/error`, 비활성 `value/disabled` · `placeholder/disabled`, hover `placeholder/hover`를 씁니다. 색은 모두 그대로입니다(36/36 세 엔진). CSS 변수 이름 `--colors-search-field-*-label-*`는 없어졌습니다.
 
 ## 상태
 

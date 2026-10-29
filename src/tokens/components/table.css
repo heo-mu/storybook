@@ -12,7 +12,7 @@
   --colors-table-data-value-default: var(--colors-text-secondary);
   --colors-table-data-border-default: var(--colors-border-gray-subtler);
   --colors-table-data-icon-default: var(--colors-icon-secondary);
-  --colors-table-data-icon-hover: var(--colors-icon-tertiary);
+  --colors-table-data-icon-hover: var(--colors-icon-primary);
   --colors-table-data-icon-pressed: var(--colors-icon-primary);
   --colors-table-key-value-key-background-default: var(--colors-surface-container);
   --colors-table-key-value-key-label-default: var(--colors-text-secondary);

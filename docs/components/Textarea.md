@@ -44,6 +44,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `TEXT-01` **높이 · 스크롤**: 컨테이너 높이는 Figma와 같은 100px 고정, 내용이 넘치면 내부 스크롤됩니다. 크기 조절 핸들은 두지 않습니다(Rules 08).
 - `TEXT-02` **카운터**: 숫자는 실제 입력 길이 / 최대 길이입니다(Figma의 1 · 50 · 200은 예시 값). `maxLength`는 브라우저가 강제합니다(Rules 04).
 - `TEXT-03` **카운터 토큰**(2026-10-29): Figma 카운터의 현재 글자 수는 `colors/textarea/outline/counter/completed`(→ `text/brand`), 초과 글자 수는 `counter/error`(→ `brand-status/danger/strong`)에 묶었습니다 — 이전에는 Semantic `text/brand`와 input의 `helper/error`를 직접 썼습니다(색 동일). Textarea.css의 `--ds-textarea-count`도 같은 토큰입니다. Disabled 변형의 현재 글자 수는 디자인대로 brand 색을 유지하고 `counter/disabled`는 향후 상태용으로 둡니다(figma-issues F113). 라벨 토큰 `label/*` 4개는 디자인이 라벨을 `text/secondary`로 통일해 삭제([figma-fix-requests AC절](../figma-fix-requests.md)).
+- `TEXT-04` **비활성 카운터**(2026-10-29, F113 해결): Figma Disabled 변형의 카운터 글자(현재 수 · "/" · 최대 수)를 `counter/disabled`(text/disabled)에 묶었고 코드도 `[data-disabled]`에서 카운터 전체를 같은 색으로 보입니다 — 비활성 필드의 value · placeholder · helper가 모두 text/disabled인 규칙과 같습니다(이전: 현재 수 brand, 나머지 tertiary). 참조 이미지 갱신, 바뀐 픽셀은 Disabled 칸뿐([figma-fix-requests AD절](../figma-fix-requests.md)). 비활성 카운터는 비활성 컨트롤의 일부라 대비 예외(WCAG 1.4.3)이며, 라벨 · 메시지처럼 카운터 요소에 `aria-disabled`를 붙여 axe도 같은 예외를 적용합니다(기준 완화 없음).
 
 ## 상태
 

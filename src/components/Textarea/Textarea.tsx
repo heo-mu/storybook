@@ -80,7 +80,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
             </FieldMessage>
           )}
           {hasCount && (
-            <span id={counterId} className="ds-textarea__count">
+            <span
+              id={counterId}
+              className="ds-textarea__count"
+              // The counter of a disabled field belongs to that inactive control (WCAG 1.4.3 exemption, as the label and message): aria-disabled says so.
+              aria-disabled={disabled || undefined}
+            >
               <span className="ds-textarea__count-current">{current.length}</span>
               <span className="ds-textarea__count-rest">/</span>
               <span className="ds-textarea__count-rest">{maxLength}</span>

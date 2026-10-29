@@ -99,10 +99,11 @@
   --_caret: var(--colors-navigation-lnb-item-parent-chevron-collapsed);
 }
 
-/* Figma binds the Unselected Hover icon to …/icon/default (…/icon/hover is unused — figma-issues F36). */
+/* Figma Unselected Hover binds the icon to …/icon/hover (icon/secondary) like item_parent (2026-10-29, F113). */
 .ds-nav-item[data-kind='link']:hover {
   --_bg: var(--colors-navigation-lnb-item-link-unselected-background-hover);
   --_fg: var(--colors-navigation-lnb-item-link-unselected-label-hover);
+  --_icon: var(--colors-navigation-lnb-item-link-unselected-icon-hover);
 }
 
 .ds-nav-item[data-kind='parent']:hover {

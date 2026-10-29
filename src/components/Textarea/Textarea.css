@@ -48,6 +48,12 @@
   --ds-field-border-width: var(--border-width-border);
   --ds-field-text: var(--colors-textarea-outline-value-disabled);
   --ds-field-placeholder: var(--colors-textarea-outline-placeholder-disabled);
+  /* Figma Disabled binds the whole counter to …/counter/disabled (2026-10-29, F113 — before: brand current count). */
+  --ds-textarea-count: var(--colors-textarea-outline-counter-disabled);
+}
+
+.ds-textarea[data-disabled] .ds-textarea__count {
+  color: var(--colors-textarea-outline-counter-disabled);
 }
 
 /* Container: fixed 100px, top-aligned text. */

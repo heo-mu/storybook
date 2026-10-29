@@ -10,21 +10,23 @@
 .ds-search-field[data-appearance='outline'] {
   --ds-field-bg: var(--colors-search-field-outline-background-default);
   --ds-field-border-color: var(--colors-search-field-outline-border-default);
-  --ds-field-text: var(--colors-search-field-outline-label-completed);
-  --ds-field-placeholder: var(--colors-search-field-outline-label-default);
+  /* Typed text …/value/* · empty text …/placeholder/* (Figma naming aligned with Input 2026-10-29, F112). */
+  --ds-field-text: var(--colors-search-field-outline-value-default);
+  --ds-field-placeholder: var(--colors-search-field-outline-placeholder-default);
   --ds-field-icon: var(--colors-search-field-outline-icon-default);
   --ds-field-action: var(--colors-search-field-outline-icon-default);
 }
 
 .ds-search-field[data-appearance='outline'][data-filled] {
   --ds-field-bg: var(--colors-search-field-outline-background-completed);
+  --ds-field-text: var(--colors-search-field-outline-value-completed);
   --ds-field-border-color: var(--colors-search-field-outline-border-completed);
 }
 
 .ds-search-field[data-appearance='outline']:hover {
   --ds-field-bg: var(--colors-search-field-outline-background-hover);
   --ds-field-border-color: var(--colors-search-field-outline-border-hover);
-  --ds-field-placeholder: var(--colors-search-field-outline-label-hover);
+  --ds-field-placeholder: var(--colors-search-field-outline-placeholder-hover);
 }
 
 .ds-search-field[data-appearance='outline']:focus-within {
@@ -36,15 +38,15 @@
   --ds-field-bg: var(--colors-search-field-outline-background-error);
   --ds-field-border-color: var(--colors-search-field-outline-border-error);
   --ds-field-border-width: var(--border-width-border-2);
-  --ds-field-text: var(--colors-search-field-outline-label-error);
+  --ds-field-text: var(--colors-search-field-outline-value-error);
 }
 
 .ds-search-field[data-appearance='outline'][data-disabled] {
   --ds-field-bg: var(--colors-search-field-outline-background-disabled);
   --ds-field-border-color: var(--colors-search-field-outline-border-disabled);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-search-field-outline-label-disabled);
-  --ds-field-placeholder: var(--colors-search-field-outline-label-disabled);
+  --ds-field-text: var(--colors-search-field-outline-value-disabled);
+  --ds-field-placeholder: var(--colors-search-field-outline-placeholder-disabled);
   --ds-field-icon: var(--colors-search-field-outline-icon-disabled);
 }
 
@@ -53,8 +55,9 @@
   --ds-field-bg: var(--colors-search-field-solid-background-default);
   --ds-field-border-color: transparent;
   --ds-field-border-width: 0px;
-  --ds-field-text: var(--colors-search-field-solid-label-completed);
-  --ds-field-placeholder: var(--colors-search-field-solid-label-default);
+  /* Typed text …/value/* · empty text …/placeholder/* (Figma naming aligned with Input 2026-10-29, F112). */
+  --ds-field-text: var(--colors-search-field-solid-value-default);
+  --ds-field-placeholder: var(--colors-search-field-solid-placeholder-default);
   --ds-field-icon: var(--colors-search-field-solid-icon-default);
   /* Figma binds the Solid clear icon to the Outline icon variable. */
   --ds-field-action: var(--colors-search-field-outline-icon-default);
@@ -62,13 +65,14 @@
 
 .ds-search-field[data-appearance='solid'][data-filled] {
   --ds-field-bg: var(--colors-search-field-solid-background-completed);
+  --ds-field-text: var(--colors-search-field-solid-value-completed);
 }
 
 .ds-search-field[data-appearance='solid']:hover {
   --ds-field-bg: var(--colors-search-field-solid-background-hover);
   --ds-field-border-color: var(--colors-search-field-solid-border-hover);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-placeholder: var(--colors-search-field-solid-label-hover);
+  --ds-field-placeholder: var(--colors-search-field-solid-placeholder-hover);
 }
 
 .ds-search-field[data-appearance='solid']:focus-within {
@@ -82,15 +86,15 @@
   --ds-field-bg: var(--colors-search-field-solid-background-error);
   --ds-field-border-color: var(--colors-search-field-solid-border-error);
   --ds-field-border-width: var(--border-width-border-2);
-  --ds-field-text: var(--colors-search-field-solid-label-error);
+  --ds-field-text: var(--colors-search-field-solid-value-error);
 }
 
 .ds-search-field[data-appearance='solid'][data-disabled] {
   --ds-field-bg: var(--colors-search-field-solid-background-disabled);
   --ds-field-border-color: transparent;
   --ds-field-border-width: 0px;
-  --ds-field-text: var(--colors-search-field-solid-label-disabled);
-  --ds-field-placeholder: var(--colors-search-field-solid-label-disabled);
+  --ds-field-text: var(--colors-search-field-solid-value-disabled);
+  --ds-field-placeholder: var(--colors-search-field-solid-placeholder-disabled);
   --ds-field-icon: var(--colors-search-field-solid-icon-disabled);
 }
 

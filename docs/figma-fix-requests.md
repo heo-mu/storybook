@@ -335,6 +335,30 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 
 알림(Alert) 행을 복제해 그 아래에 넣었습니다(1656:7954, 글자 1656:7956 · 7957 · 7959 · 7961). 정책 · 적용 대상 "주의 / Alert · Toast (Warning)", 사용 규칙 "작업은 이어갈 수 있지만 확인이 필요한 일을 알립니다. 예: 일부 데이터만 표시, 곧 만료되는 설정. 작업을 막는 문제는 오류, 잘 끝난 일은 성공, 참고할 내용은 안내로 보여 줍니다. 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 버튼을 함께 둡니다.", 디자인 기준 "Warning 상태 — 주황 삼각형 아이콘과 warning 색. 자리와 크기는 다른 상태와 같습니다. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초)." Rules 프레임은 세로 자동 레이아웃이라 아래 장은 자동으로 밀렸습니다(06장 296 → 388px).
 
+## AD. F112 · F113 — SearchField 토큰 이름 구조화, 상태 토큰 바인딩 수정 (2026-10-29, 사용자 승인 작업)
+
+변경 뒤 체크섬 compOthers 688 `70863118`(그 외 7그룹 변화 없음), 삭제된 · 끊어진 참조 0건, Component 763 → 767.
+
+### F112 search-field 토큰
+
+| 처리 | 변수(ID) | 전 → 후 |
+| --- | --- | --- |
+| 이름 변경(ID · 바인딩 유지) | outline 451:11335 · 11336 · 11339 · 11337 · 11338, solid 447:11189 · 451:11334 · 447:11192 · 11190 · 11191 | `label/default` → `placeholder/default`(text/placeholder), `label/hover` → `placeholder/hover`(text/placeholder), `label/disabled` → `placeholder/disabled`(text/disabled), `label/completed` → `value/completed`(text/primary), `label/error` → `value/error`(text/primary). WEB code syntax도 새 이름 |
+| 신규 | `outline/value/default` 1660:7954 · `solid/value/default` 1660:7956 → `S:colors/text/primary`; `outline/value/disabled` 1660:7955 · `solid/value/disabled` 1660:7957 → `S:colors/text/disabled` (TEXT_FILL) | input · textarea · select · date-picker와 같은 `placeholder/*` · `value/*` 구조 |
+| 재바인딩 | Focus 변형 Input 글자 6곳(216:6586 · 6629 · 6672, 439:10239 · 10282 · 10325) → `value/default`; solid Hover 3곳(439:10233 · 10276 · 10319) → `solid/placeholder/hover` | 색 동일(text/primary · text/placeholder) |
+
+상태별 색은 그대로입니다: Default · Hover placeholder(brand-gray/600), Focus · Completed · Error 값(brand-gray/900), Disabled placeholder(brand-gray/300).
+
+### F113 상태 토큰
+
+| 항목 | Figma 변경 | 전 → 후 |
+| --- | --- | --- |
+| textarea Disabled 카운터 | 86:3036 · 3037 · 3038(sm), 86:3042 · 3043 · 3044(md) → `colors/textarea/outline/counter/disabled` | 현재 수 `counter/completed` brand/700 #007c56, "/" · 최대 수 `counter/default` brand-gray/600 #778191 → 모두 text/disabled brand-gray/300 #c2c7d0 (비활성 value · placeholder · helper와 같은 규칙) |
+| navigation item_link Hover · Unselected 아이콘 | I476:18731;128:1335;2:44340;8899:59372 → `…/link/unselected/icon/hover` | icon/tertiary brand-gray/500 → icon/secondary brand-gray/700 (item_parent Hover와 같음) |
+| table `data/icon/hover` 별칭 | 변수 355:3807 값 `S:colors/icon/tertiary` → `S:colors/icon/primary` | hover가 기본(icon/secondary 700)보다 연한 500이던 위계를 900으로 — header `icon/active` · 다른 컴포넌트의 hover 단계와 같은 방향. 세트에 Hover 변형이 없어 노드 바인딩 없음(코드 끌기 손잡이에 적용) |
+
+유지: `slider/background/handle/outline` · `slider/border/handle/brand` — legacy 페이지 "Slider · 디자인 대안 2종"의 slider-outline 세트와 그 인스턴스 24곳이 바인딩(채택되지 않은 대안이지만 삭제하면 legacy 노드가 풀림).
+
 ## Z. 전체 품질 감사 — 끊어진 · 외부 변수 바인딩 수정 (2026-10-28, QA 브리프의 "명확한 오류는 직접 수정" 승인)
 
 Component 섹션 68개 세트를 모두 훑어(use_figma 읽기) 하드코딩 색 · 삭제된 변수 참조 · 외부 라이브러리 변수 참조를 찾았습니다. 변수 · 스타일 자체는 바꾸지 않았고(체크섬 8그룹 동일) 노드 바인딩만 고쳤습니다.

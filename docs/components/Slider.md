@@ -71,6 +71,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `SLID-05` **값 라벨의 Figma 구조**(2026-10-28 QA): `handle`의 값 라벨 "Description Top"은 외부 라이브러리 컴포넌트(`Tag/state`) 인스턴스라 글자 속성이 다른 파일의 폰트 변수에 묶여 있습니다(값은 로컬 `xxs/leading-normal/semibold`와 같은 10/12 SemiBold). 인스턴스 안의 바인딩은 이 파일에서 풀 수 없어 로컬 텍스트 스타일만 다시 적용했고, 교체는 디자인 결정 대상으로 기록했습니다(figma-issues F105). 코드는 로컬 스타일을 씁니다. **해결(2026-10-28 저녁)**: 두 `Tag/state` 인스턴스를 분리해 로컬 글자("Value label")로 바꾸고 텍스트 스타일을 다시 적용했습니다 — 외부 바인딩 0, 픽셀 · 코드 변화 없음([figma-fix-requests AB절](../figma-fix-requests.md)).
 - `SLID-02` **핸들 위치**: 값 위치에 핸들 중심을 맞춥니다(Figma 예시는 손으로 배치되어 채움 끝보다 2px 오른쪽).
 - `SLID-06` **레이어 이름 · legacy 토큰**(2026-10-29): Figma slider · handle의 기본 이름 레이어를 `Track group` · `Track control` · `Track` · `Indicator` · `Range labels` · `Value input` · `Handle` · `Interaction ring`으로 바꿨습니다(크기 · 배치 변경 없음, 기하 · 검증 설정 갱신, [figma-fix-requests AC절](../figma-fix-requests.md)). `slider/background/handle/outline` · `slider/border/handle/brand`는 본 컴포넌트가 쓰지 않지만 legacy 페이지의 slider-outline 대안(24곳)이 바인딩 중이라 유지합니다.
+- `SLID-07` **legacy handle 토큰 유지 사유**(2026-10-29): `colors/slider/background/handle/outline`(→ surface/page) · `colors/slider/border/handle/brand`(→ border/brand)는 본 slider · handle 세트가 쓰지 않지만 legacy 페이지(684:6491) "Slider · 디자인 대안 2종"의 slider-outline 세트(682:6771 · 6794 · 6816 · 6817 · 6843 · 6919)와 그 인스턴스 24곳이 바인딩하고 있어 삭제 · 이름 변경하지 않습니다. 코드 토큰 CSS에는 남지만 Slider.css는 참조하지 않습니다.
 
 ## 상태
 
