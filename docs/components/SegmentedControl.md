@@ -45,7 +45,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 
 - `SEGM-01` **포커스**: 키보드 포커스일 때 선택된 항목 바깥 2px에 2px `colors/border/focus` 링(Figma 속성 `Focus` — segmented-item).
 - `SEGM-02` **선택된 항목의 Hover · Pressed**: Variant는 없지만 같은 값의 Component 변수(`…/selected/background/hover` 등)가 Figma에 있어 그대로 사용합니다(시각 변화 없음).
-- `SEGM-04` **선택 이동**(2026-10-29, Rules 09 개정): 선택 배경이 새 항목으로 미끄러져 이동합니다(참고 링크 HeroUI Segment). 컨트롤 안의 선택 표시(`.ds-segmented__indicator`, `aria-hidden`) 하나가 선택된 항목 상자를 재서 left · top · width · height를 250ms `cubic-bezier(0.32, 0.72, 0, 1)`로 옮기고, 선택된 항목은 글자색만 맡습니다 — 쉬는 위치는 항목 상자와 같아 Figma 정합성(21/21, 세 엔진)이 그대로입니다. 선택 · 글자색 · 포커스 테두리는 즉시 바뀌고, 빠른 연속 클릭 · 방향키 · 제어 값 변경 모두 마지막 선택에 멈춥니다. 크기 변경(ResizeObserver)에는 미끄러지지 않고 바로 따라가며, JS가 돌기 전(서버 렌더)에는 항목이 예전처럼 자기 배경을 그립니다. 동작 줄이기에서는 이동하지 않습니다. 선택 표시 색은 선택 항목의 상태 토큰(selected/background/hover · pressed · disabled)을 따릅니다. 공개 Props 변화 없음.
+- `SEGM-04` **선택 이동**(2026-10-29, Rules 09 개정): 선택 배경이 새 항목으로 미끄러져 이동합니다(참고 링크 HeroUI Segment). 컨트롤 안의 선택 표시(`.ds-segmented__indicator`, `aria-hidden`) 하나가 선택된 항목 상자를 재서 left · top · width · height를 250ms `cubic-bezier(0.32, 0.72, 0, 1)`로 옮기고, 선택된 항목은 글자색만 맡습니다 — 쉬는 위치는 항목 상자와 같아 Figma 정합성(21/21, 세 엔진)이 그대로입니다. 선택 · 글자색 · 포커스 테두리는 즉시 바뀌고, 빠른 연속 클릭 · 방향키 · 제어 값 변경 모두 마지막 선택에 멈춥니다. 크기 변경(ResizeObserver — 좁아진 화면, 늦게 도착한 웹 글꼴 포함)에는 미끄러지지 않고 바로 따라가며(이동 중이면 도착한 뒤), JS가 돌기 전(서버 렌더)에는 항목이 예전처럼 자기 배경을 그립니다. 동작 줄이기에서는 이동하지 않습니다. 선택 표시 색은 선택 항목의 상태 토큰(selected/background/hover · pressed · disabled)을 따릅니다. 공개 Props 변화 없음.
 
 ### Figma 반영 대기
 

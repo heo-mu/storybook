@@ -241,11 +241,14 @@ export const Motion: Story = {
     const selectedSegment = () => canvasElement.querySelector<HTMLElement>('.ds-segmented__input:checked + .ds-segmented__segment')!;
     const aligned = async () => {
       await motionSettled();
-      const a = indicator.getBoundingClientRect();
-      const b = selectedSegment().getBoundingClientRect();
-      await expect([a.left, a.top, a.width, a.height].map((v) => Math.round(v * 100) / 100)).toEqual(
-        [b.left, b.top, b.width, b.height].map((v) => Math.round(v * 100) / 100),
-      );
+      // waitFor: a size change is reported by ResizeObserver in the next frame
+      await waitFor(() => {
+        const a = indicator.getBoundingClientRect();
+        const b = selectedSegment().getBoundingClientRect();
+        expect([a.left, a.top, a.width, a.height].map((v) => Math.round(v * 100) / 100)).toEqual(
+          [b.left, b.top, b.width, b.height].map((v) => Math.round(v * 100) / 100),
+        );
+      });
     };
     await step('at rest the indicator is the selected segment', aligned);
     await step('clicking slides it: left · width transitions run, the selection is already checked', async () => {
@@ -261,6 +264,14 @@ export const Motion: Story = {
       await userEvent.click(canvas.getByText('일간'));
       await userEvent.click(canvas.getByText('주간'));
       await expect(canvas.getByRole('radio', { name: '주간' })).toBeChecked();
+      await aligned();
+    });
+    await step('a size change (e.g. a web font arriving, a narrower layout) re-places it at once, without sliding', async () => {
+      const control = canvasElement.querySelector<HTMLElement>('.ds-segmented')!;
+      control.style.width = '240px';
+      await waitFor(() => expect(Math.abs(indicator.getBoundingClientRect().width - selectedSegment().getBoundingClientRect().width)).toBeLessThan(0.01));
+      await expect(indicator.getAnimations().length).toBe(0);
+      control.style.width = '320px';
       await aligned();
     });
     await step('arrow keys slide it the same way', async () => {

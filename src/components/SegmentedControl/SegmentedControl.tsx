@@ -82,22 +82,25 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     if (rootRef.current && indicatorRef.current) placeIndicator(rootRef.current, indicatorRef.current, true);
   }, [selected, size, children]);
 
-  // Size changes (container width, fonts, items): follow at once, without sliding. ResizeObserver also reports every
-  // element once when it starts observing — those first reports are ignored so a re-subscription never cuts a slide short.
-  const sizes = useRef(new WeakMap<Element, string>());
+  // Size changes (container width, a web font arriving, items): follow at once, without sliding. Every report re-places
+  // the indicator (a no-op when nothing moved) — including the first report after (re)subscribing, which is when a font
+  // that loaded between the first measurement and the subscription shows up. A slide in progress is never cut short:
+  // the indicator is re-placed once it has arrived.
   useEffect(() => {
     const root = rootRef.current;
     if (!root || typeof ResizeObserver === 'undefined') return;
-    const observer = new ResizeObserver((entries) => {
-      let changed = false;
-      for (const entry of entries) {
-        const size = `${entry.contentRect.width}x${entry.contentRect.height}`;
-        const previous = sizes.current.get(entry.target);
-        if (previous !== undefined && previous !== size) changed = true;
-        sizes.current.set(entry.target, size);
+    const sync = () => {
+      const r = rootRef.current;
+      const indicator = indicatorRef.current;
+      if (!r || !indicator) return;
+      const running = typeof indicator.getAnimations === 'function' ? indicator.getAnimations().filter((a) => a.playState === 'running') : [];
+      if (running.length > 0) {
+        void Promise.all(running.map((a) => a.finished.catch(() => undefined))).then(sync);
+        return;
       }
-      if (changed && rootRef.current && indicatorRef.current) placeIndicator(rootRef.current, indicatorRef.current, false);
-    });
+      placeIndicator(r, indicator, false);
+    };
+    const observer = new ResizeObserver(sync);
     observer.observe(root);
     root.querySelectorAll(':scope > .ds-segmented__item > .ds-segmented__segment').forEach((segment) => observer.observe(segment));
     return () => observer.disconnect();
