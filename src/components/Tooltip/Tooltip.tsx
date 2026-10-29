@@ -30,6 +30,9 @@ export type TooltipProps = {
   [dataAttribute: `data-${string}`]: string | undefined;
 };
 
+/** Distance from the trigger (Rules 05, 2026-10-29): the 8px arrow plus a 2px gap (spacing/margin/m-0_5) — the arrow tip no longer touches the trigger. */
+const TOOLTIP_OFFSET = 8 + 2;
+
 /** Figma arrow (10 × 8 triangle) pointing at the trigger. */
 const ARROW: Record<TooltipPlacement, { w: number; h: number; d: string }> = {
   top: { w: 10, h: 8, d: 'M0 0H10L5 8Z' },
@@ -56,7 +59,7 @@ export function Tooltip({
   return (
     <TooltipTrigger delay={delay} closeDelay={closeDelay} isOpen={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} isDisabled={disabled}>
       <Focusable>{children as ReactElement<DOMAttributes<Element>, string>}</Focusable>
-      <RACTooltip {...dataAttributes} placement={placement} offset={8} className={cx('ds-tooltip', className)}>
+      <RACTooltip {...dataAttributes} placement={placement} offset={TOOLTIP_OFFSET} className={cx('ds-tooltip', className)}>
         {showArrow && (
           <OverlayArrow className="ds-tooltip__arrow">
             {({ placement: side }) => {

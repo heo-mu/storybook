@@ -2,6 +2,7 @@
  * Tooltip — Figma `tooltip` (149:1111): padding p-1_5 p-2_5, border-radius/rounded, colors/tooltip/background
  * (black 90%), 1px INSIDE border colors/tooltip/border (transparent), text sm/leading-normal/normal
  * (…/label/default), 10 × 8 arrow (…/arrow/default) centred on the side facing the trigger, effect elevation-3.
+ * Distance from the trigger: arrow 8px + 2px gap = 10px (RAC offset in Tooltip.tsx, Rules 05 · 2026-10-29).
  */
 
 .ds-tooltip {

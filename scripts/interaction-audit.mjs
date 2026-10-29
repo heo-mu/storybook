@@ -462,9 +462,46 @@ const flows = {
     await page.keyboard.press('Tab');
     await sleep(100);
     expect((await page.getByRole('tooltip').count()) === 1, 'keyboard focus did not show the tooltip immediately');
+    // Rules 05 (2026-10-29): arrow tip 2px from the trigger; the position follows the trigger after a resize (portal + real bounds).
+    const gap = async () => page.evaluate(() => { const t = document.querySelector('[role=tooltip]'); const a = t.querySelector('.ds-tooltip__arrow > svg').getBoundingClientRect(); const b = document.activeElement.getBoundingClientRect(); const side = t.getAttribute('data-placement'); return { side, gap: Math.round(({ top: b.top - a.bottom, bottom: a.top - b.bottom, left: b.left - a.right, right: a.left - b.right })[side] * 100) / 100, inside: t.getBoundingClientRect().left >= 0 && t.getBoundingClientRect().right <= innerWidth }; });
+    const g1 = await gap();
+    expect(g1.gap === 2, `arrow tip is ${g1.gap}px from the trigger (expected 2, side ${g1.side})`);
+    await page.setViewportSize({ width: 900, height: 700 });
+    await sleep(200);
+    const g2 = await gap();
+    expect(g2.gap === 2 && g2.inside, `after resize: gap ${g2.gap}px, inside viewport ${g2.inside}`);
+    await page.setViewportSize({ width: 1400, height: 1000 });
+    await sleep(200);
+    await page.evaluate(() => { document.body.style.minHeight = '2400px'; window.scrollBy(0, 48); });
+    await sleep(200);
+    const g3 = await gap();
+    expect(g3.gap === 2, `after scroll: arrow tip ${g3.gap}px from the trigger`);
+    await page.evaluate(() => { window.scrollTo(0, 0); document.body.style.minHeight = ''; });
     await page.keyboard.press('Escape');
     await sleep(150);
     expect((await page.getByRole('tooltip').count()) === 0, 'Escape did not hide the tooltip');
+  },
+  async 'Tooltip — flips at the screen edge, one tooltip at a time without flicker on quick pointer moves'() {
+    await story('components-tooltip-showcase--edge');
+    await page.getByRole('tooltip').first().waitFor({ timeout: 3000 });
+    const placements = await page.evaluate(() => [...document.querySelectorAll('[role=tooltip]')].map((t) => t.getAttribute('data-placement')));
+    expect(placements.join(',') === 'bottom,left', `edge placements ${placements.join(',')} (expected bottom,left)`);
+    const inside = await page.evaluate(() => [...document.querySelectorAll('[role=tooltip]')].every((t) => { const r = t.getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth && r.top >= 0; }));
+    expect(inside, 'an edge tooltip leaves the viewport');
+    await story('components-tooltip-showcase--multiple');
+    const buttons = root().getByRole('button');
+    const boxes = [];
+    for (let i = 0; i < 3; i++) boxes.push(await buttons.nth(i).boundingBox());
+    await page.mouse.move(boxes[0].x - 30, boxes[0].y + boxes[0].height / 2);
+    for (const bb of boxes) { for (let i = 1; i <= 4; i++) { await page.mouse.move(bb.x + (bb.width / 4) * i, bb.y + bb.height / 2); await sleep(10); } }
+    await page.mouse.move(boxes[2].x + boxes[2].width / 2, boxes[2].y + boxes[2].height / 2); // rest on the last button
+    await sleep(250);
+    const tips = page.getByRole('tooltip');
+    expect((await tips.count()) === 1, `${await tips.count()} tooltips visible after a quick pointer sweep (expected 1)`);
+    expect((await tips.first().textContent()).includes('삭제'), 'the tooltip shown is not the one of the hovered button');
+    await page.mouse.move(5, 5);
+    await sleep(300);
+    expect((await tips.count()) === 0, 'tooltip stayed after the pointer left');
   },
   async 'Input — typing, clear button, password reveal'() {
     await story('components-input-input--playground');

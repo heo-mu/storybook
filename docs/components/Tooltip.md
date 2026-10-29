@@ -37,7 +37,7 @@ Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 —
 
 Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
 
-- `TOOL-01` **트리거와의 거리**: 화살표 길이(8px)만큼 띄워 화살표 끝이 트리거에 닿습니다(Rules 05).
+- `TOOL-01` **트리거와의 거리**: 화살표(8px) + 2px = 10px 띄워 화살표 끝이 트리거에서 2px 떨어집니다(Rules 05, 2026-10-29 개정 — 이전: 화살표 끝이 닿는 8px). 네 방향 모두 같고, 위치는 트리거의 실제 경계 기준(react-aria `offset`, portal 좌표)입니다. 공간이 없으면 반대쪽으로 뒤집고 화면 안으로 밀며, 크기가 바뀌어도 위치를 다시 잡습니다. Figma "Tooltip 사용 예시"(1668:7954)와 같은 배치이며, Gallery Variants 스토리의 play가 네 방향의 2px를, 화면 가장자리 · 여러 툴팁 스토리와 `verify:interaction`이 뒤집힘 · 한 번에 하나 · 빠른 이동 · 크기 변경을 검사합니다.
 - `TOOL-02` **나타나는 지연**: 마우스는 0.5초(`delay` 기본 500), 키보드 포커스는 즉시. 포인터 · 포커스가 떠나거나 Esc로 닫힙니다. `delay` · `closeDelay`로 조정할 수 있습니다(Rules 05 · tooltip 주석).
 
 ### 개발 구현 세부 사항

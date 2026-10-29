@@ -51,7 +51,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 
 | 정책 | 상세 기준 | 토큰 · 근거 |
 | --- | --- | --- |
-| 위치 | 트리거 아래 4px(Breadcrumb 메뉴 2px, Tooltip은 화살표 끝이 닿는 8px). Select 목록은 필드 너비, 나머지는 시작 정렬. 공간이 없으면 반대쪽으로 뒤집고 화면 안으로 이동 | `spacing/margin/m-1` · react-aria `placement` |
+| 위치 | 트리거 아래 4px(Breadcrumb 메뉴 2px, Tooltip은 화살표 8px + 2px = 10px — 화살표 끝이 요소에서 2px 떨어짐, 2026-10-29 개정). Select 목록은 필드 너비, 나머지는 시작 정렬. 공간이 없으면 반대쪽으로 뒤집고 화면 안으로 이동 | `spacing/margin/m-1` · react-aria `placement` |
 | 차트 툴팁 위치 | 자기 차트의 그림 영역 안. 선 · 가로 막대는 기준점 오른쪽 12px(넘치면 왼쪽), 세로 막대는 항목 가운데 위쪽. 보이는 부분(그림 영역 ∩ 화면 · 스크롤 영역, 가장자리 12px)을 우선하고, 차트가 화면 밖이면 함께 사라짐 — 다른 차트 위에 남거나 툴팁을 공유하지 않음. 계열 이름 칸 최소 40 · 최대 80px | Chart CHAR-01 · CHAR-08 |
 | 크기 | Select 목록 높이는 화면에 맞추고 내부 스크롤, 공간이 없으면 위로. Dropdown은 내용 폭. Breadcrumb 메뉴 최소 200px(내용에 맞춰 넓어짐) | — |
 | 열기 · 닫기 | Esc로 닫힘. 바깥 클릭: 메뉴 · 목록 · 달력은 닫힘, Dialog는 닫히지 않음(`isDismissable`일 때만). Tooltip은 포인터 · 포커스가 떠나면 닫힘. 트리거 모양은 바뀌지 않고 `aria-expanded`로 전달 | — |
@@ -121,7 +121,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | --- | --- | --- |
 | select | 동작 | 목록 — 필드 아래 4px, 필드 너비, 높이는 화면에 맞추고 내부 스크롤, 공간이 없으면 위로. 글자 입력으로 항목 이동. 키보드 포커스는 State=Focus(테두리), Error와 겹치면 Error 테두리 유지 |
 | toast | 동작 | 화면 아래 가운데(아래 20px), 토스트 사이 8px. 최대 3개. Information · Success는 5초 뒤 닫힘, Error · Warning은 닫을 때까지. Hover · 포커스 중 정지. 같은 문구 · 상태는 다시 표시 |
-| tooltip | 동작 | 마우스 0.5초 뒤, 키보드 포커스 즉시. 포인터 · 포커스가 떠나거나 Esc로 닫힘. 화살표 끝이 트리거에 닿게(8px) |
+| tooltip | 동작 | 마우스 0.5초 뒤, 키보드 포커스 즉시. 포인터 · 포커스가 떠나거나 Esc로 닫힘. 화살표 끝이 트리거에서 2px(화살표 포함 10px, 2026-10-29 개정) |
 | dialog | 동작 | 덮개 `colors/dialog/scrim/default`(검정 50%). 포커스가 안으로 이동 · 갇힘, Esc로 닫힘, 바깥 클릭은 닫지 않음(dismissable일 때만), 닫히면 연 요소로 복귀 |
 | date-picker_trigger | 동작 | 직접 입력 허용. 해석할 수 없거나 범위 밖 날짜는 State=Error, 값은 바꾸지 않음. 달력은 트리거 아래 4px(공간이 없으면 위), 닫히면 포커스는 트리거로 |
 | alert | 접근성 | Status=Error는 `role="alert"`, Information · Success · Warning은 `role="status"` |

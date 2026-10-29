@@ -472,7 +472,7 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 
 | ID | 분류 | 이전 | Figma에 없던 것 | 결정 | Figma 반영 | 상태 | ID · 장 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| TOOL-01 | B | 트리거와 8px(화살표 길이) | 거리 없음 | 화살표 끝이 트리거에 닿게(8px) | Rules 05 | Figma 문서화 정책 | Rules 05 |
+| TOOL-01 | B | 트리거와 10px(화살표 8px + 2px, 2026-10-29 개정) | 거리 없음 | 화살표 끝이 트리거에서 2px(화살표 포함 10px) | Rules 05 | Figma 문서화 정책 | Rules 05 |
 | TOOL-02 | B | 지연: 마우스 1.5초, 포커스 즉시 | 지연 없음 | 마우스 0.5초, 키보드 포커스 즉시, Esc로 닫힘 | Rules 05 | Figma 문서화 정책 | Rules 05 |
 | TOOL-03 | C | 그림자는 말풍선에만(화살표 생략) | Figma는 화살표에도 그림자(F47) | 개발 구현(CSS 한계) | Rules 10 | 개발 구현 세부 사항 | Rules 10 |
 | TOOL-04 | C | 트리거는 ref · props 전달 요소 | — | 개발 구현 | Rules 10 | 개발 구현 세부 사항 | Rules 10 |

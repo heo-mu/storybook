@@ -7,6 +7,12 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Tooltip — 트리거와 2px 더 띄움, Figma 사용 예시 (2026-10-29)
+
+- **거리**: 화살표 끝이 트리거에 닿던 8px에서 화살표 8px + 2px = 10px로(Rules 05 개정, Figma 먼저). 네 방향 같고, 위치는 트리거의 실제 경계 기준(react-aria `offset`)이라 다른 값은 그대로입니다. 공개 Props 변화 없음.
+- **Figma**: Tooltip 프레임에 "Tooltip 사용 예시"(1668:7954) — 기본(2px 간격 표시) · Top · Bottom · Left · Right · Hover · Focus · 화면 가장자리(반대쪽에 열림) · 여러 툴팁(한 번에 하나) — 기존 tooltip · button_basic · button_icon 인스턴스로, DatePicker 사용 예시와 같은 머리글 · 격자 형식.
+- **Storybook**: Gallery Variants 스토리의 play가 네 방향의 화살표 끝 ~ 트리거 2px를 검사하고, 화면 가장자리(뒤집힘 · 화면 안) · 여러 툴팁(빠른 이동에도 하나만) 스토리 추가. `verify:interaction`에 간격 · 크기 변경 · 스크롤 · 가장자리 · 깜빡임 흐름 추가(세 엔진). 문서 · 정책 표 갱신.
+
 ### F112 · F113 — SearchField 토큰 이름 구조화, 상태 토큰 바인딩 수정 (2026-10-29)
 
 - **SearchField 토큰 이름(F112)**: `search-field/{outline,solid}/label/*`가 입력 글자를 뜻하던 것을 다른 필드와 같은 구조로 바꿨습니다 — `label/default · hover · disabled` → `placeholder/default · hover · disabled`, `label/completed · error` → `value/completed · error`(이름만 변경, 변수 ID · 노드 바인딩 유지). input처럼 `value/default`(Focus) · `value/disabled`를 추가했고 Focus 변형 6곳 · solid Hover 변형 3곳을 알맞은 토큰에 묶었습니다(색 동일). CSS 변수 이름이 바뀌었습니다: `--colors-search-field-*-label-*` → `--colors-search-field-*-placeholder-*` · `-value-*`(배포 전 0.1.0, SearchField.css 외 참조 없음). 공개 Props 변화 없음.
