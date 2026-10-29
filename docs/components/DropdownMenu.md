@@ -51,7 +51,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DROP-02` **키보드 포커스**: 포커스된 항목은 Hover와 같은 모양입니다(Rules 02 — 목록 항목 포커스).
 - `DROP-03` **패널 위치**: 트리거 아래 4px(`offset`, Select · Date Picker와 같음 — Breadcrumb은 2px), 시작 정렬. 화면 밖으로 나가면 위치를 뒤집습니다(Rules 05).
 - `DROP-04` **패널 너비**: 내용에 맞춥니다(Figma의 200 · 140px은 예시 폭). 필요하면 `className`으로 지정합니다(Rules 05).
-- `DROP-05` **하위 메뉴**: 지원하지 않습니다. `chevron`은 다른 화면으로 이동한다는 표시입니다(Rules 05). Rules 09의 dropdown-menu-sub 행은 2026-10-28 저녁에 "기본 메뉴(200px) · 글자만 있는 좁은 메뉴(140px), 하위 메뉴 없음(05장)"으로 고쳐 Rules 05와 충돌이 없습니다(F103 해결). Figma `dropdown-menu-sub`(1440:8455)는 140px 글자 전용 메뉴 패널(단일 컴포넌트, Menu 갤러리에서 정합성 1/1)이고 중첩 열림 동작 · 변형은 없어 지원하지 않습니다.
+- `DROP-05` **하위 메뉴(2단계)**(2026-10-29, Rules 09 개정): Rules 09가 "dropdown-menu는 1depth, dropdown-menu-sub는 2depth"로 정해 `DropdownMenuSub`를 더했습니다(react-aria `SubmenuTrigger`). 항목에 마우스를 올리거나 → · Enter · Space로 옆에 140px 글자 메뉴(Figma dropdown-menu-sub)가 열리고, ← · Esc로 닫혀 여는 항목으로 포커스가 돌아갑니다. 상위 패널에서 4px, 첫 항목이 여는 항목과 같은 높이(react-aria가 겹침 위치를 정수 픽셀로 놓아 ±0.5px), 공간이 없으면 반대쪽에 열립니다. 열린 동안 여는 항목은 hover 모양을 유지하고, 하위 메뉴로 비스듬히 옮겨 가는 동안 닫히지 않습니다. Rules 09는 메뉴에 애니메이션을 정하지 않아 상위 메뉴와 같이 즉시 열리고 닫힙니다. Rules 05의 "하위 메뉴를 두지 않음"과 충돌해 결정 대기입니다(figma-issues F114) — `chevron`만 있는 항목은 계속 다른 화면으로 이동한다는 표시입니다.
 - `DROP-06` **설명이 있는 항목의 이름**: 라벨과 설명(`description`) 전체가 항목 이름입니다 — 보이는 글자가 모두 이름에 들어갑니다(WCAG 2.5.3, Rules 03).
 
 ## 키보드

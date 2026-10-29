@@ -1,6 +1,7 @@
-import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import { forwardRef, useEffect, useState, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import { CheckIcon, ExclamationMarkIcon } from '../../icons';
 import { cx } from '../../utils/cx';
+import { usePrefersReducedMotion } from '../../utils/usePrefersReducedMotion';
 import type { StepperOrientation, StepperStatus } from './Stepper.options';
 
 /** Text read by screen readers for states that are shown only by colour or icon. */
@@ -17,6 +18,11 @@ export type StepperIndicatorProps = Omit<ComponentPropsWithoutRef<'div'>, 'child
   description?: ReactNode;
   /** 방향 — 가로이면 글자가 원 아래, 세로이면 원 옆에 놓입니다. @default 'horizontal' */
   orientation?: StepperOrientation;
+  /**
+   * 화면에 그리는 상태(색 · 아이콘). 단계가 바뀌는 움직임 동안 `Stepper`가 넘기며, 화면 낭독기는 `status`를 읽습니다.
+   * @default status
+   */
+  displayStatus?: StepperStatus;
 };
 
 /**
@@ -25,17 +31,18 @@ export type StepperIndicatorProps = Omit<ComponentPropsWithoutRef<'div'>, 'child
  * @internal Rendered by `Stepper` — use that (docs/public-api.md).
  */
 export const StepperIndicator = forwardRef<HTMLDivElement, StepperIndicatorProps>(function StepperIndicator(
-  { status = 'upcoming', step, label, description, orientation = 'horizontal', className, ...rest },
+  { status = 'upcoming', displayStatus, step, label, description, orientation = 'horizontal', className, ...rest },
   ref,
 ) {
   const hasLabel = label != null && label !== false;
   const hasDescription = description != null && description !== false;
+  const shown = displayStatus ?? status;
   return (
-    <div {...rest} ref={ref} className={cx('ds-stepper-indicator', className)} data-status={status} data-orientation={orientation}>
+    <div {...rest} ref={ref} className={cx('ds-stepper-indicator', className)} data-status={shown} data-orientation={orientation}>
       <span className="ds-stepper-indicator__circle" aria-hidden="true">
-        {status === 'completed' ? (
+        {shown === 'completed' ? (
           <CheckIcon className="ds-stepper-indicator__icon" />
-        ) : status === 'error' ? (
+        ) : shown === 'error' ? (
           <ExclamationMarkIcon className="ds-stepper-indicator__icon" />
         ) : (
           <span className="ds-stepper-indicator__number">{step}</span>
@@ -69,8 +76,11 @@ export type StepperConnectorProps = Omit<ComponentPropsWithoutRef<'span'>, 'chil
 export function StepperConnector({ completed = false, orientation = 'horizontal', className, ...rest }: StepperConnectorProps) {
   return (
     <span {...rest} className={cx('ds-stepper-connector', className)} data-orientation={orientation} data-completed={completed || undefined} aria-hidden="true">
+      {/* Track (incomplete colour) and fill (complete colour) split the same 1px line; Rules 09 fills it from the
+          previous step towards the next (Stepper.css). At rest only one of them is visible. */}
       <svg className="ds-stepper-connector__line" focusable="false">
-        <rect />
+        <rect className="ds-stepper-connector__track" />
+        <rect className="ds-stepper-connector__fill" />
       </svg>
     </span>
   );
@@ -94,21 +104,72 @@ export type StepperProps = Omit<ComponentPropsWithoutRef<'ol'>, 'children'> & {
   orientation?: StepperOrientation;
 };
 
+/** Duration of one connector fill — keep equal to the transition in Stepper.css. */
+const FILL_MS = 300;
+
+/**
+ * What the stepper shows while it moves: steps before `done` are completed, `active` is current (-1 while a connector
+ * fills), connectors before `filled` are filled. At rest all three equal the shown current step.
+ */
+type Shown = { done: number; active: number; filled: number };
+const restAt = (step: number): Shown => ({ done: step, active: step, filled: step });
+
+/**
+ * Rules 09 "Stepper" (2026-10-29, reference HeroUI Stepper): the stepper moves one step at a time — moving forward the
+ * step becomes completed, the next connector fills, then the next step becomes current; moving back the step becomes
+ * upcoming, the connector empties, then the previous step becomes current. A jump of several steps plays them in order,
+ * and a new `currentStep` during the motion continues from what is shown, so the last state always equals the props.
+ * Screen readers get the real state at once (aria-current, "n단계, 완료"); with reduced motion the shown state follows
+ * `currentStep` immediately.
+ */
+function useSteppedProgress(target: number): Shown {
+  const reduced = usePrefersReducedMotion();
+  const [shown, setShown] = useState<Shown>(() => restAt(target));
+  // Start the next phase while rendering (React's "adjust state when a prop changes" pattern): at rest and away from the
+  // target, take one step; with reduced motion jump straight to the target.
+  if (reduced) {
+    if (shown.active !== target || shown.done !== target || shown.filled !== target) setShown(restAt(target));
+  } else if (shown.active !== -1 && target !== shown.active) {
+    const k = shown.active;
+    setShown(target > k ? { done: k + 1, active: -1, filled: k + 1 } : { done: k, active: -1, filled: k - 1 });
+  }
+  // A phase ends when its connector has filled (or emptied).
+  useEffect(() => {
+    if (reduced || shown.active !== -1) return;
+    const timer = setTimeout(() => setShown(restAt(shown.filled)), FILL_MS);
+    return () => clearTimeout(timer);
+  }, [shown, reduced]);
+  return shown;
+}
+
 /** 여러 단계로 이루어진 과정의 현재 위치와 진행 상태를 표시합니다. 단계 이동 버튼으로 사용하지 않습니다. */
 export const Stepper = forwardRef<HTMLOListElement, StepperProps>(function Stepper(
   { steps, currentStep = 0, orientation = 'horizontal', className, ...rest },
   ref,
 ) {
+  const target = Math.max(-1, Math.min(currentStep, steps.length));
+  const shown = useSteppedProgress(target);
   const statusOf = (step: StepperStep, index: number): StepperStatus =>
     step.status ?? (index < currentStep ? 'completed' : index === currentStep ? 'current' : 'upcoming');
+  const shownStatusOf = (step: StepperStep, index: number): StepperStatus =>
+    step.status ?? (index < shown.done ? 'completed' : index === shown.active ? 'current' : 'upcoming');
+  // A step with its own status (locked · error) never shows a filled connector after it, as before.
+  const filledAfter = (step: StepperStep, index: number) => (step.status ? step.status === 'completed' : index < shown.filled);
   return (
     <ol {...rest} ref={ref} className={cx('ds-stepper', className)} data-orientation={orientation}>
       {steps.map((step, index) => {
         const status = statusOf(step, index);
         return (
           <li key={index} className="ds-stepper__step" aria-current={status === 'current' ? 'step' : undefined}>
-            <StepperIndicator status={status} step={index + 1} label={step.label} description={step.description} orientation={orientation} />
-            {index < steps.length - 1 && <StepperConnector orientation={orientation} completed={status === 'completed'} />}
+            <StepperIndicator
+              status={status}
+              displayStatus={shownStatusOf(step, index)}
+              step={index + 1}
+              label={step.label}
+              description={step.description}
+              orientation={orientation}
+            />
+            {index < steps.length - 1 && <StepperConnector orientation={orientation} completed={filledAfter(step, index)} />}
           </li>
         );
       })}

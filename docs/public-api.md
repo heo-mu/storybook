@@ -7,14 +7,14 @@
 | 분류 | 개수 | 쓰는 법 |
 | --- | ---: | --- |
 | 공개 컴포넌트 | 50 | 화면에 바로 배치합니다. |
-| 보조 컴포넌트 | 32 | 적힌 상위 컴포넌트 안에서만 조합합니다. |
-| 타입 | 132 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
+| 보조 컴포넌트 | 33 | 적힌 상위 컴포넌트 안에서만 조합합니다. |
+| 타입 | 133 | `<컴포넌트>Props`와 값 타입(`ISODate`, `BreadcrumbEntry`, `ChartSeries` …) |
 | 상수 | 45 | Figma 속성 값 목록(`BUTTON_VARIANTS` 등) — 선택지 UI · 값 검증용 |
 | 함수 | 3 | `filterChipText()` · `showToast()` · `closeToast()` |
 | 아이콘 | 38 | `<이름>Icon` 컴포넌트 |
 | **내부 부품 — 사용 금지** | 7 | 상위 컴포넌트가 그립니다. |
 | **내부 API — 사용 금지** | 13 | 아래 대체 수단을 씁니다. |
-| 합계 | 320 | `src/index.ts`의 export 전체 |
+| 합계 | 322 | `src/index.ts`의 export 전체 |
 
 내부 부품 · 내부 API는 하위 호환을 보장하지 않으며 다음 메이저 버전에서 export 목록에서 빠질 수 있습니다.
 
@@ -52,7 +52,7 @@
 | [`Link`](./api.md#link) | 텍스트 링크 | `link` 111:1509 |  |
 | [`Tabs`](./api.md#tabs) | 탭 | `tab_filled` 91:5000 · `tab_line` 91:5241 | `TabList` `TabPanel` |
 | [`Pagination`](./api.md#pagination) | 페이지 이동 | `pagination` 132:871 |  |
-| [`DropdownMenu`](./api.md#dropdownmenu) | 동작 메뉴 | `dropdownmenu_item` 179:4819 · `dropdownmenu_line` 179:5082 | `DropdownMenuItem` `DropdownMenuSection` `DropdownMenuSeparator` |
+| [`DropdownMenu`](./api.md#dropdownmenu) | 동작 메뉴 | `dropdownmenu_item` 179:4819 · `dropdownmenu_line` 179:5082 | `DropdownMenuItem` `DropdownMenuSection` `DropdownMenuSeparator` `DropdownMenuSub` |
 | [`Breadcrumb`](./api.md#breadcrumb) | 현재 위치 경로(`items`) | `breadcrumb` 712:5106 |  |
 | [`Navigation`](./api.md#navigation) | 좌측 메뉴(LNB) | — | `NavLink` `NavGroup` |
 | [`Stepper`](./api.md#stepper) | 단계 진행 표시(`steps`) | `stepper_horizontal` 179:2043 · `stepper_vertical` 203:3949 |  |
@@ -79,7 +79,7 @@
 | [`DataState`](./api.md#datastate) | 데이터 상태(로딩 · 오류 · 결과 없음 등) | `data-state` 698:4359 |  |
 | [`DashboardFilterBar`](./api.md#dashboardfilterbar) | 대시보드 조회 조건 막대 | `dashboard-filter-bar` 698:4163 | `DashboardFilterGroup` |
 
-## 2. 보조 컴포넌트 (32)
+## 2. 보조 컴포넌트 (33)
 
 | 컴포넌트 | 쓰는 곳 | Figma |
 | --- | --- | --- |
@@ -92,6 +92,7 @@
 | `DropdownMenuItem` | `DropdownMenu` 안 | — |
 | `DropdownMenuSection` | `DropdownMenu` 안 | — |
 | `DropdownMenuSeparator` | `DropdownMenu` 안 | — |
+| `DropdownMenuSub` | `DropdownMenu` 안 — 하위 메뉴(2단계) | — |
 | `NavLink` | `Navigation` 안 | `item_link` 180:6174 |
 | `NavGroup` | `Navigation` 안 | — |
 | `NavChild` | `NavGroup` 안 | `item_child` 180:6249 |

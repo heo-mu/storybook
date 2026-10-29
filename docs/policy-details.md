@@ -59,7 +59,7 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 | 대화상자 크기 | 한 가지 420px — 가운데 정렬 확인 · 선택용(제목 · 설명 · 240px 버튼). 안에 넣는 입력은 1–2개까지, 입력이 많은 작업은 화면으로 | Rules 05 "대화상자 크기" |
 | 모달 덮개 | 모달은 검정 50% 덮개로 뒤 화면을 가리고 조작 · 스크롤을 막음 | `colors/dialog/scrim/default` → `surface/scrim`(black 50%) · Dialog "Modal example" |
 | Tooltip 지연 | 마우스 0.5초 뒤, 키보드 포커스는 즉시 | Tooltip `delay` 500 |
-| 하위 메뉴 | 두지 않음(Rules 05). Rules 09의 dropdown-menu-sub 행은 2026-10-28 저녁에 "기본 메뉴(200px) · 글자만 있는 좁은 메뉴(140px), 하위 메뉴 없음(05장)"으로 고쳐 충돌이 없음. dropdown-menu-sub(1440:8455)는 140px 글자 전용 메뉴 패널 단일 컴포넌트(정합성 1/1) | DROP-05 |
+| 하위 메뉴 | Rules 05는 "메뉴 안에 하위 메뉴를 두지 않음"이지만 2026-10-29 Rules 09가 "dropdown-menu는 1depth, dropdown-menu-sub는 2depth"로 다시 정함 — 코드는 선택형 `DropdownMenuSub`(2단계)를 더하고 `chevron`만 있는 항목은 계속 "다른 화면으로 이동" 표시(figma-issues F114, 결정 대기) | DROP-05 |
 
 ## 06. 알림 · 진행 표시
 
@@ -96,11 +96,11 @@ Figma **Design System Rules** 표는 처음 보는 사람도 읽을 수 있게 �
 
 | 정책 | 상세 기준 | 토큰 · 근거 |
 | --- | --- | --- |
-| 상태 변화 | 색 · 배경 · 펼침 · 열림 · 썸 이동 · 진행 막대 · 단계 이동은 즉시(애니메이션 없음) — Rules 09 첫 행 그대로. 2026-10-28에 추가됐던 참고 링크 행들은 같은 날 저녁 "즉시 바뀜"으로 고쳐 충돌이 없음(F103 해결) | — |
-| Segmented Control | 선택 이동은 즉시 — Rules 09 행도 2026-10-28 저녁에 "즉시 바뀜"으로 고침 | [components/SegmentedControl.md](./components/SegmentedControl.md) SEGM-04 |
-| Stepper | 연결선 · 표시기는 즉시 바뀜 — Rules 09 행도 2026-10-28 저녁에 "즉시 바뀜"으로 고침 | STEP-03 |
-| 하위 메뉴 | Rules 09(2026-10-28 추가): "dropdown-menu 1depth · dropdown-menu-sub 2depth"(shadcn 링크) — 05장 "하위 메뉴를 두지 않음"과 충돌. dropdown-menu-sub(1440:8455)는 140px 글자 전용 메뉴 패널 단일 컴포넌트로 코드에 있고(정합성 1/1), 중첩 열림 동작은 Figma에 변형 · 예시가 없어 미지원 유지 | 결정 대기 · DROP-05 |
-| 펼침 · 닫힘 | Select 목록 · Date Picker 달력 · Breadcrumb 메뉴 · 필터 칩 패널은 즉시 열림 · 닫힘 — Rules 09 행도 2026-10-28 저녁에 "즉시"로 고침 | SELE-09 · DPCK-06 · BREA-06 · CHIP-07 |
+| 상태 변화 | 색 · 배경 · 펼침(Accordion) · 열림(DropdownMenu · Tooltip · Dialog) · 썸 이동 · 진행 막대는 즉시(애니메이션 없음) — Rules 09 첫 행. 아래 행에 적힌 컴포넌트만 예외(2026-10-29 Rules 09 개정) | — |
+| Segmented Control | 선택 배경이 새 항목으로 미끄러져 이동(참고 링크 HeroUI Segment) — 하나의 선택 표시가 left · top · width · height를 250ms `cubic-bezier(0.32, 0.72, 0, 1)`(HeroUI 선택 표시 값)로 옮김. 선택 · 글자색 · 포커스는 즉시, 쉬는 위치는 선택 항목과 같은 상자(정합성 그대로). 크기가 바뀌면 바로 따라감, 빠른 연속 클릭 · 방향키도 마지막 선택에 멈춤. 동작 줄이기: 이동 없음 | [components/SegmentedControl.md](./components/SegmentedControl.md) SEGM-04 |
+| Stepper | 한 단계씩 연결선이 채워지며 이동(참고 링크 HeroUI Stepper) — 앞으로: 단계 완료 → 다음 연결선 300ms 채움 → 다음 단계가 현재. 여러 단계를 건너뛰면 차례로(지나가는 단계는 선이 닿을 때 완료), 뒤로 가면 거꾸로 비워짐. 화면 낭독기(aria-current · "n단계, 완료")는 즉시 실제 상태, 잠김 · 오류 단계 뒤 연결선은 채우지 않음. 참고 링크에 시간이 없어 300ms ease-in-out으로 정함. 동작 줄이기: 바로 바뀜 | STEP-03 |
+| 하위 메뉴 | Rules 09 "dropdown-menu": dropdown-menu-sub(140px 글자 메뉴)가 2단계 — `DropdownMenuSub` 항목에 마우스를 올리면(react-aria 지연) 또는 → · Enter · Space로 옆에 열리고 ← · Esc로 닫혀 그 항목으로 포커스가 돌아감. 상위 메뉴 패널에서 4px(패널 안쪽 여백 4 + 4), 첫 항목이 여는 항목과 같은 높이, 공간이 없으면 반대쪽. 열린 동안 여는 항목은 hover 모양 유지. 하위 메뉴로 비스듬히 옮겨 가는 동안 닫히지 않음(react-aria). Rules 09는 메뉴에 애니메이션을 정하지 않아 즉시 열림 · 닫힘 | DROP-05 |
+| 펼침 · 닫힘 | Select 목록 · Date Picker 달력(연 · 월 목록 포함) · Breadcrumb 메뉴 · 필터 칩 패널만: 열 때 150ms 동안 투명에서 0.9배 크기 · 트리거 쪽 4px에서 제자리로, 닫을 때 100ms 동안 0.95배로 흐려지며 사라짐(닫히는 동안 누를 수 없음) — 참고 링크 HeroUI Dropdown의 값(overlay-motion.css), 트리거 기준점(`--trigger-anchor-point`)에서 커지고 투명도 · transform만 움직여 쉬는 위치 · 너비 · 간격은 그대로(`src/styles/overlay-motion.css`). 동작 줄이기: 애니메이션 없음 | SELE-09 · DPCK-06 · BREA-06 · CHIP-07 |
 | 반복 움직임 | 스피너 1초/바퀴, 동작 줄이기 설정에서 3초/바퀴. Skeleton은 참고 링크(shadcn/ui Skeleton)대로 밝기 맥동 — 불투명도 1 → 0.5 → 1, 2초, `cubic-bezier(0.4, 0, 0.6, 1)` 반복, 동작 줄이기 6초(2026-10-28 구현, 이전: 정적). Rules 09 반복 움직임 행에도 2026-10-28 저녁 "스피너 1초 · 스켈레톤 2초"를 적음 | `prefers-reduced-motion` · Loading · Skeleton CSS |
 
 ## 10. 개발 구현 세부 (디자인 컴포넌트에 넣지 않는 항목)

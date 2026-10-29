@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Stepper } from './Stepper';
 import { STEPPER_ORIENTATIONS } from './Stepper.options';
+import { Button } from '../Button';
 
 // 사용 예 스토리(매니페스트 포함). 검증용 스토리는 ./stories/Stepper.showcase.stories.tsx에 있습니다.
 const meta = {
@@ -62,4 +64,35 @@ export const ErrorAndLocked: Story = {
 export const LabelsOnly: Story = {
   name: "Label Only",
   args: { steps: [{ label: '장바구니' }, { label: '배송 정보' }, { label: '결제' }] },
+};
+
+/**
+ * 단계를 옮기면 연결선이 한 단계씩 채워지며 현재 단계가 이동합니다. 여러 단계를 건너뛰면 차례로 채워지고, 이전으로 가면 거꾸로 비워집니다.
+ * 동작 줄이기 설정에서는 바로 바뀝니다.
+ */
+export const Motion: Story = {
+  name: '단계 이동',
+  render: function Render(args) {
+    const [current, setCurrent] = useState(0);
+    const last = args.steps.length - 1;
+    return (
+      <div style={{ display: 'grid', gap: 24 }}>
+        <Stepper {...args} currentStep={current} />
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Button variant="secondary" appearance="outline" onClick={() => setCurrent(0)} disabled={current === 0}>
+            처음
+          </Button>
+          <Button variant="secondary" appearance="outline" onClick={() => setCurrent((c) => Math.max(0, c - 1))} disabled={current === 0}>
+            이전
+          </Button>
+          <Button onClick={() => setCurrent((c) => Math.min(last, c + 1))} disabled={current === last}>
+            다음
+          </Button>
+          <Button variant="secondary" appearance="outline" onClick={() => setCurrent(last)} disabled={current === last}>
+            마지막
+          </Button>
+        </div>
+      </div>
+    );
+  },
 };

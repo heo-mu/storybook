@@ -90,6 +90,8 @@ const flows = {
     await trigger.click();
     const dialog = page.getByRole('dialog');
     await dialog.waitFor({ timeout: 3000 });
+    // Rules 09: the calendar opens with the reference motion — measure where it rests
+    await page.waitForFunction(() => document.getAnimations().filter((x) => x.playState === 'running' && Number.isFinite(x.effect.getComputedTiming().endTime)).length === 0, null, { timeout: 3000 });
     const tb = await trigger.boundingBox(); const db = await dialog.boundingBox();
     expect(Math.round(db.y - (tb.y + tb.height)) === 4, `calendar is ${Math.round(db.y - (tb.y + tb.height))}px below the field, expected 4`);
     expect(Math.round(db.x) === Math.round(tb.x), `calendar left ${Math.round(db.x)} is not aligned with the field left ${Math.round(tb.x)}`);
@@ -502,6 +504,131 @@ const flows = {
     await page.mouse.move(5, 5);
     await sleep(300);
     expect((await tips.count()) === 0, 'tooltip stayed after the pointer left');
+  },
+  // Positions are compared to the engines' layout precision: WebKit lays out in 1/64 px units, so a box placed at a fractional
+  // offset can sit 0.0156 px from the grid cell it covers (not visible). Chromium and Firefox match exactly.
+  async 'Motion — segmented control: the selected background slides; rapid clicks and arrow keys land on the selection'() {
+    const LAYOUT_UNIT = 1 / 64 + 1e-6;
+    await story('components-segmentedcontrol-segmentedcontrol--playground');
+    const geometry = () => page.evaluate(() => { const i = document.querySelector('.ds-segmented__indicator').getBoundingClientRect(); const s = document.querySelector('.ds-segmented__input:checked + .ds-segmented__segment').getBoundingClientRect(); return { il: i.left, iw: i.width, sl: s.left, sw: s.width, value: document.querySelector('.ds-segmented__input:checked').value }; });
+    const settle = () => page.waitForFunction(() => document.getAnimations().filter((a) => a.playState === 'running' && Number.isFinite(a.effect.getComputedTiming().endTime)).length === 0, null, { timeout: 3000 });
+    await settle();
+    const items = root().locator('.ds-segmented__item');
+    const start = await geometry();
+    expect(Math.abs(start.il - start.sl) <= LAYOUT_UNIT && Math.abs(start.iw - start.sw) <= LAYOUT_UNIT, 'indicator does not cover the selected segment at rest');
+    await items.nth(2).click();
+    await sleep(60);
+    const mid = await geometry();
+    expect(mid.value === 'month', 'the selection did not change at once');
+    expect(mid.il > start.il + 1 && mid.il < mid.sl - 1, `indicator is not between the items mid-slide (${mid.il} between ${start.il} and ${mid.sl})`);
+    await settle();
+    const end = await geometry();
+    expect(Math.abs(end.il - end.sl) <= LAYOUT_UNIT, 'indicator did not land on the new selection');
+    for (const i of [0, 1, 2, 1]) await items.nth(i).click({ delay: 0 });
+    await settle();
+    const rapid = await geometry();
+    expect(rapid.value === 'week' && Math.abs(rapid.il - rapid.sl) <= LAYOUT_UNIT, `after rapid clicks: ${rapid.value}, indicator ${rapid.il} vs segment ${rapid.sl}`);
+    await root().getByRole('radio', { name: '주간' }).focus();
+    await page.keyboard.press('ArrowLeft');
+    await settle();
+    const key = await geometry();
+    expect(key.value === 'day' && Math.abs(key.il - key.sl) <= LAYOUT_UNIT, 'arrow key selection did not move the indicator onto it');
+  },
+  async 'Motion — stepper: connectors fill one at a time forward and empty in reverse; aria-current moves at once'() {
+    await story('components-stepper-stepper--motion');
+    const state = () => page.evaluate(() => ({ shown: [...document.querySelectorAll('.ds-stepper-indicator')].map((i) => i.dataset.status).join(','), filled: [...document.querySelectorAll('.ds-stepper-connector')].map((c) => (c.hasAttribute('data-completed') ? 1 : 0)).join(''), current: [...document.querySelectorAll('.ds-stepper__step')].findIndex((li) => li.getAttribute('aria-current') === 'step'), fill: [...document.querySelectorAll('.ds-stepper-connector__fill')].map((r) => new DOMMatrix(getComputedStyle(r).transform === 'none' ? undefined : getComputedStyle(r).transform).a) }));
+    await root().getByRole('button', { name: '마지막' }).click();
+    await sleep(100);
+    const a = await state();
+    expect(a.current === 3, 'aria-current did not move to the last step at once');
+    expect(a.filled === '100' && a.fill[0] > 0.05 && a.fill[0] < 0.95 && a.fill[1] === 0, `first phase: filled ${a.filled}, fill scales ${a.fill.map((v) => v.toFixed(2))}`);
+    expect(a.shown.startsWith('completed,upcoming'), `first phase statuses ${a.shown}`);
+    // three 300 ms phases plus renders; wait for the end state rather than a fixed time (WebKit timers run later)
+    await page.waitForFunction(() => [...document.querySelectorAll('.ds-stepper-indicator')].map((i) => i.dataset.status).join(',') === 'completed,completed,completed,current', null, { timeout: 4000 }).catch(() => {});
+    const b = await state();
+    expect(b.filled === '111' && b.shown === 'completed,completed,completed,current', `after the jump: ${b.filled} ${b.shown}`);
+    await root().getByRole('button', { name: '처음' }).click();
+    await sleep(100);
+    const c = await state();
+    expect(c.current === 0 && c.filled === '110' && c.fill[2] < 0.95, `going back starts with the last connector: ${c.filled} ${c.fill.map((v) => v.toFixed(2))}`);
+    await page.waitForFunction(() => [...document.querySelectorAll('.ds-stepper-indicator')].map((i) => i.dataset.status).join(',') === 'current,upcoming,upcoming,upcoming', null, { timeout: 4000 }).catch(() => {});
+    const d = await state();
+    expect(d.filled === '000' && d.shown === 'current,upcoming,upcoming,upcoming', `after going back: ${d.filled} ${d.shown}`);
+  },
+  async 'Motion — Select, DatePicker, Breadcrumb and chip filter open and close with the reference motion; DropdownMenu opens at once'() {
+    const cases = [
+      ['components-select-select--playground', '#storybook-root .ds-select__trigger', '.ds-select__popover'],
+      ['components-datepicker-datepicker--playground', '#storybook-root .ds-field__control', '.ds-date-picker__popover'],
+      ['components-chip-filterchipselect--playground', '#storybook-root button', '.ds-filter-chip-select__popover'],
+      ['components-breadcrumb-breadcrumb--collapsed', '#storybook-root .ds-breadcrumb button', '.ds-dropdown__popover'],
+    ];
+    for (const [id, trigger, popover] of cases) {
+      await story(id);
+      await page.locator(trigger).first().click();
+      const entering = await page.waitForFunction((sel) => { const e = document.querySelector(sel); return e && e.getAnimations().map((a) => a.animationName).join(','); }, popover, { timeout: 3000 }).then((h) => h.jsonValue());
+      expect(/ds-overlay-enter/.test(entering), `${id}: no open motion (${entering})`);
+      await page.waitForFunction((sel) => document.querySelector(sel)?.getAnimations().length === 0, popover, { timeout: 3000 });
+      const rest = await page.evaluate((sel) => getComputedStyle(document.querySelector(sel)).transform, popover);
+      expect(rest === 'none', `${id}: resting transform ${rest}`);
+      await page.keyboard.press('Escape');
+      const exiting = await page.evaluate((sel) => { const e = document.querySelector(sel); return e ? e.getAnimations().map((a) => a.animationName).join(',') + '|' + getComputedStyle(e).pointerEvents : 'gone'; }, popover);
+      expect(/ds-overlay-exit\|none/.test(exiting), `${id}: no close motion (${exiting})`);
+      await page.waitForFunction((sel) => !document.querySelector(sel), popover, { timeout: 3000 });
+    }
+    await story('components-dropdownmenu-dropdownmenu--playground');
+    await root().getByRole('button', { name: '메뉴' }).click();
+    await page.locator('.ds-dropdown__popover').waitFor({ timeout: 3000 });
+    const menuAnims = await page.evaluate(() => document.querySelector('.ds-dropdown__popover').getAnimations().length);
+    expect(menuAnims === 0, 'DropdownMenu should open without animation (Rules 09)');
+  },
+  async 'Motion — 2-depth menu: hover opens beside the item, diagonal travel keeps it open, the item stays highlighted'() {
+    await story('components-dropdownmenu-dropdownmenu--submenu');
+    await root().getByRole('button', { name: '메뉴' }).click();
+    const item = page.getByRole('menuitem', { name: /내보내기/ });
+    const ib = await item.boundingBox();
+    await page.mouse.move(ib.x + 10, ib.y + ib.height / 2);
+    for (let i = 1; i <= 6; i++) { await page.mouse.move(ib.x + 10 + ((ib.width - 22) * i) / 6, ib.y + ib.height / 2); await sleep(20); }
+    const sub = page.getByRole('menu', { name: '내보내기' });
+    await sub.waitFor({ timeout: 3000 });
+    const target = await page.getByRole('menuitem', { name: 'CSV' }).boundingBox();
+    const from = { x: ib.x + ib.width - 12, y: ib.y + ib.height / 2 }; // a pointer leaves the item towards its sub menu
+    for (let i = 1; i <= 8; i++) { await page.mouse.move(from.x + ((target.x + 20 - from.x) * i) / 8, from.y + ((target.y + target.height / 2 - from.y) * i) / 8); await sleep(15); }
+    expect((await sub.count()) === 1, 'the sub menu closed while the pointer travelled into it');
+    expect((await item.getAttribute('data-open')) === 'true', 'the parent item is not marked open');
+    const hl = await page.evaluate(() => { const i = document.querySelector('.ds-dropdown__item[data-open]'); const n = document.querySelector('.ds-dropdown__item:not([data-open]):not([data-danger])'); return [getComputedStyle(i).backgroundColor, getComputedStyle(n).backgroundColor]; });
+    expect(hl[0] !== hl[1], 'the open parent item does not keep the hover look');
+    await page.getByRole('menuitem', { name: 'CSV' }).click();
+    await sleep(150);
+    expect((await page.getByRole('menu').count()) === 0, 'choosing a sub item did not close both menus');
+  },
+  async 'Motion — reduced motion: no slide, fill or open/close motion; spinner 3 s and skeleton 6 s per turn'() {
+    const LAYOUT_UNIT = 1 / 64 + 1e-6;
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    try {
+      await story('components-segmentedcontrol-segmentedcontrol--playground');
+      await root().locator('.ds-segmented__item').nth(2).click();
+      await sleep(20);
+      const seg = await page.evaluate(() => { const i = document.querySelector('.ds-segmented__indicator').getBoundingClientRect(); const s = document.querySelector('.ds-segmented__input:checked + .ds-segmented__segment').getBoundingClientRect(); return Math.abs(i.left - s.left); });
+      expect(seg <= LAYOUT_UNIT, `indicator slid with reduced motion (${seg}px away)`);
+      await story('components-stepper-stepper--motion');
+      await root().getByRole('button', { name: '마지막' }).click();
+      await sleep(50);
+      const st = await page.evaluate(() => [...document.querySelectorAll('.ds-stepper-connector')].map((c) => (c.hasAttribute('data-completed') ? 1 : 0)).join(''));
+      expect(st === '111', `stepper still stepping with reduced motion (${st})`);
+      await story('components-select-select--playground');
+      await page.locator('#storybook-root .ds-select__trigger').first().click();
+      await page.locator('.ds-select__popover').waitFor({ timeout: 3000 });
+      const anims = await page.evaluate(() => document.querySelector('.ds-select__popover').getAnimations().length);
+      expect(anims === 0, 'Select list animated with reduced motion');
+      await page.keyboard.press('Escape');
+      await story('components-loading-loading--playground');
+      const spin = await page.evaluate(() => getComputedStyle(document.querySelector('.ds-loading__spinner')).animationDuration);
+      await story('components-skeleton-skeleton--playground');
+      const pulse = await page.evaluate(() => getComputedStyle(document.querySelector('.ds-skeleton')).animationDuration);
+      expect(spin === '3s' && pulse === '6s', `repeating motion with reduced motion: spinner ${spin}, skeleton ${pulse}`);
+    } finally {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+    }
   },
   async 'Input — typing, clear button, password reveal'() {
     await story('components-input-input--playground');

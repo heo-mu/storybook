@@ -79,6 +79,7 @@ const AUXILIARY = {
   DropdownMenuItem: '`DropdownMenu` 안',
   DropdownMenuSection: '`DropdownMenu` 안',
   DropdownMenuSeparator: '`DropdownMenu` 안',
+  DropdownMenuSub: '`DropdownMenu` 안 — 하위 메뉴(2단계)',
   NavLink: '`Navigation` 안',
   NavGroup: '`Navigation` 안',
   NavChild: '`NavGroup` 안',

@@ -34,7 +34,7 @@ export const SingleDate: Story = { name: 'Single Date', play: async ({ canvas, c
   await expect(args.onChange).toHaveBeenCalledWith('2026-07-20');
   await waitFor(() => expect(body.queryByRole('dialog')).not.toBeInTheDocument());
   await expect(trigger).toHaveTextContent('2026.07.20');
-  await expect(trigger).toHaveFocus();
+  await waitFor(() => expect(trigger).toHaveFocus());
 } };
 
 /** 시작일과 종료일을 고르면 "시작일 ~ 종료일"로 표시되고 닫힙니다. */
@@ -90,7 +90,7 @@ export const Disabled: Story = { args: { disabled: true }, play: async ({ canvas
   const trigger = canvas.getByRole('button', { name: /방문일/ });
   await expect(trigger).toBeDisabled();
   await userEvent.click(trigger);
-  await expect(calendar(canvasElement).queryByRole('dialog')).not.toBeInTheDocument();
+  await waitFor(() => expect(calendar(canvasElement).queryByRole('dialog')).not.toBeInTheDocument());
 } };
 /** 읽기 전용은 값만 보여 주고 달력이 열리지 않습니다(달력 아이콘 없음). */
 export const ReadOnly: Story = { name: 'Read Only', args: { readOnly: true, defaultValue: '2026-07-30' }, play: async ({ canvas, canvasElement, userEvent }) => {
@@ -98,7 +98,7 @@ export const ReadOnly: Story = { name: 'Read Only', args: { readOnly: true, defa
   await expect(trigger).toHaveTextContent('2026.07.30');
   await expect(trigger).toHaveAccessibleDescription(/읽기 전용/);
   await userEvent.click(trigger);
-  await expect(calendar(canvasElement).queryByRole('dialog')).not.toBeInTheDocument();
+  await waitFor(() => expect(calendar(canvasElement).queryByRole('dialog')).not.toBeInTheDocument());
   await expect(trigger.querySelector('.ds-date-picker__icon')).toBeNull();
 } };
 
@@ -148,12 +148,12 @@ export const KeyboardInteraction: Story = { name: 'Keyboard Interaction',
     await userEvent.keyboard('{ArrowRight}{Enter}');
     await expect(args.onChange).toHaveBeenCalledWith('2026-07-16');
     await waitFor(() => expect(body.queryByRole('dialog')).not.toBeInTheDocument());
-    await expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
     await userEvent.keyboard('{Enter}');
     await body.findByRole('dialog');
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(body.queryByRole('dialog')).not.toBeInTheDocument());
-    await expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
     await expect(args.onChange).toHaveBeenCalledTimes(1);
   },
 };
@@ -166,6 +166,6 @@ export const InlineKeyboard: Story = { name: 'Inline Keyboard', args: { variant:
     await expect(args.onChange).toHaveBeenCalledWith('2026-07-16');
     const year = canvas.getByRole('button', { name: /연도/ });
     year.focus(); await userEvent.keyboard('{ArrowDown}{Escape}');
-    await expect(year).toHaveFocus();
+    await waitFor(() => expect(year).toHaveFocus());
   },
 };

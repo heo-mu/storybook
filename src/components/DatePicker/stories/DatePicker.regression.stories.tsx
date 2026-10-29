@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, within } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 import { DatePicker } from '../DatePicker';
 
 const meta = {
@@ -32,11 +32,11 @@ export const LimitsAndDismissal: Story = { args: { selectionMode: 'single', minV
     await expect(within(list).getAllByRole('option')).toHaveLength(2);
     await expect(within(list).queryByRole('option', { name: '6월' })).not.toBeInTheDocument();
     await userEvent.keyboard('{Escape}');
-    await expect(body.queryByRole('listbox')).not.toBeInTheDocument();
+    await waitFor(() => expect(body.queryByRole('listbox')).not.toBeInTheDocument());
     await userEvent.click(canvas.getByRole('button', { name: /연도/ }));
     await expect(within(await body.findByRole('listbox')).getAllByRole('option')).toHaveLength(1);
     await userEvent.click(canvas.getByText('기간'));
-    await expect(body.queryByRole('listbox')).not.toBeInTheDocument();
+    await waitFor(() => expect(body.queryByRole('listbox')).not.toBeInTheDocument());
   },
 };
 export const LeapAndMonthEnd: Story = { args: { selectionMode: 'single', defaultFocusedValue: '2028-01-31' },

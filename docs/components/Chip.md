@@ -95,7 +95,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `CHIP-01` **InputChip 삭제 대상**: X 아이콘(12px)만이 아니라 칩 전체가 삭제 버튼입니다(터치 대상 크기 확보). 키보드는 Enter · Space · Delete · Backspace(Rules 04 · chip-input 주석).
 - `CHIP-03` **Chip 그룹**: 칩 사이 4px(`spacing/margin/m-1` — Figma 예시와 같음), 줄바꿈 시 같은 간격(Rules 08). 그룹 컴포넌트는 없으므로 사용처에서 `role="group"`(이름 포함)과 `gap: var(--spacing-margin-m-1)`를 지정합니다.
 - `CHIP-04` **필터 칩 선택**: 다중(기본)은 패널을 연 채 켜고 끄며 닫을 때 적용, 단일은 고르면 적용 · 닫힘, "전체"로 해제. 칩 글자는 0개 "필터명" · 1개 "필터명: 값" · 2개 이상 "필터명: 첫 값 외 n개"(2026-10-28 개정, 첫 값은 옵션 목록 순서, `maxDisplayed`로 나열 수 조정) — Figma 다중 · 단일 선택 예시(1011:12956 · 1149:6756), Rules 04 · chip-filter 주석.
-- `CHIP-07` **패널 열림 · 닫힘 애니메이션**: 없습니다 — 즉시 열리고 닫힙니다. Rules 09의 해당 행도 2026-10-28 저녁에 "즉시"로 고쳐 충돌이 없습니다(F103 해결).
+- `CHIP-07` **패널 열림 · 닫힘**(2026-10-29, Rules 09 개정): `FilterChipSelect` 목록이 참고 링크(HeroUI Dropdown)대로 열 때 150ms 동안 투명에서 0.9배 크기 · 트리거 쪽 4px에서 제자리로, 닫을 때 100ms 동안 0.95배로 흐려지며 사라짐(닫히는 동안 누를 수 없음) — 참고 링크 HeroUI Dropdown의 값(overlay-motion.css), 트리거 기준점(`--trigger-anchor-point`)에서 커지고 투명도 · transform만 움직여 쉬는 위치 · 너비 · 간격은 그대로(`src/styles/overlay-motion.css`). 동작 줄이기: 애니메이션 없음. 칩 글자 · 선택 표시는 즉시 바뀝니다. `FilterChip` + `DropdownMenu` 조합의 메뉴는 DropdownMenu 규칙(즉시)을 따릅니다.
 
 ## 상태
 

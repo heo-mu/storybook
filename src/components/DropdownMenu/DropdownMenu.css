@@ -58,7 +58,8 @@
 }
 
 .ds-dropdown__item:hover,
-.ds-dropdown__item[data-focused] {
+.ds-dropdown__item[data-focused],
+.ds-dropdown__item[data-open] {
   --_bg: var(--colors-dropdown-menu-item-background-hover);
   --_fg: var(--colors-dropdown-menu-item-label-title-hover);
   --_icon: var(--colors-dropdown-menu-item-icon-hover);
@@ -156,4 +157,10 @@
   background: linear-gradient(var(--colors-dropdown-menu-divider-default), var(--colors-dropdown-menu-divider-default))
     center top calc(var(--spacing-padding-p-1) - var(--border-width-border)) / calc(100% - 2 * var(--spacing-padding-p-2))
     var(--border-width-border) no-repeat;
+}
+
+/* Sub menu (2-depth) — Figma dropdown-menu-sub (1440:8455): the 140px text-only panel (Rules 09 "dropdown-menu"). While it is
+   open, its parent item keeps the hover look (above). */
+.ds-dropdown--sub {
+  min-width: 140px;
 }

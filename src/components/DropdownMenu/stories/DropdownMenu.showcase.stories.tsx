@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Menu } from 'react-aria-components';
 import { expect, fn, waitFor, within, type Mock } from 'storybook/test';
-import { DropdownMenu, DropdownMenuItem, DropdownMenuSection, DropdownMenuSeparator } from '../DropdownMenu';
+import { DropdownMenu, DropdownMenuItem, DropdownMenuSection, DropdownMenuSeparator, DropdownMenuSub } from '../DropdownMenu';
 import { Button } from '../../Button';
 import { FolderSimpleDashedIcon } from '../../../icons';
 import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
@@ -274,5 +274,66 @@ export const Accessibility: Story = {
     await expect(await canvas.findByRole('group', { name: '편집' })).toBeInTheDocument();
     await expect(canvas.getByRole('menuitem', { name: '삭제' })).toBeInTheDocument();
     await expect(canvas.getByRole('separator')).toBeInTheDocument();
+  },
+};
+
+/**
+ * 2-depth menu (Rules 09 "dropdown-menu": dropdown-menu-sub is the 2nd depth): → · Enter open the sub menu beside its
+ * item (4px from the parent panel, first item level with the trigger item), ← · Esc close it and return focus to the
+ * item, choosing a sub item calls onAction and closes both menus. It opens and closes at once (no animation).
+ */
+export const Submenu: StoryObj<{ onAction: Mock<(key: unknown) => void> }> = {
+  name: '하위 메뉴',
+  args: { onAction: fn() },
+  render: (args) => (
+    <div style={{ paddingBottom: 240 }}>
+      <DropdownMenu trigger={<Button>파일</Button>} aria-label="파일 작업">
+        <DropdownMenuItem id="new">새 폴더</DropdownMenuItem>
+        <DropdownMenuSub id="export" label="내보내기" onAction={args.onAction}>
+          <DropdownMenuItem id="pdf">PDF</DropdownMenuItem>
+          <DropdownMenuItem id="csv">CSV</DropdownMenuItem>
+        </DropdownMenuSub>
+        <DropdownMenuItem id="delete" danger>
+          삭제
+        </DropdownMenuItem>
+      </DropdownMenu>
+    </div>
+  ),
+  play: async ({ args, canvas, canvasElement, userEvent, step }) => {
+    const body = within(canvasElement.ownerDocument.body);
+    const trigger = canvas.getByRole('button', { name: '파일' });
+    await step('→ opens the sub menu beside its item, focus on its first item', async () => {
+      trigger.focus();
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(body.getByRole('menuitem', { name: '새 폴더' })).toHaveFocus());
+      await userEvent.keyboard('{ArrowDown}');
+      const item = body.getByRole('menuitem', { name: '내보내기' });
+      await expect(item).toHaveAttribute('aria-haspopup', 'menu');
+      await userEvent.keyboard('{ArrowRight}');
+      const sub = await body.findByRole('menu', { name: '내보내기' });
+      await waitFor(() => expect(within(sub).getByRole('menuitem', { name: 'PDF' })).toHaveFocus());
+      await expect(item).toHaveAttribute('aria-expanded', 'true');
+      // react-aria names the parent menu by its trigger
+      const parent = body.getByRole('menu', { name: '파일' }).getBoundingClientRect();
+      const box = sub.getBoundingClientRect();
+      // react-aria places overlays on whole pixels, so after a content-width parent (fractional right edge) the gap is 4px ± 0.5
+      await expect(Math.abs(box.left - parent.right - 4)).toBeLessThanOrEqual(0.5);
+      await expect(Math.abs(within(sub).getByRole('menuitem', { name: 'PDF' }).getBoundingClientRect().top - item.getBoundingClientRect().top)).toBeLessThanOrEqual(0.5);
+      await expect(box.width).toBeGreaterThanOrEqual(140);
+    });
+    await step('← closes it and returns focus to its item', async () => {
+      await userEvent.keyboard('{ArrowLeft}');
+      await waitFor(() => expect(body.queryByRole('menu', { name: '내보내기' })).not.toBeInTheDocument());
+      await expect(body.getByRole('menuitem', { name: '내보내기' })).toHaveFocus();
+    });
+    await step('choosing a sub item calls onAction and closes both menus', async () => {
+      await userEvent.keyboard('{ArrowRight}');
+      await body.findByRole('menu', { name: '내보내기' });
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+      await waitFor(() => expect(args.onAction).toHaveBeenCalled());
+      await expect(args.onAction.mock.calls[0][0]).toBe('csv');
+      await waitFor(() => expect(body.queryByRole('menu')).not.toBeInTheDocument());
+      await waitFor(() => expect(trigger).toHaveFocus());
+    });
   },
 };

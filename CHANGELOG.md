@@ -7,6 +7,18 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Motion — Rules 09 개정에 맞춘 실제 움직임 (2026-10-29)
+
+디자이너가 다시 쓴 Design System Rules 09장 "움직임"을 Figma에서 읽고 해당 컴포넌트에만 움직임을 넣었습니다. 쉬는 모양은 Figma와 그대로이고(정합성 세 엔진 통과), 색 · 펼침 · 열림 같은 나머지 상태 변화는 계속 즉시입니다. 기기의 동작 줄이기 설정에서는 이동 · 채움 · 펼침 움직임이 없고, 반복 움직임은 느려집니다(Rules 03).
+
+- **SegmentedControl**: 선택 배경이 새 항목으로 미끄러져 이동(HeroUI Segment — 250ms `cubic-bezier(0.32, 0.72, 0, 1)`). 선택 표시 요소 하나가 선택 항목 상자를 재서 옮기고, 쉬는 위치는 항목과 같은 상자. 빠른 연속 클릭 · 방향키 · 크기 변경에도 마지막 선택에 맞음. 공개 Props 변화 없음.
+- **Stepper**: 한 단계씩 연결선이 채워지며 이동(HeroUI Stepper) — 완료 → 연결선 300ms 채움 → 다음 단계 현재, 건너뛰면 차례로, 뒤로 가면 거꾸로. 화면 낭독기는 실제 상태를 즉시 읽음. `StepperIndicator`에 그림 전용 `displayStatus`(보조 API) 추가.
+- **Select · DatePicker(달력 · 연/월 목록) · Breadcrumb 메뉴 · FilterChipSelect**: 펼칠 때 150ms(투명 · 0.9배 · 트리거 쪽 4px에서), 닫을 때 100ms(0.95배로 흐려짐, 닫히는 동안 누를 수 없음) — HeroUI Dropdown 값. 위치 · 너비 · 간격은 그대로(`src/styles/overlay-motion.css`, styles.css에 포함).
+- **DropdownMenu 하위 메뉴(2단계)**: 새 `DropdownMenuSub` — 마우스 · → · Enter로 옆에 140px 글자 메뉴가 열리고 ← · Esc로 닫힘, 비스듬히 옮겨 가는 동안 유지, 여는 항목은 열린 동안 hover 모양. 메뉴는 Rules 09에 애니메이션이 없어 즉시 열림 · 닫힘. Rules 05 "하위 메뉴 없음"과 충돌해 결정 대기(figma-issues F114).
+- **Loading · Skeleton**: 이미 09장과 같음(스피너 1초/바퀴 · 스켈레톤 2초 맥동, 동작 줄이기 3초 · 6초) — 변경 없음.
+- **움직임 토큰**: 추가하지 않음 — Figma에 시간 · 곡선 변수가 없어 참고 링크 값을 컴포넌트 CSS에 직접 둠(figma-issues F115).
+- **스토리 · 검증**: SegmentedControl Gallery "선택 이동" · Stepper "단계 이동"(문서 · Gallery) · DropdownMenu "하위 메뉴"(문서 · Gallery) 스토리, `verify:interaction`에 움직임 흐름 5개(선택 이동 · 단계 채움 · 펼침/닫힘 · 하위 메뉴 · 동작 줄이기, 세 엔진). 펼침 움직임 중에 위치를 재던 스토리 검사 6곳은 움직임이 끝난 뒤의 쉬는 위치를 재도록 기다림을 넣음(값은 그대로).
+
 ### Tooltip — 트리거와 2px 더 띄움, Figma 사용 예시 (2026-10-29)
 
 - **거리**: 화살표 끝이 트리거에 닿던 8px에서 화살표 8px + 2px = 10px로(Rules 05 개정, Figma 먼저). 네 방향 같고, 위치는 트리거의 실제 경계 기준(react-aria `offset`)이라 다른 값은 그대로입니다. 공개 Props 변화 없음.

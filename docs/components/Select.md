@@ -85,7 +85,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `SELE-03` **선택된 옵션에 마우스를 올릴 때**: 배경은 Hover · Pressed 색, 글자는 Selected 스타일을 유지합니다 — 선택 표시가 Hover보다 우선합니다(Rules 02).
 - `SELE-04` **목록 위치 · 최대 높이**: 필드 아래 4px(`spacing/margin/m-1`), 필드와 같은 너비. 화면 아래 공간이 부족하면 위로 열리고, 높이는 화면 안에 맞춰 줄어들며 목록이 스크롤됩니다(Rules 05 · select 주석).
 - `SELE-06` **Read-only**: 스크린리더에 "읽기 전용" 설명을 함께 전달합니다(Rules 03).
-- `SELE-09` **목록 열림 · 닫힘 애니메이션**: 없습니다 — 즉시 열리고 닫힙니다. Rules 09의 해당 행도 2026-10-28 저녁에 "즉시"로 고쳐 충돌이 없습니다(F103 해결).
+- `SELE-09` **목록 열림 · 닫힘**(2026-10-29, Rules 09 개정): 참고 링크(HeroUI Dropdown)대로 열 때 150ms 동안 투명에서 0.9배 크기 · 트리거 쪽 4px에서 제자리로, 닫을 때 100ms 동안 0.95배로 흐려지며 사라짐(닫히는 동안 누를 수 없음) — 참고 링크 HeroUI Dropdown의 값(overlay-motion.css), 트리거 기준점(`--trigger-anchor-point`)에서 커지고 투명도 · transform만 움직여 쉬는 위치 · 너비 · 간격은 그대로(`src/styles/overlay-motion.css`). 동작 줄이기: 애니메이션 없음. 정합성(목록 위치 4px · 너비) 그대로.
 
 ### 개발 구현 세부 사항
 

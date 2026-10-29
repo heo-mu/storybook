@@ -1,0 +1,144 @@
+/*
+ * Open · close motion — Design System Rules 09 "펼침·닫힘" (2026-10-29): select, date-picker_calendar, breadcrumb and
+ * chip-filter open and close with the reference animation (HeroUI Dropdown popover). Only these four — other overlays
+ * (DropdownMenu, Tooltip, Dialog) change state immediately (Rules 09 "상태 변화").
+ *
+ *   open   150ms ease — from opacity 0, scale 0.9 and 4px towards the trigger, to the resting place
+ *   close  100ms ease — to opacity 0 and scale 0.95, not clickable while closing
+ *
+ * Opacity and transform only, scaled from the trigger's anchor point (react-aria's --trigger-anchor-point). React Aria
+ * positions the overlay with top / left from its untransformed size, so the motion never moves the resting position,
+ * width or gap (4px · Breadcrumb 2px). Values come from the reference (HeroUI v3 overlay-motion.css); Figma has no
+ * duration / easing variables, so they live here rather than in the token files.
+ * Reduced motion: no open / close animation (the overlay appears and disappears at once).
+ */
+
+@keyframes ds-overlay-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.9);
+  }
+}
+
+/* Placement bottom: starts 4px higher, i.e. closer to the trigger above it (likewise for the other sides). */
+@keyframes ds-overlay-enter-bottom {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -4px, 0) scale(0.9);
+  }
+}
+
+@keyframes ds-overlay-enter-top {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 4px, 0) scale(0.9);
+  }
+}
+
+@keyframes ds-overlay-enter-right {
+  from {
+    opacity: 0;
+    transform: translate3d(-4px, 0, 0) scale(0.9);
+  }
+}
+
+@keyframes ds-overlay-enter-left {
+  from {
+    opacity: 0;
+    transform: translate3d(4px, 0, 0) scale(0.9);
+  }
+}
+
+/* Both ends set: WebKit does not interpolate from an implicit `transform: none`, so the close would be skipped. */
+@keyframes ds-overlay-exit {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+}
+
+.ds-select__popover,
+.ds-date-picker__popover,
+.ds-calendar__select-popover,
+.ds-filter-chip-select__popover,
+.ds-dropdown__popover:has(> .ds-breadcrumb__menu) {
+  transform-origin: var(--trigger-anchor-point);
+}
+
+:is(
+    .ds-select__popover,
+    .ds-date-picker__popover,
+    .ds-calendar__select-popover,
+    .ds-filter-chip-select__popover,
+    .ds-dropdown__popover:has(> .ds-breadcrumb__menu)
+  )[data-entering] {
+  animation: ds-overlay-enter 150ms ease;
+}
+
+:is(
+    .ds-select__popover,
+    .ds-date-picker__popover,
+    .ds-calendar__select-popover,
+    .ds-filter-chip-select__popover,
+    .ds-dropdown__popover:has(> .ds-breadcrumb__menu)
+  )[data-entering][data-placement='bottom'] {
+  animation-name: ds-overlay-enter-bottom;
+}
+
+:is(
+    .ds-select__popover,
+    .ds-date-picker__popover,
+    .ds-calendar__select-popover,
+    .ds-filter-chip-select__popover,
+    .ds-dropdown__popover:has(> .ds-breadcrumb__menu)
+  )[data-entering][data-placement='top'] {
+  animation-name: ds-overlay-enter-top;
+}
+
+:is(
+    .ds-select__popover,
+    .ds-date-picker__popover,
+    .ds-calendar__select-popover,
+    .ds-filter-chip-select__popover,
+    .ds-dropdown__popover:has(> .ds-breadcrumb__menu)
+  )[data-entering][data-placement='right'] {
+  animation-name: ds-overlay-enter-right;
+}
+
+:is(
+    .ds-select__popover,
+    .ds-date-picker__popover,
+    .ds-calendar__select-popover,
+    .ds-filter-chip-select__popover,
+    .ds-dropdown__popover:has(> .ds-breadcrumb__menu)
+  )[data-entering][data-placement='left'] {
+  animation-name: ds-overlay-enter-left;
+}
+
+:is(
+    .ds-select__popover,
+    .ds-date-picker__popover,
+    .ds-calendar__select-popover,
+    .ds-filter-chip-select__popover,
+    .ds-dropdown__popover:has(> .ds-breadcrumb__menu)
+  )[data-exiting] {
+  animation: ds-overlay-exit 100ms ease;
+  pointer-events: none;
+}
+
+/* Reduced motion: an accessibility override of the rules above (including the placement variants). */
+@media (prefers-reduced-motion: reduce) {
+  :is(
+      .ds-select__popover,
+      .ds-date-picker__popover,
+      .ds-calendar__select-popover,
+      .ds-filter-chip-select__popover,
+      .ds-dropdown__popover:has(> .ds-breadcrumb__menu)
+    ):is([data-entering], [data-exiting]) {
+    animation: none !important;
+  }
+}

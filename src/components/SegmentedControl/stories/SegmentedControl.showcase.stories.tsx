@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
+import { expect, waitFor } from 'storybook/test';
 import { SegmentedControl } from '../SegmentedControl';
 import { SegmentedControlItem } from '../SegmentedControlItem';
 import { SEGMENTED_CONTROL_SIZES } from '../SegmentedControl.options';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { motionSettled } from '../../../storybook/motion';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs segmented-control` (sets segmented-control, segmented-item).
@@ -218,5 +219,55 @@ export const LabelOverflow: Story = {
     const long = label(canvas.getByTestId('long'), '지난 분기 전체 기간');
     await expect(long.scrollWidth).toBeGreaterThan(long.clientWidth);
     await expect(long.getBoundingClientRect().width).toBeLessThanOrEqual(long.closest('.ds-segmented__segment')!.getBoundingClientRect().width + 0.5);
+  },
+};
+
+/**
+ * Rules 09 "Segmented Control" (reference HeroUI Segment): the selected background slides to the new item — pointer,
+ * rapid clicks and arrow keys. At rest the indicator covers exactly the selected segment (same box as the Figma
+ * selected item); while it moves the selection, label colour and focus have already changed.
+ */
+export const Motion: Story = {
+  name: '선택 이동',
+  render: () => (
+    <SegmentedControl aria-label="기간" defaultValue="day" style={{ width: 320 }}>
+      <SegmentedControlItem value="day">일간</SegmentedControlItem>
+      <SegmentedControlItem value="week">주간</SegmentedControlItem>
+      <SegmentedControlItem value="month">월간</SegmentedControlItem>
+    </SegmentedControl>
+  ),
+  play: async ({ canvas, canvasElement, userEvent, step }) => {
+    const indicator = canvasElement.querySelector<HTMLElement>('.ds-segmented__indicator')!;
+    const selectedSegment = () => canvasElement.querySelector<HTMLElement>('.ds-segmented__input:checked + .ds-segmented__segment')!;
+    const aligned = async () => {
+      await motionSettled();
+      const a = indicator.getBoundingClientRect();
+      const b = selectedSegment().getBoundingClientRect();
+      await expect([a.left, a.top, a.width, a.height].map((v) => Math.round(v * 100) / 100)).toEqual(
+        [b.left, b.top, b.width, b.height].map((v) => Math.round(v * 100) / 100),
+      );
+    };
+    await step('at rest the indicator is the selected segment', aligned);
+    await step('clicking slides it: left · width transitions run, the selection is already checked', async () => {
+      const from = indicator.getBoundingClientRect().left;
+      await userEvent.click(canvas.getByText('월간'));
+      await expect(canvas.getByRole('radio', { name: '월간' })).toBeChecked();
+      const moving = indicator.getAnimations().map((a) => (a as CSSTransition).transitionProperty);
+      await expect(moving).toEqual(expect.arrayContaining(['left']));
+      await waitFor(() => expect(indicator.getBoundingClientRect().left).toBeGreaterThan(from));
+      await aligned();
+    });
+    await step('rapid clicks end on the last choice', async () => {
+      await userEvent.click(canvas.getByText('일간'));
+      await userEvent.click(canvas.getByText('주간'));
+      await expect(canvas.getByRole('radio', { name: '주간' })).toBeChecked();
+      await aligned();
+    });
+    await step('arrow keys slide it the same way', async () => {
+      canvas.getByRole('radio', { name: '주간' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      await expect(canvas.getByRole('radio', { name: '월간' })).toBeChecked();
+      await aligned();
+    });
   },
 };

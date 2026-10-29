@@ -166,16 +166,12 @@
  * CSS backgrounds would snap it to a whole pixel. Rect geometry is set with SVG 2 CSS properties.
  */
 .ds-stepper-connector {
-  --_line: var(--colors-stepper-connector-incomplete-default);
 
   box-sizing: border-box;
   display: block;
   flex-shrink: 0;
 }
 
-.ds-stepper-connector[data-completed] {
-  --_line: var(--colors-stepper-connector-complete-default);
-}
 
 .ds-stepper-connector[data-orientation='horizontal'] {
   flex: 1 1 180px;
@@ -197,8 +193,67 @@
   overflow: visible;
 }
 
+/*
+ * Fill motion — Rules 09 "Stepper" (2026-10-29, reference HeroUI Stepper): the line is two rects on the same geometry,
+ * the track (connector/incomplete) and the fill (connector/complete). Completing a step grows the fill from the
+ * previous step towards the next while the track shrinks from the same edge, so together they always cover the line
+ * once (no doubled anti-aliased edge); at rest only one is drawn, exactly as the single line before. Moving back runs
+ * it in reverse. 300ms ease-in-out per connector (Stepper.tsx FILL_MS) — the reference gives no duration.
+ * Reduced motion: no transition.
+ */
+.ds-stepper-connector__track {
+  fill: var(--colors-stepper-connector-incomplete-default);
+}
+
+.ds-stepper-connector__fill {
+  fill: var(--colors-stepper-connector-complete-default);
+}
+
 .ds-stepper-connector__line > rect {
-  fill: var(--_line);
+  transform-box: fill-box;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ds-stepper-connector[data-orientation='horizontal'] .ds-stepper-connector__fill {
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.ds-stepper-connector[data-orientation='horizontal'] .ds-stepper-connector__track {
+  transform-origin: right center;
+  transform: scaleX(1);
+}
+
+.ds-stepper-connector[data-orientation='vertical'] .ds-stepper-connector__fill {
+  transform-origin: center top;
+  transform: scaleY(0);
+}
+
+.ds-stepper-connector[data-orientation='vertical'] .ds-stepper-connector__track {
+  transform-origin: center bottom;
+  transform: scaleY(1);
+}
+
+.ds-stepper-connector[data-completed][data-orientation='horizontal'] .ds-stepper-connector__fill {
+  transform: scaleX(1);
+}
+
+.ds-stepper-connector[data-completed][data-orientation='horizontal'] .ds-stepper-connector__track {
+  transform: scaleX(0);
+}
+
+.ds-stepper-connector[data-completed][data-orientation='vertical'] .ds-stepper-connector__fill {
+  transform: scaleY(1);
+}
+
+.ds-stepper-connector[data-completed][data-orientation='vertical'] .ds-stepper-connector__track {
+  transform: scaleY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-stepper-connector__line > rect {
+    transition: none;
+  }
 }
 
 .ds-stepper-connector[data-orientation='horizontal'] .ds-stepper-connector__line > rect {

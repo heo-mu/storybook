@@ -7,7 +7,7 @@
   react-aria-components 기반 컴포넌트의 react-aria Prop(`onPress` 등)은 그대로 전달됩니다(각 컴포넌트의 사용 방법 문서 참고).
 - 모든 컴포넌트는 `ref`를 실제 DOM 요소로 전달합니다(`forwardRef`).
 
-export 320개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품 7 · 타입 132 · 상수 45 · 함수 3 · 아이콘 38 · 내부 API 13
+export 322개: 공개 컴포넌트 50 · 보조 컴포넌트 33 · 내부 부품 7 · 타입 133 · 상수 45 · 함수 3 · 아이콘 38 · 내부 API 13
 
 ## 목차
 
@@ -658,7 +658,24 @@ export 320개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 
 메뉴 항목 묶음 사이의 구분선입니다.
 
-- 타입: `DropdownMenuProps`, `DropdownMenuItemProps`, `DropdownMenuSectionProps`
+### `DropdownMenuSub`
+
+**보조 컴포넌트** — `DropdownMenu` 안 — 하위 메뉴(2단계)
+
+메뉴 안의 하위 메뉴(2단계)입니다. 항목에 마우스를 올리거나 → · Enter · Space를 누르면 옆에 열리고, ← · Esc로 닫힙니다. Figma `dropdown-menu-sub`(140px, 글자만 있는 항목)의 모양입니다.
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `children` *(필수)* | `ReactNode` |  | 하위 메뉴의 `DropdownMenuItem` · `DropdownMenuSeparator`들. Figma `dropdown-menu-sub`처럼 글자만 있는 항목을 씁니다. |
+| `label` *(필수)* | `ReactNode` |  | 하위 메뉴를 여는 항목의 이름. |
+| `aria-label` | `string` | `label 글자` | 화면 낭독기가 읽는 하위 메뉴 이름. |
+| `disabled` | `boolean` |  | 비활성 — 하위 메뉴를 열 수 없습니다. |
+| `icon` | `ReactNode` |  | 이름 앞 아이콘. |
+| `id` | `Key` |  | 항목 `id`. |
+| `onAction` | `((key: Key) => void)` |  | 하위 메뉴 항목을 고르면 그 항목의 `id`로 호출됩니다. |
+| `textValue` | `string` |  | 글자로 찾을 때 쓰는 이름. `label`이 글자가 아니면 넘깁니다. |
+
+- 타입: `DropdownMenuProps`, `DropdownMenuItemProps`, `DropdownMenuSectionProps`, `DropdownMenuSubProps`
 
 ## EmptyState
 
@@ -1177,6 +1194,7 @@ export 320개: 공개 컴포넌트 50 · 보조 컴포넌트 32 · 내부 부품
 | --- | --- | --- | --- |
 | `step` *(필수)* | `number` |  | 원 안에 보이는 단계 번호(`upcoming` · `current` · `locked`일 때). |
 | `description` | `ReactNode` |  | 제목 아래 설명. |
+| `displayStatus` | `"error" \| "current" \| "completed" \| "upcoming" \| "locked"` | `status` | 화면에 그리는 상태(색 · 아이콘). 단계가 바뀌는 움직임 동안 `Stepper`가 넘기며, 화면 낭독기는 `status`를 읽습니다. |
 | `label` | `ReactNode` |  | 단계 제목. |
 | `orientation` | `"horizontal" \| "vertical"` | `horizontal` | 방향 — 가로이면 글자가 원 아래, 세로이면 원 옆에 놓입니다. |
 | `status` | `"error" \| "current" \| "completed" \| "upcoming" \| "locked"` | `upcoming` | 단계 상태. |

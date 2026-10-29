@@ -8,6 +8,7 @@ import {
   Popover,
   Pressable,
   Separator,
+  SubmenuTrigger,
   type Key,
   type MenuItemProps,
   type Placement,
@@ -132,4 +133,45 @@ export function DropdownMenuSection({ title, children, id, 'aria-label': ariaLab
 /** 메뉴 항목 묶음 사이의 구분선입니다. */
 export function DropdownMenuSeparator() {
   return <Separator className="ds-dropdown__separator" />;
+}
+
+export type DropdownMenuSubProps = {
+  /** 하위 메뉴를 여는 항목의 이름. */
+  label: ReactNode;
+  /** 이름 앞 아이콘. */
+  icon?: ReactNode;
+  /** 항목 `id`. */
+  id?: Key;
+  /** 글자로 찾을 때 쓰는 이름. `label`이 글자가 아니면 넘깁니다. */
+  textValue?: string;
+  /** 비활성 — 하위 메뉴를 열 수 없습니다. */
+  disabled?: boolean;
+  /** 화면 낭독기가 읽는 하위 메뉴 이름. @default label 글자 */
+  'aria-label'?: string;
+  /** 하위 메뉴 항목을 고르면 그 항목의 `id`로 호출됩니다. */
+  onAction?: (key: Key) => void;
+  /** 하위 메뉴의 `DropdownMenuItem` · `DropdownMenuSeparator`들. Figma `dropdown-menu-sub`처럼 글자만 있는 항목을 씁니다. */
+  children: ReactNode;
+};
+
+/**
+ * 메뉴 안의 하위 메뉴(2단계)입니다. 항목에 마우스를 올리거나 → · Enter · Space를 누르면 옆에 열리고, ← · Esc로 닫힙니다.
+ * Figma `dropdown-menu-sub`(140px, 글자만 있는 항목)의 모양입니다.
+ */
+export function DropdownMenuSub({ label, icon, id, textValue, disabled, 'aria-label': ariaLabel, onAction, children }: DropdownMenuSubProps) {
+  const name = textValue ?? (typeof label === 'string' ? label : undefined);
+  return (
+    <SubmenuTrigger>
+      <DropdownMenuItem id={id} icon={icon} chevron disabled={disabled} textValue={name}>
+        {label}
+      </DropdownMenuItem>
+      {/* Rules 05: 4px from the parent panel (its p-1 padding + 4px), the first item level with the trigger item.
+          Rules 09 gives the dropdown no animation: it opens and closes at once like the parent menu. */}
+      <Popover className="ds-dropdown__popover" placement="end top" offset={8} crossOffset={-4}>
+        <Menu aria-label={ariaLabel ?? name} onAction={onAction} className="ds-dropdown ds-dropdown--sub">
+          {children}
+        </Menu>
+      </Popover>
+    </SubmenuTrigger>
+  );
 }

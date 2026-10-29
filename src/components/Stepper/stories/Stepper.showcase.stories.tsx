@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, within } from 'storybook/test';
+import { expect, waitFor, within } from 'storybook/test';
 import { Stepper, StepperConnector, StepperIndicator, type StepperStep } from '../Stepper';
 import { STEPPER_STATUSES, type StepperOrientation, type StepperStatus } from '../Stepper.options';
 import { Button } from '../../Button';
@@ -162,5 +162,54 @@ export const Accessibility: Story = {
     await expect(items[0]).toHaveTextContent('1단계, 완료');
     await expect(items[1]).toHaveTextContent('2단계, 오류');
     await expect(items[2]).toHaveTextContent('3단계, 잠김');
+  },
+};
+
+/**
+ * Rules 09 "Stepper" (reference HeroUI Stepper): moving forward fills one connector at a time and the next step becomes
+ * current when its line arrives; a jump plays the steps in order; moving back empties them in reverse. Screen readers
+ * get the new current step at once (aria-current), only the drawing follows step by step.
+ */
+export const Motion: Story = {
+  name: '단계 이동',
+  render: function Render() {
+    const [current, setCurrent] = useState(0);
+    const items = [{ label: '약관 동의' }, { label: '정보 입력' }, { label: '본인 확인' }, { label: '완료' }];
+    return (
+      <div style={{ display: 'grid', gap: 24, padding: '0 24px' }}>
+        <Stepper aria-label="가입 절차" steps={items} currentStep={current} />
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Button variant="secondary" appearance="outline" onClick={() => setCurrent(0)}>
+            처음
+          </Button>
+          <Button onClick={() => setCurrent(items.length - 1)}>마지막</Button>
+        </div>
+      </div>
+    );
+  },
+  play: async ({ canvas, step }) => {
+    const list = canvas.getByRole('list', { name: '가입 절차' });
+    const shown = () => [...list.querySelectorAll<HTMLElement>('.ds-stepper-indicator')].map((i) => i.dataset.status);
+    const filled = () => [...list.querySelectorAll<HTMLElement>('.ds-stepper-connector')].map((c) => c.hasAttribute('data-completed'));
+    const current = () => within(list).getAllByRole('listitem').findIndex((li) => li.getAttribute('aria-current') === 'step');
+    await step('jump forward: aria-current moves at once, the drawing goes step by step', async () => {
+      canvas.getByRole('button', { name: '마지막' }).click();
+      await waitFor(() => expect(current()).toBe(3));
+      // first phase: step 1 completed, the first connector filling, no current step drawn yet
+      await waitFor(() => expect(shown()).toEqual(['completed', 'upcoming', 'upcoming', 'upcoming']));
+      await expect(filled()).toEqual([true, false, false]);
+      // a step passed on the way turns completed when its incoming line arrives, as the next line starts
+      await waitFor(() => expect(shown()).toEqual(['completed', 'completed', 'upcoming', 'upcoming']));
+      await expect(filled()).toEqual([true, true, false]);
+      await waitFor(() => expect(shown()).toEqual(['completed', 'completed', 'completed', 'current']), { timeout: 3000 });
+      await expect(filled()).toEqual([true, true, true]);
+    });
+    await step('jump back: the lines empty in reverse order, ending at the first step', async () => {
+      canvas.getByRole('button', { name: '처음' }).click();
+      await waitFor(() => expect(current()).toBe(0));
+      await waitFor(() => expect(filled()).toEqual([true, true, false]));
+      await waitFor(() => expect(shown()).toEqual(['current', 'upcoming', 'upcoming', 'upcoming']), { timeout: 3000 });
+      await expect(filled()).toEqual([false, false, false]);
+    });
   },
 };

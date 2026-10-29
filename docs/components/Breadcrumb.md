@@ -60,7 +60,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `BREA-01` **펼친 상태(… 메뉴)**: 메뉴는 연 트리거(… 버튼) 아래 2px, 시작 정렬로 열리고 현재 페이지 항목은 Current 그대로입니다(Rules 05 · breadcrumb 주석, 2026-10-20부터 Figma 펼침 변형도 같음 — F33). Figma Role=Open은 `BreadcrumbItem open`으로 쓸 수 있고, Hover · Pressed에서도 `label/focus` 색을 유지합니다.
 - `BREA-03` **Show Parent**: Collapsed에만 적용합니다. Full은 항상 전체 경로를 보여 줍니다 — 상위 페이지를 숨기면 경로가 끊기기 때문입니다(Rules 07).
 - `BREA-04` **메뉴 너비**: 최소 200px, 더 긴 이름은 넓어집니다(Rules 05).
-- `BREA-06` **메뉴 열림 · 닫힘 애니메이션**: 없습니다 — 즉시 열리고 닫힙니다. Rules 09의 해당 행도 2026-10-28 저녁에 "즉시"로 고쳐 충돌이 없습니다(F103 해결).
+- `BREA-06` **메뉴 열림 · 닫힘**(2026-10-29, Rules 09 개정): 접힌 경로 메뉴가 참고 링크(HeroUI Dropdown)대로 열 때 150ms 동안 투명에서 0.9배 크기 · 트리거 쪽 4px에서 제자리로, 닫을 때 100ms 동안 0.95배로 흐려지며 사라짐(닫히는 동안 누를 수 없음) — 참고 링크 HeroUI Dropdown의 값(overlay-motion.css), 트리거 기준점(`--trigger-anchor-point`)에서 커지고 투명도 · transform만 움직여 쉬는 위치 · 너비 · 간격은 그대로(`src/styles/overlay-motion.css`). 동작 줄이기: 애니메이션 없음. 같은 DropdownMenu라도 Breadcrumb 메뉴(`ds-breadcrumb__menu`)에만 적용됩니다.
 - `BREA-07` **삭제한 토큰**(2026-10-29): 포커스는 공통 `border/focus` 링이고 "더보기" 메뉴 테두리는 dropdown-menu 토큰을 써서 `breadcrumb/background/focus` · `border/focus` · `border/menu`를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). 코드 변화 없음.
 
 ## 상태

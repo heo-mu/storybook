@@ -4,6 +4,7 @@ import { Breadcrumb, BreadcrumbItem, type BreadcrumbEntry } from '../Breadcrumb'
 import { BREADCRUMB_SIZES, type BreadcrumbSize } from '../Breadcrumb.options';
 import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+import { motionSettled } from '../../../storybook/motion';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs breadcrumb` (sets breadcrumb-item, breadcrumb).
@@ -111,6 +112,7 @@ export const BreadcrumbExpanded: StoryObj<{ size: BreadcrumbSize }> = {
     const body = within(canvasElement.ownerDocument.body);
     const menu = await body.findByRole('menu', { name: '중간 경로 보기' });
     await expect(within(menu).getByRole('group', { name: '상위 경로' })).toBeInTheDocument();
+    await motionSettled(); // Rules 09: the menu opens with the reference motion — measure its resting box
     const box = menu.getBoundingClientRect();
     await expect([box.width, box.height]).toEqual([200, 110]);
     await expect(within(menu).getAllByRole('menuitem').map((i) => i.textContent)).toEqual(['에너지 관리', '에너지 절약']);

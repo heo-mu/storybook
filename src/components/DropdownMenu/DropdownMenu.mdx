@@ -23,7 +23,8 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuSection } from './DropdownM
 
 - `icon`으로 항목 앞에 아이콘을 붙입니다.
 - `description`으로 항목 이름 아래에 설명을 붙입니다.
-- `chevron`을 켜면 오른쪽 화살표가 붙습니다. 다른 화면으로 이동하는 항목이라는 표시이며, 하위 메뉴는 지원하지 않습니다.
+- `chevron`을 켜면 오른쪽 화살표가 붙습니다. 다른 화면으로 이동하는 항목이라는 표시입니다.
+- `DropdownMenuSub`로 2단계 메뉴를 둡니다. 항목에 마우스를 올리거나 →를 누르면 옆에 글자만 있는 좁은 메뉴가 열리고, ←나 Esc로 닫힙니다.
 - `danger`는 삭제처럼 위험한 작업에 씁니다.
 
 ## 상태
@@ -53,6 +54,22 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuSection } from './DropdownM
 - `trigger`에는 `Button`이나 `FilterChip`처럼 누를 수 있는 요소를 넘깁니다.
 - 메뉴는 트리거 아래에 열리고, 화면 밖으로 나가면 반대쪽으로 열립니다. 위치는 `placement`, 트리거와의 간격은 `offset`으로 바꿉니다.
 - 메뉴 너비는 내용에 맞춰집니다. 너비를 정하려면 `className`을 씁니다.
+- 메뉴는 애니메이션 없이 바로 열리고 닫힙니다.
+
+<Source
+  language="tsx"
+  code={`import { DropdownMenu, DropdownMenuItem, DropdownMenuSub } from 'platform-design-system';
+
+<DropdownMenu trigger={<Button>파일</Button>} aria-label="파일 작업" onAction={(key) => run(key)}>
+  <DropdownMenuItem id="new">새 폴더</DropdownMenuItem>
+  <DropdownMenuSub label="내보내기" onAction={(key) => exportAs(key)}>
+    <DropdownMenuItem id="pdf">PDF</DropdownMenuItem>
+    <DropdownMenuItem id="csv">CSV</DropdownMenuItem>
+  </DropdownMenuSub>
+</DropdownMenu>`}
+/>
+
+- 2단계 메뉴의 항목을 고르면 `DropdownMenuSub`의 `onAction`이 호출되고 두 메뉴가 모두 닫힙니다.
 
 ## 접근성
 

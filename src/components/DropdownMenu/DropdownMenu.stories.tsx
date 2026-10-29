@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { DropdownMenu, DropdownMenuItem, DropdownMenuSection, DropdownMenuSeparator } from './DropdownMenu';
+import { DropdownMenu, DropdownMenuItem, DropdownMenuSection, DropdownMenuSeparator, DropdownMenuSub } from './DropdownMenu';
 import { Button } from '../Button';
 import { FolderSimpleDashedIcon } from '../../icons';
 
@@ -86,6 +86,35 @@ export const WithDescription: Story = {
       </DropdownMenuItem>
       <DropdownMenuItem id="archive" icon={<FolderSimpleDashedIcon />} description="목록에서 숨깁니다">
         보관
+      </DropdownMenuItem>
+    </DropdownMenu>
+  ),
+};
+
+/**
+ * 하위 메뉴(2단계): `DropdownMenuSub` 항목에 마우스를 올리거나 → · Enter를 누르면 옆에 글자만 있는 좁은 메뉴가 열리고, ← · Esc로 닫힙니다.
+ * 상위 메뉴와 같이 애니메이션 없이 바로 열리고 닫힙니다.
+ */
+export const Submenu: Story = {
+  name: '하위 메뉴',
+  render: (args) => (
+    <DropdownMenu {...args} aria-label="파일 작업">
+      <DropdownMenuItem id="new" icon={<FolderSimpleDashedIcon />}>
+        새 폴더
+      </DropdownMenuItem>
+      <DropdownMenuItem id="copy" icon={<FolderSimpleDashedIcon />}>
+        복제
+      </DropdownMenuItem>
+      <DropdownMenuSub id="export" label="내보내기" icon={<FolderSimpleDashedIcon />} onAction={args.onAction}>
+        <DropdownMenuItem id="pdf">PDF</DropdownMenuItem>
+        <DropdownMenuItem id="xlsx">Excel</DropdownMenuItem>
+        <DropdownMenuItem id="csv">CSV</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem id="more">더보기...</DropdownMenuItem>
+      </DropdownMenuSub>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem id="delete" icon={<FolderSimpleDashedIcon />} danger>
+        삭제
       </DropdownMenuItem>
     </DropdownMenu>
   ),

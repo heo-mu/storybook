@@ -9,6 +9,7 @@
  */
 
 .ds-segmented {
+  position: relative;
   box-sizing: border-box;
   display: inline-grid;
   grid-auto-columns: 1fr;
@@ -161,6 +162,67 @@
 .ds-segmented__item[data-disabled] > .ds-segmented__segment {
   background-color: var(--_bg-disabled);
   color: var(--_fg-disabled);
+}
+
+/*
+ * Selection indicator — Rules 09 "Segmented Control" (2026-10-29, reference HeroUI Segment): the selected background
+ * and shadow are painted by one indicator that slides to the newly selected item (250ms, cubic-bezier(0.32, 0.72, 0, 1)
+ * on left · top · width · height — HeroUI's selection indicator values). SegmentedControl.tsx measures the selected
+ * segment and sets --_x · --_y · --_w · --_h; at rest the box equals the segment's, so the static design is unchanged.
+ * Colours, label and focus ring change at once (Rules 09 "상태 변화"). Reduced motion: no slide.
+ */
+.ds-segmented__indicator {
+  --_ind-bg: var(--colors-segmented-control-selected-background-default);
+
+  position: absolute;
+  top: var(--_y, 0);
+  left: var(--_x, 0);
+  box-sizing: border-box;
+  width: var(--_w, 0);
+  height: var(--_h, 0);
+  border-radius: var(--border-radius-rounded);
+  background-color: var(--_ind-bg);
+  box-shadow: var(--effect-elevation-segmented-selected);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    left 250ms cubic-bezier(0.32, 0.72, 0, 1),
+    top 250ms cubic-bezier(0.32, 0.72, 0, 1),
+    width 250ms cubic-bezier(0.32, 0.72, 0, 1),
+    height 250ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.ds-segmented__indicator[data-shown] {
+  visibility: visible;
+}
+
+.ds-segmented__indicator[data-instant] {
+  transition: none;
+}
+
+/* The indicator takes the selected item's state colours (selected/background/hover · pressed · disabled). */
+.ds-segmented:has(> .ds-segmented__item:hover > .ds-segmented__input:checked) > .ds-segmented__indicator {
+  --_ind-bg: var(--colors-segmented-control-selected-background-hover);
+}
+
+.ds-segmented:has(> .ds-segmented__item:active > .ds-segmented__input:checked) > .ds-segmented__indicator {
+  --_ind-bg: var(--colors-segmented-control-selected-background-pressed);
+}
+
+.ds-segmented:has(> .ds-segmented__item[data-disabled] > .ds-segmented__input:checked) > .ds-segmented__indicator {
+  --_ind-bg: var(--colors-segmented-control-selected-background-disabled);
+}
+
+/* Once the indicator is placed it carries the selected background; the segment keeps only its label colours. */
+.ds-segmented[data-indicator] > .ds-segmented__item > .ds-segmented__input:checked + .ds-segmented__segment {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-segmented__indicator {
+    transition: none;
+  }
 }
 
 /* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside the segment. */

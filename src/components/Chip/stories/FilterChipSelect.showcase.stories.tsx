@@ -5,6 +5,7 @@ import { expect, fn, waitFor, within } from 'storybook/test';
 import { FilterChipSelect } from '../FilterChipSelect';
 import { TextButton } from '../../Button';
 import { Badge } from '../../Badge';
+import { motionSettled } from '../../../storybook/motion';
 
 // Interaction and application examples of FilterChipSelect (not in the MCP manifest) — Figma "chip-filter 선택 예시"
 // (1011:12956, multiple) and "단일 선택 예시" (Design System Rules 07).
@@ -54,6 +55,7 @@ export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = 
       const lb = await listbox();
       await expect(lb).toHaveAttribute('aria-multiselectable', 'true');
       await expect(chip()).toHaveAttribute('aria-expanded', 'true');
+      await motionSettled(); // Rules 09: the panel opens with the reference motion — measure its resting place
       const c = chip().getBoundingClientRect();
       const p = lb.getBoundingClientRect();
       await expect(Math.round(p.top - c.bottom)).toBe(4);
@@ -75,7 +77,7 @@ export const MultipleSelection: StoryObj<{ onChange: ReturnType<typeof fn> }> = 
       await expect(args.onChange).toHaveBeenLastCalledWith(['2', '3']);
       await expect(chip()).toHaveAttribute('data-selected');
       await expect(chip()).toHaveTextContent('나이대: 옵션 2 외 1개');
-      await expect(chip()).toHaveFocus();
+      await waitFor(() => expect(chip()).toHaveFocus()); // focus returns once the 100ms close motion ends
     });
     await step('다시 열림 → 다시 선택 중 → 다시 선택 완료', async () => {
       await userEvent.click(chip());
