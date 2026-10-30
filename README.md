@@ -5,7 +5,7 @@ Tokens and components are built only from values that exist in Figma (plus one d
 `figma-pending/primitive.txt`).
 
 Status: design tokens and every component of the Figma Component section (58:5174) and Dashboard components section
-(728:25472) — Button family (352 variants) plus 842 further variants in 71 sets, checked against Figma in Chromium,
+(728:25472) — Button family (400 variants) plus 842 further variants in 71 sets, checked against Figma in Chromium,
 Firefox and WebKit. Inventory: [docs/component-inventory.md](docs/component-inventory.md) · results:
 [docs/final-report.md](docs/final-report.md).
 
@@ -74,7 +74,7 @@ exists in Figma since the 2026-10-19 sync (Secondary / Solid added); without `ap
 | --- | --- |
 | `npm run storybook` | Storybook on http://localhost:6006 (also the Storybook MCP endpoint `/mcp`) |
 | `npm test` | Story tests (Vitest + Playwright Chromium): computed styles, prop → state transitions, variant counts |
-| `npm run verify:button` | Figma parity of all 352 Button variants (Storybook must be running); `-- --browser=firefox` / `webkit` for other engines |
+| `npm run verify:button` | Figma parity of all 400 Button variants (Storybook must be running); `-- --browser=firefox` / `webkit` for other engines |
 | `node scripts/verify-figma.mjs <component>` | Figma parity of one component (`figma/verify/<component>.json`); `--browser=`, `--set=` |
 | `npm run verify:all` | Every component in Chromium, Firefox and WebKit |
 | `npm run verify:a11y` | axe-core audit of every story |

@@ -57,14 +57,16 @@ export const TextButtonStates: Story = {
   render: () => (
     <MatrixTable
       columns={BUTTON_STATES.map(figmaCase)}
-      rows={TEXT_BUTTON_SIZES.map((size) => ({
-        label: size,
-        cells: BUTTON_STATES.map((state) => (
-          <TextButton key={state} size={size} {...stateProps(state)} leftIcon={<CaretLeftIcon />} rightIcon={<CaretRightIcon />}>
-            라벨명
-          </TextButton>
-        )),
-      }))}
+      rows={TEXT_BUTTON_SIZES.flatMap((size) =>
+        [false, true].map((withIcon) => ({
+          label: `${size} · ${withIcon ? '오른쪽 아이콘' : '아이콘 없음'}`,
+          cells: BUTTON_STATES.map((state) => (
+            <TextButton key={state} size={size} {...stateProps(state)} rightIcon={withIcon ? <CaretRightIcon /> : undefined}>
+              라벨명
+            </TextButton>
+          )),
+        })),
+      )}
     />
   ),
 };

@@ -7,6 +7,25 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### TextButton — 좌우 여백 넓힘 · 아이콘 쪽 한 단계 좁게 (Figma Left Icon · Right Icon 변형) (2026-10-30)
+
+- **Figma**(사용자 요청 작업, figma-fix-requests AJ절): Component 변수 4개 추가 — `spacing/button_text/padding-x/sm` · `md`(→ Primitive `p-1` 4 · `p-1_5` 6),
+  `spacing/button_text/padding-x-icon/sm` · `md`(→ `p-0_5` 2 · `p-1` 4), 스코프 GAP · WEB 코드 문법. `button_text`의 불리언 `Left Icon` · `Right Icon`을 같은 이름의
+  변형 속성(False / True, 기본 False)으로 바꿔 16 → 64 변형, 아이콘 없는 쪽은 `padding-x`, 아이콘 있는 쪽은 `padding-x-icon`에 연결. 위아래 여백 · 간격 · 높이 ·
+  글자 · 색은 그대로. 원래 16개 변형은 `Right Icon=True` 변형으로 남겨 인스턴스 74개(모두 오른쪽 아이콘)의 연결 · 재정의가 그대로입니다.
+- **여백**(좌 · 우 px): sm 2 · 2 → 아이콘 없음 4 · 4 / 오른쪽 아이콘 4 · 2 / 왼쪽 2 · 4 / 양쪽 2 · 2, md 2 · 2 → 6 · 6 / 6 · 4 / 4 · 6 / 4 · 4.
+- **코드**: 새 Prop 없이 기존 `leftIcon` · `rightIcon`을 그대로 씁니다 — 넘기면 `data-left-icon` · `data-right-icon`이 붙고 `Button.css`가 그쪽 여백만
+  `--spacing-button_text-padding-x-icon-*`로 바꿉니다. 같은 DOM을 직접 쓰는 달력 연 · 월 선택과 `ToastRegion` 닫기 버튼에도 같은 속성. 토큰 재생성(`npm run tokens`).
+- **영향**: 오른쪽 아이콘 TextButton sm +2 · md +6px, 글자만 sm +4 · md +8px 넓어짐 — Toast 닫기, EmptyState · DataState 동작, FileUploaderItem 다운로드 · 삭제,
+  DatePicker 달력 연 · 월, Table 필터 초기화, FilterChipSelect 필터 초기화. Figma 쪽 같은 인스턴스를 담은 세트의 기준(geometry · 참조 이미지)을 다시 내보냈습니다
+  (toast · empty-state · file-uploader-item · data-state · date-picker_calendar 머리글 · table_value_editable Filter Hover — 바뀐 픽셀은 모두 TextButton 안).
+- **스토리**: Variant Matrix의 TextButton 64칸(크기 × 아이콘 조합 열), States에 오른쪽 아이콘 행, TextButton "오른쪽 아이콘" 스토리, 사용 방법에 아이콘과 여백 규칙.
+- **검증**: `verify:button` 400/400 · 실제 포인터 36/36 × 3 엔진, `verify-figma` 36개 컴포넌트(Chromium) · TextButton을 담은 7개(toast · date-picker · empty-state ·
+  file-uploader · data-state · table · card) × 3 엔진, 스토리 테스트 154 · Storybook MCP 17 스토리(a11y 포함), axe 454 스토리(새 위반 0 — 기존 Secondary / Solid 대비 18건만),
+  `verify:render` 537쪽 × 3 엔진(Chromium DropdownMenu 1건은 위 별도 수정), `verify:interaction` 37/37 × 3 엔진. 탐침(3 엔진): TextButton 97개 여백 = Figma, 높이 · 글자 줄
+  위치가 아이콘 유무와 같음, Hover · Pressed · 포커스에 크기 변화 없음. Chromium은 아이콘 · 글자가 정수 픽셀, Firefox · WebKit은 `calc-size()` 미지원으로 오른쪽 아이콘이
+  소수 px 위치이지만 그리기는 정수 위치와 픽셀이 같음(흐림 없음).
+
 ### DropdownMenu — 하위 메뉴를 여는 항목 바로 옆에 (Figma 사용 예시 기준) (2026-10-30)
 
 - **원인**: `DropdownMenuSub`의 Popover에 `offset={8} crossOffset={-4}`를 직접 주어(Rules 05의 "4px 간격"을 상위 패널 기준으로 적용) 하위 패널이 여는 항목에서 8px,

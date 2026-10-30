@@ -210,8 +210,8 @@ export 322개: 공개 컴포넌트 50 · 보조 컴포넌트 33 · 내부 부품
 | --- | --- | --- | --- |
 | `children` *(필수)* | `ReactNode` |  | 버튼 글자. |
 | `disabled` | `boolean` |  | 비활성 — 누를 수 없고 키보드로도 선택되지 않습니다. |
-| `leftIcon` | `ReactNode` |  | 글자 왼쪽 아이콘. |
-| `rightIcon` | `ReactNode` |  | 글자 오른쪽 아이콘. |
+| `leftIcon` | `ReactNode` |  | 글자 왼쪽 아이콘. 넣으면 왼쪽 안쪽 여백이 한 단계 좁아집니다(sm 2px · md 4px). |
+| `rightIcon` | `ReactNode` |  | 글자 오른쪽 아이콘(예: 더보기 ›, 초기화 ↺). 넣으면 오른쪽 안쪽 여백이 한 단계 좁아집니다(sm 2px · md 4px). |
 | `size` | `"sm" \| "md"` | `sm` | 크기. |
 | `variant` | `"primary" \| "secondary"` | `primary` | 종류. |
 

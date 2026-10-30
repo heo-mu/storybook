@@ -335,6 +335,27 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 
 알림(Alert) 행을 복제해 그 아래에 넣었습니다(1656:7954, 글자 1656:7956 · 7957 · 7959 · 7961). 정책 · 적용 대상 "주의 / Alert · Toast (Warning)", 사용 규칙 "작업은 이어갈 수 있지만 확인이 필요한 일을 알립니다. 예: 일부 데이터만 표시, 곧 만료되는 설정. 작업을 막는 문제는 오류, 잘 끝난 일은 성공, 참고할 내용은 안내로 보여 줍니다. 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 버튼을 함께 둡니다.", 디자인 기준 "Warning 상태 — 주황 삼각형 아이콘과 warning 색. 자리와 크기는 다른 상태와 같습니다. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초)." Rules 프레임은 세로 자동 레이아웃이라 아래 장은 자동으로 밀렸습니다(06장 296 → 388px).
 
+## AJ. TextButton 좌우 여백 · 아이콘 변형 (2026-10-30, 사용자 요청 작업)
+
+기본 TextButton의 좌우 여백을 넓히고, 아이콘이 있는 쪽은 한 단계 좁게(시각 정렬) 했습니다. 기존 불리언 아이콘 속성을 같은 이름의 변형 속성으로 바꿔
+아이콘 유무마다 다른 여백 변수를 연결합니다(새 속성을 따로 만들지 않음).
+
+| 항목 | 변경 전 | 변경 후 | 노드 · ID |
+| --- | --- | --- | --- |
+| Component 변수 4개 추가(스코프 `GAP`, WEB `var(--spacing-button_text-…)`) | — | `spacing/button_text/padding-x/sm` → Primitive `spacing/padding/p-1`(4) · `…/padding-x/md` → `p-1_5`(6) · `…/padding-x-icon/sm` → `p-0_5`(2) · `…/padding-x-icon/md` → `p-1`(4) | VariableID:1727:8283 · 8284 · 8285 · 8286 |
+| `button_text` 아이콘 속성 | 불리언 `Left Icon#432:0` · `Right Icon#432:1`(기본 켬) | 변형 속성 `Left Icon` · `Right Icon`(False / True, 기본 False — 속성 패널에서 토글로 보임) | 432:8395 |
+| 변형 수 · 세트 크기 | 16(Type × Size × State) · 424 × 212 | 64(× Left Icon × Right Icon) · 440 × 788 | |
+| 좌우 여백 바인딩 | 모든 변형 `spacing/padding/p-0_5`(2 · 2) | 아이콘 없는 쪽 `padding-x/*`, 아이콘 있는 쪽 `padding-x-icon/*` — sm 4·4 / 오른쪽 아이콘 4·2 / 왼쪽 아이콘 2·4 / 양쪽 2·2, md 6·6 / 6·4 / 4·6 / 4·4 | 64개 변형 `paddingLeft` · `paddingRight` |
+
+그대로: 위아래 여백(sm `p-1` 4 · md `p-1_5` 6), 간격(sm `p-0_5` · md `p-1`), 높이(24 · 32), 글자 스타일, 색 · 테두리 · 모서리 변수, `Label Text#432:2` · `Focus#1080:422` ·
+Type · Size · State. 가로 크기(Primary / 라벨명): sm 40 · 56 · 56 · 72, md 49 · 67 · 67 · 85(아이콘 없음 · 오른쪽 · 왼쪽 · 양쪽).
+
+**인스턴스 영향**: 원래 16개 변형은 지우지 않고 `Left Icon=False, Right Icon=True` 변형으로 바꿔 기존 연결 · 재정의(라벨 글자 등)를 유지했습니다. 인스턴스 74개
+(Ver 0.5 67 · legacy 7, Cover 0)는 모두 오른쪽 아이콘만 쓰던 것이라 같은 변형에 그대로 연결되고, 오른쪽 아이콘 버튼은 sm +2px(왼쪽 2 → 4) · md +6px(왼쪽 2 → 6, 오른쪽 2 → 4) 넓어집니다
+— toast 4 변형 · Toast 예시, empty-state, date-picker_header(연 · 월)와 calendar 5 변형 · Date Picker 예시, table_value_editable(Date Picker Editing · Filter Hover),
+file-uploader-item(Completed · download · Error) · File Uploader 예시, data-state 5 상태, Card, Dashboard · Table 목록 화면 예시. 넘침 · 잘림 없음, Button 프레임(58:4971)은
+이웃 프레임과 겹치지 않음. 확인 후 체크섬: compOthers 688 → 692(변수 4개), 나머지 7그룹 그대로.
+
 ## AI. Toast 쌓임 — Rules 09 행 · 사용 예시 (2026-10-30, 사용자 요청 작업)
 
 | 항목 | Figma 변경 | 노드 |

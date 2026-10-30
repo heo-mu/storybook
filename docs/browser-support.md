@@ -4,19 +4,20 @@
 목표는 **Figma와의 픽셀 정합성을 유지하면서, 특정 브라우저가 없어도 깨지지 않는 것**입니다.
 
 - 지원 정보: MDN browser-compat-data (2026-10-16 기준)
-- 측정: Playwright로 Chromium 156, Firefox 157, WebKit 27.2(Windows)에서 352개 Variant 전부를(2026-10-20 v1.0 후보 점검에서 재측정)
+- 측정: Playwright로 Chromium 156, Firefox 157, WebKit 27.2(Windows)에서 400개 Variant 전부를(2026-10-20 v1.0 후보 점검에서 재측정, 2026-10-30 TextButton 64 변형 반영)
   `npm run verify:button -- --browser=<engine>`으로 Figma 사양과 비교
 
 ## 측정 결과
 
 | 항목 | Chromium 156 | Firefox 157 | WebKit 27.2 |
 | --- | --- | --- | --- |
-| 높이 · padding · gap · radius · 테두리 · 색 · 타이포그래피 | 352/352 일치 | 352/352 일치 | 352/352 일치 |
+| 높이 · padding · gap · radius · 테두리 · 색 · 타이포그래피 | 400/400 일치 | 400/400 일치 | 400/400 일치 |
 | 버튼 너비 (텍스트 포함 Variant) | Figma와 동일 (80 / 88 / 101 / 114px) | 1px 미만 좁음 (예: 79.10px) | 1px 미만 좁음 (예: 79.13px) |
 | 라벨 글자 위치 (Figma 대비) | 가로 ≤ 0.33px, 세로 ≤ 0.13px | 가로 ≤ 0.70px, 세로 ≤ 0.09px | 가로 ≤ 0.60px, 세로 ≤ 0.09px |
 | 실제 마우스 Default / Hover / Pressed | 36/36 | 36/36 | 36/36 |
 | IconButton (텍스트 없음) | 144/144 | 144/144 | 144/144 |
-| 텍스트 버튼 `button_text` 16개 — 라벨 글자 위치 | 가로 ≤ 0.85px(sm, 허용치 안), 세로 ≤ 0.08px | 가로 ≤ 0.21px · 너비 1px 미만 좁음(71.10px) | 가로 ≤ 0.60px · 너비 1px 미만 좁음(71.13px) |
+| 텍스트 버튼 `button_text` 64개 — 라벨 글자 위치 | 가로 ≤ 0.85px(sm, 허용치 안), 세로 ≤ 0.07px | 가로 ≤ 0.21px · 너비 1px 미만 좁음(예: 39.10px) | 가로 ≤ 0.60px · 너비 1px 미만 좁음(예: 39.13px) |
+| 텍스트 버튼 오른쪽 아이콘 위치(2026-10-30 탐침) | 정수 픽셀 | 라벨 자연 너비 뒤라 소수 px 위치(1px 미만) — 그리기는 픽셀에 맞춰져 정수 위치일 때와 픽셀이 같음(흐림 없음) | Firefox와 같음 |
 
 Firefox·WebKit의 차이는 아래 `calc-size()` 한 가지가 원인이며 모두 1px 미만입니다.
 

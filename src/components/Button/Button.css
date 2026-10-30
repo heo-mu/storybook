@@ -3,7 +3,7 @@
  * [Platform] Web Design System / 🔵 Ver 0.4:
  *   .ds-button       ← component set "button_basic" (54:2904, 192 variants)
  *   .ds-icon-button  ← component set "button_icon"  (67:2368, 144 variants)
- *   .ds-text-button  ← component set "button_text"  (432:8395, 16 variants)
+ *   .ds-text-button  ← component set "button_text"  (432:8395, 64 variants: Type × Size × State × Left Icon × Right Icon)
  * Every value below is a Figma variable (CSS custom property from src/tokens) or a value read
  * from the component itself. State "Hover" → :hover, "Pressed" → :active, "Disabled" → :disabled.
  */
@@ -378,14 +378,32 @@
   --ds-button-icon-disabled: var(--colors-button_text-secondary-icon-disabled);
 }
 
+/*
+ * Horizontal padding (Figma button_text, 2026-10-30): spacing/button_text/padding-x/* on both sides, and one step tighter
+ * on a side with an icon — spacing/button_text/padding-x-icon/* (optical alignment: the icon's own side bearing adds to
+ * the padding, so text + icon look centred). Left Icon / Right Icon are Figma variant properties; the elements say which
+ * slot is filled with data-left-icon / data-right-icon. Height, gap and type are unchanged.
+ */
 .ds-text-button[data-size='sm'] {
+  --ds-text-button-px: var(--spacing-button_text-padding-x-sm);
+  --ds-text-button-px-icon: var(--spacing-button_text-padding-x-icon-sm);
   gap: var(--spacing-padding-p-0_5);
-  padding: var(--spacing-padding-p-1) var(--spacing-padding-p-0_5);
+  padding: var(--spacing-padding-p-1) var(--ds-text-button-px);
 }
 
 .ds-text-button[data-size='md'] {
+  --ds-text-button-px: var(--spacing-button_text-padding-x-md);
+  --ds-text-button-px-icon: var(--spacing-button_text-padding-x-icon-md);
   gap: var(--spacing-padding-p-1);
-  padding: var(--spacing-padding-p-1_5) var(--spacing-padding-p-0_5);
+  padding: var(--spacing-padding-p-1_5) var(--ds-text-button-px);
+}
+
+.ds-text-button[data-left-icon] {
+  padding-left: var(--ds-text-button-px-icon);
+}
+
+.ds-text-button[data-right-icon] {
+  padding-right: var(--ds-text-button-px-icon);
 }
 
 /* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 2px colors/border/focus, 2px outside. */

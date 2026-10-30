@@ -89,31 +89,42 @@ export const IconButtonMatrix: Story = {
   play: expectVariantCount(144),
 };
 
-/** 종류·크기·모양·상태에 따른 버튼 표현을 비교합니다. */
+/** Figma button_text icon variants: no icon · right · left · both (Left Icon / Right Icon). */
+const TEXT_BUTTON_ICONS = [
+  { left: false, right: false, label: '아이콘 없음' },
+  { left: false, right: true, label: '오른쪽' },
+  { left: true, right: false, label: '왼쪽' },
+  { left: true, right: true, label: '양쪽' },
+] as const;
+const figmaBool = (value: boolean) => (value ? 'True' : 'False');
+
+/** 종류·크기·상태·아이콘 위치에 따른 텍스트 버튼 표현을 비교합니다(아이콘이 있는 쪽 안쪽 여백은 한 단계 좁음). */
 export const TextButtonMatrix: Story = {
   name: 'Variants · TextButton',
   render: () => (
     <MatrixTable
-      columns={[...TEXT_BUTTON_SIZES]}
+      columns={TEXT_BUTTON_SIZES.flatMap((size) => TEXT_BUTTON_ICONS.map((icons) => `${size} · ${icons.label}`))}
       rows={TEXT_BUTTON_VARIANTS.flatMap((variant) =>
         BUTTON_STATES.map((state) => ({
           label: `${FIGMA_TEXT_BUTTON_TYPE[variant]} / ${figmaCase(state)}`,
-          cells: TEXT_BUTTON_SIZES.map((size) => (
-            <TextButton
-              key={size}
-              variant={variant}
-              size={size}
-              {...stateProps(state)}
-              data-figma={`Type=${FIGMA_TEXT_BUTTON_TYPE[variant]}, Size=${size}, State=${figmaCase(state)}`}
-              leftIcon={<CaretLeftIcon />}
-              rightIcon={<CaretRightIcon />}
-            >
-              라벨명
-            </TextButton>
-          )),
+          cells: TEXT_BUTTON_SIZES.flatMap((size) =>
+            TEXT_BUTTON_ICONS.map((icons) => (
+              <TextButton
+                key={`${size}-${icons.label}`}
+                variant={variant}
+                size={size}
+                {...stateProps(state)}
+                data-figma={`Type=${FIGMA_TEXT_BUTTON_TYPE[variant]}, Size=${size}, State=${figmaCase(state)}, Left Icon=${figmaBool(icons.left)}, Right Icon=${figmaBool(icons.right)}`}
+                leftIcon={icons.left ? <CaretLeftIcon /> : undefined}
+                rightIcon={icons.right ? <CaretRightIcon /> : undefined}
+              >
+                라벨명
+              </TextButton>
+            )),
+          ),
         })),
       )}
     />
   ),
-  play: expectVariantCount(16),
+  play: expectVariantCount(64),
 };

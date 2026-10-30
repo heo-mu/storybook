@@ -4,14 +4,14 @@
 > Figma 노드 ID · 변수 ID는 현재 Figma 버전(🔵 Ver 0.4)에 속한 보조 정보이며, 대응 기준은 컴포넌트 · 세트 이름입니다([figma-sync.md](../figma-sync.md)).
 > 정책 항목 ID(`XXXX-00`)의 출처 · 상태는 [code-policy-audit.md](../code-policy-audit.md).
 
-Figma **[Platform] Web Design System → 🔵 Ver 0.4 → Component → Button** 프레임(58:4971)의 컴포넌트 352개를
-3개의 React 컴포넌트로 구현했습니다. 352개를 각각 만들지 않고, Figma Variant Property를 그대로 Props로 옮겼습니다.
+Figma **[Platform] Web Design System → 🔵 Ver 0.4 → Component → Button** 프레임(58:4971)의 컴포넌트 400개를
+3개의 React 컴포넌트로 구현했습니다. 400개를 각각 만들지 않고, Figma Variant Property를 그대로 Props로 옮겼습니다.
 
 | React 컴포넌트 | Figma Component Set | Variant 수 | 구성 |
 | --- | --- | --- | --- |
 | `Button` | `button_basic` (54:2904) | 192 | Variant×Appearance 6 × Size 4 × Shape 2 × State 4 |
 | `IconButton` | `button_icon` (67:2368) | 144 | Variant×Appearance 6 × Size 3 × Shape 2 × State 4 |
-| `TextButton` | `button_text` (432:8395) | 16 | Type 2 × Size 2 × State 4 |
+| `TextButton` | `button_text` (432:8395) | 64 | Type 2 × Size 2 × State 4 × Left Icon 2 × Right Icon 2 |
 
 ## 설치 및 Import
 
@@ -50,7 +50,8 @@ import { Button, IconButton, TextButton } from 'platform-design-system';
 | Type | Primary · SecondarySecondary | `variant` (`'primary'` · `'secondary'`) | `'primary'` |
 | Size | sm · md | `size` | `'sm'` |
 | State | Default · Hover · Pressed · Disabled | `:hover` · `:active`, `disabled` | — |
-| Left Icon / Right Icon, Label Text | | `leftIcon` / `rightIcon`, `children` | |
+| Left Icon · Right Icon (변형 속성) | False · True — 아이콘이 있는 쪽 좌우 여백이 한 단계 좁은 변형 | `leftIcon` / `rightIcon` (넘기면 표시) | 없음 |
+| Label Text | 텍스트 | `children` | — |
 
 ## Variant × Appearance
 
@@ -63,7 +64,7 @@ import { Button, IconButton, TextButton } from 'platform-design-system';
 <Button variant="secondary" appearance="solid">OK</Button>   // Solid (녹색 채움, 2026-10-19 추가)
 ```
 
-Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수(192 / 144 / 16)를 테스트로 검증합니다.
+Storybook의 Variant Matrix는 Figma와 같은 조합만 렌더링하고, 개수(192 / 144 / 64)를 테스트로 검증합니다.
 
 ### Tertiary / Solid 배경 (2026-10-19)
 
@@ -78,6 +79,23 @@ Tertiary / Solid의 배경은 Semantic 토큰 **`colors/fill/tertiary/*`** 를 �
 | Disabled | `--colors-button-tertiary-solid-background-disabled`(fill/disabled) | `gray/250` | #d6dae0 | 변경 없음 |
 
 Props · 사용법은 그대로이고 색만 바뀝니다. 비교: Storybook **Components / Button / Tertiary Background**.
+
+## TextButton 여백 (2026-10-30)
+
+기본 TextButton의 좌우 여백을 넓히고, 아이콘이 있는 쪽은 한 단계 좁게 했습니다(아이콘 상자 안 여백만큼의 시각 정렬, [figma-fix-requests AJ절](../figma-fix-requests.md)).
+Figma `button_text`의 `Left Icon` · `Right Icon`이 불리언에서 **변형 속성**으로 바뀌어 아이콘 조합마다 다른 여백 변수가 연결됩니다(16 → 64 변형).
+
+| Size | 아이콘 없음 | 오른쪽 아이콘 | 왼쪽 아이콘 | 양쪽 | 이전(모든 조합) |
+| --- | --- | --- | --- | --- | --- |
+| sm (높이 24) | 4 · 4 | 4 · 2 | 2 · 4 | 2 · 2 | 2 · 2 |
+| md (높이 32) | 6 · 6 | 6 · 4 | 4 · 6 | 4 · 4 | 2 · 2 |
+
+- 토큰(Component, Primitive 별칭): `--spacing-button_text-padding-x-sm`(→ `p-1` 4) · `-md`(→ `p-1_5` 6), `--spacing-button_text-padding-x-icon-sm`(→ `p-0_5` 2) · `-icon-md`(→ `p-1` 4).
+  위아래 여백 · 간격 · 높이 · 글자 스타일 · 색은 그대로입니다.
+- 코드: `TextButton`이 `leftIcon` · `rightIcon`을 받으면 `data-left-icon` · `data-right-icon`을 달고 Button.css가 그쪽 여백만 `padding-x-icon` 토큰으로 바꿉니다
+  (새 Prop 없음). TextButton과 같은 DOM을 직접 쓰는 곳 — Calendar 연 · 월 선택(md, 오른쪽 아이콘), `ToastRegion` 닫기(sm, 오른쪽 아이콘) — 도 같은 속성을 답니다.
+- 영향: 오른쪽 아이콘 버튼은 sm 2px · md 6px 넓어지고, 글자만 있는 버튼은 sm 4px · md 8px 넓어집니다 — Toast 닫기, EmptyState · DataState 동작,
+  FileUploaderItem 다운로드 · 삭제, DatePicker 달력 머리글, Table 필터 초기화, FilterChipSelect 필터 초기화(글자만).
 
 ## 상태 (State)
 
@@ -136,7 +154,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 
 ## 브라우저 지원
 
-Chromium(Chrome · Edge 129+)에서는 352개 Variant가 Figma와 픽셀 단위로 같습니다.
+Chromium(Chrome · Edge 129+)에서는 400개 Variant가 Figma와 픽셀 단위로 같습니다.
 Firefox · Safari는 `calc-size()`를 지원하지 않아 텍스트가 있는 버튼의 너비가 1px 미만 좁게 그려지고, 그 외(높이 · 간격 · 색 · 테두리 · 상태)는 같습니다.
 측정 결과와 Fallback은 `docs/browser-support.md`, 외부 프로젝트 사용 예제는 `docs/usage.md`를 참고하세요.
 
@@ -153,4 +171,4 @@ Firefox · Safari는 `calc-size()`를 지원하지 않아 텍스트가 있는 �
 
 - `VariantMatrix.stories.tsx / ButtonMatrix`: `button_basic` — 6 Variant×Appearance × 4 States (rows) × 4 Sizes × 2 Shapes (columns) = 192.
 - `VariantMatrix.stories.tsx / IconButtonMatrix`: `button_icon` — 6 Variant×Appearance × 4 States × 3 Sizes × 2 Shapes = 144.
-- `VariantMatrix.stories.tsx / TextButtonMatrix`: `button_text` — 2 Types × 4 States (rows) × 2 Sizes (columns) = 16.
+- `VariantMatrix.stories.tsx / TextButtonMatrix`: `button_text` — 2 Types × 4 States (rows) × 2 Sizes × 4 icon combinations (columns: none · right · left · both) = 64.

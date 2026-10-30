@@ -10,9 +10,9 @@ export type TextButtonProps = Omit<ComponentPropsWithoutRef<'button'>, 'children
   variant?: TextButtonVariant;
   /** 크기. @default 'sm' */
   size?: TextButtonSize;
-  /** 글자 왼쪽 아이콘. */
+  /** 글자 왼쪽 아이콘. 넣으면 왼쪽 안쪽 여백이 한 단계 좁아집니다(sm 2px · md 4px). */
   leftIcon?: ReactNode;
-  /** 글자 오른쪽 아이콘. */
+  /** 글자 오른쪽 아이콘(예: 더보기 ›, 초기화 ↺). 넣으면 오른쪽 안쪽 여백이 한 단계 좁아집니다(sm 2px · md 4px). */
   rightIcon?: ReactNode;
   /** 버튼 글자. */
   children: ReactNode;
@@ -23,6 +23,8 @@ export const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(functio
   { variant = 'primary', size = 'sm', leftIcon, rightIcon, children, className, type = 'button', ...rest },
   ref,
 ) {
+  const hasLeftIcon = hasSlot(leftIcon);
+  const hasRightIcon = hasSlot(rightIcon);
   return (
     <button
       {...rest}
@@ -31,10 +33,12 @@ export const TextButton = forwardRef<HTMLButtonElement, TextButtonProps>(functio
       className={cx('ds-button-base', 'ds-text-button', className)}
       data-variant={variant}
       data-size={size}
+      data-left-icon={hasLeftIcon || undefined}
+      data-right-icon={hasRightIcon || undefined}
     >
-      {hasSlot(leftIcon) && <ButtonIconSlot>{leftIcon}</ButtonIconSlot>}
+      {hasLeftIcon && <ButtonIconSlot>{leftIcon}</ButtonIconSlot>}
       <span className="ds-button__label">{children}</span>
-      {hasSlot(rightIcon) && <ButtonIconSlot>{rightIcon}</ButtonIconSlot>}
+      {hasRightIcon && <ButtonIconSlot>{rightIcon}</ButtonIconSlot>}
     </button>
   );
 });

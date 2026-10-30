@@ -251,7 +251,7 @@ npm run typecheck && npm run lint && npm test
 npm run build && npm run build-storybook
 npm run storybook            # 다른 터미널에서 실행한 채로
 npm run verify:all           # 전 컴포넌트 × Chromium · Firefox · WebKit (다른 무거운 작업과 동시에 돌리지 말 것)
-npm run verify:button        # Button 352 변형 + 실제 포인터 상태(-- --browser=firefox · webkit도)
+npm run verify:button        # Button 400 변형 + 실제 포인터 상태(-- --browser=firefox · webkit도)
 npm run verify:a11y          # 전 스토리 axe 감사 ("other violations: 0")
 npm run docs:api             # Public API 문서 갱신
 npm pack                     # 외부 프로젝트에 설치해 타입 검사 · 빌드 · 실행 확인

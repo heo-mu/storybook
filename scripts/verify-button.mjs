@@ -35,7 +35,8 @@ const SETS = [
 const WEIGHT = { Regular: '400', Medium: '500', SemiBold: '600', Bold: '700', ExtraBold: '800' };
 
 const parseName = (name) => Object.fromEntries(name.split(', ').map((kv) => kv.split('=')));
-const geoKey = (set, p) => (set === 'button_text' ? p.Size : `${p.Size}/${p.Shape}`);
+// button_text geometry depends on the icons (Figma variant properties Left Icon / Right Icon since 2026-10-30)
+const geoKey = (set, p) => (set === 'button_text' ? `${p.Size}/${p['Left Icon']}/${p['Right Icon']}` : `${p.Size}/${p.Shape}`);
 const colorKey = (set, p) => (set === 'button_text' ? `${p.Type}/${p.State}` : `${p.Variant}/${p.Appearance}/${p.State}`);
 
 function toHex(css) {

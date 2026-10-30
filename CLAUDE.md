@@ -34,7 +34,7 @@ to access component and documentation knowledge before answering or acting on UI
 - `npm run typecheck`, `npm run lint`, `npm run build`
 - `npm run tokens` — regenerate CSS tokens from `figma/`
 - `npm run figma:checksum` — checksums to compare with `figma/checksum.figma.js` run in Figma
-- `npm run verify:button` — DOM/pixel parity check of all 352 Button variants against Figma (Storybook must be running);
+- `npm run verify:button` — DOM/pixel parity check of all 400 Button variants against Figma (Storybook must be running);
   add `-- --browser=firefox` or `webkit` to check other engines (see docs/browser-support.md)
 - `node scripts/verify-figma.mjs <component> [--browser=…]` — parity check driven by figma/verify/<component>.json;
   `npm run verify:all` runs every component in Chromium, Firefox and WebKit

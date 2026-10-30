@@ -49,3 +49,12 @@ export const Disabled: Story = {
   name: "Disabled",
   args: { disabled: true },
 };
+
+/**
+ * 오른쪽 아이콘: 글자 뒤에 아이콘을 둡니다(예: 더보기 ›, 초기화 ↺). 아이콘이 있는 쪽의 안쪽 여백이 한 단계 좁아 글자와 아이콘이
+ * 버튼 가운데에 자연스럽게 놓입니다 — sm 왼쪽 4 · 오른쪽 2px, md 왼쪽 6 · 오른쪽 4px(아이콘 없으면 sm 4 · 4, md 6 · 6).
+ */
+export const RightIcon: Story = {
+  name: "오른쪽 아이콘",
+  args: { children: '더보기', rightIcon: 'CaretRight' },
+};

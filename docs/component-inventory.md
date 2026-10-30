@@ -19,7 +19,7 @@ Component 섹션 `58:5174`, Dashboard components 섹션 `728:25472`. 2026-10-16 
 
 | Figma 프레임 | Component Set (Variant 수) · 속성 | React | Phase | 상태 |
 | --- | --- | --- | --- | --- |
-| Button 58:4971 | `button_basic` (192) · `button_icon` (144) · `button_text` (16) — Secondary · Solid는 2026-10-19 동기화로 추가 | `Button`, `IconButton`, `TextButton` | — | 완료 |
+| Button 58:4971 | `button_basic` (192) · `button_icon` (144) · `button_text` (64 — 2026-10-30 Left Icon · Right Icon 변형 속성) — Secondary · Solid는 2026-10-19 동기화로 추가 | `Button`, `IconButton`, `TextButton` | — | 완료 |
 | Input 72:4021 | `input` (21) Type=Outline · Size sm/md/lg · State Default/Hover/Focus/Completed/Error/Disabled/Read-only · Label, Alert, Icon-eye · `input_message` (3) Info/Success/Error · `password_field` (24, 2026-10-27) State + Focus-on · Icon-eye | `Input` (`type="password"`) | 1 | 완료 |
 | Textarea 86:2594 | `textarea` (14) Size md/sm · State 7종 · Label, Alert, Counter · `textarea_message` (3) | `Textarea` | 1 | 완료 |
 | Search Field 216:6742 | `search-field` (36) Size sm/md/lg · State Default/Hover/Focus/Error/Disabled/Completed · Type Solid/Outline · Label | `SearchField` | 1 | 완료 |

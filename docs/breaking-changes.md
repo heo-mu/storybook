@@ -88,6 +88,12 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 | --- | --- | --- |
 | 값 변경 — 정의 | `--colors-fill-secondary-strong-hover` · `-pressed` #006247 · #004a38 → **#009b68 · #02bb7b**(brand/600 · 500, A-1 이전 값) | 화면 변경 — Button · IconButton Secondary / Solid의 Hover · Pressed만 |
 
+### 2026-10-30 — TextButton 좌우 여백 토큰
+
+| 변경 | 내용 | 호환성 |
+| --- | --- | --- |
+| 추가 — Component | `--spacing-button_text-padding-x-sm` · `-md`(→ `p-1` 4 · `p-1_5` 6), `--spacing-button_text-padding-x-icon-sm` · `-icon-md`(→ `p-0_5` 2 · `p-1` 4) | 호환(추가만) |
+
 ### 2026-10-19 밤 — 코드 정책의 Figma 공식 정책화
 
 | 변경 | 내용 | 호환성 |
@@ -151,6 +157,7 @@ Figma에서 다른 편집자가 Chart 변수를 재구성했습니다(1527 → 1
 | 보조 · 플레이스홀더 글자 | #778191 · #a1a8b5 → #596475 (비활성 라벨은 #a1a8b5 그대로) |
 | 입력 칸 · Checkbox · Radio 테두리, Switch 꺼짐 트랙 | #a1a8b5 → #778191 (hover 한 단계 진하게) |
 | `EyeSlashIcon` · Input 비밀번호를 보이는 동안의 눈 아이콘 | `icon/visibility_off`(24 그리드, 단독 기본 크기 24px) → Figma `icon/Eye-close`(16 그리드, 기본 16px — `EyeIcon`과 같음). Input 안에서는 칸 크기(16 · 20 · 24px) 그대로 |
+| `TextButton` 좌우 여백(2026-10-30) | sm 2 · 2 → 4 · 4, md 2 · 2 → 6 · 6, 아이콘이 있는 쪽만 한 단계 좁게(sm 2 · md 4) — 글자만 있는 버튼 sm +4 · md +8px, 오른쪽 아이콘 버튼 sm +2 · md +6px 넓어짐(높이 · 글자 그대로). TextButton을 쓰는 Toast 닫기 · EmptyState · DataState · FileUploaderItem · 달력 연 · 월 선택도 같음. Props 그대로, 너비를 고정해 배치한 화면만 확인 |
 | Button Secondary · Solid Hover · Pressed | 최종 #009b68 · #02bb7b(Default #007c56보다 한 단계씩 밝음) — 2026-10-19 A-1에서 #006247 · #004a38로 바꿨다가 2026-10-30 되돌림, 처음 값과 같음 |
 | `Chart` 호버 강조 영역 | 세로 막대 Group=no 64 → 40px, 가로 막대 행 높이 → 32 · 46px, 간단 스타일 추가 |
 | Hover 배경 16곳 | #f9fafb → #f5f6f7 |

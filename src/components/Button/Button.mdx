@@ -1,6 +1,7 @@
 import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
 import * as OverviewStories from './stories/Overview.stories';
 import * as StatesStories from './stories/States.stories';
+import * as TextButtonStories from './TextButton.stories';
 import { Button } from './Button';
 import { IconButton } from './IconButton';
 import { TextButton } from './TextButton';
@@ -56,13 +57,24 @@ import { Button, IconButton, TextButton } from 'platform-design-system';
 
 <Button variant="primary" size="md" leftIcon={<MyIcon />}>저장</Button>
 <IconButton variant="tertiary" appearance="outline" icon={<PlusIcon />} aria-label="추가" />
-<TextButton size="md" rightIcon={<CaretRightIcon />}>더보기</TextButton>`}
+<TextButton size="md" rightIcon={<CaretRightIcon />}>더보기</TextButton>
+<TextButton rightIcon={<ArrowCounterClockwiseIcon />}>초기화</TextButton>`}
 />
 
 ## 아이콘
 
 - `leftIcon` · `rightIcon` · `icon`에 아이콘 요소를 넘기면 버튼 크기에 맞게 표시됩니다.
 - 아이콘은 텍스트 색을 따르므로 SVG에 `fill="currentColor"`를 씁니다.
+
+### TextButton의 아이콘과 여백
+
+<Canvas of={TextButtonStories.RightIcon} />
+
+- 아이콘이 없는 `TextButton`의 좌우 여백은 `sm` 4px, `md` 6px입니다.
+- `rightIcon`을 넣으면 아이콘이 있는 오른쪽 여백만 한 단계 좁아집니다(`sm` 2px, `md` 4px). 아이콘은 글자보다 둘레에 빈 공간이 있어 같은 여백이면 오른쪽이 더 넓어 보이기 때문에 눈으로 보기에 균형이 맞도록 줄인 값입니다.
+- `leftIcon`도 같은 규칙으로 왼쪽 여백이 한 단계 좁아지고, 양쪽에 아이콘이 있으면 양쪽 모두 좁아집니다.
+- 높이와 글자 크기는 아이콘 유무와 관계없이 같습니다.
+- 오른쪽 아이콘은 동작을 보충합니다. 예: 더보기 · 설정 확인처럼 다음 내용으로 이어지면 `CaretRightIcon`, 필터 초기화는 `ArrowCounterClockwiseIcon`.
 
 ## 접근성
 

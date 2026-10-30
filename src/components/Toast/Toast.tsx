@@ -104,7 +104,7 @@ export function ToastRegion({ queue = toastQueue, 'aria-label': ariaLabel = '알
               </div>
             </RACToastContent>
             {/* The same DOM and classes as TextButton (sm, primary) on react-aria's close button (focus management + queue.close). */}
-            <Button slot="close" className="ds-button-base ds-text-button ds-toast__close" data-variant="primary" data-size="sm" aria-label={closeLabel}>
+            <Button slot="close" className="ds-button-base ds-text-button ds-toast__close" data-variant="primary" data-size="sm" data-right-icon aria-label={closeLabel}>
               <span className="ds-button__label">{CLOSE_TEXT}</span>
               <ButtonIconSlot>
                 <XCircleFillIcon />
