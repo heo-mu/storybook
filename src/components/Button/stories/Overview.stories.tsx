@@ -9,7 +9,7 @@ import { figmaCase } from './story-helpers';
 
 // Visual showcase — excluded from the MCP components manifest (uses story-only helpers).
 const meta = {
-  title: "Components/Button/Overview",
+  title: "Components/Button/Gallery",
   id: 'components-button-overview',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },

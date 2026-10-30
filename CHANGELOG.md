@@ -7,6 +7,12 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Storybook 빈 화면 전수 검사 — Toast 표시 규칙 예시, 가시 콘텐츠 검사, 메뉴 정리 (2026-10-30)
+
+- **Toast Gallery "표시 규칙(개수 · 시간 · 중복)"**: 열면 빈 화면이던 스토리를 규칙별 버튼과 "지금 보이는 알림: n개" 표시가 있는 상호작용 예시로 다시 만들었습니다(기존 Toast · ToastRegion · 전역 큐 그대로). play는 버튼으로 같은 규칙(중복 교체 · 최대 3개 · 5초 · 닫을 때까지)을 검사하고 마지막 토스트를 남깁니다.
+- **`verify:render` 보강**: 실제로 보이는 요소(크기 · display · visibility · opacity, 포털 포함)를 세고, 처음에 비어 있으면 첫 조작 요소를 눌러 확인하며, 1초 · 6초 뒤 콘텐츠가 남아 있는지와 문서의 Canvas 가시 여부를 검사합니다. 4개 탭 병렬. 전체 532개 항목에서 빈 화면은 Toast 표시 규칙 1건뿐이었고 수정 뒤 Chromium · Firefox · WebKit 모두 0건입니다. 문서의 Canvas는 늦게 채워지는 경우(WebKit)를 위해 최대 8초 기다린 뒤 판정하고, Firefox의 외부 글꼴 진단 메시지(Storybook 문서 테마 글꼴 · Pretendard 이름 표)는 콘텐츠 결함이 아니라 제외 목록에 이유와 함께 둡니다.
+- **Storybook 메뉴**: "Components/Chip/FilterChipSelect/Gallery"(4단계) → "Components/Chip/FilterChipSelect Gallery", Button의 Overview · States · Variants · Surface Comparison · Checks 다섯 그룹 → "Components/Button/Gallery" 하나(스토리 이름에 접두어, ID 변화 없음). 삭제한 스토리 없음.
+
 ### Motion — Rules 09 개정에 맞춘 실제 움직임 (2026-10-29)
 
 디자이너가 다시 쓴 Design System Rules 09장 "움직임"을 Figma에서 읽고 해당 컴포넌트에만 움직임을 넣었습니다. 쉬는 모양은 Figma와 그대로이고(정합성 세 엔진 통과), 색 · 펼침 · 열림 같은 나머지 상태 변화는 계속 즉시입니다. 기기의 동작 줄이기 설정에서는 이동 · 채움 · 펼침 움직임이 없고, 반복 움직임은 느려집니다(Rules 03).

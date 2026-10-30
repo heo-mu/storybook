@@ -10,7 +10,7 @@ import { PSEUDO_PARAMETERS, figmaCase, stateProps } from './story-helpers';
 // Figma "State": Default → Hover → Pressed → Disabled. Hover/Pressed are forced with
 // storybook-addon-pseudo-states; in an app they come from the real pointer (:hover / :active).
 const meta = {
-  title: "Components/Button/States",
+  title: "Components/Button/Gallery",
   id: 'components-button-states',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_PARAMETERS, controls: { disable: true } },
@@ -20,7 +20,7 @@ export default meta;
 type Story = StoryObj;
 
 export const ButtonStates: Story = {
-  name: 'Button',
+  name: 'States · Button',
   render: () => (
     <MatrixTable
       columns={BUTTON_STATES.map(figmaCase)}
@@ -37,7 +37,7 @@ export const ButtonStates: Story = {
 };
 
 export const IconButtonStates: Story = {
-  name: 'IconButton',
+  name: 'States · IconButton',
   render: () => (
     <MatrixTable
       columns={BUTTON_STATES.map(figmaCase)}
@@ -53,7 +53,7 @@ export const IconButtonStates: Story = {
 
 /** Label and icon colours also change with the state. */
 export const TextButtonStates: Story = {
-  name: 'TextButton',
+  name: 'States · TextButton',
   render: () => (
     <MatrixTable
       columns={BUTTON_STATES.map(figmaCase)}

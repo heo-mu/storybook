@@ -56,6 +56,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 
 - `TOAS-05` **react-aria Toast**: react-aria-components 1.22에서 UNSTABLE API입니다. 이 패키지의 `ToastRegion` · `showToast` · `closeToast`가 감싸므로 라이브러리가 바뀌어도 사용하는 쪽 코드는 그대로입니다. `toastQueue`(react-aria 큐 자체)는 내부 API이니 직접 쓰지 마세요.
 - `TOAS-08` **주의 정책**(2026-10-29): Rules 06 "주의" 행 — Toast Warning은 확인이 필요한 일을 잠깐(5초) 알리고, 확인할 때까지 남겨야 하면 Alert(사용 문서 · policy-details 06 동일, [figma-fix-requests AC절](../figma-fix-requests.md)).
+- `TOAS-09` **표시 규칙 스토리가 비어 있던 문제**(2026-10-30): Gallery "표시 규칙(개수 · 시간 · 중복)" 스토리는 `ToastRegion`만 그리고 play가 `showToast()`로 토스트를 띄운 뒤 끝에서 모두 닫았으므로, 사용자가 열면 빈 화면이었습니다(배포 사이트 확인). 이제 규칙마다 버튼(같은 알림 · 새 알림 · 5초 알림 · 닫을 때까지 남는 알림)과 "지금 보이는 알림: n개" 표시를 두어 직접 확인할 수 있고, play는 그 버튼으로 같은 검사를 한 뒤 마지막 토스트를 남깁니다. 기존 Toast · ToastRegion · 전역 큐를 그대로 씁니다. `verify:render`가 이런 "DOM은 있으나 보이는 것이 없는" 스토리를 잡도록 보강했습니다(아래 참고).
 
 ## 키보드
 

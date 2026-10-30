@@ -79,6 +79,14 @@ Storybook 전체(스토리 444 · 문서 87 = 531개 항목)를 기존 검증 �
 | typecheck · lint · build · build-storybook | 모두 통과(tsc -b · oxlint · vite build · storybook build) |
 | 외부 소비자 스모크 | 통과 — ESM · CJS 각 179개 export 동일, 누락 0, 10개 컴포넌트 서버 렌더링, styles · fonts · tokens CSS 하위 경로, 타입 선언 포함(패키지 번들의 secondary hover 토큰 brand/600 확인) |
 
+## 8-1. 빈 화면 · 콘텐츠 누락 전수 검사 (2026-10-30)
+
+배포 사이트의 Toast Gallery "표시 규칙" 스토리가 비어 있다는 보고로, `verify:render`를 "DOM 노드가 있는가"에서 "사용자가 실제로 보는 것이 있는가"로 바꿨습니다.
+
+- **검사 기준(scripts/render-audit.mjs)**: 스토리는 `#storybook-root`와 포털(대화상자 · 툴팁 · 팝오버 · 토스트 영역)에서 크기가 있고, 문서 안에 있으며, `display` · `visibility` · `opacity`(조상 포함)로 숨겨지지 않은 요소를 셉니다. 처음에 보이는 것이 없으면 첫 번째 조작 요소(버튼 등)를 눌러 콘텐츠가 나타나는지 확인하고(`content-after-trigger`, 정보), 그래도 없으면 `no-visible-content`(실패)입니다. 보이던 콘텐츠는 1초 · 6초 뒤에 다시 재서(토스트 5초 자동 닫힘) 사라지면 `content-vanishes`(실패)입니다. 문서 페이지는 본문 글자와 각 Canvas의 가시 콘텐츠를 확인합니다(`docs-canvas-empty`). 페이지 오류 · 콘솔 오류 · 깨진 이미지 · 글꼴 · 가로 넘침은 그대로이며, 4개 브라우저 탭으로 병렬 실행합니다.
+- **결과**: 532개(스토리 449 · 문서 83) 중 비어 있던 스토리는 Toast "표시 규칙" 1개(배포 빌드에서 `no-visible-content`로 재현). 원인은 `ToastRegion`만 그리고 play가 띄운 토스트를 끝에서 모두 닫는 구조였고, 규칙별 버튼과 보이는 개수 표시를 가진 상호작용 예시로 다시 만들었습니다. 그 밖의 "처음에 빈" 스토리는 없었고(`content-after-trigger` 0), 시간이 지나 사라지는 스토리도 없었습니다(`content-vanishes` 0). 새 정적 빌드에서 Chromium · Firefox · WebKit 모두 532개 0건(가로 넘침 정보 14건은 Figma 세트 폭의 검증 갤러리). WebKit에서 처음 보인 문서 Canvas 7건은 4개 탭 병렬 실행에서 늦게 채워진 것으로, 단일 탭에서는 2초 안에 모두 채워짐을 확인하고 최대 8초 기다리도록 했습니다.
+- **메뉴 정리**: 4단계였던 "Components/Chip/FilterChipSelect/Gallery"를 "Components/Chip/FilterChipSelect Gallery"로, Button의 다섯 갤러리 그룹(Overview · States · Variants · Surface Comparison · Checks)을 다른 컴포넌트와 같은 "Components/Button/Gallery" 하나로 모았습니다(스토리 이름에 States · / Variants · / Checks · 접두어, 스토리 ID · 검증 설정 변화 없음). 삭제한 스토리는 없고, 내부 링크 1개(Breadcrumb → DropdownMenu Usage)는 유효합니다.
+
 ## 9. 미해결 · 미검증
 
 - Figma 결정 대기: F100 대비(Secondary Solid), F102 accordion sm Expanded 그림자, F103 Rules 모순, F105–F109(이번 감사), table_value_editable Filter 변형 글자.

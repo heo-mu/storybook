@@ -12,7 +12,7 @@ import { PSEUDO_PARAMETERS, figmaCase, stateProps } from './story-helpers';
 // tokens the Component variables used before (surface/container-subtle · container · overlay, still in Figma),
 // the new one is colors/fill/tertiary/*. Story-only comparison — the component itself always uses the new tokens.
 const meta = {
-  title: "Components/Button/Surface Comparison",
+  title: "Components/Button/Gallery",
   id: 'components-button-tertiary-background',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_PARAMETERS, controls: { disable: true } },

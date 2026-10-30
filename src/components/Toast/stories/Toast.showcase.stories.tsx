@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { UNSTABLE_ToastQueue as ToastQueue } from 'react-aria-components';
 import { expect, waitFor, within } from 'storybook/test';
@@ -116,45 +117,77 @@ export const Interaction: Story = {
   },
 };
 
-/** Design System Rules 06 (2026-10-28): every toast closes after 5 s, at most 3 on screen — a 4th pushes the oldest out, duplicates replace. */
+/** Rules 06 demo: buttons for each rule and a live count of the toasts on screen (the global queue, as in an app). */
+function PolicyDemo() {
+  const [visible, setVisible] = useState(() => toastQueue.visibleToasts.length);
+  const counter = useRef(0);
+  useEffect(() => toastQueue.subscribe(() => setVisible(toastQueue.visibleToasts.length)), []);
+  return (
+    <div style={{ display: 'grid', gap: 24, paddingBottom: 200 }}>
+      <StorySection title="중복 — 같은 문구 · 종류는 겹치지 않고 다시 표시됩니다">
+        <Button onClick={() => showToast('저장했습니다', { status: 'success' })}>같은 알림 보내기</Button>
+      </StorySection>
+      <StorySection title="개수 — 한 번에 3개까지, 4번째가 오면 가장 오래된 알림이 사라집니다">
+        <Button onClick={() => showToast(`${++counter.current}번 알림`)}>새 알림 보내기</Button>
+      </StorySection>
+      <StorySection title="시간 — 모든 종류가 5초 뒤 닫히고, 닫을 때까지 남길 수도 있습니다">
+        <Button onClick={() => showToast('저장하지 못했습니다', { status: 'error' })}>오류 알림(5초)</Button>
+        <Button onClick={() => showToast('일부 항목만 저장했습니다', { status: 'warning' })}>주의 알림(5초)</Button>
+        <Button variant="secondary" appearance="outline" onClick={() => showToast('업로드 중입니다', { timeout: null })}>
+          닫을 때까지 남는 알림
+        </Button>
+      </StorySection>
+      <p data-testid="visible-count" style={{ margin: 0 }}>
+        지금 보이는 알림: {visible}개
+      </p>
+      <ToastRegion />
+    </div>
+  );
+}
+
+/**
+ * Design System Rules 06 (2026-10-28): every toast closes after 5 s, at most 3 on screen — a 4th pushes the oldest out,
+ * duplicates replace. The buttons let you try each rule; the play below checks them.
+ */
 export const Policy: Story = {
   name: '표시 규칙(개수 · 시간 · 중복)',
-  render: () => <ToastRegion />,
-  play: async ({ canvasElement, step }) => {
+  render: () => <PolicyDemo />,
+  play: async ({ canvas, canvasElement, userEvent, step }) => {
     const body = within(canvasElement.ownerDocument.body);
     const visible = () => toastQueue.visibleToasts;
     const clear = () => { for (let i = 0; i < 10 && toastQueue.visibleToasts.length; i++) toastQueue.visibleToasts.forEach((t) => closeToast(t.key)); };
-    try {
-      await step('showing the same text again replaces the visible toast (no duplicate)', async () => {
-        showToast('저장했습니다', { status: 'success' });
-        showToast('저장했습니다', { status: 'success' });
-        await waitFor(() => expect(body.getAllByText('저장했습니다')).toHaveLength(1));
-        await expect(visible()).toHaveLength(1);
-      });
-      await step('at most 3 toasts on screen; a 4th pushes the oldest out', async () => {
-        clear();
-        ['1번', '2번', '3번'].forEach((m) => showToast(m));
-        await waitFor(() => expect(visible()).toHaveLength(3));
-        showToast('4번');
-        await waitFor(() => expect(body.queryByText('1번')).not.toBeInTheDocument());
-        await expect(visible().map((t) => t.content.message)).toEqual(['4번', '3번', '2번']);
-        await expect(body.getByText('4번')).toBeVisible();
-      });
-      await step('every status closes after 5 s; timeout: null keeps a toast until closed', async () => {
-        clear();
-        const err = showToast('저장하지 못했습니다', { status: 'error' });
-        const warn = showToast('일부 항목만 저장했습니다', { status: 'warning' });
-        const sticky = showToast('업로드 중입니다', { timeout: null });
-        await waitFor(() => expect(visible().length).toBe(3));
-        await expect(visible().find((t) => t.key === err)?.timeout).toBe(5000);
-        await expect(visible().find((t) => t.key === warn)?.timeout).toBe(5000);
-        await expect(visible().find((t) => t.key === sticky)?.timeout).toBeUndefined();
-        await expect(showToast('짧게', { timeout: 1000 })).toBeTruthy();
-        await expect(visible()[0].timeout).toBe(5000);
-      });
-    } finally {
+    clear();
+    await step('showing the same text again replaces the visible toast (no duplicate)', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: '같은 알림 보내기' }));
+      await userEvent.click(canvas.getByRole('button', { name: '같은 알림 보내기' }));
+      await waitFor(() => expect(body.getAllByText('저장했습니다')).toHaveLength(1));
+      await expect(visible()).toHaveLength(1);
+      await expect(canvas.getByTestId('visible-count')).toHaveTextContent('1개');
+    });
+    await step('at most 3 toasts on screen; a 4th pushes the oldest out', async () => {
       clear();
-    }
+      for (let i = 0; i < 3; i++) await userEvent.click(canvas.getByRole('button', { name: '새 알림 보내기' }));
+      await waitFor(() => expect(visible()).toHaveLength(3));
+      await expect(canvas.getByTestId('visible-count')).toHaveTextContent('3개');
+      await userEvent.click(canvas.getByRole('button', { name: '새 알림 보내기' }));
+      await waitFor(() => expect(body.queryByText('1번 알림')).not.toBeInTheDocument());
+      await expect(visible().map((t) => t.content.message)).toEqual(['4번 알림', '3번 알림', '2번 알림']);
+      await expect(body.getByText('4번 알림')).toBeVisible();
+    });
+    await step('every status closes after 5 s; timeout: null keeps a toast until closed', async () => {
+      clear();
+      await userEvent.click(canvas.getByRole('button', { name: '오류 알림(5초)' }));
+      await userEvent.click(canvas.getByRole('button', { name: '주의 알림(5초)' }));
+      await userEvent.click(canvas.getByRole('button', { name: '닫을 때까지 남는 알림' }));
+      await waitFor(() => expect(visible().length).toBe(3));
+      await expect(visible().find((t) => t.content.message === '저장하지 못했습니다')?.timeout).toBe(5000);
+      await expect(visible().find((t) => t.content.message === '일부 항목만 저장했습니다')?.timeout).toBe(5000);
+      await expect(visible().find((t) => t.content.message === '업로드 중입니다')?.timeout).toBeUndefined();
+      // a timeout shorter than the rule is raised to 5 s
+      await expect(showToast('짧게', { timeout: 1000 })).toBeTruthy();
+      await expect(visible()[0].timeout).toBe(5000);
+    });
+    // The sticky toast and the buttons stay on screen so the rules can be tried by hand.
   },
 };
 

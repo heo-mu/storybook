@@ -10,7 +10,7 @@ import { motionSettled } from '../../../storybook/motion';
 // Interaction and application examples of FilterChipSelect (not in the MCP manifest) — Figma "chip-filter 선택 예시"
 // (1011:12956, multiple) and "단일 선택 예시" (Design System Rules 07).
 const meta = {
-  title: "Components/Chip/FilterChipSelect/Gallery",
+  title: "Components/Chip/FilterChipSelect Gallery",
   id: 'components-chip-filterchipselect-showcase',
   tags: ['!manifest'],
   parameters: { controls: { disable: true } },

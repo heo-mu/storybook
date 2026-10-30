@@ -11,7 +11,7 @@ import { FIGMA_TEXT_BUTTON_TYPE, PSEUDO_PARAMETERS, figmaCase, stateProps } from
 // Every Figma variant of the Button frame rendered by the real components. Each element carries
 // `data-figma` with the exact Figma variant name (used by scripts/verify-button.mjs).
 const meta = {
-  title: "Components/Button/Variants",
+  title: "Components/Button/Gallery",
   id: 'components-button-variant-matrix',
   tags: ['!manifest'],
   parameters: { ...PSEUDO_PARAMETERS, controls: { disable: true } },
@@ -29,7 +29,7 @@ const expectVariantCount = (count: number) => async ({ canvasElement }: { canvas
 
 /** 종류·크기·모양·상태에 따른 버튼 표현을 비교합니다. */
 export const ButtonMatrix: Story = {
-  name: 'Button',
+  name: 'Variants · Button',
   render: () => (
     <MatrixTable
       columns={BUTTON_SIZES.flatMap((size) => BUTTON_SHAPES.map((shape) => `${size} · ${figmaCase(shape)}`))}
@@ -61,7 +61,7 @@ export const ButtonMatrix: Story = {
 
 /** 종류·크기·모양·상태에 따른 버튼 표현을 비교합니다. */
 export const IconButtonMatrix: Story = {
-  name: 'IconButton',
+  name: 'Variants · IconButton',
   render: () => (
     <MatrixTable
       columns={ICON_BUTTON_SIZES.flatMap((size) => BUTTON_SHAPES.map((shape) => `${size} · ${figmaCase(shape)}`))}
@@ -91,7 +91,7 @@ export const IconButtonMatrix: Story = {
 
 /** 종류·크기·모양·상태에 따른 버튼 표현을 비교합니다. */
 export const TextButtonMatrix: Story = {
-  name: 'TextButton',
+  name: 'Variants · TextButton',
   render: () => (
     <MatrixTable
       columns={[...TEXT_BUTTON_SIZES]}
