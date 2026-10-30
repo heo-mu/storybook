@@ -7,6 +7,18 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Table — 일부 선택 상태의 전체 선택 체크박스는 모두 해제 (2026-10-30)
+
+- **원인**: 머리글 체크박스가 react-aria의 전체 선택 핸들러(`toggleSelectAll`)를 그대로 썼습니다. 이 핸들러는 모든 행이 선택되었을 때만 해제하고
+  그 밖에는 모두 선택하므로, 일부만 선택된 상태(Indeterminate)에서 누르면 전체 선택이 되었습니다. Figma Design System Rules 04 "선택 · 삭제"
+  ("일부만 선택된 타이틀의 체크박스를 누르면 선택이 제외됩니다")와 달랐습니다 — Figma 규칙은 그대로 맞으므로 Figma는 바꾸지 않았습니다.
+- **수정**(`TableSelectionColumn`만): 일부 선택 상태에서 누르면 react-aria `clearSelection()` — 체크된 머리글을 누를 때 react-aria가 쓰는 것과 같은 해제라
+  제어(`selectedKeys` + `onSelectionChange`) · 비제어 표, 비활성 행, `disallowEmptySelection`이 기존과 같습니다. 빈 머리글 → 모두 선택(비활성 행 제외),
+  체크된 머리글 → 모두 해제는 그대로. 마우스 · Space(Tab 또는 방향키로 이동) 같음. 공통 Checkbox · 행 체크박스 · Props · 디자인 변화 없음.
+- **스토리 · 검증**: 사용 스토리 "Selection"(제어 표, 비활성 행, "n개 선택됨") — play가 일부 선택 → 해제, 빈 → 모두 선택, 모두 → 해제, 행 선택에 따른 머리글
+  상태, Space를 검사합니다. Gallery "Interaction"(비제어)과 실제 브라우저 흐름(`verify:interaction` Table)은 새 규칙으로 바꿨습니다 — 이전 검사는
+  "일부 선택 → 모두 선택"을 기대하고 있었습니다. 수정 전 코드로 되돌리면 두 스토리가 실패하는 것을 확인했습니다.
+
 ### Password Field — Figma 눈 아이콘 동기화 (2026-10-30)
 
 - **Figma 변경 확인**: `password_field`(1440:8466)의 눈 아이콘이 아이콘 라이브러리 인스턴스(`icon_size` › `icon/Eye` · `icon/Eye-close`)로 바뀌었습니다.

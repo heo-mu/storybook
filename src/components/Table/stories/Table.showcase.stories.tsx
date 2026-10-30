@@ -249,12 +249,20 @@ export const Interaction: StoryObj<{ onRowAction: Mock<(key: unknown) => void> }
       await userEvent.click(within(rows[2]).getByText('2호기 공조'));
       await expect(args.onRowAction).toHaveBeenCalledWith('2');
     });
-    await step('the row checkbox selects the row, the header checkbox selects all', async () => {
-      const boxes = within(grid).getAllByRole('checkbox');
+    await step('the row checkbox selects the row; the header box clears a partial selection, then selects all, then clears (Rules 04)', async () => {
+      const boxes = within(grid).getAllByRole('checkbox') as HTMLInputElement[];
+      const selected = () => within(grid).getAllByRole('row').slice(1).filter((r) => r.getAttribute('aria-selected') === 'true').length;
       await userEvent.click(boxes[1]);
       await expect(rows[1]).toHaveAttribute('aria-selected', 'true');
+      await waitFor(() => expect(boxes[0].indeterminate).toBe(true));
       await userEvent.click(boxes[0]);
-      await waitFor(() => expect(within(grid).getAllByRole('row').slice(1).every((r) => r.getAttribute('aria-selected') === 'true')).toBe(true));
+      await waitFor(() => expect(selected()).toBe(0));
+      await expect(boxes[0].checked || boxes[0].indeterminate).toBe(false);
+      await userEvent.click(boxes[0]);
+      await waitFor(() => expect(selected()).toBe(ROWS.length));
+      await expect(boxes[0].checked).toBe(true);
+      await userEvent.click(boxes[0]);
+      await waitFor(() => expect(selected()).toBe(0));
     });
   },
 };

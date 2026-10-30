@@ -50,6 +50,15 @@ import { Table, TableColumn, TableCell, KeyValueItem } from './Table';
 - 편집 칸은 평소에는 글자처럼 보이고, 마우스를 올리거나 편집하는 동안 입력 상자가 나타납니다.
 - `KeyValueItem`의 `disabled`는 칸 배경을 비활성으로 바꿉니다. 안의 입력 컴포넌트에는 `disabled`를 따로 줍니다.
 
+## 행 선택
+
+<Canvas of={TableStories.Selection} />
+
+- 머리글의 전체 선택 체크박스는 아무 행도 선택되지 않았을 때 누르면 모두 선택하고, 모두 선택되었거나 일부만 선택되었을 때(일부 선택 표시) 누르면 모두 해제합니다. 마우스와 키보드(Space)가 같습니다.
+- 행을 선택하거나 해제하면 머리글 체크박스가 따라 바뀝니다 — 선택이 없으면 빈 상자, 일부면 일부 선택 표시, 선택할 수 있는 행이 모두 선택되면 체크입니다.
+- 비활성 행(`disabledKeys`)은 선택되지 않고 전체 선택에도 포함되지 않습니다.
+- 선택 상태를 앱에서 관리하려면 `selectedKeys`와 `onSelectionChange`를 함께 넘깁니다.
+
 ## 사용 예시
 
 <Source

@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import type { Selection as SelectionKeys } from 'react-aria-components';
+import { expect, fn, waitFor, within, type Mock } from 'storybook/test';
 import { KeyValueItem, KeyValueTable, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, TableSelectionCell, TableSelectionColumn } from './Table';
 import { Badge } from '../Badge';
 import { Button } from '../Button';
@@ -69,6 +71,126 @@ export const Playground: Story = { name: "Playground" };
 export const WithoutSelection: Story = {
   name: "Without Selection",
   args: { selectionMode: 'none' },
+};
+
+const SELECTION_ROWS = [
+  { id: '1', name: '1호기 공조', site: '본관', status: '운영' },
+  { id: '2', name: '2호기 공조', site: '별관', status: '점검' },
+  { id: '3', name: '3호기 냉동기', site: '본관', status: '운영' },
+  { id: '4', name: '4호기 보일러', site: '별관', status: '점검' },
+];
+const DISABLED_ROWS = ['4'];
+
+/**
+ * 머리글의 전체 선택 체크박스는 아무 행도 선택되지 않았을 때 누르면 모두 선택하고, 모두 또는 일부만 선택되었을 때(일부 선택 표시) 누르면
+ * 모두 해제합니다. 행을 선택하거나 해제하면 머리글 체크박스가 따라 바뀝니다. 비활성 행(4호기)은 선택되지 않습니다.
+ * 선택 상태를 앱에서 관리할 때는 `selectedKeys`와 `onSelectionChange`를 함께 넘깁니다.
+ */
+export const Selection: Story = {
+  name: "Selection",
+  render: function SelectionTable(args) {
+    const [selected, setSelected] = useState<SelectionKeys>(new Set(['2']));
+    const count = selected === 'all' ? SELECTION_ROWS.length - DISABLED_ROWS.length : selected.size;
+    return (
+      <div style={{ display: 'grid', gap: 8 }}>
+        <Table
+          {...args}
+          selectionMode="multiple"
+          selectedKeys={selected}
+          disabledKeys={DISABLED_ROWS}
+          onSelectionChange={(keys) => {
+            setSelected(keys);
+            args.onSelectionChange?.(keys);
+          }}
+        >
+          <TableHeader>
+            <TableSelectionColumn />
+            <TableColumn isRowHeader>설비명</TableColumn>
+            <TableColumn>위치</TableColumn>
+            <TableColumn>상태</TableColumn>
+          </TableHeader>
+          <TableBody items={SELECTION_ROWS}>
+            {(row) => (
+              <TableRow id={row.id}>
+                <TableSelectionCell />
+                <TableCell variant="strong">{row.name}</TableCell>
+                <TableCell>{row.site}</TableCell>
+                <TableCell>
+                  <Badge dot={false} status={row.status === '운영' ? 'success' : 'warning'}>
+                    {row.status}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <p role="status" style={{ margin: 0, font: 'var(--typography-sm-leading-normal-normal-font-weight) var(--typography-sm-leading-normal-normal-font-size) / var(--typography-sm-leading-normal-normal-line-height) var(--typography-sm-leading-normal-normal-font-family), sans-serif', color: 'var(--colors-text-secondary)' }}>
+          {count}개 선택됨
+        </p>
+      </div>
+    );
+  },
+  play: async ({ args, canvasElement, userEvent, step }) => {
+    const canvas = within(canvasElement);
+    const grid = canvas.getByRole('grid');
+    await waitFor(() => expect(within(grid).getAllByRole('row')).toHaveLength(1 + SELECTION_ROWS.length));
+    const all = () => within(grid).getByRole('checkbox', { name: '모두 선택' }) as HTMLInputElement;
+    const rowBox = (i: number) => within(within(grid).getAllByRole('row')[i + 1]).getByRole('checkbox') as HTMLInputElement;
+    const selectedRows = () => within(grid).getAllByRole('row').slice(1).filter((r) => r.getAttribute('aria-selected') === 'true').length;
+    const header = async (state: 'checked' | 'unchecked' | 'indeterminate') => {
+      await waitFor(() => expect({ checked: all().checked, indeterminate: all().indeterminate }).toEqual({ checked: state === 'checked', indeterminate: state === 'indeterminate' }));
+    };
+    const status = () => canvas.getByRole('status');
+
+    await step('one row selected → header shows indeterminate', async () => {
+      await header('indeterminate');
+      await expect(selectedRows()).toBe(1);
+      await expect(rowBox(3)).toBeDisabled();
+    });
+    await step('indeterminate header click → every row cleared', async () => {
+      await userEvent.click(all());
+      await header('unchecked');
+      await expect(selectedRows()).toBe(0);
+      await expect(status()).toHaveTextContent('0개 선택됨');
+      // controlled: onSelectionChange receives an empty selection (react-aria passes its Set subclass)
+      const last = (args.onSelectionChange as Mock<(keys: SelectionKeys) => void>).mock.lastCall?.[0];
+      await expect(last instanceof Set && last.size === 0).toBe(true);
+    });
+    await step('unchecked header click → every selectable row selected (disabled row stays unselected)', async () => {
+      await userEvent.click(all());
+      await header('checked');
+      await expect(selectedRows()).toBe(3);
+      await expect(rowBox(3).checked).toBe(false);
+      await expect(status()).toHaveTextContent('3개 선택됨');
+    });
+    await step('checked header click → every row cleared', async () => {
+      await userEvent.click(all());
+      await header('unchecked');
+      await expect(selectedRows()).toBe(0);
+    });
+    await step('row checkboxes update the header: some → indeterminate, all selectable → checked', async () => {
+      await userEvent.click(rowBox(0));
+      await header('indeterminate');
+      await userEvent.click(rowBox(1));
+      await userEvent.click(rowBox(2));
+      await header('checked');
+      await userEvent.click(rowBox(2));
+      await header('indeterminate');
+      await expect(status()).toHaveTextContent('2개 선택됨');
+    });
+    await step('Space on the header checkbox does the same: indeterminate → cleared → all → cleared', async () => {
+      all().focus();
+      await userEvent.keyboard(' ');
+      await header('unchecked');
+      await expect(selectedRows()).toBe(0);
+      await userEvent.keyboard(' ');
+      await header('checked');
+      await expect(selectedRows()).toBe(3);
+      await userEvent.keyboard(' ');
+      await header('unchecked');
+      await expect(selectedRows()).toBe(0);
+    });
+  },
 };
 
 /** 한 항목의 속성을 이름과 값으로 보여 주는 키-값 표입니다. */

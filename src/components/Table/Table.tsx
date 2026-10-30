@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { useContext, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import {
   Button,
   Cell,
@@ -8,6 +8,7 @@ import {
   Table as RACTable,
   TableBody as RACTableBody,
   TableHeader as RACTableHeader,
+  TableStateContext,
   useSlottedContext,
   type CellProps,
   type ColumnProps,
@@ -73,11 +74,14 @@ export function TableColumn({ children, info, infoLabel = '도움말', className
   );
 }
 
-/** 전체 선택 체크박스 열입니다. `selectionMode="multiple"`일 때 씁니다. */
+/**
+ * 전체 선택 체크박스 열입니다. `selectionMode="multiple"`일 때 씁니다.
+ * 아무 행도 선택되지 않았을 때 누르면 모두 선택, 모두 또는 일부만 선택되었을 때 누르면 모두 해제합니다(Rules 04).
+ */
 export function TableSelectionColumn({ className, ...rest }: { className?: string; [dataAttribute: `data-${string}`]: string | undefined }) {
   return (
     <Column {...rest} className={cx('ds-table__column', className)} data-type="checkbox">
-      <TableCheckbox />
+      <TableCheckbox selectAll />
     </Column>
   );
 }
@@ -145,17 +149,26 @@ export function TableDragHandle({ 'aria-label': ariaLabel = '순서 이동' }: {
 }
 
 /** The design-system Checkbox driven by react-aria's table selection (slot "selection"). */
-function TableCheckbox() {
+function TableCheckbox({ selectAll = false }: { selectAll?: boolean }) {
   const ctx = useSlottedContext(CheckboxContext, 'selection');
+  const state = useContext(TableStateContext);
   if (!ctx) return null;
+  const indeterminate = Boolean(ctx.isIndeterminate);
   return (
     <Checkbox
       size="md"
       checked={Boolean(ctx.isSelected)}
-      indeterminate={Boolean(ctx.isIndeterminate)}
+      indeterminate={indeterminate}
       disabled={ctx.isDisabled}
       aria-label={ctx['aria-label']}
-      onChange={(event) => ctx.onChange?.(event.target.checked)}
+      onChange={(event) => {
+        // Design System Rules 04 "선택 · 삭제": a partly selected header box clears the selection. react-aria's
+        // select-all handler (toggleSelectAll) selects every row unless all are selected, so the mixed state is
+        // cleared here — with the same clearSelection() react-aria uses for a fully selected header, so controlled
+        // (onSelectionChange) and uncontrolled tables, disabled rows and disallowEmptySelection behave as before.
+        if (selectAll && indeterminate && state) state.selectionManager.clearSelection();
+        else ctx.onChange?.(event.target.checked);
+      }}
       // A real pointer click must not reach the column header / row press handlers: react-aria's usePress calls
       // preventDefault() on the click when the column is not sortable, and the browser then reverts the native
       // checkbox — the select-all box showed the opposite of the selection (2026-10-28 real-browser audit).

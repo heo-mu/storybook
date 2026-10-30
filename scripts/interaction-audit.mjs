@@ -37,6 +37,9 @@ const expect = (cond, msg) => { if (!cond) throw new Error(msg); };
 const root = () => page.locator('#storybook-root');
 const active = () => page.evaluate(() => { const a = document.activeElement; return a ? { tag: a.tagName, role: a.getAttribute('role'), name: a.getAttribute('aria-label') || a.textContent?.trim().slice(0, 40), id: a.id } : null; });
 const sleep = (ms) => page.waitForTimeout(ms);
+// A story's play function runs when the page opens; wait until Storybook reports the render as completed before
+// driving it, so the flow does not race the play.
+const playDone = () => page.waitForFunction(() => ['finished', 'completed', 'errored', 'aborted'].includes(window.__STORYBOOK_PREVIEW__?.currentRender?.phase), null, { timeout: 20000 });
 
 const flows = {
   async 'Select — pointer: open, choose, close'() {
@@ -357,24 +360,63 @@ const flows = {
     await story('components-fileuploader-fileuploaderitem--failed');
     expect((await root().getByRole('button', { name: /삭제|제거|remove/i }).count()) >= 1, 'failed item has no remove button');
   },
-  async 'Table — row selection with checkboxes, select-all, header sort state'() {
+  async 'Table — row selection with checkboxes, select-all (indeterminate clears), header sort state'() {
     await story('components-table-table--playground');
     const rows = root().getByRole('row');
     const firstRowBox = root().getByRole('checkbox', { name: '선택', exact: true }).first();
     await firstRowBox.click();
     expect(await firstRowBox.isChecked(), 'row checkbox not checked');
     const all = root().getByRole('checkbox', { name: '모두 선택' });
-    expect((await all.getAttribute('aria-checked')) === 'mixed' || (await all.evaluate((e) => e.indeterminate)), 'select-all is not indeterminate with one row selected');
+    const header = () => all.evaluate((e) => (e.indeterminate ? 'indeterminate' : e.checked ? 'checked' : 'unchecked'));
+    const rowBoxes = () => root().getByRole('checkbox', { name: '선택', exact: true });
+    const checkedRows = () => root().getByRole('checkbox', { name: '선택', exact: true, checked: true }).count();
+    const totalRows = await rowBoxes().count();
+    // Rules 04 "선택 · 삭제": unchecked header → select all, checked → clear, indeterminate (some rows) → clear
+    expect((await header()) === 'indeterminate', 'select-all is not indeterminate with one row selected');
     await all.click();
     await sleep(100);
-    const totalRows = await root().getByRole('checkbox', { name: '선택', exact: true }).count();
-    const checkedRows = await root().getByRole('checkbox', { name: '선택', exact: true, checked: true }).count();
-    expect(checkedRows === totalRows, `select-all left ${checkedRows}/${totalRows} rows`);
-    expect(await all.isChecked(), 'select-all box does not show checked while every row is selected');
+    expect((await checkedRows()) === 0 && (await header()) === 'unchecked', `indeterminate select-all click left ${await checkedRows()}/${totalRows} rows (${await header()})`);
     await all.click();
     await sleep(100);
-    expect((await root().getByRole('checkbox', { name: '선택', exact: true, checked: true }).count()) === 0, 'second select-all click did not clear the selection');
-    expect(!(await all.isChecked()), 'select-all box still checked after clearing');
+    expect((await checkedRows()) === totalRows && (await header()) === 'checked', `unchecked select-all click left ${await checkedRows()}/${totalRows} rows (${await header()})`);
+    await all.click();
+    await sleep(100);
+    expect((await checkedRows()) === 0 && (await header()) === 'unchecked', 'checked select-all click did not clear the selection');
+    // keyboard: Space on the header box follows the same rules
+    await rowBoxes().first().click();
+    await sleep(100);
+    expect((await header()) === 'indeterminate', 'header not indeterminate after selecting one row again');
+    await all.focus();
+    await page.keyboard.press('Space');
+    await sleep(100);
+    expect((await checkedRows()) === 0 && (await header()) === 'unchecked', 'Space on the indeterminate header did not clear');
+    await page.keyboard.press('Space');
+    await sleep(100);
+    expect((await checkedRows()) === totalRows && (await header()) === 'checked', 'Space on the unchecked header did not select all');
+    await page.keyboard.press('Space');
+    await sleep(100);
+    expect((await checkedRows()) === 0 && (await header()) === 'unchecked', 'Space on the checked header did not clear');
+    // controlled table with a disabled row (its play ends with nothing selected): some rows → indeterminate → clear,
+    // then select all skips the disabled row
+    await story('components-table-table--selection');
+    await playDone();
+    expect(['finished', 'completed'].includes(await page.evaluate(() => window.__STORYBOOK_PREVIEW__.currentRender.phase)), 'Selection story play did not finish (errored or aborted)');
+    const ctrlAll = root().getByRole('checkbox', { name: '모두 선택' });
+    const ctrlHeader = () => ctrlAll.evaluate((e) => (e.indeterminate ? 'indeterminate' : e.checked ? 'checked' : 'unchecked'));
+    const ctrlChecked = () => root().getByRole('checkbox', { name: '선택', exact: true, checked: true }).count();
+    const disabledBox = root().getByRole('checkbox', { name: '선택', exact: true }).last();
+    expect((await ctrlHeader()) === 'unchecked' && (await ctrlChecked()) === 0 && (await disabledBox.isDisabled()), `Selection story did not end with nothing selected and a disabled last row (${await ctrlHeader()}, ${await ctrlChecked()})`);
+    await root().getByRole('checkbox', { name: '선택', exact: true }).first().click();
+    await sleep(100);
+    expect((await ctrlHeader()) === 'indeterminate', 'controlled: header not indeterminate with one row selected');
+    await ctrlAll.click();
+    await sleep(100);
+    expect((await ctrlChecked()) === 0 && (await ctrlHeader()) === 'unchecked', 'controlled: indeterminate click did not clear');
+    await ctrlAll.click();
+    await sleep(100);
+    expect((await ctrlChecked()) === 3 && !(await disabledBox.isChecked()) && (await ctrlHeader()) === 'checked', `controlled: select all gave ${await ctrlChecked()} rows (disabled row checked: ${await disabledBox.isChecked()})`);
+    expect((await root().getByRole('status').textContent()).includes('3개 선택됨'), 'controlled: selection count text not updated');
+    await story('components-table-table--playground');
     const headers = root().getByRole('columnheader');
     const sortable = await headers.evaluateAll((hs) => hs.filter((h) => h.hasAttribute('aria-sort')).map((h) => h.textContent.trim()));
     if (sortable.length) {

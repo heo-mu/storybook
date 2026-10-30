@@ -107,6 +107,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `TABL-01` **관리 모드 상태**: 칸에 마우스가 있거나 포커스 · 열린 목록이 있으면 입력 상자를 보여 줍니다. Hover에서는 입력 상자의 기본(Default · Completed) 테두리를 씁니다(Rules 07 · table_value_editable 주석).
 - `TABL-05` **선택된 행**: 배경 강조 없이 체크박스로만 표시합니다(Rules 07).
 - `TABL-11` **전체 선택 체크박스의 실제 클릭**(2026-10-28 실제 브라우저 감사에서 수정): 머리글 열은 정렬이 없으면 react-aria `usePress`가 비활성 상태로 클릭의 기본 동작을 막아(`preventDefault`) 브라우저가 네이티브 체크박스를 되돌렸습니다 — 전체 선택이 눌러도 체크 표시가 반대로 보이고 두 번째 클릭이 해제되지 않았습니다(스토리 테스트의 합성 이벤트에서는 드러나지 않음). `TableCheckbox`가 `onClick`에서 전파를 멈춰 머리글 · 행의 press 처리에 닿지 않게 했습니다. 행 체크박스 · 전체 선택 · 해제를 실제 포인터로 검증(`npm run verify:interaction`).
+- `TABL-15` **일부 선택 상태의 전체 선택 체크박스**(2026-10-30, Rules 04 "선택 · 삭제" — "일부만 선택된 타이틀의 체크박스를 누르면 선택이 제외됩니다"): 빈 머리글을 누르면 모두 선택, 모두 또는 일부만 선택된 머리글을 누르면 모두 해제합니다. react-aria의 전체 선택 핸들러(`toggleSelectAll`)는 모든 행이 선택되었을 때만 해제하고 나머지는 모두 선택해서, 일부 선택(Indeterminate)에서 누르면 전체 선택이 되었습니다. `TableSelectionColumn`의 체크박스만 일부 선택 상태에서 react-aria `clearSelection()`을 부릅니다 — 체크된 머리글의 해제와 같은 함수라 제어 · 비제어 표, 비활성 행, `disallowEmptySelection`이 기존과 같고, 마우스 · Space(Tab · 방향키로 이동) 모두 같습니다. 공통 Checkbox와 행 체크박스는 바꾸지 않았습니다. Figma 규칙과 이미 같아 Figma는 변경 없음.
 - `TABL-06` **정렬 방향 아이콘**: 아이콘은 CaretUpDown 하나 — 방향은 `aria-sort`로 전달하고 활성 열 아이콘만 `header/icon/active` 색입니다(Rules 07).
 - `TABL-07` **편집 아이콘(Type Icon)**: 누를 수 있게 하려면 버튼으로 감싸고 이름을 주세요(Rules 03).
 - `TABL-08` **포커스**: 행 · 칸 · 열 머리글은 키보드 포커스일 때 안쪽 가장자리에 2px `colors/border/focus` 링(Rules 02 — Table에는 Figma `Focus` 속성이 없어 규칙이 기준).
