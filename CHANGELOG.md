@@ -7,6 +7,20 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Badge Count — 숫자 가운데 정렬 (2026-10-30)
+
+- **원인**: 숫자 글자 상자가 왼쪽 정렬이었습니다(Figma · 코드 같음). 글자 상자는 정수 픽셀로 올림되므로(Figma 자동 폭, 코드 `calc-size`) 올림한 나머지가
+  모두 오른쪽에 남아 숫자가 왼쪽으로 치우쳤습니다 — Chromium 1배 화면에서 최대 1px, 2배에서 0.75px.
+- **Figma 먼저**: `badge_count` 숫자 글자 14개의 가로 정렬 Left → Center(상자 · 텍스트 스타일 · 색 · 크기 그대로, [figma-fix-requests AF절](docs/figma-fix-requests.md)).
+  참조 이미지 다시 내보냄(바뀐 픽셀은 모두 글자 상자 안).
+- **코드**: `.ds-badge-count__label { text-align: center }` — 나머지가 양쪽으로 나뉩니다. 고정 여백 · 이동 보정 없음. 배지 폭 · 높이 · 색 · 글꼴 · 모서리 · 상태와
+  공개 Props는 그대로입니다. Firefox · WebKit은 `calc-size`가 없어 글자 상자가 원래 글자 폭이므로 전과 같습니다.
+- **결과**(1 · 3 · 9 · 10 · 99 · 99+ · 999+, Danger · Basic · Gray, 잉크 기준 최대 치우침): Chromium 1배 1.00 → 0.50px(99+ · 999+는 홀수 폭의 픽셀 한계),
+  2배 0.75 → 0.25px, 4배 0.75 → 0.38px("1"의 글리프 옆 여백 — Figma도 0.25px). Figma 대비 글자 위치 |dx| 0.31 → 0.03px.
+  세로는 12px 줄 상자가 정확히 가운데(위 2 · 아래 2)이고, 숫자는 Pretendard 기준선 때문에 0.4–0.5px 아래 — Figma(0.375px)와 같아 바꾸지 않았습니다(figma-issues F116).
+- **스토리**: Badge Gallery "Count Digits" — play가 라벨 상자와 글자의 가운데(엔진 배치 단위 1/60px 이내), 높이 16, `calc-size` 지원 시 정수 폭을 검사합니다.
+  가운데 정렬을 빼면 실패하는 것을 확인했습니다.
+
 ### Storybook 빈 화면 전수 검사 — Toast 표시 규칙 예시, 가시 콘텐츠 검사, 메뉴 정리 (2026-10-30)
 
 - **Toast Gallery "표시 규칙(개수 · 시간 · 중복)"**: 열면 빈 화면이던 스토리를 규칙별 버튼과 "지금 보이는 알림: n개" 표시가 있는 상호작용 예시로 다시 만들었습니다(기존 Toast · ToastRegion · 전역 큐 그대로). play는 버튼으로 같은 규칙(중복 교체 · 최대 3개 · 5초 · 닫을 때까지)을 검사하고 마지막 토스트를 남깁니다.

@@ -16,7 +16,7 @@
 | button (Button) | ✓ button_basic 54:2904 · 192/192 (2026-10-28 저녁 Secondary Solid Hover · Pressed brand/800 · 900, 2026-10-29 Tertiary Solid 배경 Component 토큰)<br>button_icon 67:2368 · 144/144<br>button_text 432:8395 · 16/16 | ✓ | ✓ 352/352 / 352/352 / 352/352 | ✓ play 8 · 스토리 24 | ✓ 경고 0 | ✓ |
 | accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 (2026-10-28 펼침 하단 구분선 · 트리거 모서리 4px 동기화, 저녁 sm Default Expanded 외톨이 그림자 제거 F102) | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | alert (Alert) | ✓ alert 179:6087 · 3/3 (2026-10-29 레이어 이름 정리) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
-| badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 1 · 스토리 9 | ✓ 경고 0 | ✓ |
+| badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 (2026-10-30 숫자 가운데 정렬) | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | breadcrumb (Breadcrumb) | ✓ breadcrumb-item 710:4794 · 8/8 (Role=Open 삭제, 2026-10-27)<br>breadcrumb 712:5106 · 6/6 (2026-10-29 메뉴 펼침 · 닫힘 모션) | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | card (Card) | ✓ card_header 218:7173 · 1/1<br>card_footer 218:7174 · 1/1<br>card 185:8050 (예시 프레임, 2026-10-28 Content placeholder → surface/container) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
 | chart (Chart) | ✓ chart 698:4399 · 24/24<br>chart-legend-item 697:4514 · 3/3<br>chart-tooltip 693:9776 · 1/1 | ✓ | ✓ 28/28 / 28/28 / 28/28 | ✓ play 8 · 스토리 16 | ✓ 경고 0 | ✓ |

@@ -62,6 +62,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - 상태 색은 `colors/badge/status/{filled|outline}/*` 변수를 씁니다.
 - `BadgeDot`은 `aria-label`이 없으면 `aria-hidden`, 있으면 `role="img"`로 렌더링됩니다.
 - `BadgeCount`의 Figma Digits Single · Multiple은 숫자에 따라 정해지며, Multiple은 "99+"(`{max}+`)입니다.
+- `BadgeCount`의 숫자는 글자 상자 안에서 가운데 정렬입니다(Figma 글자 정렬 Center, 2026-10-30). 글자 상자를 정수 픽셀로 올림한 나머지가 양쪽으로 나뉘어 1 · 10 · 99+ · 999+ 모두 배지 가운데에 놓입니다. 세로는 12px 줄 상자가 가운데이고, 숫자는 Pretendard 기준선 때문에 약 0.4px 아래에 보입니다(Figma와 같음, figma-issues F116).
 
 
 ## Storybook 검증 예시의 내부 참고
@@ -71,3 +72,4 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `Badge.showcase.stories.tsx / StatusMatrix`: Figma `badge_status` (84): Status × Appearance × Size × Shape.
 - `Badge.showcase.stories.tsx / DotMatrix`: Figma `badge_dot` (21): Status × Size.
 - `Badge.showcase.stories.tsx / CountMatrix`: Figma `badge_count` (14): Status × Digits (Single "1", Multiple "99+").
+- `Badge.showcase.stories.tsx / CountDigits`: 자릿수 1 · 3 · 9 · 10 · 99 · 99+ · 999+ × Danger · Basic · Gray — play가 라벨 상자와 글자의 가로 · 세로 가운데를 검사.

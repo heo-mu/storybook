@@ -230,6 +230,12 @@
   white-space: nowrap;
 }
 
+/* Figma centres the count in its text box (textAlignHorizontal CENTER, docs/figma-fix-requests.md AF), so the
+   slack left by rounding the box up to a whole pixel is split evenly instead of all landing on the right. */
+.ds-badge-count__label {
+  text-align: center;
+}
+
 .ds-badge-count[data-status='basic'] {
   --_bg: var(--colors-badge-count-background-basic);
 }

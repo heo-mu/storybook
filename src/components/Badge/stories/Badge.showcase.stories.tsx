@@ -102,6 +102,47 @@ export const CountMatrix: Story = {
   ),
 };
 
+const DIGIT_CASES: { count: number; max?: number }[] = [{ count: 1 }, { count: 3 }, { count: 9 }, { count: 10 }, { count: 99 }, { count: 100 }, { count: 1000, max: 999 }];
+
+/**
+ * 자릿수별 숫자 배지(1 · 3 · 9 · 10 · 99 · 99+ · 999+). 숫자는 배지의 가로 · 세로 가운데에 놓입니다.
+ * The play checks that the label box sits in the middle of the badge and the text in the middle of the label box
+ * (Figma textAlignHorizontal CENTER). Where calc-size is supported the label, and so the badge, is a whole pixel wide.
+ */
+export const CountDigits: Story = {
+  name: "Count Digits",
+  render: () => (
+    <div style={{ display: 'grid', gap: 12 }}>
+      {(['danger', 'basic', 'gray'] as const).map((status) => (
+        <div key={status} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          {DIGIT_CASES.map(({ count, max }) => (
+            <BadgeCount key={count} status={status} count={count} max={max} data-testid={`${status}-${count}`} />
+          ))}
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const wholePixel = CSS.supports('width', 'calc-size(fit-content, round(up, size, 1px))');
+    // centred to one layout unit: Gecko lays out in 1/60px, Blink and WebKit in 1/64px (+ float error)
+    const centred = (a: number, b: number) => expect(Math.abs(a - b)).toBeLessThanOrEqual(1 / 60 + 1e-6);
+    for (const badge of canvasElement.querySelectorAll<HTMLElement>('.ds-badge-count')) {
+      const label = badge.querySelector<HTMLElement>('.ds-badge-count__label')!;
+      const b = badge.getBoundingClientRect();
+      const l = label.getBoundingClientRect();
+      const range = document.createRange();
+      range.selectNodeContents(label);
+      const t = range.getBoundingClientRect();
+      await expect(b.height).toBe(16);
+      if (wholePixel) await expect(b.width % 1).toBe(0);
+      // label box centred in the badge, text centred in the label box
+      await centred(l.left - b.left, b.right - l.right);
+      await centred(l.top - b.top, b.bottom - l.bottom);
+      await centred(t.left - l.left, l.right - t.right);
+    }
+  },
+};
+
 /** Text is the accessible content; dots are decorative unless named; counts above `max` show "max+". */
 export const Accessibility: Story = {
   name: "Accessibility",
