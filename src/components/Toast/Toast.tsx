@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import { forwardRef, useRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import {
   Button,
   Text,
@@ -13,7 +13,8 @@ import type { AlertStatus } from '../Alert/Alert.options';
 import { STATUS_ICON } from '../Alert/statusIcon';
 import { ButtonIconSlot } from '../Button/ButtonIconSlot';
 import { TextButton } from '../Button/TextButton';
-import { toastQueue, type ToastContent } from './toastQueue';
+import { useToastStackMotion } from './toastMotion';
+import { toastQueue, wasPushedOut, type ToastContent } from './toastQueue';
 
 /** Figma toast close: `button_text` Primary sm, label "닫기" with the XCircle (fill) right icon. */
 const CLOSE_TEXT = '닫기';
@@ -73,18 +74,22 @@ export type ToastRegionProps = {
 
 /**
  * `showToast()`로 띄운 토스트가 나타나는 영역입니다. 앱에 한 번만 둡니다.
- * 화면 아래 오른쪽에 최신 토스트가 아래에서 위로 쌓이고, 토스트가 나타나면 화면 낭독기가 읽습니다.
+ * 화면 아래 오른쪽에 최신 토스트가 아래에서 위로 쌓이고(최대 3개), 토스트가 나타나면 화면 낭독기가 읽습니다.
+ * 새 토스트는 아래에서 올라오며 먼저 온 토스트를 위로 밀어 올리고, 4번째가 오면 가장 오래된 토스트가 위로 밀려 나가 사라집니다.
+ * 기기의 동작 줄이기 설정에서는 움직임 없이 바로 바뀝니다.
  * 마우스를 올리거나 키보드 포커스가 있는 동안에는 자동으로 닫히지 않습니다.
  */
 export function ToastRegion({ queue = toastQueue, 'aria-label': ariaLabel = '알림', closeLabel = '알림 닫기', className }: ToastRegionProps) {
+  const regionRef = useRef<HTMLDivElement>(null);
+  useToastStackMotion(queue, regionRef, wasPushedOut);
   return (
-    <RACToastRegion queue={queue} aria-label={ariaLabel} className={cx('ds-toast-region', className)}>
+    <RACToastRegion ref={regionRef} queue={queue} aria-label={ariaLabel} className={cx('ds-toast-region', className)}>
       {({ toast }) => {
         const status = toast.content.status ?? 'information';
         const Icon = STATUS_ICON[status];
         const hasDescription = toast.content.description != null && toast.content.description !== false;
         return (
-          <RACToast toast={toast} className="ds-toast" data-status={status}>
+          <RACToast toast={toast} className="ds-toast" data-status={status} data-toast-key={toast.key}>
             <RACToastContent className="ds-toast__body">
               {toast.content.showIcon !== false && <Icon className="ds-toast__icon" />}
               <div className="ds-toast__content">

@@ -25,6 +25,17 @@ export const TOAST_TIMEOUT = 5000;
  */
 export const toastQueue = new ToastQueue<ToastContent>({ maxVisibleToasts: MAX_VISIBLE_TOASTS });
 
+/** Keys of toasts that a newer toast pushed out (Rules 06) — the region plays them rising out of the stack. */
+const pushedOut = new Set<string>();
+
+/**
+ * Whether the toast `key` left because a newer toast pushed it out (it then rises and fades) rather than being closed.
+ * Each mark is read once. @internal Used by `ToastRegion`'s stack motion.
+ */
+export function wasPushedOut(key: string) {
+  return pushedOut.delete(key);
+}
+
 export type ShowToastOptions = {
   /** 종류. @default 'information' */
   status?: AlertStatus;
@@ -51,6 +62,9 @@ export function showToast(message: ReactNode, { status = 'information', descript
   // Rules 06: a fourth toast pushes the oldest one out (visibleToasts is newest first — the oldest is last).
   while (toastQueue.visibleToasts.length >= MAX_VISIBLE_TOASTS) {
     const oldest = toastQueue.visibleToasts[toastQueue.visibleToasts.length - 1];
+    pushedOut.add(oldest.key);
+    // A mark is normally read by the region at once; keep only the latest few if no region is showing them.
+    if (pushedOut.size > MAX_VISIBLE_TOASTS * 4) pushedOut.delete(pushedOut.values().next().value!);
     toastQueue.close(oldest.key);
   }
   return toastQueue.add({ status, message, description, showIcon }, timeout === null ? undefined : { timeout: Math.max(TOAST_TIMEOUT, timeout) });

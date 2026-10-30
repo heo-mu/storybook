@@ -3,10 +3,11 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { UNSTABLE_ToastQueue as ToastQueue } from 'react-aria-components';
 import { expect, waitFor, within } from 'storybook/test';
 import { Toast, ToastRegion } from '../Toast';
-import { closeToast, showToast, toastQueue, type ToastContent } from '../toastQueue';
+import { closeToast, showToast, toastQueue, type ShowToastOptions, type ToastContent } from '../toastQueue';
 import { ALERT_STATUSES, type AlertStatus } from '../../Alert/Alert.options';
 import { Button } from '../../Button';
 import { FigmaMatrix, StorySection } from '../../../storybook/FigmaMatrix';
+import { motionSettled } from '../../../storybook/motion';
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs toast` (set toast).
@@ -83,6 +84,8 @@ export const Interaction: Story = {
       await userEvent.click(canvas.getByRole('button', { name: '저장' }));
       const region = await body.findByRole('region', { name: '알림' });
       const toast = (await within(region).findByText('저장했습니다')).closest('.ds-toast')!;
+      // measure the resting place, after the toast has slid in (Rules 09 stack motion)
+      await motionSettled();
       const box = toast.getBoundingClientRect();
       await expect([box.width, box.height]).toEqual([320, 40]);
       await expect(Math.round(win.innerWidth - box.right)).toBe(20);
@@ -93,6 +96,7 @@ export const Interaction: Story = {
       const region = body.getByRole('region', { name: '알림' });
       const error = (await within(region).findByText('저장하지 못했습니다')).closest('.ds-toast')!;
       const success = within(region).getByText('저장했습니다').closest('.ds-toast')!;
+      await motionSettled();
       await expect(error.getBoundingClientRect().height).toBe(54);
       await expect(error.getBoundingClientRect().top).toBeGreaterThan(success.getBoundingClientRect().bottom);
       await expect(Math.round(success.getBoundingClientRect().bottom - error.getBoundingClientRect().top)).toBe(-8);
@@ -188,6 +192,150 @@ export const Policy: Story = {
       await expect(visible()[0].timeout).toBe(5000);
     });
     // The sticky toast and the buttons stay on screen so the rules can be tried by hand.
+  },
+};
+
+const STACK_STATUSES: AlertStatus[] = ['information', 'success', 'warning', 'error'];
+const STACK_LABEL: Record<AlertStatus, string> = { information: '안내', success: '성공', warning: '주의', error: '오류' };
+
+/** Stacking demo: real `showToast` calls on the app's global queue (5 s, at most 3) and a live readout of the stack. */
+function StackingDemo() {
+  const counter = useRef(0);
+  const [toasts, setToasts] = useState(() => toastQueue.visibleToasts);
+  useEffect(() => toastQueue.subscribe(() => setToasts(toastQueue.visibleToasts)), []);
+  const add = (status?: AlertStatus, options?: ShowToastOptions) => {
+    const n = ++counter.current;
+    const kind = status ?? STACK_STATUSES[(n - 1) % STACK_STATUSES.length];
+    // every second toast has a description, so toasts of 40 and 54 px are mixed in the stack
+    showToast(`${n}번 알림`, { status: kind, description: n % 2 === 0 ? `${STACK_LABEL[kind]} 알림입니다` : undefined, ...options });
+  };
+  // visibleToasts is newest first; on screen the oldest is at the top
+  const order = [...toasts].reverse().map((t) => t.content.message);
+  return (
+    <div style={{ display: 'grid', gap: 8, paddingBottom: 220 }}>
+      <StorySection title="추가 — 최신 알림은 아래에 붙고, 먼저 온 알림은 위로 올라갑니다(최대 3개)">
+        <Button onClick={() => add()}>알림 1개 추가</Button>
+        <Button
+          onClick={() => {
+            for (let i = 0; i < 3; i++) add();
+          }}
+        >
+          3개 연속 추가
+        </Button>
+        <Button
+          onClick={() => {
+            for (let i = 0; i < 5; i++) add();
+          }}
+        >
+          5개 빠르게 추가
+        </Button>
+      </StorySection>
+      <StorySection title="종류 섞기 · 닫기">
+        {STACK_STATUSES.map((status) => (
+          <Button key={status} variant="secondary" appearance="outline" onClick={() => add(status)}>
+            {STACK_LABEL[status]}
+          </Button>
+        ))}
+        <Button variant="tertiary" appearance="outline" onClick={() => add('information', { timeout: null })}>
+          닫을 때까지 남는 알림
+        </Button>
+        <Button variant="tertiary" appearance="outline" onClick={() => toastQueue.visibleToasts.forEach((t) => closeToast(t.key))}>
+          모두 닫기
+        </Button>
+      </StorySection>
+      <p data-testid="stack-order" style={{ margin: 0 }}>
+        화면의 알림(위 → 아래): {order.length ? order.join(' · ') : '없음'}
+      </p>
+      <ToastRegion />
+    </div>
+  );
+}
+
+/**
+ * Rules 06 · 09 stacking: the newest toast rises from below and pushes the others up; at most 3 stay — a 4th pushes the
+ * oldest up and out. Closing one lets the rest close the gap; each toast closes on its own 5 s timer.
+ */
+export const Stacking: Story = {
+  name: "Stacking",
+  render: () => <StackingDemo />,
+  play: async ({ canvas, canvasElement, userEvent, step }) => {
+    const doc = canvasElement.ownerDocument;
+    const win = doc.defaultView!;
+    const live = () => [...doc.querySelectorAll<HTMLElement>('.ds-toast-region [data-toast-key]')].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+    const stack = () => live().map((el) => el.querySelector('.ds-toast__message')!.textContent);
+    const exiting = () => doc.querySelectorAll('[data-toast-exit]').length;
+    const add = () => userEvent.click(canvas.getByRole('button', { name: '알림 1개 추가' }));
+    // the stack hangs from 20 px above the bottom edge, toasts 8 px apart, the newest at the bottom
+    const restsInPlace = async () => {
+      await motionSettled();
+      const boxes = live().map((el) => el.getBoundingClientRect());
+      for (let i = 1; i < boxes.length; i++) await expect(Math.round(boxes[i].top - boxes[i - 1].bottom)).toBe(8);
+      if (boxes.length) {
+        await expect(Math.round(win.innerHeight - boxes[boxes.length - 1].bottom)).toBe(20);
+        await expect(Math.round(win.innerWidth - boxes[boxes.length - 1].right)).toBe(20);
+      }
+      await expect(exiting()).toBe(0);
+    };
+    toastQueue.visibleToasts.forEach((t) => closeToast(t.key));
+    await motionSettled();
+
+    await step('1 → 2 → 3 toasts: each new one is added at the bottom', async () => {
+      await add();
+      await restsInPlace();
+      await expect(stack()).toEqual(['1번 알림']);
+      await add();
+      await add();
+      await restsInPlace();
+      await expect(stack()).toEqual(['1번 알림', '2번 알림', '3번 알림']);
+      await expect(canvas.getByTestId('stack-order')).toHaveTextContent('1번 알림 · 2번 알림 · 3번 알림');
+    });
+    await step('a 4th toast pushes the oldest out: it leaves the queue and the DOM at once and only its exit copy rises away', async () => {
+      await add();
+      await expect(stack()).toEqual(['2번 알림', '3번 알림', '4번 알림']);
+      await expect(toastQueue.visibleToasts).toHaveLength(3);
+      const copy = doc.querySelector<HTMLElement>('[data-toast-exit]');
+      await expect(copy).not.toBeNull();
+      await expect(copy).toHaveAttribute('aria-hidden', 'true');
+      await expect(copy!.hasAttribute('inert')).toBe(true);
+      await expect(copy!.querySelector('[id]')).toBeNull();
+      await restsInPlace();
+      await expect(stack()).toEqual(['2번 알림', '3번 알림', '4번 알림']);
+    });
+    await step('rapid clicks: the latest 3 stay, in order, with no duplicates or leftovers', async () => {
+      for (let i = 0; i < 5; i++) await add();
+      await restsInPlace();
+      await expect(stack()).toEqual(['7번 알림', '8번 알림', '9번 알림']);
+      await expect(new Set(live().map((el) => el.dataset.toastKey)).size).toBe(3);
+      await expect(doc.querySelectorAll('.ds-toast')).toHaveLength(3);
+    });
+    await step('closing one toast removes only it; the others keep their place in line and their timers', async () => {
+      const timers = new Map(toastQueue.visibleToasts.map((t) => [t.key, t.timer]));
+      const started = new Map([...timers].map(([key, timer]) => [key, (timer as unknown as { startTime: number }).startTime]));
+      const middle = live()[1];
+      await userEvent.click(within(middle).getByRole('button', { name: '알림 닫기' }));
+      await restsInPlace();
+      await expect(stack()).toEqual(['7번 알림', '9번 알림']);
+      for (const t of toastQueue.visibleToasts) {
+        await expect(t.timer).toBe(timers.get(t.key));
+        await expect((t.timer as unknown as { startTime: number }).startTime).toBe(started.get(t.key));
+      }
+    });
+    await step('mixed statuses stack the same way', async () => {
+      for (const label of ['안내', '성공', '주의', '오류']) await userEvent.click(canvas.getByRole('button', { name: label }));
+      await restsInPlace();
+      await expect(live().map((el) => el.dataset.status)).toEqual(['success', 'warning', 'error']);
+    });
+    await step('each toast closes on its own 5 s timer (the deployed policy) and the stack empties', async () => {
+      toastQueue.visibleToasts.forEach((t) => closeToast(t.key));
+      await motionSettled();
+      await add();
+      await waitFor(() => expect(live()).toHaveLength(1));
+      await waitFor(() => expect(live()).toHaveLength(0), { timeout: 7000, interval: 100 });
+      await motionSettled();
+      await expect(exiting()).toBe(0);
+      await expect(doc.querySelector('.ds-toast-region')).toBeNull();
+      await expect(canvas.getByTestId('stack-order')).toHaveTextContent('없음');
+    });
   },
 };
 

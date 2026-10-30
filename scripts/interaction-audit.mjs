@@ -285,7 +285,7 @@ const flows = {
     expect((await dialog.count()) === 1, 'clicking the scrim closed the dialog (Rules 05: dialogs do not close on outside click)');
     await page.keyboard.press('Escape');
   },
-  async 'Toast — shows, closes with the 닫기 button, at most three visible'() {
+  async 'Toast — shows, closes with the 닫기 button, at most three visible; stacking keeps focus and order'() {
     await story('components-toast-toast--with-region');
     await root().getByRole('button', { name: '성공' }).click();
     const toast = page.getByText('저장했습니다');
@@ -298,6 +298,34 @@ const flows = {
     const visible = await page.locator('.ds-toast').count();
     expect(visible <= 3, `${visible} toasts visible, max is 3`);
     expect(visible >= 1, 'no toast visible after four calls');
+    // Rules 06 · 09 stacking on the Gallery story: adding toasts never moves focus, the latest 3 rest in order (newest at
+    // the bottom, 8 px apart), and closing the middle one with the keyboard closes the gap
+    await story('components-toast-showcase--stacking');
+    await playDone();
+    const settled = () => page.waitForFunction(() => !document.querySelector('[data-toast-exit]') && document.getAnimations().filter((a) => a.playState === 'running' && Number.isFinite(a.effect?.getComputedTiming().endTime ?? Infinity)).length === 0, null, { timeout: 4000 });
+    const stack = () => page.evaluate(() => [...document.querySelectorAll('[data-toast-key]')].map((el) => ({ n: Number(el.querySelector('.ds-toast__message').textContent.replace('번 알림', '')), box: el.getBoundingClientRect().toJSON() })).sort((a, b) => a.box.top - b.box.top));
+    await root().getByRole('button', { name: '모두 닫기' }).click();
+    await settled();
+    const add = root().getByRole('button', { name: '알림 1개 추가' });
+    await add.focus();
+    for (let i = 0; i < 4; i++) {
+      await page.keyboard.press('Enter');
+      await sleep(80);
+    }
+    const focused = await page.evaluate(() => document.activeElement?.textContent?.trim());
+    expect(focused === '알림 1개 추가', `adding toasts moved focus to "${focused}"`);
+    await settled();
+    const four = await stack();
+    expect(four.length === 3 && four[1].n === four[0].n + 1 && four[2].n === four[1].n + 1, `stack after 4 adds: ${four.map((t) => t.n)}`);
+    expect(Math.round(four[1].box.top - four[0].box.bottom) === 8 && Math.round(four[2].box.top - four[1].box.bottom) === 8, 'toasts are not 8 px apart');
+    const middle = page.locator('[data-toast-key]').filter({ hasText: `${four[1].n}번 알림` });
+    await middle.getByRole('button', { name: '알림 닫기' }).focus();
+    await page.keyboard.press('Enter');
+    await settled();
+    const two = await stack();
+    expect(two.map((t) => t.n).join() === [four[0].n, four[2].n].join(), `after closing the middle toast: ${two.map((t) => t.n)}`);
+    expect(Math.round(two[1].box.top - two[0].box.bottom) === 8, 'the gap was not closed after closing the middle toast');
+    await root().getByRole('button', { name: '모두 닫기' }).click();
   },
   async 'Chart — hover shows the tooltip for the nearest item, keyboard arrows move it, leaving hides it'() {
     await story('components-chart-chart--playground');
