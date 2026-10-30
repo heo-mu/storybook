@@ -30,14 +30,14 @@
         "Label row/Label": ".ds-field__label",
         "Container": ".ds-field__control",
         "Container/Input": ".ds-field__input",
-        "Container/eye": ".ds-input__reveal[aria-pressed=\"false\"]",
-        "Container/icon/visibility_off": ".ds-input__reveal[aria-pressed=\"true\"]",
-        "Container/icon_size": ".ds-input__clear",
+        "Container/icon_size": ".ds-input__reveal",
+        "Container/icon_size/icon/Eye": ".ds-input__reveal[aria-pressed=\"false\"] > svg",
+        "Container/icon_size/icon/Eye-close": ".ds-input__reveal[aria-pressed=\"true\"] > svg",
         "input_message": ".ds-field-message",
         "input_message/*-fill": ".ds-field-message__icon",
         "input_message/*ext": ".ds-field-message__text"
       },
-      "//": "Figma password_field (1440:8466): the eye is `Container/eye` (hidden in Default) and `Container/icon/visibility_off` while revealed (Focus-on) — the same button, told apart by aria-pressed; no clear icon exists — `Container/icon_size` is mapped so a rendered clear button fails the structure check.",
+      "//": "Figma password_field (1440:8466, icons changed 2026-10-30): the eye button is `Container/icon_size` (hidden in Default) holding `icon/Eye` while the value is hidden and `icon/Eye-close` while it is shown (Focus-on) — the same button, told apart by aria-pressed. No clear icon exists in this set (`clearable` is off for type=password).",
       "knownDifferences": {
         "Type=Outline, Size=sm, State=Disabled": "disabled placeholder dots (#c9ced6 on #eff0f3, nine 2px bullets at 14px): the text box renders identically (0 differing pixels at threshold 25, max channel delta 17) but the faint anti-aliasing shifts the ink centroid 0.93px — same low-contrast centroid noise as the input lg Disabled note",
         "Type=Outline, Size=sm, State=Focus": {

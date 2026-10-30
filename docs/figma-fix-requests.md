@@ -335,6 +335,25 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 
 알림(Alert) 행을 복제해 그 아래에 넣었습니다(1656:7954, 글자 1656:7956 · 7957 · 7959 · 7961). 정책 · 적용 대상 "주의 / Alert · Toast (Warning)", 사용 규칙 "작업은 이어갈 수 있지만 확인이 필요한 일을 알립니다. 예: 일부 데이터만 표시, 곧 만료되는 설정. 작업을 막는 문제는 오류, 잘 끝난 일은 성공, 참고할 내용은 안내로 보여 줍니다. 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 버튼을 함께 둡니다.", 디자인 기준 "Warning 상태 — 주황 삼각형 아이콘과 warning 색. 자리와 크기는 다른 상태와 같습니다. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초)." Rules 프레임은 세로 자동 레이아웃이라 아래 장은 자동으로 밀렸습니다(06장 296 → 388px).
 
+## AH. password_field 눈 아이콘 색 — 로컬 상태 토큰으로 재연결 요청 (2026-10-30, 미적용)
+
+2026-10-30 Figma에서 눈 아이콘이 아이콘 라이브러리 인스턴스(`icon_size` › `icon/Eye` · `icon/Eye-close`)로 바뀌면서 벡터 채움이 외부 변수
+`colors/icon/secondary`(VariableID:24226adc95afdd4f806b3e0e30bf1a8962779a09/359:2603, #404b5d)에 묶였습니다(F117). 이전처럼 각 상태의 로컬 토큰으로
+다시 연결해 주세요 — 인스턴스 안 `Vector`의 채움 재정의. 이번 작업(아이콘 동기화)은 Figma 수정 권한이 없어 적용하지 않았습니다.
+
+| 변형 State | 연결할 변수 | `icon_size` 인스턴스(sm · md · lg) |
+| --- | --- | --- |
+| Hover | `colors/input/outline/icon/hover` | 1688:8532 · 1688:8572 · 1688:8556 |
+| Focus | `colors/input/outline/icon/focus` | 1688:8536 · 1688:8568 · 1688:8552 |
+| Focus-on | `colors/input/outline/icon/focus` | 1688:8642 · 1688:8649 · 1688:8653 |
+| Completed | `colors/input/outline/icon/completed` | 1688:8540 · 1688:8596 · 1688:8576 |
+| Error | `colors/input/outline/icon/error` | 1688:8544 · 1688:8564 · 1688:8580 |
+| Disabled | `colors/input/outline/icon/disabled` | 1688:8600 · 1688:8560 · 1688:8588 |
+| Read-only | `colors/input/outline/icon/read-only` | 1688:8584 · 1688:8592 · 1688:8548 |
+
+적용하면 Disabled · Read-only 눈이 이전처럼 #a1a8b5(`icon/disabled`)가 되어 코드와 같아지고, 외부 변수 의존이 없어집니다(다른 상태는 값 그대로 #404b5d).
+아이콘 모양 · 크기 · 위치는 바꾸지 않습니다.
+
 ## AG. Button Secondary / Solid 상태 밝기 — 한 단계씩 밝게 (2026-10-30, 사용자 승인 작업)
 
 | 변수 | 변경 전 | 변경 후 | ID |

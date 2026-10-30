@@ -37,7 +37,7 @@ const [value, setValue] = useState('');
 | input_message Type Helper · State Default · Disabled · 필드 `Helper` 속성 | `message`(종류를 정하지 않으면 `'helper'`) | 아이콘 없는 회색 글자 `colors/input/outline/helper/default`, 비활성 칸은 `…/helper/disabled`(Rules 04 "도움말", 2026-10-20 V-1) |
 | Icon-eye | `type="password"` + `revealable` | 비밀번호 표시/숨김 토글. `input` 세트의 Figma 기본값 끔(2026-10-20, F90) — 비밀번호 칸(`password_field`)에서만 켬 |
 | password_field State Default · Hover · Focus · Completed · Error · Disabled · Read-only | `type="password"` + `input`과 같은 Props | 눈 아이콘은 Default에서 숨김, Hover · Focus · 값이 있을 때(Completed · Error · Read-only · Disabled) 표시 — 색 `colors/input/outline/icon/*` |
-| password_field State Focus-on | `defaultRevealed` 또는 눈 버튼 클릭 | 값이 보이는 Focus 상태: 아이콘이 `icon/visibility_off`(`EyeSlashIcon`, 24 그리드)로 바뀜, 입력 `type`은 `text` |
+| password_field State Focus-on | `defaultRevealed` 또는 눈 버튼 클릭 | 값이 보이는 Focus 상태: 아이콘이 `icon/Eye-close`(`EyeSlashIcon`, 16 그리드 — 2026-10-30 Figma 교체)로 바뀜, 입력 `type`은 `text` |
 | password_field Input Text `•••••••••` | `value` / `placeholder` | Figma의 마스킹 글자. 브라우저가 값을 가리므로 코드에서는 글자를 바꾸지 않음 — Firefox는 U+25CF로 가림(docs/browser-support.md) |
 | password_field (지우기 아이콘 없음) | `clearable` 기본 끔 | 어떤 상태에도 `icon/X`가 없어 `type="password"`이면 `clearable`의 기본값이 `false`. 명시하면 그대로 동작 |
 | State Hover · Focus | 브라우저 `:hover` · `:focus-within` | |
@@ -60,9 +60,9 @@ Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 —
 Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules**(각 항목의 Rules 장)와 컴포넌트 주석에 정의되어 있습니다.
 
 - `INPU-01` **지우기 버튼(X)**: Hover · Focus 상태에서 보입니다(Figma와 같음). 마우스 보조라 Tab 순서에서 제외됩니다(`tabIndex=-1`) — 키보드는 전체 선택 후 삭제. 필요 없으면 `clearable={false}`(Rules 04). 비밀번호 칸은 Figma `password_field`에 지우기 아이콘이 없어 기본으로 끕니다(2026-10-28).
-- `INPU-02` **눈 아이콘**: Figma `Icon-eye`는 비밀번호 표시/숨김 토글입니다 — `type="password"`일 때만 렌더링합니다. 숨긴 상태는 `eye`, 보이는 상태(Figma `password_field` State=Focus-on)는 `icon/visibility_off` 아이콘이고, 상태는 `aria-pressed`와 레이블("비밀번호 표시" / "비밀번호 숨기기")로도 전달합니다(Rules 04).
+- `INPU-02` **눈 아이콘**: Figma `Icon-eye`는 비밀번호 표시/숨김 토글입니다 — `type="password"`일 때만 렌더링합니다. 숨긴 상태는 `icon/Eye`(`EyeIcon`), 보이는 상태(Figma `password_field` State=Focus-on)는 `icon/Eye-close`(`EyeSlashIcon`) 아이콘이고(2026-10-30 Figma 아이콘 라이브러리로 교체, 둘 다 16 그리드를 16 · 20 · 24px 칸에 맞춤), 상태는 `aria-pressed`와 레이블("비밀번호 표시" / "비밀번호 숨기기")로도 전달합니다(Rules 04).
 - `INPU-03` **Error + Focus**: Error 테두리를 유지합니다 — 오류 표시가 포커스 표시보다 우선합니다(Rules 02).
-- `INPU-05` **Figma 눈 아이콘(보이는 상태)의 토큰**(2026-10-28 QA): `password_field` Focus-on 변형의 `icon/visibility_off`는 외부 라이브러리 아이콘 인스턴스라 벡터 색이 다른 파일의 변수(`color/icon/gray` · `color/icon/inverse-static`)에 묶여 있었습니다. 디자인 시스템 토큰 `colors/input/outline/icon/focus`(가려진 눈과 같은 상태 색)와 흰 테두리는 `colors/input/outline/background/default`로 다시 연결했습니다(QA 승인 작업, Z절). 픽셀 변화 없음(참조 이미지 재대조), 코드 변화 없음. **해결(2026-10-28 저녁)**: 세 `icon/visibility_off` 인스턴스를 분리해 로컬 프레임으로 바꿨습니다 — 외부 컴포넌트 의존 0, 픽셀 · 코드 변화 없음([figma-fix-requests AB절](../figma-fix-requests.md)).
+- `INPU-05` **Figma 눈 아이콘(보이는 상태)의 토큰**(2026-10-28 QA): `password_field` Focus-on 변형의 `icon/visibility_off`는 외부 라이브러리 아이콘 인스턴스라 벡터 색이 다른 파일의 변수(`color/icon/gray` · `color/icon/inverse-static`)에 묶여 있었습니다. 디자인 시스템 토큰 `colors/input/outline/icon/focus`(가려진 눈과 같은 상태 색)와 흰 테두리는 `colors/input/outline/background/default`로 다시 연결했습니다(QA 승인 작업, Z절). 픽셀 변화 없음(참조 이미지 재대조), 코드 변화 없음. **해결(2026-10-28 저녁)**: 세 `icon/visibility_off` 인스턴스를 분리해 로컬 프레임으로 바꿨습니다 — 외부 컴포넌트 의존 0, 픽셀 · 코드 변화 없음([figma-fix-requests AB절](../figma-fix-requests.md)). **2026-10-30**: Figma가 눈 아이콘을 아이콘 라이브러리 인스턴스(`icon/Eye` · `icon/Eye-close`)로 바꾸면서 채움이 외부 변수 `colors/icon/secondary`(#404b5d)에 묶여 Disabled · Read-only 눈도 #404b5d가 되었습니다(F117). 코드는 상태 토큰(Disabled · Read-only `icon/disabled` #a1a8b5)을 유지하고, Figma 재연결을 요청했습니다(figma-fix-requests AH절).
 - `INPU-04` **눈 아이콘 포커스**: 키보드 포커스일 때 버튼 바깥 2px에 2px `colors/border/focus` 링(Design System Rules 02 — 입력 칸 안의 버튼에는 Figma `Focus` 속성이 없어 규칙이 기준). 입력 칸 자체는 Figma State=Focus 테두리입니다.
 - `INPU-06` **삭제한 토큰**(2026-10-29): 라벨이 모든 상태에서 `text/secondary`라 `input/outline/label/*` 4개를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)). 코드 변화 없음.
 
@@ -75,7 +75,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 
 - Figma 컴포넌트 세트: `input`(76:2945), `input_message`(83:3009), `password_field`(1440:8466).
-- 지우기 버튼 아이콘은 Figma `icon/X`, 비밀번호 표시 버튼 아이콘은 Figma `Icon-eye`(`eye` 벡터)와 `icon/visibility_off`(1440:10313, 보이는 동안)입니다.
+- 지우기 버튼 아이콘은 Figma `icon/X`, 비밀번호 표시 버튼 아이콘은 Figma `icon/Eye`(숨긴 동안)와 `icon/Eye-close`(보이는 동안, 2026-10-30부터 — 이전 `icon/visibility_off` 1440:10313은 Figma에서 삭제됨)입니다.
 
 
 ## Storybook 검증 예시의 내부 참고

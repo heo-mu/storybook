@@ -118,10 +118,18 @@ export const PasswordMatrix: Story = {
   ),
   play: async ({ canvasElement }) => {
     await expect(canvasElement.querySelectorAll('[data-figma]')).toHaveLength(24);
-    // Figma password_field has no clear (X) icon in any state; the eye-slash icon is shown only while revealed (Focus-on).
+    // Figma password_field has no clear (X) icon in any state. The eye button holds icon/Eye while the value is hidden
+    // (21 buttons; CSS hides the 3 in Default, as Figma) and icon/Eye-close while it is shown (Focus-on, 3), both on the
+    // 16 × 16 icon grid: one shape each, and the two shapes differ.
     await expect(canvasElement.querySelectorAll('.ds-input__clear')).toHaveLength(0);
-    await expect(canvasElement.querySelectorAll('.ds-input__reveal[aria-pressed="true"]')).toHaveLength(3);
-    await expect(canvasElement.querySelectorAll('.ds-input__reveal[aria-pressed="true"] svg[viewBox="0 0 24 24"]')).toHaveLength(3);
+    const paths = (pressed: string) => [...canvasElement.querySelectorAll(`.ds-input__reveal[aria-pressed="${pressed}"] svg[viewBox="0 0 16 16"] path`)].map((p) => p.getAttribute('d'));
+    const shown = paths('true');
+    const hidden = paths('false');
+    await expect(shown).toHaveLength(3);
+    await expect(hidden).toHaveLength(21);
+    await expect(new Set(shown).size).toBe(1);
+    await expect(new Set(hidden).size).toBe(1);
+    await expect(shown[0]).not.toBe(hidden[0]);
   },
 };
 
@@ -184,15 +192,21 @@ export const Interaction: Story = {
       await userEvent.type(password, 'secret');
       await expect(password).toHaveAttribute('type', 'password');
       const toggle = canvas.getByRole('button', { name: '비밀번호 표시' });
-      await expect(toggle.querySelector('svg')).toHaveAttribute('viewBox', '0 0 16 16');
+      const iconPath = () => canvas.getByRole('button', { name: /비밀번호 (표시|숨기기)/ }).querySelector('svg[viewBox="0 0 16 16"] path')?.getAttribute('d');
+      const eye = iconPath();
+      await expect(eye).toBeTruthy();
       await userEvent.click(toggle);
       await expect(password).toHaveAttribute('type', 'text');
       const hide = canvas.getByRole('button', { name: '비밀번호 숨기기' });
       await expect(hide).toHaveAttribute('aria-pressed', 'true');
-      await expect(hide.querySelector('svg')).toHaveAttribute('viewBox', '0 0 24 24');
+      // icon/Eye → icon/Eye-close (both 16 × 16 Figma icons)
+      const eyeClose = iconPath();
+      await expect(eyeClose).toBeTruthy();
+      await expect(eyeClose).not.toBe(eye);
       await userEvent.keyboard('{Enter}');
       await expect(password).toHaveAttribute('type', 'password');
       await expect(canvas.getByRole('button', { name: '비밀번호 표시' })).toHaveAttribute('aria-pressed', 'false');
+      await expect(iconPath()).toBe(eye);
     });
   },
 };

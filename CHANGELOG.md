@@ -7,6 +7,19 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Password Field — Figma 눈 아이콘 동기화 (2026-10-30)
+
+- **Figma 변경 확인**: `password_field`(1440:8466)의 눈 아이콘이 아이콘 라이브러리 인스턴스(`icon_size` › `icon/Eye` · `icon/Eye-close`)로 바뀌었습니다.
+  값을 숨긴 상태의 `icon/Eye`는 벡터가 이전과 같고(내보낸 SVG가 코드 경로와 일치), **값을 보이는 상태(Focus-on)의 아이콘이 `icon/visibility_off`(24 그리드)에서
+  `icon/Eye-close`(16 그리드)로 바뀌었습니다**. 크기 · 위치(16 · 20 · 24px 칸, 오른쪽 끝)는 그대로이고, 20 · 24px은 16px 벡터를 그대로 키운 것입니다.
+- **코드**: `EyeSlashIcon`의 경로를 Figma `icon/Eye-close` 내보내기(16 × 16)로 바꿨습니다. Input의 눈 버튼 구조 · 크기 · 색 토큰 · 동작(클릭 · 키보드 · `aria-pressed` ·
+  "비밀번호 표시 / 숨기기")은 그대로이고 공개 이름 · Props도 같습니다. 단독으로 쓰는 `EyeSlashIcon`의 기본 크기는 24 → 16px(`EyeIcon`과 같음).
+- **Figma 색 바인딩(보고, Figma 수정 안 함)**: 새 아이콘의 채움이 로컬 `colors/input/outline/icon/*`가 아니라 **외부 라이브러리 변수 `colors/icon/secondary`**(#404b5d)에
+  묶여, Disabled · Read-only 눈도 #404b5d로 그려집니다(이전 #a1a8b5). 같은 파일의 Input 지우기(X) 아이콘은 로컬 상태 토큰에 묶여 있고, 요청이 상태 유지였으므로
+  코드는 상태 색(Disabled · Read-only #a1a8b5)을 유지합니다 — figma-issues F117, 재연결 요청은 figma-fix-requests AH절.
+- **스냅샷 · 검증**: 기하(층 이름 `Container/icon_size` › `icon/Eye` · `icon/Eye-close`, 상자 변화 없음) · 참조 이미지 재추출(바뀐 픽셀은 Focus-on 3칸의 아이콘 모양과
+  Disabled · Read-only 6칸의 아이콘 색뿐), 정합성 매핑을 새 층 이름으로, 스토리 검사는 아이콘 모양(경로)이 바뀌고 돌아오는지로(24 그리드 검사 대체).
+
 ### Button Secondary / Solid — 상태가 진행될수록 한 단계씩 밝게 (2026-10-30)
 
 - **Figma 먼저(사용자 승인)**: Semantic `colors/fill/secondary/strong/hover` 별칭 brand/800 → **brand/600**, `pressed` brand/900 → **brand/500**.

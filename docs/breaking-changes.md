@@ -150,6 +150,7 @@ Figma에서 다른 편집자가 Chart 변수를 재구성했습니다(1527 → 1
 | 상태 색(안내 · 성공 · 경고 · 포인트 · 위험 · 오류) | 한 단계 진하게(600 → 700) — 메시지 · 배지 · 토스트 · 알림 · 오류 테두리 |
 | 보조 · 플레이스홀더 글자 | #778191 · #a1a8b5 → #596475 (비활성 라벨은 #a1a8b5 그대로) |
 | 입력 칸 · Checkbox · Radio 테두리, Switch 꺼짐 트랙 | #a1a8b5 → #778191 (hover 한 단계 진하게) |
+| `EyeSlashIcon` · Input 비밀번호를 보이는 동안의 눈 아이콘 | `icon/visibility_off`(24 그리드, 단독 기본 크기 24px) → Figma `icon/Eye-close`(16 그리드, 기본 16px — `EyeIcon`과 같음). Input 안에서는 칸 크기(16 · 20 · 24px) 그대로 |
 | Button Secondary · Solid Hover · Pressed | 최종 #009b68 · #02bb7b(Default #007c56보다 한 단계씩 밝음) — 2026-10-19 A-1에서 #006247 · #004a38로 바꿨다가 2026-10-30 되돌림, 처음 값과 같음 |
 | `Chart` 호버 강조 영역 | 세로 막대 Group=no 64 → 40px, 가로 막대 행 높이 → 32 · 46px, 간단 스타일 추가 |
 | Hover 배경 16곳 | #f9fafb → #f5f6f7 |
