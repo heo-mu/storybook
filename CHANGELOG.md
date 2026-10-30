@@ -7,6 +7,17 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### DropdownMenu — 하위 메뉴 위치 검사를 react-aria의 정수 픽셀 내림 기준으로 (2026-10-30)
+
+- **원인**: 앞 수정(하위 메뉴를 여는 항목 바로 옆에)의 위치 검사는 "정수 픽셀 배치 ±0.5px"로 가정했지만, react-aria는 패널 위치를 내림합니다(`Math.floor`).
+  상위 패널 너비는 글자에 따라 소수 px이라 웹 글꼴이 늦게 적용되면 Chromium에서 항목 끝이 x.53125px가 되어 패널이 0.53px 안쪽에서 시작하고, 전체 렌더 점검
+  (`verify:render`, Chromium)에서 실패했습니다. 글꼴이 제때 적용되면 0.41px라 통과하던 검사였습니다.
+- **수정**: 컴포넌트 변경 없음. Gallery "하위 메뉴" · "하위 메뉴 — 화면 가장자리" play와 `verify:interaction` 검사를 정확한 값으로 — 왼쪽 = 항목 오른쪽 끝의 내림,
+  뒤집히면 오른쪽 = 항목 왼쪽 끝의 올림, 위쪽 = 항목 위쪽, 첫 항목 = +4(모두 0.05px 안). 간격은 허용하지 않고(이전 검사는 0.5px까지 허용), 겹침은 react-aria가
+  만드는 1px 미만만 허용됩니다. DropdownMenu 개발 노트에 같은 설명.
+- **검증**: 웹 글꼴 0 · 200 · 600 · 1500ms 지연 × 3 엔진 × 두 스토리 통과(이전 검사는 Chromium에서 200ms부터 실패 재현), `verify:interaction` 37/37 × 3 엔진,
+  DropdownMenu 스토리 테스트 13, `verify:render` DropdownMenu 15쪽.
+
 ### TextButton — 좌우 여백 넓힘 · 아이콘 쪽 한 단계 좁게 (Figma Left Icon · Right Icon 변형) (2026-10-30)
 
 - **Figma**(사용자 요청 작업, figma-fix-requests AJ절): Component 변수 4개 추가 — `spacing/button_text/padding-x/sm` · `md`(→ Primitive `p-1` 4 · `p-1_5` 6),

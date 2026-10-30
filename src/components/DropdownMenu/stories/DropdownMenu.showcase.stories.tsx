@@ -319,12 +319,13 @@ export const Submenu: StoryObj<{ onAction: Mock<(key: unknown) => void> }> = {
       const box = sub.getBoundingClientRect();
       const itemBox = item.getBoundingClientRect();
       // Figma 217:6478: sub panel left = item right (= parent right − 4, over its p-1 padding), sub panel top = item top, so
-      // the first sub item is 4px below (the sub panel's p-1). react-aria places overlays on whole pixels, so after a
-      // content-width parent (fractional edges) each distance holds to ± 0.5px.
-      await expect(Math.abs(box.left - itemBox.right)).toBeLessThanOrEqual(0.5);
-      await expect(Math.abs(box.left - (parent.right - 4))).toBeLessThanOrEqual(0.5);
-      await expect(Math.abs(box.top - itemBox.top)).toBeLessThanOrEqual(0.5);
-      await expect(Math.abs(within(sub).getByRole('menuitem', { name: 'PDF' }).getBoundingClientRect().top - (itemBox.top + 4))).toBeLessThanOrEqual(0.5);
+      // the first sub item is 4px below (the sub panel's p-1). react-aria puts the panel on a whole pixel by flooring the
+      // item's right edge (calculatePosition), so after a content-width parent (fractional edge, depends on the font) the
+      // panel starts on the whole pixel at or less than 1px inside that edge — never a gap. The top is not floored.
+      await expect(box.left).toBeCloseTo(Math.floor(itemBox.right), 1);
+      await expect(itemBox.right).toBeCloseTo(parent.right - 4, 1);
+      await expect(box.top).toBeCloseTo(itemBox.top, 1);
+      await expect(within(sub).getByRole('menuitem', { name: 'PDF' }).getBoundingClientRect().top).toBeCloseTo(itemBox.top + 4, 1);
       await expect(box.width).toBeGreaterThanOrEqual(140);
     });
     await step('← closes it and returns focus to its item', async () => {
@@ -379,9 +380,10 @@ export const SubmenuEdge: StoryObj = {
     const parent = body.getByRole('menu', { name: '파일' }).getBoundingClientRect();
     const box = sub.getBoundingClientRect();
     const itemBox = item.getBoundingClientRect();
-    // flipped: sub panel right = item left = parent left + 4 (whole-pixel placement, ± 0.5px)
-    await expect(Math.abs(box.right - itemBox.left)).toBeLessThanOrEqual(0.5);
-    await expect(Math.abs(box.right - (parent.left + 4))).toBeLessThanOrEqual(0.5);
+    // flipped: sub panel right = item left = parent left + 4 — react-aria floors the distance from the container's right
+    // edge, so the panel ends on the whole pixel at or less than 1px past the item's left edge (ceil) — never a gap
+    await expect(box.right).toBeCloseTo(Math.ceil(itemBox.left), 1);
+    await expect(itemBox.left).toBeCloseTo(parent.left + 4, 1);
     // shifted into the screen: no part below or right of the viewport
     await expect(box.bottom).toBeLessThanOrEqual(win.innerHeight);
     await expect(box.right).toBeLessThanOrEqual(win.innerWidth);
