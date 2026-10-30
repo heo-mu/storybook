@@ -25,6 +25,26 @@ Figma 링 레이어와 DOM 링의 화면 비교(2026-10-19).
 - **Dialog**(Rules 05): 모달 덮개(검정 50%)로 뒤 화면 조작을 막고, 포커스를 대화상자 안에 가두며 닫히면 연 요소로 돌려보냅니다.
 - **모션**(Rules 09): 상태 전환은 즉시, 반복 모션(스피너)은 `prefers-reduced-motion`에서 1초 → 3초/바퀴.
 
+## 색 대비 미충족 — Button Secondary / Solid Hover · Pressed (2026-10-30, 디자인 결정)
+
+사용자 요청: Default → Hover → Pressed가 같은 초록 계열에서 한 단계씩 밝아질 것(최우선), 접근성 검사는 그대로 하고 대비를 맞추려고 다시 어둡게 하지 말 것.
+Figma Semantic `colors/fill/secondary/strong/hover` → brand/600, `pressed` → brand/500으로 바꿨습니다(별칭 변경, 사용자 승인). 기준을 낮추거나 `KNOWN_CONTRAST`에 넣지 않았습니다.
+
+| 상태 | 배경 | 흰 라벨 · 아이콘(#fdfdfd) 대비 | 글자 4.5:1 | 아이콘(비텍스트) 3:1 |
+| --- | --- | --- | --- | --- |
+| Default | brand/700 #007c56 | 5.14:1 | 충족 | 충족 |
+| Hover | brand/600 #009b68 | **3.51:1** | **미달** | 충족 |
+| Pressed | brand/500 #02bb7b | **2.46:1** | **미달** | **미달** |
+
+- **axe 감사**(`npm run verify:a11y`, Button 25 스토리): 색 대비 위반 **18건** — States · Button 2건(Hover · Pressed), Variant Matrix · Button 16건
+  (크기 4 × 모양 2 × Hover · Pressed, 12 · 14 · 16px 글자). axe는 아이콘(비텍스트)을 검사하지 않아 IconButton Pressed 아이콘 2.46:1은 위 표로 보고합니다.
+- **Storybook `test-run`**(a11y 'todo')은 이 18건을 보고하지 않습니다. pseudo-states 애드온으로 강제한 Hover · Pressed 색을 vitest 안의 axe가 보지 못하기 때문이며
+  (이 작업 전부터 같음), 상태 색 대비는 `verify:a11y` 결과를 기준으로 봅니다.
+- **두 조건을 함께 만족하는 조합 검토**: Default(brand/700)를 유지하고 전경색을 Default와 같은 흰색으로 두면 한 단계라도 밝은 색은 모두 4.5:1 미만입니다
+  (brand/600 3.51 · 500 2.46 · 400 1.94, 700과 600 사이 단계 없음). 팔레트 안에서 모두 충족하는 조합은 Hover · Pressed 전경색만 `text/primary` · `icon/primary`
+  (#131c2b, Hover 4.79:1 · Pressed 6.83:1)로 바꾸는 것뿐인데, "Hover · Pressed 전경색은 Default와 같은 토큰" 요청과 충돌해 적용하지 않았습니다(결정 필요 시 선택지).
+- 실제 사용에서는 마우스를 올리거나 누르는 동안만 나타나는 색입니다.
+
 ## 색 대비 — 해결 (A-1 · A-2, 2026-10-19)
 
 Figma 원본과 코드를 함께 고쳤습니다(Figma 수정 허용 작업). 모두 기존 팔레트 안에서 고른 색이고, 기준을 낮추거나 경고를 숨기지 않았습니다.

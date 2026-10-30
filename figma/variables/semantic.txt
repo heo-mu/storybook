@@ -3,6 +3,7 @@
 # Format: <name>=<value | @<collection initial>:<alias target>> [<scopes>]   (P=Primitive, T=Theme, S=Semantic, C=Component)
 # 2026-10-20: Secondary/Solid hover and pressed fills updated in Figma to Theme brand/600 and brand/500; 2026-10-27 (X): brand/800 · 900;
 # 2026-10-28: back to brand/600 · 500 by user decision; stabilisation the same evening (F100 final): brand/800 · 900 — white label 7.42:1 · 10.2:1, hover/pressed one step apart.
+# 2026-10-30: brightness policy (user brief): Default → Hover → Pressed one palette step lighter each — hover brand/600, pressed brand/500 (white label 3.51:1 · 2.46:1, reported, not compensated).
 colors/border/inverse=@P:colors/white [STROKE_COLOR]
 colors/border/gray-subtler=@T:colors/brand-gray/250 [STROKE_COLOR]
 colors/border/gray-subtle=@T:colors/brand-gray/400 [TEXT_FILL,STROKE_COLOR]
@@ -40,8 +41,8 @@ colors/text/primary=@T:colors/brand-gray/900 [TEXT_FILL]
 colors/text/secondary=@T:colors/brand-gray/700 [TEXT_FILL]
 colors/fill/primary/strong/hover=@T:colors/brand/800 [FRAME_FILL,SHAPE_FILL]
 colors/fill/secondary/strong/default=@T:colors/brand/700 [FRAME_FILL,SHAPE_FILL]
-colors/fill/secondary/strong/hover=@T:colors/brand/800 [FRAME_FILL,SHAPE_FILL]
-colors/fill/secondary/strong/pressed=@T:colors/brand/900 [FRAME_FILL,SHAPE_FILL]
+colors/fill/secondary/strong/hover=@T:colors/brand/600 [FRAME_FILL,SHAPE_FILL]
+colors/fill/secondary/strong/pressed=@T:colors/brand/500 [FRAME_FILL,SHAPE_FILL]
 colors/fill/primary/strong/pressed=@T:colors/brand/700 [FRAME_FILL,SHAPE_FILL]
 colors/fill/disabled/default=@T:colors/brand-gray/250 [FRAME_FILL,SHAPE_FILL]
 colors/text/tertiary=@T:colors/brand-gray/600 [TEXT_FILL]

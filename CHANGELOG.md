@@ -7,6 +7,19 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Button Secondary / Solid — 상태가 진행될수록 한 단계씩 밝게 (2026-10-30)
+
+- **Figma 먼저(사용자 승인)**: Semantic `colors/fill/secondary/strong/hover` 별칭 brand/800 → **brand/600**, `pressed` brand/900 → **brand/500**.
+  Default(brand/700), Component `button/secondary/solid/*`의 이름 · 별칭 · 노드 바인딩은 그대로입니다(Primitive emerald → Theme brand → Semantic → Component 구조 유지,
+  새 색 · HEX 없음). 체크섬은 semantic 그룹만 바뀌고(38439d42 → efc7719c) 나머지 7개 그룹은 같습니다.
+- **색**: Default #007c56 → Hover **#009b68** → Pressed **#02bb7b**(이전 Hover #006247 · Pressed #004a38). 명도 L* 45.8 → 56.5 → 67.3(+10.7 · +10.8, 같은 간격),
+  Primary / Solid(900 → 800 → 700)와 같은 방향. Button · IconButton의 모든 크기 · 모양에 적용되고, TextButton · Outline · Primary · Tertiary는 변화 없음.
+- **전경색**: 라벨 · 아이콘은 모든 상태에서 Default와 같은 흰색(`text/inverse` · `icon/inverse` #fdfdfd). Hover · Pressed Component 토큰도 같은 Semantic을 가리켜 바꿀 것이 없었습니다.
+- **대비(흰색 #fdfdfd)**: Default 5.14:1, Hover **3.51:1**(글자 4.5:1 미달, 아이콘 3:1 충족), Pressed **2.46:1**(글자 · 아이콘 모두 미달). 요청대로 밝기 정책을 유지하고
+  기준은 낮추지 않았습니다 — axe 감사 색 대비 위반 18건, `KNOWN_CONTRAST`에 넣지 않음([docs/accessibility.md](docs/accessibility.md)).
+- **코드**: 스냅샷 · `src/tokens` 재생성(Button.css 변경 없음), `figma/button-spec.json` Secondary / Solid Hover · Pressed 4항목, 참조 이미지 재내보내기
+  (바뀐 픽셀은 button_basic 16칸 · button_icon 12칸뿐), 사용 문서의 대비 설명. 352/352 · 실제 포인터 36/36 세 엔진.
+
 ### Badge Count — 숫자 가운데 정렬 (2026-10-30)
 
 - **원인**: 숫자 글자 상자가 왼쪽 정렬이었습니다(Figma · 코드 같음). 글자 상자는 정수 픽셀로 올림되므로(Figma 자동 폭, 코드 `calc-size`) 올림한 나머지가

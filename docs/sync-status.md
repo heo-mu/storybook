@@ -13,7 +13,7 @@
 
 | 컴포넌트 | Figma 정의 확인 | Storybook 구현 확인 | 시각적 정합성 확인 (C / F / W) | 인터랙션 검증 | 접근성 검증 | 문서 동기화 완료 |
 | --- | --- | --- | --- | --- | --- | --- |
-| button (Button) | ✓ button_basic 54:2904 · 192/192 (2026-10-28 저녁 Secondary Solid Hover · Pressed brand/800 · 900, 2026-10-29 Tertiary Solid 배경 Component 토큰)<br>button_icon 67:2368 · 144/144<br>button_text 432:8395 · 16/16 | ✓ | ✓ 352/352 / 352/352 / 352/352 | ✓ play 8 · 스토리 24 | ✓ 경고 0 | ✓ |
+| button (Button) | ✓ button_basic 54:2904 · 192/192 (2026-10-30 Secondary Solid Hover · Pressed brand/600 · 500 — 한 단계씩 밝게, 2026-10-29 Tertiary Solid 배경 Component 토큰)<br>button_icon 67:2368 · 144/144<br>button_text 432:8395 · 16/16 | ✓ | ✓ 352/352 / 352/352 / 352/352 | ✓ play 8 · 스토리 24 | ✗ 경고 2 스토리 — 색 대비 18(Secondary Solid Hover · Pressed 흰 라벨, 밝기 우선 디자인 결정 2026-10-30) | ✓ |
 | accordion (Accordion) | ✓ accordion-item 1035:15648 · 10/10 (2026-10-28 펼침 하단 구분선 · 트리거 모서리 4px 동기화, 저녁 sm Default Expanded 외톨이 그림자 제거 F102) | ✓ | ✓ 10/10 / 10/10 / 10/10 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | alert (Alert) | ✓ alert 179:6087 · 3/3 (2026-10-29 레이어 이름 정리) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 (2026-10-30 숫자 가운데 정렬) | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |

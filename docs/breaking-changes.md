@@ -82,6 +82,12 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 
 앱 CSS에서 `--colors-text-placeholder`를 비활성 글자에 썼다면 `--colors-text-inactive`로 바꾸면 이전 색이 유지됩니다.
 
+### 2026-10-30 — Button Secondary / Solid 상태 밝기
+
+| 변경 | 내용 | 호환성 |
+| --- | --- | --- |
+| 값 변경 — 정의 | `--colors-fill-secondary-strong-hover` · `-pressed` #006247 · #004a38 → **#009b68 · #02bb7b**(brand/600 · 500, A-1 이전 값) | 화면 변경 — Button · IconButton Secondary / Solid의 Hover · Pressed만 |
+
 ### 2026-10-19 밤 — 코드 정책의 Figma 공식 정책화
 
 | 변경 | 내용 | 호환성 |
@@ -144,7 +150,7 @@ Figma에서 다른 편집자가 Chart 변수를 재구성했습니다(1527 → 1
 | 상태 색(안내 · 성공 · 경고 · 포인트 · 위험 · 오류) | 한 단계 진하게(600 → 700) — 메시지 · 배지 · 토스트 · 알림 · 오류 테두리 |
 | 보조 · 플레이스홀더 글자 | #778191 · #a1a8b5 → #596475 (비활성 라벨은 #a1a8b5 그대로) |
 | 입력 칸 · Checkbox · Radio 테두리, Switch 꺼짐 트랙 | #a1a8b5 → #778191 (hover 한 단계 진하게) |
-| Button Secondary · Solid Hover · Pressed | #009b68 · #02bb7b → #006247 · #004a38 |
+| Button Secondary · Solid Hover · Pressed | 최종 #009b68 · #02bb7b(Default #007c56보다 한 단계씩 밝음) — 2026-10-19 A-1에서 #006247 · #004a38로 바꿨다가 2026-10-30 되돌림, 처음 값과 같음 |
 | `Chart` 호버 강조 영역 | 세로 막대 Group=no 64 → 40px, 가로 막대 행 높이 → 32 · 46px, 간단 스타일 추가 |
 | Hover 배경 16곳 | #f9fafb → #f5f6f7 |
 | 키보드 포커스 표시(모든 컨트롤) | 브라우저 기본 표시 → 2px `colors/border/focus` 링(#007c56, 바깥 2px · 행은 안쪽) — 앱이 `:focus-visible`을 따로 꾸몄다면 겹칠 수 있음 |
