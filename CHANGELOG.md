@@ -7,6 +7,18 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### DropdownMenu — 하위 메뉴를 여는 항목 바로 옆에 (Figma 사용 예시 기준) (2026-10-30)
+
+- **원인**: `DropdownMenuSub`의 Popover에 `offset={8} crossOffset={-4}`를 직접 주어(Rules 05의 "4px 간격"을 상위 패널 기준으로 적용) 하위 패널이 여는 항목에서 8px,
+  상위 패널에서 4px 떨어지고 4px 위에서 시작했습니다. Figma "dropdown-menu 사용 예시"(217:6478)에서는 하위 패널(140 × 160)의 왼쪽 끝이 여는 항목의 오른쪽 끝과 같고
+  (상위 패널 안쪽 여백 4px 위에 겹침, 간격 0) 위쪽이 여는 항목과 같은 높이입니다(첫 항목은 하위 패널 안쪽 여백만큼 4px 아래).
+- **수정**: `placement="end top" offset={0} crossOffset={0}` — react-aria Popover의 기본 간격(8px)을 쓰지 않고 항목 기준으로 붙입니다. 오른쪽 공간이 없으면 왼쪽으로
+  뒤집히고(같은 0 간격) 화면 안으로 옮겨지는 것은 react-aria 그대로(`shouldFlip` · `containerPadding`), 크기 변경 시 위치 갱신. 디자인 토큰 · 크기 · 글꼴 · 공개 API 변화 없음,
+  Figma 변경 없음. 상위 메뉴의 트리거와 4px 간격(Rules 05)은 그대로입니다.
+- **검증**: Gallery "하위 메뉴" play의 위치 검사를 Figma 값으로(항목과 0 · 상위 패널과 −4 · 위쪽 0 · 첫 항목 +4, 정수 픽셀 배치 ±0.5px — 이전 코드로 되돌리면 실패),
+  새 Gallery "하위 메뉴 — 화면 가장자리"(오른쪽 아래 구석: 왼쪽으로 뒤집혀 항목과 0, 화면 안으로 이동), `verify:interaction` 2단계 메뉴 흐름에 위치 검사.
+  세 엔진 실제 포인터: 경계를 1px씩 지나도 닫히지 않음, 항목 사이 빠른 이동 · 다른 항목으로 전환 · Esc · 바깥 클릭 · → / ← · 크기 변경 · 구석 배치 모두 통과.
+
 ### Toast — 쌓임 움직임(아래에서 등장 · 위로 밀림 · 오래된 알림 퇴장) (2026-10-30)
 
 - **기존 구조**: react-aria `UNSTABLE_ToastQueue`(`maxVisibleToasts: 3`) + `showToast`가 4번째 전에 가장 오래된 토스트를 닫고(Rules 06), 같은 문구 · 종류는 바꿔 보여 줌.

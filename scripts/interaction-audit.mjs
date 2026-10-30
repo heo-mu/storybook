@@ -660,6 +660,11 @@ const flows = {
     for (let i = 1; i <= 6; i++) { await page.mouse.move(ib.x + 10 + ((ib.width - 22) * i) / 6, ib.y + ib.height / 2); await sleep(20); }
     const sub = page.getByRole('menu', { name: '내보내기' });
     await sub.waitFor({ timeout: 3000 });
+    // Figma 217:6478: the sub panel starts at the item's right edge (no gap) with its top level with the item — whole-pixel
+    // placement by react-aria, so ± 0.5px
+    const sb = await sub.boundingBox();
+    const ibNow = await item.boundingBox();
+    expect(Math.abs(sb.x - (ibNow.x + ibNow.width)) <= 0.5 && Math.abs(sb.y - ibNow.y) <= 0.5, `sub menu at ${(sb.x - ibNow.x - ibNow.width).toFixed(2)}px / ${(sb.y - ibNow.y).toFixed(2)}px from its item (Figma 0 / 0)`);
     const target = await page.getByRole('menuitem', { name: 'CSV' }).boundingBox();
     const from = { x: ib.x + ib.width - 12, y: ib.y + ib.height / 2 }; // a pointer leaves the item towards its sub menu
     for (let i = 1; i <= 8; i++) { await page.mouse.move(from.x + ((target.x + 20 - from.x) * i) / 8, from.y + ((target.y + target.height / 2 - from.y) * i) / 8); await sleep(15); }

@@ -279,8 +279,9 @@ export const Accessibility: Story = {
 
 /**
  * 2-depth menu (Rules 09 "dropdown-menu": dropdown-menu-sub is the 2nd depth): → · Enter open the sub menu beside its
- * item (4px from the parent panel, first item level with the trigger item), ← · Esc close it and return focus to the
- * item, choosing a sub item calls onAction and closes both menus. It opens and closes at once (no animation).
+ * item — as in the Figma usage example (217:6478) the sub panel starts at the item's right edge (over the parent panel's
+ * 4px padding, no gap) with its top level with the item — ← · Esc close it and return focus to the item, choosing a sub
+ * item calls onAction and closes both menus. It opens and closes at once (no animation).
  */
 export const Submenu: StoryObj<{ onAction: Mock<(key: unknown) => void> }> = {
   name: '하위 메뉴',
@@ -316,9 +317,14 @@ export const Submenu: StoryObj<{ onAction: Mock<(key: unknown) => void> }> = {
       // react-aria names the parent menu by its trigger
       const parent = body.getByRole('menu', { name: '파일' }).getBoundingClientRect();
       const box = sub.getBoundingClientRect();
-      // react-aria places overlays on whole pixels, so after a content-width parent (fractional right edge) the gap is 4px ± 0.5
-      await expect(Math.abs(box.left - parent.right - 4)).toBeLessThanOrEqual(0.5);
-      await expect(Math.abs(within(sub).getByRole('menuitem', { name: 'PDF' }).getBoundingClientRect().top - item.getBoundingClientRect().top)).toBeLessThanOrEqual(0.5);
+      const itemBox = item.getBoundingClientRect();
+      // Figma 217:6478: sub panel left = item right (= parent right − 4, over its p-1 padding), sub panel top = item top, so
+      // the first sub item is 4px below (the sub panel's p-1). react-aria places overlays on whole pixels, so after a
+      // content-width parent (fractional edges) each distance holds to ± 0.5px.
+      await expect(Math.abs(box.left - itemBox.right)).toBeLessThanOrEqual(0.5);
+      await expect(Math.abs(box.left - (parent.right - 4))).toBeLessThanOrEqual(0.5);
+      await expect(Math.abs(box.top - itemBox.top)).toBeLessThanOrEqual(0.5);
+      await expect(Math.abs(within(sub).getByRole('menuitem', { name: 'PDF' }).getBoundingClientRect().top - (itemBox.top + 4))).toBeLessThanOrEqual(0.5);
       await expect(box.width).toBeGreaterThanOrEqual(140);
     });
     await step('← closes it and returns focus to its item', async () => {
@@ -337,3 +343,53 @@ export const Submenu: StoryObj<{ onAction: Mock<(key: unknown) => void> }> = {
     });
   },
 };
+/**
+ * The 2-depth menu at the bottom-right corner of the screen: with no room on the right the sub menu opens on the left —
+ * still edge to edge with its item, over the parent panel's 4px padding — and moves up to stay inside the screen
+ * (react-aria flip · containerPadding 12px). Where there is room it keeps the Figma position (see "하위 메뉴").
+ */
+export const SubmenuEdge: StoryObj = {
+  name: '하위 메뉴 — 화면 가장자리',
+  render: () => (
+    <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', height: 'calc(100vh - 32px)' }}>
+      <DropdownMenu trigger={<Button>파일</Button>} aria-label="파일 작업">
+        <DropdownMenuItem id="new">새 폴더</DropdownMenuItem>
+        <DropdownMenuItem id="copy">복제</DropdownMenuItem>
+        <DropdownMenuSub id="export" label="내보내기">
+          <DropdownMenuItem id="pdf">PDF</DropdownMenuItem>
+          <DropdownMenuItem id="xlsx">Excel</DropdownMenuItem>
+          <DropdownMenuItem id="csv">CSV</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem id="more">더보기...</DropdownMenuItem>
+        </DropdownMenuSub>
+      </DropdownMenu>
+    </div>
+  ),
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const doc = canvasElement.ownerDocument;
+    const win = doc.defaultView!;
+    const body = within(doc.body);
+    canvas.getByRole('button', { name: '파일' }).focus();
+    await userEvent.keyboard('{Enter}');
+    const item = await body.findByRole('menuitem', { name: '내보내기' });
+    await waitFor(() => expect(body.getByRole('menuitem', { name: '새 폴더' })).toHaveFocus());
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowRight}');
+    const sub = await body.findByRole('menu', { name: '내보내기' });
+    await waitFor(() => expect(within(sub).getByRole('menuitem', { name: 'PDF' })).toHaveFocus());
+    const parent = body.getByRole('menu', { name: '파일' }).getBoundingClientRect();
+    const box = sub.getBoundingClientRect();
+    const itemBox = item.getBoundingClientRect();
+    // flipped: sub panel right = item left = parent left + 4 (whole-pixel placement, ± 0.5px)
+    await expect(Math.abs(box.right - itemBox.left)).toBeLessThanOrEqual(0.5);
+    await expect(Math.abs(box.right - (parent.left + 4))).toBeLessThanOrEqual(0.5);
+    // shifted into the screen: no part below or right of the viewport
+    await expect(box.bottom).toBeLessThanOrEqual(win.innerHeight);
+    await expect(box.right).toBeLessThanOrEqual(win.innerWidth);
+    await expect(box.left).toBeGreaterThanOrEqual(0);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('menu', { name: '내보내기' })).not.toBeInTheDocument());
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(body.queryByRole('menu')).not.toBeInTheDocument());
+  },
+};
+
