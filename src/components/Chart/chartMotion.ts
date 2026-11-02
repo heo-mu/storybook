@@ -103,7 +103,7 @@ const VISIBLE_RATIO = 0.3;
  * Entrance state of one chart: `pending` until its plot is first seen (IntersectionObserver), then `running` for
  * `duration` ms, then `done` for good. With reduced motion (or without IntersectionObserver) it is `done` from the
  * start; `finish()` ends it at once (the user opened a tooltip). Hover, focus, re-renders and leaving / re-entering the
- * viewport never replay it; a new mount (React `key`) does. `start` runs on the committed DOM before it is painted.
+ * viewport never replay it; a new mount (React `key`) does. `start` runs on the next frame after the switch to `running`.
  */
 export function useEntrance(target: RefObject<Element | null>, ready: boolean, duration: number, start: () => void) {
   const reduced = usePrefersReducedMotion();
@@ -129,10 +129,18 @@ export function useEntrance(target: RefObject<Element | null>, ready: boolean, d
   }, [phase, ready, target]);
   useLayoutEffect(() => {
     if (phase !== 'running') return;
-    startRef.current();
-    // Only a phase change starts the timer: later renders (resize, new data, hover) neither restart nor stretch it.
-    const timer = setTimeout(() => setState('done'), durationRef.current);
-    return () => clearTimeout(timer);
+    // Start on the next frame: SMIL begins at the document's current time, which lags behind after a long task (the
+    // opening of the motion would be skipped); at a frame the clock is current. Until then the marks show their empty
+    // start shape. Only a phase change starts it: later renders (resize, new data, hover) neither restart nor stretch it.
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const frame = requestAnimationFrame(() => {
+      startRef.current();
+      timer = setTimeout(() => setState('done'), durationRef.current);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+    };
   }, [phase]);
   const finish = useCallback(() => setState('done'), []);
   return { phase, finish };
