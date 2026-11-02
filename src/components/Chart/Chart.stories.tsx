@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 import { expect, fn, waitFor } from 'storybook/test';
+import { Button } from '../Button';
 import { Chart } from './Chart';
 import { CHART_TYPES, CHART_VARIANTS } from './Chart.options';
 
@@ -96,6 +98,25 @@ export const Simple: Story = {
       { label: '사용량', data: [148, 198, 136, 224, 184] },
       { label: '비교 기간', data: [170, 185, 168, 204, 212] },
     ],
+  },
+};
+
+/**
+ * 처음 화면에 보일 때 데이터가 그려집니다(선은 왼쪽부터, 막대는 기준선부터). "다시 그리기"는 차트를 새로 표시해(`key` 변경)
+ * 움직임을 다시 보여 줍니다. 종류와 스타일을 바꿔 볼 수 있습니다.
+ */
+export const Entrance: Story = {
+  name: 'Entrance',
+  render: function Render(args) {
+    const [round, setRound] = useState(0);
+    return (
+      <div style={{ display: 'grid', gap: 16, justifyItems: 'start', width: args.variant === 'simple' ? 320 : 600, maxWidth: '100%' }}>
+        <Button size="sm" variant="secondary" onClick={() => setRound((r) => r + 1)}>
+          다시 그리기
+        </Button>
+        <Chart key={round} {...args} style={{ width: '100%' }} />
+      </div>
+    );
   },
 };
 

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, waitFor, type Mock } from 'storybook/test';
+import { useState, type ReactNode } from 'react';
+import { expect, fn, waitFor, within, type Mock } from 'storybook/test';
+import { Button } from '../../Button';
 import { Chart, type ChartProps } from '../Chart';
 import { ChartLegendItem } from '../ChartLegendItem';
 import { ChartTooltip } from '../ChartTooltip';
@@ -563,5 +565,319 @@ export const MultipleCharts: Story = {
       await expect(r.bottom <= box.top || r.top >= box.bottom).toBe(true);
       scroller.scrollTop = 0;
     });
+  },
+};
+
+// ── Entrance motion (Rules 09 "차트 그리기") ─────────────────────────────────────────────────────────────────────────
+// The real Chart draws its data in when it is first seen. "다시 그리기" remounts the charts (React key) — the way an
+// app draws a chart again. The plays record every animation frame and check the motion itself, then the final state.
+
+const sample = (name: string) => FIGMA_BASE.find((b) => b.name === name)!;
+
+/** One of the Figma sample charts (the Variants story), drawn in by the real component. */
+function SampleChart({ name, ...props }: { name: string } & Partial<ChartProps>) {
+  const s = sample(name);
+  return <Chart aria-label={name} style={{ width: s.width }} {...s.props} {...props} />;
+}
+
+/** Remounts its charts with a new key: they wait to be seen and draw in again. */
+function Replay({ children }: { children: ReactNode }) {
+  const [round, setRound] = useState(0);
+  return (
+    <div style={{ display: 'grid', gap: 16, justifyItems: 'start' }}>
+      <Button size="sm" variant="secondary" onClick={() => setRound((r) => r + 1)}>
+        다시 그리기
+      </Button>
+      <div key={round} data-round={round} style={{ display: 'grid', gap: 32, justifyItems: 'start' }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+type EntranceFrame = { phase: string | null; hidden: boolean; sizes: number[]; reveal: number | null };
+
+/** Every frame of a chart's entrance until it is done: the drawn size of each bar (its animated path) or the share of the line that is revealed. */
+function recordEntrance(chart: Element): Promise<EntranceFrame[]> {
+  const horizontal = chart.getAttribute('data-type') === 'bar-horizontal';
+  const frames: EntranceFrame[] = [];
+  return new Promise((resolve) => {
+    const tick = () => {
+      const clip = chart.querySelector<SVGRectElement>('clipPath rect');
+      const mark = chart.querySelector('.ds-chart__bar, .ds-chart__line');
+      frames.push({
+        phase: chart.getAttribute('data-entrance'),
+        hidden: !!mark && getComputedStyle(mark).visibility === 'hidden',
+        sizes: [...chart.querySelectorAll<SVGGraphicsElement>('.ds-chart__bar')].map((b) => (horizontal ? b.getBBox().width : b.getBBox().height)),
+        // share of the plot right of the clip start that is revealed (the clip base width is 0 while drawing)
+        reveal: clip ? clip.width.animVal.value / (Number(chart.querySelector('.ds-chart__svg')!.getAttribute('width')) - clip.x.baseVal.value) : null,
+      });
+      if (frames[frames.length - 1].phase === 'done') resolve(frames);
+      else requestAnimationFrame(tick);
+    };
+    tick();
+  });
+}
+
+/**
+ * The marks are hidden until the chart is seen, then grow from (almost) nothing and never shrink — bars category by
+ * category (a pair together), the line revealed from the left — and end at the finished geometry with no clip left.
+ */
+async function expectDrawnIn(frames: EntranceFrame[], seriesCount: number) {
+  const running = frames.filter((f) => f.phase === 'running');
+  const done = frames[frames.length - 1];
+  await expect(frames.filter((f) => f.phase === 'pending').every((f) => f.hidden)).toBe(true);
+  await expect(running.length).toBeGreaterThan(5);
+  if (done.sizes.length) {
+    for (let i = 0; i < done.sizes.length; i++) {
+      const seq = running.map((f) => f.sizes[i]);
+      await expect(seq[0]).toBeLessThanOrEqual(done.sizes[i] * 0.25);
+      await expect(seq.every((v, k) => k === 0 || v >= seq[k - 1] - 1e-3)).toBe(true);
+      await expect(Math.max(...seq)).toBeLessThanOrEqual(done.sizes[i] + 1e-3);
+    }
+    const starts = done.sizes.map((_, i) => running.findIndex((f) => f.sizes[i] > 0.5));
+    const categoryStart = (c: number) => Math.min(...starts.slice(c * seriesCount, (c + 1) * seriesCount).map((s) => (s < 0 ? Infinity : s)));
+    for (let c = 1; c < done.sizes.length / seriesCount; c++) await expect(categoryStart(c)).toBeGreaterThanOrEqual(categoryStart(c - 1));
+    await expect(categoryStart(done.sizes.length / seriesCount - 1)).toBeGreaterThan(categoryStart(0));
+  } else {
+    const reveal = running.map((f) => f.reveal ?? 1);
+    await expect(reveal[0]).toBeLessThan(0.3);
+    await expect(reveal.every((v, k) => k === 0 || v >= reveal[k - 1] - 1e-6)).toBe(true);
+    await expect(done.reveal).toBeNull();
+  }
+}
+
+/** Presses "다시 그리기", brings each new chart into view and checks its recorded entrance. */
+async function replayAndCheck(canvasElement: HTMLElement, userEvent: { click: (el: Element) => Promise<void> }) {
+  const round = Number(canvasElement.querySelector('[data-round]')!.getAttribute('data-round')) + 1;
+  await userEvent.click(within(canvasElement).getByRole('button', { name: '다시 그리기' }));
+  await waitFor(() => expect(canvasElement.querySelector(`[data-round="${round}"] .ds-chart__svg`)).not.toBeNull());
+  const charts = [...canvasElement.querySelectorAll(`[data-round="${round}"] .ds-chart`)];
+  const recordings = charts.map(recordEntrance);
+  for (const chart of charts) {
+    if (chart.getAttribute('data-entrance') !== 'pending') continue;
+    chart.scrollIntoView({ block: 'center' });
+    await new Promise((r) => setTimeout(r, 50));
+  }
+  const all = await Promise.all(recordings);
+  for (const [i, frames] of all.entries()) await expectDrawnIn(frames, charts[i].getAttribute('data-group') === 'yes' ? 2 : 1);
+  window.scrollTo(0, 0);
+}
+
+/** 선은 첫 점부터 오른쪽으로 그려지며, 두 계열 · 면 · 점이 같은 시간축으로 나타나고 "최고" 배지는 선이 닿을 때 보입니다. */
+export const LineEntrance: Story = {
+  name: '진입 — 선 차트',
+  render: () => (
+    <Replay>
+      <SampleChart name="Type=Line, Style=Default, Group=yes" />
+      <SampleChart name="Type=Line, Style=Default, Group=no" />
+      <div style={{ display: 'flex', gap: 40 }}>
+        <SampleChart name="Type=Line, Style=Simple, Group=no" />
+        <SampleChart name="Type=Line, Style=Simple, Group=yes" />
+      </div>
+    </Replay>
+  ),
+  play: async ({ canvasElement, userEvent }) => replayAndCheck(canvasElement, userEvent),
+};
+
+/** 세로 막대는 기준선에서 위로 실제 높이만큼 자랍니다(너비 · 모서리 유지). 항목마다 차례로, 비교 막대는 함께 나타납니다. */
+export const BarVerticalEntrance: Story = {
+  name: '진입 — 세로 막대',
+  render: () => (
+    <Replay>
+      <SampleChart name="Type=Bar Vertical, Style=Default, Group=yes" />
+      <SampleChart name="Type=Bar Vertical, Style=Default, Group=no" />
+      <div style={{ display: 'flex', gap: 40 }}>
+        <SampleChart name="Type=Bar Vertical, Style=Simple, Group=no" />
+        <SampleChart name="Type=Bar Vertical, Style=Simple, Group=yes" />
+      </div>
+    </Replay>
+  ),
+  play: async ({ canvasElement, userEvent }) => replayAndCheck(canvasElement, userEvent),
+};
+
+/** 가로 막대는 축에서 오른쪽으로 값만큼 채워집니다(높이 · 모서리 · 그라데이션 유지). 항목마다 차례로 나타납니다. */
+export const BarHorizontalEntrance: Story = {
+  name: '진입 — 가로 막대',
+  render: () => (
+    <Replay>
+      <SampleChart name="Type=Bar Horizontal, Style=Default, Group=yes" />
+      <SampleChart name="Type=Bar Horizontal, Style=Default, Group=no" />
+      <div style={{ display: 'flex', gap: 40 }}>
+        <SampleChart name="Type=Bar Horizontal, Style=Simple, Group=no" />
+        <SampleChart name="Type=Bar Horizontal, Style=Simple, Group=yes" />
+      </div>
+    </Replay>
+  ),
+  play: async ({ canvasElement, userEvent }) => replayAndCheck(canvasElement, userEvent),
+};
+
+/**
+ * 강조 상태(`highlightedIndex`)의 배경은 그리는 동안에도 그대로이고, 그리는 중에 마우스를 올리거나 키보드로 항목을 고르면
+ * 차트가 바로 완성된 뒤 툴팁이 열립니다. 다시 그리지는 않습니다.
+ */
+export const EntranceHighlighted: Story = {
+  name: '진입 — 강조 상태와 툴팁',
+  render: () => (
+    <Replay>
+      <SampleChart name="Type=Bar Vertical, Style=Default, Group=yes" highlightedIndex={3} />
+      <SampleChart name="Type=Line, Style=Default, Group=yes" highlightedIndex={4} />
+    </Replay>
+  ),
+  play: async ({ canvasElement, userEvent, step }) => {
+    await step('the highlight stays while the data draws in', async () => {
+      await replayAndCheck(canvasElement, userEvent);
+      for (const chart of canvasElement.querySelectorAll('.ds-chart')) {
+        await expect(chart).toHaveAttribute('data-state', 'highlighted');
+        await expect(chart.querySelector('.ds-chart__highlight')).not.toBeNull();
+      }
+    });
+    await step('hovering while it draws shows the finished chart and the right values', async () => {
+      await userEvent.click(within(canvasElement).getByRole('button', { name: '다시 그리기' }));
+      const chart = await waitFor(() => {
+        const c = canvasElement.querySelector('[data-round="2"] .ds-chart');
+        expect(c).toHaveAttribute('data-entrance', 'running');
+        return c!;
+      });
+      const plot = chart.querySelector('.ds-chart__plot')!;
+      const box = plot.getBoundingClientRect();
+      await userEvent.pointer({ target: plot, coords: { clientX: box.left + box.width * 0.9, clientY: box.top + 100 } });
+      await expect(chart).toHaveAttribute('data-entrance', 'done');
+      await expect(chart.querySelector('animate')).toBeNull();
+      await expect(chart.querySelector('.ds-chart__tooltip')).toHaveTextContent('105동');
+      const heights = [...chart.querySelectorAll<SVGGraphicsElement>('.ds-chart__bar')].map((b) => b.getBBox().height);
+      await userEvent.unhover(plot);
+      await waitFor(() => expect(chart).toHaveAttribute('data-state', 'highlighted'));
+      await expect(chart).toHaveAttribute('data-entrance', 'done');
+      await expect([...chart.querySelectorAll<SVGGraphicsElement>('.ds-chart__bar')].map((b) => b.getBBox().height)).toEqual(heights);
+    });
+    await step('the keyboard does the same', async () => {
+      await userEvent.click(within(canvasElement).getByRole('button', { name: '다시 그리기' }));
+      const line = await waitFor(() => {
+        const c = canvasElement.querySelectorAll('[data-round="3"] .ds-chart')[1];
+        expect(c).toBeDefined();
+        return c;
+      });
+      line.scrollIntoView({ block: 'center' });
+      await waitFor(() => expect(line).toHaveAttribute('data-entrance', 'running'));
+      (line.querySelector('.ds-chart__plot') as HTMLElement).focus();
+      await userEvent.keyboard('{End}');
+      await expect(line).toHaveAttribute('data-entrance', 'done');
+      await expect(line.querySelector('clipPath')).toBeNull();
+      await expect(line.querySelector('.ds-chart__tooltip')).toHaveTextContent('10.13');
+      await userEvent.keyboard('{Escape}');
+      window.scrollTo(0, 0);
+    });
+  },
+};
+
+/** 여러 차트가 함께 보이면 각자 그려지고, 한 차트를 조작해도 다른 차트의 움직임에는 영향이 없습니다. */
+export const EntranceMultiple: Story = {
+  name: '진입 — 여러 차트',
+  render: () => (
+    <Replay>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 320px)', gap: 32 }}>
+        <SampleChart name="Type=Line, Style=Simple, Group=no" />
+        <SampleChart name="Type=Bar Vertical, Style=Simple, Group=no" />
+        <SampleChart name="Type=Bar Horizontal, Style=Simple, Group=no" />
+        <SampleChart name="Type=Line, Style=Simple, Group=yes" />
+        <SampleChart name="Type=Bar Vertical, Style=Simple, Group=yes" />
+        <SampleChart name="Type=Bar Horizontal, Style=Simple, Group=yes" />
+      </div>
+    </Replay>
+  ),
+  play: async ({ canvasElement, userEvent, step }) => {
+    await step('all draw in together', async () => replayAndCheck(canvasElement, userEvent));
+    await step('finishing one by hovering it leaves the others drawing', async () => {
+      await userEvent.click(within(canvasElement).getByRole('button', { name: '다시 그리기' }));
+      const charts = await waitFor(() => {
+        const list = [...canvasElement.querySelectorAll('[data-round="2"] .ds-chart')];
+        expect(list).toHaveLength(6);
+        for (const c of list) expect(c).toHaveAttribute('data-entrance', 'running');
+        return list;
+      });
+      const plot = charts[1].querySelector('.ds-chart__plot')!;
+      const box = plot.getBoundingClientRect();
+      await userEvent.pointer({ target: plot, coords: { clientX: box.left + box.width / 2, clientY: box.top + box.height / 2 } });
+      await expect(charts[1]).toHaveAttribute('data-entrance', 'done');
+      for (const c of [charts[0], ...charts.slice(2)]) await expect(c).toHaveAttribute('data-entrance', 'running');
+      await userEvent.unhover(plot);
+      await waitFor(() => charts.forEach((c) => expect(c).toHaveAttribute('data-entrance', 'done')), { timeout: 3000 });
+    });
+  },
+};
+
+/** 화면 밖의 차트는 스크롤해서 보일 때 그려지고, 밖으로 나갔다 다시 들어와도 다시 그리지 않습니다. */
+export const EntranceOnScroll: Story = {
+  name: '진입 — 스크롤해서 보일 때',
+  render: () => (
+    <div data-scroller="" style={{ width: 360, height: 320, overflow: 'auto', border: '1px dashed var(--colors-border-gray-subtler)' }}>
+      <p style={{ margin: 16, font: 'inherit', color: 'var(--colors-text-tertiary)' }}>아래로 스크롤하면 차트가 보일 때 그려집니다.</p>
+      <div style={{ height: 480 }} />
+      <SampleChart name="Type=Bar Vertical, Style=Simple, Group=yes" style={{ width: 320, margin: 16 }} />
+      <div style={{ height: 480 }} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const scroller = canvasElement.querySelector<HTMLElement>('[data-scroller]')!;
+    const chart = canvasElement.querySelector('.ds-chart')!;
+    const phases: string[] = [];
+    const observer = new MutationObserver(() => phases.push(chart.getAttribute('data-entrance')!));
+    observer.observe(chart, { attributes: true, attributeFilter: ['data-entrance'] });
+    await waitFor(() => expect(chart.querySelector('.ds-chart__svg')).not.toBeNull());
+    await new Promise((r) => setTimeout(r, 300));
+    await expect(chart).toHaveAttribute('data-entrance', 'pending');
+    const recording = recordEntrance(chart);
+    scroller.scrollTop = 420;
+    await expectDrawnIn(await recording, 2);
+    for (const top of [0, 420, 0, 420]) {
+      scroller.scrollTop = top;
+      await new Promise((r) => setTimeout(r, 120));
+    }
+    observer.disconnect();
+    await expect(phases).toEqual(['running', 'done']);
+  },
+};
+
+/**
+ * 운영체제의 "동작 줄이기"를 켜면 차트는 처음부터 완성된 모습으로 표시됩니다. 이 스토리는 그 설정을 흉내 냅니다
+ * (이 화면에서만 `prefers-reduced-motion: reduce`로 응답).
+ */
+export const EntranceReducedMotion: Story = {
+  name: '진입 — 동작 줄이기',
+  beforeEach: () => {
+    const original = window.matchMedia;
+    window.matchMedia = (query: string) => {
+      const real = original.call(window, query);
+      if (!query.includes('prefers-reduced-motion')) return real;
+      return { matches: true, media: query, onchange: null, addEventListener: () => {}, removeEventListener: () => {}, addListener: () => {}, removeListener: () => {}, dispatchEvent: () => false } as MediaQueryList;
+    };
+    return () => {
+      window.matchMedia = original;
+    };
+  },
+  render: () => (
+    <Replay>
+      <SampleChart name="Type=Bar Vertical, Style=Default, Group=yes" />
+      <div style={{ display: 'flex', gap: 40 }}>
+        <SampleChart name="Type=Line, Style=Simple, Group=yes" />
+        <SampleChart name="Type=Bar Horizontal, Style=Simple, Group=yes" />
+      </div>
+    </Replay>
+  ),
+  play: async ({ canvasElement, userEvent }) => {
+    for (let round = 0; round < 2; round++) {
+      if (round) await userEvent.click(within(canvasElement).getByRole('button', { name: '다시 그리기' }));
+      const charts = await waitFor(() => {
+        const list = [...canvasElement.querySelectorAll(`[data-round="${round}"] .ds-chart`)];
+        expect(list).toHaveLength(3);
+        list.forEach((c) => expect(c.querySelector('.ds-chart__svg')).not.toBeNull());
+        return list;
+      });
+      for (const chart of charts) {
+        await expect(chart).toHaveAttribute('data-entrance', 'done');
+        await expect(chart.querySelector('animate, clipPath')).toBeNull();
+      }
+    }
   },
 };

@@ -79,9 +79,15 @@ export function extendToEdges(points: readonly Point[], left: number, right: num
   return [at(points[0], points[1], left), ...points, at(points[n - 2], points[n - 1], right)];
 }
 
-/** Bar with the two corners at its value end rounded (`up`: top corners, `right`: right corners). */
-export function barPath(x: number, y: number, w: number, h: number, radius: number, direction: 'up' | 'right'): string {
-  if (w <= 0 || h <= 0) return '';
+/**
+ * Bar with the two corners at its value end rounded (`up`: top corners, `right`: right corners). An empty bar is no
+ * path, or with `keepShape` the same commands at zero size (keyframes of the entrance motion must share their commands).
+ */
+export function barPath(x: number, y: number, w: number, h: number, radius: number, direction: 'up' | 'right', keepShape = false): string {
+  if (keepShape) {
+    w = Math.max(0, w);
+    h = Math.max(0, h);
+  } else if (w <= 0 || h <= 0) return '';
   if (direction === 'up') {
     const r = Math.min(radius, w / 2, h);
     return `M${f(x)} ${f(y + h)} V${f(y + r)} A${f(r)} ${f(r)} 0 0 1 ${f(x + r)} ${f(y)} H${f(x + w - r)} A${f(r)} ${f(r)} 0 0 1 ${f(x + w)} ${f(y + r)} V${f(y + h)} Z`;

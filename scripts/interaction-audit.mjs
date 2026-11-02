@@ -352,6 +352,91 @@ const flows = {
     await sleep(250);
     expect((await tooltip.count()) === 0 || !(await tooltip.isVisible()), 'Escape did not hide the keyboard tooltip');
   },
+  async 'Chart entrance — drawn once when scrolled into view (bars grow, the line from the left); scrolling out and back does not redraw'() {
+    for (const type of ['bar-vertical', 'bar-horizontal', 'line']) {
+      await story(`components-chart-chart--entrance&args=type:${type}`);
+      // The chart is pushed below the fold, then remounted ("다시 그리기") so it waits there to be seen.
+      await page.addStyleTag({ content: '#storybook-root .ds-chart { margin-top: 1400px; }' });
+      await root().getByRole('button', { name: '다시 그리기' }).click();
+      await sleep(500);
+      const phase = () => page.evaluate(() => document.querySelector('.ds-chart').getAttribute('data-entrance'));
+      expect((await phase()) === 'pending', `${type}: drawn before it was seen (${await phase()})`);
+      await page.evaluate(() => {
+        const chart = document.querySelector('.ds-chart');
+        window.__phases = [];
+        window.__sizes = [];
+        new MutationObserver(() => window.__phases.push(chart.getAttribute('data-entrance'))).observe(chart, { attributes: true, attributeFilter: ['data-entrance'] });
+        const tick = () => {
+          const clip = chart.querySelector('clipPath rect');
+          const bar = chart.querySelector('.ds-chart__bar');
+          // drawn size of the first bar (its animated path) or of the line's reveal, while it is drawing
+          if (chart.getAttribute('data-entrance') === 'running') window.__sizes.push(clip ? clip.width.animVal.value : bar ? Math.max(bar.getBBox().width, bar.getBBox().height) : -1);
+          if (chart.getAttribute('data-entrance') !== 'done') requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+      const plot = root().locator('.ds-chart__plot');
+      await page.mouse.move(700, 500);
+      for (let i = 0; i < 6 && (await phase()) === 'pending'; i++) { await page.mouse.wheel(0, 300); await sleep(120); }
+      await page.waitForFunction(() => document.querySelector('.ds-chart').getAttribute('data-entrance') === 'done', null, { timeout: 4000 });
+      const sizes = await page.evaluate(() => window.__sizes);
+      const grown = sizes.filter((s) => s >= 0);
+      expect(grown.length > 5 && grown.every((s, i) => i === 0 || s >= grown[i - 1] - 1e-3) && grown[0] < grown[grown.length - 1] * 0.3, `${type}: did not grow from (almost) nothing (${grown.slice(0, 3).map((s) => s.toFixed(1))} … ${grown.at(-1)?.toFixed(1)})`);
+      for (const dy of [-1200, 1200, -1200, 1200]) { await page.mouse.wheel(0, dy); await sleep(150); }
+      expect((await plot.isVisible()) && (await page.evaluate(() => window.__phases.join())) === 'running,done', `${type}: phases ${await page.evaluate(() => window.__phases.join())} (redrawn after scrolling?)`);
+    }
+  },
+  async 'Chart entrance — hovering or a key while it draws shows the finished chart and the right tooltip; reduced motion shows it at once'() {
+    await story('components-chart-chart--entrance');
+    const phase = () => page.evaluate(() => document.querySelector('.ds-chart').getAttribute('data-entrance'));
+    const heights = () => page.evaluate(() => [...document.querySelectorAll('.ds-chart__bar')].map((b) => +b.getBBox().height.toFixed(3)).join());
+    await sleep(1000);
+    const finished = await heights();
+    await root().getByRole('button', { name: '다시 그리기' }).click();
+    await page.waitForFunction(() => document.querySelector('.ds-chart')?.getAttribute('data-entrance') === 'running', null, { timeout: 3000 });
+    const box = await root().locator('.ds-chart__plot').boundingBox();
+    await page.mouse.move(box.x + box.width * 0.62, box.y + box.height * 0.5);
+    await sleep(60);
+    expect((await phase()) === 'done', `hovering while drawing left it ${await phase()}`);
+    expect((await heights()) === finished, 'hovering while drawing did not show the finished bars');
+    const title = await page.locator('.ds-chart-tooltip__title').textContent();
+    expect(title === '103동', `tooltip shows ${title}, expected the hovered 103동`);
+    await page.mouse.move(5, 5);
+    await sleep(400);
+    expect((await phase()) === 'done' && (await heights()) === finished, 'leaving the chart redrew it');
+    await root().getByRole('button', { name: '다시 그리기' }).click();
+    await page.waitForFunction(() => document.querySelector('.ds-chart')?.getAttribute('data-entrance') === 'running', null, { timeout: 3000 });
+    await root().getByRole('group', { name: /차트 항목/ }).focus();
+    await page.keyboard.press('End');
+    expect((await phase()) === 'done' && (await heights()) === finished, 'a key while drawing did not show the finished chart');
+    expect((await page.locator('.ds-chart-tooltip__title').textContent()) === '105동', 'End did not show the last item');
+    await page.keyboard.press('Escape');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    try {
+      await story('components-chart-chart--entrance&args=type:line');
+      expect((await phase()) === 'done' && (await page.locator('.ds-chart animate, .ds-chart clipPath').count()) === 0, `reduced motion: ${await phase()}`);
+      await root().getByRole('button', { name: '다시 그리기' }).click();
+      await sleep(100);
+      expect((await phase()) === 'done' && (await page.locator('.ds-chart animate, .ds-chart clipPath').count()) === 0, 'reduced motion: redraw animated');
+    } finally {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+    }
+  },
+  async 'Chart entrance — several charts draw at once, each on its own; hovering one finishes only that one'() {
+    await story('components-chart-showcase--entrance-multiple');
+    await playDone();
+    await root().getByRole('button', { name: '다시 그리기' }).click();
+    await page.waitForFunction(() => { const c = [...document.querySelectorAll('.ds-chart')]; return c.length === 6 && c.every((x) => x.getAttribute('data-entrance') === 'running'); }, null, { timeout: 3000 });
+    const plots = root().locator('.ds-chart__plot');
+    const box = await plots.nth(2).boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await sleep(40);
+    const phases = await page.evaluate(() => [...document.querySelectorAll('.ds-chart')].map((c) => c.getAttribute('data-entrance')));
+    expect(phases[2] === 'done' && phases.filter((p) => p === 'running').length === 5, `phases after hovering the third chart: ${phases}`);
+    expect((await root().locator('.ds-chart__tooltip').count()) === 1, 'more than one tooltip');
+    await page.mouse.move(5, 5);
+    await page.waitForFunction(() => [...document.querySelectorAll('.ds-chart')].every((c) => c.getAttribute('data-entrance') === 'done'), null, { timeout: 3000 });
+  },
   async 'Accordion — one open at a time, Space / Enter toggle, disabled ignores'() {
     await story('components-accordion-accordion--playground');
     const basic = root().getByRole('button', { name: '기본 설정' });

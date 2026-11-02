@@ -145,6 +145,22 @@ async function screenshotCell(page, name) {
   }
 }
 
+// Charts draw their data in when they are first seen (Rules 09 "차트 그리기", data-entrance): bring every one that is
+// still waiting into view, then wait until all have finished — the completed state is what is compared with Figma
+// (the motion itself is checked by the Chart stories and the interaction audit).
+async function settleEntrances(page) {
+  const count = await page.evaluate(async () => {
+    const waiting = [...document.querySelectorAll('[data-entrance="pending"]')];
+    for (const el of waiting) {
+      el.scrollIntoView({ block: 'center' });
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    }
+    if (waiting.length) window.scrollTo(0, 0);
+    return document.querySelectorAll('[data-entrance]').length;
+  });
+  if (count) await page.waitForFunction(() => [...document.querySelectorAll('[data-entrance]')].every((el) => el.getAttribute('data-entrance') === 'done'), null, { timeout: 15000 });
+}
+
 const report = { component, browser: `${BROWSER} ${browser.version()}`, sets: {} };
 let failures = 0;
 const lines = ['', `Figma ↔ Storybook parity — ${component} (${report.browser})`];
@@ -194,6 +210,7 @@ for (const set of config.sets) {
   await page.addStyleTag({ content: `html, body { background: ${set.background} !important; } ${set.harnessCss ?? ''}` });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(150);
+  await settleEntrances(page);
 
   // `figmaPrefix`: one story holds several sets — cells named "<prefix><variant>" belong to this set.
   const prefix = set.figmaPrefix ?? '';

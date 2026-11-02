@@ -157,6 +157,7 @@ Figma에서 다른 편집자가 Chart 변수를 재구성했습니다(1527 → 1
 | 보조 · 플레이스홀더 글자 | #778191 · #a1a8b5 → #596475 (비활성 라벨은 #a1a8b5 그대로) |
 | 입력 칸 · Checkbox · Radio 테두리, Switch 꺼짐 트랙 | #a1a8b5 → #778191 (hover 한 단계 진하게) |
 | `EyeSlashIcon` · Input 비밀번호를 보이는 동안의 눈 아이콘 | `icon/visibility_off`(24 그리드, 단독 기본 크기 24px) → Figma `icon/Eye-close`(16 그리드, 기본 16px — `EyeIcon`과 같음). Input 안에서는 칸 크기(16 · 20 · 24px) 그대로 |
+| `Chart` 그리기 움직임(2026-11-02) | 처음 화면에 보일 때 데이터가 그려짐(선 왼쪽부터 0.7초, 막대 기준선부터 항목마다 0.05초 차이로 0.5초씩, 전체 0.8초 이내). 보이기 전에는 축 · 눈금 · 범례만 보임. 움직임 줄이기 설정 · 툴팁을 연 경우 · 인쇄는 완성 상태. Props 그대로 — 차트 화면을 바로 캡처하는 시각 테스트는 완료를 기다리거나(`data-entrance="done"`) 움직임 줄이기로 실행 |
 | `TextButton` 좌우 여백(2026-10-30) | sm 2 · 2 → 4 · 4, md 2 · 2 → 6 · 6, 아이콘이 있는 쪽만 한 단계 좁게(sm 2 · md 4) — 글자만 있는 버튼 sm +4 · md +8px, 오른쪽 아이콘 버튼 sm +2 · md +6px 넓어짐(높이 · 글자 그대로). TextButton을 쓰는 Toast 닫기 · EmptyState · DataState · FileUploaderItem · 달력 연 · 월 선택도 같음. Props 그대로, 너비를 고정해 배치한 화면만 확인 |
 | Button Secondary · Solid Hover · Pressed | 최종 #009b68 · #02bb7b(Default #007c56보다 한 단계씩 밝음) — 2026-10-19 A-1에서 #006247 · #004a38로 바꿨다가 2026-10-30 되돌림, 처음 값과 같음 |
 | `Chart` 호버 강조 영역 | 세로 막대 Group=no 64 → 40px, 가로 막대 행 높이 → 32 · 46px, 간단 스타일 추가 |

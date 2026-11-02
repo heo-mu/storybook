@@ -394,6 +394,29 @@
 }
 
 /*
+ * Entrance motion — Design System Rules 09 "차트 그리기" (chartMotion.ts). Until the plot is first seen
+ * (data-entrance="pending") the chart shows its axes, grid, labels and legend without data; then the marks draw in
+ * (SMIL on the bar paths and on the line's clip rectangle) and the "최고" badge fades in when the line reaches it
+ * (BADGE_FADE, delay set by Chart.tsx). Printing shows the finished chart. No motion with prefers-reduced-motion
+ * (data-entrance is "done" from the start).
+ */
+@media not print {
+  .ds-chart[data-entrance='pending'] :is(.ds-chart__bar, .ds-chart__line, .ds-chart__area, .ds-chart__point, .ds-chart__max) {
+    visibility: hidden;
+  }
+}
+
+@keyframes ds-chart-badge-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.ds-chart[data-entrance='running'] .ds-chart__max {
+  animation: ds-chart-badge-in 150ms ease-out var(--_badge-delay, 0ms) both;
+}
+
+/*
  * Tooltip of a chart — inside its own plot (position: absolute, no portal) and placed by Chart.tsx beside the active
  * item, inside the visible part of the plot (Design System Rules 05): it moves with its chart and is never left over
  * another one. z-index 1 lifts it over the rest of the chart and the content after it; max-content keeps its width

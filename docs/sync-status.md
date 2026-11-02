@@ -19,7 +19,7 @@
 | badge (Badge) | ✓ badge_status 91:6152 · 84/84<br>badge_dot 95:2681 · 21/21<br>badge_count 95:2762 · 14/14 (2026-10-30 숫자 가운데 정렬) | ✓ | ✓ 119/119 / 119/119 / 119/119 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |
 | breadcrumb (Breadcrumb) | ✓ breadcrumb-item 710:4794 · 8/8 (Role=Open 삭제, 2026-10-27)<br>breadcrumb 712:5106 · 6/6 (2026-10-29 메뉴 펼침 · 닫힘 모션) | ✓ | ✓ 14/14 / 14/14 / 14/14 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | card (Card) | ✓ card_header 218:7173 · 1/1<br>card_footer 218:7174 · 1/1<br>card 185:8050 (예시 프레임, 2026-10-28 Content placeholder → surface/container) | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
-| chart (Chart) | ✓ chart 698:4399 · 24/24<br>chart-legend-item 697:4514 · 3/3<br>chart-tooltip 693:9776 · 1/1 | ✓ | ✓ 28/28 / 28/28 / 28/28 | ✓ play 8 · 스토리 16 | ✓ 경고 0 | ✓ |
+| chart (Chart) | ✓ chart 698:4399 · 33/33 (2026-11-02 그리기 움직임 — Rules 09 "차트 그리기", 완료 상태를 비교)<br>chart-legend-item 697:4514 · 3/3<br>chart-tooltip 693:9776 · 1/1 | ✓ | ✓ 37/37 / 37/37 / 37/37 | ✓ play 17 · 스토리 25 (2026-11-02 실측) | ✓ 경고 0 | ✓ |
 | checkbox (Checkbox) | ✓ checkbox 99:2389 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 4 · 스토리 13 | ✓ 경고 0 | ✓ |
 | chip (Chip) | ✓ chip-multi 201:12711 · 24/24<br>chip-input 558:26017 · 12/12<br>chip-filter 558:25704 · 48/48 (2026-10-29 필터 목록 펼침 · 닫힘 모션) | ✓ | ✓ 84/84 / 84/84 / 84/84 | ✓ play 9 · 스토리 31 | ✓ 경고 0 | ✓ |
 | dashboard-filter-bar (DashboardFilterBar) | ✓ dashboard-filter-bar 698:4163 · 1/1 (2026-10-28 스토리 기간 입력 DashboardFilterRange + DatePicker 136px ×2) | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |

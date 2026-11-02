@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   type ComponentPropsWithoutRef,
+  type CSSProperties,
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
@@ -17,6 +18,7 @@ import type { ChartColor, ChartType, ChartVariant } from './Chart.options';
 import { ChartLegendItem } from './ChartLegendItem';
 import { ChartTooltip } from './ChartTooltip';
 import { areaPath, bands, barPath, extendToEdges, intersect, niceTicks, placeTooltip, polyline, roundedPolyline, scale, type Point, type Rect } from './chartGeometry';
+import { BADGE_FADE, LINE_DURATION, barStagger, barTimeline, growKeyframes, revealKeyframes, timeToReach, useEntrance, type EntrancePhase, type Keyframes } from './chartMotion';
 
 export type ChartSeries = {
   /** 계열 이름. 범례 · 툴팁 · 화면 낭독기용 표에 쓰입니다. */
@@ -114,6 +116,8 @@ type TooltipAnchor = { x: number; y: number; gap: number; vertical: 'top' | 'cen
 
 type Scene = {
   svg: ReactNode;
+  /** Extra SVG definitions (the clip rectangle of the line entrance). */
+  defs?: ReactNode;
   labels: ReactNode;
   overlay?: ReactNode;
   anchor?: TooltipAnchor;
@@ -134,7 +138,19 @@ type SceneInput = {
   format: (value: number) => string;
   maxLabel: ReactNode;
   fill: (color: ChartColor, kind: 'v' | 'h' | 'area') => string;
+  /** Unique id prefix of this chart's SVG definitions. */
+  uid: string;
+  /**
+   * Entrance motion: while it is not `done` the marks carry their SMIL keyframes (started by Chart); while `running`
+   * their base value is the start (empty) shape — the animation holds the final value until the finished render.
+   */
+  entrance: EntrancePhase;
 };
+
+/** SMIL animation of one attribute, started by Chart (beginElement) when the chart is first seen. */
+const animateEntrance = (attributeName: string, k: Keyframes) => (
+  <animate attributeName={attributeName} begin="indefinite" fill="freeze" calcMode="spline" dur={k.dur} keyTimes={k.keyTimes} values={k.values} keySplines={k.keySplines} />
+);
 
 const clampIndex = (i: number, n: number) => Math.min(n - 1, Math.max(0, i));
 /** Index of the band (columns or rows `pitch` apart, `gap` between them) that a coordinate falls in. */
@@ -162,7 +178,7 @@ function valueLabels({ ticks, m, format }: SceneInput, yOf: (v: number) => numbe
 }
 
 function lineScene(input: SceneInput): Scene {
-  const { variant, categories, series, ticks, width, m, active, highlighted, maxLabel, fill } = input;
+  const { variant, categories, series, ticks, width, m, active, highlighted, maxLabel, fill, uid, entrance } = input;
   const n = categories.length;
   const group = series.length > 1;
   const simple = variant === 'simple';
@@ -205,6 +221,19 @@ function lineScene(input: SceneInput): Scene {
     );
   }
   const points = series.map((s) => categories.map((_, i): Point => [xs[i], yOf(valueAt(s, i))]));
+  // Entrance: lines, area and points are revealed from the first point (simple: the left edge, where the line enters)
+  // to the right edge by one clip rectangle — all series on one time axis, each point shown when the line reaches it.
+  const revealLeft = simple ? 0 : Math.max(0, xs[0] - m['point-radius']);
+  const revealWidth = Math.max(0, width - revealLeft);
+  const reveal = entrance !== 'done' ? `url(#${uid}-reveal)` : undefined;
+  const reached = (x: number) => LINE_DURATION * timeToReach(revealWidth ? (x - revealLeft) / revealWidth : 1);
+  const defs = entrance !== 'done' && (
+    <clipPath id={`${uid}-reveal`}>
+      <rect x={revealLeft} y={0} width={entrance === 'running' ? 0 : revealWidth} height={m['plot-height']}>
+        {animateEntrance('width', revealKeyframes(revealWidth))}
+      </rect>
+    </clipPath>
+  );
   // Simple: the line runs on past the plot edges (Figma; clipped there), continuing its first and last segments.
   const run = (k: number) => (simple ? extendToEdges(points[k], -EDGE_OVERRUN, width + EDGE_OVERRUN, 0, base) : points[k]);
   const order = series.map((_, k) => k).reverse();
@@ -213,7 +242,7 @@ function lineScene(input: SceneInput): Scene {
   const dots = (k: number) => {
     const color = markColor('line', k);
     return (
-      <g key={`dots-${k}`}>
+      <g key={`dots-${k}`} clipPath={reveal}>
         {points[k].map(([x, y], i) =>
           i === active || (!simple && (i === 0 || i === n - 1)) ? null : (
             <circle key={i} className="ds-chart__point" data-color={color} cx={x} cy={y} r={m['point-radius']} />
@@ -229,12 +258,13 @@ function lineScene(input: SceneInput): Scene {
     <path
       key={`line-${k}`}
       className="ds-chart__line"
+      clipPath={reveal}
       data-series={k}
       data-color={markColor('line', k)}
       d={!simple && k === 0 ? roundedPolyline(run(k), m['line-corner']) : polyline(run(k))}
     />
   );
-  const area = !group && <path key="area" className="ds-chart__area" d={areaPath(run(0), base)} fill={fill('brand', 'area')} />;
+  const area = !group && <path key="area" className="ds-chart__area" clipPath={reveal} d={areaPath(run(0), base)} fill={fill('brand', 'area')} />;
   // Hover guide under everything: over the grid (default) or the whole drawing height (simple).
   const guide = active != null && <line key="guide" className="ds-chart__guide" x1={xs[active]} x2={xs[active]} y1={simple ? 0 : m['grid-top']} y2={base} />;
   let svg: ReactNode;
@@ -264,6 +294,8 @@ function lineScene(input: SceneInput): Scene {
   if (!simple && maxLabel !== false && maxLabel != null && n > 0) {
     const values = categories.map((_, i) => valueAt(series[0], i));
     const top = values.indexOf(Math.max(...values));
+    // Entrance: the badge fades in when the line reaches its point (Chart.css ds-chart-badge-in).
+    const badgeDelay = reached(points[0][top][0]);
     overlay = (
       <Badge
         className="ds-chart__max"
@@ -273,7 +305,7 @@ function lineScene(input: SceneInput): Scene {
         shape="rounded"
         dot={false}
         aria-hidden="true"
-        style={{ left: points[0][top][0], top: points[0][top][1] - m['badge-offset'] }}
+        style={{ left: points[0][top][0], top: points[0][top][1] - m['badge-offset'], '--_badge-delay': `${badgeDelay}ms` } as CSSProperties}
       >
         {maxLabel}
       </Badge>
@@ -281,6 +313,7 @@ function lineScene(input: SceneInput): Scene {
   }
   return {
     svg,
+    defs,
     labels,
     overlay,
     anchor: active != null ? { x: xs[active], y: points[0][active][1], gap: m['tooltip-gap'], vertical: 'center' } : undefined,
@@ -289,7 +322,7 @@ function lineScene(input: SceneInput): Scene {
 }
 
 function barVerticalScene(input: SceneInput): Scene {
-  const { variant, categories, series, ticks, width, m, active, fill } = input;
+  const { variant, categories, series, ticks, width, m, active, fill, entrance } = input;
   const n = categories.length;
   const simple = variant === 'simple';
   const left = simple ? 0 : m['plot-left'];
@@ -318,8 +351,15 @@ function barVerticalScene(input: SceneInput): Scene {
             {active === i && <rect className="ds-chart__highlight" x={c - m['highlight-size'] / 2} y={highlightTop} width={m['highlight-size']} height={bottom - highlightTop} />}
             {series.map((s, k) => {
               const y = yOf(valueAt(s, i));
+              const x = c - pairW / 2 + k * (barW + gap);
               const color = markColor('bar-vertical', k);
-              return <path key={k} className="ds-chart__bar" data-color={color} d={barPath(c - pairW / 2 + k * (barW + gap), y, barW, bottom - y, m['bar-radius'], 'up')} fill={fill(color, 'v')} />;
+              // Entrance: the bar grows from the baseline (its real height; width and corner radius kept), categories in turn.
+              const shape = (v: number) => barPath(x, bottom - v, barW, v, m['bar-radius'], 'up', true);
+              return (
+                <path key={k} className="ds-chart__bar" data-color={color} d={entrance === 'running' ? shape(0) : barPath(x, y, barW, bottom - y, m['bar-radius'], 'up')} fill={fill(color, 'v')}>
+                  {entrance !== 'done' && bottom - y > 0 && animateEntrance('d', growKeyframes(bottom - y, Math.min(m['bar-radius'], barW / 2), i * barStagger(n), barTimeline(n), shape))}
+                </path>
+              );
             })}
           </g>
         );
@@ -353,7 +393,7 @@ function barVerticalScene(input: SceneInput): Scene {
 }
 
 function barHorizontalScene(input: SceneInput): Scene {
-  const { variant, categories, series, ticks, width, m, active, fill } = input;
+  const { variant, categories, series, ticks, width, m, active, fill, entrance } = input;
   const n = categories.length;
   const simple = variant === 'simple';
   const trackLeft = m['row-label-width'] + m['row-label-gap'];
@@ -391,8 +431,15 @@ function barHorizontalScene(input: SceneInput): Scene {
           {active === i && <rect className="ds-chart__highlight" x={trackLeft} y={y + h / 2 - m['highlight-size'] / 2} width={trackW} height={m['highlight-size']} />}
           {series.map((s, k) => {
             const color = markColor('bar-horizontal', k);
-            const d = barPath(trackLeft, y + h / 2 - pairH / 2 + k * (barH + gap), lengthOf(valueAt(s, i)), barH, m['bar-radius'], 'right');
-            return <path key={k} className="ds-chart__bar" data-color={color} d={d} fill={fill(color, 'h')} />;
+            const top = y + h / 2 - pairH / 2 + k * (barH + gap);
+            const length = lengthOf(valueAt(s, i));
+            // Entrance: the bar fills from the axis to its value (its real length; height and corner radius kept), rows in turn.
+            const shape = (v: number) => barPath(trackLeft, top, v, barH, m['bar-radius'], 'right', true);
+            return (
+              <path key={k} className="ds-chart__bar" data-color={color} d={entrance === 'running' ? shape(0) : barPath(trackLeft, top, length, barH, m['bar-radius'], 'right')} fill={fill(color, 'h')}>
+                {entrance !== 'done' && length > 0 && animateEntrance('d', growKeyframes(length, Math.min(m['bar-radius'], barH / 2), i * barStagger(n), barTimeline(n), shape))}
+              </path>
+            );
           })}
         </g>
       ))}
@@ -512,6 +559,12 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
     gradients.set(id, { color, kind });
     return `url(#${id})`;
   };
+  // Entrance motion (Rules 09 "차트 그리기"): drawn once, the first time the plot is seen. An open tooltip shows the
+  // final chart at once — the hovered values always match the marks.
+  const { phase, finish: finishEntrance } = useEntrance(plotRef, size != null && n > 0, type === 'line' ? LINE_DURATION + BADGE_FADE : barTimeline(n), () =>
+    plotRef.current?.querySelectorAll<SVGAnimationElement>('.ds-chart__svg animate').forEach((a) => a.beginElement()),
+  );
+  const entrance: EntrancePhase = active == null ? phase : 'done';
   const scene =
     size && n > 0
       ? (type === 'line' ? lineScene : type === 'bar-horizontal' ? barHorizontalScene : barVerticalScene)({
@@ -527,6 +580,8 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
           format: formatValue,
           maxLabel,
           fill,
+          uid,
+          entrance,
         })
       : null;
 
@@ -571,6 +626,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   // Latest requested category, so two handlers of one event (blur + outside press) report a change only once.
   const activeRef = useRef(active);
   const move = (next: number | null, announce: boolean) => {
+    if (next != null) finishEntrance();
     if (next !== activeRef.current) {
       activeRef.current = next;
       setActive(next);
@@ -624,7 +680,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
   );
 
   return (
-    <figure {...rest} ref={ref} className={cx('ds-chart', className)} data-type={type} data-variant={variant} data-group={group ? 'yes' : 'no'} data-state={active != null ? 'hover' : highlighted != null ? 'highlighted' : 'default'} aria-label={ariaLabel}>
+    <figure {...rest} ref={ref} className={cx('ds-chart', className)} data-type={type} data-variant={variant} data-group={group ? 'yes' : 'no'} data-state={active != null ? 'hover' : highlighted != null ? 'highlighted' : 'default'} data-entrance={entrance} aria-label={ariaLabel}>
       {!simple && (yAxisLabel != null || xAxisLabel != null) && (
         <div className="ds-chart__axes">
           <span className="ds-chart__axis-label">{yAxisLabel}</span>
@@ -663,6 +719,7 @@ export const Chart = forwardRef<HTMLElement, ChartProps>(function Chart(
                     <stop offset={1} className="ds-chart__stop" data-end="" />
                   </linearGradient>
                 ))}
+                {scene.defs}
               </defs>
               {scene.svg}
             </svg>
