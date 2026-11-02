@@ -20,14 +20,14 @@ Storybook 각 Usage 문서의 **정책** 절은 이 표의 ID를 그대로 씁�
 | 처리 상태 | 뜻 | 개수 |
 | --- | --- | --- |
 | **Figma 정의 정책** | Figma 변형 · 컴포넌트 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씀(Figma 재조회로 확인) | 45 |
-| **Figma 문서화 정책** | 변형으로 그리지 않는 동작 · 규칙 — Figma "Design System Rules" 02–09장 표와 컴포넌트 Dev Mode 주석에 기록(Figma 재조회로 확인) | 102 |
+| **Figma 문서화 정책** | 변형으로 그리지 않는 동작 · 규칙 — Figma "Design System Rules" 02–09장 표와 컴포넌트 Dev Mode 주석에 기록(Figma 재조회로 확인) | 101 |
 | **개발 구현 세부 사항** | 디자인 컴포넌트에 넣지 않는 기술 구현 — Rules 10장에 목록, Storybook "개발 구현 세부 사항" | 16 |
-| **Figma 반영 대기** | Figma 정리가 필요하지만 아직 반영하지 않은 항목 — 반영 완료로 표시하지 않음 | 2 |
+| **Figma 반영 대기** | Figma 정리가 필요하지만 아직 반영하지 않은 항목 — 반영 완료로 표시하지 않음 | 3 |
 
 | 분류 \ 상태 | Figma 정의 | Figma 문서화 | 개발 구현 | 반영 대기 |
 | --- | --- | --- | --- | --- |
 | A 시각 상태 | 45 | 10 | 0 | 2 |
-| B 동작 · 상호작용 | 0 | 92 | 0 | 0 |
+| B 동작 · 상호작용 | 0 | 91 | 0 | 1 |
 | C 기술 구현 | 0 | 0 | 16 | 0 |
 
 분류 원칙: **A** 시각 상태는 가능한 한 Figma 변형 · 속성(기존 토큰 사용), **B** 동작은 불필요한 변형 대신 규칙 문서 · 주석, **C** 기술 구현은 개발 문서에만.
@@ -413,7 +413,7 @@ Accordion `accordion-item 1035:15648` · Alert `alert 179:6087` · Breadcrumb `b
 | ID | 분류 | 이전 | Figma에 없던 것 | 결정 | Figma 반영 | 상태 | ID · 장 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | SWIT-01 | A | 포커스: 브라우저 기본 링 | Focus 상태 없음 | 포커스 링: 2px `colors/border/focus`(brand/700), 바깥 2px 간격, 모서리는 컴포넌트 모서리 + 4px. `:focus-visible`(키보드)일 때만 — 트랙에만 | Figma 컴포넌트 속성 `Focus`(boolean) + 숨김 "Focus ring" 레이어 | Figma 정의 정책 | switch 107:409 · Rules 02 |
-| SWIT-02 | B | 썸 즉시 이동 | 모션 없음 | 모션 정책(09): 즉시 | Rules 09 | Figma 문서화 정책 | Rules 09 |
+| SWIT-02 | B | 썸 즉시 이동 | 모션 없음 | 2026-11-02 사용자 요청(HeroUI Native Switch): 누름 0.96 축소 · 썸 스프링 · 트랙 색 175ms 블렌드, 움직임 줄이기면 즉시 | Rules 09 Switch 행 추가 요청(figma-fix-requests AM, Figma 수정 금지 작업) | Figma 반영 대기 | Rules 09 |
 
 ### Table
 

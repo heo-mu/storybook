@@ -7,6 +7,22 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Switch — 누름 · 썸 스프링 · 트랙 색 움직임 (HeroUI Native Switch 참고) (2026-11-02)
+
+- **누름**: 포인터를 누르는 동안(스위치 · 라벨 위에 있을 때만)과 Space를 누르고 있는 동안 트랙과 썸이 트랙 중심 기준 0.96으로 줄어듭니다(150ms, Reanimated 기본
+  `Easing.inOut(Easing.quad)`). 놓기 · 밖으로 나감 · `pointercancel` · 창 포커스 잃음에서 돌아오고, 비활성은 반응하지 않습니다. Figma Pressed 색은 그대로(`:active`).
+- **썸**: HeroUI `withSpring({ damping: 120, stiffness: 1600, mass: 2 })`를 Reanimated가 계산하는 그대로(감쇠비 ≈1.06 → ω0 = √800 임계 감쇠 해, 오버슈트 없음,
+  ≈437ms · 0.5px 안 ≈180ms) 240Hz 샘플 Web Animations 키프레임으로 재현 — 정지 위치는 CSS `left` 정수 px, 움직임은 그 위의 transform이 0으로 끝남. 연속 클릭은 지금
+  그려진 자리에서 정지 상태로 다시 출발, 첫 렌더는 움직이지 않고, 밖에서 바꾼 `checked`도 같은 움직임.
+- **트랙 색**: 175ms `cubic-bezier(0.25, 0.1, 0.25, 1)` 동안 꺼짐 ↔ 켜짐 색을 선형 광으로 섞음(등록 속성 `--ds-switch-on` + `color-mix(in srgb-linear, …)` 덧칠) —
+  Hover · Pressed · Disabled 색은 즉시, 정지 배경은 토큰 그대로. `prefers-reduced-motion: reduce`면 축소 없음 · 썸 · 색 즉시.
+- 크기 · 색 · 여백 · 반경 · 토큰 · Props 변화 없음. Figma는 수정하지 않았고 Rules 09 Switch 행 추가를 요청(figma-fix-requests AM절).
+- **스토리**: Gallery "Interaction"을 움직임 확인용으로 확장(sm · md, 제어 컴포넌트 · 밖에서 바꾸기, 비활성 — play가 매 프레임 썸 위치를 Reanimated 식과 비교),
+  사용 방법 "움직임". `verify:interaction`에 Switch 움직임 흐름.
+- **검증**: `verify-figma` switch 16/16 × 3 엔진(Figma 세트 재조회 — 기준 이미지와 변경 0픽셀, 체크섬 8그룹 일치), 움직임 탐침 23/23 × 3 엔진(썸이 식과 0.02px 안, 정지 위치
+  정수 px), 블렌드 색 픽셀 Δ≤0.7 × 3 엔진, 스토리 테스트 Switch 10 · 관련(Table · Focus) 25, Storybook MCP 13 스토리(a11y), axe Switch 10 스토리 위반 0,
+  `verify:interaction` Switch 2/2 × 3 엔진, `verify:render` Switch 12 × 3 엔진.
+
 ### Accordion — 펼침 · 접힘 움직임 · 트리거 모서리 0 (Disabled · Hover 직각) (2026-11-02)
 
 - **모서리 원인 · 수정**(figma-fix-requests AL절): Trigger 네 모서리가 묶인 Component `border-radius/accordion/default`가 F80 복구 때 `border-radius/rounded`(4px)로

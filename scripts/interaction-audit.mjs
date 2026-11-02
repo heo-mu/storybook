@@ -888,6 +888,81 @@ const flows = {
     await page.keyboard.press('Space');
     expect(!(await sw.isChecked()), 'Space did not toggle the switch off');
   },
+  async 'Switch motion — press shrinks to 0.96 and lets go; the thumb slides on the HeroUI spring to a whole-pixel rest; the track colour blends; rapid clicks settle on the last state; disabled does nothing; reduced motion is instant'() {
+    // HeroUI withSpring({ damping: 120, stiffness: 1600, mass: 2 }) — critically damped in Reanimated at ω0 = √(1600 / 2)
+    const OMEGA = Math.sqrt(1600 / 2);
+    const remaining = (s) => Math.exp(-OMEGA * s) * (1 + OMEGA * s);
+    const record = (ms) => page.evaluate((ms) => new Promise((resolve) => {
+      const track = document.querySelector('.ds-switch__track');
+      const thumb = document.querySelector('.ds-switch__thumb');
+      const frames = [];
+      const start = performance.now();
+      const tick = () => {
+        const a = track.getBoundingClientRect(), b = thumb.getBoundingClientRect();
+        const spring = thumb.getAnimations().find((x) => !(x instanceof CSSTransition));
+        frames.push({ x: track.offsetWidth / 2 + (b.left + b.width / 2 - (a.left + a.width / 2)) / (a.width / track.offsetWidth) - thumb.offsetWidth / 2, at: spring ? Number(spring.currentTime) : null, on: parseFloat(getComputedStyle(track).getPropertyValue('--ds-switch-on')) });
+        if (performance.now() - start < ms) requestAnimationFrame(tick); else resolve(frames);
+      };
+      requestAnimationFrame(tick);
+    }), ms);
+    const state = () => page.evaluate(() => {
+      const track = document.querySelector('.ds-switch__track'), thumb = document.querySelector('.ds-switch__thumb');
+      return { checked: track.checked, pressed: track.parentElement.hasAttribute('data-pressed'), scale: getComputedStyle(track).scale, thumbScale: getComputedStyle(thumb).scale, x: thumb.getBoundingClientRect().left - track.getBoundingClientRect().left, transform: getComputedStyle(thumb).transform };
+    });
+    const settled = () => page.waitForFunction(() => document.getAnimations().filter((a) => a.playState === 'running').length === 0, null, { timeout: 3000 });
+    await story('components-switch-switch--playground&args=size:md');
+    const box = await root().locator('.ds-switch').boundingBox();
+    await page.mouse.move(box.x + 8, box.y + box.height / 2);
+    await page.mouse.down();
+    await sleep(250);
+    let st = await state();
+    expect(st.pressed && st.scale === '0.96' && st.thumbScale === '0.96' && !st.checked, `pressed: ${JSON.stringify(st)}`);
+    await page.mouse.move(box.x + box.width + 40, box.y + box.height / 2, { steps: 3 });
+    await sleep(250);
+    st = await state();
+    expect(!st.pressed && st.scale === 'none', `pointer left while held: ${JSON.stringify(st)}`);
+    await page.mouse.move(box.x + 8, box.y + box.height / 2, { steps: 3 });
+    const rec = record(700);
+    await page.mouse.up();
+    const frames = await rec;
+    await settled();
+    st = await state();
+    const moving = frames.filter((f) => f.at !== null && f.at > 0);
+    const dev = Math.max(...moving.map((f) => Math.abs(f.x - (20 - 18 * remaining(f.at / 1000)))));
+    expect(frames.filter((f) => f.x > 2.01 && f.x < 19.99).length >= 6 && dev < 0.35 && frames.every((f, i) => f.x >= 1.98 && f.x <= 20.02 && (!i || f.x >= frames[i - 1].x - 0.02)), `spring: deviation ${dev.toFixed(3)}px, ${frames.map((f) => f.x.toFixed(1)).join(',')}`);
+    expect(frames.filter((f) => f.on > 0.001 && f.on < 0.999).length >= 4 && frames.at(-1).on === 1, `colour: ${frames.map((f) => f.on.toFixed(2)).join(',')}`);
+    expect(st.checked && !st.pressed && st.x === 20 && st.transform === 'none' && st.scale === 'none', `rest: ${JSON.stringify(st)}`);
+    for (let i = 0; i < 5; i++) { await page.mouse.down(); await page.mouse.up(); await sleep(40); }
+    await settled();
+    st = await state();
+    expect(!st.checked && st.x === 2 && st.transform === 'none', `after 5 rapid clicks: ${JSON.stringify(st)}`);
+    await story('components-switch-switch--playground&args=disabled:!true');
+    const off = await root().locator('.ds-switch').boundingBox();
+    await page.mouse.move(off.x + 8, off.y + off.height / 2);
+    await page.mouse.down();
+    await sleep(200);
+    st = await state();
+    await page.mouse.up();
+    await sleep(200);
+    const after = await state();
+    expect(!st.pressed && st.scale === 'none' && !after.checked && after.x === 2 && (await page.evaluate(() => document.getAnimations().length)) === 0, `disabled: ${JSON.stringify(st)} ${JSON.stringify(after)}`);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    try {
+      await story('components-switch-switch--playground&args=size:md');
+      const b = await root().locator('.ds-switch').boundingBox();
+      await page.mouse.move(b.x + 8, b.y + b.height / 2);
+      await page.mouse.down();
+      await sleep(200);
+      const held = await state();
+      const r = record(300);
+      await page.mouse.up();
+      const f = await r;
+      st = await state();
+      expect(held.scale === 'none' && st.checked && st.x === 20 && f.filter((x) => x.x > 2.01 && x.x < 19.99).length === 0 && f.filter((x) => x.on > 0.001 && x.on < 0.999).length === 0, `reduced motion: ${JSON.stringify(held)} ${f.map((x) => x.x.toFixed(1)).join(',')}`);
+    } finally {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+    }
+  },
   async 'DatePicker — year / month selection lists change the visible month, previous / next navigate'() {
     await story('components-datepicker-datepicker--year-month-selection');
     const heading = root().getByRole('heading', { level: 2 }).first(); // the story renders two pickers

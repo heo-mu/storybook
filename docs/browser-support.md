@@ -77,6 +77,9 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 
 - 컨트롤은 네이티브 `<input>`에 `appearance: none`을 지정해 그립니다 — 세 엔진 모두 지원, 포커스 링도 브라우저 기본.
 - 라벨 너비가 내용에 맞춰지는 루트(Checkbox · Radio · Switch)는 `calc-size()`가 없는 Firefox · WebKit에서 1px 미만 좁습니다(Button과 같은 fallback).
+- Switch 움직임(2026-11-02): 누름 축소는 `scale` 속성(Chrome 104+, Firefox 72+, Safari 14.1+), 썸 스프링은 Web Animations `element.animate()`(세 엔진),
+  트랙 색 섞기는 `@property`로 등록한 `--ds-switch-on` 전환 + `color-mix(in srgb-linear, …)`(Chrome 111+, Firefox 128+, Safari 16.4+) — 없는 엔진에서는 색이
+  바로 바뀝니다(정지 모습은 같음). 세 엔진 실측: 썸이 Reanimated 식과 0.02px 안, 섞인 색이 선형 광 혼합과 Δ0.7 이하(8bit), 정지 위치 정수 px · transform 없음.
 - **listbox 스크롤 표시**: Chromium · Safari는 `::-webkit-scrollbar`(4px, 둥근 막대, 토큰 색), Firefox는
   `@supports not selector(::-webkit-scrollbar)`로 `scrollbar-width: thin` + `scrollbar-color`(두께는 브라우저가 결정).
   macOS의 "스크롤 막대 자동 숨김" 설정에서는 스크롤할 때만 보입니다.
