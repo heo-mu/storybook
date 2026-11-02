@@ -7,6 +7,21 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Navigation — 하위 메뉴 펼침 · 접힘 움직임 (shadcn/ui Base Accordion 참고) (2026-11-02)
+
+- **펼침 · 접힘**: 메뉴 그룹의 하위 목록이 실제 콘텐츠 높이까지 200ms `cubic-bezier(0.33, 1, 0.68, 1)`(이 디자인 시스템 Accordion과 같은 값) 동안 펼쳐지고 접히며,
+  아래쪽 메뉴가 같은 양만큼 따라 이동합니다. 한 줄 grid의 `grid-template-rows` `0fr` ↔ `1fr` 전환 — 높이 측정 · `max-height` · 프레임별 React 상태 없음, 도중에 반대로
+  누르면 그려진 높이에서 되돌아감. 부모와 목록 사이 6px를 움직이는 높이 안으로 옮겨 접힌 그룹은 공간을 남기지 않고, 목록은 세로로만 잘림(`overflow-y: clip`).
+- **숨김 · 포커스**: 닫힘이 끝난 뒤 `visibility: hidden`(움직임 시간만큼 늦춤), 닫히는 순간 `inert`(Tab · 화면 낭독기에서 빠짐)이고 목록 안 포커스는 그룹 버튼으로 옮김.
+- **화살표**: `CaretDownIcon` 하나가 펼침 때 180° 돌아 Figma `icon/CaretUp`과 같은 모양(이전에는 아이콘 교체), 같은 시간 · 곡선. `prefers-reduced-motion: reduce`면 즉시.
+- shadcn 데모 실측: 높이 0 ↔ 콘텐츠 200ms `ease-out`, 화살표는 회전 없이 교체. 그룹마다 따로 여닫는 정책 · 선택 · 색 · 여백 · 들여쓰기 · Props 그대로.
+  Figma는 수정하지 않았고 Rules 09 내비게이션 행(또는 Accordion 행 적용 대상 추가)을 요청(figma-fix-requests AO절).
+- **스토리**: Gallery "Interaction"에 두 번째 그룹(선택된 하위 메뉴 · 줄바꿈되는 긴 이름)을 더해 펼침 · 접힘 · 연속 클릭 · 도중 반전 · Tab · 포커스 이동을 매 프레임 검사,
+  사용 방법 "움직임". `verify:interaction`에 Navigation 움직임 흐름.
+- **검증**: `verify-figma` navigation 12/12 × 3 엔진(픽셀 차이 0.00%, Figma 세트 재조회 — 기준 이미지 3종 변경 0픽셀, 체크섬 8그룹 일치), 움직임 탐침 16/16 × 3 엔진
+  (끝난 배치 = Figma LNB 좌표, 펼침 · 접힘 · 화살표 · 도중 반전 · 연속 클릭 · Tab · 포커스 이동 · 움직임 줄이기), 스토리 테스트 Navigation · Focus 11, Storybook MCP 11 스토리(a11y),
+  axe Navigation 9 · Focus 2 위반 0, `verify:interaction` Navigation 1/1 × 3 엔진, `verify:render` Navigation 11 × 3 엔진 · Focus 2.
+
 ### Tooltip — 나타남 · 사라짐 움직임 (shadcn/ui Base Tooltip 참고) (2026-11-02)
 
 - **나타남**: 150ms `ease` 동안 opacity 0 → 1, `scale` 0.95 → 1. **사라짐**: 100ms `ease` 동안 1 → 0, 1 → 0.95(그동안 포인터 무시), 끝난 뒤 DOM에서 빠짐 —

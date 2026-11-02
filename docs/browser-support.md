@@ -115,6 +115,9 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 - Breadcrumb: 라벨 너비를 `calc-size()`로 올림하므로 Firefox · Safari에서는 라벨마다 1px 미만 좁아지고, 한 줄에 라벨이 여럿이면
   누적됩니다(md Full 433 → 431.8px). 검증 설정 `accumulatedFallback`은 앞선 라벨 수만큼(라벨당 1px) 허용하고 기록합니다.
 - Navigation 1뎁스 라벨(16 / 24)은 Button lg와 같은 기준선 보정(1px + 23px)을 씁니다.
+- Navigation 하위 메뉴 움직임(2026-11-02): `grid-template-rows` `0fr` ↔ `1fr` 전환(Chrome 107+, Firefox 66+, Safari 16+), `overflow-y: clip`(Chrome 90+,
+  Firefox 81+, Safari 16+), `inert`(Chrome 102+, Firefox 112+, Safari 15.5+). 세 엔진 실측: 높이 0 ↔ 콘텐츠가 약 200ms 감속, 아래 항목이 같은 양만큼 이동,
+  화살표 0 ↔ 180°, 끝난 배치가 Figma LNB 예시 좌표와 같음. Safari는 버튼을 눌러도 버튼에 포커스를 주지 않아(포커스가 페이지로 빠짐) 목록 안 포커스가 남지 않습니다.
 - 반 픽셀 선(Stepper 연결선, Navigation 하위 목록 선): CSS 배경 · 그라데이션은 엔진이 정수 픽셀로 맞추고,
   `transform`은 Firefox에서 맞춰지므로, SVG `<rect>`(`x` · `y` · `width` · `height` CSS 속성)로 그립니다 — 세 엔진 모두
   Figma와 같은 50% 두 줄.

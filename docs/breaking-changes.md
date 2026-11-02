@@ -163,6 +163,7 @@ Figma에서 다른 편집자가 Chart 변수를 재구성했습니다(1527 → 1
 | 보조 · 플레이스홀더 글자 | #778191 · #a1a8b5 → #596475 (비활성 라벨은 #a1a8b5 그대로) |
 | 입력 칸 · Checkbox · Radio 테두리, Switch 꺼짐 트랙 | #a1a8b5 → #778191 (hover 한 단계 진하게) |
 | `EyeSlashIcon` · Input 비밀번호를 보이는 동안의 눈 아이콘 | `icon/visibility_off`(24 그리드, 단독 기본 크기 24px) → Figma `icon/Eye-close`(16 그리드, 기본 16px — `EyeIcon`과 같음). Input 안에서는 칸 크기(16 · 20 · 24px) 그대로 |
+| `Navigation` 하위 메뉴 움직임(2026-11-02) | 그룹을 열고 닫을 때 하위 목록 높이가 0.2초 동안 바뀌고(아래 항목이 따라 이동, 화살표 회전), 닫힘은 끝난 뒤 숨김. Props · 색 · 배치 그대로. DOM: 하위 목록(`.ds-nav__children`)이 `.ds-nav__panel > .ds-nav__panel-content` 안으로 들어가고 `hidden` 속성 대신 `visibility: hidden` + `inert`, 펼친 화살표는 `CaretDownIcon`을 돌린 것(DOM에 `CaretUpIcon` 없음) — `[hidden]`이나 화살표 아이콘 종류를 보던 코드 · 테스트, 펼친 직후 높이를 재는 테스트는 움직임 종료를 기다려야 함 |
 | `Tooltip` 움직임(2026-11-02) | 처음 나타날 때 0.15초 페이드 + 0.95 → 1 크기, 사라질 때 0.1초 동안 DOM에 남아 흐려짐(`data-exiting`). 다른 트리거로 옮기면 즉시 교체(애니메이션 없음). 움직임 줄이기면 즉시. 지연 · 위치 · 간격 · 토큰 · Props 그대로 — 열린 직후 툴팁 크기 · 위치를 재거나 닫힌 직후 `role="tooltip"`이 없음을 확인하는 테스트는 움직임 종료를 기다려야 함(`aria-describedby`는 닫히는 순간 빠짐) |
 | `Switch` 움직임(2026-11-02) | 누르는 동안 트랙 · 썸 0.96 축소(라벨에 `data-pressed`), 켜고 끌 때 썸이 스프링(≈0.44초, 0.5px 안 ≈0.18초)으로 이동하고 트랙 색이 0.175초 섞임. 움직임 줄이기면 즉시. 정지 모습 · 토큰 · Props 그대로 — 토글 직후 썸의 화면 위치(`getBoundingClientRect`)를 재는 테스트는 움직임 종료를 기다려야 함(CSS `left`는 바로 최종값) |
 | `Accordion` 모서리 · 움직임(2026-11-02) | 트리거 모서리 4 → 0px(배경이 보이는 Hover · Disabled에서 직각). 펼침 · 접힘이 0.2초 높이 전환(아래 항목이 따라 이동, 화살표 회전 — 펼친 화살표는 `CaretDownIcon`을 돌린 것, DOM에 `CaretUpIcon` 없음). 움직임 줄이기 · 비활성은 즉시. Props 그대로 — 펼친 직후 높이를 재는 테스트는 전환 종료를 기다려야 함 |

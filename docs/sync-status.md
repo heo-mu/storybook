@@ -34,7 +34,7 @@
 | link (Link) | ✓ link 111:1509 · 21/21 (2026-10-28 Type 축) | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 3 · 스토리 9 | ✓ 경고 0 | ✓ |
 | metric-card (MetricCard) | ✓ metric-card 697:4487 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | metric-trend (MetricTrend) | ✓ metric-trend 697:4482 · 12/12 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
-| navigation (Navigation) | ✓ item_parent 180:5246 · 4/4<br>item_link 180:6174 · 4/4<br>item_child 180:6249 · 4/4 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 2 · 스토리 9 | ✓ 경고 0 | ✓ |
+| navigation (Navigation) | ✓ item_parent 180:5246 · 4/4<br>item_link 180:6174 · 4/4<br>item_child 180:6249 · 4/4 (2026-11-02 하위 메뉴 펼침 · 접힘 움직임 — shadcn/ui, 끝난 배치 = LNB 예시; Rules 09 행 요청 AO) | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 2 · 스토리 9 (2026-11-02 실측) | ✓ 경고 0 | ✓ |
 | pagination (Pagination) | ✓ pagination 132:871 · 3/3<br>pagination_item 132:520 · 24/24<br>pagination_control 132:604 · 48/48 | ✓ | ✓ 75/75 / 75/75 / 75/75 | ✓ play 2 · 스토리 11 | ✓ 경고 0 | ✓ |
 | progress (Progress) | ✓ progress 185:6518 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | radio (Radio) | ✓ radio 102:2677 · 24/24 (2026-10-28 재대조, 변경 없음) | ✓ | ✓ 24/24 / 24/24 / 24/24 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |

@@ -930,6 +930,78 @@ const flows = {
       await page.emulateMedia({ reducedMotion: 'no-preference' });
     }
   },
+  async 'Navigation motion — a group list opens to its real height and closes to 0 over ≈200ms with the caret, the entries below follow; reversal and rapid clicks end on the last state; a closed list is hidden and skipped by Tab; reduced motion is instant'() {
+    const record = (g, ms) => page.evaluate(({ g, ms }) => new Promise((resolve) => {
+      const group = document.querySelectorAll('.ds-nav__group')[g];
+      const panel = group.querySelector('.ds-nav__panel');
+      const caret = group.querySelector('.ds-nav-item__caret');
+      const next = group.closest('.ds-nav__entry').nextElementSibling.firstElementChild;
+      const frames = [];
+      const start = performance.now();
+      const tick = () => {
+        const t = getComputedStyle(caret).transform;
+        const m = new DOMMatrix(t === 'none' ? undefined : t);
+        frames.push({ h: panel.getBoundingClientRect().height, next: next.getBoundingClientRect().top, angle: Math.round(((Math.atan2(m.b, m.a) * 180) / Math.PI + 360) % 360), vis: getComputedStyle(panel).visibility, inert: panel.inert, open: group.querySelector('button').getAttribute('aria-expanded') });
+        if (performance.now() - start < ms) requestAnimationFrame(tick); else resolve(frames);
+      };
+      requestAnimationFrame(tick);
+    }), { g, ms });
+    const settled = () => page.waitForFunction(() => document.getAnimations().filter((x) => x.playState === 'running' && Number.isFinite(x.effect.getComputedTiming().endTime)).length === 0, null, { timeout: 3000 });
+    const full = (g) => page.evaluate((g) => document.querySelectorAll('.ds-nav__group')[g].querySelector('.ds-nav__panel-content').scrollHeight, g);
+    // entry tops relative to the first item, visible ones only (Figma LNB example: 0, 50, 100, 138, 176, 214, 264)
+    const tops = () => page.evaluate(() => { const items = [...document.querySelectorAll('.ds-nav-item, .ds-nav-child')].filter((el) => getComputedStyle(el.closest('.ds-nav__panel') ?? el).visibility === 'visible'); const first = items[0].getBoundingClientRect().top; return items.map((el) => Math.round((el.getBoundingClientRect().top - first) * 1000) / 1000).join(','); });
+    await story('components-navigation-showcase--overview');
+    await playDone();
+    expect((await tops()) === '0,50,100,138,176,214,264', `rest layout ${await tops()} (Figma 0,50,100,138,176,214,264)`);
+    const groups = root().locator('.ds-nav__group > button');
+    let target = await full(0);
+    let rec = record(0, 450);
+    await groups.nth(0).click();
+    let f = await rec;
+    expect(f.filter((x) => x.h > 0.5 && x.h < target - 0.5).length >= 4 && f.every((x, i) => !i || x.h >= f[i - 1].h - 0.01) && f.every((x) => Math.abs(x.next - f[0].next - x.h) < 0.6) && f.at(-1).h === target && f.at(-1).vis === 'visible',
+      `expand: ${f.map((x) => x.h.toFixed(0)).join(',')} (to ${target})`);
+    expect(f.filter((x) => x.angle > 0 && x.angle < 180).length >= 3 && f.at(-1).angle === 180, `caret opening: ${[...new Set(f.map((x) => x.angle))].join(',')}`);
+    await settled();
+    expect((await tops()) === '0,50,88,138,176,214,252,302', `both open: ${await tops()}`);
+    target = await full(1);
+    rec = record(1, 450);
+    await groups.nth(1).click();
+    f = await rec;
+    const closing = f.filter((x) => x.open === 'false');
+    expect(closing.filter((x) => x.h > 0.5 && x.h < target - 0.5).length >= 4 && closing.every((x) => x.inert && (x.h < 0.5 || x.vis === 'visible')) && f.at(-1).h === 0 && f.at(-1).vis === 'hidden' && f.at(-1).angle === 0,
+      `collapse: ${f.map((x) => `${x.h.toFixed(0)}${x.vis === 'hidden' ? 'h' : ''}`).join(',')}`);
+    await settled();
+    expect((await tops()) === '0,50,88,138,188', `after collapsing: ${await tops()}`);
+    // reversal 80ms after opening: turns back from the drawn height, ends closed
+    rec = record(1, 600);
+    await groups.nth(1).evaluate((b) => { b.click(); setTimeout(() => b.click(), 80); });
+    f = await rec;
+    const peak = Math.max(...f.map((x) => x.h));
+    expect(peak > 5 && peak < target - 5 && f.at(-1).h === 0 && f.at(-1).vis === 'hidden', `reversal: peak ${peak.toFixed(0)} of ${target}, ${f.map((x) => x.h.toFixed(0)).join(',')}`);
+    await settled();
+    for (let i = 0; i < 5; i++) await groups.nth(1).click({ delay: 0 });
+    await settled();
+    const rapid = await page.evaluate(() => { const p = document.querySelectorAll('.ds-nav__panel')[1]; return { h: p.getBoundingClientRect().height, full: p.firstElementChild.scrollHeight, vis: getComputedStyle(p).visibility, open: p.previousElementSibling.getAttribute('aria-expanded') }; });
+    expect(rapid.open === 'true' && rapid.h === rapid.full && rapid.vis === 'visible', `after 5 rapid clicks: ${JSON.stringify(rapid)}`);
+    // a closed list is skipped by Tab
+    await groups.nth(1).click();
+    await settled();
+    await groups.nth(1).focus();
+    await page.keyboard.press('Tab');
+    const next = await page.evaluate(() => document.activeElement.textContent);
+    expect(!(await page.evaluate(() => !!document.activeElement.closest('.ds-nav__panel'))), `Tab went into a closed list (${next})`);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    try {
+      await story('components-navigation-showcase--overview');
+      target = await full(0);
+      rec = record(0, 300);
+      await root().locator('.ds-nav__group > button').first().click();
+      f = await rec;
+      expect(f.filter((x) => x.h > 0.5 && x.h < target - 0.5).length === 0 && f.at(-1).h === target && f.every((x) => x.angle === 0 || x.angle === 180), `reduced motion: ${f.map((x) => x.h.toFixed(0)).join(',')}`);
+    } finally {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+    }
+  },
   async 'Input — typing, clear button, password reveal'() {
     await story('components-input-input--playground');
     const field = root().getByRole('textbox', { name: '이메일' });

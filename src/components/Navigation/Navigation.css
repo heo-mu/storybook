@@ -28,10 +28,49 @@
   list-style: none;
 }
 
+/*
+ * Open · close motion (reference: shadcn/ui Base Accordion — the panel height runs between 0 and its content, 200 ms
+ * ease-out; the values are this design system's Accordion motion, Rules 09 "Accordion 펼침·접힘"): 200 ms
+ * cubic-bezier(0.33, 1, 0.68, 1), no bounce · scale · fade. The caret turns with the list.
+ */
+.ds-nav__group,
+.ds-nav-item[data-kind='parent'] {
+  --_motion-duration: 200ms;
+  --_motion-ease: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
 .ds-nav__group {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-margin-m-1_5);
+}
+
+/*
+ * The child list sits in a one-row grid whose row runs from 0fr (closed) to 1fr (its real content height), so the
+ * list opens downwards, the items below move with it and nothing is measured or capped. The 6px between the group
+ * button and the list (m-1_5) is inside the moving height, so a closed group adds no space. Closed, the panel is
+ * hidden only after the motion (visibility, delayed by the duration); NavGroup makes it inert as soon as it closes.
+ */
+.ds-nav__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--_motion-duration) var(--_motion-ease),
+    visibility 0s linear var(--_motion-duration);
+}
+
+.ds-nav__panel[data-expanded] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--_motion-duration) var(--_motion-ease),
+    visibility 0s;
+}
+
+/* Clips the list while the row is shorter than it (vertically only — the focus ring and line stay as they are). */
+.ds-nav__panel-content {
+  min-height: 0;
+  overflow-y: clip;
 }
 
 /*
@@ -40,11 +79,8 @@
  */
 .ds-nav__children {
   position: relative;
+  margin-top: var(--spacing-margin-m-1_5);
   padding-left: calc(var(--spacing-padding-p-4) + var(--spacing-margin-m-2_5));
-}
-
-.ds-nav__children[hidden] {
-  display: none;
 }
 
 .ds-nav__line {
@@ -160,6 +196,11 @@
   width: 16px;
   height: 16px;
   color: var(--_caret);
+  transition: transform var(--_motion-duration) var(--_motion-ease);
+}
+
+.ds-nav-item[data-expanded] .ds-nav-item__caret {
+  transform: rotate(180deg);
 }
 
 /* item_child */
@@ -212,4 +253,13 @@
 .ds-nav-child:focus-visible {
   outline: var(--border-width-border-2) solid var(--colors-border-focus);
   outline-offset: calc(-1 * var(--border-width-border-2));
+}
+
+/* Reduced motion: the list opens and closes, and the caret turns, at once. */
+@media (prefers-reduced-motion: reduce) {
+  .ds-nav__panel,
+  .ds-nav__panel[data-expanded],
+  .ds-nav-item__caret {
+    transition: none;
+  }
 }

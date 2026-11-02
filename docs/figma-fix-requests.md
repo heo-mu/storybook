@@ -335,6 +335,21 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 
 알림(Alert) 행을 복제해 그 아래에 넣었습니다(1656:7954, 글자 1656:7956 · 7957 · 7959 · 7961). 정책 · 적용 대상 "주의 / Alert · Toast (Warning)", 사용 규칙 "작업은 이어갈 수 있지만 확인이 필요한 일을 알립니다. 예: 일부 데이터만 표시, 곧 만료되는 설정. 작업을 막는 문제는 오류, 잘 끝난 일은 성공, 참고할 내용은 안내로 보여 줍니다. 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 버튼을 함께 둡니다.", 디자인 기준 "Warning 상태 — 주황 삼각형 아이콘과 warning 색. 자리와 크기는 다른 상태와 같습니다. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초)." Rules 프레임은 세로 자동 레이아웃이라 아래 장은 자동으로 밀렸습니다(06장 296 → 388px).
 
+## AO. Navigation 하위 메뉴 펼침 · 접힘 움직임 — Rules 09 행 추가 요청 (2026-11-02, Figma 미수정)
+
+Storybook Navigation의 메뉴 그룹에 shadcn/ui Base Accordion 성격의 펼침 · 접힘 움직임(실제 높이, 아래 항목 이동, 화살표 회전)을 넣었습니다. 이번 작업은
+"Figma의 시각적 디자인 및 Variables는 변경하지 마"라는 지시라 Figma는 읽기만 했습니다 — `item_parent`(180:5246, Expanded False = icon/CaretDown · True = icon/CaretUp) ·
+`item_link` · `item_child` 각 4 변형과 LNB 예시(180:6448: 항목 사이 6px, 하위 목록 x 26 · 폭 174, 선 높이 = 목록 높이)와 같고, 정합성 12/12 × 3 엔진(0.00%)과
+움직임이 끝난 LNB 배치 실측(접힘 · 펼침 모두 Figma 좌표와 같음)으로 확인했습니다. Rules 09 첫 행 "상태 변화 · 모든 컴포넌트 — 색 · 펼침 · 열림 같은 상태 변화는
+애니메이션 없이 바로 바꿉니다"(1674:8120)에 내비게이션 예외가 없고 "Accordion 펼침·접힘"(1762:8739)은 `accordion-item`만 대상이므로, 아래처럼 요청합니다(둘 중 하나).
+기존 행 문구 · 순서는 바꾸지 않습니다.
+
+| 항목 | 현재 Figma | 요청 | 노드 |
+| --- | --- | --- | --- |
+| Rules 09 "움직임" 표 | 내비게이션 행 없음 — 첫 행 "상태 변화"에 따라 즉시 | ① 행 추가: 정책 "내비게이션 펼침·접힘" / 적용 대상 `item_parent` · 사용 규칙 "메뉴 그룹을 열거나 닫으면 하위 메뉴가 실제 높이만큼 펼쳐지거나 접히고, 아래 메뉴가 함께 이동합니다. 움직임 줄이기를 설정하면 바로 바뀝니다." · 디자인 기준 "Accordion과 같은 짧고 부드러운 움직임(튕김 · 확대 · 흐려짐 없음)으로, 화살표 아이콘도 함께 돌아갑니다. 참고 링크: https://ui.shadcn.com/docs/components/base/accordion" — 또는 ② "Accordion 펼침·접힘" 행의 적용 대상에 `item_parent` 추가 | 표 1674:8112 · 1762:8739 |
+
+코드 값(Figma에는 넣지 않는 구현 세부): 200ms `cubic-bezier(0.33, 1, 0.68, 1)` — [Navigation.md](./components/Navigation.md) `NAVI-08`.
+
 ## AN. Tooltip 나타남 · 사라짐 움직임 — Rules 09 행 추가 요청 (2026-11-02, Figma 미수정)
 
 Storybook Tooltip에 shadcn/ui Base Tooltip 성격의 나타남 · 사라짐 움직임(페이드 + 크기, 트리거 쪽 기준점, 연속 이동은 즉시 교체)을 넣었습니다. 이번 작업은

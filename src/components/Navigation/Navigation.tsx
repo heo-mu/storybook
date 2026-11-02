@@ -1,5 +1,5 @@
-import { Children, forwardRef, useId, type ComponentPropsWithoutRef, type ReactNode } from 'react';
-import { CaretDownIcon, CaretUpIcon } from '../../icons';
+import { Children, forwardRef, useId, useLayoutEffect, useRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import { CaretDownIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import { useControllableState } from '../../utils/useControllableState';
 
@@ -63,7 +63,6 @@ export const NavParentItem = forwardRef<HTMLButtonElement, NavParentItemProps>(f
   { children, icon, expanded = false, className, ...rest },
   ref,
 ) {
-  const Caret = expanded ? CaretUpIcon : CaretDownIcon;
   return (
     <button {...rest} ref={ref} type="button" className={cx('ds-nav-item', className)} data-kind="parent" data-expanded={expanded || undefined} aria-expanded={expanded}>
       {icon && (
@@ -72,7 +71,8 @@ export const NavParentItem = forwardRef<HTMLButtonElement, NavParentItemProps>(f
         </span>
       )}
       <span className="ds-nav-item__label">{children}</span>
-      <Caret className="ds-nav-item__caret" />
+      {/* One caret that turns with the list (Figma icon/CaretDown · icon/CaretUp — the same shape turned 180°). */}
+      <CaretDownIcon className="ds-nav-item__caret" />
     </button>
   );
 });
@@ -98,23 +98,40 @@ export function NavGroup({ label, icon, children, expanded, defaultExpanded = fa
   const [isExpanded, setExpanded] = useControllableState(expanded, defaultExpanded, onExpandedChange);
   const listId = useId();
   const items = Children.toArray(children);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // The list opens and closes with a height motion (Navigation.css) and is hidden only once it has closed. From the
+  // moment it starts closing it is inert — out of the Tab order and the accessibility tree — and focus inside it
+  // returns to the group button rather than staying in a list that is going away.
+  useLayoutEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    if (!isExpanded && panel.contains(document.activeElement)) buttonRef.current?.focus();
+    panel.inert = !isExpanded;
+  }, [isExpanded]);
+
   return (
     <div className={cx('ds-nav__group', className)}>
-      <NavParentItem icon={icon} expanded={isExpanded} aria-controls={items.length ? listId : undefined} onClick={() => setExpanded(!isExpanded)}>
+      <NavParentItem ref={buttonRef} icon={icon} expanded={isExpanded} aria-controls={items.length ? listId : undefined} onClick={() => setExpanded(!isExpanded)}>
         {label}
       </NavParentItem>
       {items.length > 0 && (
-        <div className="ds-nav__children" hidden={!isExpanded}>
-          <svg className="ds-nav__line" aria-hidden="true" focusable="false">
-            <rect />
-          </svg>
-          <ul id={listId} className="ds-nav__children-list">
-            {items.map((child, index) => (
-              <li key={index} className="ds-nav__entry">
-                {child}
-              </li>
-            ))}
-          </ul>
+        <div ref={panelRef} className="ds-nav__panel" data-expanded={isExpanded || undefined}>
+          <div className="ds-nav__panel-content">
+            <div className="ds-nav__children">
+              <svg className="ds-nav__line" aria-hidden="true" focusable="false">
+                <rect />
+              </svg>
+              <ul id={listId} className="ds-nav__children-list">
+                {items.map((child, index) => (
+                  <li key={index} className="ds-nav__entry">
+                    {child}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       )}
     </div>
