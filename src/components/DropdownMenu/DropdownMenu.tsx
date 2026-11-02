@@ -168,8 +168,8 @@ export function DropdownMenuSub({ label, icon, id, textValue, disabled, 'aria-la
       {/* Figma "dropdown-menu 사용 예시" (217:6478): the sub panel starts right at the trigger item's edge — over the parent
           panel's p-1 padding, no gap — and its top is level with the item's top (offset 0 · crossOffset 0; react-aria's
           Popover would otherwise add its default 8px). Placed from the item, so it flips to the start side and shifts into the
-          viewport when there is no room (react-aria shouldFlip · containerPadding). Rules 09 gives the dropdown no
-          animation: it opens and closes at once like the parent menu. */}
+          viewport when there is no room (react-aria shouldFlip · containerPadding). It shows and hides with the same motion
+          as the parent menu (DropdownMenu.css, Rules 09 "dropdown-menu"), on the menu inside so the position is untouched. */}
       <Popover className="ds-dropdown__popover" placement="end top" offset={0} crossOffset={0}>
         <Menu aria-label={ariaLabel ?? name} onAction={onAction} className="ds-dropdown ds-dropdown--sub">
           {children}

@@ -798,7 +798,7 @@ const flows = {
     const d = await state();
     expect(d.filled === '000' && d.shown === 'current,upcoming,upcoming,upcoming', `after going back: ${d.filled} ${d.shown}`);
   },
-  async 'Motion — Select, DatePicker, Breadcrumb and chip filter open and close with the reference motion; DropdownMenu opens at once'() {
+  async 'Motion — Select, DatePicker, Breadcrumb and chip filter open and close with the reference motion; DropdownMenu with its own (shadcn) motion'() {
     const cases = [
       ['components-select-select--playground', '#storybook-root .ds-select__trigger', '.ds-select__popover'],
       ['components-datepicker-datepicker--playground', '#storybook-root .ds-field__control', '.ds-date-picker__popover'],
@@ -810,6 +810,9 @@ const flows = {
       await page.locator(trigger).first().click();
       const entering = await page.waitForFunction((sel) => { const e = document.querySelector(sel); return e && e.getAnimations().map((a) => a.animationName).join(','); }, popover, { timeout: 3000 }).then((h) => h.jsonValue());
       expect(/ds-overlay-enter/.test(entering), `${id}: no open motion (${entering})`);
+      // the Breadcrumb path menu is a DropdownMenu: only its overlay motion runs, not the dropdown menu motion as well
+      const inner = await page.evaluate((sel) => [...document.querySelector(sel).querySelectorAll('*')].flatMap((e) => e.getAnimations()).map((a) => a.animationName).join(','), popover);
+      expect(!/ds-dropdown-/.test(inner), `${id}: a second motion runs inside (${inner})`);
       await page.waitForFunction((sel) => document.querySelector(sel)?.getAnimations().length === 0, popover, { timeout: 3000 });
       const rest = await page.evaluate((sel) => getComputedStyle(document.querySelector(sel)).transform, popover);
       expect(rest === 'none', `${id}: resting transform ${rest}`);
@@ -821,8 +824,9 @@ const flows = {
     await story('components-dropdownmenu-dropdownmenu--playground');
     await root().getByRole('button', { name: '메뉴' }).click();
     await page.locator('.ds-dropdown__popover').waitFor({ timeout: 3000 });
-    const menuAnims = await page.evaluate(() => document.querySelector('.ds-dropdown__popover').getAnimations().length);
-    expect(menuAnims === 0, 'DropdownMenu should open without animation (Rules 09)');
+    // Rules 09 "dropdown-menu" (2026-11-02): the popover fades, the menu inside grows from the trigger side
+    const menuAnims = await page.evaluate(() => { const p = document.querySelector('.ds-dropdown__popover'); return [...p.getAnimations(), ...p.querySelector(':scope > .ds-dropdown').getAnimations()].map((a) => a.animationName).sort().join(','); });
+    expect(menuAnims === 'ds-dropdown-fade-in,ds-dropdown-grow', `DropdownMenu open motion: ${menuAnims}`);
   },
   async 'Motion — 2-depth menu: hover opens beside the item, diagonal travel keeps it open, the item stays highlighted'() {
     await story('components-dropdownmenu-dropdownmenu--submenu');
@@ -833,6 +837,8 @@ const flows = {
     for (let i = 1; i <= 6; i++) { await page.mouse.move(ib.x + 10 + ((ib.width - 22) * i) / 6, ib.y + ib.height / 2); await sleep(20); }
     const sub = page.getByRole('menu', { name: '내보내기' });
     await sub.waitFor({ timeout: 3000 });
+    // measured at rest: the menu inside grows during the show motion (the positioned box does not move)
+    await page.waitForFunction(() => document.getAnimations().filter((x) => x.playState === 'running' && Number.isFinite(x.effect.getComputedTiming().endTime)).length === 0, null, { timeout: 3000 });
     // Figma 217:6478: the sub panel starts at the item's right edge (no gap) with its top level with the item — react-aria
     // floors the edge to a whole pixel, so the panel starts at floor(item right): less than 1px inside the item, never a gap
     const sb = await sub.boundingBox();
@@ -848,6 +854,119 @@ const flows = {
     await page.getByRole('menuitem', { name: 'CSV' }).click();
     await sleep(150);
     expect((await page.getByRole('menu').count()) === 0, 'choosing a sub item did not close both menus');
+  },
+  async 'Dropdown menu motion — main and sub menus fade and grow from the side facing what opened them and rest where Figma 217:6478 has them; hover moves between items and sub menus without gaps or flicker; keys, outside click and reduced motion'() {
+    // every frame: each open menu (main / sub, by name) with the popover's opacity and box and the inner menu's scale and move
+    const frames = (ms) => page.evaluate((ms) => new Promise((resolve) => {
+      const out = [];
+      const start = performance.now();
+      const tick = () => {
+        out.push({ t: performance.now() - start, menus: [...document.querySelectorAll('.ds-dropdown__popover > .ds-dropdown')].map((m) => { const p = m.parentElement; const t = getComputedStyle(m).transform; const x = new DOMMatrix(t === 'none' ? undefined : t); const b = p.getBoundingClientRect(); return { sub: m.classList.contains('ds-dropdown--sub'), name: m.getAttribute('aria-label') || '', op: Number(getComputedStyle(p).opacity), s: x.a, dx: x.e, dy: x.f, left: b.left, top: b.top, entering: p.hasAttribute('data-entering'), exiting: p.hasAttribute('data-exiting') }; }) });
+        if (performance.now() - start < ms) requestAnimationFrame(tick); else resolve(out);
+      };
+      requestAnimationFrame(tick);
+    }), ms);
+    const settled = () => page.waitForFunction(() => document.getAnimations().filter((x) => x.playState === 'running' && Number.isFinite(x.effect.getComputedTiming().endTime)).length === 0, null, { timeout: 3000 });
+    const pick = (f, sub, name) => f.menus.find((m) => m.sub === sub && (!name || m.name === name));
+    await story('components-dropdownmenu-showcase--submenu');
+    await playDone(); // its play leaves the menu and the 내보내기 sub menu open on the Figma layout
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('[role=menu]'), null, { timeout: 3000 });
+    // main menu: pointer open
+    let rec = frames(320);
+    await root().getByRole('button', { name: '파일' }).click();
+    let f = (await rec).filter((x) => pick(x, false) && pick(x, false).op > 0);
+    const first = pick(f[0], false), last = pick(f.at(-1), false);
+    expect(first.op < 1 && first.s < 1 && first.s >= 0.9499 && first.dy < 0 && last.op === 1 && last.s === 1 && last.dy === 0 && f.every((x) => pick(x, false).top === last.top && pick(x, false).left === last.left),
+      `main show: ${f.map((x) => { const m = pick(x, false); return `${m.op.toFixed(2)}/${m.s.toFixed(3)}/${m.dy.toFixed(1)}@${m.top}`; }).join(' ')}`);
+    await settled();
+    // hover 내보내기: the sub menu opens beside it with the motion and rests on the Figma position
+    const exp = page.getByRole('menuitem', { name: '내보내기' });
+    const eb = await exp.boundingBox();
+    rec = frames(700);
+    await page.mouse.move(eb.x + 12, eb.y + eb.height / 2, { steps: 4 });
+    f = (await rec).filter((x) => pick(x, true, '내보내기') && pick(x, true, '내보내기').op > 0);
+    const s0 = pick(f[0], true, '내보내기'), s1 = pick(f.at(-1), true, '내보내기');
+    expect(f.length >= 4 && s0.op < 1 && s0.s < 1 && s0.dx < 0 && s1.op === 1 && s1.s === 1 && s1.dx === 0 && f.every((x) => pick(x, true, '내보내기').left === s1.left && pick(x, true, '내보내기').top === s1.top),
+      `sub show: ${f.map((x) => { const m = pick(x, true, '내보내기'); return `${m.op.toFixed(2)}/${m.s.toFixed(3)}/${m.dx.toFixed(1)}@${m.left}`; }).join(' ')}`);
+    await settled();
+    const geo = await page.evaluate(() => { const r = (el) => el.getBoundingClientRect(); const main = [...document.querySelectorAll('.ds-dropdown')].find((m) => !m.classList.contains('ds-dropdown--sub') && m.closest('.ds-dropdown__popover')); const sub = document.querySelector('.ds-dropdown--sub'); const item = [...document.querySelectorAll('[role=menuitem]')].find((i) => i.textContent.trim() === '내보내기'); return { dx: r(sub).left - r(main).left, dy: r(sub).top - r(main).top, w: r(sub).width, h: r(sub).height, gapToItem: r(sub).left - r(item).right, topToItem: r(sub).top - r(item).top, origin: getComputedStyle(sub).transformOrigin }; });
+    expect(geo.dx === 196 && geo.dy === 222 && geo.w === 140 && geo.h === 160 && geo.gapToItem <= 0 && geo.gapToItem > -1 && geo.topToItem === 0 && geo.origin === '0px 0px', `sub at rest ${JSON.stringify(geo)} (Figma 196 · 222 · 140 × 160, left = item right, top = item top)`);
+    // across the seam into the sub menu in 1px steps: it stays open (the panels overlap by the parent's 4px padding — no gap)
+    const sub = page.getByRole('menu', { name: '내보내기' });
+    const sb = await sub.boundingBox();
+    rec = frames(400);
+    for (let x = eb.x + eb.width - 10; x <= sb.x + 20; x += 1) await page.mouse.move(x, eb.y + eb.height / 2);
+    f = await rec;
+    expect(f.every((x) => pick(x, true, '내보내기') && !pick(x, true, '내보내기').exiting) && (await exp.getAttribute('data-open')) === 'true', 'the sub menu started closing while the pointer crossed into it');
+    // back to the main menu onto the other sub menu item: 내보내기 fades out, 이동 opens; at most these two at once
+    const mv = await page.getByRole('menuitem', { name: '이동' }).boundingBox();
+    rec = frames(900);
+    await page.mouse.move(eb.x + 40, eb.y + eb.height / 2, { steps: 4 });
+    await page.mouse.move(mv.x + 40, mv.y + mv.height / 2, { steps: 4 });
+    f = await rec;
+    const exportFade = f.filter((x) => pick(x, true, '내보내기')?.exiting);
+    expect(exportFade.length >= 2 && pick(f.at(-1), true, '이동')?.op === 1 && !pick(f.at(-1), true, '내보내기') && f.every((x) => x.menus.filter((m) => m.sub).length <= 2),
+      `switch: ${f.map((x) => x.menus.filter((m) => m.sub).map((m) => `${m.name}${m.exiting ? 'x' : ''}${m.op.toFixed(1)}`).join('+') || '-').join(' ')}`);
+    await settled();
+    // a quick sweep over all items (no pause): no sub menu flashes open
+    const items = page.locator('.ds-dropdown__popover > .ds-dropdown:not(.ds-dropdown--sub) [role=menuitem]');
+    const fb = await items.first().boundingBox(), lb = await items.last().boundingBox();
+    await page.mouse.move(fb.x - 30, fb.y + 4);
+    await settled();
+    rec = frames(500);
+    await page.mouse.move(fb.x + 30, fb.y + fb.height / 2, { steps: 2 });
+    await page.mouse.move(lb.x + 30, lb.y + lb.height / 2, { steps: 8 });
+    await page.mouse.move(lb.x - 40, lb.y + lb.height / 2, { steps: 2 });
+    f = await rec;
+    const before = new Set(f[0].menus.filter((m) => m.sub).map((m) => m.name));
+    const flashed = [...new Set(f.flatMap((x) => x.menus.filter((m) => m.sub && !before.has(m.name) && !m.exiting && m.op > 0.5).map((m) => m.name)))];
+    expect(flashed.length === 0, `sub menus flashed open during a quick sweep: ${flashed.join(', ')}`);
+    await settled();
+    // keyboard: → opens, ← returns focus to the item, Escape closes everything and focus returns to the trigger
+    await exp.hover();
+    await page.getByRole('menu', { name: '내보내기' }).waitFor({ timeout: 3000 });
+    await page.keyboard.press('ArrowRight');
+    await page.waitForFunction(() => document.activeElement?.closest('.ds-dropdown--sub'), null, { timeout: 3000 });
+    await page.keyboard.press('ArrowLeft');
+    await page.waitForFunction(() => document.activeElement?.textContent.trim() === '내보내기', null, { timeout: 3000 });
+    // choosing a sub item with the pointer closes both menus (fading out) — reopened with → (focus is on 내보내기)
+    await page.keyboard.press('ArrowRight');
+    await page.waitForFunction(() => document.activeElement?.closest('.ds-dropdown--sub'), null, { timeout: 3000 });
+    await settled();
+    rec = frames(400);
+    await page.getByRole('menuitem', { name: 'Excel' }).click();
+    f = await rec;
+    expect(f.some((x) => x.menus.length && x.menus.every((m) => m.exiting)) && f.at(-1).menus.length === 0, `choosing a sub item: ${f.map((x) => x.menus.map((m) => `${m.sub ? 's' : 'm'}${m.exiting ? 'x' : ''}`).join('+') || '-').join(' ')}`);
+    // outside click closes everything
+    await root().getByRole('button', { name: '파일' }).click();
+    await page.getByRole('menu', { name: '파일' }).waitFor({ timeout: 3000 });
+    await exp.hover();
+    await page.getByRole('menu', { name: '내보내기' }).waitFor({ timeout: 3000 });
+    await page.mouse.click(5, 5);
+    await page.waitForFunction(() => !document.querySelector('[role=menu]'), null, { timeout: 3000 });
+    // reduced motion: shown and hidden at once
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    try {
+      await story('components-dropdownmenu-dropdownmenu--submenu');
+      rec = frames(300);
+      await root().getByRole('button').first().click();
+      const shown = (await rec).filter((x) => pick(x, false));
+      expect(shown.length > 0 && shown.every((x) => pick(x, false).op === 1 && pick(x, false).s === 1), `reduced motion main: ${shown.map((x) => pick(x, false).op).join(',')}`);
+      const it = await page.getByRole('menuitem', { name: '내보내기' }).boundingBox();
+      rec = frames(600);
+      await page.mouse.move(it.x + 12, it.y + it.height / 2, { steps: 4 });
+      const subShown = (await rec).filter((x) => pick(x, true));
+      expect(subShown.length > 0 && subShown.every((x) => pick(x, true).op === 1 && pick(x, true).s === 1), `reduced motion sub: ${subShown.map((x) => pick(x, true).op).join(',')}`);
+      rec = frames(200);
+      await page.keyboard.press('Escape');
+      await page.keyboard.press('Escape');
+      const after = await rec;
+      expect(after.findIndex((x) => x.menus.length === 0) <= 2, 'reduced motion: the menus did not close at once');
+    } finally {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+    }
   },
   async 'Motion — reduced motion: no slide, fill or open/close motion; spinner 3 s and skeleton 6 s per turn'() {
     const LAYOUT_UNIT = 1 / 64 + 1e-6;
@@ -868,6 +987,12 @@ const flows = {
       await page.locator('.ds-select__popover').waitFor({ timeout: 3000 });
       const anims = await page.evaluate(() => document.querySelector('.ds-select__popover').getAnimations().length);
       expect(anims === 0, 'Select list animated with reduced motion');
+      await page.keyboard.press('Escape');
+      await story('components-dropdownmenu-dropdownmenu--playground');
+      await root().getByRole('button', { name: '메뉴' }).click();
+      await page.locator('.ds-dropdown__popover').waitFor({ timeout: 3000 });
+      const dropAnims = await page.evaluate(() => { const p = document.querySelector('.ds-dropdown__popover'); return p.getAnimations().length + p.querySelector(':scope > .ds-dropdown').getAnimations().length; });
+      expect(dropAnims === 0, 'DropdownMenu animated with reduced motion');
       await page.keyboard.press('Escape');
       await story('components-loading-loading--playground');
       const spin = await page.evaluate(() => getComputedStyle(document.querySelector('.ds-loading__spinner')).animationDuration);

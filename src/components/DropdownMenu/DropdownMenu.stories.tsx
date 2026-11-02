@@ -93,7 +93,7 @@ export const WithDescription: Story = {
 
 /**
  * 하위 메뉴(2단계): `DropdownMenuSub` 항목에 마우스를 올리거나 → · Enter를 누르면 옆에 글자만 있는 좁은 메뉴가 열리고, ← · Esc로 닫힙니다.
- * 상위 메뉴와 같이 애니메이션 없이 바로 열리고 닫힙니다.
+ * 하위 메뉴는 여는 항목의 오른쪽 끝에 붙어 열리고(Figma 사용 예시 217:6478), 상위 메뉴와 같은 움직임으로 나타나고 사라집니다.
  */
 export const Submenu: Story = {
   name: '하위 메뉴',

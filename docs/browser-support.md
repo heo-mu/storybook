@@ -122,6 +122,10 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
   `transform`은 Firefox에서 맞춰지므로, SVG `<rect>`(`x` · `y` · `width` · `height` CSS 속성)로 그립니다 — 세 엔진 모두
   Figma와 같은 50% 두 줄.
 - Dropdown Menu 구분선은 1px 배경 그라데이션(테두리 대신)이라 엔진마다 같은 픽셀 행에 그려집니다.
+- Dropdown Menu 움직임(2026-11-02): opacity · `transform` `@keyframes`(키프레임 안 `var()`), react-aria `--trigger-anchor-point`, `:has()`(Chrome 105+, Firefox 121+,
+  Safari 15.4+ — 없는 엔진(Firefox 120 이하)에서는 상위 메뉴가 커지는 0.15초 안에 키보드로 연 하위 메뉴가 크기 움직임만큼(최대 약 10px) 안쪽에 놓일 수 있음).
+  세 엔진 실측: 하위 메뉴 위치가 Figma 217:6478과 같음(196 · 222,
+  간격 0), 움직이는 동안 위치 요소가 고정, 뒤집힘 · 아래 보정 · 창 크기 변경 · 스크롤에서도 같은 규칙.
 
 ## Badge
 

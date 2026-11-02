@@ -164,3 +164,105 @@
 .ds-dropdown--sub {
   min-width: 140px;
 }
+
+/*
+ * Show · hide motion — Rules 09 "dropdown-menu · dropdown-menu-sub: 참고 링크 대로 움직입니다" (reference shadcn/ui Base
+ * Dropdown Menu: fade + zoom 0.95 from the side facing the trigger, a short move from that side when opening). The main menu
+ * and the sub menu move the same way, each from the point facing what opened it (react-aria --trigger-anchor-point on the
+ * side it actually opened on: below the trigger → its top edge, beside the item → its left edge, flipped → its right edge).
+ *
+ *   show  150 ms ease — opacity 0 → 1, scale 0.95 → 1, 4px from the trigger side (the design system's overlay open)
+ *   hide  100 ms ease — opacity 1 → 0, scale 1 → 0.95 (shadcn and the design system's overlay close), not interactive
+ *
+ * The positioned element (react-aria Popover: top / left) only fades — react-aria waits for its animation before removing
+ * it — and the scale / move is on the menu inside, so the motion never feeds into the position: the sub menu is placed
+ * from its item's untransformed box and rests exactly where Figma 217:6478 has it. Breadcrumb's path menu (also this
+ * popover) keeps its own Rules 09 "펼침·닫힘" motion in overlay-motion.css. Reduced motion: shown and hidden at once.
+ */
+@keyframes ds-dropdown-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ds-dropdown-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Both ends set: WebKit does not interpolate from an implicit `transform: none` (as in overlay-motion.css). */
+@keyframes ds-dropdown-grow {
+  from {
+    transform: translate(var(--_from-x, 0), var(--_from-y, 0)) scale(0.95);
+  }
+  to {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes ds-dropdown-shrink {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.95);
+  }
+}
+
+/* Starts 4px towards what opened it: below the trigger it comes from above, beside the item from the item's side. */
+.ds-dropdown__popover[data-placement='bottom'] {
+  --_from-y: -4px;
+}
+
+.ds-dropdown__popover[data-placement='top'] {
+  --_from-y: 4px;
+}
+
+.ds-dropdown__popover[data-placement='right'] {
+  --_from-x: -4px;
+}
+
+.ds-dropdown__popover[data-placement='left'] {
+  --_from-x: 4px;
+}
+
+.ds-dropdown__popover:not(:has(> .ds-breadcrumb__menu)) > .ds-dropdown {
+  transform-origin: var(--trigger-anchor-point);
+}
+
+.ds-dropdown__popover:not(:has(> .ds-breadcrumb__menu))[data-entering] {
+  animation: ds-dropdown-fade-in 150ms ease;
+}
+
+.ds-dropdown__popover:not(:has(> .ds-breadcrumb__menu))[data-entering] > .ds-dropdown {
+  animation: ds-dropdown-grow 150ms ease;
+}
+
+.ds-dropdown__popover:not(:has(> .ds-breadcrumb__menu))[data-exiting] {
+  animation: ds-dropdown-fade-out 100ms ease forwards;
+  pointer-events: none;
+}
+
+.ds-dropdown__popover:not(:has(> .ds-breadcrumb__menu))[data-exiting] > .ds-dropdown {
+  animation: ds-dropdown-shrink 100ms ease forwards;
+}
+
+/* A sub menu opened while its parent is still growing (fast keys): the parent is drawn at its final size at once, so the sub
+   menu is placed from where its item rests. */
+.ds-dropdown__popover[data-entering]:has(.ds-dropdown__item[data-open]) > .ds-dropdown {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-dropdown__popover:not(:has(> .ds-breadcrumb__menu)):is([data-entering], [data-exiting]),
+  .ds-dropdown__popover:not(:has(> .ds-breadcrumb__menu)):is([data-entering], [data-exiting]) > .ds-dropdown {
+    animation: none;
+  }
+}

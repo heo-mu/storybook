@@ -7,6 +7,23 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### DropdownMenu — 메뉴 · 하위 메뉴 열림 · 닫힘 움직임, 하위 메뉴 위치 재확인 (Figma 217:6478 · shadcn/ui Base Dropdown Menu) (2026-11-02)
+
+- **움직임**(Rules 09 "dropdown-menu · dropdown-menu-sub — 참고 링크 대로 움직입니다"를 이번에 따름, 이전에는 즉시): 메뉴와 하위 메뉴 모두 나타남 150ms `ease`
+  (opacity 0 → 1, `scale` 0.95 → 1, 연 쪽에서 4px), 사라짐 100ms `ease`(1 → 0, 1 → 0.95, 그동안 누를 수 없음). 기준점은 react-aria `--trigger-anchor-point`
+  (메뉴 위 가장자리, 하위 메뉴 왼쪽 위 — 왼쪽으로 뒤집히면 오른쪽). shadcn 데모 실측은 100ms `ease` · 8px 이동 — 열림은 디자인 시스템 오버레이 열림(150ms), 이동은 4px.
+- **위치와 움직임 분리**: react-aria가 top · left로 놓는 Popover는 투명도만, 크기 · 이동은 안쪽 메뉴에 — 움직임이 위치 계산에 들어가지 않음. 상위 메뉴가 커지는 도중
+  하위 메뉴가 열리면 상위 메뉴의 크기 움직임을 바로 끝내 항목의 최종 위치에서 놓음. Breadcrumb 경로 메뉴는 기존 "펼침·닫힘" 움직임만.
+- **하위 메뉴 위치**: Figma 217:6478 재측정 — 하위 패널이 여는 항목의 오른쪽 위 모서리에 붙음(상위 패널 안쪽 4px 위, 메뉴 왼쪽 위에서 196 · 222px). 코드는 이미 같은
+  값(2026-10-30 `offset 8 · crossOffset −4` → `0 · 0`)이고 세 엔진 · 배포 사이트에서 간격 0 · 위 끝 0 확인, 중복 오프셋 없음. 사용 예시의 트리거 ↔ 메뉴 8px는 Rules 05
+  4px와 달라 결정 요청(figma-fix-requests AP절, 코드는 4px 유지).
+- **스토리**: Gallery "하위 메뉴"를 Figma 217:6478 구성(200px 메뉴, 하위 메뉴 2개, 140px 하위 패널)으로 바꿔 196 · 222 · 140 × 160을 검사하고 열린 채 끝남, Interaction ·
+  화면 가장자리 play에 움직임 · 기준점. `verify:interaction`에 Dropdown 움직임 흐름(메인 · 하위 움직임, Figma 위치, 경계 넘기, 다른 하위 메뉴로 전환, 빠른 sweep, 키보드,
+  바깥 클릭, 움직임 줄이기), 기존 흐름은 정지 상태에서 위치를 재고 "DropdownMenu 즉시" 기대를 움직임으로 바꿈.
+- **검증**: `verify-figma` dropdown-menu 8/8 × 3 엔진 · breadcrumb × 3 엔진(픽셀 차이 0.00%, Figma 세트 재조회 — 기준 이미지 4종 변경 0픽셀, 체크섬 8그룹 일치), 스토리 테스트
+  DropdownMenu · Breadcrumb 23, Storybook MCP 13 스토리(a11y), axe DropdownMenu 13 · Breadcrumb 10 위반 0, `verify:interaction` 메뉴 4/4 · 움직임 줄이기 7/7 · Breadcrumb 1/1 × 3 엔진,
+  화면 경계 탐침 5/5 × 3 엔진(스크롤 · 아래 보정 · 좁은 화면 · 구석 뒤집힘 · 창 크기 변경), `verify:render` DropdownMenu 15 · Breadcrumb 12 × 3 엔진.
+
 ### Navigation — 하위 메뉴 펼침 · 접힘 움직임 (shadcn/ui Base Accordion 참고) (2026-11-02)
 
 - **펼침 · 접힘**: 메뉴 그룹의 하위 목록이 실제 콘텐츠 높이까지 200ms `cubic-bezier(0.33, 1, 0.68, 1)`(이 디자인 시스템 Accordion과 같은 값) 동안 펼쳐지고 접히며,

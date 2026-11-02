@@ -5,7 +5,44 @@ import { DropdownMenu, DropdownMenuItem, DropdownMenuSection, DropdownMenuSepara
 import { Button } from '../../Button';
 import { FolderSimpleDashedIcon } from '../../../icons';
 import { FigmaMatrix } from '../../../storybook/FigmaMatrix';
+import { motionSettled } from '../../../storybook/motion';
 import { PSEUDO, PSEUDO_STORY_PARAMETERS } from '../../../storybook/pseudo';
+
+type MenuFrame = { opacity: number; scale: number; x: number; y: number; left: number; top: number; entering: boolean; exiting: boolean };
+
+/**
+ * The open menu (`main`) or sub menu (`sub`) on every frame for `ms`: the positioned popover's opacity and box, the scale and
+ * move of the menu inside it, react-aria's motion state. Frames before it exists or after it is removed are left out.
+ */
+async function recordMenu(doc: Document, which: 'main' | 'sub', ms: number, act?: () => Promise<void>) {
+  const frames: MenuFrame[] = [];
+  let running = true;
+  const tick = () => {
+    const menu = [...doc.querySelectorAll<HTMLElement>('.ds-dropdown__popover > .ds-dropdown')].find((m) => m.classList.contains('ds-dropdown--sub') === (which === 'sub'));
+    if (menu) {
+      const popover = menu.parentElement!;
+      const t = getComputedStyle(menu).transform;
+      const m = new DOMMatrix(t === 'none' ? undefined : t);
+      const box = popover.getBoundingClientRect();
+      frames.push({
+        opacity: Number(getComputedStyle(popover).opacity),
+        scale: m.a,
+        x: m.e,
+        y: m.f,
+        left: box.left,
+        top: box.top,
+        entering: popover.hasAttribute('data-entering'),
+        exiting: popover.hasAttribute('data-exiting'),
+      });
+    }
+    if (running) requestAnimationFrame(tick);
+  };
+  tick();
+  await act?.();
+  await new Promise((resolve) => setTimeout(resolve, ms));
+  running = false;
+  return frames;
+}
 
 // Visual verification (not in the MCP manifest). Cells carry data-figma names checked by
 // `node scripts/verify-figma.mjs dropdown-menu` (sets dropdownmenu_item, dropdownmenu_line, dropdown-menu, dropdown-menu-sub).
@@ -223,11 +260,23 @@ export const Interaction: StoryObj<{ onAction: Mock<(key: unknown) => void> }> =
   play: async ({ args, canvas, canvasElement, userEvent, step }) => {
     const body = within(canvasElement.ownerDocument.body);
     const trigger = canvas.getByRole('button', { name: '정렬' });
-    await step('click opens the menu (design-system Button as trigger), Escape closes', async () => {
-      await userEvent.click(trigger);
+    await step('click opens the menu with fade + scale from the trigger side (design-system Button as trigger), Escape closes it with fade + shrink', async () => {
+      const doc = canvasElement.ownerDocument;
+      const show = await recordMenu(doc, 'main', 260, () => userEvent.click(trigger));
       await body.findByRole('menu');
       await expect(trigger).toHaveAttribute('aria-expanded', 'true');
-      await userEvent.keyboard('{Escape}');
+      const visible = show.filter((f) => f.opacity > 0);
+      // starts small, transparent and 4px towards the trigger above it; ends at rest; the positioned box never moves
+      await expect(show[0].entering).toBe(true);
+      await expect(visible[0].opacity).toBeLessThan(1);
+      await expect(visible[0].scale).toBeLessThan(1);
+      await expect(visible[0].scale).toBeGreaterThanOrEqual(0.9499);
+      await expect(visible[0].y).toBeLessThan(0);
+      await expect(show.at(-1)).toMatchObject({ opacity: 1, scale: 1, x: 0, y: 0, entering: false });
+      await expect(visible.filter((f) => f.top !== show.at(-1)!.top || f.left !== show.at(-1)!.left)).toEqual([]);
+      const hide = await recordMenu(doc, 'main', 260, () => userEvent.keyboard('{Escape}'));
+      const fading = hide.filter((f) => f.exiting);
+      await expect(fading.filter((f) => f.opacity < 1 && f.scale < 1 && f.scale >= 0.9499).length).toBeGreaterThanOrEqual(2);
       await waitFor(() => expect(body.queryByRole('menu')).not.toBeInTheDocument());
       await waitFor(() => expect(trigger).toHaveFocus());
     });
@@ -278,69 +327,143 @@ export const Accessibility: Story = {
 };
 
 /**
- * 2-depth menu (Rules 09 "dropdown-menu": dropdown-menu-sub is the 2nd depth): → · Enter open the sub menu beside its
- * item — as in the Figma usage example (217:6478) the sub panel starts at the item's right edge (over the parent panel's
- * 4px padding, no gap) with its top level with the item — ← · Esc close it and return focus to the item, choosing a sub
- * item calls onAction and closes both menus. It opens and closes at once (no animation).
+ * 2-depth menu laid out like the Figma "dropdown-menu 사용 예시" (217:6478): a 200px menu (title, three items, two items and
+ * the sub menu item, three and one chevron items) whose 6th item opens the 140px sub menu. The sub panel starts at the item's
+ * right edge — over the parent panel's 4px padding, no gap — with its top level with the item (Figma: 196px right of and
+ * 222px below the menu's top-left corner). → · Enter open it, ← · Esc close it and return focus to the item, another sub
+ * item opens its own sub menu, choosing a sub item calls onAction and closes both. Both menus show and hide with the
+ * dropdown motion (Rules 09 "dropdown-menu"); positions are checked at rest. The play ends with the sub menu open.
  */
 export const Submenu: StoryObj<{ onAction: Mock<(key: unknown) => void> }> = {
   name: '하위 메뉴',
   args: { onAction: fn() },
   render: (args) => (
-    <div style={{ paddingBottom: 240 }}>
-      <DropdownMenu trigger={<Button>파일</Button>} aria-label="파일 작업">
-        <DropdownMenuItem id="new">새 폴더</DropdownMenuItem>
-        <DropdownMenuSub id="export" label="내보내기" onAction={args.onAction}>
+    <div style={{ paddingBottom: 460 }}>
+      {/* DROP-04: the panel width comes from the layout — 200px like the Figma example */}
+      <style>{'.ds-dropdown.figma-217-6478 { width: 200px; }'}</style>
+      <DropdownMenu
+        trigger={
+          <Button variant="tertiary" appearance="outline" size="sm">
+            파일
+          </Button>
+        }
+        aria-label="파일 작업"
+        className="figma-217-6478"
+      >
+        <DropdownMenuSection title="파일">
+          <DropdownMenuItem id="new" icon={<FolderSimpleDashedIcon />}>
+            새 폴더
+          </DropdownMenuItem>
+          <DropdownMenuItem id="copy" icon={<FolderSimpleDashedIcon />}>
+            복제
+          </DropdownMenuItem>
+          <DropdownMenuItem id="rename" icon={<FolderSimpleDashedIcon />}>
+            이름 바꾸기
+          </DropdownMenuItem>
+        </DropdownMenuSection>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem id="share" icon={<FolderSimpleDashedIcon />}>
+          공유
+        </DropdownMenuItem>
+        <DropdownMenuItem id="link" icon={<FolderSimpleDashedIcon />}>
+          링크 복사
+        </DropdownMenuItem>
+        <DropdownMenuSub id="export" label="내보내기" icon={<FolderSimpleDashedIcon />} onAction={args.onAction}>
           <DropdownMenuItem id="pdf">PDF</DropdownMenuItem>
+          <DropdownMenuItem id="xlsx">Excel</DropdownMenuItem>
           <DropdownMenuItem id="csv">CSV</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem id="more">더보기...</DropdownMenuItem>
         </DropdownMenuSub>
-        <DropdownMenuItem id="delete" danger>
-          삭제
+        <DropdownMenuSeparator />
+        <DropdownMenuSub id="move" label="이동" icon={<FolderSimpleDashedIcon />}>
+          <DropdownMenuItem id="docs">문서</DropdownMenuItem>
+          <DropdownMenuItem id="photos">사진</DropdownMenuItem>
+        </DropdownMenuSub>
+        <DropdownMenuItem id="sort" icon={<FolderSimpleDashedIcon />} chevron>
+          정렬
+        </DropdownMenuItem>
+        <DropdownMenuItem id="view" icon={<FolderSimpleDashedIcon />} chevron>
+          보기
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem id="info" icon={<FolderSimpleDashedIcon />} chevron>
+          정보
         </DropdownMenuItem>
       </DropdownMenu>
     </div>
   ),
   play: async ({ args, canvas, canvasElement, userEvent, step }) => {
-    const body = within(canvasElement.ownerDocument.body);
+    const doc = canvasElement.ownerDocument;
+    const body = within(doc.body);
     const trigger = canvas.getByRole('button', { name: '파일' });
-    await step('→ opens the sub menu beside its item, focus on its first item', async () => {
+    const rect = (el: Element) => el.getBoundingClientRect();
+    await step('the menu opens with the dropdown motion and rests as the Figma panel (200 × 422)', async () => {
       trigger.focus();
-      await userEvent.keyboard('{Enter}');
+      const show = await recordMenu(doc, 'main', 260, () => userEvent.keyboard('{Enter}'));
       await waitFor(() => expect(body.getByRole('menuitem', { name: '새 폴더' })).toHaveFocus());
-      await userEvent.keyboard('{ArrowDown}');
+      await expect(show.filter((f) => f.opacity > 0 && f.opacity < 1 && f.scale < 1).length).toBeGreaterThanOrEqual(2);
+      await motionSettled();
+      const parent = rect(body.getByRole('menu', { name: '파일' }));
+      await expect([parent.width, parent.height]).toEqual([200, 422]);
+    });
+    await step('→ opens the sub menu beside its item (Figma 217:6478: left = item right = menu right − 4, top = item top)', async () => {
+      await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}');
       const item = body.getByRole('menuitem', { name: '내보내기' });
+      await expect(item).toHaveFocus();
       await expect(item).toHaveAttribute('aria-haspopup', 'menu');
-      await userEvent.keyboard('{ArrowRight}');
+      const show = await recordMenu(doc, 'sub', 260, () => userEvent.keyboard('{ArrowRight}'));
       const sub = await body.findByRole('menu', { name: '내보내기' });
       await waitFor(() => expect(within(sub).getByRole('menuitem', { name: 'PDF' })).toHaveFocus());
       await expect(item).toHaveAttribute('aria-expanded', 'true');
-      // react-aria names the parent menu by its trigger
-      const parent = body.getByRole('menu', { name: '파일' }).getBoundingClientRect();
-      const box = sub.getBoundingClientRect();
-      const itemBox = item.getBoundingClientRect();
-      // Figma 217:6478: sub panel left = item right (= parent right − 4, over its p-1 padding), sub panel top = item top, so
-      // the first sub item is 4px below (the sub panel's p-1). react-aria puts the panel on a whole pixel by flooring the
-      // item's right edge (calculatePosition), so after a content-width parent (fractional edge, depends on the font) the
-      // panel starts on the whole pixel at or less than 1px inside that edge — never a gap. The top is not floored.
-      await expect(box.left).toBeCloseTo(Math.floor(itemBox.right), 1);
-      await expect(itemBox.right).toBeCloseTo(parent.right - 4, 1);
-      await expect(box.top).toBeCloseTo(itemBox.top, 1);
-      await expect(within(sub).getByRole('menuitem', { name: 'PDF' }).getBoundingClientRect().top).toBeCloseTo(itemBox.top + 4, 1);
-      await expect(box.width).toBeGreaterThanOrEqual(140);
+      // motion: fades and grows from the item's side (4px towards it); the positioned box stays where it rests
+      const visible = show.filter((f) => f.opacity > 0);
+      await expect(visible[0].scale).toBeLessThan(1);
+      await expect(visible[0].x).toBeLessThan(0);
+      await expect(visible.filter((f) => f.left !== show.at(-1)!.left || f.top !== show.at(-1)!.top)).toEqual([]);
+      await expect(getComputedStyle(sub).transformOrigin).toBe('0px 0px');
+      await motionSettled();
+      const parent = rect(body.getByRole('menu', { name: '파일' }));
+      const box = rect(sub);
+      const itemBox = rect(item);
+      // Figma: sub 196px right of and 222px below the menu's top-left corner, 140 × 160, its first item 4px below its top.
+      // react-aria puts the panel on a whole pixel by flooring the item's right edge — after a whole-pixel menu that is exact.
+      await expect([box.left - parent.left, box.top - parent.top, box.width, box.height]).toEqual([196, 222, 140, 160]);
+      await expect(box.left).toBe(Math.floor(itemBox.right));
+      await expect(box.top).toBe(itemBox.top);
+      await expect(rect(within(sub).getByRole('menuitem', { name: 'PDF' })).top).toBe(itemBox.top + 4);
     });
-    await step('← closes it and returns focus to its item', async () => {
-      await userEvent.keyboard('{ArrowLeft}');
+    await step('← closes it with the motion and returns focus to its item', async () => {
+      const hide = await recordMenu(doc, 'sub', 260, () => userEvent.keyboard('{ArrowLeft}'));
+      await expect(hide.filter((f) => f.exiting && f.opacity < 1).length).toBeGreaterThanOrEqual(2);
       await waitFor(() => expect(body.queryByRole('menu', { name: '내보내기' })).not.toBeInTheDocument());
       await expect(body.getByRole('menuitem', { name: '내보내기' })).toHaveFocus();
+    });
+    await step('another sub menu item opens its own sub menu level with it', async () => {
+      await userEvent.keyboard('{ArrowDown}{ArrowRight}');
+      const sub = await body.findByRole('menu', { name: '이동' });
+      await motionSettled();
+      const item = body.getByRole('menuitem', { name: '이동' });
+      await expect(rect(sub).top).toBe(rect(item).top);
+      await expect(rect(sub).left).toBe(Math.floor(rect(item).right));
+      await userEvent.keyboard('{ArrowLeft}{ArrowUp}');
+      await waitFor(() => expect(body.queryByRole('menu', { name: '이동' })).not.toBeInTheDocument());
     });
     await step('choosing a sub item calls onAction and closes both menus', async () => {
       await userEvent.keyboard('{ArrowRight}');
       await body.findByRole('menu', { name: '내보내기' });
-      await userEvent.keyboard('{ArrowDown}{Enter}');
+      await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
       await waitFor(() => expect(args.onAction).toHaveBeenCalled());
       await expect(args.onAction.mock.calls[0][0]).toBe('csv');
       await waitFor(() => expect(body.queryByRole('menu')).not.toBeInTheDocument());
       await waitFor(() => expect(trigger).toHaveFocus());
+    });
+    await step('left open on the Figma layout: the menu and the 내보내기 sub menu', async () => {
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(body.getByRole('menuitem', { name: '새 폴더' })).toHaveFocus());
+      await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}{ArrowRight}');
+      await body.findByRole('menu', { name: '내보내기' });
+      await motionSettled();
     });
   },
 };
@@ -377,6 +500,10 @@ export const SubmenuEdge: StoryObj = {
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowRight}');
     const sub = await body.findByRole('menu', { name: '내보내기' });
     await waitFor(() => expect(within(sub).getByRole('menuitem', { name: 'PDF' })).toHaveFocus());
+    // measured at rest, after the show motion; it grew from its right edge — the side facing the item it opened beside
+    await motionSettled();
+    await expect(sub.parentElement).toHaveAttribute('data-placement', 'left');
+    await expect(parseFloat(getComputedStyle(sub).transformOrigin)).toBe(sub.offsetWidth);
     const parent = body.getByRole('menu', { name: '파일' }).getBoundingClientRect();
     const box = sub.getBoundingClientRect();
     const itemBox = item.getBoundingClientRect();
