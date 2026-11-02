@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import { Button, Disclosure, DisclosureGroup, DisclosurePanel, Heading, type Key } from 'react-aria-components';
-import { CaretDownIcon, CaretUpIcon } from '../../icons';
+import { CaretDownIcon } from '../../icons';
 import { cx } from '../../utils/cx';
 import type { AccordionSize } from './Accordion.options';
 
@@ -86,22 +86,19 @@ export function AccordionItem({
       data-size={size}
       data-divider={divider || undefined}
     >
-      {({ isExpanded }) => (
-        <>
-          <Heading level={headingLevel} className="ds-accordion__heading">
-            <Button slot="trigger" className="ds-accordion__trigger" data-divider={divider || undefined}>
-              <span className="ds-accordion__heading-text">
-                <span className="ds-accordion__title">{title}</span>
-                {description != null && description !== false && <span className="ds-accordion__description">{description}</span>}
-              </span>
-              {isExpanded ? <CaretUpIcon className="ds-accordion__icon" /> : <CaretDownIcon className="ds-accordion__icon" />}
-            </Button>
-          </Heading>
-          <DisclosurePanel className="ds-accordion__panel">
-            <div className="ds-accordion__body">{children}</div>
-          </DisclosurePanel>
-        </>
-      )}
+      <Heading level={headingLevel} className="ds-accordion__heading">
+        <Button slot="trigger" className="ds-accordion__trigger" data-divider={divider || undefined}>
+          <span className="ds-accordion__heading-text">
+            <span className="ds-accordion__title">{title}</span>
+            {description != null && description !== false && <span className="ds-accordion__description">{description}</span>}
+          </span>
+          {/* One caret that turns with the panel (Figma icon/CaretDown · icon/CaretUp — the same shape turned 180°). */}
+          <CaretDownIcon className="ds-accordion__icon" />
+        </Button>
+      </Heading>
+      <DisclosurePanel className="ds-accordion__panel">
+        <div className="ds-accordion__body">{children}</div>
+      </DisclosurePanel>
     </Disclosure>
   );
 }

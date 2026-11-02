@@ -790,6 +790,58 @@ const flows = {
       await page.emulateMedia({ reducedMotion: 'no-preference' });
     }
   },
+  async 'Accordion motion — opens and closes over ≈200ms with the caret, the next item follows, rapid clicks settle on the last state; disabled is square and still; reduced motion is instant'() {
+    const record = (ms) => page.evaluate((ms) => new Promise((resolve) => {
+      const items = [...document.querySelectorAll('.ds-accordion__item')];
+      const panel = items[0].querySelector('.ds-accordion__panel');
+      const icon = items[0].querySelector('.ds-accordion__icon');
+      const frames = [];
+      const start = performance.now();
+      const tick = () => {
+        const t = getComputedStyle(icon).transform;
+        const m = new DOMMatrix(t === 'none' ? undefined : t);
+        frames.push({ t: performance.now() - start, h: panel.getBoundingClientRect().height, next: items[1].getBoundingClientRect().top, angle: Math.round((Math.atan2(m.b, m.a) * 180) / Math.PI + 360) % 360, hidden: panel.hasAttribute('hidden') });
+        if (performance.now() - start < ms) requestAnimationFrame(tick); else resolve(frames);
+      };
+      requestAnimationFrame(tick);
+    }), ms);
+    await story('components-accordion-accordion--playground');
+    const basic = root().getByRole('button', { name: '기본 설정' });
+    const content = await page.evaluate(() => document.querySelector('.ds-accordion__body').scrollHeight);
+    let rec = record(500);
+    await basic.click();
+    let frames = await rec;
+    const from = frames.findIndex((f) => f.h > 0.5);
+    const to = frames.findIndex((f) => Math.abs(f.h - content) < 0.5);
+    const between = frames.filter((f) => f.h > 0.5 && f.h < content - 0.5);
+    expect(between.length >= 4 && frames.every((f, i) => !i || f.h >= frames[i - 1].h - 0.01), `opening: ${frames.map((f) => f.h.toFixed(0)).join(',')}`);
+    expect(to > from && frames[to].t - frames[Math.max(0, from - 1)].t < 270, `opening took ${(frames[to]?.t - frames[Math.max(0, from - 1)].t).toFixed(0)}ms`);
+    expect(frames.filter((f) => f.angle > 0 && f.angle < 180).length >= 3 && frames.at(-1).angle === 180, `caret ${frames.map((f) => f.angle).join(',')}`);
+    expect(frames.at(-1).next - frames[0].next > content - 1, 'the item below did not move down');
+    rec = record(500);
+    await basic.click();
+    frames = await rec;
+    expect(frames.filter((f) => f.h > 0.5 && f.h < content - 0.5).length >= 4 && frames.filter((f) => f.h > 0.5).every((f) => !f.hidden) && frames.at(-1).hidden && frames.at(-1).angle === 0, `closing: ${frames.map((f) => `${f.h.toFixed(0)}${f.hidden ? 'h' : ''}`).join(',')}`);
+    for (let i = 0; i < 5; i++) await basic.click();
+    await page.waitForFunction(() => document.getAnimations().filter((a) => a.playState === 'running').length === 0, null, { timeout: 3000 });
+    const settled = await page.evaluate(() => { const p = document.querySelector('.ds-accordion__panel'); return { h: p.getBoundingClientRect().height, hidden: p.hasAttribute('hidden'), content: p.scrollHeight }; });
+    expect((await basic.getAttribute('aria-expanded')) === 'true' && !settled.hidden && Math.abs(settled.h - content) < 0.5, `after 5 rapid clicks: ${await basic.getAttribute('aria-expanded')} ${JSON.stringify(settled)}`);
+    const disabled = page.locator('.ds-accordion__item[data-disabled]');
+    await disabled.locator('button').click({ force: true });
+    await sleep(250);
+    const off = await disabled.evaluate((el) => ({ expanded: el.querySelector('button').getAttribute('aria-expanded'), anims: el.getAnimations({ subtree: true }).length, radius: getComputedStyle(el.querySelector('button')).borderRadius, bg: getComputedStyle(el.querySelector('button')).backgroundColor }));
+    expect(off.expanded === 'false' && off.anims === 0 && off.radius === '0px', `disabled: ${JSON.stringify(off)}`);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    try {
+      await story('components-accordion-accordion--playground');
+      rec = record(250);
+      await root().getByRole('button', { name: '기본 설정' }).click();
+      frames = await rec;
+      expect(frames.filter((f) => f.h > 0.5 && f.h < content - 0.5).length === 0 && Math.abs(frames.at(-1).h - content) < 0.5, `reduced motion: ${frames.map((f) => f.h.toFixed(0)).join(',')}`);
+    } finally {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+    }
+  },
   async 'Input — typing, clear button, password reveal'() {
     await story('components-input-input--playground');
     const field = root().getByRole('textbox', { name: '이메일' });

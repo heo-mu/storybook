@@ -9,6 +9,7 @@
  *            uses it since the Figma update of 2026-10-19). Expanded items (Figma 2026-10-28) also end with a second
  *            divider under the body — always …/border/default — drawn on the panel's last pixel row (::after).
  *   disabled: …/background/disabled (fill/disabled), …/title/disabled (text/placeholder), divider opacity 0
+ *   motion:  Rules 09 "Accordion 펼침·접힘" (2026-11-02) — the panel height eases open / closed and the caret turns
  *   body:    padding top p-3, sides …/trigger-padding-x, bottom spacing/accordion/body-padding; text sm/leading-normal/normal
  *   divider: thickness border-width/accordion/default
  * State: Default → Hover (divider and trigger background …/background/hover in every size — Figma since 2026-10-19, F50) → Disabled.
@@ -20,6 +21,13 @@
 }
 
 .ds-accordion__item {
+  /*
+   * Open / close motion (Rules 09 "Accordion 펼침·접힘"): 200ms ease-out, no bounce, scale or fade — the same curve as the
+   * chart entrance. react-aria sets --disclosure-panel-height to the content height in px while the panel opens or
+   * closes (auto once open, 0px once closed) and hides the panel only after the transition, so the height eases between
+   * them and the items below follow; the caret turns with it.
+   */
+  --_motion: 200ms cubic-bezier(0.33, 1, 0.68, 1);
   --_bg: var(--colors-accordion-background-default);
   --_title: var(--colors-accordion-title-default);
   --_icon: var(--colors-accordion-icon-default);
@@ -44,7 +52,8 @@
   margin: 0;
   padding: var(--spacing-accordion-padding-md) var(--spacing-accordion-trigger-padding-x-md);
   border: 0;
-  /* Figma Trigger corners — border-radius/accordion/default (rounded, 4px). Until 2026-10-28 the Figma binding pointed at a deleted variable and rendered 0. */
+  /* Figma Trigger corners — border-radius/accordion/default → border-radius/rounded-none: square in every state (2026-11-02;
+   * the variable had been restored as rounded 4px after F80, which rounded the filled Hover and Disabled triggers). */
   border-radius: var(--border-radius-accordion-default);
   background-color: var(--_bg);
   font: inherit;
@@ -109,6 +118,12 @@
   width: 16px;
   height: 16px;
   color: var(--_icon);
+  transition: transform var(--_motion);
+}
+
+/* Expanded: the caret points up — Figma icon/CaretUp is icon/CaretDown turned 180°. */
+.ds-accordion__item[data-expanded] .ds-accordion__icon {
+  transform: rotate(180deg);
 }
 
 .ds-accordion__item[data-expanded] {
@@ -146,12 +161,18 @@
 }
 
 /* Bottom divider of an expanded item (Figma Expanded=True: a second Divider after the Body, colors/accordion/border/default
- * in every state, bound to Show Divider like the trigger divider). */
+ * in every state, bound to Show Divider like the trigger divider). It stays on the panel's last row while the panel
+ * closes (react-aria hides the panel after the motion), so it rides up with the edge instead of vanishing first.
+ * The panel clips its content vertically only while its height is smaller than the content (overflow-y: clip leaves
+ * horizontal overflow as before). */
 .ds-accordion__panel {
   position: relative;
+  height: var(--disclosure-panel-height);
+  overflow-y: clip;
+  transition: height var(--_motion);
 }
 
-.ds-accordion__item[data-divider][data-expanded] .ds-accordion__panel::after {
+.ds-accordion__item[data-divider] .ds-accordion__panel:not([hidden])::after {
   position: absolute;
   inset: auto 0 0;
   height: var(--border-width-accordion-default);
@@ -173,7 +194,7 @@
   padding: var(--spacing-padding-p-3) var(--spacing-accordion-trigger-padding-x-sm) var(--spacing-accordion-body-padding);
 }
 
-/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): 4px ring corners, matching the trigger corners. */
+/* Keyboard focus — Design System Rules 02 (Figma property "Focus"): the Figma Focus ring frame's 4px corners. */
 .ds-accordion__trigger[data-focus-visible]::before {
   position: absolute;
   inset: 0;
@@ -181,4 +202,12 @@
   border-radius: 4px;
   content: '';
   pointer-events: none;
+}
+
+/* Reduced motion: the panel and the caret change at once (react-aria then hides a closing panel immediately). */
+@media (prefers-reduced-motion: reduce) {
+  .ds-accordion__panel,
+  .ds-accordion__icon {
+    transition: none;
+  }
 }

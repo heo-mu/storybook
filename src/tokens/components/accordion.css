@@ -19,6 +19,6 @@
   --spacing-accordion-body-padding: var(--spacing-padding-p-3);
   --size-accordion-trigger-height-md: var(--spacing-padding-p-11);
   --size-accordion-trigger-height-sm: var(--spacing-padding-p-9);
-  --border-radius-accordion-default: var(--border-radius-rounded);
+  --border-radius-accordion-default: var(--border-radius-rounded-none);
   --border-width-accordion-default: var(--border-width-border);
 }

@@ -7,6 +7,22 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Accordion — 펼침 · 접힘 움직임 · 트리거 모서리 0 (Disabled · Hover 직각) (2026-11-02)
+
+- **모서리 원인 · 수정**(figma-fix-requests AL절): Trigger 네 모서리가 묶인 Component `border-radius/accordion/default`가 F80 복구 때 `border-radius/rounded`(4px)로
+  다시 만들어져(삭제 전 원래 값 0), 배경이 칠해지는 Disabled · Hover 트리거가 코드에서 둥글게 보였습니다(Figma는 접힌 Disabled · Hover의 채움이 직각 변형 프레임에 있어
+  가려졌고 펼친 Hover만 둥글었음). 변수를 `border-radius/rounded-none`으로 되돌려 Figma 10 변형 · 사용 예시 인스턴스 · 코드 모든 상태가 0 — 코드는 그대로
+  `var(--border-radius-accordion-default)`(토큰 재생성), 최상위에 `radius: 0`을 덧씌우지 않음. 구분선 · 여백 · 크기 · 포커스 링(Figma 4px) 그대로.
+- **움직임**(Figma Rules 09에 "Accordion 펼침·접힘" 행 추가 — 기존 행 문구 · 순서 그대로): 내용 영역 높이가 0 ↔ 실제 내용 높이로 200ms `cubic-bezier(0.33, 1, 0.68, 1)`
+  (감속, 튕김 · 확대 · 흐려짐 없음) 동안 바뀌고 아래 항목이 따라 움직이며, 화살표가 함께 180° 돕니다(하나의 `CaretDownIcon` — Figma `CaretUp`은 같은 모양을 돌린 것).
+  react-aria `Disclosure`의 `--disclosure-panel-height`(전환 중 px, 열린 뒤 auto, 닫힌 뒤 0)로 CSS 전환만 더했고 상태 · `aria-expanded` · 키보드 · 포커스는 그대로.
+  닫히는 동안 내용은 영역 안에서 잘리고(`overflow-y: clip`) 내용 아래 구분선은 패널 끝과 함께 올라가며, 패널은 움직임이 끝난 뒤 숨겨집니다. 빠른 연속 클릭은 마지막 상태로 끝나고,
+  열린 뒤 내용이 바뀌거나 안의 아코디언이 열리면 높이가 따라갑니다. 비활성은 움직이지 않고, `prefers-reduced-motion: reduce`면 즉시. Props · 공개 API 변화 없음.
+- **스토리**: Gallery "펼침 · 접힘 움직임"(긴 내용 · 안에 든 아코디언 · 내용이 바뀌는 항목 · 비활성 · 독립된 두 번째 아코디언 — play가 매 프레임 기록), 사용 방법 "움직임",
+  Variants play의 모서리 기대값 4 → 0px. `verify:interaction`에 움직임 흐름(열기 · 닫기 · 연속 클릭 · 비활성 · 움직임 줄이기).
+- **검증**: `verify-figma` accordion 10/10 × 3 엔진(픽셀 차이 0.00%), 프레임 탐침 3 엔진(열림 ≈165ms에 내용 높이, 닫힘 끝에서만 숨김), 스토리 테스트 463, Storybook MCP 8 스토리(a11y),
+  axe 463 스토리(새 위반 0), `verify:interaction` 41/41 × 3 엔진, `verify:render` Accordion × 3 엔진 · 정적 빌드 전체.
+
 ### Chart — 처음 보일 때 데이터가 그려지는 움직임 (선 · 세로 막대 · 가로 막대) (2026-11-02)
 
 - **동작**(Figma Rules 09 "차트 그리기" 신설 · 사용 예시 "그리기 순서", figma-fix-requests AK절): 그림 영역이 처음 30% 이상 보일 때 데이터가 그려지는 방향으로 나타납니다.
