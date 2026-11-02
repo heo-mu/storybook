@@ -37,3 +37,60 @@
     width: calc-size(fit-content, round(up, size, 1px));
   }
 }
+
+/*
+ * Show · hide motion — reference: shadcn/ui Base Tooltip (tw-animate-css `fade-in-0 zoom-in-95` /
+ * `fade-out-0 zoom-out-95`). The bubble and its arrow fade and scale from the point that faces the trigger:
+ * react-aria's --trigger-anchor-point is on the edge towards the trigger at the arrow (top → bottom edge, bottom → top,
+ * left → right, right → left) and follows a flipped placement.
+ *
+ *   show  150ms ease — from opacity 0 and scale 0.95 (shadcn: 150ms ease; same as the overlay open in overlay-motion.css)
+ *   hide  100ms ease — to opacity 0 and scale 0.95, not hoverable while it fades (overlay close; shadcn keeps 150ms)
+ *
+ * Opacity and transform only: react-aria places the tooltip with top / left from its untransformed box, so the resting
+ * position and the 2px arrow gap never change. react-aria keeps the tooltip mounted until the hide animation ends and
+ * plays neither animation when one tooltip replaces another during its warm-up (moving to the next trigger), so that
+ * swap is instant — Base UI's "instant" phase. Reduced motion: shown and hidden at once.
+ */
+@keyframes ds-tooltip-show {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Both ends set: WebKit does not interpolate from an implicit `transform: none` (as in overlay-motion.css). */
+@keyframes ds-tooltip-hide {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.ds-tooltip {
+  transform-origin: var(--trigger-anchor-point);
+}
+
+.ds-tooltip[data-entering] {
+  animation: ds-tooltip-show 150ms ease;
+}
+
+.ds-tooltip[data-exiting] {
+  animation: ds-tooltip-hide 100ms ease forwards;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-tooltip[data-entering],
+  .ds-tooltip[data-exiting] {
+    animation: none;
+  }
+}

@@ -7,6 +7,24 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### Tooltip — 나타남 · 사라짐 움직임 (shadcn/ui Base Tooltip 참고) (2026-11-02)
+
+- **나타남**: 150ms `ease` 동안 opacity 0 → 1, `scale` 0.95 → 1. **사라짐**: 100ms `ease` 동안 1 → 0, 1 → 0.95(그동안 포인터 무시), 끝난 뒤 DOM에서 빠짐 —
+  react-aria-components `Tooltip`의 `data-entering` · `data-exiting`(닫힘 애니메이션이 끝날 때까지 유지)에 CSS `@keyframes`만 더함, setTimeout 없음.
+- **기준점**: react-aria `--trigger-anchor-point` — 실제 열린 쪽의 트리거를 향한 가장자리, 화살표 위치(top → 아래, bottom → 위, left → 오른쪽, right → 왼쪽, 뒤집히면 뒤집힌 쪽).
+  위치는 변형 전 상자 기준이라 정지 위치 · 화살표 끝 2px 간격 그대로.
+- **연속 이동**: 툴팁이 뜬 뒤 다른 트리거로 옮기면 react-aria 워밍업으로 지연 없이 열리고, 이전 툴팁은 즉시 닫히며 둘 다 애니메이션 없음(`shouldSkipAnimation` — Base UI
+  instant 단계와 같음, 두 개가 함께 보이지 않음). 마지막 툴팁이 닫히고 0.5초 뒤에는 다시 지연 · 애니메이션.
+- shadcn 실제 값(registry 소스 + tw-animate-css): 열림 · 닫힘 150ms `ease`, 0.95, 열릴 때 8px 미끄러짐 — 닫힘은 요청 권장 · 디자인 시스템 오버레이 닫힘과 같은 100ms,
+  미끄러짐은 트리거와 2px 간격이라 넣지 않음. `prefers-reduced-motion: reduce`면 즉시. 지연 · 색 · 여백 · 반경 · 그림자 · 화살표 · 토큰 · Props 변화 없음.
+  Figma는 수정하지 않았고 Rules 09 툴팁 행 추가를 요청(figma-fix-requests AN절).
+- **스토리**: Gallery "Interaction"을 네 방향(위 · 아래 · 오른쪽 · 왼쪽) 움직임 확인용으로 바꿈(play가 매 프레임 opacity · scale · 기준점 · 닫힘을 기록), "여러 툴팁" play는
+  첫 툴팁만 움직이고 이후는 즉시 교체 · 한 번에 하나, "화면 가장자리" play는 뒤집힌 쪽 기준점, Variants는 정지 상태에서 2px. 사용 방법 "움직임".
+  `verify:interaction`에 Tooltip 움직임 흐름(네 방향 hover · 닫힘 · 기본 지연에서 즉시 교체 · 움직임 줄이기), 기존 흐름은 정지 상태에서 간격을 재고 play 종료 뒤 sweep.
+- **검증**: `verify-figma` tooltip 4/4 × 3 엔진(픽셀 차이 0.00%, Figma 세트 재조회 — 기준 이미지와 변경 0픽셀, 체크섬 8그룹 일치), 움직임 탐침 25/25 × 3 엔진
+  (네 방향 hover · 포커스 · Esc · 즉시 교체 · 뒤집힘 기준점 · 움직임 줄이기), 스토리 테스트 Tooltip · Table 21, Storybook MCP 8 스토리(a11y), axe Tooltip 8 · Table 13 위반 0,
+  `verify:interaction` Tooltip 5/5 × 3 엔진, `verify:render` Tooltip 10 × 3 엔진 · Table 15.
+
 ### Switch — 누름 · 썸 스프링 · 트랙 색 움직임 (HeroUI Native Switch 참고) (2026-11-02)
 
 - **누름**: 포인터를 누르는 동안(스위치 · 라벨 위에 있을 때만)과 Space를 누르고 있는 동안 트랙과 썸이 트랙 중심 기준 0.96으로 줄어듭니다(150ms, Reanimated 기본

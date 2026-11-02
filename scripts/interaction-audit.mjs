@@ -621,6 +621,8 @@ const flows = {
     expect((await page.getByRole('tooltip').count()) === 1, 'keyboard focus did not show the tooltip immediately');
     // Rules 05 (2026-10-29): arrow tip 2px from the trigger; the position follows the trigger after a resize (portal + real bounds).
     const gap = async () => page.evaluate(() => { const t = document.querySelector('[role=tooltip]'); const a = t.querySelector('.ds-tooltip__arrow > svg').getBoundingClientRect(); const b = document.activeElement.getBoundingClientRect(); const side = t.getAttribute('data-placement'); return { side, gap: Math.round(({ top: b.top - a.bottom, bottom: a.top - b.bottom, left: b.left - a.right, right: a.left - b.right })[side] * 100) / 100, inside: t.getBoundingClientRect().left >= 0 && t.getBoundingClientRect().right <= innerWidth }; });
+    // the tooltip shows with a 150 ms fade + scale (Tooltip.css) — the gap is measured where it rests
+    await page.waitForFunction(() => document.getAnimations().filter((x) => x.playState === 'running' && Number.isFinite(x.effect.getComputedTiming().endTime)).length === 0, null, { timeout: 3000 });
     const g1 = await gap();
     expect(g1.gap === 2, `arrow tip is ${g1.gap}px from the trigger (expected 2, side ${g1.side})`);
     await page.setViewportSize({ width: 900, height: 700 });
@@ -646,6 +648,7 @@ const flows = {
     const inside = await page.evaluate(() => [...document.querySelectorAll('[role=tooltip]')].every((t) => { const r = t.getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth && r.top >= 0; }));
     expect(inside, 'an edge tooltip leaves the viewport');
     await story('components-tooltip-showcase--multiple');
+    await playDone(); // the story's own play walks the buttons with the keyboard first
     const buttons = root().getByRole('button');
     const boxes = [];
     for (let i = 0; i < 3; i++) boxes.push(await buttons.nth(i).boundingBox());
@@ -659,6 +662,91 @@ const flows = {
     await page.mouse.move(5, 5);
     await sleep(300);
     expect((await tips.count()) === 0, 'tooltip stayed after the pointer left');
+  },
+  async 'Tooltip motion — the first tooltip fades and scales in from the side facing the trigger (four sides), fades out before leaving the DOM; moving to the next trigger swaps at once, never two; reduced motion is instant'() {
+    // every frame: the tooltips in the DOM with opacity, scale, transform origin and react-aria's motion state
+    const frames = (ms) => page.evaluate((ms) => new Promise((resolve) => {
+      const out = [];
+      const start = performance.now();
+      const tick = () => {
+        out.push({ t: performance.now() - start, tips: [...document.querySelectorAll('[role=tooltip]')].map((t) => { const cs = getComputedStyle(t); return { text: t.textContent, op: Number(cs.opacity), s: cs.transform === 'none' ? 1 : new DOMMatrix(cs.transform).a, entering: t.hasAttribute('data-entering'), exiting: t.hasAttribute('data-exiting') }; }) });
+        if (performance.now() - start < ms) requestAnimationFrame(tick); else resolve(out);
+      };
+      requestAnimationFrame(tick);
+    }), ms);
+    const settled = () => page.waitForFunction(() => document.getAnimations().filter((x) => x.playState === 'running' && Number.isFinite(x.effect.getComputedTiming().endTime)).length === 0, null, { timeout: 3000 });
+    // at rest: the edge facing the trigger is the transform origin (at the arrow), no transform left, arrow tip 2px away
+    const rest = (name) => page.evaluate((name) => {
+      const t = document.querySelector('[role=tooltip]');
+      const b = [...document.querySelectorAll('#storybook-root button')].find((x) => x.textContent === name).getBoundingClientRect();
+      const a = t.querySelector('.ds-tooltip__arrow > svg').getBoundingClientRect();
+      const r = t.getBoundingClientRect();
+      const side = t.getAttribute('data-placement');
+      const [ox, oy] = getComputedStyle(t).transformOrigin.split(' ').map(parseFloat);
+      const vertical = side === 'top' || side === 'bottom';
+      const edge = { top: oy === t.offsetHeight, bottom: oy === 0, left: ox === t.offsetWidth, right: ox === 0 }[side];
+      const atArrow = Math.abs((vertical ? ox : oy) - (vertical ? a.left + a.width / 2 - r.left : a.top + a.height / 2 - r.top)) < 0.6;
+      return { side, edge, atArrow, transform: getComputedStyle(t).transform, gap: Math.round(({ top: b.top - a.bottom, bottom: a.top - b.bottom, left: b.left - a.right, right: a.left - b.right })[side] * 100) / 100 };
+    }, name);
+    const hover = async (name) => {
+      const bb = await root().getByRole('button', { name, exact: true }).boundingBox();
+      await page.mouse.move(bb.x - 40, bb.y + bb.height / 2);
+      for (let i = 1; i <= 6; i++) { await page.mouse.move(bb.x - 40 + i * 8, bb.y + bb.height / 2); await sleep(12); }
+      await page.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2);
+      return bb;
+    };
+    await story('components-tooltip-showcase--interaction');
+    await playDone();
+    // the play leaves keyboard focus on a trigger (a focused trigger opens on hover without the delay); then react-aria's 0.5 s cool-down
+    await page.evaluate(() => document.activeElement?.blur());
+    await sleep(700);
+    for (const [name, side] of [['위쪽', 'top'], ['아래쪽', 'bottom'], ['오른쪽', 'right'], ['왼쪽', 'left']]) {
+      await hover(name);
+      await sleep(380);
+      const show = (await frames(600)).filter((f) => f.tips.length);
+      const first = show[0]?.tips[0];
+      const mono = show.every((f, i) => !i || (f.tips[0].op >= show[i - 1].tips[0].op - 1e-3 && f.tips[0].s >= show[i - 1].tips[0].s - 1e-4));
+      expect(first && first.entering && first.op < 0.6 && first.s < 0.985 && first.s >= 0.9499 && show.filter((f) => f.tips[0].entering).length >= 4 && mono && show.at(-1).tips[0].op === 1 && show.at(-1).tips[0].s === 1,
+        `${side}: show motion ${show.map((f) => `${f.tips[0].op.toFixed(2)}/${f.tips[0].s.toFixed(3)}`).join(' ')}`);
+      await settled();
+      const r = await rest(name);
+      expect(r.side === side && r.edge && r.atArrow && r.transform === 'none' && r.gap === 2, `${side}: at rest ${JSON.stringify(r)}`);
+      await page.mouse.move(5, 5);
+      await sleep(420); // closeDelay 0.5 s
+      const hide = await frames(450);
+      const fading = hide.filter((f) => f.tips[0]?.exiting);
+      expect(fading.length >= 3 && fading.every((f, i) => f.tips[0].s >= 0.9499 && (!i || f.tips[0].op <= fading[i - 1].tips[0].op + 1e-3)) && fading.at(-1).tips[0].op < 0.5 && hide.at(-1).tips.length === 0,
+        `${side}: hide motion ${hide.map((f) => (f.tips[0] ? `${f.tips[0].op.toFixed(2)}${f.tips[0].exiting ? 'x' : ''}` : '-')).join(' ')}`);
+      await sleep(700); // cool-down: the next side is the first tooltip of a sequence again
+    }
+    // with the default delays, once a tooltip is up the next trigger shows its own at once — no fade, no second wait, never two
+    await hover('위쪽');
+    await sleep(800);
+    await settled();
+    const down = await root().getByRole('button', { name: '아래쪽', exact: true }).boundingBox();
+    const sweep = frames(700);
+    await page.mouse.move(down.x + down.width / 2, down.y + down.height / 2, { steps: 12 });
+    const moved = await sweep;
+    const swap = moved.findIndex((f) => f.tips.some((t) => t.text.startsWith('아래쪽')));
+    const next = moved[swap]?.tips.find((t) => t.text.startsWith('아래쪽'));
+    expect(swap >= 0 && next.op === 1 && !next.entering && moved[swap].tips.length === 1 && Math.max(...moved.map((f) => f.tips.length)) === 1,
+      `swap: ${moved.map((f) => f.tips.map((t) => `${t.text.slice(0, 3)}${t.op.toFixed(2)}`).join('+') || '-').join(' ')}`);
+    await page.mouse.move(5, 5);
+    await sleep(1300);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    try {
+      await story('components-tooltip-tooltip--playground');
+      await page.keyboard.press('Tab');
+      const shown = (await frames(250)).filter((f) => f.tips.length);
+      expect(shown.length > 0 && shown.every((f) => f.tips[0].op === 1 && f.tips[0].s === 1), `reduced motion show: ${shown.map((f) => f.tips[0].op).join(',')}`);
+      const gone = frames(250);
+      await page.keyboard.press('Escape');
+      const after = await gone;
+      const firstGone = after.findIndex((f) => !f.tips.length);
+      expect(firstGone >= 0 && firstGone <= 2 && after.every((f) => !f.tips.length || f.tips[0].op === 1), `reduced motion hide: ${after.map((f) => (f.tips[0] ? f.tips[0].op : '-')).join(',')}`);
+    } finally {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+    }
   },
   // Positions are compared to the engines' layout precision: WebKit lays out in 1/64 px units, so a box placed at a fractional
   // offset can sit 0.0156 px from the grid cell it covers (not visible). Chromium and Firefox match exactly.

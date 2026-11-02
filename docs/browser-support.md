@@ -134,6 +134,9 @@ Firefox·WebKit에서는 결과가 같으므로(중립) 모든 엔진에 그대�
 세 엔진 모두 전 Variant 통과. 엔진 차이로 기록한 항목:
 
 - Tooltip: 트리거 너비가 소수점이면 말풍선 위치도 소수점이 되어 검증 하네스에서 트리거 너비를 정수로 고정(`harnessCss`).
+- Tooltip 움직임(2026-11-02): `@keyframes`의 opacity · `transform: scale()`과 react-aria `--trigger-anchor-point` 기준점 — 세 엔진 모두 지원.
+  세 엔진 실측: 나타남 0.95 → 1 · 0 → 1(약 150ms), 사라짐 약 100ms 뒤 DOM에서 빠짐, 기준점은 실제 열린 쪽 가장자리의 화살표 위치, 정지 후 transform 없음 · 간격 2px.
+  Firefox · WebKit은 calc-size가 없어 말풍선 폭이 소수(예 148.03px)인데 react-aria 기준점은 정수 폭(148px)을 써서 0.03px 안쪽 — 보이지 않는 차이.
 - Accordion: 14px 한글의 글자 위치는 같고 안티에일리어싱 농도만 달라 글자 중심 허용치를 1px로 둠(`glyphDxTolerance`).
 - Dialog(WebKit): calc-size가 없어 가운데 정렬된 제목 상자가 Figma보다 좁아 제목 글자 중심이 약 1.1px 차이(`knownDifferences`).
 - Table: 본문 · 값 칸 내용이 반 픽셀 위치(높이 45 · 51의 가운데)라 글자 세로 위치 0.5px 차이(`knownDifferences` · `glyphDyTolerance`),
