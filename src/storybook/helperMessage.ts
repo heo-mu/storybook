@@ -21,4 +21,7 @@ export async function expectHelperMessage(field: HTMLElement, token: string) {
 
   await expect(message!.id).not.toBe('');
   await expect(field.querySelector(`[aria-describedby~="${message!.id}"]`)).toBeTruthy();
+  // the message of a disabled field is part of the inactive control (WCAG 1.4.3 exception)
+  if (field.hasAttribute('data-disabled')) await expect(message).toHaveAttribute('aria-disabled', 'true');
+  else await expect(message).not.toHaveAttribute('aria-disabled');
 }

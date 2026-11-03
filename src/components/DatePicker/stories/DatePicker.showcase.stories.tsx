@@ -170,7 +170,9 @@ export const MessageMatrix: Story = {
                 figma: 'Type=Helper, State=Disabled',
                 node: (
                   <div className="ds-date-picker" data-disabled="" aria-disabled="true">
-                    <FieldMessage type="helper">Alert 내용</FieldMessage>
+                    <FieldMessage type="helper" disabled>
+                      Alert 내용
+                    </FieldMessage>
                   </div>
                 ),
               },

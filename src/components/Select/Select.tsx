@@ -138,7 +138,7 @@ export function Select<T extends object = object>({
               </span>
             )}
             {hasMessage && (
-              <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')}>
+              <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')} disabled={disabled}>
                 {message}
               </FieldMessage>
             )}

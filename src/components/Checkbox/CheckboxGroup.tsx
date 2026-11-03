@@ -61,7 +61,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(func
     <div className="ds-choice-field" data-message={hasMessage || undefined} data-disabled={disabled || undefined}>
       {group}
       {hasMessage && (
-        <FieldMessage id={messageId} type={invalid ? 'error' : 'helper'}>
+        <FieldMessage id={messageId} type={invalid ? 'error' : 'helper'} disabled={disabled}>
           {message}
         </FieldMessage>
       )}

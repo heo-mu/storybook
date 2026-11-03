@@ -71,7 +71,7 @@ export function DatePicker({
       <input type="hidden" name={`${name}.start`} value={range?.start ?? ''} disabled={disabled} />
       <input type="hidden" name={`${name}.end`} value={range?.end ?? ''} disabled={disabled} />
     </> : <input type="hidden" name={name} value={date ?? ''} disabled={disabled} />);
-  const messageNode = hasMessage && <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')}>{message}</FieldMessage>;
+  const messageNode = hasMessage && <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')} disabled={disabled}>{message}</FieldMessage>;
 
   if (variant === 'inline') {
     return <div className={cx('ds-field', 'ds-date-picker', className)} style={style} data-variant="inline"

@@ -75,7 +75,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
       {(hasMessage || hasCount) && (
         <div className="ds-textarea__footer">
           {hasMessage && (
-            <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')} className="ds-textarea__message">
+            <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')} disabled={disabled} className="ds-textarea__message">
               {message}
             </FieldMessage>
           )}

@@ -19,7 +19,7 @@
       "background": "#ffffff",
       "harnessCss": "table { table-layout: fixed; } td, th { width: 60px; min-width: 60px; max-width: 60px; } tr > :first-child { width: 140px; min-width: 140px; max-width: 140px; }",
       "parts": {
-        "Number": ".ds-pagination__number"
+        "*Number": ".ds-pagination__number"
       }
     },
     {

@@ -130,7 +130,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         )}
       </div>
       {hasMessage && (
-        <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')}>
+        <FieldMessage id={messageId} type={messageType ?? (invalid ? 'error' : 'helper')} disabled={disabled}>
           {message}
         </FieldMessage>
       )}
