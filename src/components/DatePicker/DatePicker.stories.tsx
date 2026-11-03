@@ -82,8 +82,10 @@ export const Required: Story = { args: { required: true } };
 export const WithValue: Story = { name: 'Selected Date', args: { defaultValue: '2026-07-30' } };
 export const Helper: Story = { name: 'Helper Text', args: { message: '날짜를 선택해 주세요.' } };
 export const WithMessage: Story = { name: 'Status Message', args: { message: '예약 가능한 날짜를 확인해 주세요.', messageType: 'info' } };
-export const Range: Story = { name: 'Date Limits', args: { minValue: '2026-07-06', maxValue: '2026-07-24', defaultOpen: true } };
-export const WeekdaysOnly: Story = { name: 'Disabled Dates', args: { defaultOpen: true, isDateUnavailable: (iso: string) => [0, 6].includes(new Date(iso + 'T12:00:00').getDay()) } };
+// Open by default: in the docs page this story renders in its own frame — an open calendar is modal (react-aria underlay + scroll
+// lock), which inline would cover the whole docs page until the first click.
+export const Range: Story = { name: 'Date Limits', args: { minValue: '2026-07-06', maxValue: '2026-07-24', defaultOpen: true }, parameters: { docs: { story: { inline: false, height: '360px' } } } };
+export const WeekdaysOnly: Story = { name: 'Disabled Dates', parameters: { docs: { story: { inline: false, height: '360px' } } }, args: { defaultOpen: true, isDateUnavailable: (iso: string) => [0, 6].includes(new Date(iso + 'T12:00:00').getDay()) } };
 export const Invalid: Story = { name: 'Error', args: { invalid: true, message: '예약할 수 없는 날짜예요.' } };
 /** 비활성 필드는 누르거나 키보드로 열 수 없습니다. */
 export const Disabled: Story = { args: { disabled: true }, play: async ({ canvas, canvasElement, userEvent }) => {

@@ -56,8 +56,11 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
+// Open by default: in the docs page this story renders in its own frame — an open menu is modal (react-aria underlay + scroll
+// lock), which inline would cover the whole docs page until the first click.
 export const Overview: Story = {
   name: "Overview",
+  parameters: { docs: { story: { inline: false, height: '380px' } } },
   render: () => (
     <div style={{ paddingBottom: 320 }}>
       <DropdownMenu

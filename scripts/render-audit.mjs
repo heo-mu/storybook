@@ -20,6 +20,9 @@
 //   • broken images (naturalWidth 0) and inline SVG icons without a viewBox
 //   • fonts that did not load (document.fonts.check for the Pretendard family)
 //   • horizontal overflow of the page (scrollWidth > viewport) — layout spill at 1400 × 1000
+//   • docs pages blocked by an open modal overlay (2026-11-03): a fixed layer covering ≥ 90% of the viewport that takes
+//     pointer events (react-aria underlay of a story that opens by default) — 'docs-blocked'. Canvas blocks rendered in an
+//     iframe (parameters.docs.story.inline false) count only when the story inside the frame shows something
 // Informational (reported, not failed): 'content-after-trigger'; 'overflow-gallery' — a */Gallery verification matrix
 // that mirrors the Figma set frame and is wider than the viewport; 'docs-inert-warning' — react-aria Pressable warning
 // raised only because Storybook keeps docs-page story containers [inert] while the page builds (no warning in story mode).
@@ -106,13 +109,17 @@ async function audit(page, entry, messages) {
       if (docs) {
         const content = document.querySelector('.sbdocs-content');
         const canvases = [...document.querySelectorAll('.docs-story')]; // one per Canvas block (.sb-story sits inside it)
-        const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== document.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
+        const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== el.ownerDocument.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } if (n.tagName === 'IFRAME') { const d = n.contentDocument; return !!d && !!d.body && visibleIn(d.body); } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
         docsCanvases = { total: canvases.length, empty: canvases.filter((c) => !visibleIn(c)).length, text: (content?.innerText || '').trim().length };
+        // an open modal overlay rendered inline (react-aria underlay / scroll lock) blocks the whole docs page
+        const blockers = [...document.body.querySelectorAll('*')].filter((n) => { const cs = getComputedStyle(n); if (cs.position !== 'fixed' || cs.pointerEvents === 'none' || cs.display === 'none' || cs.visibility === 'hidden') return false; if (String(n.className).startsWith('sb-') || n.closest('.sb-errordisplay, .sb-preparing-docs, .sb-preparing-story, .sb-loader')) return false; const r = n.getBoundingClientRect(); return r.width >= innerWidth * 0.9 && r.height >= innerHeight * 0.9; });
+        docsCanvases.blockedBy = blockers.map((n) => n.tagName.toLowerCase() + (n.dataset.testid ? '[data-testid=' + n.dataset.testid + ']' : '') + (n.className ? '.' + String(n.className).split(' ')[0] : ''));
       }
       return { overlay: overlayVisible ? (overlay.querySelector('.sb-heading')?.textContent || overlay.textContent || '').trim().slice(0, 200) : null, images: imgs, svgNoViewBox, fontOk, overflow, docsCanvases };
     }, isDocs);
     if (state.overlay) current.issues.push({ cat: 'error-overlay', detail: state.overlay });
     if (isDocs) {
+      if (state.docsCanvases?.blockedBy?.length) current.issues.push({ cat: 'docs-blocked', detail: 'a fixed full-screen layer covers the docs page (an open modal overlay rendered inline — render that story in an iframe: parameters.docs.story.inline false): ' + state.docsCanvases.blockedBy.join(', ') });
       if (!state.docsCanvases || state.docsCanvases.text === 0) current.issues.push({ cat: 'no-visible-content', detail: 'docs page shows no text' });
       else if (state.docsCanvases.empty) {
         const settled = await canvasesFilled(page);
@@ -170,7 +177,7 @@ async function canvasesFilled(page) {
   for (let waited = 0; waited <= 8000; waited += 500) {
     last = await page.evaluate(() => {
       const canvases = [...document.querySelectorAll('.docs-story')];
-      const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== document.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
+      const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== el.ownerDocument.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } if (n.tagName === 'IFRAME') { const d = n.contentDocument; return !!d && !!d.body && visibleIn(d.body); } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
       return { total: canvases.length, empty: canvases.filter((x) => !visibleIn(x)).length };
     });
     if (!last.empty) return last;

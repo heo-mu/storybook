@@ -57,9 +57,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = { name: "Playground" };
 
+// Open by default: in the docs page this story renders in its own frame — an open menu is modal (react-aria underlay + scroll
+// lock), which inline would cover the whole docs page until the first click.
 export const Open: Story = {
   name: "Open",
   args: { open: true },
+  parameters: { docs: { story: { inline: false, height: '300px' } } },
 };
 
 /** 아이콘 없이 글자만 있는 메뉴입니다(예: 정렬 메뉴). */
@@ -79,6 +82,7 @@ export const TextOnly: Story = {
 export const WithDescription: Story = {
   name: "With Description",
   args: { open: true },
+  parameters: { docs: { story: { inline: false, height: '300px' } } },
   render: (args) => (
     <DropdownMenu {...args}>
       <DropdownMenuItem id="share" icon={<FolderSimpleDashedIcon />} description="링크가 있는 모든 사용자">
