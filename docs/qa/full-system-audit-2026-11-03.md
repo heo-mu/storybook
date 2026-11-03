@@ -15,7 +15,7 @@ Figma · Storybook · Docs · 코드를 한 번에 감사하고, 확인된 문�
 | 문서 ↔ 구현 불일치 | **82건** — 모두 고침(정책 ID 누락 50 · code-policy-audit 오래된 행 10 · 없어진 Rules 10장 표기 1 · figma-fix-requests 상태 13 · 컴포넌트 문서 2 · v1.0 후보 1 · 진행 기록 · 분류 문서 · accessibility 제목 3 · CLAUDE.md 2) |
 | Figma ↔ Storybook 정합성 | Figma 정합성 **108/108**(36개 컴포넌트 × 3 엔진, 수동 검토 3 그대로) · Button **400/400 × 3** · 참조 이미지 2개 재내보내기(바뀐 픽셀이 의도한 상자 안에만) · 체크섬 8그룹 일치 |
 | 접근성 | axe 위반 23 → **18**(남은 18 = 사용자가 정한 Button Secondary / Solid Hover · Pressed 색, 6절 H5) · 문서 페이지 키보드 · 포인터 막힘 3쪽 → 0 · Storybook MCP a11y 8 스토리 통과 |
-| 최종 배포 | GitHub `main` Push · Vercel 자동 배포(기존 프로젝트) — 결과와 배포 사이트 확인은 7절 "배포 후 확인". npm 배포 · v1.0 릴리스 없음 |
+| 최종 배포 | `main` Push(`8446ffb..6c21003`) · Vercel 배포 `21VZ4EUenyj6WMWFude57Decns1T` 성공 · 배포본 렌더 548 × 3 엔진 실패 0 · 상호작용 45/45 × 3(재실행 포함) — 7절 "배포 후 확인". npm 배포 · v1.0 릴리스 없음 |
 
 분류 기준: **A** 실제 미해결 문제 · **B** 이미 해결됐지만 기록이 남은 문제 · **C** 중복되거나 오래된 정책 · **D** 디자인과 구현이 다른 문제 ·
 **E** 기능은 있지만 동작하지 않는 문제 · **F** 접근성 · 사용성 문제 · **G** 구조적 유지보수 문제. 한 문제가 여러 분류에 걸치면 주 분류 하나로 셉니다.
@@ -153,7 +153,21 @@ Chromium · WebKit · 스토리 화면에서는 없고, 겹침을 `load` 뒤에 
 
 ### 배포 후 확인
 
-배포 뒤 이 절을 채웁니다(다음 커밋).
+`8446ffb..6c21003`(10개 커밋)을 `main`에 Push했고, 기존 Vercel 프로젝트가 자동 배포했습니다 — 배포 `21VZ4EUenyj6WMWFude57Decns1T` 성공. 배포본에 새 스토리 "휴대폰 너비" ·
+Loading 사용 문서가 있습니다(스토리 464 · 문서 84). https://storybook-heo-mu.vercel.app 에서 측정했습니다.
+
+| 검사(배포본) | 결과 |
+| --- | --- |
+| 렌더 감사 | **Chromium 548 · 실패 0**, **Firefox 548 · 실패 0**(정보: 넓은 매트릭스 14 + 문서 iframe 알림 3쪽), **WebKit 548 · 실패 0**(²) |
+| 상호작용 감사 | Chromium 45/45 · WebKit 45/45 · Firefox 44/45 → 실패한 "Tooltip motion"(오늘 바꾸지 않은 동작, 기록이 늦게 시작해 첫 프레임이 이미 0.62)은 같은 배포본에서 두 번 다시 실행해 모두 통과 |
+| Figma 정합성(Chromium) | input 45 · table 64(수동 검토 3) · dashboard-filter-bar 1 · toast 4 · select 47 · chart 37 · data-state 6 · file-uploader 11 · dropdown-menu 8 · stepper 20 — 모두 통과 |
+| 문서 페이지 막힘 | 84쪽 `docs-blocked` 0(이전 배포본 3쪽) |
+| 반응형 375px | 고친 세 곳(DashboardFilterBar · Progress · 표 키-값) 넘침 0. 남은 넘침은 정해진 대안이 있는 Stepper 가로형 · Breadcrumb Full과, 일부러 640px 틀을 보여 주는 DashboardFilterBar "좁은 컨테이너" 스토리 |
+
+(²) WebKit을 한 번에 548개 모두 돌리면 실행 중반부터 Storybook 번들(react · react-dom · iframe 청크)에 대한 WebKit 경고
+"…was preloaded using link preload but not used within a few seconds"가 쌓여 188 – 267개 항목이 실패로 나왔습니다. 이전(`8446ffb`) 감사 스크립트로 돌려도 188개로 같아 이번 변경과 무관하고,
+그 경고를 뺀 실패는 0이었습니다. 같은 범위를 컴포넌트 묶음 40개로 나눠(묶음마다 새 브라우저) 다시 돌린 결과가 위의 548 · 실패 0입니다 — 긴 WebKit 세션의 네트워크 · 캐시 현상으로
+기록하고, 검사 기준은 바꾸지 않았습니다.
 
 ## 8. 다른 세션의 미커밋 변경
 
