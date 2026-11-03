@@ -144,7 +144,7 @@ Figma 컴포넌트 설명(Description)에서 개발 · 임시 메모와 영어 �
 | 컴포넌트 | 옮긴 내용 |
 | --- | --- |
 | Focus 속성이 있는 24개 세트 | "Focus (boolean): keyboard focus ring — 2px colors/border/focus, 2px outside / inside the row edge. Design System Rules 02." → 02장 포커스 링 |
-| select | "State=Focus: keyboard focus while closed — border colors/select/outline/outline/border/focus (same as Input Focus)." → 02장 입력 칸 포커스 |
+| select | "State=Focus: keyboard focus while closed — border colors/select/outline/outline/border/focus (same as Input Focus)." → 02장 입력 칸 포커스(변수 이름은 2026-11-03부터 `colors/select/outline/border/focus`) |
 | empty-state | "Show Button (boolean): the action is optional — hide it when there is nothing to do (code: `action` prop)." → 07장 빈 · 오류 상태 |
 | pagination | "Previous / Next are Disabled when there is no page to move to (page 1 / last page)." → 07장 페이지 이동 |
 | card_header · card_footer | "Code: CardHeader (title · description · action)" · "Code: CardFooter" → [components/Card.md](./components/Card.md) |

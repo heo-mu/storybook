@@ -54,7 +54,8 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DFBR-01` **좁은 화면**: 그룹 단위로 다음 줄로 넘어갑니다(줄 간격도 `m-6`). Figma는 1616px 한 줄만 있습니다(Rules 08).
 - `DFBR-05` **접근성**: 바는 `role="search"` 랜드마크(`aria-label`, 기본 "조회 조건"), 그룹은 라벨로 이름 붙은 `role="group"`. 각 컨트롤에도 `aria-label`을 주세요(Figma 컨트롤에는 보이는 라벨이 없음). "|" · "~"는 장식입니다(Rules 03).
 - `DFBR-06` **조회 기간 날짜 범위 예시**(2026-10-28 저녁): Figma 예시의 기간은 136px 날짜 필드 두 개를 "~"로 이은 구성입니다. 스토리 예시(FilterBarSample)를 `DashboardFilterRange` + `DatePicker size="sm"` 두 개로 맞춰 정합성 1/1(세 엔진) — 컴포넌트 코드 변화 없음(figma-issues F111).
-- `DFBR-07` **레이어 이름 · 토큰**(2026-10-29): `Filters` · `Date range` · `Interval` · `Actions`로 기본 이름 프레임을 정리했고(검증 설정 갱신), 구분선이 `border/gray-subtle`을 써서 `dashboard/border/default`를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)).
+- `DFBR-07` (2026-11-03 덧붙임: 기간 칸 달력 아이콘의 외부 `colors/icon/secondary`를 같은 이름 · 값의 로컬 변수로 연결) **레이어 이름 · 토큰**(2026-10-29): `Filters` · `Date range` · `Interval` · `Actions`로 기본 이름 프레임을 정리했고(검증 설정 갱신), 구분선이 `border/gray-subtle`을 써서 `dashboard/border/default`를 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)).
+- `DFBR-08` **컨트롤 너비 · 휴대폰 너비**(2026-11-03 전체 QA): 조회 기간 묶음 안의 SegmentedControl(220px)이 넓은 화면에서도 132px로 눌려 "최근 7일 · 최근 30일"이 "최근 …"로 잘렸습니다 — 날짜 필드의 `width: 100%`가 내용 너비로 정해지는 묶음 안에서 순환 백분율이 되어, 묶음은 필드를 뺀 너비로 정해지고 필드가 그 묶음을 차지했습니다. 묶음 안 컨트롤은 줄어들지 않고(`flex-shrink: 0`), 너비를 주지 않은 필드는 내용 너비, SegmentedControl은 `max-width` 제한 없이 Figma 220px(698:4163). 휴대폰처럼 묶음 하나보다 좁은 막대에서는 그 묶음 안의 컨트롤도 다음 줄로 넘어가 카드 밖으로 나가지 않습니다(Rules 08 "묶음 단위로 다음 줄"은 그대로 — 넓은 화면은 묶음마다 한 줄). 스토리 `Playground`(넓은 화면 검사) · `휴대폰 너비`(320px)에 검사 play.
 
 ## Props
 

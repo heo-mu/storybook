@@ -2,6 +2,8 @@
 
 # 진행 기록 — 전체 컴포넌트 구축
 
+> **2026-11-03 전체 QA**: 가장 최신 상태 · 남은 결정은 [qa/full-system-audit-2026-11-03.md](./qa/full-system-audit-2026-11-03.md)에 있습니다. 아래는 그 전 기록입니다.
+
 후속 세션은 이 문서의 **다음 작업**부터 이어서 진행합니다. 완료 기준은 [component-inventory.md](./component-inventory.md)의 "완료" 정의를 따릅니다.
 
 ## Codex 인수인계 · Storybook 콘텐츠 개선 (2026-10-20)
@@ -236,4 +238,8 @@ Primary · Outline 테두리 변수(원본에서 삭제)만 결정 D1 대기입�
 
 ## 미해결 이슈
 
-- 색 대비: Figma 토큰 일부가 WCAG AA(4.5:1) 미만 — [accessibility.md](./accessibility.md).
+(2026-11-03 갱신 — 이전 "색 대비: 토큰 일부가 AA 미만"은 2026-10-27 · 28에 해결)
+
+- 색 대비: Button Secondary / Solid Hover · Pressed 흰 라벨 3.51 · 2.46:1 — 2026-10-30 사용자 결정(밝기 우선)으로 유지, [accessibility.md](./accessibility.md).
+- 디자인 결정 대기: V-6 차트 점선 · V-12 Card 공개 · V-13 표 칸 정렬 · V-14(TABL-02) 표 편집 칸 Textarea 유형 — [v1.0-candidate.md](./v1.0-candidate.md).
+- 다른 세션의 미완료 작업: 글자 색 정확 비교 도구(`scripts/verify-text-*.mjs`, `figma/text-fills.json`)는 F112 이름 변경 이전 추출이라 다시 내보내야 함 — 커밋하지 않고 보류.

@@ -47,7 +47,7 @@ import { Button, IconButton, TextButton } from 'platform-design-system';
 
 | Figma 속성 | 값 | Prop | 기본값 |
 | --- | --- | --- | --- |
-| Type | Primary · SecondarySecondary | `variant` (`'primary'` · `'secondary'`) | `'primary'` |
+| Type | Primary · Secondary | `variant` (`'primary'` · `'secondary'`) | `'primary'` |
 | Size | sm · md | `size` | `'sm'` |
 | State | Default · Hover · Pressed · Disabled | `:hover` · `:active`, `disabled` | — |
 | Left Icon · Right Icon (변형 속성) | False · True — 아이콘이 있는 쪽 좌우 여백이 한 단계 좁은 변형 | `leftIcon` / `rightIcon` (넘기면 표시) | 없음 |
@@ -122,6 +122,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 - `BUTT-03` **처리 중(`loading`)** (2026-10-28, Figma Form 사용 예시 "저장 중" 1216:7451): 버튼은 Default 팔레트 · 크기를 유지하고(Hover · Pressed 변화 없음), 글자 · 아이콘은 자리만 남기고 투명(`opacity: 0`), 가운데에 Figma `loading` size=sm · Type=Inverse(16px, 2px 호, `colors/border/inverse` = 버튼 글자색)를 그립니다. `aria-busy` · `aria-disabled`로 상태를 알리고 포커스는 유지하며, 클릭 · Enter · Space를 무시해 중복 제출을 막습니다(`disabled`가 아님). 버튼 안의 `role="status"` 글자(`loadingLabel`)가 상태를 읽어 주고, 이름은 `aria-labelledby`로 라벨에 고정됩니다. Figma 예시의 저장 중 버튼은 글자를 지워 40px이지만 코드는 레이아웃이 흔들리지 않도록 원래 너비(49px)를 유지합니다. Figma `button_basic` 세트에는 Loading 변형이 없어 공통 상태로 추가하지 않았습니다(사용 예시 기준).
 - `BUTT-04` **Secondary / Solid Hover · Pressed 배경**(2026-10-30 사용자 결정, figma-fix-requests AG절): Default → Hover → Pressed가 같은 초록 계열에서 한 단계씩 밝아집니다 — Semantic `colors/fill/secondary/strong/hover` → brand/600(#009b68), `pressed` → brand/500(#02bb7b), Default brand/700(#007c56), 명도 L* 45.8 → 56.5 → 67.3. Primary / Solid(900 → 800 → 700)와 같은 방향입니다. 라벨 · 아이콘은 모든 상태에서 Default와 같은 흰색(`text/inverse` · `icon/inverse`). Component `button/secondary/solid/background/hover` · `pressed`가 그대로 참조하므로 코드는 `src/tokens/semantic.css` 재생성과 `figma/button-spec.json` · 참조 이미지(button_basic 16칸 · button_icon 12칸)로 따라갑니다(Button · IconButton 공통, TextButton 무관). 흰 라벨 대비 Hover 3.51:1 · Pressed 2.46:1은 WCAG AA 미달이며 요청(밝기 우선)에 따라 그대로 두고 [accessibility.md](../accessibility.md)에 보고합니다(axe 18건). 이력: 2026-10-19 A-1에서 800 · 900, 2026-10-28 아침 600 · 500, 같은 날 저녁 800 · 900(대비 우선), 2026-10-30 600 · 500(밝기 우선).
 - `BUTT-05` **Tertiary · Solid 배경 토큰 · 삭제된 테두리 토큰**(2026-10-29): Figma Tertiary · Solid 변형 42개가 Semantic `fill/tertiary/*`를 직접 쓰던 것을 Component `colors/button/tertiary/solid/background/default` · `hover` · `pressed`(같은 별칭)로 바꿨고 Button.css도 같은 토큰을 씁니다 — 색 변화 없음, 352/352 세 엔진. Solid 버튼 · Outline Disabled 변형에 테두리가 없어 `secondary/solid/border/*` · `tertiary/solid/border/*` · `secondary/outline/border/disabled` · `tertiary/outline/border/disabled`와 `progress/border`는 삭제했습니다([figma-fix-requests AC절](../figma-fix-requests.md)).
+- `BUTT-06` **TextButton Type 값 이름**(2026-11-03, A1): Figma `button_text`의 Type 값 `SecondarySecondary`를 `Secondary`로 바꿨습니다(변형 32개, 인스턴스 연결 그대로). 코드 `variant="secondary"` · 토큰 · 모양 변화 없음 — 검증 설정(`figma/button-variants.json` · `verify-button`)의 변형 이름만 함께 바꿨습니다.
 
 ## 아이콘
 
@@ -142,7 +143,7 @@ Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코�
 
 구현은 Figma 바인딩을 그대로 따릅니다. 아래 항목은 디자인 쪽 정리가 필요할 수 있는 부분입니다.
 
-1. `button_text`의 Type 값 이름이 **`SecondarySecondary`** 입니다. 2026-10-19 동기화로 Secondary는 `colors/button_text/secondary/*`(Primary보다 연한 글자 · 아이콘)를 씁니다.
+1. `button_text`의 Type 값 이름은 2026-11-03까지 **`SecondarySecondary`** 였고 지금은 `Secondary`입니다(`BUTT-06`). 2026-10-19 동기화로 Secondary는 `colors/button_text/secondary/*`(Primary보다 연한 글자 · 아이콘)를 씁니다.
 2. **Primary / Outline 테두리**: 삭제되었던 변수 `colors/button/primary/outline/border/default`(→ `fill/primary/strong/default`, #004a38)를 2026-10-19 Figma에 복구하고 42개 변형을 다시 연결했습니다. Secondary / Outline Square Hover · Pressed 테두리도 `secondary/outline/border/default`로 통일(값 같음).
 3. `button_basic`의 **Secondary / Outline Hover·Pressed** 테두리는 Square 변형에서 `secondary/solid/border/default`,
    Rounded 변형에서 `secondary/outline/border/default` 에 바인딩되어 있습니다(값은 동일 #007c56). 구현은 `secondary/outline/border/default` 를 사용합니다.

@@ -16,7 +16,7 @@
 | R4 | 12px 모서리 로컬 변수 등록 (F69) | **완료** | 변수 등록 + 본 페이지 5노드 재연결(legacy 인스턴스 10개 자동) |
 | R5 | Accordion md · Hover · Expanded 위치 | **완료(재등록 후)** | 1035:15685 y 40 → 20 |
 | R6 | Table 편집 칸 Filter 칩 상태 | **완료(693:7165)** · 693:7167 오류 아님 | Editing · Filled 칩 Selected로 |
-| R7 | Table 편집 칸 Filter · Editing의 다중 선택 목록 | 결정 대기 (D3) | 변경 없음 |
+| R7 | Table 편집 칸 Filter · Editing의 다중 선택 목록 | **해결(F76 · D3)** | `FilterChipSelect`(2026-10-19 밤) |
 | R8 | Table 편집 칸 안내 글자가 삭제된 변수에 바인딩 (F57) | **완료** | 3노드 `text/tertiary`, #778191 그대로 |
 | C3 | 텍스트 스타일 `sm/leading-normal/underline`이 삭제된 변수에 바인딩 | **완료** — 바인딩(R) · 줄 높이 20px(A-4, 2026-10-19 정책 작업) | 같은 값 변수로 교체 |
 
@@ -67,6 +67,8 @@ Rounded 전부 · Square Default · `button_icon` 전부가 이미 outline 토�
 
 ## R5. Accordion md · Hover · Expanded 위치 — 미확인 (수정 불가)
 
+> **완료(2026-10-19 재등록 후)** — 처리 현황 표와 같음: 1035:15685 y 40 → 20. 아래는 재등록 전 기록입니다.
+
 대상 796:5903이 속한 `accordion-item`(796:6071)은 페이지에서 분리되어 있고 Accordion 프레임(796:5813)이 원본에서 삭제되어 있습니다(이번 작업 전, 다른 편집).
 캔버스에 없는 노드라 위치를 비교 · 수정할 수 없습니다 — N4 참고. 코드 · 검증 기준은 이전 Accordion 그대로입니다.
 
@@ -84,6 +86,8 @@ Editing 변형이 1px 위(y 894)인 것은 모든 Type의 Editing 변형에 공�
 Hover · Empty(693:7163)의 칩만 State=Hover인 점은 N6.
 
 ## R7. Table 편집 칸 Filter · Editing의 다중 선택 목록 — 결정 대기 (D3)
+
+> **해결(2026-10-19 밤, F76 · D3)**: ② 대신 새 컴포넌트 `FilterChipSelect`(chip-filter + listbox · option sm, 다중 선택)로 정했습니다 — 아래는 결정 전 기록입니다.
 
 693:7165 아래의 `listbox / Size=sm`(97:2664) + `option`(Selected 2개)은 칩 트리거 + 다중 선택 목록입니다. 라이브러리에 해당 컴포넌트가 없어
 ① 새 컴포넌트 ② `DropdownMenu` 선택 모드 대체 ③ 다른 패턴 중 결정이 필요합니다. 쇼케이스는 목록을 그리지 않습니다.
@@ -220,13 +224,13 @@ Figma를 Product Designer 관점에서 따로 점검하고(Storybook을 정답�
 
 | # | 노드 · 변수 | 현재 | 권장 | 영향 |
 | --- | --- | --- | --- | --- |
-| N1 | `chart` 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261)의 비교 막대 1011:14280 · 1011:14288 · 1011:14296 · 1011:14303 · 1011:14310 | R3와 같은 오류(`simple/history`) — **2026-10-19 지시로 수정 제외(F77, 회귀 확인만)** | R3와 같은 수정 | 차트 hover 변형 |
+| N1 | **해결(2026-11-03 확인)** — 비교 막대 5노드가 이미 `chart/bar/compare` 그라데이션(원본에서 수정됨) · `chart` 새 변형 `Type=Bar Horizontal, Style=Default, Group=yes, hover=yes`(1011:14261)의 비교 막대 1011:14280 · 1011:14288 · 1011:14296 · 1011:14303 · 1011:14310 | R3와 같은 오류(`simple/history`) — **2026-10-19 지시로 수정 제외(F77, 회귀 확인만)** | R3와 같은 수정 | 차트 hover 변형 |
 | N2 | `chart` `Type=Bar Vertical, Style=Simple, Group=yes, hover=yes`의 1011:14873 | **해결** — 원본에서 짝 762:5921도 `series/compare`로 바뀌어 일치(가로 막대 간단 Group=yes도 같음), F78로 `colors/chart/bar/compare` 연결 · 코드 동기화 | — | — |
 | N3 | `chart` 세트 구조 변경 | **해결(F79)** — 코드 · 스토리 · 검증을 24개 변형으로 동기화, 기준 이미지 · geometry 재생성 | — | — |
 | N4 | Accordion 프레임 삭제 | **해결** — 재등록(1035:15645) 후 F80으로 토큰 연결 · 동기화 | — | — |
 | N5 | `border-radius/rounded-[2px]`(`VariableID:873:4798`) WEB code syntax | **해결(F81)** — `var(--border-radius-rounded-2px)` | 생성 규칙 개선 | — |
-| N6 | 693:7163 Filter · Hover · Empty 칩(693:8205) | 칩 State=Hover — 다른 Type의 Hover · Empty는 컨트롤 Default | 의도 확인 후 Default로 | Table 쇼케이스 1칸 |
-| N7 | legacy 화면 시안 19개 프레임 | 원격 `radius/xlarge1` | 로컬 `rounded-[12px]`로(값 같음) | 시각 변화 없음, 원격 의존 제거 |
+| N6 | 693:7163 Filter · Hover · Empty 칩(693:8205) | **해결(2026-11-03, AQ절 14)** — State=Default(다른 Type과 같음) | — | Table 쇼케이스 1칸(검증 · 참조 이미지 갱신) |
+| N7 | legacy 화면 시안 19개 프레임 | 원격 `radius/xlarge1` — **그대로(2026-11-03 판단)**: legacy 페이지 전체가 이전 라이브러리(원격 바인딩 약 1,700곳)라 일부만 바꾸는 이득이 없고 원격 값을 읽을 수 없음 | — | 시각 변화 없음 |
 
 작업 중 관찰된 다른 편집(이번 작업이 한 것 아님, 같은 값 — 동기화함): `colors/button/secondary/outline/background/default` · `/hover`가 `fill/secondary/subtle/*`로,
 `colors/chip-filter/background/unselected/default`가 `fill/primary/subtle/default`로 별칭 변경.
@@ -335,7 +339,41 @@ Calendar와 DatePicker를 `DatePicker` 하나로 통합하면서 Figma의 Select
 
 알림(Alert) 행을 복제해 그 아래에 넣었습니다(1656:7954, 글자 1656:7956 · 7957 · 7959 · 7961). 정책 · 적용 대상 "주의 / Alert · Toast (Warning)", 사용 규칙 "작업은 이어갈 수 있지만 확인이 필요한 일을 알립니다. 예: 일부 데이터만 표시, 곧 만료되는 설정. 작업을 막는 문제는 오류, 잘 끝난 일은 성공, 참고할 내용은 안내로 보여 줍니다. 무엇을 확인하면 되는지 한 문장으로 쓰고, 바로 확인할 수 있으면 버튼을 함께 둡니다.", 디자인 기준 "Warning 상태 — 주황 삼각형 아이콘과 warning 색. 자리와 크기는 다른 상태와 같습니다. 화면에 남겨야 하면 Alert, 잠깐 알리면 Toast(5초)." Rules 프레임은 세로 자동 레이아웃이라 아래 장은 자동으로 밀렸습니다(06장 296 → 388px).
 
+## AQ. 전체 자율 QA — Figma 일괄 수정 (2026-11-03, 사용자 승인 작업)
+
+전체 QA 브리프("실제 Figma와 코드 모두 수정해", Figma 컴포넌트 · Variables · Rules 수정 권한)에 따라 고쳤습니다. 컴포넌트를 다시 만들지 않았고 인스턴스 연결 · 변수 ID는 그대로입니다.
+작업 전 체크섬 8그룹이 스냅샷과 같았고, 작업 후 스냅샷을 같은 변경으로 갱신해 다시 8그룹 일치(primColors 455 `0308b6f1` · compOthers 692 `b1993741`, 나머지 6그룹 그대로).
+전체 기록 · 판단 근거는 [qa/full-system-audit-2026-11-03.md](./qa/full-system-audit-2026-11-03.md).
+
+| # | 항목 | 변경 전 | 변경 후 | 노드 · ID |
+| --- | --- | --- | --- | --- |
+| 1 | dropdown-menu · dropdown-menu-sub 테두리 두께(네 변 × 2), 구분선 세로 여백(16곳) | 외부 라이브러리 `border-width`(1) · `py-1`(4) — F97 | 같은 값의 로컬 `border-width/border` · `spacing/padding/p-1` | 1440:8454 · 1440:8455 · 179:5082 · 217:6204 · 6208 · 6212 · 217:6014 · 6018 · 6022 · 6109 |
+| 2 | dashboard-filter-bar 달력 아이콘 채움 | 외부 `colors/icon/secondary` | 같은 이름 · 값의 로컬 `colors/icon/secondary`(VariableID:47:8094) | I693:9815;855:9023;128:1335;2:44494;8899:45704 |
+| 3 | password_field 눈 아이콘 21개(F117 · AH) | 외부 `colors/icon/secondary`(#404b5d) — 비활성 · 읽기 전용도 진한 색 | 상태별 로컬 `colors/input/outline/icon/{hover,focus,completed,error,disabled,read-only}`(Focus-on = focus) — 비활성 · 읽기 전용 #a1a8b5, 나머지 값 그대로 | AH절 표의 `icon_size` 21개 |
+| 4 | card 그림자 | 효과 값 0 1 8 / 12%(스타일 없음) | 같은 값의 효과 스타일 `elevation-3` | 1304:5733 |
+| 5 | toast 속성 · 레이어(4 변형) | `Alert Text` · `Show Icon` 속성이 어떤 레이어에도 연결되지 않음, 글자 레이어 "File info · File name · File metadata"(file-uploader-item에서 복사된 이름) | 제목 글자 → `Alert Text#91:31`, 상태 아이콘 표시 → `Show Icon#91:35`, 레이어 `Content` · `Title` · `Description`. 사용 예시 인스턴스의 글자 · 아이콘은 그대로(연결 전후 비교 — 바뀐 인스턴스 0) | 91:5927 (1444:9904 · 9908 · 9912 · 9916, 91:5858 · 91:5838 · 1252:5707 · 91:5855) |
+| 6 | data-state 속성(F109 이후) | 상태별 제목 · 설명 TEXT 속성 10개가 어떤 레이어에도 연결되지 않음(상태 내용이 empty-state 인스턴스라 중첩 인스턴스 안 글자에는 속성을 걸 수 없음 — Plugin API "Cannot set component property references on instance sublayer") | 속성 10개 삭제, 각 상태의 empty-state 인스턴스를 노출(`isExposedInstance`) — data-state 인스턴스 패널에서 제목 · 설명을 바로 바꿈 | 698:4359 (724:14964 · 15002 · 15018 · 15100 · 15051) |
+| 7 | file-uploader `Show Button`(F26) | 연결 레이어 없음 — 세트에 버튼 레이어가 없음(업로드 영역 자체가 버튼) | 속성 삭제 | 651:3945 (`Show Button#651:33`) |
+| 8 | Rules 05 "하위 메뉴"(F114) | "메뉴 안에 하위 메뉴를 두지 않습니다." / "오른쪽 화살표는 다른 화면으로 이동한다는 뜻" — 09장 dropdown-menu-sub · 사용 예시 217:6478과 충돌 | "하위 메뉴는 한 단계(dropdown-menu-sub)까지만 둡니다. 여는 항목 바로 옆에 붙여 열고, 마우스를 올리거나 → 키로 엽니다." / "오른쪽 화살표 — 하위 메뉴가 있으면 옆에 열리고, 없으면 다른 화면으로 이동한다는 뜻" | 1198:5155 |
+| 9 | Rules 09 첫 행 "상태 변화"(F103 ①) | "… 애니메이션 없이 바로 바꿉니다." — 아래 움직임 행과 모순 | 같은 문장 + "아래 행에 따로 정한 움직임은 예외입니다."(수동 줄바꿈 제거) | 1674:8120 |
+| 10 | Rules 09 행 추가(AO · AM · AN) | 내비게이션 · Switch · 툴팁 행 없음 — 코드는 2026-11-02부터 움직임 | "Accordion 펼침·접힘" 다음에 "내비게이션 펼침·접힘"(`item_parent`) · "Switch 켜기·끄기"(`switch`) · "툴팁 나타남·사라짐"(`tooltip`) — 문구는 AO · AM · AN 요청 그대로, Accordion 행을 복제(표 스타일 같음) | 1807:8738 · 1807:8746 · 1807:8754 |
+| 11 | Rules 09 이름(F115) | 프레임 "Chapter 10"(제목 09), 행 프레임 기본 이름 | "Chapter 09", 행 이름 = 정책 이름 | 1674:8110 · 1674:8113 … 1713:8145 |
+| 12 | Component 섹션 높이 | Rules 프레임이 4248 → 4510px로 길어져 섹션 아래로 162px 넘침 | 섹션 4448 → 4710px, 아래 두 섹션(Dashboard components · 사용 예시 화면)을 300px 아래로 — 겹침 0 | 58:5174 · 728:25472 · 1216:5171 |
+| 13 | dropdown-menu 사용 예시 메뉴 위치(AP) | 트리거 아래 8px | Rules 05대로 4px(메뉴 y 89 → 85, 하위 메뉴 311 → 307 — 하위 메뉴는 메뉴 왼쪽 위에서 196 · 222 그대로) | 1687:8345 · 1687:8462 |
+| 14 | table_value_editable Filter · Hover · Empty 칩(F82 · V-7) | 칩 State=Hover — 다른 유형의 Hover · Empty는 컨트롤 Default | State=Default(칸 Hover는 칸 배경으로만) | 693:8205 (693:7163) |
+| 15 | 변수 이름 42개(ID · 바인딩 유지, WEB code syntax 함께) | `colors/select/outline/outline/*` 39(분류 단계 중복), `colors/toast/{border,status-icon}/succeess`(F45), `colors/stepper/label/title/dafault`(F38) | `colors/select/outline/*` · `…/success` · `…/title/default` | select 95:2819 · toast · stepper |
+| 16 | 변형 값 이름 41개 | chart State `Hilighted` 9, button_text Type `SecondarySecondary` 32(A1) | `Highlighted` · `Secondary`(인스턴스 그대로 연결) | 698:4399 · 432:8395 |
+| 17 | Primitive `colors/gray 2`(B2) | `colors/gray`와 같은 값 #f2f2f3, 이름에 공백, 참조 0(노드 · 별칭 · 스타일, 두 페이지) | 삭제 | VariableID:58:4783 |
+
+**바꾸지 않은 것**: legacy 페이지(684:6491)의 원격 변수(F83 · N7) — 이전 라이브러리의 화면 시안이고 원격 바인딩이 약 1,700곳이라 반지름 19개만 바꾸는 이득이 없으며 원격 값을 읽을 수 없어 같은 값인지 확인할 수 없음.
+Component 섹션의 1 × 32px 선 `Vector 1`(476:18668, Dropdown Menu 프레임 왼쪽 100px) — 의도를 알 수 없어 그대로. 상단 메모 프레임(1277:7982 "예시 하나는 남겨놔 주세요") 그대로.
+숨은 Focus ring 프레임 반지름(컴포넌트 반지름 + 간격에서 나온 값, 바인딩 없음) · chart-tooltip 그림자(elevation-3 + 배경 흐림 — 두 효과를 함께 담는 스타일 없음) · 홀수 크기 요소의 가운데 정렬 소수점 좌표(badge 점 3px, dialog 머리글, empty-state 버튼, file-uploader 아이콘 · F56 표 칸 · 슬라이더 F16) · 노드에 묶이지 않은 Component 변수 36개(모두 코드 CSS가 상태 색으로 사용 — 시리즈 3 · 4 차트 토큰은 확장용, CHAR-09) — 의도된 값이거나 화면 영향이 없음.
+
+**검증**: Rules 다른 행 글자 지문 변경 전후 `c5af0c44` 같음, 섹션 겹침 0 · 글자 잘림 0, 참조 이미지 재내보내기 — password_field 794픽셀(비활성 · 읽기 전용 눈 상자 안), table_value_editable 899픽셀(693:7163 칩 상자 716–823 × 902–938 안)만 변경. 정합성은 QA 기록.
+
 ## AP. dropdown-menu 사용 예시(217:6478) — 트리거와 메뉴 사이 8px ↔ Rules 05 4px (2026-11-02, 확인만 · Figma 미수정)
+
+> **반영(2026-11-03, AQ절 13)**: 예시를 Rules 05대로 4px로 옮겼습니다(Rules 05 · 코드 그대로).
 
 DropdownMenu 하위 메뉴 위치를 다시 맞추며 217:6478을 좌표로 읽었습니다. 하위 메뉴 배치(여는 항목의 오른쪽 위 모서리에 붙음, 상위 패널 안쪽 4px 위)는 코드와
 같습니다. 다만 이 예시의 메뉴는 트리거(button_basic sm, 아래 끝 y −4915)에서 **8px** 아래(y −4907)에 있어 Rules 05 "열리는 위치 — 4px 간격"(1097:5364)과 다릅니다.
@@ -347,6 +385,8 @@ DropdownMenu 하위 메뉴 위치를 다시 맞추며 217:6478을 좌표로 읽�
 | 사용 예시의 메뉴 위치 | 트리거 아래 8px | Rules 05대로 4px로 옮기거나, 8px가 맞다면 Rules 05 수정 | 1687:8345 · 1687:8321 · 1097:5364 |
 
 ## AO. Navigation 하위 메뉴 펼침 · 접힘 움직임 — Rules 09 행 추가 요청 (2026-11-02, Figma 미수정)
+
+> **반영(2026-11-03, AQ절 10)**: 요청 ①대로 "내비게이션 펼침·접힘" 행을 추가했습니다(1807:8738).
 
 Storybook Navigation의 메뉴 그룹에 shadcn/ui Base Accordion 성격의 펼침 · 접힘 움직임(실제 높이, 아래 항목 이동, 화살표 회전)을 넣었습니다. 이번 작업은
 "Figma의 시각적 디자인 및 Variables는 변경하지 마"라는 지시라 Figma는 읽기만 했습니다 — `item_parent`(180:5246, Expanded False = icon/CaretDown · True = icon/CaretUp) ·
@@ -363,6 +403,8 @@ Storybook Navigation의 메뉴 그룹에 shadcn/ui Base Accordion 성격의 펼�
 
 ## AN. Tooltip 나타남 · 사라짐 움직임 — Rules 09 행 추가 요청 (2026-11-02, Figma 미수정)
 
+> **반영(2026-11-03, AQ절 10)**: "툴팁 나타남·사라짐" 행을 추가했습니다(1807:8754).
+
 Storybook Tooltip에 shadcn/ui Base Tooltip 성격의 나타남 · 사라짐 움직임(페이드 + 크기, 트리거 쪽 기준점, 연속 이동은 즉시 교체)을 넣었습니다. 이번 작업은
 "Figma의 기존 Tooltip 디자인은 수정하지 마 · 새 규칙이나 Variables를 만들지 마"라는 지시라 Figma는 읽기만 했습니다 — `tooltip` 세트(149:1111) 4 변형 · 변수 ·
 Rules 05 "툴팁 표시"(1097:5406, 마우스는 잠시 뒤 · 키보드는 바로) · "열리는 위치"(1097:5364, 화살표 포함 10px · 끝과 요소 사이 2px)와 충돌하지 않고, 정지 모습은
@@ -376,6 +418,8 @@ Rules 05 "툴팁 표시"(1097:5406, 마우스는 잠시 뒤 · 키보드는 바�
 코드 값(Figma에는 넣지 않는 구현 세부): 나타남 150ms · 사라짐 100ms `ease`, 크기 0.95 — [Tooltip.md](./components/Tooltip.md) `TOOL-05`.
 
 ## AM. Switch 켜기 · 끄기 움직임 — Rules 09 행 추가 요청 (2026-11-02, Figma 미수정)
+
+> **반영(2026-11-03, AQ절 10)**: "Switch 켜기·끄기" 행을 추가했습니다(1807:8746).
 
 Storybook Switch에 HeroUI Native Switch의 움직임(누름 축소 · 썸 스프링 · 트랙 색 전환)을 넣었습니다. 이번 작업은 "Figma 컴포넌트 디자인은 수정하지 마"라는 지시라
 Figma는 읽기만 했습니다 — `switch` 세트(107:409) 16 변형 · 변수 · 크기 · 색은 그대로이고, 코드의 정지 모습은 정합성 16/16 × 3 엔진으로 같습니다.
@@ -439,6 +483,8 @@ file-uploader-item(Completed · download · Error) · File Uploader 예시, data
 토스트 컴포넌트 · 변수 · 스타일 변화 없음. Toast 프레임은 높이를 따라 1618 → 1918px(이웃 프레임과 겹침 없음).
 
 ## AH. password_field 눈 아이콘 색 — 로컬 상태 토큰으로 재연결 요청 (2026-10-30, 미적용)
+
+> **적용(2026-11-03, AQ절 3)**: 아래 표대로 21개를 상태별 로컬 토큰에 다시 연결했습니다(F117 해결).
 
 2026-10-30 Figma에서 눈 아이콘이 아이콘 라이브러리 인스턴스(`icon_size` › `icon/Eye` · `icon/Eye-close`)로 바뀌면서 벡터 채움이 외부 변수
 `colors/icon/secondary`(VariableID:24226adc95afdd4f806b3e0e30bf1a8962779a09/359:2603, #404b5d)에 묶였습니다(F117). 이전처럼 각 상태의 로컬 토큰으로
@@ -543,13 +589,7 @@ Component 섹션 68개 세트를 모두 훑어(use_figma 읽기) 하드코딩 �
 
 ## 플레이스홀더 토큰 오용 — 바인딩 수정 요청 (2026-10-27, 변경하지 않음)
 
-`text/placeholder`가 brand-gray/400(#a1a8b5)으로 바뀌면서(F98) 플레이스홀더가 아닌 글자에 이 토큰을 묶어 둔 곳이 대비 2.35:1로 내려갔습니다. 코드는 Figma 바인딩을 그대로 따르므로 Figma에서 바꾼 뒤 재동기화합니다.
-
-| # | 변수 | 현재 | 제안 | 영향 |
-| --- | --- | --- | --- | --- |
-| R9 | `colors/breadcrumb/label/default` | `text/placeholder` | `text/tertiary`(#596475, 5.89:1) — 현재 경로 `label/current`(text/secondary)보다 한 단계 연함 | breadcrumb · breadcrumb-item Link Default 라벨(27건) |
-| R10 | `colors/file-uploader/helper/default` | `text/placeholder` | `text/tertiary` — 다른 컴포넌트 helper/default와 같음 | file-uploader 안내 문구 5개 상태, file-uploader-item 파일 정보 3개 상태(11건) |
-| R11 | `colors/stepper/label/title/locked` | `text/placeholder` | `text/tertiary`(또는 `text/inactive` 유지 시 접근성 이슈로 수용) | stepper_indicator Locked 제목(5건) |
+바로 위 절(같은 날 저녁 X절에서 적용 완료)과 같은 표의 적용 전 사본이라 표를 지웠습니다(2026-11-03 문서 정리). R9 – R11은 모두 `text/tertiary`로 바뀌었습니다.
 
 ## 승인이 필요한 값 · 정책 변경 (변경하지 않음)
 
@@ -557,9 +597,9 @@ Component 섹션 68개 세트를 모두 훑어(use_figma 읽기) 하드코딩 �
 | --- | --- | --- | --- |
 | A-1 | **대비 개선 — 텍스트** | **완료(2026-10-19)** — 상태 강조 색 6종 700, `text/tertiary` · `text/placeholder` gray/600, 비활성 라벨용 `text/inactive`(gray/400) 신설, EmptyState 위계 · Stepper 잠긴 설명 · MetricTrend Disabled 조정 | [accessibility.md](./accessibility.md) |
 | A-2 | **대비 개선 — 비텍스트 · 상태** | **완료(2026-10-19)** — 입력 칸 · Checkbox · Radio 테두리 `border/gray`(hover `gray-dark`), Switch 꺼짐 트랙 500 · 600 · 700, Secondary · Solid Hover brand/800 · Pressed brand/900(7.27 · 10.14:1) | [accessibility.md](./accessibility.md) |
-| A-3 | Table 안내 글자 전용 컴포넌트 토큰 | `colors/table/key-value/value/description` → `text/tertiary` 신설 | 표 편집 칸 안내 3노드 |
+| A-3 | Table 안내 글자 전용 컴포넌트 토큰 | **만들지 않음(2026-11-03 결정)** — 같은 역할의 Dialog · Card · Alert 설명도 Semantic `text/tertiary`를 바로 씀, 새 토큰은 값 변화 없이 이름만 늘림 | 표 편집 칸 안내 3노드(`text/tertiary` 그대로) |
 | ~~A-4~~ | `sm/leading-normal/underline` 줄 높이 140%(19.6px) — **완료(2026-10-19)** | 다른 sm 스타일처럼 `font/line-height/leading-5`(20px)로 | Link md 높이 0.4px |
 | A-5 | placeholder `gray/400`(2.35:1) | **해결(A-1)** — 플레이스홀더 gray/600(5.89:1), 비활성 라벨은 `text/inactive`로 분리 | — |
-| D3 · D4 | R7 다중 선택 목록 · 간단 스타일 차트 지난 기간 색(F65-b) | [final-report](./final-report.md) 결정 목록 | — |
+| D3 · D4 | R7 다중 선택 목록 · 간단 스타일 차트 지난 기간 색(F65-b) | **해결** — D3 `FilterChipSelect`(F76), D4 F78 `colors/chart/bar/history`(2026-10-19) | — |
 
 이미 알려진 그 밖의 원본 이슈는 [figma-issue-triage.md](./figma-issue-triage.md)에 있습니다.

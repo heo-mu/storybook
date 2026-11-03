@@ -52,6 +52,7 @@ Figma 변형으로 그리지 않는 동작입니다. Figma **Design System Rules
 - `DSTA-03` **접근성**: 상태가 바뀌면 읽어 주도록 `role="status"`(Loading은 `aria-busy`)입니다. 스켈레톤 · 아이콘은 장식입니다(Rules 03 · 06).
 - `DSTA-05` **Loading 상하 여백**(2026-10-28 저녁): Figma `data-state` State=Loading이 스냅샷 이후 위아래 `spacing/padding/p-3`(12px)를 갖게 되어(높이 66 → 90) 코드도 같은 여백을 둡니다. 스켈레톤 막대 · 문구 사이 간격 12px(`margin/m-3`)은 그대로입니다. 기하 · 참조 이미지 재추출, 정합성 6/6(세 엔진), 스토리 검사 높이 90(figma-issues F111).
 - `DSTA-06` **레이어 이름**(2026-10-29): 스켈레톤 묶음 `Frame 2147240246` → `Skeleton group`, 안의 empty-state 글자 묶음은 `Content`(검증 설정 갱신, [figma-fix-requests AC절](../figma-fix-requests.md)).
+- `DSTA-07` **Figma 글자 속성**(2026-11-03): 상태별 제목 · 설명 TEXT 속성 10개(`Empty Title` …)가 어떤 레이어에도 연결되어 있지 않았습니다 — 상태 내용이 empty-state 인스턴스라 중첩 인스턴스 안 글자에는 속성을 걸 수 없습니다. 속성을 지우고 각 상태의 empty-state 인스턴스를 노출해(data-state 인스턴스 패널에서 제목 · 설명을 바로 수정) 코드 `title` · `description`과 같은 쓰임이 됐습니다. 모양 변화 없음.
 
 ## Props
 

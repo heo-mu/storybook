@@ -37,7 +37,7 @@ const [region, setRegion] = useState<Key | null>(null);
 | --- | --- | --- |
 | Size sm · md · lg | `size` | 필드 높이 36 · 44 · 52px, 옵션 높이 36 · 40 · 44px |
 | Label / Label Text | `label` | 생략하면 `aria-label` 지정 |
-| Required | `required` | 라벨 뒤 4px 점(`colors/select/outline/outline/required/default`, 라벨과 m-2, `aria-hidden`). 버튼에는 필수 상태가 없어 "필수"를 버튼 설명(`aria-describedby`)으로 전달, 숨은 `<select>`는 `required` |
+| Required | `required` | 라벨 뒤 4px 점(`colors/select/outline/required/default`, 라벨과 m-2, `aria-hidden`). 버튼에는 필수 상태가 없어 "필수"를 버튼 설명(`aria-describedby`)으로 전달, 숨은 `<select>`는 `required` |
 | Display Text | 선택한 옵션 텍스트 / `placeholder` | 기본 placeholder `'내용 선택'`, 한 줄 말줄임 |
 | Alert / select_message Type | `message` · `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'info'` |
 | State Hover | 브라우저 `:hover` | |
@@ -47,7 +47,7 @@ const [region, setRegion] = useState<Key | null>(null);
 | option State Selected | 현재 값 | 굵은 브랜드 색 + 체크 아이콘 |
 | option State Disabled | `SelectOption disabled` 또는 `disabledKeys` | 키보드 이동에서 건너뜀 |
 | select_message Alert Text · Type Info · Success · Error | `message` · `messageType` | 기본: `invalid`면 `'error'`, 아니면 `'helper'` |
-| select_message Type Helper · State Default · Disabled · 필드 `Helper` 속성 | `message`(종류를 정하지 않으면 `'helper'`) | 아이콘 없는 회색 글자 `colors/select/outline/outline/helper/default`, 비활성 칸은 `…/helper/disabled`(Rules 04 "도움말", 2026-10-20 V-1) |
+| select_message Type Helper · State Default · Disabled · 필드 `Helper` 속성 | `message`(종류를 정하지 않으면 `'helper'`) | 아이콘 없는 회색 글자 `colors/select/outline/helper/default`, 비활성 칸은 `…/helper/disabled`(Rules 04 "도움말", 2026-10-20 V-1) |
 | option Option Text | `SelectOption` children | |
 | option Check Icon | `SelectOption checkIcon` | 기본 켬. 끄면 선택 표시는 굵은 브랜드 글자뿐(2026-10-19) |
 
@@ -73,7 +73,7 @@ Figma **Design System Rules**(Component 섹션의 Rules 227:3774, 02–09장 —
 
 Figma 변형 · 속성 · 변수 · 스타일로 정의되어 디자인과 코드가 같은 값을 씁니다.
 
-- `SELE-01` **닫힌 상태의 키보드 포커스**: Figma State=Focus(2026-10-19 추가) — 테두리가 `select/outline/outline/border/focus`(gray-darker)로 바뀝니다. Error와 겹치면 Error 테두리를 유지합니다.
+- `SELE-01` **닫힌 상태의 키보드 포커스**: Figma State=Focus(2026-10-19 추가) — 테두리가 `select/outline/border/focus`(gray-darker)로 바뀝니다. Error와 겹치면 Error 테두리를 유지합니다.
 - `SELE-07` **체크 아이콘**: Figma option "Check Icon"은 `SelectOption checkIcon`(기본 켬)입니다. 끄면 선택 표시는 굵은 브랜드 글자뿐입니다.
 - `SELE-08` **md Disabled 글자**: 다른 md 상태와 같은 `base/leading-normal/normal`(밑줄 없음) — 2026-10-19 Figma의 잘못 적용된 텍스트 스타일을 고쳤습니다(F6).
 
@@ -120,3 +120,5 @@ Storybook 컴포넌트 설명 · Props 주석에서 옮긴 내용입니다.
 - `Select.showcase.stories.tsx / LongList`: A long list scrolls inside the popover (Figma "scroll" indicator = the styled scrollbar).
 - `Select.showcase.stories.tsx / RequiredMark`: Figma Required on (every size): the dot after the label; the trigger button is described as "필수" (a button has no required state).
 - `Select.showcase.stories.tsx / HelperMessage`: Rules 04 "도움말": grey help text without an icon (Figma Type=Helper); helper/disabled in a disabled field.
+
+> 2026-11-03: Figma 변수 이름의 분류 단계 중복(`colors/select/outline/outline/*` 39개)을 `colors/select/outline/*`로 고쳤습니다(ID 유지) — CSS 변수 `--colors-select-outline-outline-*` → `--colors-select-outline-*`([breaking-changes.md](../breaking-changes.md)).

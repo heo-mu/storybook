@@ -1,5 +1,7 @@
 # Figma 이슈 분류 (2026-10-19)
 
+> **2026-11-03 전체 QA**: 이 분류는 2026-10-19 시점입니다. 그 뒤 F65-a(N1) · F75 · F82를 포함한 대부분이 해결 · 결정됐고, 현재 상태는 [figma-issues.md](./figma-issues.md)의 각 행과 [qa/full-system-audit-2026-11-03.md](./qa/full-system-audit-2026-11-03.md)에 있습니다. 남은 디자인 결정은 V-6 · V-12 · V-13 · V-14입니다.
+
 > **코드 정책 → Figma 공식 정책(2026-10-19 밤, Figma 수정 허용)** — 디자인 결정 17개를 Figma에 정의했습니다. 변형 · 속성 · 변수로:
 > A11 · F1 · F22(Focus 속성 24세트 · `colors/border/focus` · Select State=Focus), F51(Dialog 덮개 변수 · 예시), F60(Card 그림자), F69(남은 원격 배경 ·
 > 그림자 효과 스타일). 규칙 문서(Component 섹션 **Design System Rules** 02–10장, 227:3774 · 1100:5082)와 컴포넌트 주석으로: F3 · F10 · F11 · F33 · F35 ·

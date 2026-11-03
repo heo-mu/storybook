@@ -33,3 +33,4 @@
 | [token-diff.md](./token-diff.md) | 토큰 스냅샷 변경 기록 |
 | [release-checklist.md](./release-checklist.md) | 배포 전 점검 |
 | [component-inventory.md](./component-inventory.md) · [progress.md](./progress.md) · [final-report.md](./final-report.md) | 구현 현황 · 작업 기록 |
+| [qa/full-system-audit-2026-11-03.md](./qa/full-system-audit-2026-11-03.md) | **전체 QA 기록(2026-11-03)** — 발견 · 수정 · 결정 · 보류 · 검증 결과(가장 최신 상태) |

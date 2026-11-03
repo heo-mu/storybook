@@ -1,5 +1,7 @@
 # 최종 QA 보고 — Figma × Storybook 전체 품질 감사 (2026-10-28)
 
+> **2026-11-03**: 이 보고서는 2026-10-20까지의 기록입니다. 최신 상태는 [qa/full-system-audit-2026-11-03.md](./qa/full-system-audit-2026-11-03.md).
+
 Figma **[Platform] Web Design System**(`Ry3WecA6sP6lKPop1vXrTp`, 페이지 `🔵 Ver 0.5`)의 Component 섹션 68개 세트와
 Storybook 전체(스토리 444 · 문서 87 = 531개 항목)를 기존 검증 결과에 기대지 않고 처음부터 다시 검사한 결과입니다.
 배포: https://storybook-heo-mu.vercel.app/ (커밋 499f693 · 보고서 갱신 커밋은 10절). 이전 보고(2026-10-16)는 아래 "이전 보고" 절에 그대로 두었습니다.

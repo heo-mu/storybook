@@ -2,6 +2,8 @@
 
 생성: 2026-10-20 03:23 UTC · 근거: Figma 실시간 속성 조회(`use_figma`), `node scripts/verify-figma.mjs` 보고서 3 엔진(가장 오래된 보고서 2026-10-20 02:38 UTC), 스토리 테스트 + a11y 리포터 실행, 개발 노트(docs/components)의 Figma 속성 대조.
 
+> 2026-11-03 전체 QA: 바뀐 행만 갱신했습니다(Input · Select · DataState · DashboardFilterBar · Toast 등). 세 엔진 전체 결과는 [qa/full-system-audit-2026-11-03.md](./qa/full-system-audit-2026-11-03.md) 7절.
+
 | 열 | 기준 |
 | --- | --- |
 | Figma 정의 확인 | 검증 설정의 모든 Figma 세트가 원본에 있음 — 세트 · ID · 검증 변형 수 / 원본 변형 수 |
@@ -22,15 +24,15 @@
 | chart (Chart) | ✓ chart 698:4399 · 33/33 (2026-11-02 그리기 움직임 — Rules 09 "차트 그리기", 완료 상태를 비교)<br>chart-legend-item 697:4514 · 3/3<br>chart-tooltip 693:9776 · 1/1 | ✓ | ✓ 37/37 / 37/37 / 37/37 | ✓ play 17 · 스토리 25 (2026-11-02 실측) | ✓ 경고 0 | ✓ |
 | checkbox (Checkbox) | ✓ checkbox 99:2389 · 36/36 | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 4 · 스토리 13 | ✓ 경고 0 | ✓ |
 | chip (Chip) | ✓ chip-multi 201:12711 · 24/24<br>chip-input 558:26017 · 12/12<br>chip-filter 558:25704 · 48/48 (2026-10-29 필터 목록 펼침 · 닫힘 모션) | ✓ | ✓ 84/84 / 84/84 / 84/84 | ✓ play 9 · 스토리 31 | ✓ 경고 0 | ✓ |
-| dashboard-filter-bar (DashboardFilterBar) | ✓ dashboard-filter-bar 698:4163 · 1/1 (2026-10-28 스토리 기간 입력 DashboardFilterRange + DatePicker 136px ×2) | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 4 | ✓ 경고 0 | ✓ |
+| dashboard-filter-bar (DashboardFilterBar) | ✓ dashboard-filter-bar 698:4163 · 1/1 (2026-10-28 스토리 기간 입력 DashboardFilterRange + DatePicker 136px ×2; 2026-11-03 묶음 안 컨트롤 너비 · 휴대폰 너비 DFBR-08) | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 3 · 스토리 5 | ✓ 경고 0 | ✓ |
 | data-freshness (DataFreshness) | ✓ data-freshness 697:4543 · 3/3 | ✓ | ✓ 3/3 / 3/3 / 3/3 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
-| data-state (DataState) | ✓ data-state 698:4359 · 6/6 (2026-10-28 Loading 상하 12px 동기화 · 기하 재추출) | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 8 | ✓ 경고 0 | ✓ |
+| data-state (DataState) | ✓ data-state 698:4359 · 6/6 (2026-10-28 Loading 상하 12px 동기화 · 기하 재추출; 2026-11-03 쓰이지 않던 글자 속성 10개 정리) | ✓ | ✓ 6/6 / 6/6 / 6/6 | ✓ play 2 · 스토리 8 | ✓ 경고 0 | ✓ |
 | date-picker (DatePicker — Input · Inline, Calendar 호환) | ✓ date-picker_trigger 144:723 · 24/24 (2026-10-28 Open 3 추가, Input 복귀)<br>date-picker_message 144:888 · 3/3<br>date-picker_calendar 144:1644 · 1/1<br>date-picker_day 144:1033 · 7/7<br>date-picker_navigation 144:1328 · 8/8 (2026-10-29 펼침 · 닫힘 모션) | ✓ | ✓ 40/40 / 40/40 / 40/40 | ✓ play 7 · 스토리 26 | ✓ 경고 0 | ✓ |
 | dialog (Dialog) | ✓ dialog 149:2838 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | dropdown-menu (DropdownMenu) | ✓ dropdownmenu_item 179:4819 · 5/5<br>dropdownmenu_line 179:5082 · 1/1<br>dropdown-menu 1440:8454 · 1/1 · dropdown-menu-sub 1440:8455 · 1/1 (2026-10-27 추가) (2026-10-29 하위 메뉴 DropdownMenuSub, 2026-10-30 하위 메뉴 위치 — Figma 사용 예시 217:6478, 2026-11-02 열림 · 닫힘 움직임 Rules 09 — shadcn, 위치 196 · 222 재확인) | ✓ | ✓ 8/8 / 8/8 / 8/8 | ✓ play 4 · 스토리 13 (2026-11-02 실측) | ✓ 경고 0 | ✓ |
 | empty-state (EmptyState) | ✓ empty-state 724:14963 · 1/1 (2026-10-28 기하 · 참조 재추출, 2026-10-29 아이콘 토큰 바인딩) | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 2 · 스토리 7 | ✓ 경고 0 | ✓ |
 | file-uploader (FileUploader · Loading) | ✓ file-uploader 651:3945 · 5/5<br>file-uploader-item 651:3999 · 4/4<br>loading 675:5644 · 2/2 | ✓ | ✓ 11/11 / 11/11 / 11/11 | ✓ play 2 · 스토리 18 | ✓ 경고 0 | ✓ |
-| input (Input) | ✓ input 76:2945 · 21/21 · password_field 1440:8466 · 24/24 (2026-10-28, 2026-10-30 눈 아이콘 `icon/Eye` · `icon/Eye-close` — Disabled · Read-only 아이콘 색은 F117) | ✓ | ✓ 45/45 / 45/45 / 45/45 — Firefox 비밀번호 마스킹 글자(U+25CF) 12건은 기록(knownDifferences) | ✓ play 6 · 스토리 18 | ✓ 경고 0 | ✓ |
+| input (Input) | ✓ input 76:2945 · 21/21 · password_field 1440:8466 · 24/24 (2026-10-28, 2026-10-30 눈 아이콘 `icon/Eye` · `icon/Eye-close` — Disabled · Read-only 아이콘 색은 F117, 2026-11-03 Figma 재연결로 코드와 같아짐 · 참조 이미지 갱신) | ✓ | ✓ 45/45 / 45/45 / 45/45 — Firefox 비밀번호 마스킹 글자(U+25CF) 12건은 기록(knownDifferences) | ✓ play 6 · 스토리 18 | ✓ 경고 0 | ✓ |
 | link (Link) | ✓ link 111:1509 · 21/21 (2026-10-28 Type 축) | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 3 · 스토리 9 | ✓ 경고 0 | ✓ |
 | metric-card (MetricCard) | ✓ metric-card 697:4487 · 1/1 | ✓ | ✓ 1/1 / 1/1 / 1/1 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | metric-trend (MetricTrend) | ✓ metric-trend 697:4482 · 12/12 | ✓ | ✓ 12/12 / 12/12 / 12/12 | ✓ play 1 · 스토리 6 | ✓ 경고 0 | ✓ |
@@ -40,7 +42,7 @@
 | radio (Radio) | ✓ radio 102:2677 · 24/24 (2026-10-28 재대조, 변경 없음) | ✓ | ✓ 24/24 / 24/24 / 24/24 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
 | search-field (SearchField) | ✓ search-field 216:6570 · 36/36 (2026-10-28 `solid/border/*` 재대조, 변경 없음) | ✓ | ✓ 36/36 / 36/36 / 36/36 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | segmented-control (SegmentedControl) | ✓ segmented-control 531:24471 · 3/3<br>segmented-item 524:24397 · 18/18 (2026-10-29 선택 이동 모션) | ✓ | ✓ 21/21 / 21/21 / 21/21 | ✓ play 4 · 스토리 12 | ✓ 경고 0 | ✓ |
-| select (Select) | ✓ select 95:4740 · 24/24<br>listbox 97:2665 · 3/3<br>option 97:2286 · 15/15<br>select_message 95:2960 · 3/3 (2026-10-29 펼침 · 닫힘 모션) | ✓ | ✓ 45/45 / 45/45 / 45/45 | ✓ play 6 · 스토리 21 | ✓ 경고 0 | ✓ |
+| select (Select) | ✓ select 95:4740 · 24/24<br>listbox 97:2665 · 3/3<br>option 97:2286 · 15/15<br>select_message 95:2960 · 3/3 (2026-10-29 펼침 · 닫힘 모션; 2026-11-03 토큰 이름 select/outline/*) | ✓ | ✓ 45/45 / 45/45 / 45/45 | ✓ play 6 · 스토리 21 | ✓ 경고 0 | ✓ |
 | skeleton (Skeleton) | ✓ skeleton 697:4486 · 4/4 | ✓ | ✓ 4/4 / 4/4 / 4/4 | ✓ play 1 · 스토리 5 | ✓ 경고 0 | ✓ |
 | slider (Slider) | ✓ slider 391:1988 · 2/2<br>handle 391:2013 · 5/5 (2026-10-29 레이어 이름 정리) | ✓ | ✓ 7/7 / 7/7 / 7/7 | ✓ play 3 · 스토리 10 | ✓ 경고 0 | ✓ |
 | stepper (Stepper) | ✓ stepper_indicator_horizontal 179:1621 · 5/5<br>stepper_indicator_vertical 203:3708 · 5/5<br>stepper_connector_horizontal 179:1614 · 2/2<br>stepper_connector_vertical 203:4253 · 2/2<br>stepper_horizontal 179:2043 · 3/3<br>stepper_vertical 203:3949 · 3/3 (2026-10-28 재대조: 합성 세트의 Completed 아이콘 Check로 정리, 참조 이미지 갱신) (2026-10-29 연결선 채움 모션) | ✓ | ✓ 20/20 / 20/20 / 20/20 | ✓ play 2 · 스토리 10 | ✓ 경고 0 | ✓ |

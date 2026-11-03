@@ -122,6 +122,16 @@ axe 감사(444 스토리) 색 대비 위반 **18건** — 모두 아래 두 상�
 | SearchField Solid | 테두리 없이 채움(`surface/container-subtle` #f5f6f7, 1.06:1) | 채움형 변형의 정체성 — 돋보기 아이콘 · 플레이스홀더(5.89:1)로 식별 |
 | Segmented Control 선택 표시 | 흰 칸 + 그림자 + 글자 600 → 700 | 상태 표시 대비 기준 적용 범위(디자인 결정) |
 
+## 2026-11-03 전체 QA
+
+- **axe(전 스토리)**: 색 대비 위반 23 → **18**. 비활성 칸 · 묶음의 도움말 5건(#c9ced6 — Figma `helper/disabled`, Input · Select · Textarea · DatePicker 도움말 스토리와 Select 메시지 매트릭스)은
+  비활성 컨트롤의 일부라 WCAG 1.4.3 예외이고(라벨과 같음), 메시지에 `aria-disabled="true"`를 붙여 axe도 같은 예외를 적용합니다. 남은 18건은 위 "색 대비 미충족 — Button Secondary / Solid
+  Hover · Pressed"(2026-10-30 사용자 결정) — 기준 완화 · 알려진 목록 추가 없음. (2026-11-03: 464 스토리)
+- **문서 페이지 조작 불가**: 처음부터 열린 모달 메뉴 · 달력 스토리가 문서 페이지 3쪽을 덮어 첫 클릭이 메뉴 닫기에 쓰이고 스크롤이 잠겼습니다 — 문서 페이지에서만 iframe에 그리고, `verify:render`의
+  `docs-blocked` 검사로 다시 생기지 않게 했습니다.
+- **password_field 눈 아이콘**: Figma 비활성 · 읽기 전용 눈이 외부 변수 때문에 진한 색(#404b5d)이던 것(F117)을 상태 토큰(#a1a8b5)으로 — 코드는 원래 이 색.
+- 위 "미해결 색 대비 위반 — `text/placeholder` …(2026-10-27)" 절은 같은 날 저녁 해결된 기록입니다(본문 첫 줄 "해결").
+
 ## 자동 검사 (axe-core)
 
 `npm run verify:a11y`(Storybook 실행 중)가 모든 스토리를 **Storybook a11y 애드온과 같은 axe 기본 규칙**(WCAG 2.0 / 2.1 / 2.2 A · AA + 모범 사례)으로,

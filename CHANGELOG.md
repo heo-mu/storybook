@@ -7,6 +7,27 @@
 
 첫 배포 버전 제안: **0.1.0**(외부 배포 전이므로 아래 변경을 첫 버전에 포함) — [docs/breaking-changes.md](docs/breaking-changes.md).
 
+### 전체 시스템 QA — Figma · Storybook · Docs 일괄 정리 (2026-11-03)
+
+- **Figma 수정**(사용자 승인 작업, [figma-fix-requests AQ절](docs/figma-fix-requests.md) — 17건): 같은 값의 외부 변수 → 로컬(dropdown-menu · dropdown-menu-sub 테두리 두께 ·
+  구분선 여백, dashboard-filter-bar 달력 아이콘), password_field 눈 아이콘 상태별 토큰(F117 — Figma 비활성 · 읽기 전용 눈이 코드와 같아짐), card 그림자 → `elevation-3`,
+  toast `Alert Text` · `Show Icon` 속성 연결 · 레이어 이름, data-state 쓰이지 않던 글자 속성 10개 정리, file-uploader 연결 레이어 없는 `Show Button` 삭제(F26),
+  Rules 05 "하위 메뉴"를 09장 · 컴포넌트에 맞춤(F114), Rules 09 첫 행에 예외 문장 · 내비게이션 · Switch · 툴팁 행 추가(AO · AM · AN), dropdown-menu 사용 예시를 Rules 05의 4px로(AP),
+  표 편집 칸 Filter · Hover · Empty 칩 Default(F82), 변수 이름 42 · 변형 이름 41 수정, 중복 Primitive `colors/gray 2` 삭제.
+- **호환성 변경 — 토큰 CSS 변수 이름**: `--colors-select-outline-outline-*` → `--colors-select-outline-*`(39), `--colors-toast-{border,status-icon}-succeess` → `…-success`,
+  `--colors-stepper-label-title-dafault` → `…-default`, `--colors-gray-2` 삭제(같은 값 `--colors-gray`) — 배포 전 원칙대로 별칭 없음, [docs/breaking-changes.md](docs/breaking-changes.md).
+- **Fixed — 문서 페이지가 막힘**: 처음부터 열린 DropdownMenu(Open · With Description · Gallery Overview) · DatePicker(Date Limits · Disabled Dates) 스토리의 모달 덮개 · 스크롤 잠금이
+  문서 페이지 3쪽 전체를 덮어 첫 클릭이 메뉴 닫기에 쓰이고 스크롤되지 않았습니다 — 문서 페이지에서만 각자의 틀(iframe)에. `verify:render`에 `docs-blocked` 검사.
+- **Fixed — DashboardFilterBar**: 넓은 화면에서도 조회 기간 SegmentedControl이 132px로 눌려 "최근 …"으로 잘리던 문제(Figma 220px — 날짜 필드의 `width: 100%`가 내용 너비 묶음에서
+  순환 백분율), 휴대폰 너비에서 묶음이 카드 밖으로 넘치던 문제(묶음 하나보다 좁으면 묶음 안에서도 다음 줄). 검사 play · "휴대폰 너비" 스토리.
+- **Fixed — 접근성**: 비활성 칸 · 묶음 메시지에 `aria-disabled`(다른 세션이 2026-10-20 – 28에 끝내 두고 커밋하지 않은 작업) — axe 색 대비 23 → 18(남은 18은 2026-10-30 사용자가 정한
+  Button Secondary / Solid Hover · Pressed 색). Pagination 현재 번호 레이어 이름 `Page Number` 동기화.
+- **스토리 · 검증 도구**: Loading 사용 문서(유일하게 없던 Usage), Progress · 표 키-값 스토리 틀이 휴대폰 너비에 맞게, `verify:interaction`이 닫힘 움직임 뒤 고정 150ms 대신 닫힘 · 포커스 도착을 기다림(검사 내용 그대로).
+- **문서**: code-policy-audit에 `docs/components`에만 있던 정책 ID 50개 + 새 ID 10개(168 → 228), 오래된 행 10개(Accordion · Skeleton 움직임, Toast 위치 · 시간, 하위 메뉴 등), 없어진 Rules 10장 표기;
+  figma-issues F118 – F123 · 해결 항목, figma-fix-requests 상태 · 중복 절, 컴포넌트 문서 "Figma 반영 대기" 정리, v1.0 후보 · 진행 기록 · 분류 문서 안내 — 전체 기록
+  [docs/qa/full-system-audit-2026-11-03.md](docs/qa/full-system-audit-2026-11-03.md).
+- **검증**: `npm test` 464/464 · `verify:all` 정합성 108/108 · Button 400/400 × 3 엔진 · `verify:render`(정적 빌드) 548 × 3 엔진 실패 0 · `verify:interaction` 45/45 × 3 · axe 위반 18(모두 사용자 결정 색) · 격리 worktree typecheck · lint · build · build-storybook 통과 · 외부 소비자 12/12 — [QA 기록 7절](docs/qa/full-system-audit-2026-11-03.md).
+
 ### DropdownMenu — 메뉴 · 하위 메뉴 열림 · 닫힘 움직임, 하위 메뉴 위치 재확인 (Figma 217:6478 · shadcn/ui Base Dropdown Menu) (2026-11-02)
 
 - **움직임**(Rules 09 "dropdown-menu · dropdown-menu-sub — 참고 링크 대로 움직입니다"를 이번에 따름, 이전에는 즉시): 메뉴와 하위 메뉴 모두 나타남 150ms `ease`

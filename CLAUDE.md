@@ -1,6 +1,6 @@
 # platform-design-system
 
-React component library for the Figma file **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, page `🔵 Ver 0.4`).
+React component library for the Figma file **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`, page `🔵 Ver 0.5`).
 Implemented so far: design tokens, Button family, Input / Textarea / SearchField, Checkbox, Radio, Switch,
 Select, Slider, SegmentedControl, Chip / InputChip / FilterChip / FilterChipSelect, DatePicker / Calendar, FileUploader, Loading, Link, Tabs,
 Pagination, DropdownMenu, Breadcrumb, Navigation, Stepper, Badge, Progress, Alert, Toast, Tooltip, EmptyState, Accordion, Dialog, Table, Card, Chart, Skeleton,
@@ -23,7 +23,7 @@ to access component and documentation knowledge before answering or acting on UI
   team explicitly decided on that await Figma registration. Add entries only on such a decision; remove them once Figma has them.
 - Only implement Figma variant combinations that exist (Button Secondary / Solid exists since the 2026-10-19 sync).
 - The Figma file is read-only for this project — do not modify it unless the user explicitly authorizes a specific
-  change (as for the 2026-10-19 Tertiary fill tokens and the R1–R8 fixes in docs/figma-fix-requests.md). Others edit the file
+  change (as for the 2026-10-19 Tertiary fill tokens and the R1–R8 fixes in docs/figma-fix-requests.md, and the 2026-11-03 full QA — section AQ). Others edit the file
   concurrently: re-run the checksums and a fingerprint before trusting the snapshot.
 - Story-only helpers in `src/components/*/stories/` (icons, matrix layout) are not part of the package API.
 
@@ -40,7 +40,7 @@ to access component and documentation knowledge before answering or acting on UI
   `npm run verify:all` runs every component in Chromium, Firefox and WebKit
 - `npm run verify:a11y` — axe-core audit of every story (known Figma token contrast issues listed separately)
 - `npm run verify:render` — opens every story AND docs page in a real browser: page errors, console errors / warnings, error overlay,
-  visible content (sized, not hidden, incl. portals; presses the first control when a story starts empty; still visible after 6 s;
+  docs pages blocked by an open overlay (`docs-blocked`), visible content (sized, not hidden, incl. portals; presses the first control when a story starts empty; still visible after 6 s;
   every docs Canvas filled), broken images, fonts, overflow (`STORYBOOK_URL=https://… ` for the deployed site, `--browser=firefox|webkit`)
 - `npm run verify:interaction` — real pointer / keyboard flows of the main components (select · deselect · close · error · disabled)
 - `npm run docs:api` — regenerate docs/api.md (public API) after changing exports or prop JSDoc
@@ -48,10 +48,11 @@ to access component and documentation knowledge before answering or acting on UI
 ## Docs
 
 - docs/developer-guide.md — handover guide for the frontend team (stack, install, tokens, versioning, MCP)
-- docs/public-api.md — generated list of public (50) / auxiliary (32) components and the internal API not to use;
+- docs/public-api.md — generated list of public (50) / auxiliary (33) components and the internal API not to use;
   every new component export must be classified at the top of scripts/generate-api-docs.mjs (the script fails otherwise)
 - docs/api.md — generated public API; docs/figma-issue-triage.md — open Figma issues by category
 - docs/release-checklist.md — pre-release checklist; docs/breaking-changes.md — compatibility analysis and version policy
+- docs/qa/full-system-audit-2026-11-03.md — full system QA history (findings, fixes, decisions, held items, test results)
 - docs/figma-fix-requests.md — fixes requested in the Figma source (node / variable IDs); add new ones there, never edit Figma
 - docs/usage.md — consuming the package from another React project
 - docs/browser-support.md — CSS features, fallbacks, measured per-engine results

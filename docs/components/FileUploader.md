@@ -46,7 +46,7 @@ const [files, setFiles] = useState<Upload[]>([]);
 | loading size · text | `Loading` `size` · `label` | |
 | Title Text · Helper Text | `title` · `helperText` | |
 
-Figma의 "Show Button" 속성은 어떤 레이어에도 연결되어 있지 않아 구현하지 않았습니다(figma-issues F26).
+Figma의 "Show Button" 속성은 어떤 레이어에도 연결되어 있지 않았고(세트에 버튼 레이어가 없음 — 업로드 영역 자체가 버튼) 2026-11-03에 Figma에서 삭제했습니다(`FILE-08`, figma-issues F26).
 
 ## 정책
 
