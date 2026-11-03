@@ -1,0 +1,44 @@
+import { Meta, Canvas, ArgTypes, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from './Loading.stories';
+import { Loading } from './Loading';
+
+<Meta title="Components/Loading/Usage" id="components-loading-usage" name="Docs" />
+
+# Loading
+
+데이터를 불러오거나 작업을 처리하는 동안 회전 표시로 알립니다. 진행률을 알 수 있는 작업에는 Progress를 씁니다.
+
+<Canvas of={Stories.Playground} />
+
+## 사용 시점
+
+- 끝나는 시점을 알 수 없는 작업(조회 · 저장 · 업로드 시작 직후)에 씁니다.
+- 진행률을 알면 Progress, 불러올 내용의 자리를 보여 줄 수 있으면 Skeleton을 씁니다(Rules 06 "진행 · 로딩").
+- 버튼으로 시작한 작업은 버튼의 `loading`으로 버튼 안에 표시합니다(Rules 06 "처리 중", Button 사용 방법).
+
+## 사용 예시
+
+<Source
+  language="tsx"
+  code={`import { Loading } from 'platform-design-system';
+
+<Loading label="데이터를 불러오는 중입니다" />
+<Loading size="sm" aria-label="목록을 불러오는 중" />`}
+/>
+
+- 크기는 `md`(기본) · `sm` 두 가지입니다(Figma `loading` Size).
+- `label`은 회전 표시 아래 한 줄 글자입니다. 없으면 표시만 보이고, 이름은 `aria-label`(기본 "로딩 중")이 됩니다.
+
+## 움직임
+
+- 회전 표시는 1초에 한 바퀴 돕니다(Rules 09 "반복 움직임").
+- 사용자가 움직임 줄이기를 설정하면 3초에 한 바퀴로 느려집니다(Rules 03 "움직임 줄이기").
+
+## 접근성
+
+- `role="status"`라 화면 낭독기가 처리 중임을 알립니다. 보이는 글자가 있으면 그 글자가 이름입니다.
+- 글자 없이 쓸 때는 무엇을 처리 중인지 `aria-label`로 알려 주세요.
+
+## Props
+
+<ArgTypes of={Loading} />
