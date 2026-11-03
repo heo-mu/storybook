@@ -44,12 +44,36 @@
   color: var(--colors-border-gray-subtle);
 }
 
+/* A group (or the date range in it) wider than the whole filter area — a phone-width bar — wraps its own items
+   instead of running out of the card (2026-11-03 QA, DFBR-08); wider bars keep each group on one line. */
 .ds-filter-bar__group,
 .ds-filter-bar__range {
   display: flex;
   flex: none;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-padding-p-2);
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Controls keep their own width (Figma: select 156, segmented 220, date fields 136): a group sized to its content must not
+   squeeze them — SegmentedControl's max-width: 100% made Chromium count it as its min-content (132px of 220) when sizing the
+   group, so "최근 7일 · 최근 30일" were cut to "최근 …" even on a wide screen (2026-11-03 QA, DFBR-08). */
+.ds-filter-bar__group > *,
+.ds-filter-bar__range > * {
+  flex-shrink: 0;
+}
+
+.ds-filter-bar__group > .ds-segmented {
+  max-width: none;
+}
+
+/* Fields fill their parent elsewhere (width: 100%); in a group sized to its content that percentage is circular — the
+   group was sized without it and the field then took the whole group. Here a field without its own width hugs its value. */
+.ds-filter-bar__group > .ds-field,
+.ds-filter-bar__range > .ds-field {
+  width: auto;
 }
 
 .ds-filter-bar__range {

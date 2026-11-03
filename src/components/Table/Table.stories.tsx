@@ -197,7 +197,7 @@ export const Selection: Story = {
 export const KeyValue: Story = {
   name: '키-값 표',
   render: () => (
-    <KeyValueTable style={{ width: 480 }}>
+    <KeyValueTable style={{ width: 480, maxWidth: '100%' }}>
       <KeyValueItem label="설비명" required>
         1호기 공조
       </KeyValueItem>

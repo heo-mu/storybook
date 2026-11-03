@@ -23,7 +23,7 @@ const meta = {
     valueLabel: { description: '화면 낭독기가 읽는 수치 설명(예: 10단계 중 3단계)' },
     'aria-label': { description: '화면 낭독기가 읽는 이름. `aria-label` 또는 `aria-labelledby` 중 하나는 꼭 붙입니다.' },
   },
-  decorators: [(Story) => <div style={{ width: 430 }}>{Story()}</div>],
+  decorators: [(Story) => <div style={{ width: 430, maxWidth: '100%' }}>{Story()}</div>],
 } satisfies Meta<typeof Progress>;
 
 export default meta;
