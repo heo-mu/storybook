@@ -69,7 +69,13 @@ async function expectContained(canvasElement: HTMLElement) {
   const segmented = canvasElement.querySelector<HTMLElement>('.ds-segmented');
   if (segmented) {
     await expect(segmented.getBoundingClientRect().width).toBeCloseTo(220, 0);
-    const cut = [...segmented.querySelectorAll<HTMLElement>('*')].filter((el) => el.scrollWidth > el.clientWidth + 0.5);
+    // a label may run into the item padding (F71) and is cut only when it is wider than the whole item: compare the text
+    // itself with the item box (scrollWidth also counts the padding overflow, Firefox by a whole pixel)
+    const cut = [...segmented.querySelectorAll<HTMLElement>('.ds-segmented__segment')].filter((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      return range.getBoundingClientRect().width > el.getBoundingClientRect().width + 0.5;
+    });
     await expect(cut.map((el) => el.textContent)).toEqual([]);
   }
 }
