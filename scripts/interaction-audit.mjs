@@ -37,6 +37,13 @@ const expect = (cond, msg) => { if (!cond) throw new Error(msg); };
 const root = () => page.locator('#storybook-root');
 const active = () => page.evaluate(() => { const a = document.activeElement; return a ? { tag: a.tagName, role: a.getAttribute('role'), name: a.getAttribute('aria-label') || a.textContent?.trim().slice(0, 40), id: a.id } : null; });
 const sleep = (ms) => page.waitForTimeout(ms);
+// After closing an overlay that has an exit motion: react-aria removes it — and restores focus — only when the motion
+// has ended, so wait for that instead of a fixed pause (2026-11-03: a loaded run missed the focus by a few ms after 150ms).
+// The checks that follow stay the same; this only waits (≤ 2 s) for the overlay to leave and focus to land.
+const closed = async (overlay) => {
+  await overlay.first().waitFor({ state: 'detached', timeout: 2000 }).catch(() => {});
+  await page.waitForFunction(() => document.activeElement && document.activeElement !== document.body, null, { timeout: 2000 }).catch(() => {});
+};
 // A story's play function runs when the page opens; wait until Storybook reports the render as completed before
 // driving it, so the flow does not race the play.
 const playDone = () => page.waitForFunction(() => ['finished', 'completed', 'errored', 'aborted'].includes(window.__STORYBOOK_PREVIEW__?.currentRender?.phase), null, { timeout: 20000 });
@@ -65,13 +72,13 @@ const flows = {
     await page.getByRole('listbox').waitFor({ timeout: 3000 });
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
-    await sleep(150);
+    await closed(page.getByRole('listbox'));
     expect((await page.getByRole('listbox').count()) === 0, 'Enter did not close the list');
     expect(!/내용 선택/.test(await trigger.textContent()), 'no value chosen by keyboard');
     await page.keyboard.press('ArrowDown');
     await page.getByRole('listbox').waitFor({ timeout: 3000 });
     await page.keyboard.press('Escape');
-    await sleep(150);
+    await closed(page.getByRole('listbox'));
     expect((await page.getByRole('listbox').count()) === 0, 'Escape did not close the list');
     const a = await active();
     expect(a && a.tag === 'BUTTON', 'focus did not return to the trigger after Escape');
@@ -252,14 +259,14 @@ const flows = {
     const a1 = await active();
     expect(a1 && a1.role === 'menuitem', `ArrowDown did not focus a menu item (got ${a1?.role})`);
     await page.keyboard.press('Escape');
-    await sleep(150);
+    await closed(menu);
     expect((await menu.count()) === 0, 'Escape did not close the menu');
     const a2 = await active();
     expect(a2 && a2.name === '메뉴', 'focus did not return to the trigger');
     await trigger.click();
     await menu.waitFor({ timeout: 3000 });
     await page.getByRole('menuitem').first().click();
-    await sleep(150);
+    await closed(menu);
     expect((await menu.count()) === 0, 'choosing an item did not close the menu');
   },
   async 'Dialog — opens, traps focus, Escape closes and restores focus'() {
