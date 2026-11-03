@@ -97,12 +97,13 @@ function EditCell({ type, state, content }: { type: Type; state: State; content:
         { editable: true },
       );
     // Figma (since 2026-10-19): one chip-filter — Unselected "텍스트 선택" when empty, Selected with the summary when
-    // filled; Hover · Empty shows the chip's Hover state, Hover · Filled adds 초기화, Editing is the Selected · Expanded chip
+    // filled; Hover · Empty keeps the chip in Default like the other types (F82, Figma 693:7163 fixed 2026-11-03), Hover · Filled
+    // adds 초기화, Editing is the Selected · Expanded chip
     // with its multi-select listbox (R7 / D3 decided 2026-10-19: FilterChipSelect — the chip and its listbox · option sm).
     case 'Filter':
       if (!filled) {
         return row(
-          <FilterChip size="md" disabled={disabled} className={state === 'Hover' ? PSEUDO.hover : undefined}>
+          <FilterChip size="md" disabled={disabled}>
             텍스트 선택
           </FilterChip>,
         );
