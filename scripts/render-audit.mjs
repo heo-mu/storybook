@@ -25,7 +25,8 @@
 //     iframe (parameters.docs.story.inline false) count only when the story inside the frame shows something
 // Informational (reported, not failed): 'content-after-trigger'; 'overflow-gallery' — a */Gallery verification matrix
 // that mirrors the Figma set frame and is wider than the viewport; 'docs-inert-warning' — react-aria Pressable warning
-// raised only because Storybook keeps docs-page story containers [inert] while the page builds (no warning in story mode).
+// raised only because Storybook keeps docs-page story containers [inert] while the page builds (no warning in story mode);
+// 'docs-iframe-load-notice' — Firefox "Layout was forced before the page was fully loaded" from a docs-page story iframe.
 // Report: .verify/render/report-<browser>.json. Exit code 1 when any entry fails.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -109,7 +110,7 @@ async function audit(page, entry, messages) {
       if (docs) {
         const content = document.querySelector('.sbdocs-content');
         const canvases = [...document.querySelectorAll('.docs-story')]; // one per Canvas block (.sb-story sits inside it)
-        const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== el.ownerDocument.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } if (n.tagName === 'IFRAME') { const d = n.contentDocument; return !!d && !!d.body && visibleIn(d.body); } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
+        const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== el.ownerDocument.body; p = p.parentElement) { const cs = (p.ownerDocument.defaultView || window).getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } if (n.tagName === 'IFRAME') { const d = n.contentDocument; return !!d && !!d.body && visibleIn(d.body); } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
         docsCanvases = { total: canvases.length, empty: canvases.filter((c) => !visibleIn(c)).length, text: (content?.innerText || '').trim().length };
         // an open modal overlay rendered inline (react-aria underlay / scroll lock) blocks the whole docs page
         const blockers = [...document.body.querySelectorAll('*')].filter((n) => { const cs = getComputedStyle(n); if (cs.position !== 'fixed' || cs.pointerEvents === 'none' || cs.display === 'none' || cs.visibility === 'hidden') return false; if (String(n.className).startsWith('sb-') || n.closest('.sb-errordisplay, .sb-preparing-docs, .sb-preparing-story, .sb-loader')) return false; const r = n.getBoundingClientRect(); return r.width >= innerWidth * 0.9 && r.height >= innerHeight * 0.9; });
@@ -155,11 +156,30 @@ async function audit(page, entry, messages) {
     if (!state.fontOk) current.issues.push({ cat: 'font', detail: 'Pretendard not loaded' });
     const gallery = /\/Gallery$/.test(entry.title);
     if (state.overflow > 1) current.issues.push({ cat: gallery ? 'overflow-gallery' : 'overflow', detail: `page ${state.overflow}px wider than the 1400px viewport` + (gallery ? ' (verification matrix mirroring the Figma set frame)' : '') });
+    if (isDocs) {
+      // Story iframes on the page (parameters.docs.story.inline false): let each finish rendering before the tab moves on, so
+      // none is torn down mid-render (that logs "Error rendering story …" into the next entry); a story that errors still fails.
+      for (const frame of page.frames().filter((fr) => /[?&]viewMode=story/.test(fr.url()))) {
+        const phase = await frame
+          .waitForFunction(() => { const p = window.__STORYBOOK_PREVIEW__?.currentRender?.phase; return ['finished', 'completed', 'errored', 'aborted'].includes(p) && p; }, null, { timeout: 8000 })
+          .then((h) => h.jsonValue())
+          .catch(() => 'timeout');
+        if (phase === 'errored') current.issues.push({ cat: 'error', detail: `story iframe ${decodeURIComponent(frame.url().match(/[?&]id=([^&#]+)/)?.[1] ?? '')} failed to render` });
+      }
+    }
     for (const m of messages) {
+      // A docs page renders some stories in their own iframe (iframe.html?viewMode=story&id=…). Their late messages can arrive
+      // after the tab has moved on: a message from another story's frame does not belong to this story entry.
+      const frameId = /[?&]viewMode=story/.test(m.url) ? decodeURIComponent(m.url.match(/[?&]id=([^&#]+)/)?.[1] ?? '') : '';
+      if (!isDocs && frameId && frameId !== entry.id) continue;
+      // Firefox's page-load advisory from such a docs-page story iframe (the iframes load lazily inside the docs page; the same
+      // stories in story mode and Chromium / WebKit report nothing, and opening the overlay after `load` does not change it —
+      // checked 2026-11-03): reported as info. Every other warning or error from those frames still fails.
+      const iframeNotice = isDocs && frameId && /Layout was forced before the page was fully loaded/.test(m.text);
       // Storybook renders docs-page story containers inside an [inert] ancestor until the page is ready; react-aria's Pressable
       // (DropdownMenu trigger) then warns that its child is not focusable. Story mode shows no warning — docs artifact, reported as info.
       const docsInert = isDocs && /<Pressable> child must be focusable/.test(m.text);
-      current.issues.push({ cat: docsInert ? 'docs-inert-warning' : m.kind, detail: m.text });
+      current.issues.push({ cat: docsInert ? 'docs-inert-warning' : iframeNotice ? 'docs-iframe-load-notice' : m.kind, detail: m.text });
     }
   } catch (e) {
     current.issues.push({ cat: 'load', detail: String(e.message).split('\n')[0].slice(0, 200) });
@@ -177,8 +197,11 @@ async function canvasesFilled(page) {
   for (let waited = 0; waited <= 8000; waited += 500) {
     last = await page.evaluate(() => {
       const canvases = [...document.querySelectorAll('.docs-story')];
-      const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== el.ownerDocument.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } if (n.tagName === 'IFRAME') { const d = n.contentDocument; return !!d && !!d.body && visibleIn(d.body); } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
-      return { total: canvases.length, empty: canvases.filter((x) => !visibleIn(x)).length };
+      const visibleIn = (el) => [...el.querySelectorAll('*')].some((n) => { const r = n.getBoundingClientRect(); if (r.width < 1 || r.height < 1) return false; for (let p = n; p && p !== el.ownerDocument.body; p = p.parentElement) { const cs = (p.ownerDocument.defaultView || window).getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false; } if (n.tagName === 'IFRAME') { const d = n.contentDocument; return !!d && !!d.body && visibleIn(d.body); } return n.children.length === 0 || (n.textContent || '').trim().length > 0; });
+      const empty = canvases.filter((x) => !visibleIn(x));
+      // docs-page story iframes are loading="lazy": bring the next empty one into view as a reader would (2026-11-03)
+      empty[0]?.scrollIntoView({ block: 'center' });
+      return { total: canvases.length, empty: empty.length };
     });
     if (!last.empty) return last;
     await page.waitForTimeout(500);
@@ -191,14 +214,16 @@ async function worker() {
   const context = await browser.newContext({ viewport: { width: 1400, height: 1000 } });
   const page = await context.newPage();
   let messages = [];
-  const log = (kind, text) => { if (!IGNORED_CONSOLE.some((re) => re.test(text))) messages.push({ kind, text: text.slice(0, 300) }); };
+  const log = (kind, text, url = '') => { if (!IGNORED_CONSOLE.some((re) => re.test(text))) messages.push({ kind, text: text.slice(0, 300), url }); };
   page.on('pageerror', (e) => log('pageerror', String(e.message)));
-  page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') log(m.type(), m.text()); });
+  page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') log(m.type(), m.text(), m.location()?.url ?? ''); });
   while (next < entries.length) {
     const entry = entries[next++];
     messages = [];
     const own = messages;
     results.push(await audit(page, entry, own));
+    // isolate entries: leave the page (and any docs-page story iframes) before the next entry starts collecting messages
+    await page.goto('about:blank').catch(() => {});
   }
   await context.close();
 }
@@ -206,7 +231,7 @@ await Promise.all(Array.from({ length: Math.max(1, Math.min(WORKERS, entries.len
 await browser.close();
 results.sort((a, b) => entries.findIndex((e) => e.id === a.id) - entries.findIndex((e) => e.id === b.id));
 
-const INFO = new Set(['content-after-trigger', 'overflow-gallery', 'docs-inert-warning']);
+const INFO = new Set(['content-after-trigger', 'overflow-gallery', 'docs-inert-warning', 'docs-iframe-load-notice']);
 const failed = results.filter((r) => r.issues.some((i) => !INFO.has(i.cat)));
 const info = results.filter((r) => r.issues.length && !failed.includes(r));
 const byCat = {};
