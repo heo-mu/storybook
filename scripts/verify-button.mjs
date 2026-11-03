@@ -251,7 +251,7 @@ const INTERACTIONS = [
     set: 'button_icon', story: 'components-button-iconbutton--playground', args: `variant:${v};appearance:${a}`, key: `${v[0].toUpperCase() + v.slice(1)}/${a[0].toUpperCase() + a.slice(1)}`,
   })),
   { set: 'button_text', story: 'components-button-textbutton--playground', args: 'variant:primary;leftIcon:CaretLeft', key: 'Primary' },
-  { set: 'button_text', story: 'components-button-textbutton--playground', args: 'variant:secondary;leftIcon:CaretLeft', key: 'SecondarySecondary' },
+  { set: 'button_text', story: 'components-button-textbutton--playground', args: 'variant:secondary;leftIcon:CaretLeft', key: 'Secondary' },
 ];
 for (const it of INTERACTIONS) {
   await page.goto(`${SB}/iframe.html?id=${it.story}&viewMode=story&args=${it.args}`);

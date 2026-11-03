@@ -300,14 +300,14 @@
         <symbol id="432:8450" name="Type=Primary, Size=md, State=Hover" x="121" y="64" width="81" height="32" />
         <symbol id="432:8456" name="Type=Primary, Size=md, State=Pressed" x="222" y="64" width="81" height="32" />
         <symbol id="432:8462" name="Type=Primary, Size=md, State=Disabled" x="323" y="64" width="81" height="32" />
-        <symbol id="746:33559" name="Type=SecondarySecondary, Size=sm, State=Default" x="24.5" y="116" width="72" height="24" />
-        <symbol id="746:33563" name="Type=SecondarySecondary, Size=sm, State=Hover" x="125.5" y="116" width="72" height="24" />
-        <symbol id="746:33567" name="Type=SecondarySecondary, Size=sm, State=Pressed" x="226.5" y="116" width="72" height="24" />
-        <symbol id="746:33571" name="Type=SecondarySecondary, Size=sm, State=Disabled" x="327.5" y="116" width="72" height="24" />
-        <symbol id="746:33575" name="Type=SecondarySecondary, Size=md, State=Default" x="20" y="160" width="81" height="32" />
-        <symbol id="746:33579" name="Type=SecondarySecondary, Size=md, State=Hover" x="121" y="160" width="81" height="32" />
-        <symbol id="746:33583" name="Type=SecondarySecondary, Size=md, State=Pressed" x="222" y="160" width="81" height="32" />
-        <symbol id="746:33587" name="Type=SecondarySecondary, Size=md, State=Disabled" x="323" y="160" width="81" height="32" />
+        <symbol id="746:33559" name="Type=Secondary, Size=sm, State=Default" x="24.5" y="116" width="72" height="24" />
+        <symbol id="746:33563" name="Type=Secondary, Size=sm, State=Hover" x="125.5" y="116" width="72" height="24" />
+        <symbol id="746:33567" name="Type=Secondary, Size=sm, State=Pressed" x="226.5" y="116" width="72" height="24" />
+        <symbol id="746:33571" name="Type=Secondary, Size=sm, State=Disabled" x="327.5" y="116" width="72" height="24" />
+        <symbol id="746:33575" name="Type=Secondary, Size=md, State=Default" x="20" y="160" width="81" height="32" />
+        <symbol id="746:33579" name="Type=Secondary, Size=md, State=Hover" x="121" y="160" width="81" height="32" />
+        <symbol id="746:33583" name="Type=Secondary, Size=md, State=Pressed" x="222" y="160" width="81" height="32" />
+        <symbol id="746:33587" name="Type=Secondary, Size=md, State=Disabled" x="323" y="160" width="81" height="32" />
       </frame>
     </frame>
     <frame id="72:4021" name="Input" x="4877" y="106" width="2500" height="824">

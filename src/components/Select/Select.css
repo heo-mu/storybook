@@ -1,61 +1,61 @@
 /*
  * Select — Figma component set `select` (95:4740), Type Outline. Field layout from Field.css.
  * State: Default → (has value) Completed → :hover Hover → Open → Error → Read-only → Disabled
- * (later rules win). Colours are the Figma bindings (colors/select/outline/outline/*).
+ * (later rules win). Colours are the Figma bindings (colors/select/outline/*).
  */
 .ds-select {
-  --ds-field-bg: var(--colors-select-outline-outline-background-default);
-  --ds-field-border-color: var(--colors-select-outline-outline-border-default);
+  --ds-field-bg: var(--colors-select-outline-background-default);
+  --ds-field-border-color: var(--colors-select-outline-border-default);
   --ds-field-border-width: var(--border-width-border);
   /* Value and empty Display Text: …/value/* · …/placeholder/* (Figma since 2026-10-20, E1 · E3). Required dot: …/required/default. */
-  --ds-field-required: var(--colors-select-outline-outline-required-default);
-  --ds-field-text: var(--colors-select-outline-outline-value-default);
-  --ds-field-placeholder: var(--colors-select-outline-outline-placeholder-default);
-  --ds-field-icon: var(--colors-select-outline-outline-icon-default);
+  --ds-field-required: var(--colors-select-outline-required-default);
+  --ds-field-text: var(--colors-select-outline-value-default);
+  --ds-field-placeholder: var(--colors-select-outline-placeholder-default);
+  --ds-field-icon: var(--colors-select-outline-icon-default);
 }
 
 .ds-select[data-filled] {
-  --ds-field-bg: var(--colors-select-outline-outline-background-completed);
-  --ds-field-border-color: var(--colors-select-outline-outline-border-completed);
-  --ds-field-text: var(--colors-select-outline-outline-value-completed);
+  --ds-field-bg: var(--colors-select-outline-background-completed);
+  --ds-field-border-color: var(--colors-select-outline-border-completed);
+  --ds-field-text: var(--colors-select-outline-value-completed);
 }
 
 .ds-select:hover {
-  --ds-field-border-color: var(--colors-select-outline-outline-border-hover);
+  --ds-field-border-color: var(--colors-select-outline-border-hover);
 }
 
 /* Open: the caret colour is an unbound #404b5d in Figma — the semantic token with that value (docs/figma-issues.md F5). */
 .ds-select[data-open] {
-  --ds-field-border-color: var(--colors-select-outline-outline-border-focus);
+  --ds-field-border-color: var(--colors-select-outline-border-focus);
   --ds-field-icon: var(--colors-icon-secondary);
 }
 
 /* Keyboard focus while closed — Figma State=Focus (2026-10-19): the focus border, as Input. Error keeps its border (rule below). */
 .ds-select[data-focus-visible] {
-  --ds-field-border-color: var(--colors-select-outline-outline-border-focus);
+  --ds-field-border-color: var(--colors-select-outline-border-focus);
 }
 
 .ds-select[data-invalid] {
-  --ds-field-border-color: var(--colors-select-outline-outline-border-error);
+  --ds-field-border-color: var(--colors-select-outline-border-error);
   --ds-field-border-width: var(--border-width-border-2);
-  --ds-field-text: var(--colors-select-outline-outline-value-default);
-  --ds-field-icon: var(--colors-select-outline-outline-icon-error);
+  --ds-field-text: var(--colors-select-outline-value-default);
+  --ds-field-icon: var(--colors-select-outline-icon-error);
 }
 
 .ds-select[data-readonly] {
-  --ds-field-bg: var(--colors-select-outline-outline-background-read-only);
-  --ds-field-border-color: var(--colors-select-outline-outline-border-read-only);
+  --ds-field-bg: var(--colors-select-outline-background-read-only);
+  --ds-field-border-color: var(--colors-select-outline-border-read-only);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-select-outline-outline-value-default);
+  --ds-field-text: var(--colors-select-outline-value-default);
 }
 
 .ds-select[data-disabled] {
-  --ds-field-bg: var(--colors-select-outline-outline-background-disabled);
-  --ds-field-border-color: var(--colors-select-outline-outline-border-disabled);
+  --ds-field-bg: var(--colors-select-outline-background-disabled);
+  --ds-field-border-color: var(--colors-select-outline-border-disabled);
   --ds-field-border-width: var(--border-width-border);
-  --ds-field-text: var(--colors-select-outline-outline-value-disabled);
-  --ds-field-placeholder: var(--colors-select-outline-outline-placeholder-disabled);
-  --ds-field-icon: var(--colors-select-outline-outline-icon-disabled);
+  --ds-field-text: var(--colors-select-outline-value-disabled);
+  --ds-field-placeholder: var(--colors-select-outline-placeholder-disabled);
+  --ds-field-icon: var(--colors-select-outline-icon-disabled);
 }
 
 /* Trigger — the Figma Container as a <button>. */
@@ -118,26 +118,26 @@
   letter-spacing: var(--typography-lg-leading-normal-normal-letter-spacing);
 }
 
-/* select_message — colors/select/outline/outline/helper/* */
+/* select_message — colors/select/outline/helper/* */
 .ds-select .ds-field-message[data-type='helper'] {
-  --ds-field-message-color: var(--colors-select-outline-outline-helper-default);
+  --ds-field-message-color: var(--colors-select-outline-helper-default);
 }
 
 /* Figma Type=Helper, State=Disabled — the help text of a disabled field. */
 .ds-select[data-disabled] .ds-field-message[data-type='helper'] {
-  --ds-field-message-color: var(--colors-select-outline-outline-helper-disabled);
+  --ds-field-message-color: var(--colors-select-outline-helper-disabled);
 }
 
 .ds-select .ds-field-message[data-type='info'] {
-  --ds-field-message-color: var(--colors-select-outline-outline-helper-info);
+  --ds-field-message-color: var(--colors-select-outline-helper-info);
 }
 
 .ds-select .ds-field-message[data-type='success'] {
-  --ds-field-message-color: var(--colors-select-outline-outline-helper-completed);
+  --ds-field-message-color: var(--colors-select-outline-helper-completed);
 }
 
 .ds-select .ds-field-message[data-type='error'] {
-  --ds-field-message-color: var(--colors-select-outline-outline-helper-error);
+  --ds-field-message-color: var(--colors-select-outline-helper-error);
 }
 
 /* Popover — positioned by react-aria below the field (offset spacing/margin/m-1) and as wide as it.
@@ -159,13 +159,13 @@
   overflow-y: auto;
   padding: var(--spacing-padding-p-1_5);
   border-radius: var(--border-radius-rounded);
-  background-color: var(--colors-select-outline-outline-listbox-background-default);
+  background-color: var(--colors-select-outline-listbox-background-default);
   box-shadow: var(--effect-elevation-3);
-  outline: var(--border-width-border) solid var(--colors-select-outline-outline-listbox-border-default);
+  outline: var(--border-width-border) solid var(--colors-select-outline-listbox-border-default);
   outline-offset: calc(-1 * var(--border-width-border));
 }
 
-/* Figma "scroll": a 4px rounded thumb at the right edge, colors/select/outline/outline/listbox/scroll/default. */
+/* Figma "scroll": a 4px rounded thumb at the right edge, colors/select/outline/listbox/scroll/default. */
 .ds-listbox::-webkit-scrollbar {
   width: 4px;
 }
@@ -176,13 +176,13 @@
 
 .ds-listbox::-webkit-scrollbar-thumb {
   border-radius: var(--border-radius-rounded-full);
-  background-color: var(--colors-select-outline-outline-listbox-scroll-default);
+  background-color: var(--colors-select-outline-listbox-scroll-default);
 }
 
 @supports not selector(::-webkit-scrollbar) {
   .ds-listbox {
     scrollbar-width: thin;
-    scrollbar-color: var(--colors-select-outline-outline-listbox-scroll-default) transparent;
+    scrollbar-color: var(--colors-select-outline-listbox-scroll-default) transparent;
   }
 }
 
@@ -195,8 +195,8 @@
   gap: var(--spacing-margin-m-2);
   padding: var(--spacing-padding-p-2) var(--spacing-padding-p-2_5);
   border-radius: var(--border-radius-rounded);
-  background-color: var(--colors-select-outline-outline-option-background-default);
-  color: var(--colors-select-outline-outline-option-label-default);
+  background-color: var(--colors-select-outline-option-background-default);
+  color: var(--colors-select-outline-option-label-default);
   font-family: var(--typography-sm-leading-normal-normal-font-family), sans-serif;
   font-size: var(--typography-sm-leading-normal-normal-font-size);
   font-weight: var(--typography-sm-leading-normal-normal-font-weight);
@@ -246,7 +246,7 @@
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  color: var(--colors-select-outline-outline-option-check-icon-selected);
+  color: var(--colors-select-outline-option-check-icon-selected);
 }
 
 .ds-option__check > svg {
@@ -262,19 +262,19 @@
 
 .ds-option:hover,
 .ds-option[data-focus-visible] {
-  background-color: var(--colors-select-outline-outline-option-background-hover);
-  color: var(--colors-select-outline-outline-option-label-hover);
+  background-color: var(--colors-select-outline-option-background-hover);
+  color: var(--colors-select-outline-option-label-hover);
 }
 
 .ds-option:active,
 .ds-option[data-pressed] {
-  background-color: var(--colors-select-outline-outline-option-background-pressed);
-  color: var(--colors-select-outline-outline-option-label-pressed);
+  background-color: var(--colors-select-outline-option-background-pressed);
+  color: var(--colors-select-outline-option-label-pressed);
 }
 
 /* Selected: brand label in the *-leading-normal-semibold text style. */
 .ds-option[data-selected] {
-  color: var(--colors-select-outline-outline-option-label-selected);
+  color: var(--colors-select-outline-option-label-selected);
   font-weight: var(--typography-sm-leading-normal-semibold-font-weight);
 }
 
@@ -287,12 +287,12 @@
 }
 
 .ds-option[data-disabled] {
-  background-color: var(--colors-select-outline-outline-option-background-disabled);
-  color: var(--colors-select-outline-outline-option-label-disabled);
+  background-color: var(--colors-select-outline-option-background-disabled);
+  color: var(--colors-select-outline-option-label-disabled);
   cursor: default;
 }
 
 .ds-option[data-disabled] .ds-option__check {
-  color: var(--colors-select-outline-outline-option-check-icon-disabled);
+  color: var(--colors-select-outline-option-check-icon-disabled);
 }
 

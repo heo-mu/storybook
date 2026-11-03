@@ -343,7 +343,6 @@ emerald/700=#007c56
 emerald/800=#006247
 emerald/900=#004a38 [TEXT_FILL]
 emerald/950=#002c22
-gray 2=#f2f2f3
 green/50=#f0fdf4
 green/75=#e6fdee
 green/100=#dcfce7

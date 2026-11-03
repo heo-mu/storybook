@@ -18,5 +18,5 @@ export const PSEUDO_PARAMETERS = {
   pseudo: { hover: ['[data-pseudo="hover"]'], active: ['[data-pseudo="pressed"]'] },
 };
 
-/** Figma "Type" value names of button_text (the second one is literally "SecondarySecondary" in Ver 0.4). */
-export const FIGMA_TEXT_BUTTON_TYPE = { primary: 'Primary', secondary: 'SecondarySecondary' } as const;
+/** Figma "Type" value names of button_text ("SecondarySecondary" until the 2026-11-03 rename). */
+export const FIGMA_TEXT_BUTTON_TYPE = { primary: 'Primary', secondary: 'Secondary' } as const;

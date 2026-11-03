@@ -2595,224 +2595,224 @@
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Default, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Default, Left Icon=False, Right Icon=False",
     "x": 42.5,
     "y": 404,
     "w": 40,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Hover, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Hover, Left Icon=False, Right Icon=False",
     "x": 147.5,
     "y": 404,
     "w": 40,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Pressed, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Pressed, Left Icon=False, Right Icon=False",
     "x": 252.5,
     "y": 404,
     "w": 40,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Disabled, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Disabled, Left Icon=False, Right Icon=False",
     "x": 357.5,
     "y": 404,
     "w": 40,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Default, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Default, Left Icon=False, Right Icon=True",
     "x": 34.5,
     "y": 448,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Hover, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Hover, Left Icon=False, Right Icon=True",
     "x": 139.5,
     "y": 448,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Pressed, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Pressed, Left Icon=False, Right Icon=True",
     "x": 244.5,
     "y": 448,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Disabled, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Disabled, Left Icon=False, Right Icon=True",
     "x": 349.5,
     "y": 448,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Default, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Default, Left Icon=True, Right Icon=False",
     "x": 34.5,
     "y": 492,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Hover, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Hover, Left Icon=True, Right Icon=False",
     "x": 139.5,
     "y": 492,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Pressed, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Pressed, Left Icon=True, Right Icon=False",
     "x": 244.5,
     "y": 492,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Disabled, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=sm, State=Disabled, Left Icon=True, Right Icon=False",
     "x": 349.5,
     "y": 492,
     "w": 56,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Default, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Default, Left Icon=True, Right Icon=True",
     "x": 26.5,
     "y": 536,
     "w": 72,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Hover, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Hover, Left Icon=True, Right Icon=True",
     "x": 131.5,
     "y": 536,
     "w": 72,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Pressed, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Pressed, Left Icon=True, Right Icon=True",
     "x": 236.5,
     "y": 536,
     "w": 72,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=sm, State=Disabled, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=sm, State=Disabled, Left Icon=True, Right Icon=True",
     "x": 341.5,
     "y": 536,
     "w": 72,
     "h": 24
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Default, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Default, Left Icon=False, Right Icon=False",
     "x": 38,
     "y": 580,
     "w": 49,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Hover, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Hover, Left Icon=False, Right Icon=False",
     "x": 143,
     "y": 580,
     "w": 49,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Pressed, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Pressed, Left Icon=False, Right Icon=False",
     "x": 248,
     "y": 580,
     "w": 49,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Disabled, Left Icon=False, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Disabled, Left Icon=False, Right Icon=False",
     "x": 353,
     "y": 580,
     "w": 49,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Default, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Default, Left Icon=False, Right Icon=True",
     "x": 29,
     "y": 632,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Hover, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Hover, Left Icon=False, Right Icon=True",
     "x": 134,
     "y": 632,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Pressed, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Pressed, Left Icon=False, Right Icon=True",
     "x": 239,
     "y": 632,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Disabled, Left Icon=False, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Disabled, Left Icon=False, Right Icon=True",
     "x": 344,
     "y": 632,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Default, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Default, Left Icon=True, Right Icon=False",
     "x": 29,
     "y": 684,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Hover, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Hover, Left Icon=True, Right Icon=False",
     "x": 134,
     "y": 684,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Pressed, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Pressed, Left Icon=True, Right Icon=False",
     "x": 239,
     "y": 684,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Disabled, Left Icon=True, Right Icon=False",
+    "name": "Type=Secondary, Size=md, State=Disabled, Left Icon=True, Right Icon=False",
     "x": 344,
     "y": 684,
     "w": 67,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Default, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Default, Left Icon=True, Right Icon=True",
     "x": 20,
     "y": 736,
     "w": 85,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Hover, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Hover, Left Icon=True, Right Icon=True",
     "x": 125,
     "y": 736,
     "w": 85,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Pressed, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Pressed, Left Icon=True, Right Icon=True",
     "x": 230,
     "y": 736,
     "w": 85,
     "h": 32
    },
    {
-    "name": "Type=SecondarySecondary, Size=md, State=Disabled, Left Icon=True, Right Icon=True",
+    "name": "Type=Secondary, Size=md, State=Disabled, Left Icon=True, Right Icon=True",
     "x": 335,
     "y": 736,
     "w": 85,

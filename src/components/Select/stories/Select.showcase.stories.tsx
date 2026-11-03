@@ -373,7 +373,7 @@ export const RequiredMark: Story = {
   play: async ({ canvas, canvasElement }) => {
     for (const size of FIELD_SIZES) {
       const trigger = canvas.getByRole('button', { name: (name) => name.endsWith(`과일 (${size})`), description: '필수' });
-      await expectRequiredMark(trigger.closest('.ds-field')!, '--colors-select-outline-outline-required-default');
+      await expectRequiredMark(trigger.closest('.ds-field')!, '--colors-select-outline-required-default');
     }
     await expect(canvas.getByRole('button', { name: (name) => name.endsWith('메모') })).not.toHaveAccessibleDescription('필수');
     await expect(canvasElement.querySelectorAll('.ds-field__required')).toHaveLength(3);
@@ -395,7 +395,7 @@ export const HelperMessage: Story = {
   ),
   play: async ({ canvasElement }) => {
     const [field, disabled] = canvasElement.querySelectorAll<HTMLElement>('.ds-select');
-    await expectHelperMessage(field, '--colors-select-outline-outline-helper-default');
-    await expectHelperMessage(disabled, '--colors-select-outline-outline-helper-disabled');
+    await expectHelperMessage(field, '--colors-select-outline-helper-default');
+    await expectHelperMessage(disabled, '--colors-select-outline-helper-disabled');
   },
 };

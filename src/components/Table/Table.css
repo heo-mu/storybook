@@ -343,11 +343,11 @@
 }
 
 .ds-kv__value[data-editable] .ds-select:hover:not([data-open]) {
-  --ds-field-border-color: var(--colors-select-outline-outline-border-default);
+  --ds-field-border-color: var(--colors-select-outline-border-default);
 }
 
 .ds-kv__value[data-editable] .ds-select[data-filled]:hover:not([data-open]) {
-  --ds-field-border-color: var(--colors-select-outline-outline-border-completed);
+  --ds-field-border-color: var(--colors-select-outline-border-completed);
 }
 
 .ds-kv__value[data-editable] .ds-date-picker:hover:not(:focus-within, [data-open]) {

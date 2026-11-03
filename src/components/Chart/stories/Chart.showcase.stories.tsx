@@ -181,7 +181,7 @@ const FIGMA_CHARTS = FIGMA_BASE.flatMap(({ name, width, hover, props }) => [
   { name: `${name}, State=Default`, width, props },
   { name: `${name}, State=Hover`, width, props: { ...props, activeIndex: hover } },
   ...(props.type !== 'line' || name === 'Type=Line, Style=Default, Group=yes'
-    ? [{ name: `${name}, State=Hilighted`, width, props: { ...props, highlightedIndex: hover } }]
+    ? [{ name: `${name}, State=Highlighted`, width, props: { ...props, highlightedIndex: hover } }]
     : []),
 ]);
 

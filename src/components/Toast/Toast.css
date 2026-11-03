@@ -2,7 +2,7 @@
  * Toast — Figma `toast` (91:5927, redesigned 2026-10-27 · synced 2026-10-28, F101): 320px wide, height hugs the content
  * (min 36px; 40px with a title only, 54px with the description), padding p-2 p-2_5, gap p-2, items centred,
  * border-radius/rounded, colors/toast/background/default, 1px INSIDE border colors/toast/border/<status>, effect elevation-3.
- *   "Icon and Text" (fills the width, gap p-2): 20px status icon colors/toast/status-icon/<status> + "File info" column (gap p-0_5):
+ *   "Icon and Text" (fills the width, gap p-2): 20px status icon colors/toast/status-icon/<status> + "Content" column (gap p-0_5):
  *       title sm/leading-normal/medium colors/toast/label/title/default, description xs/leading-normal/normal …/label/body/default.
  *   Close: `button_text` Primary sm — "닫기" + XCircle (fill) 16px right icon (TextButton styles from Button.css).
  * Texts stay on one line with an ellipsis (Design System Rules 08: "토스트는 한 줄로 줄입니다").
@@ -29,8 +29,8 @@
 }
 
 .ds-toast[data-status='success'] {
-  --_bd: var(--colors-toast-border-succeess);
-  --_icon: var(--colors-toast-status-icon-succeess);
+  --_bd: var(--colors-toast-border-success);
+  --_icon: var(--colors-toast-status-icon-success);
 }
 
 .ds-toast[data-status='warning'] {
@@ -59,7 +59,7 @@
   color: var(--_icon);
 }
 
-/* Figma "File info": title + description column, gap p-0_5, fills the remaining width. */
+/* Figma "Content" (Title + Description): column, gap p-0_5, fills the remaining width. */
 .ds-toast__content {
   display: flex;
   flex: 1 1 auto;

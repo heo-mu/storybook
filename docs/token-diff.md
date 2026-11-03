@@ -10,6 +10,10 @@ Figma **[Platform] Web Design System** (`Ry3WecA6sP6lKPop1vXrTp`)의 Variables /
 Button 구현 시점의 스냅샷(`figma/`)과 비교한 결과입니다. 비교는 정렬된 `name=value [scopes]` 줄의 체크섬
 (`npm run figma:checksum` ↔ `figma/checksum.figma.js`)과 그룹별 변수 개수로 했습니다.
 
+> **2026-11-03 — 전체 QA**: Figma 변수 이름 42개 수정(`colors/select/outline/outline/*` 39 → `colors/select/outline/*`, toast `succeess` 2 → `success`, stepper `dafault` → `default`, ID 유지)과
+> 중복 Primitive `colors/gray 2` 삭제를 스냅샷(`figma/variables/component-others.txt` · `primitive-colors.txt`)에 같이 반영했습니다 — 체크섬 8그룹 다시 일치(primColors 455 `0308b6f1` · compOthers 692 `b1993741`).
+> CSS 변수 이름 변화는 [breaking-changes.md](./breaking-changes.md) "2026-11-03".
+
 ## 요약
 
 | 구분 | Button 구현 시점 | 현재 Figma | 코드 |

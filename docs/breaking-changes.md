@@ -82,6 +82,20 @@ Chart 전용 토큰 19개 추가(호환): `--colors-chart-bar-{primary,compare,h
 
 앱 CSS에서 `--colors-text-placeholder`를 비활성 글자에 썼다면 `--colors-text-inactive`로 바꾸면 이전 색이 유지됩니다.
 
+### 2026-11-03 — Figma 변수 이름 오류 수정 (전체 QA)
+
+Figma 변수 이름의 오타 · 분류 단계 중복을 고쳤습니다(변수 ID · 바인딩 · 값 그대로, [figma-fix-requests AQ절](./figma-fix-requests.md)). 배포 전이라 이전 이름의 별칭은 두지 않습니다(위 원칙과 같음).
+앱 CSS에서 이전 이름을 썼다면 아래처럼 바꿉니다. 컴포넌트 Props · 화면 변화 없음.
+
+| 구분 | 이전 CSS 변수 | 이후 | 호환성 |
+| --- | --- | --- | --- |
+| 이름 변경 39 | `--colors-select-outline-outline-*`(background · border · value · placeholder · icon · helper · listbox · option · required) | `--colors-select-outline-*`(뒤쪽 이름 그대로) | **깨짐** — 앞부분만 바꾸면 됨 |
+| 이름 변경 2 | `--colors-toast-border-succeess` · `--colors-toast-status-icon-succeess` | `--colors-toast-border-success` · `--colors-toast-status-icon-success` | **깨짐** |
+| 이름 변경 1 | `--colors-stepper-label-title-dafault` | `--colors-stepper-label-title-default` | **깨짐** |
+| 삭제 1 | `--colors-gray-2`(#f2f2f3, Figma `colors/gray 2` — 이름에 공백, 참조 0) | 같은 값의 `--colors-gray` | **깨짐** — `--colors-gray`로 |
+
+Figma 변형 이름 `button_text` Type `SecondarySecondary` → `Secondary`, `chart` State `Hilighted` → `Highlighted`는 디자인 쪽 이름만 바뀌어 코드 API와 무관합니다.
+
 ### 2026-10-30 — Button Secondary / Solid 상태 밝기
 
 | 변경 | 내용 | 호환성 |

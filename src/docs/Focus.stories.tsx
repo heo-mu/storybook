@@ -139,7 +139,7 @@ export const Keyboard: Story = {
       const select = canvasElement.querySelector('.ds-select');
       await expect(select).toHaveAttribute('data-focus-visible');
       const border = getComputedStyle(select!).getPropertyValue('--ds-field-border-color').trim();
-      const focusBorder = getComputedStyle(document.documentElement).getPropertyValue('--colors-select-outline-outline-border-focus').trim();
+      const focusBorder = getComputedStyle(document.documentElement).getPropertyValue('--colors-select-outline-border-focus').trim();
       await expect(border).toBe(focusBorder);
     });
     await step('slider handle: ring 1px from the 20px thumb (2px from the knob)', async () => {

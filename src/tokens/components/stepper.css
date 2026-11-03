@@ -7,7 +7,7 @@
   --colors-stepper-indicator-current-label-default: var(--colors-text-inverse);
   --colors-stepper-indicator-completed-background-default: var(--colors-fill-primary-strong-default);
   --colors-stepper-indicator-completed-icon-default: var(--colors-icon-inverse);
-  --colors-stepper-label-title-dafault: var(--colors-text-primary);
+  --colors-stepper-label-title-default: var(--colors-text-primary);
   --colors-stepper-label-title-locked: var(--colors-text-tertiary);
   --colors-stepper-label-title-error: var(--colors-status-error-strong);
   --colors-stepper-connector-incomplete-default: var(--colors-border-gray-subtler);

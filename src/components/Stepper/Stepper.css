@@ -47,7 +47,7 @@
 .ds-stepper-indicator {
   --_bg: var(--colors-stepper-indicator-upcoming-background-default);
   --_mark: var(--colors-stepper-indicator-upcoming-label-default);
-  --_title: var(--colors-stepper-label-title-dafault);
+  --_title: var(--colors-stepper-label-title-default);
   --_desc: var(--colors-stepper-label-description-default);
 
   position: relative;

@@ -345,7 +345,7 @@
 }
 
 /* ------------------------------------------------------------- TextButton */
-/* Figma Type "Primary" → colors/button_text/primary/*, "SecondarySecondary" → colors/button_text/secondary/* (split in the 2026-10-19 sync). */
+/* Figma Type "Primary" → colors/button_text/primary/*, "Secondary" → colors/button_text/secondary/* (split in the 2026-10-19 sync). */
 .ds-text-button {
   --ds-button-icon-size: 16px;
   --ds-button-bg-default: var(--colors-button_text-primary-background-default);
